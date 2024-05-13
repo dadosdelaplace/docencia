@@ -38,7 +38,7 @@
 
 <h2 align="left">Teaching materials</h2>
 
-| Subject | Description | Slides (diapositivas) | Material |
+| Subject | Description | Slides | Material |
 |:----------------:|:-------------------:|:------:|:------:|
-| <img width="200" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52"> <br> [R for datascience](https://javieralvarezliebana.es/docencia/R-datascience)  | Introductory course in R for data science. The course includes an introduction to R base, functional programming, tidyverse, Quarto and dataviz with ggplot. | <https://javieralvarezliebana.es/docencia/R-datascience/diapos> | <https://javieralvarezliebana.es/docencia/R-datascience/material> |
+| <img width="200" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52"> <br> [R for datascience](https://javieralvarezliebana.es/docencia/R-datascience)  | Introductory course in R for data science. The course includes an introduction to R base, functional programming, tidyverse, Quarto and dataviz with ggplot. | 👨🏻‍🏫 [Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-datascience/diapos) | [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material) |
 
