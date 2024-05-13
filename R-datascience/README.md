@@ -32,8 +32,6 @@
 </a>
 </div>
             
-<br>
-
 🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
 
 <h2 align="left">Teaching materials</h2>
