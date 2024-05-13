@@ -1,0 +1,59 @@
+---
+title: "prueba"
+format:
+  html:
+    toc: true
+    toc-location: right
+    toc-title: Índice
+    fig-cap-location: margin
+editor: visual
+---
+
+# Intro
+
+Este *material* ha sido diseñado por el profesor **Javier Álvarez Liébana**, docente en la [Universidad Complutense de Madrid](https://www.ucm.es)
+
+## Quarto {#sec-quarto}
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+### Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r chunk-1}
+# Código R
+x <- 1
+y <- 2
+x + y
+```
+
+```{r}
+<<chunk-1>>
+```
+
+Podemos escribir el resultado de x = `r x` e y = `r y` dentro del propio texto, y ecuaciones tipo $x + y$ o incluso
+
+$$x = \sqrt{z} + ...$$
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+#| message: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+## Cross referencias
+
+Puedes hacer referencia a @sec-quarto
+
+### Figuras e imágenes
+
+```{r}
+#| fig-cap: "Visualización cutre de y = x"
+plot(1:100, 1:100)
+```
+
