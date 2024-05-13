@@ -24,8 +24,6 @@
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
 </div>
 
-adsadsadadsadsad
-
 <h1 align="left">Welcome to my teaching materials</h1>
 
 adsadsadadsadsad
