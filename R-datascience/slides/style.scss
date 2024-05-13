@@ -1,0 +1,173 @@
+/*-- scss:defaults --*/
+
+// Fuentes: Quicksand, KoHo, Alkatra
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400;500;600;700&family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+/*-- scss:defaults --*/
+
+// general
+$body-bg: #ffffff !default; // color de fondo
+$body-color: #444442 !default; // color de texto
+$link-color: #2972A8 !default; // color de links
+$link-weight: bold !default;
+$presentation-font-size-root: 1.9em;
+$font-family-sans-serif: 'KoHo', sans-serif !default;
+
+// headings
+$presentation-heading-font: "Quicksand", sans-serif !default;
+$presentation-heading-color: #2972A8 !default; // color headings
+$presentation-heading-font-weight: bold !default;
+$h1-font-size: 2.2em !default;
+$h2-font-size: 2em !default;
+$h3-font-size: 1.5em !default;
+$h4-font-size: 1.3em !default;
+$footer-font-size: 1.9em !default;
+
+//code
+$code-color: #2fad7e !default;
+$font-family-monospace: "Spline Sans Mono", monospace  !default;
+$code-block-border-color: lighten($body-color, 30%) !default;
+$code-block-bg: #ffffff !default;
+
+.reveal pre.sourceCode code {
+    padding: 6px 9px !important;
+    max-height: 400px !important;
+    white-space: pre !important;
+}
+
+
+.reveal pre code {
+    display: block !important;
+    overflow: auto !important;
+    word-wrap: normal !important;
+    font-weight: 300 !important;
+    font-size: 1.1em !important;
+}
+
+
+
+
+code span.fu {
+  color: #917fb8 !important; // a1ffe2
+}
+
+code span.at {
+  color: #2972A8 !important; // a1ffe2
+}
+
+code span.sc {
+  color: #ff5500 !important; // a1ffe2
+}
+
+code span.st {
+  color: #c4201d !important; // a1ffe2
+}
+
+code span.ot {
+  color: #30ad7e !important; // a1ffe2
+}
+
+
+/*-- scss:mixins --*/
+
+// Background generator
+@mixin bodyBackground() {
+  @include radial-gradient(#E8F3F5, #ffffff);
+}
+
+/*-- scss:rules --*/
+
+.backgrounds .title-slide {
+    background-color: #C9E0F1 !important;
+}
+ 
+  
+.title{
+  font-size: 2.5em !important;
+  font-weight: bold !important;
+}
+
+.subtitle {
+  color: $body-color !important;
+  font-size: $h3-font-size !important;
+  font-family: $presentation-heading-font !important;
+  font-weight: bold !important;
+}
+
+.reveal .footer {
+  font-size: 0.6em !important;
+}
+
+.reveal code {
+    background-color: rgba(0,0,0,0);
+    white-space: pre-wrap !important;
+    font-weight: bold !important;
+}
+
+
+.reveal h1, h2 {
+  color: #2972A8 !important;
+  font-weight: bold !important;
+}
+
+.reveal h1 {
+  font-size: 4.1em !important;
+  text-align: center !important;
+}
+
+.reveal h2 {
+  font-size: 2.4em !important;
+}
+
+.hl-yellow{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #F8DF58 35%
+  );
+}
+
+.hl-red{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #EEB0B1 35%
+  );
+}
+
+.hl-purple{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #CAB0EE 35%
+  );
+}
+
+.hl-green{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #B0EED1 35%
+  );
+}
+
+
+.hl-orange{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #EFD3A7 35%
+  );
+}
+
+li{
+  margin: 0.35em 0 0.3em -0.6em !important;
+}
+
+div.callout-caution.callout-caption {
+  title: "hola" !important;
+}
+
+
+
