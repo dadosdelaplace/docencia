@@ -3,7 +3,6 @@
 <p><em>PhD in Statistics<img src="https://media.giphy.com/media/fYSnHlufseco8Fh93Z/giphy.gif" width="30"> Researcher and Assistant Professor at Universidad Complutense<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
 </em></p>
 
-adsadsadadsadsad
 
 <h1 align="center">
 <img src="https://komarev.com/ghpvc/?username=dadosdelaplace&label=Profile%20views&color=blue&style=plastic" alt="dadosdelaplace">
@@ -17,7 +16,6 @@ adsadsadadsadsad
 <img src="https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white" alt="R">
 </h1>
 
-adsadsadadsadsad
 
 <div align="center">
 <a href="https://github.com/dadosdelaplace/docencia/pulse" alt="Activity"> <img src="https://img.shields.io/github/commit-activity/m/dadosdelaplace/docencia" /></a>
