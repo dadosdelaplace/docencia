@@ -33,9 +33,9 @@
 </a>
 </div>
             
-&nbsp;
+<br>
 
-🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
+🕸 You can check the course at <a href="https://javieralvarezliebana.es/docencia/R-datascience"></a>
 
 <h2 align="left">Teaching materials</h2>
 
