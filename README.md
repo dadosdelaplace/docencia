@@ -31,7 +31,7 @@
 
 
 <div align="left">
-<img width="410" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
+<img width="415" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 <img width="360" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/c90dc302-9119-4e30-b2dc-b4775663aaf9">
 
 🕸 You can check all teaching materials at <https://javieralvarezliebana.es/docencia/>
