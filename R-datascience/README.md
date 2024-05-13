@@ -35,7 +35,7 @@
             
 <br>
 
-🕸 You can check the course at <a href="https://javieralvarezliebana.es/docencia/R-datascience"></a>
+🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
 
 <h2 align="left">Teaching materials</h2>
 
