@@ -1,6 +1,6 @@
 
 <a href="https://www.buymeacoffee.com/dadosdelaplace" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 37px !important;width: 140px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-<p><em>PhD in Statistics<img src="https://media.giphy.com/media/fYSnHlufseco8Fh93Z/giphy.gif" width="30"></br>Researcher and Assistant Professor at Universidad Complutense</a><img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
+<p><em>PhD in Statistics<img src="https://media.giphy.com/media/fYSnHlufseco8Fh93Z/giphy.gif" width="30"> Researcher and Assistant Professor at Universidad Complutense<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
 </em></p>
 
 <h1 align="center">
@@ -23,15 +23,16 @@
 <a href="https://github.com/dadosdelaplace/docencia/issues"><img src="https://img.shields.io/github/issues/dadosdelaplace/docencia" alt="Issues Badge"/></a>
 <a href="https://github.com/dadosdelaplace/docencia/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/dadosdelaplace/docencia?color=2b9348"></a>
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
+</div>
 
 <h1 align="left">Welcome to my teaching materials</h1>
-
 
 <div align="left">
 <a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 <a href="https://javieralvarezliebana.es/docencia/R-biostats/diapos"><img width="360" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/c90dc302-9119-4e30-b2dc-b4775663aaf9">
 <a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/0889bfbd-3a28-4d06-9212-d84cbbe4e983">
-
+</div>
+            
 🕸 You can check all teaching materials at <https://javieralvarezliebana.es/docencia/>
 
 <h2 align="left">Teaching materials</h2>
