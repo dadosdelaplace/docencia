@@ -1,8 +1,6 @@
-
 <a href="https://www.buymeacoffee.com/dadosdelaplace" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 37px !important;width: 140px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 <p><em>PhD in Statistics<img src="https://media.giphy.com/media/fYSnHlufseco8Fh93Z/giphy.gif" width="30"> Researcher and Assistant Professor at Universidad Complutense<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
 </em></p>
-
 
 <h1 align="center">
 <img src="https://komarev.com/ghpvc/?username=dadosdelaplace&label=Profile%20views&color=blue&style=plastic" alt="dadosdelaplace">
@@ -15,7 +13,6 @@
 <img src="https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white" alt="Markdown">
 <img src="https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white" alt="R">
 </h1>
-
 
 <div align="center">
 <a href="https://github.com/dadosdelaplace/docencia/pulse" alt="Activity"><img src="https://img.shields.io/github/commit-activity/m/dadosdelaplace/docencia"/></a>
