@@ -26,13 +26,12 @@
 
 <h1 align="left">Welcome to my teaching materials</h1>
 
-adsadsadadsadsad
 
 <div align="left">
             
-<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52"></a>
-<a href="https://javieralvarezliebana.es/docencia/R-biostats/diapos"><img width="360" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/c90dc302-9119-4e30-b2dc-b4775663aaf9"></a>
-<a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/0889bfbd-3a28-4d06-9212-d84cbbe4e983"></a>
+<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52"/></a>
+<a href="https://javieralvarezliebana.es/docencia/R-biostats/diapos"><img width="360" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/c90dc302-9119-4e30-b2dc-b4775663aaf9"/></a>
+<a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos"><img width="419" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/0889bfbd-3a28-4d06-9212-d84cbbe4e983"/></a>
             
 </div>
             
