@@ -3,6 +3,8 @@
 <p><em>PhD in Statistics<img src="https://media.giphy.com/media/fYSnHlufseco8Fh93Z/giphy.gif" width="30"> Researcher and Assistant Professor at Universidad Complutense<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
 </em></p>
 
+adsadsadadsadsad
+
 <h1 align="center">
 <img src="https://komarev.com/ghpvc/?username=dadosdelaplace&label=Profile%20views&color=blue&style=plastic" alt="dadosdelaplace">
 <img src="https://img.shields.io/static/v1?label=%F0%9F%8C%9F&message=If%20Useful&style=style=flat&color=BC4E99" alt="Star Badge"/>
@@ -15,6 +17,8 @@
 <img src="https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white" alt="R">
 </h1>
 
+adsadsadadsadsad
+
 <div align="center">
 <a href="https://github.com/dadosdelaplace/docencia/pulse" alt="Activity"> <img src="https://img.shields.io/github/commit-activity/m/dadosdelaplace/docencia" /></a>
 <a href="https://github.com/dadosdelaplace/docencia/stargazers"><img src="https://img.shields.io/github/stars/dadosdelaplace/docencia" alt="Stars Badge"/></a>
@@ -25,7 +29,11 @@
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
 </div>
 
+adsadsadadsadsad
+
 <h1 align="left">Welcome to my teaching materials</h1>
+
+adsadsadadsadsad
 
 <div align="left">
             
