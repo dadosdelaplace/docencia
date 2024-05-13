@@ -28,7 +28,7 @@
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="700" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
+<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 </a>
 &nbsp;
 
