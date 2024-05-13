@@ -18,7 +18,7 @@
 
 
 <div align="center">
-<a href="https://github.com/dadosdelaplace/docencia/pulse" alt="Activity"> <img src="https://img.shields.io/github/commit-activity/m/dadosdelaplace/docencia" /></a>
+<a href="https://github.com/dadosdelaplace/docencia/pulse" alt="Activity"><img src="https://img.shields.io/github/commit-activity/m/dadosdelaplace/docencia"/></a>
 <a href="https://github.com/dadosdelaplace/docencia/stargazers"><img src="https://img.shields.io/github/stars/dadosdelaplace/docencia" alt="Stars Badge"/></a>
 <a href="https://github.com/dadosdelaplace/docencia/network/members"><img src="https://img.shields.io/github/forks/dadosdelaplace/docencia" alt="Forks Badge"/></a>
 <a href="https://github.com/dadosdelaplace/docencia/pulls"><img src="https://img.shields.io/github/issues-pr/dadosdelaplace/docencia" alt="Pull Requests Badge"/></a>
