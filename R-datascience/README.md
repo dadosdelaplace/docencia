@@ -23,6 +23,7 @@
 <a href="https://github.com/dadosdelaplace/docencia/issues"><img src="https://img.shields.io/github/issues/dadosdelaplace/docencia" alt="Issues Badge"/></a>
 <a href="https://github.com/dadosdelaplace/docencia/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/dadosdelaplace/docencia?color=2b9348"></a>
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
+</div>
 
 <h1 align="left">R for datascience</h1>
 
@@ -30,6 +31,8 @@
 <div align="left">
 <a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 </a>
+</div>
+            
 &nbsp;
 
 🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
