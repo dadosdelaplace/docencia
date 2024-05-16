@@ -91,7 +91,7 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 . . .
 
-* [**Examen final**]{.hl-yellow}: si el final tiene peso deberás **sacar al menos un 2.5** para que pondere.
+* [**Examen final**]{.hl-yellow}: si el final tiene peso deberás **sacar al menos un 3** para que pondere.
 
   - [**Entre 3.5 y 5**]{.hl-purple} --> podrás decidir peso del final **entre el 80% y el 100%**
   - [**Entre 5 y 6**]{.hl-purple} --> entre el **60% y el 100%**.
@@ -129,6 +129,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 12 sep | Primeros pasos en R | [💻](#tu-turno-1) |  |  | 
 | [2](#clase-2) | S1 | 15 sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-práctico-2) |  |
+| [3](#clase-3) | S2 | 15 sep | Primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-práctico-3) |  |
 :::
 :::
 
@@ -136,15 +137,19 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 
 ## Materiales
 
-* [**Diapositivas**]{.hl-yellow}: las diapositivas que usaremos en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia-R-datascience-2324/diapos>** 
+* [**Diapositivas**]{.hl-yellow}: diapositivas en `Quarto` disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia/R-datascience>** 
 
-En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools` (consejo: no lo hagas hasta el final del curso ya que irán modificándose)
+En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools`
   
 &nbsp;
 
-* [**Material**]{.hl-yellow}: [**scripts de cada tema**](https://github.com/dadosdelaplace/docencia-R-datascience-2324/tree/main/material) y materiales extras
+* [**Material**]{.hl-yellow}: [**cuadernos de trabajo**](https://javieralvarezliebana.es/docencia/R-datascience/material/) y materiales extras y **resúmenes de paquetes**
 
-* [**Resúmenes de paquetes**]{.hl-yellow}: [**chuletas de los paquetes**](https://github.com/dadosdelaplace/docencia-R-datascience-2324/tree/main/fichas%20paquetes) en formato .pdf
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+
+&nbsp;
+
+* [📚 **Recursos de apoyo**]{.hl-yellow}: en inglés <https://r4ds.had.co.nz/> y en castellano <https://cdr-book.github.io/>
 
 
 # Clase 1: primeros pasos {#clase-1}
@@ -2121,3 +2126,685 @@ sum(temp_celsius > 30) # n días (otra forma)
 + ordenar
 
 + microbenchmark
+
+
+
+
+# Clase 3: primeras bases de datos {#clase-3}
+
+[**Profundizando en variables de tipo texto. Primeras bases de datos**]{style="color:#444442;"}
+
+* [💻 Ejercicios resueltos: variables de texto](#tu-turno-3-1) 
+
+* [💻 Ejercicios resueltos: matrices](#tu-turno-3-2) 
+
+* [💻 Ejercicios resueltos: data.frame y tibble](#tu-turno-3-3) 
+
+* [🐣 Workbook/caso práctico](#caso-práctico-3)
+
+* [📆 Planificación](#planificacion)
+
+---
+
+## Profundizando en textos
+
+---
+
+## 💻 Tu turno (textos) {#tu-turno-3-1}
+
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 ...
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 ...
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 ...
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 ...
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 
+
+
+:::
+
+
+---
+
+## Primera base de datos
+
+Cuando analizamos datos solemos tener [**varias variables**]{.hl-yellow} de cada individuo: necesitamos una «tabla» que las recopile. La opción más inmediata son las [**matrices**]{.hl-yellow}: concatenación de variables del [**mismo tipo e igual longitud**]{.hl-purple}.
+
+Imagina que tenemos estaturas y pesos de 4 personas. ¿Cómo [**crear un dataset con las dos variables**]{.hl-yellow}?
+
+. . .
+
+
+La opción más habitual es usando `cbind()`: [**concatenamos (bind) vectores en forma de columnas (c)**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: 3
+estaturas <- c(150, 160, 170, 180)
+pesos <- c(63, 70, 85, 95)
+datos_matriz <- cbind(estaturas, pesos)
+datos_matriz
+```
+
+---
+
+## Primer intento: matrices
+
+También podemos [**construir la matriz por filas**]{.hl-yellow} con la función `rbind()` (concatenar - bind - por filas  - rows), aunque lo [**recomendable es tener cada variable en columna**]{.hl-green} e individuo en fila como luego veremos.
+
+```{r}
+rbind(estaturas, pesos) # Construimos la matriz por filas
+```
+
+. . .
+
+- Podemos [**«visualizar» la matriz**]{.hl-yellow} con `View(matriz)`.
+
+. . .
+
+-   Podemos [**comprobar las dimensiones**]{.hl-yellow} con `dim()`, `nrow()` y `ncol()`: las matrices son un tipo de **datos tabulados** (organizados en filas y columnas)
+
+```{r}
+dim(datos_matriz)
+nrow(datos_matriz)
+ncol(datos_matriz)
+```
+
+---
+
+## Primer intento: matrices
+
+También podemos [**«darle vuelta» (matriz transpuesta)**]{.hl-yellow} con `t()`.
+
+```{r}
+t(datos_matriz)
+```
+
+. . .
+
+Dado que ahora tenemos dos dimensiones en nuestros datos, para [**acceder a elementos con `[]`**]{.hl-yellow} deberemos proporcionar **dos índices separados por comas**: índice de la fila y de la columna 
+
+```{r}
+datos_matriz[2, 1] # segunda fila, primera columna
+datos_matriz[1, 2] # primera fila, segunda columna 
+```
+
+---
+
+## Primer intento: matrices
+
+En algunas casos querremos obtener los [**datos totales de un individuo**]{.hl-yellow} (una fila concreta pero todas las columnas) o los valores de [**toda una variable**]{.hl-yellow} para todos los individuos (una columna concreta pero todas las filas). Para ello dejaremos [**sin rellenar uno de los índices**]{.hl-yellow}
+
+```{r}
+datos_matriz[2, ] # segundo individuo
+datos_matriz[, 1] # primera variable
+```
+
+. . .
+
+Mucho de lo aprendido con vectores podemos hacerlo con matrices, así podemos por ejemplo acceder a varias filas y/o columnas haciendo uso de las [**secuencias de enteros 1:n**]{.hl-yellow}
+
+```{r}
+datos_matriz[c(1, 3), 1] # primera variable para el primer y tercer individuo
+```
+
+
+---
+
+## Primer intento: matrices
+
+También podemos definir una [**matriz a partir de un vector numérico**]{.hl-yellow}, reorganizando los valores en forma de matriz (sabiendo que los elementos se van [**colocando por columnas**]{.hl-purple}).
+
+```{r}
+z <- matrix(1:9, ncol = 3) 
+z
+```
+
+. . .
+
+Incluso podemos [**definir una matriz de valores constantes**]{.hl-yellow}, por ejemplo de ceros (para luego rellenar)
+
+```{r}
+matrix(0, nrow = 2, ncol = 3)
+```
+
+
+---
+
+## Operaciones con matrices
+
+Con las matrices sucede como con los vectores: cuando aplicamos una [**operación aritmética lo hacemos elemento a elemento**]{.hl-yellow}
+
+```{r}
+z/5
+```
+
+. . .
+
+Para realizar [**operaciones en un sentido matricial**]{.hl-yellow} deberemos añadir `%%`, por ejemplo, para multiplicar matrices será `%*%`
+
+
+```{r}
+z * t(z)
+z %*% t(z)
+```
+
+
+---
+
+## Operaciones con matrices
+
+También podemos [**realizar operaciones por columnas/filas**]{.hl-yellow} sin recurrir a bucles con la función `apply()`, y le indicaremos como **argumentos**
+
+-   la matriz
+-   el sentido de la operación (`MARGIN = 1` por filas, `MARGIN = 2` por columnas)
+-   la función a aplicar
+- argumentos extra que necesite la función
+
+. . .
+
+Por ejemplo, para aplicar una media a cada variable, será `mean` aplicada con `MARGIN = 2` (misma función para cada columna)
+
+```{r}
+# Media (mean) por columnas (MARGIN = 2)
+apply(datos_matriz, MARGIN = 2, FUN = "mean")
+```
+
+
+
+---
+
+## 💻 Tu turno (matrices) {#tu-turno-3-2}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir una matriz `x` de unos, de 3 filas y 7 columnas.
+
+```{r}
+#| eval: false
+x <- matrix(0, nrow = 2, ncol = 3)
+x
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- matrix(1, nrow = 3, ncol = 7)
+x
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 A la matriz anterior, suma un 1 a cada número de la matriz y divide el resultado entre 5. Tras ello calcula su transpuesta
+
+```{r}
+#| code-fold: true
+#| eval: false
+new_matrix <- (x + 1)/5
+t(new_matrix)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 ¿Por qué el código inferior nos devuelve dicho mensaje de aviso?
+
+```{r}
+#| warning: TRUE
+matrix(1:15, nrow = 4)
+```
+
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Define la matriz `x <- matrix(1:12, nrow = 4)`. Tras ello obtén los datos del primer individuo, los datos de la tercera variable, y el elemento `(4, 1)`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- matrix(1:12, nrow = 4)
+x[1, ] # primera fila
+x[, 3] # tercera columna
+x[4, 1] # elemento (4, 1)
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Define una matriz de 2 variables y 3 individuos tal que cada variable capture la estatura y la edad 3 personas, de manera que la edad de la segunda persona sea desconocida (ausente). Tras ello calcula la media de cada variable (¡nos debe de volver un número!)
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos <- cbind("edad" = c(20, NA, 25), "estatura" = c(160, 165, 170))
+apply(datos, MARGIN = 2, FUN = "mean", na.rm = TRUE) # media por columnas
+
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 ¿Por qué devuelve error el código inferior? ¿Qué está mal?
+
+```{r}
+#| error: true
+matriz <- cbind("edad" = c(15, 20, 25), "nombres" = c("javi", "sandra", "carlos"))
+matriz
+matriz + 1
+```
+
+
+
+:::
+
+---
+
+## Segundo intento: data.frame
+
+Las matrices tienen el mismo problema que los vectores: si juntamos datos de distinto tipo, se [**perturba la integridad del dato**]{.hl-red} ya que los convierte (fíjate en el código inferior: las edades y los `TRUE/FALSE` los ha convertido a texto)
+
+```{r}
+#| code-line-numbers: "4-5"
+edades <- c(14, 24, NA)
+soltero <- c(TRUE, NA, FALSE)
+nombres <- c("javi", "laura", "lucía")
+matriz <- cbind(edades, soltero, nombres)
+matriz
+```
+
+. . .
+
+De hecho al no ser números ya no podemos realizar operaciones aritméticas
+
+```{r}
+#| error: true
+matriz + 1
+```
+
+---
+
+## Segundo intento: data.frame
+
+Para poder trabajar con [**variables de distinto tipo**]{.hl-yellow} tenemos en `R` lo que se conoce como [**data.frame**]{.hl-yellow}: concatenación de variables de igual longitud pero que pueden ser de [**tipo distinto**]{.hl-purple}.
+
+```{r}
+tabla <- data.frame(edades, soltero, nombres)
+class(tabla)
+tabla
+```
+
+---
+
+## Segundo intento: data.frame
+
+Dado que un `data.frame` es ya un intento de «base de datos» las variables no son meros vectores matemáticos: [**tienen un significado**]{.hl-yellow} y podemos (debemos) [**ponerles nombres**]{.hl-purple} que describan su significado
+
+```{r}
+library(lubridate)
+tabla <-
+  data.frame("edad" = edades, "estado" = soltero, "nombre" = nombres,
+             "f_nacimiento" = as_date(c("1989-09-10", "1992-04-01", "1980-11-27")))
+tabla
+```
+
+---
+
+## Segundo intento: data.frame
+
+[**¡TENEMOS NUESTRO PRIMER CONJUNTO DE DATOS!**]{.hl-yellow} (estrictamente no podemos hablar de base de datos pero de momento como lo si fuesen). Puedes visualizarlo escribiendo su nombre en consola o con `View(tabla)`
+
+![](img/view_tabla.jpg)
+
+---
+
+## Acceso a variables
+
+Si queremos acceder a sus elementos, al ser de nuevo **datos tabulados**, podemos acceder como en las matrices ([**no recomendable**]{.hl-red}): de nuevo [**tenemos dos índices**]{.hl-yellow} (filas y columnas, dejando libre la que no usemos)
+
+```{r}
+tabla[2, ]  # segunda fila (todas sus variables)
+tabla[, 3]  # tercera columna (de todos los individuos)
+tabla[2, 1]  # primera característica de la segunda persona
+```
+
+. . .
+
+::: columns
+::: {.column width="25%"}
+![](img/menu_data_frame.jpg)
+:::
+
+::: {.column width="75%"}
+Pero también tiene las ventajas de una [**«base» de datos**]{.hl-yellow} : podemos [**aceder a las variables por su nombre**]{.hl-purple} ([**lo recomendable**]{.hl-green} ya que las variables pueden cambiar de posición y ahora sí tienen un significado), poniendo el nombre de la tabla seguido del símbolo `$` (con el **tabulador**, nos aparecerá un menú de columnas a elegir)
+:::
+:::
+
+---
+
+## Funciones de consulta
+
+-   `names()`: nos muestra los nombres de las variables
+
+```{r}
+names(tabla)
+```
+
+. . .
+
+-   `dim()`: nos muestra las dimensiones (también `nrow()` y `ncol()`)
+
+```{r}
+dim(tabla)
+```
+
+. . .
+
+-   Podemos acceder a las variables por su nombre
+
+```{r}
+tabla[c(1, 3), "nombre"]
+tabla$nombre[c(1, 3)]
+```
+
+---
+
+## Añadir variable
+
+Si tenemos uno ya creado y queremos [**añadir una columna**]{.hl-yellow} es tan simple como usar la función `data.frame()` que ya hemos visto para concatenar la columna. Vamos añadir por ejemplo una nueva variable, el número de hermanos de cada individuo.
+
+```{r}
+# Añadimos una nueva columna con nº de hermanos/as
+hermanos <- c(0, 2, 3)
+tabla <- data.frame(tabla, "n_hermanos" = hermanos)
+tabla
+```
+
+---
+
+## Intento final: tibble
+
+Las tablas en formato `data.frame` tienen algunas [**limitaciones**]{.hl-red}. La principal es que [**no permite la recursividad**]{.hl-red}: imagina que definimos una base de datos con estaturas y pesos, y queremos una tercera variable con el IMC
+
+```{r}
+#| error: true
+data.frame("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70),
+           "IMC" = peso / (estatura^2))
+```
+
+. . .
+
+
+En adelante usaremos el formato `tibble` ([**data.frame mejorado**]{.hl-yellow}) del paquete `{tibble}`
+
+```{r}
+library(tibble)
+datos_tb <- 
+  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
+class(datos_tb)
+datos_tb
+```
+
+---
+
+## Intento final: tibble
+
+```{r}
+datos_tb <-
+  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
+datos_tb
+```
+
+Las tablas en formato `tibble` nos permitirá una [**gestión más ágil, eficiente y coherente**]{.hl-yellow} de los datos, con 4 ventajas principales:
+
+. . .
+
+-   [**Metainformación**]{.hl-yellow}: si te fijas en la cabecera, nos dice ya automáticamente el número de filas y columnas, y el tipo de cada variable
+
+. . .
+
+-   [**Recursividad**]{.hl-yellow}: permite definir las variables secuencialmente (como hemos visto)
+
+---
+
+## Intento final: tibble
+
+-   [**Consistencia**]{.hl-yellow}: si accedes a una columna que no existe avisa con un warning
+
+```{r}
+#| warning: true
+datos_tb$invent
+```
+
+. . .
+
+-   [**Por filas**]{.hl-yellow}: crear por filas (copiar y pegar de una tabla) con `tribble()`
+
+```{r}
+tribble(~colA, ~colB,
+        "a",   1,
+        "b",   2)
+```
+
+. . .
+
+::: callout-tip
+El paquete `{datapasta}` nos permite [**copiar y pegar**]{.hl-green} tablas de páginas web y documentos sencillos
+:::
+
+
+---
+
+
+## Recapitulando
+
+-   Cada [**celda puede ser de un tipo diverso**]{.hl-yellow}: números, texto, fechas, valores lógicos, etc
+
+. . .
+
+-   Un [**vector es una concatenación de celdas**]{.hl-yellow} (las futuras columnas de nuestras tablas) --> En `R` por defecto las operaciones se hacen [**elemento a elemento**]{.hl-yellow}
+
+. . .
+
+-   Una [**matriz**]{.hl-yellow} nos permite concatenar [**variables del MISMO tipo y MISMA longitud**]{.hl-yellow} --> datos tabulados
+
+. . .
+
+-   Un [**data.frame**]{.hl-yellow} nos permite concatenar [**variables de DISTINTO tipo y MISMA longitud**]{.hl-yellow} --> usaremos [**tibble**]{.hl-yellow} como una opción mejorada de base de datos
+
+---
+
+## 💻 Tu turno (tb/df) {#tu-turno-3-3}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Carga del paquete `{datasets}` el conjunto de datos `airquality` (variables de la calidad del aire de Nueva York desde mayo hasta septiembre de 1973). ¿Es el conjunto de datos airquality de tipo tibble? En caso negativo, conviértelo a tibble (busca en la documentación del paquete en <https://tibble.tidyverse.org/index.html>).
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tibble)
+class(datasets::airquality)
+airquality_tb <- as_tibble(datasets::airquality)
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Una vez convertido a `tibble` obtén el nombre de las variables y las dimensiones del conjunto de datos. ¿Cuántas variables hay? ¿Cuántos días se han medido?
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb)
+ncol(airquality_tb)
+nrow(airquality_tb)
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Filtra solo los datos de la quinta observación
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Filtra solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores "formateados")
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Selecciona aquellos datos que no sean ni de julio ni de agosto.
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month != 7 & Month != 8, ]
+airquality_tb[!(Month %in% c(7, 8)), ]
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Modifica el siguiente código para quedarte solo con las variable de ozono y temperatura (sin importar qué posición ocupen)
+
+```{r}
+#| eval: false
+airquality_tb[, 3]
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Selecciona los datos de temperatura y viento de agosto. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, c("Temp", "Wind")]
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Traduce a castellano el nombre de las variables.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia") 
+```
+
+:::
+
+
+
+---
+
+
+## 🐣 Caso práctico {#caso-práctico-3}
+
+Del paquete `Biostatistics` usaremos el conunto de datos `pinniped`
+
+```{r}
+#| eval: false
+Biostatistics::pinniped
+```
+
+
+1. ¿Qué [**representan**]{.hl-yellow} los datos? ¿Qué [**tipo de dato**]{.hl-yellow} es? En caso de que no lo sea, convierte la base de datos a un `tibble` (renombra con `pinniped_tb`)
+
+```{r}
+#| code-fold: true
+#| eval: false
+? Biostatistics::pinniped
+```
+
+```{r}
+#| code-fold: true
+class(Biostatistics::pinniped) # no es un tibble
+pinniped_tb <- as_tibble(Biostatistics::pinniped)
+```
+
+. . .
+
+2. ¿Cuántos registros hay? ¿Y variables? ¿De qué tipo es cada una?
+
+
+```{r}
+#| code-fold: true
+nrow(pinniped_tb)
+ncol(pinniped_tb)
+```
+
+
+---
+
+## 🐣 Caso práctico {#caso-práctico-3a-2}
+
+
+3. Incorpora una [**variable extra llamada phoca**]{.hl-yellow} que sea de tipo lógico y que nos diga si una especie es de la categoría `Phoca` o no.
+
+```{r}
+#| code-fold: true
+pinniped_tb$phoca <- pinniped_tb$Species == "Phoca"
+```
+
+. . .
+
+4. ¿A qué sexo le [**pesa más el cerebro**]{.hl-yellow}: a las hembras o a los machos? ¿A quienes les [**pesa más el cuerpo**]{.hl-yellow}: a los monógamos o a los polígamos?
+
+```{r}
+#| code-fold: true
+# ¿a quién le pesa más el cerebro?
+mean(pinniped_tb$Male_brain_g, na.rm = TRUE) >
+  mean(pinniped_tb$Female_brain_g, na.rm = TRUE)
+
+# ¿a quién le pesa más el cerebro?
+mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "mono"],
+       pinniped_tb$Female_mass_Kg[pinniped_tb$Mate_type == "mono"])) >
+  mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "poly"],
+         pinniped_tb$Female_mass_Kg[pinniped_tb$Mate_type == "poly"]))
+```
+
+---
+
+## 🐣 Caso práctico {#caso-práctico-3a-3}
+
+
+5. Incopora una nueva variable que represente la [**diferencia entre el peso del cerebro entre machos y hembras**]{.hl-yellow} (machos - hembras) para cada especie.
+
+```{r}
+#| code-fold: true
+pinniped_tb$dif_m_f <- pinniped_tb$Male_brain_g - pinniped_tb$Female_brain_g
+pinniped_tb
+```
