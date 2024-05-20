@@ -24,7 +24,7 @@ execute:
 
 # ¡Bienvenidos a R!
 
-[**Dejad vuestras hojas de cálculo y Anacondas a un lado**]{style="color:#444442;"}
+[**Dejad vuestras hojas de cálculo, Anacondas y SAS a un lado**]{style="color:#444442;"}
 
 ---
 
@@ -87,31 +87,29 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 . . .
 
--   [**Evaluación continua**]{.hl-yellow}. A lo largo del curso se han planteado [**3 entregas individuales (15%-25%-35%)**]{.hl-purple}, así como una [**entrega final grupal (25%)**]{.hl-purple} (entre 4 y 6 personas). La nota solo ponderará si supera el 3.5 de media.
+-   [**Evaluación continua**]{.hl-yellow}. A lo largo del curso se han planteado [**3 entregas individuales (10%-30%-35%)**]{.hl-purple}, así como una [**entrega final grupal (25%)**]{.hl-purple} (entre 4 y 6 personas). 
 
 . . .
 
-* [**Examen final**]{.hl-yellow}: si el final tiene peso deberás **sacar al menos un 3** para que pondere.
+* [**Examen final**]{.hl-yellow}: solo [**obligatorio en caso de que en la continua (sin contar la entrega final grupal) no superes el 3.5**]{.hl-purple} de nota media. En caso contrario el día de la entrega final grupal (día del examen oficial de enero) deberás realizar un examen final en lugar de la grupal.
 
-  - [**Entre 3.5 y 5**]{.hl-purple} --> podrás decidir peso del final **entre el 80% y el 100%**
-  - [**Entre 5 y 6**]{.hl-purple} --> entre el **60% y el 100%**.
-  - [**Entre 6 y 7**]{.hl-purple} --> entre el **40% y el 100%**.
-  - [**Entre 7 y 8**]{.hl-purple} --> entre el **20% y el 100%**.
-  - [**Más de un 8**]{.hl-purple} --> entre el **0% y el 100%** (podrás **no presentarte al final**).
+. . .
+
+* [**Nota máxima**]{.hl-yellow}: para tener una nota final superior al 9 deberás tener al menos un 9 de nota media en la evaluación continua sin contar la grupal.
 
 ---
 
 ## Planificación entregas
 
-* [**Entrega I (15%)**]{.hl-yellow}: semana ...
+* [**Entrega I (10%)**]{.hl-yellow}: semana 3-4
 
-* [**Entrega II (25%)**]{.hl-yellow}:
+* [**Entrega II (30%)**]{.hl-yellow}: semana 8-9
 
-* [**Entrega III (35%)**]{.hl-yellow}:
+* [**Entrega III (35%)**]{.hl-yellow}: última semana de clase.
 
 &nbsp;
 
-* [**Entrega grupal (25%)**]{.hl-yellow}: último día de clase
+* [**Entrega grupal (25%)** o examen final]{.hl-yellow}: día del examen final en enero.
 
 &nbsp;
 
@@ -127,9 +125,12 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 ::: {style="font-size:20px"}
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [1](#clase-1) | S1 | 12 sep | Primeros pasos en R | [💻](#tu-turno-1) |  |  | 
-| [2](#clase-2) | S1 | 15 sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-práctico-2) |  |
-| [3](#clase-3) | S2 | 15 sep | Primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-práctico-3) |  |
+| [1](#clase-1) | S1 | x sep | Primeros pasos en R | [💻](#tu-turno-1) |  |  | 
+| [2](#clase-2) | S1 | x sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
+| [3](#clase-3) | S2 | x sep | Primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3) |  |
+| [4](#clase-4) | S2 | x sep | Estructuras de control | [💻](#tu-turno-4-1) [💻](#tu-turno-4-2) |  [🐣](#caso-practico-4) |  |
+| [5](#clase-5) | S3 | x sep | Elaborar apuntes y simulacro de entrega | [💻](#tu-turno-5-1) [💻](#tu-turno-5-2) |  [🐣](#caso-practico-5) |  |
+| [6](#clase-6) | S3 | x sep | Entrega I | | | 🎯 15% |
 :::
 :::
 
@@ -150,6 +151,19 @@ En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción par
 &nbsp;
 
 * [📚 **Recursos de apoyo**]{.hl-yellow}: en inglés <https://r4ds.had.co.nz/> y en castellano <https://cdr-book.github.io/>
+
+---
+
+## Datasets
+
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+
+&nbsp;
+
+* [library(datasets)
+temperature <- airquality$Temp
+month <- airquality$Month
+day <- airquality$Day
 
 
 # Clase 1: primeros pasos {#clase-1}
@@ -2050,7 +2064,7 @@ all(x > 0)
 :::
 
 
-## 🐣 Caso práctico {#caso-práctico-2}
+## 🐣 Caso práctico {#caso-practico-2}
 
 En el paquete `{datasets}` (ya instalado por defecto) tenemos diversos conjuntos de datos y uno de ellos es `airquality`. Debajo te he extraído 3 variables de dicho dataset (fíjate que se hace con `datos$variable`)
 
@@ -2731,7 +2745,7 @@ names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia")
 ---
 
 
-## 🐣 Caso práctico {#caso-práctico-3}
+## 🐣 Caso práctico {#caso-practico-3}
 
 Del paquete `Biostatistics` usaremos el conunto de datos `pinniped`
 
@@ -2808,3 +2822,553 @@ mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "mono"],
 pinniped_tb$dif_m_f <- pinniped_tb$Male_brain_g - pinniped_tb$Female_brain_g
 pinniped_tb
 ```
+
+
+# Clase 4: estructuras de control {#clase-4}
+
+[**Estructuras condicionales y bucles**]{style="color:#444442;"}
+
+* [💻 Ejercicios resueltos: estructuras condicionales](#tu-turno-4-1) 
+
+* [💻 Ejercicios resueltos: bucles](#tu-turno-4-2) 
+
+* [🐣 Workbook/caso práctico](#caso-práctico-4)
+
+* [📆 Planificación](#planificacion)
+
+---
+
+## Estructuras de control
+
+Una [**estructura de control**]{.hl-yellow} se compone de una serie de comandos orientados a  [**decidir el camino**]{.hl-yellow} que tu código debe recorrer
+
+* Si se cumple la condición A, ¿qué sucede?
+
+* ¿Y si sucede B?
+
+* ¿Cómo puedo repetir una misma expresión (dependiendo de una variable)?
+
+. . .
+
+Si has programado antes, quizás te sea familiar las conocidas como [**estructuras condicionales**]{.hl-yellow} tales como `if (blabla) {...} else {...}`  o [**bucles**]{.hl-yellow} `for/while` (a evitar siempre que podamos).
+
+---
+
+## Estructura If
+
+Una de las estructuras de control más famosas son las conocidas como [**estructuras condicionales**]{.hl-yellow} `if`.
+
+> SI (IF) un conjunto de condiciones se cumple (TRUE), entonces ejecuta lo que haya dentro de las llaves
+
+Por ejemplo, la estructura `if (x == 1) { código A }` lo que hará será [**ejecutar el código A entre llaves**]{.hl-yellow} pero [**SOLO SI**]{.hl-purple} la [**condición entre paréntesis es cierta**]{.hl-purple} (solo si `x` es 1). En cualquier otro caso, no hará nada.
+
+. . .
+
+Por ejemplo, definamos un vector de edades de 8 personas
+
+```{r}
+edad <- c(14, 17, 24, 56, 31, 20, 87, 73)
+edad < 18
+```
+
+---
+
+## Estructura If
+
+
+Nuestra estructura condicional hará lo siguiente: [**si existe algún menor de edad, imprimirá**]{.hl-yellow} por pantalla un mensaje.
+
+```{r}
+if (any(edad < 18)) { 
+  
+  print("Existe alguna persona menor de edad")
+  
+}
+```
+
+---
+
+## Estructura If
+
+```{r}
+#| eval: false
+if (any(edad < 18)) { 
+  
+  print("Existe alguna persona menor de edad")
+  
+}
+```
+
+
+En caso de que las [**condiciones no sean ciertas**]{.hl-yellow} dentro de `if()` (`FALSE`), no sucede nada
+
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+}
+```
+
+**No obtenemos ningún mensaje** porque la condición `all(edad >= 18)` no es `TRUE`, así que bno ejecuta nada.
+
+---
+
+## Estructura If-else
+
+La estructura `if (condicion) { código A }` puede combinarse con un `else { código B }`: cuando la [**condición no está verificada**]{.hl-yellow}, se [**ejecutará el código alternativo B**]{.hl-yellow} dentro de `else { }`, permitiéndonos decidir que sucede cuando se cumple y cuando no.
+. . .
+
+Por ejemplo, `if (x == 1) { código A } else { código B }` ejecutará A si `x` es igual a 1 y B en cualquier otro caso.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else {
+  
+  print("Existe alguna persona menor de edad")
+}
+```
+
+---
+
+## Estructura If-else
+
+Esta estructura `if - else` puede ser [**anidada**]{.hl-yellow}: imagina que queremos ejecutar un código si todos son menores; si no sucede, pero todos son mayores de 16, hacer otra cosa; en cualquier otra cosa, otra acción.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else if (all(edad >= 16)) {
+  
+  print("Hay algún menor de edad pero todos con 16 años o más")
+  
+} else { print("Hay alguna persona con menos de 16 años") }
+```
+
+::: callout-note
+## Truco
+
+Puedes **colapsar las estructuras** haciendo click en la flecha a la izquierda que aparece en tu script.
+
+:::
+
+
+---
+
+## If-else vectorizado
+
+
+Esta estructura condicional se puede [**vectorizar**]{.hl-yellow} (en una sola línea) con `if_else()` (del paquete `{dplyr}`), cuyos argumentos son
+
+* la condición a evaluar
+* lo que sucede cuando se cumple
+* lo que sucede cuando no
+* un argumento opcional para cuando la condición a evaluar es `NA`
+
+Por ejemplo, vamos a etiquetar sin son mayores/menores de edad y un "desconocido" cuando no conocemos la edad
+
+```{r}
+library(dplyr)
+edad <- c(NA, edad)
+if_else(edad >= 18, "mayor", "menor", missing = "desconocido")
+```
+
+
+---
+
+## 💻 Tu turno {#tu-turno-4-1}
+
+---
+
+## Bucles
+
+Aunque en la mayoría de ocasiones se pueden reemplazar por otras estructuras más eficientes y legibles, es importante conocer una de las expresiones de control más famosas: los [**bucles**]{.hl-yellow}.
+
+* `for { }`: permite [**repetir el mismo código**]{.hl-yellow} en un [**número prefijado y conocido**]{.hl-purple} de veces.
+
+* `while { }`: permite [**repetir el mismo código**]{.hl-yellow} pero en un [**número indeterminado de veces**]{.hl-purple} (hasta que una **condición** deje de cumplirse).
+
+---
+
+## Bucles for
+
+Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+
+. . .
+
+Por ejemplo, vamos a definir un vector `x` y vamos a imprimir sus elementos al cuadrado: definireos un índice `i` para imprimir, en cada paso, el valor i-ésimo `x[i]^2`. Esos índices irán dentro de `for (indice in conjunto) { code }` (por ejemplo, `i in 1:4`)
+
+```{r}
+x <- c(0, -7, 1, 4)
+for (i in 1:4) {
+  
+  print(x[i]^2)
+  
+}
+```
+
+---
+
+## Bucles for
+
+```{r}
+#| eval: false
+for (i in 1:4) { 
+  print(x[i]^2) 
+}
+```
+
+Dentro del paréntesis del `for ()` debemos tener una  [**secuencia de índices**]{.hl-yellow} (en este caso, números). Si queremos hacer lo mismo pero excluyendo el segundo elemento simplemente definimos el conjunto de valores `c(1, 3, 4)` entre los que `i` puede moverse.
+
+```{r}
+for (i in c(1, 3, 4)) {
+  
+  print(x[i]^2)
+  
+}
+```
+
+---
+
+## Bucles for
+
+Otra forma de usar un bucle es definir de cero un vector: primer inicializamos en ceros `y <- rep(0, 4)` para después modificar cada [**elemento i-ésimo**]{.hl-yellow} definidos como `x[i]^2`.
+
+```{r}
+y <- rep(0, 4)
+for (i in 1:4) {
+  
+  y[i] <- x[i]^2
+  
+}
+y
+```
+
+. . .
+
+Lo anterior es equivalente vectorialmente a
+
+```{r}
+y <- x^2
+y
+```
+
+---
+
+## Evitando bucles
+
+
+Como ya hemos aprendido con el paquete`{microbenchmark}` podemos chequear como [**los bucles suelen ser muy ineficientes**]{.hl-yellow} (de ahí que debamos evitarlos en la mayoría de ocasiones
+
+```{r}
+library(microbenchmark)
+x <- 1:1000
+microbenchmark(y <- x^2, 
+               for (i in 1:100) { y[i] <- x[i]^2 },
+               times = 500)
+```
+
+---
+ 
+## Bucles for
+
+
+Podemos ver otro ejemplo  [**combinando números y textos**]{.hl-yellow}: definimos un vector de edades y de nombres, e imprimimos el nomber y edad i-ésima.
+
+```{r}
+nombres <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+edades <- c(33, 27, 18, 43, 29)
+
+for (i in 1:5) { 
+  
+  print(glue("{nombres[i]} tiene {edades[i]} años")) 
+  
+}
+```
+
+---
+
+## Bucles for
+
+
+Fíjate que [**si no queremos estar pendientes de cuantos valores**]{.hl-yellow} tenemos, podemos hacer uso de `length()` para acceder a la [**última posición**]{.hl-yellow} (sea cual sea).
+
+```{r}
+for (i in 1:length(nombres)) { 
+  
+  print(glue("{nombres[i]} tiene {edades[i]} años")) 
+  
+}
+```
+
+---
+
+## Bucles for
+
+Aunque normalmente se suelen indexar con vectors numéricos, los bucles pueden ser [**indexados sobre cualquier estructura vectorial**]{.hl-yellow}
+
+```{r}
+library(stringr)
+week_days <- c("monday", "tuesday", "wednesday", "thursday",
+               "friday", "saturday", "sunday")
+
+for (days in week_days) {
+  
+  print(str_to_upper(days))
+}
+```
+
+---
+
+## Bucles for
+
+Vamos a combinar las estructuras condicionales y los bucles: usando el conjunto `swiss` del paquete `{datasets}`, vamos a asignar `NA`  si los valores de fertilidad son mayores de 80.
+
+```{r}
+for (i in 1:nrow(swiss)) {
+  
+  if (swiss$Fertility[i] > 80) { 
+    
+    swiss$Fertility[i] <- NA
+    
+  }
+}
+```
+
+. . .
+
+Esto es exactamente igual a un `if_else()` vectorizado
+
+```{r}
+data("swiss")
+swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
+```
+
+
+---
+
+## Bucles while
+
+Otra forma de crear un bucle es con la estructura `while { }`, que nos ejecutará un bucle [**un número desconocido de veces**]{.hl-yellow}, hasta que una condición [**deje de cumplirse**]{.hl-yellow} (de hecho puede que nunca termine). Por ejemplo, vamos a inializar una variable `ciclos <- 1`, que incrementaremos en cada paso, y no saldremos del bucle hasta que `ciclos > 4`.
+
+```{r}
+ciclos <- 1
+while(ciclos <= 4) {
+  
+  print(glue("No todavía, vamos por el ciclo {ciclos}")) 
+  ciclos <- ciclos + 1
+  
+}
+```
+
+
+---
+  
+## Bucles while
+
+
+¿Qué sucede cuando la [**condición nunca es FALSE**]{.hl-yellow}? Pruébalo tu mismo
+
+```{r}
+#| eval: false
+while (1 > 0) {
+  
+  print("Presiona ESC para salir del bucle")
+  
+}
+```
+
+&nbsp;
+
+::: callout-warning
+## Cuidado
+
+Un bucle `while { }` puede ser bastante «peligroso» sino controlamos bien cómo pararlo.
+
+:::
+
+---
+
+## Bucles while
+
+Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+
+* `break`: permite [**abortar un bucle**]{.hl-yellow} incluso si no se ha llegado a su final
+
+```{r}
+for(i in 1:10) {
+  if (i == 3) {
+    
+    break # si i = 3, abortamos bucle
+    
+  }
+  print(i)
+}
+```
+
+---
+
+## Bucles while
+
+Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+
+* `next`: [**fuerza un bucle a avanzar a la siguiente iteración**]{.hl-yellow} 
+
+```{r}
+for(i in 1:5) {
+  if (i == 3) {
+    
+    next # si i = 3, la obvia y continua al siguiente
+    
+  }
+  print(i)
+}
+```
+
+---
+
+## Bucles repeat
+
+Aunque no es tan usado como las opciones anteriores, también contamos con `repeat { }` que ejecuta un [**bucle de manera infinita hasta que se indique abortar**]{.hl-yellow} con un break
+
+```{r}
+count <- 0
+repeat { 
+  
+  count <- count + 1
+  if (count >= 100) { break }
+  
+}
+count
+```
+
+
+---
+
+## Replicate
+
+Por último, otra forma de [**repetir código un número de veces**]{.hl-yellow} es hacer uso de `replicate()`: simplemente permite repetir lo mismo [**n veces**]{.hl-yellow}
+
+```{r}
+x <- 1:3
+replicate(n = 3, x^2)
+```
+
+---
+
+## 💻 Tu turno {#tu-turno-4-2}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Modifica el código inferior para que se imprima un mensaje por pantalla si y solo si todos los datos de `airquality` son con mes distinto a enero
+
+```{r}
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (months == 2) {
+  print("No hay datos de enero")
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (all(months != 1)) {
+  print("No hay datos de enero")
+}
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Modifica el código inferior para guardar en una variable llamada `temp_alta` un `TRUE` si alguno de los registros tiene una temperatura superior a 90 grados Farenheit y `FALSE` en cualquier otro caso
+ 
+```{r}
+#| eval: false
+temp <- airquality$Temp
+
+if (temp == 100) {
+  print("Algunos de los registros tienen temperaturas superiores a 90 grados Farenheit")
+}
+```
+
+ 
+```{r}
+#| eval: false
+#| code-fold: true
+# Option 1
+temp <- airquality$Temp
+temp_alta <- FALSE
+if (any(temp > 90)) {
+   temp_alta <- TRUE
+}
+
+# Option 2
+temp_alta <- any(airquality$Temp > 90)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `for` de 5 iteraciones que solo recorra los primeros 5 impares (y en cada paso del bucle los imprima)
+
+```{r}
+#| eval: false
+for (i in 1:5) {
+  
+  print(i)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+for (i in c(1, 3, 5, 7, 9)) {
+  
+  print(i)
+}
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `while` que empiece con un contador `count <- 1` y pare cuando llegue a 6
+
+```{r}
+#| eval: false
+count <- 1
+while (count == 2) {
+  
+  print(count)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+count <- 1
+while (count < 6) {
+  
+  print(count)
+  count <- count + 1
+  
+}
+```
+
+
+:::
+
+---
+
+## 🐣 Caso práctico {#caso-practico-4}
