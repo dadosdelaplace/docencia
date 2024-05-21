@@ -127,7 +127,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | x sep | Primeros pasos en R | [💻](#tu-turno-1) |  |  | 
 | [2](#clase-2) | S1 | x sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
-| [3](#clase-3) | S2 | x sep | Primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3) |  |
+| [3](#clase-3) | S2 | x sep | Primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  |
 | [4](#clase-4) | S2 | x sep | Estructuras de control | [💻](#tu-turno-4-1) [💻](#tu-turno-4-2) |  [🐣](#caso-practico-4) |  |
 | [5](#clase-5) | S3 | x sep | Elaborar apuntes y simulacro de entrega | [💻](#tu-turno-5-1) [💻](#tu-turno-5-2) |  [🐣](#caso-practico-5) |  |
 | [6](#clase-6) | S3 | x sep | Entrega I | | | 🎯 15% |
@@ -2688,8 +2688,11 @@ names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia")
 
 ---
 
+## 🐣 Caso práctico I: textos {#caso-practico-3-1}
 
-## 🐣 Caso práctico {#caso-practico-3}
+---
+
+## 🐣 Caso práctico II: tibble {#caso-practico-3-2}
 
 Del paquete `Biostatistics` usaremos el conunto de datos `pinniped`
 
@@ -2725,11 +2728,6 @@ ncol(pinniped_tb)
 ```
 
 
----
-
-## 🐣 Caso práctico {#caso-práctico-3a-2}
-
-
 3. Incorpora una [**variable extra llamada phoca**]{.hl-yellow} que sea de tipo lógico y que nos diga si una especie es de la categoría `Phoca` o no.
 
 ```{r}
@@ -2753,10 +2751,6 @@ mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "mono"],
   mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "poly"],
          pinniped_tb$Female_mass_Kg[pinniped_tb$Mate_type == "poly"]))
 ```
-
----
-
-## 🐣 Caso práctico {#caso-práctico-3a-3}
 
 
 5. Incopora una nueva variable que represente la [**diferencia entre el peso del cerebro entre machos y hembras**]{.hl-yellow} (machos - hembras) para cada especie.
