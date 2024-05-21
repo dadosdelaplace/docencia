@@ -710,7 +710,7 @@ sqrt(x)
 
 
 ```{r}
-#| eval: false
+#| error: true
 x <- -1
 y <- 0
 
