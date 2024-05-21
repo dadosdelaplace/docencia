@@ -3,7 +3,7 @@
 </em></p>
 
 
-<h2 align="left">Teaching materials</h2>
+<h2 align="left">Teaching materials for R for datascience</h2>
 
 <h3 align="left">📊 Data</h3>
 
