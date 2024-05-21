@@ -1,0 +1,8 @@
+- source: correlacion.qmd
+  quarto-pub:
+    - id: 428bd638-9f5e-43f4-9a4b-09166bdc2881
+      url: 'https://quartopub.com/sites/javieralvarezliebana/correlaciones'
+- source: intro-R-base.qmd
+  quarto-pub:
+    - id: cd32f862-c217-4136-b50b-e093a025f18b
+      url: 'https://javieralvarezliebana.quarto.pub/introducción-a-r-base'

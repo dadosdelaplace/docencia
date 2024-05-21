@@ -160,10 +160,11 @@ En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción par
 
 &nbsp;
 
-* [library(datasets)
-temperature <- airquality$Temp
-month <- airquality$Month
-day <- airquality$Day
+* `airquality` del paquete `{datasets}` (ya instalado por defecto): [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: niveles de ozono, radiación solar, viento, temperatura, mes y día.
+
+*
+
+
 
 
 # Clase 1: primeros pasos {#clase-1}
@@ -832,6 +833,12 @@ Incluso_Haygente.Caotica_que.NoMereceNuestraATENCION
 * [**Tip 7**]{.hl-green}: fíjate en el lateral izquierdo. No solo podrás ver la línea de código por la que vas sino que, en caso de estar cometiendo un [**error de sintaxis**]{.hl-red}, el propio `RStudio` te avisará.
 
 ![](img/rstudio-error-sintaxis.png)
+
+* [**Tip 8**]{.hl-green}: intenta [**trabajar siempre por proyectos**]{.hl-yellow} (para esta clase, crea un script `clase2.R` en el proyecto que creamos en la anterior clase)
+
+&nbsp;
+
+Ver más tips en <https://r4ds.had.co.nz/workflow-basics.html#whats-in-a-name>
 
 ---
 
@@ -2066,7 +2073,9 @@ all(x > 0)
 
 ## 🐣 Caso práctico {#caso-practico-2}
 
-En el paquete `{datasets}` (ya instalado por defecto) tenemos diversos conjuntos de datos y uno de ellos es `airquality`. Debajo te he extraído 3 variables de dicho dataset (fíjate que se hace con `datos$variable`)
+En el paquete `{datasets}` (ya instalado por defecto) tenemos diversos conjuntos de datos y uno de ellos es `airquality`. Debajo te he extraído 3 variables de dicho dataset (fíjate que se hace con `datos$variable`, ese dolar será importante).
+
+Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: niveles de ozono, radiación solar, viento, temperatura, mes y día.
 
 ```{r}
 library(datasets)
@@ -2075,73 +2084,8 @@ month <- airquality$Month
 day <- airquality$Day
 ```
 
-Intenta responder a las preguntas planteadas en el [**workbook**](...)
-
----
-
-1. ¿Qué [**representan los datos**]{.hl-yellow}? ¿Cómo averiguarlo?
-
-```{r}
-#| code-fold: true
-#| eval: false
-? airquality
-```
-
-Haciendo uso de `? ...` podemos consultar en el panel de ayuda lo que significa el objeto.
-
----
-
-## 🐣 Caso práctico {#caso-práctico-2-2}
-
-2. ¿Cuántos [**registros tenemos de mayo**]{.hl-yellow}? ¿Y de abril? Construye una nueva variable `date` con la [**fecha**]{.hl-yellow} de cada registro (combinando año, mes y día)
-
-```{r}
-#| code-fold: true
-# Una forma para registros de mayo
-sum(month == 5)
-# Otra forma
-length(month[month == 5])
-
-# ídem en abril
-sum(month == 4)
-
-# variable date
-dates <- lubridate::as_date(glue("{1973}-{month}-{day}"))
-```
-
-. . .
-
-3. Crea una nueva variable `temp_celsius` con la [**temperatura en ºC**]{.hl-yellow}
-
-```{r}
-#| code-fold: true
-# Temperatura en celsius
-temp_celsius <- (temperature - 32) * (5/9)
-```
-
----
-
-## 🐣 Caso práctico {#caso-práctico-2-3}
-
-4. ¿Cuál fue la [**media de temperatura**]{.hl-yellow} del mes de agosto? Extrae los días en los que la [**temperatura superó los 30 grados**]{.hl-yellow} y calcula la cantidad de días en los que lo hizo.
-
-```{r}
-#| code-fold: true
-# media en agosto
-mean(temperature[month == 8], na.rm = TRUE)
-mean(temp_celsius[month == 8], na.rm = TRUE)
-
-# Extremos días > 30
-dates[temp_celsius > 30]
-length(dates[temp_celsius > 30]) # n días
-sum(temp_celsius > 30) # n días (otra forma)
-```
-
-+ ordenar
-
-+ microbenchmark
-
-
+Intenta responder a las preguntas planteadas en el [**workbook**](
+https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
 
 
 # Clase 3: primeras bases de datos {#clase-3}
@@ -2210,7 +2154,7 @@ Imagina que tenemos estaturas y pesos de 4 personas. ¿Cómo [**crear un dataset
 La opción más habitual es usando `cbind()`: [**concatenamos (bind) vectores en forma de columnas (c)**]{.hl-yellow}
 
 ```{r}
-#| code-line-numbers: 3
+#| code-line-numbers: "3"
 estaturas <- c(150, 160, 170, 180)
 pesos <- c(63, 70, 85, 95)
 datos_matriz <- cbind(estaturas, pesos)
