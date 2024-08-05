@@ -41,4 +41,5 @@
 * [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
 * 🛠 Workbooks:
   - [Introducción a R base (intro to R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
+  - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
 
