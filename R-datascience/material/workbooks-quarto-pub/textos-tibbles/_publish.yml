@@ -1,0 +1,4 @@
+- source: textos-tibbles.qmd
+  quarto-pub:
+    - id: 447b4871-0ce3-4279-8e20-41e4c30a85c8
+      url: 'https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd'

@@ -79,7 +79,7 @@ code span.ot {
 /*-- scss:rules --*/
 
 .backgrounds .title-slide {
-    background-color: #C9E0F1 !important;
+    background-color: #E4F2FC !important;
 }
  
   
@@ -167,6 +167,24 @@ li{
 
 div.callout-caution.callout-caption {
   title: "hola" !important;
+}
+
+.flow {
+  background-image: url(https://www.schemecolor.com/wallpaper?i=2542);
+  background-attachment: fixed;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+	animation: animate 40s linear infinite;
+	font-weight: 900;
+}
+
+@keyframes animate {
+	0% {
+		background-position: left 0px top 10px;
+	}
+	40% {
+		background-position: left 800px top 10px;
+	}
 }
 
 
