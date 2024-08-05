@@ -177,7 +177,11 @@ medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de may
 
 * `discursos`: recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021
 
+* `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>)
 
+* `who` del paquete `{tidyr}`: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.
+
+* `billboard` del paquete `{tidyr}`: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.
 
 # Clase 1: [primeros pasos]{.flow} {#clase-1}
 
