@@ -10,8 +10,8 @@
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <meta name="author" content="Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana">
-  <title>SOFTWARE II</title>
+  <meta name="author" content="Master in Computational Social Sciences • Javier Álvarez Liébana">
+  <title>Data programming and intro to R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -389,14 +389,14 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="img/data-science-2.jpeg" data-background-opacity="0.2" data-background-size="cover" class="quarto-title-block center">
-  <h1 class="title">SOFTWARE II</h1>
-  <p class="subtitle">Análisis de datos en R para Ciencia de Datos</p>
+<section id="title-slide" data-background-image="img/background-mucss.webp" data-background-opacity="0.2" data-background-size="cover" class="quarto-title-block center">
+  <h1 class="title">Data programming and intro to R</h1>
+  <p class="subtitle">Prepare, clean, transform and enrich data in R</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana 
+Master in Computational Social Sciences • Javier Álvarez Liébana 
 </div>
 </div>
 </div>
@@ -405,49 +405,49 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <section class="slide level2">
 
 <div class="r-fit-text">
-<p><span class="flow">¡Bienvenidos a R!</span></p>
+<p><span class="flow">Welcome to R!</span></p>
 </div>
-<p><span style="color:#444442;"><strong>Dejad vuestras hojas de cálculo, Anacondas y SAS a un lado</strong></span></p>
+<p><span style="color:#444442;"><strong>Put your spreadsheets, SAS and SPSS aside</strong></span></p>
 </section>
-<section id="buenas" class="slide level2">
-<h2>¡Buenas!</h2>
-<p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
+<section id="hi" class="slide level2">
+<h2>Hi!</h2>
+<p><span class="hl-green"><strong>Mail</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><img data-src="img/me.jpeg"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
-<li class="fragment"><p><span class="hl-yellow"><strong>Javier Álvarez Liébana</strong></span>, de Carabanchel (Bajo).</p></li>
-<li class="fragment"><p>Licenciado en Matemáticas (UCM). <span class="hl-yellow"><strong>Doctorado en estadística</strong></span> (UGR).</p></li>
-<li class="fragment"><p>Encargado de la <span class="hl-yellow"><strong>visualización y análisis de datos covid</strong></span> del Principado de Asturias (2021-2022).</p></li>
-<li class="fragment"><p>Miembro de la <span class="hl-yellow"><strong>Sociedad Española de Estadística e IO</strong></span> y la <span class="hl-yellow"><strong>Real Sociedad Matemática Española</strong></span>.</p></li>
+<li class="fragment"><p><span class="hl-yellow"><strong>Javier Álvarez Liébana</strong></span> from Carabanchel (Madrid).</p></li>
+<li class="fragment"><p>Degree in Mathematics (UCM). <span class="hl-yellow"><strong>PhD in Statistics</strong></span> (UGR).</p></li>
+<li class="fragment"><p>In charge of <span class="hl-yellow"><strong>data visualization and analysis</strong></span> for the Principality of Asturias (2021-2022) during the COVID pandemic</p></li>
+<li class="fragment"><p>Member of the <span class="hl-yellow"><strong>Spanish Society of Statistics and OR</strong></span> and the <span class="hl-yellow"><strong>Spanish Royal Mathematical Society</strong></span>.</p></li>
 </ul>
 </div>
 </div>
 </div>
-<p>Actualmente, <span class="hl-yellow"><strong>investigador y docente en la Facultad de Estadística de la UCM</strong></span>. Divulgando por <a href="https://twitter.com/dadosdelaplace"><strong>Twitter</strong></a> e <a href="https://instagram.com/javieralvarezliebana"><strong>Instagram</strong></a></p>
+<p>Currently, <span class="hl-yellow"><strong>researcher and lecturer at the Faculty of Statistics of the UCM</strong></span>. Disseminating via <a href="https://twitter.com/dadosdelaplace"><strong>Twitter</strong></a> e <a href="https://instagram.com/javieralvarezliebana"><strong>Instagram</strong></a></p>
 </section>
-<section id="objetivos" class="slide level2">
-<h2>Objetivos</h2>
+<section id="goals" class="slide level2">
+<h2>Goals</h2>
 <div class="columns">
 <div class="column" style="width:37%;">
 <p><img data-src="https://assets-global.website-files.com/6092cb6b4ac959f39728dd26/6188a97fa499b5fbfe410417_target%20(1).png"></p>
 </div><div class="column" style="width:63%;">
 <div>
 <ul>
-<li class="fragment"><p>Quitarnos el <span class="hl-yellow"><strong>miedo a los errores en programación</strong></span> → a programar se aprende programando</p></li>
-<li class="fragment"><p>Entender los <span class="hl-yellow"><strong>conceptos básicos de R</strong></span> desde cero → aprender a abstraer ideas y algoritmos</p></li>
-<li class="fragment"><p>Utilidad de programar → flujos de trabajo <span class="hl-yellow"><strong>reproducibles</strong>, <strong>transparentes</strong></span> y mantenibles</p></li>
-<li class="fragment"><p>Introducción al <span class="hl-yellow"><strong>análisis y preprocesamiento</strong></span> de datos → <code>{tidyverse}</code></p></li>
-<li class="fragment"><p>Adquirir habilidades en la <span class="hl-yellow"><strong>visualización de datos</strong></span> → <code>{ggplot2}</code></p></li>
+<li class="fragment"><p>Take away the <span class="hl-yellow"><strong>fear of programming</strong></span> → learn to program by programming</p></li>
+<li class="fragment"><p>Understanding <span class="hl-yellow"><strong>basic R concepts</strong></span> from scratch → learning to <strong>abstract</strong> ideas and algorithms</p></li>
+<li class="fragment"><p>Utility of programming → <span class="hl-yellow"><strong>reproducible, transparent and maintainable workflows</strong></span>.</p></li>
+<li class="fragment"><p>Introduction to <span class="hl-yellow"><strong>analysis and preprocessing of data</strong></span> → <code>{tidyverse}</code>.</p></li>
+<li class="fragment"><p>Handling <span class="hl-yellow"><strong>advanced data types</strong></span> → <code>{forcats}</code>, <code>{lubridate}</code> and <code>{purrr}</code> packages</p></li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="evaluación" class="slide level2">
-<h2>Evaluación</h2>
+<section id="evaluation" class="slide level2">
+<h2>Evaluation</h2>
 <ul>
 <li><span class="hl-yellow"><strong>Asistencia</strong></span>. No será obligatoria pero se <span class="hl-purple"><strong>valorará positivamente</strong></span> la participación.</li>
 </ul>
@@ -591,22 +591,22 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 </div>
 </div>
 </section>
-<section id="materiales" class="slide level2">
-<h2>Materiales</h2>
+<section id="materials" class="slide level2">
+<h2>Materials</h2>
 <ul>
-<li><span class="hl-yellow"><strong>Diapositivas</strong></span>: diapositivas en <code>Quarto</code> disponibles y actualizadas en <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience" class="uri">https://javieralvarezliebana.es/docencia/R-datascience</a></strong>. En el menú de las diapositivas (abajo a la izquierda) tienes una <span class="hl-yellow"><strong>opción para descargarlas en pdf</strong></span> en <code>Tools</code></li>
+<li><span class="hl-yellow"><strong>Slides</strong></span>: diapositivas en <code>Quarto</code> disponibles y actualizadas en <strong><a href="https://javieralvarezliebana.es/docencia/mucss-data-programming" class="uri">https://javieralvarezliebana.es/docencia/mucss-data-programming</a></strong>. En el menú de las diapositivas (abajo a la izquierda) tienes una <span class="hl-yellow"><strong>opción para descargarlas en pdf</strong></span> en <code>Tools</code></li>
 </ul>
 <p>&nbsp;</p>
 <ul>
-<li><p><span class="hl-yellow"><strong>Material</strong></span>: <a href="https://javieralvarezliebana.es/docencia/R-datascience/material/"><strong>cuadernos de trabajo</strong></a> y materiales extras y <strong>resúmenes de paquetes</strong></p></li>
-<li><p><span class="hl-yellow">🗃 <strong>Datos</strong></span>: datasets que usaremos a lo largo de la asignatura, disponibles en <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience/material" class="uri">https://javieralvarezliebana.es/docencia/R-datascience/material</a></strong></p></li>
-<li><p><span class="hl-yellow">📚 <strong>Recursos de apoyo</strong></span>: en inglés <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a> y en castellano <a href="https://cdr-book.github.io/" class="uri">https://cdr-book.github.io/</a>, y <a href="https://ivelasq.quarto.pub/intro-to-quarto/" class="uri">https://ivelasq.quarto.pub/intro-to-quarto/</a> para Quarto.</p></li>
+<li><p><span class="hl-yellow"><strong>Material</strong></span>: <a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/material/"><strong>workbooks</strong></a> and extra materials.</p></li>
+<li><p><span class="hl-yellow">🗃 <strong>Data</strong></span>: datasets that will be used, available on <strong><a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/material" class="uri">https://javieralvarezliebana.es/docencia/mucss-data-programming/material</a></strong></p></li>
+<li><p><span class="hl-yellow">📚 <strong>Extra resources</strong></span>: <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a>, <a href="https://cdr-book.github.io/" class="uri">https://cdr-book.github.io/</a> and <a href="https://ivelasq.quarto.pub/intro-to-quarto/" class="uri">https://ivelasq.quarto.pub/intro-to-quarto/</a>.</p></li>
 </ul>
 </section>
 <section id="datasets" class="slide level2">
 <h2>Datasets</h2>
 <ul>
-<li><span class="hl-yellow">🗃 <strong>Datos</strong></span>: datasets que usaremos a lo largo de la asignatura, disponibles en <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience/material" class="uri">https://javieralvarezliebana.es/docencia/R-datascience/material</a></strong></li>
+<li><span class="hl-yellow">🗃 <strong>Data</strong></span>: datasets that will be used, available on <strong><a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/material" class="uri">https://javieralvarezliebana.es/docencia/mucss-data-programming/material</a></strong></li>
 </ul>
 <p>&nbsp;</p>
 <ul>
@@ -618,7 +618,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <section id="datasets-1" class="slide level2">
 <h2>Datasets</h2>
 <ul>
-<li><span class="hl-yellow">🗃 <strong>Datos</strong></span>: datasets que usaremos a lo largo de la asignatura, disponibles en <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience/material" class="uri">https://javieralvarezliebana.es/docencia/R-datascience/material</a></strong></li>
+<li><span class="hl-yellow">🗃 <strong>Data</strong></span>: datasets that will be used, available on <strong><a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/material" class="uri">https://javieralvarezliebana.es/docencia/mucss-data-programming/material</a></strong></li>
 </ul>
 <p>&nbsp;</p>
 <ul>
@@ -629,12 +629,12 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 </ul>
 </section>
 <section>
-<section id="clase-1" class="title-slide slide level1 center">
-<h1>Clase 1: <span class="flow">primeros pasos</span></h1>
-<p><span style="color:#444442;"><strong>Instalando R y RStudio. Primeros pasos. Scripts y proyectos</strong></span></p>
+<section id="clase-0-1" class="title-slide slide level1 center">
+<h1>Lesson 1: <span class="flow">first steps</span></h1>
+<p><span style="color:#444442;"><strong>Introduction to R and RStudio. Working with projects. First uses of functions and packages. Basic data types</strong></span></p>
 <ul>
-<li><a href="#/tu-turno-1">💻 Ejercicios resueltos</a></li>
-<li><a href="#/planificacion">📆 Planificación</a></li>
+<li><a href="#/tu-turno-1">💻 Solved exercises</a></li>
+<li><a href="#/planificacion">📆 Planning</a></li>
 </ul>
 </section>
 <section id="requisitos" class="slide level2">
@@ -1756,7 +1756,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-06 09:27:29 EDT"</code></pre>
+<pre><code>[1] "2024-08-06 10:52:09 EDT"</code></pre>
 </div>
 </div>
 </div>
@@ -2975,7 +2975,7 @@ character(0)
 <h2>💻 Tu turno (textos)</h2>
 <p>El dataset será <code>discursos</code> (extraído de <a href="https://github.com/lirondos/discursos-de-navidad" class="uri">https://github.com/lirondos/discursos-de-navidad</a>) donde están guardados los discursos de navidad de los jefes de Estado de España desde 1946 hasta 2021.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./datos/discursos.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./data/discursos.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="panel-tabset">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1"><span class="hl-yellow"><strong>Ej 1</strong></span></a></li><li><a href="#tabset-4-2"><span class="hl-yellow"><strong>Ej 2</strong></span></a></li><li><a href="#tabset-4-3"><span class="hl-yellow"><strong>Ej 3</strong></span></a></li><li><a href="#tabset-4-4"><span class="hl-yellow"><strong>Ej 4</strong></span></a></li><li><a href="#tabset-4-5"><span class="hl-yellow"><strong>Ej 5</strong></span></a></li><li><a href="#tabset-4-6"><span class="hl-yellow"><strong>Ej 6</strong></span></a></li><li><a href="#tabset-4-7"><span class="hl-yellow"><strong>Ej 7</strong></span></a></li></ul>
@@ -3070,7 +3070,7 @@ character(0)
 <h2>🐣 Caso práctico I: textos</h2>
 <p>Para practicar textos y tibbles vamos a usar el dataset <code>salto_longitud</code> que tienes guardado en la carpeta de datos, que guarda cómo ha <strong>progresado el récord de salto de longitud masculino</strong>. Dicha tabla ha sido extraída directamente de la wikipedia <a href="https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression#Low_altitude_record_progression_1965%E2%80%931991" class="uri">https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression#Low_altitude_record_progression_1965%E2%80%931991</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb346"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb346-1"><a href="#cb346-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./datos/salto_longitud.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb346"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb346-1"><a href="#cb346-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./data/salto_longitud.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Aunque más adelante veremos como extraerlo, puedes ver debajo si quieres el código que se ha usado para extraer la tabla</p>
 <div class="cell">
@@ -4917,11 +4917,11 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
                                     expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.968    2.387512    2.091
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1283.997 1324.197 1420.983248 1355.009
+                                y &lt;- x^2    1.722    1.968    2.304856    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1281.086 1307.510 1386.587774 1321.922
        uq      max neval
-    2.378   20.131   500
- 1438.916 4219.802   500</code></pre>
+    2.296    5.576   500
+ 1391.069 4781.584   500</code></pre>
 </div>
 </div>
 </section>
@@ -5127,14 +5127,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb518"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb518-1"><a href="#cb518-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]       [,2]       [,3]
-[1,] -0.84118963 -0.5132101 -1.0564774
-[2,]  1.00835618 -0.7390054 -0.2715236
-[3,]  1.97126274 -0.7669468  1.4426808
-[4,]  1.02288731 -1.6966127  0.3714644
-[5,]  1.05898845  0.1467753  1.4376012
-[6,] -0.47221495 -0.2463880 -0.6167929
-[7,]  0.09843456  0.2210969 -1.2400156</code></pre>
+<pre><code>           [,1]       [,2]        [,3]
+[1,] -0.7210231  0.8700789  0.47641411
+[2,] -0.1500781  1.0992062 -0.06750187
+[3,] -1.4546570  0.6107806  0.55465728
+[4,]  0.8555132 -0.2920865  0.48986507
+[5,] -1.3734250 -0.4562695 -0.21727215
+[6,]  0.3931715  0.9491525 -0.02767632
+[7,]  0.2307282  1.1129252  2.26731426</code></pre>
 </div>
 </div>
 </section>
@@ -6996,7 +6996,7 @@ $tipo
 <section id="instrucciones" class="slide level2">
 <h2>Instrucciones</h2>
 <div class="footer footer-default">
-<p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM)</p>
+<p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Master in Computational Social Sciences (UC3M)</p>
 </div>
 </section></section>
     </div>

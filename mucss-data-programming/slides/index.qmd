@@ -1,11 +1,11 @@
 ---
-title: "SOFTWARE II"
-subtitle: "Análisis de datos en R para Ciencia de Datos"
+title: "Data programming and intro to R"
+subtitle: "Prepare, clean, transform and enrich data in R"
 title-slide-attributes:
-  data-background-image: img/data-science-2.jpeg
+  data-background-image: img/background-mucss.webp
   data-background-size: cover
   data-background-opacity: "0.2"
-author: "Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana"
+author: "Master in Computational Social Sciences • Javier Álvarez Liébana"
 affiliation: Facultad de Estudios Estadísticos (UCM)
 lang: es
 language: custom_lang.yml
@@ -15,23 +15,23 @@ format:
     menu:
       side: left
       width: normal
-    footer: "[<strong>Javier Álvarez Liébana</strong>](...) • Grado en Ciencia de Datos Aplicada (UCM)"
+    footer: "[<strong>Javier Álvarez Liébana</strong>](...) • Master in Computational Social Sciences (UC3M)"
     slide-number: c/t
 execute:
   echo: true
 ---
 
 ::: r-fit-text
-[¡Bienvenidos a R!]{.flow}
+[Welcome to R!]{.flow}
 :::
 
-[**Dejad vuestras hojas de cálculo, Anacondas y SAS a un lado**]{style="color:#444442;"}
+[**Put your spreadsheets, SAS and SPSS aside**]{style="color:#444442;"}
 
 ---
 
-## ¡Buenas!
+## Hi!
 
-[**Correo**]{.hl-green}: **<javalv09@ucm.es>**. [**Despacho**]{.hl-green}: 722 (3ª planta). [**Tutorías (curso 2024-2025)**]{.hl-green}: ...
+[**Mail**]{.hl-green}: **<javalv09@ucm.es>**.
 
 ::: columns
 ::: {.column width="30%"}
@@ -40,24 +40,26 @@ execute:
 
 ::: {.column width="70%"}
 ::: incremental
--   [**Javier Álvarez Liébana**]{.hl-yellow}, de Carabanchel (Bajo).
+-   [**Javier Álvarez Liébana**]{.hl-yellow} from Carabanchel (Madrid).
 
--   Licenciado en Matemáticas (UCM). [**Doctorado en estadística**]{.hl-yellow} (UGR).
+-   Degree in Mathematics (UCM). [**PhD in Statistics**]{.hl-yellow} (UGR).
 
--   Encargado de la [**visualización y análisis de datos covid**]{.hl-yellow} del Principado de Asturias (2021-2022).
+-   In charge of  [**data visualization and analysis**]{.hl-yellow} for the Principality of Asturias (2021-2022) during the COVID pandemic
 
--   Miembro de la [**Sociedad Española de Estadística e IO**]{.hl-yellow} y la [**Real Sociedad Matemática Española**]{.hl-yellow}.
+-   Member of the [**Spanish Society of Statistics and OR**]{.hl-yellow} and the [**Spanish Royal Mathematical Society**]{.hl-yellow}.
+
+
 :::
 :::
 :::
 
 
-Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM**]{.hl-yellow}. Divulgando por [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
+Currently, [**researcher and lecturer at the Faculty of Statistics of the UCM**]{.hl-yellow}. Disseminating via [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
 
 
 ---
 
-## Objetivos
+## Goals
 
 ::: columns
 ::: {.column width="37%"}
@@ -66,23 +68,24 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 ::: {.column width="63%"}
 ::: incremental
--   Quitarnos el [**miedo a los errores en programación**]{.hl-yellow} → a programar se aprende programando
+- Take away the [**fear of programming**]{.hl-yellow} → learn to program by programming
 
--   Entender los [**conceptos básicos de R**]{.hl-yellow} desde cero → aprender a abstraer ideas y algoritmos
+- Understanding [**basic R concepts**]{.hl-yellow} from scratch → learning to **abstract** ideas and algorithms
 
--   Utilidad de programar → flujos de trabajo [**reproducibles**, **transparentes**]{.hl-yellow} y mantenibles
+- Utility of programming → [**reproducible, transparent and maintainable workflows**]{.hl-yellow}.
 
--   Introducción al [**análisis y preprocesamiento**]{.hl-yellow} de datos → `{tidyverse}`
+- Introduction to [**analysis and preprocessing of data**]{.hl-yellow} → `{tidyverse}`.
 
--   Adquirir habilidades en la [**visualización de datos**]{.hl-yellow} → `{ggplot2}`
+- Handling [**advanced data types**]{.hl-yellow} → `{forcats}`, `{lubridate}` and `{purrr}` packages
 
 :::
 :::
 :::
+
 
 ---
 
-## Evaluación
+## Evaluation
 
 -   [**Asistencia**]{.hl-yellow}. No será obligatoria pero se [**valorará positivamente**]{.hl-purple} la participación.
 
@@ -140,23 +143,23 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 
 ---
 
-## Materiales
+## Materials
 
-* [**Diapositivas**]{.hl-yellow}: diapositivas en `Quarto` disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia/R-datascience>**. En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools`
+* [**Slides**]{.hl-yellow}: diapositivas en `Quarto` disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia/mucss-data-programming>**. En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools`
   
 &nbsp;
 
-* [**Material**]{.hl-yellow}: [**cuadernos de trabajo**](https://javieralvarezliebana.es/docencia/R-datascience/material/) y materiales extras y **resúmenes de paquetes**
+* [**Material**]{.hl-yellow}: [**workbooks**](https://javieralvarezliebana.es/docencia/mucss-data-programming/material/) and extra materials.
 
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
 
-* [📚 **Recursos de apoyo**]{.hl-yellow}: en inglés <https://r4ds.had.co.nz/> y en castellano <https://cdr-book.github.io/>, y <https://ivelasq.quarto.pub/intro-to-quarto/> para Quarto.
+* [📚 **Extra resources**]{.hl-yellow}:  <https://r4ds.had.co.nz/>, <https://cdr-book.github.io/> and <https://ivelasq.quarto.pub/intro-to-quarto/>.
 
 ---
 
 ## Datasets
 
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
 
 &nbsp;
 
@@ -171,7 +174,7 @@ medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de may
 
 ## Datasets
 
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
 
 &nbsp;
 
@@ -183,15 +186,14 @@ medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de may
 
 * `billboard` del paquete `{tidyr}`: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.
 
-# Clase 1: [primeros pasos]{.flow} {#clase-1}
+# Lesson 1: [first steps]{.flow} {#clase-0-1}
 
 
 
-[**Instalando R y RStudio. Primeros pasos. Scripts y proyectos**]{style="color:#444442;"}
+[**Introduction to R and RStudio. Working with projects. First uses of functions and packages. Basic data types**]{style="color:#444442;"}
 
-
-* [💻 Ejercicios resueltos](#tu-turno-1)
-* [📆 Planificación](#planificacion)
+* [💻 Solved exercises](#tu-turno-1)
+* [📆 Planning](#planificacion)
 
 ---
 
@@ -2425,7 +2427,7 @@ str_split(x, boundary("sentence"))
 El dataset será `discursos` (extraído de <https://github.com/lirondos/discursos-de-navidad>) donde están guardados los discursos de navidad de los jefes de Estado de España desde 1946 hasta 2021.
 
 ```{r}
-load(file = "./datos/discursos.RData")
+load(file = "./data/discursos.RData")
 ```
 
 ::: panel-tabset
@@ -2537,7 +2539,7 @@ sum(str_count(discursos$texto, pattern = "mujer|mujeres") >
 Para practicar textos y tibbles vamos a usar el dataset `salto_longitud` que tienes guardado en la carpeta de datos, que guarda cómo ha **progresado el récord de salto de longitud masculino**. Dicha tabla ha sido extraída directamente de la wikipedia <https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression#Low_altitude_record_progression_1965%E2%80%931991>
 
 ```{r}
-load(file = "./datos/salto_longitud.RData")
+load(file = "./data/salto_longitud.RData")
 ```
 
 Aunque más adelante veremos como extraerlo, puedes ver debajo si quieres el código que se ha usado para extraer la tabla
