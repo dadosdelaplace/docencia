@@ -24,22 +24,21 @@
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
 </div>
 
-<h1 align="left">R for datascience</h1>
+<h1 align="left">R for Computational Social Science</h1>
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
+<a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/slides"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 </a>
 </div>
             
-🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
+🕸 You can check the course at <https://javieralvarezliebana.es/docencia/mucss-data-programming>
 
 <h2 align="left">Teaching materials</h2>
 
-* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-datascience/diapos)
-* [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material)
-* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
+* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/mucss-data-programming/slides)
+* [📦 Material](https://javieralvarezliebana.es/docencia/mucss-data-programming/material)
+* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/datos)
 * 🛠 Workbooks:
-  - [Introducción a R base (intro to R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
-  - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
+  - [...](...)
 
