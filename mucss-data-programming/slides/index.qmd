@@ -194,7 +194,10 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 * `airquality` from the `{datasets}` package (already installed by default): daily measurements (153 observations) of air quality in New York, from May to September 1973. Measured **6 variables**: ozone, solar radiation, wind, temperature, month and day.
 
-* `pinniped` del paquete `{Biostatistics}`: **peso corporal y cerebral** de 33 especies de pinnípedos (morsas, leones marinos y elefantes marinos) desagregado por sexos y mono/poligamia.
+* `surveys`: we have all **poll surveys for Spain from 1982 to 2019** collected from Wikipedia.
+
+* `discursos`: compiles the Christmas speeches of the heads of state in Spain (under dictatorship and democracy) from 1946 to 2021.
+
 
 ---
 
@@ -203,8 +206,6 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 * [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
 
 &nbsp;
-
-* `discursos`: recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021
 
 * `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>)
 
@@ -2790,15 +2791,15 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 
 ## 🐣 Case study II {#caso-practico-0-2-2}
 
-Del paquete `{Biostatistics}` usaremos el conunto de datos `pinniped`, que guarda los **datos de peso de cuerpo y cerebro** (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.
-
+We will consider the `surveys.RData` file in which we have all poll surveys for Spain from 1982 to 2019.
 
 ```{r}
-Biostatistics::pinniped
+load(file = "./data/surveys.RData")
+survey_data
 ```
 
 
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-tibbles/)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss/)
 
 
 
@@ -3281,7 +3282,7 @@ for (days in week_days) {
 
 ---
 
-## Bucles y condicionales
+## For + if-else
 
 Let's **combine conditional structures and loops**: using the `swiss` set of the `{datasets}` package, let's assign `NA` if the fertility values are greater than 80.
 
@@ -3805,7 +3806,7 @@ compute_area <- function(side_1, side_2 = side_1) {
 
 ## Multiple outputs
 
-Podemos complicar un poco más la salida añadiendo una cuarta variable que nos diga, en función de los argumentos, [**si rectángulo o cuadrado**]{.hl-yellow}, teniendo que añadir en la salida una variable que de tipo caracter (o lógica).
+We can complicate the output a little more by adding a fourth variable that tells us, depending on the arguments, [**whether rectangle or square**]{.hl-yellow}, having to add a character (or logic) variable in the output.
 
 ```{r}
 #| code-line-numbers: "7-9"
@@ -3840,7 +3841,7 @@ Before we did not care about the order of the arguments, but now the [**order of
 As mentioned, it is highly recommended to make the function call [**explicitly setting the arguments**]{.hl-yellow} to improve **legibility and interpretability**.
 
 ```{r}
-# Equivalen to compute_area(5, 3)
+# Equivalent to compute_area(5, 3)
 compute_area(side_1 = 5, side_2 = 3)
 ```
 
@@ -4916,95 +4917,73 @@ plt.show()
 
 ## 🐣 Case study I: flow structures {#caso-practico-0-3-1}
 
-Diseña un bucle for de 200 iteraciones que, empezando en un valor inicial de 100 (euros), te sume 3€ si el número actual es par y te reste 5€ si es impar. Un número par o impar: un número par será todo aquel número que al dividir entre 2, la división es exacta, es decir, que su resto es nulo. Por ejemplo, al dividir 5 entre 2, el resto es 1, pero al dividir 12 entre 2 el resto es 0. Para calcula ese resto usaremos la función %%.
+To practice control structures we are going to perform a [**simulation exercise**]{.hl-yellow}
 
-+ cosas de if-elses
+&nsbp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structure)
 
 ---
 
 ## 🐣 Case study II: functions {#caso-practico-0-3-2}
 
-Define una función llamada `conversor_temperatura` que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras
+Define a function called `temperature_converter` that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others
 
-* Piensa qué argumentos necesita el usuario.
+&nsbp;
 
-* Piensa todas las combinaciones posibles e intenta conceptuar la idea antes en un papel.
-
-* Haz el código más simple y legible posible.
-
-* Aplica la función a la columna `Temp` del conjunto `airquality`, e incorpórala al fichero en una nueva columna `Temp_Celsius`.
-
-
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions)
 
 ---
 
 ## 🐣 Case study III: mock task {#caso-practico-0-3-3}
 
-1. Crea un documento `.qmd` en el que al menos la cabecera contenga
-  - Título, autor y formato (html)
-  - Índice con título y situado a la derecha
-  
-2. Tras ello vuelve a [Exercises del tema 3](#tu-turno-3-3) y estructura un documento donde cada Exercise sea una subsección. En cada subsección pon el enunciado.
-
-4. Debajo de cada enunciado pon el chunk con el código correspondiente, así como comentarios de texto de la salida (con negritas y cursivas)
-
-5. Añade un último chunk en el que, dado un vector `x <- 1:5`, calcules su media, e incluye con `$ $` la fórmula de la media aritmética e incrusta además una foto de la fórmula que encuentres por google.
-
-6. Renderiza el documento para obtener el html
-
-
----
-
-## Ejemplo de entrega
-
-Vamos a realizar un pequeño simulacro antes de la entrega usando el dataset `starwars` del paquete `{dplyr}`
+Let's perform a small simulation before delivery using the `starwars` dataset from the `{dplyr}` package.
 
 ![](https://sm.ign.com/t/ign_latam/screenshot/default/baby-yoda-nombre_3x56.1280.jpg)
 
 ---
 
-## Ejemplo de entrega
+## 🐣 Case study III: mock task
 
 ```{r}
 library(dplyr)
 starwars
 ```
 
-En él tenemos **diferentes variables de los personajes de Star Wars**, con características de su pelo, piel, altura, nombre, etc.
+We have **different variables of the Star Wars characters**, with characteristics of their hair, skin, height, name, etc.
+
+---
+
+## 🐣 Case study III: mock task
+
+> Create a `.qmd` document with name, title, format and index. Each subsequent Exercise will be a subsection of the document. Run the chunks you consider and comment on the outputs to answer each question
+
+. . .
+
+> Exercise 1. How many characters are stored in the database? How many characteristics have been measured for each one?
+
+. . .
+
+> Exercise 2. Extract in two different variables `names` and `ages` the corresponding variables from the table. What type is the variable name? And the variable birth_year?
+
+. . . 
+
+> Exercise 3. Obtain the vector of names of the characters sorted from oldest to youngest.
 
 
 ---
 
-## Ejemplo de entrega
+## 🐣 Case study III: mock task
 
-> Crea un documento `.qmd` con nombre, título, formato e índice. Cada Exercise posterior será una subsección del documento. Ejecuta los chunks que consideres y comenta las salidas para responder a cada pregunta
-
-. . .
-
-> Exercise 1. ¿Cuántos personajes hay guardados en la base de datos? ¿Cuántas características se han medido de cada uno?
+> Exercise 4. Get help from the unique() function. Use it to find out what modalities the qualitative variable for eye color has. How many different ones are there?
 
 . . .
 
-> Exercise 2. Extrae en dos variables distintas `nombres` y `edades` las variables correspondientes de la tabla. ¿De qué tipo es la variable nombre? ¿Y la variable birth_year?
+>  Exercise 5. Are there ANY missing values in the eye color variable?
 
 . . .
 
-> Exercise 3. Obtén el vector de nombres de los personajes ordenados de mayores a jóvenes.
-
-
----
-
-## Ejemplo de entrega
-
-> Exercise 4. Busca ayuda de la función unique(). Úsala para saber que modalidades tiene la variable cualitativa correspondiente al color de ojos. ¿Cuántos distintos hay?
-
-. . .
-
-> Exercise 5. ¿Existe ALGÚN valor ausente en la variable de color ojos? 
-
-. . .
-
-> Exercise 6.  Calcula la media y desviación típica de las variables de estatura y peso (cuidado con los ausentes). Define un nuevo tibble con esas dos variables e incorpora una tercera variable que se llame “IMC” que calcule el índice de masa corporal. Incorpora con `$ $` la fórmula usada para el IMC.
+> Exercise 6. Calculate the mean and standard deviation of the height and weight variables (watch out for missing values). Define a new tibble with these two variables and incorporate a third variable called “BMI” that calculates the body mass index. Incorporate with `$ $` the formula used for BMI.
 
 
 # Final task: [foundations of R base]{.flow} {#clase-0-4}

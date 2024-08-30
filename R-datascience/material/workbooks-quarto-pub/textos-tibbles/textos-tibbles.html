@@ -3052,6 +3052,7 @@ vertical-align: -.125em;
   <li><a href="#extraer-patrones" id="toc-extraer-patrones" class="nav-link" data-scroll-target="#extraer-patrones"><span class="header-section-number">1.4.4</span> Extraer patrones</a></li>
   <li><a href="#dividir-cadenas" id="toc-dividir-cadenas" class="nav-link" data-scroll-target="#dividir-cadenas"><span class="header-section-number">1.4.5</span> Dividir cadenas</a></li>
   </ul></li>
+  <li><a href="#tu-turno-textos" id="toc-tu-turno-textos" class="nav-link" data-scroll-target="#tu-turno-textos"><span class="header-section-number">1.5</span> 💻 Tu turno (textos)</a></li>
   </ul></li>
   <li><a href="#primera-base-de-datos" id="toc-primera-base-de-datos" class="nav-link" data-scroll-target="#primera-base-de-datos"><span class="header-section-number">2</span> Primera base de datos</a>
   <ul>
@@ -3059,7 +3060,7 @@ vertical-align: -.125em;
   <ul>
   <li><a href="#operaciones-con-matrices" id="toc-operaciones-con-matrices" class="nav-link" data-scroll-target="#operaciones-con-matrices"><span class="header-section-number">2.1.1</span> Operaciones con matrices</a></li>
   </ul></li>
-  <li><a href="#tu-turno-3-2" id="toc-tu-turno-3-2" class="nav-link" data-scroll-target="#tu-turno-3-2"><span class="header-section-number">2.2</span> 💻 Tu turno (matrices)</a></li>
+  <li><a href="#tu-turno-matrices" id="toc-tu-turno-matrices" class="nav-link" data-scroll-target="#tu-turno-matrices"><span class="header-section-number">2.2</span> 💻 Tu turno (matrices)</a></li>
   <li><a href="#segundo-intento-data.frame" id="toc-segundo-intento-data.frame" class="nav-link" data-scroll-target="#segundo-intento-data.frame"><span class="header-section-number">2.3</span> Segundo intento: data.frame</a>
   <ul>
   <li><a href="#acceso-a-variables" id="toc-acceso-a-variables" class="nav-link" data-scroll-target="#acceso-a-variables"><span class="header-section-number">2.3.1</span> Acceso a variables</a></li>
@@ -3515,7 +3516,11 @@ character(0)
 [1] &quot;Esto es una frase. &quot; &quot;Y esto otra.&quot;       </code></pre>
 </div>
 </div>
-<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span> ## 💻 Tu turno (textos) {#tu-turno-3-1}</p>
+</section>
+</section>
+<section id="tu-turno-textos" class="level3" data-number="1.5">
+<h3 data-number="1.5" class="anchored" data-anchor-id="tu-turno-textos"><span class="header-section-number">1.5</span> 💻 Tu turno (textos)</h3>
+<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
 <p>El dataset será <code>discursos</code> (extraído de <a href="https://github.com/lirondos/discursos-de-navidad" class="uri">https://github.com/lirondos/discursos-de-navidad</a>) donde están guardados los discursos navidad de los jefes de Estado de España desde 1946 hasta 2021 (en dictadura y en democracia).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">&quot;./datos/discursos.RData&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3552,7 +3557,7 @@ character(0)
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos los signos de puntuación</span></span>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nueva variable</span></span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>discursos<span class="sc">$</span>long <span class="ot">&lt;-</span> <span class="fu">str_length</span>(discursos<span class="sc">$</span>texto)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -3617,7 +3622,6 @@ character(0)
 </div>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section id="primera-base-de-datos" class="level2" data-number="2">
@@ -3777,8 +3781,8 @@ pesos       63   70   85   95</code></pre>
 </div>
 </section>
 </section>
-<section id="tu-turno-3-2" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="tu-turno-3-2"><span class="header-section-number">2.2</span> 💻 Tu turno (matrices)</h3>
+<section id="tu-turno-matrices" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="tu-turno-matrices"><span class="header-section-number">2.2</span> 💻 Tu turno (matrices)</h3>
 <p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false" href><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-6" role="tab" aria-controls="tabset-2-6" aria-selected="false" href><span class="hl-yellow"><strong>Ejercicio 6</strong></span></a></li></ul>

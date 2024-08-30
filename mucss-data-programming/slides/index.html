@@ -658,7 +658,8 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <p>&nbsp;</p>
 <ul>
 <li><p><code>airquality</code> from the <code>{datasets}</code> package (already installed by default): daily measurements (153 observations) of air quality in New York, from May to September 1973. Measured <strong>6 variables</strong>: ozone, solar radiation, wind, temperature, month and day.</p></li>
-<li><p><code>pinniped</code> del paquete <code>{Biostatistics}</code>: <strong>peso corporal y cerebral</strong> de 33 especies de pinnípedos (morsas, leones marinos y elefantes marinos) desagregado por sexos y mono/poligamia.</p></li>
+<li><p><code>surveys</code>: we have all <strong>poll surveys for Spain from 1982 to 2019</strong> collected from Wikipedia.</p></li>
+<li><p><code>discursos</code>: compiles the Christmas speeches of the heads of state in Spain (under dictatorship and democracy) from 1946 to 2021.</p></li>
 </ul>
 </section>
 <section id="datasets-1" class="slide level2">
@@ -668,7 +669,6 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 </ul>
 <p>&nbsp;</p>
 <ul>
-<li><p><code>discursos</code>: recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021</p></li>
 <li><p><code>relig_income</code> del paquete <code>{tidyr}</code>: recopila los datos de ingresos anuales en función de la religión (fuente original <a href="https://www.pewresearch.org/religion/religious-landscape-study/" class="uri">https://www.pewresearch.org/religion/religious-landscape-study/</a>)</p></li>
 <li><p><code>who</code> del paquete <code>{tidyr}</code>: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.</p></li>
 <li><p><code>billboard</code> del paquete <code>{tidyr}</code>: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.</p></li>
@@ -1791,7 +1791,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-30 14:16:07 CEST"</code></pre>
+<pre><code>[1] "2024-08-30 19:38:39 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -3247,81 +3247,29 @@ multiple of the number of rows [4]</code></pre>
 </section>
 <section id="caso-practico-0-2-2" class="slide level2">
 <h2>🐣 Case study II</h2>
-<p>Del paquete <code>{Biostatistics}</code> usaremos el conunto de datos <code>pinniped</code>, que guarda los <strong>datos de peso de cuerpo y cerebro</strong> (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.</p>
+<p>We will consider the <code>surveys.RData</code> file in which we have all poll surveys for Spain from 1982 to 2019.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb343"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb343-1"><a href="#cb343-1"></a>Biostatistics<span class="sc">::</span>pinniped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb343"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb343-1"><a href="#cb343-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./data/surveys.RData"</span>)</span>
+<span id="cb343-2"><a href="#cb343-2"></a>survey_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                       Species Male_brain_g Female_brain_g Male_mass_Kg
-1       Monachus schauinslandi        370.0             NA        173.0
-2            Monachus monachus        480.0          480.0        260.0
-3      Mirounga angustirostris        700.0          640.0       2275.0
-4             Mirounga leonina       1431.3          898.8       3510.0
-5       Leptonychotes weddelli        535.0          637.5        450.0
-6            Ommatophoca rossi        425.0          530.0        153.8
-7        Lobodon carcinophagus        578.2          538.8        220.5
-8            Hydrurga leptonyx        765.0          660.0        324.0
-9          Cystophora cristata        480.0          430.0        343.2
-10         Erignathus barbatus           NA          460.0        312.5
-11          Halichoerus grypus        342.5          272.5        233.0
-12          Phoca groenlandica        297.5          252.5        145.0
-13              Phoca fasciata        257.5          240.0         94.8
-14                Phoca largha        257.5          250.0         97.0
-15               Phoca caspica        165.0          160.0         70.5
-16              Phoca sibirica        185.0          190.0         89.5
-17               Phoca hispida        229.3          220.0         84.0
-18              Phoca vitulina        362.3          265.0         97.1
-19      Zalophus californianus        405.0          361.5        244.5
-20          Eumetopias jubatus        747.5          575.0       1000.0
-21              Otaria byronia        546.3          470.0        300.0
-22            Neophoca cinerea        440.0          337.5        300.0
-23          Phocarctos hookeri        417.5          370.0        364.0
-24         Callorhinus ursinus        355.0          302.5        140.0
-25     Arctocephalus townsendi           NA             NA        112.0
-26     Arctocephalus philippii        415.0             NA        140.0
-27 Arctocephalus galapagoensis        302.5          280.0         64.5
-28     Arctocephalus australis        350.0          265.0         91.0
-29      Arctocephalus forsteri        340.0          300.0        125.0
-30       Arctocephalus gazella        360.0          320.0        155.0
-31    Arctocephalus tropicalis        322.5          330.0        152.5
-32      Arctocephalus pusillus        401.3          337.5        263.0
-33           Odobenus rosmarus       1303.0         1340.5       1233.0
-   Female_mass_Kg Mate_type
-1           272.2      mono
-2           275.0      mono
-3           488.0      poly
-4           565.7      poly
-5           447.0      poly
-6           164.0      mono
-7           224.0      mono
-8           367.0      mono
-9           222.5      mono
-10          326.0      mono
-11          205.8      poly
-12          139.0      mono
-13           80.4      mono
-14           71.3      mono
-15           55.0      mono
-16           85.0      mono
-17           81.2      mono
-18           85.2      mono
-19           81.0      poly
-20          287.5      poly
-21          144.0      poly
-22           78.6      poly
-23          114.7      poly
-24           33.3      poly
-25           49.6      poly
-26           48.1      poly
-27           27.4      poly
-28           48.5      poly
-29           38.1      poly
-30           45.0      poly
-31           50.0      poly
-32           64.1      poly
-33          811.5      poly</code></pre>
+<pre><code># A tibble: 183,897 × 8
+   date_elec  pollster field_date_from field_date_to exit_poll  size party  
+   &lt;date&gt;     &lt;chr&gt;    &lt;date&gt;          &lt;date&gt;        &lt;lgl&gt;     &lt;dbl&gt; &lt;chr&gt;  
+ 1 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 UCD    
+ 2 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 PSOE   
+ 3 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 PCE    
+ 4 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 AP     
+ 5 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 CIU    
+ 6 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 PA     
+ 7 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 EAJ-PNV
+ 8 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 HB     
+ 9 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 ERC    
+10 1982-10-28 PSOE     1982-10-28      1982-10-28    TRUE      85300 EE     
+# ℹ 183,887 more rows
+# ℹ 1 more variable: estimation &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/intro-r-tibbles/"><strong>workbook</strong></a></p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss/"><strong>workbook</strong></a></p>
 </section></section>
 <section>
 <section id="clase-0-3" class="title-slide slide level1 center">
@@ -3693,13 +3641,13 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb378-4"><a href="#cb378-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb378-5"><a href="#cb378-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr    min       lq      mean   median
-                                y &lt;- x^2    984   1107.0   1253.37   1148.0
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 729923 740152.5 783843.66 746917.5
-       uq     max neval
-   1230.0    5945   500
- 755281.5 2190179   500</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.886    2.109122    1.968
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1258.905 1274.055 1341.043744 1281.414
+       uq      max neval
+    2.050    8.118   500
+ 1292.935 3358.802   500</code></pre>
 </div>
 </div>
 </section>
@@ -3747,8 +3695,8 @@ Marta are 29 old</code></pre>
 </div>
 </div>
 </section>
-<section id="bucles-y-condicionales" class="slide level2">
-<h2>Bucles y condicionales</h2>
+<section id="for-if-else" class="slide level2">
+<h2>For + if-else</h2>
 <p>Let’s <strong>combine conditional structures and loops</strong>: using the <code>swiss</code> set of the <code>{datasets}</code> package, let’s assign <code>NA</code> if the fertility values are greater than 80.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb384"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb384-1"><a href="#cb384-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(swiss)) {</span>
@@ -4213,7 +4161,7 @@ Not yet, we are in the 3-th iteration</code></pre>
 </section>
 <section id="multiple-outputs-1" class="slide level2">
 <h2>Multiple outputs</h2>
-<p>Podemos complicar un poco más la salida añadiendo una cuarta variable que nos diga, en función de los argumentos, <span class="hl-yellow"><strong>si rectángulo o cuadrado</strong></span>, teniendo que añadir en la salida una variable que de tipo caracter (o lógica).</p>
+<p>We can complicate the output a little more by adding a fourth variable that tells us, depending on the arguments, <span class="hl-yellow"><strong>whether rectangle or square</strong></span>, having to add a character (or logic) variable in the output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb428" data-code-line-numbers="7-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb428-1"><a href="#cb428-1"></a>compute_area <span class="ot">&lt;-</span> <span class="cf">function</span>(side_1, <span class="at">side_2 =</span> side_1) {</span>
 <span id="cb428-2"><a href="#cb428-2"></a>  </span>
@@ -4250,7 +4198,7 @@ Not yet, we are in the 3-th iteration</code></pre>
 <div class="callout-content">
 <p>As mentioned, it is highly recommended to make the function call <span class="hl-yellow"><strong>explicitly setting the arguments</strong></span> to improve <strong>legibility and interpretability</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb430"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb430-1"><a href="#cb430-1"></a><span class="co"># Equivalen to compute_area(5, 3)</span></span>
+<div class="sourceCode cell-code" id="cb430"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb430-1"><a href="#cb430-1"></a><span class="co"># Equivalent to compute_area(5, 3)</span></span>
 <span id="cb430-2"><a href="#cb430-2"></a><span class="fu">compute_area</span>(<span class="at">side_1 =</span> <span class="dv">5</span>, <span class="at">side_2 =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       area      side_1      side_2        type 
@@ -5097,44 +5045,23 @@ Not yet, we are in the 3-th iteration</code></pre>
 </section>
 <section id="caso-practico-0-3-1" class="slide level2">
 <h2>🐣 Case study I: flow structures</h2>
-<p>Diseña un bucle for de 200 iteraciones que, empezando en un valor inicial de 100 (euros), te sume 3€ si el número actual es par y te reste 5€ si es impar. Un número par o impar: un número par será todo aquel número que al dividir entre 2, la división es exacta, es decir, que su resto es nulo. Por ejemplo, al dividir 5 entre 2, el resto es 1, pero al dividir 12 entre 2 el resto es 0. Para calcula ese resto usaremos la función %%.</p>
-<ul>
-<li>cosas de if-elses</li>
-</ul>
+<p>To practice control structures we are going to perform a <span class="hl-yellow"><strong>simulation exercise</strong></span></p>
+<p>&amp;nsbp;</p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/flow-structure"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-practico-0-3-2" class="slide level2">
 <h2>🐣 Case study II: functions</h2>
-<p>Define una función llamada <code>conversor_temperatura</code> que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras</p>
-<ul>
-<li><p>Piensa qué argumentos necesita el usuario.</p></li>
-<li><p>Piensa todas las combinaciones posibles e intenta conceptuar la idea antes en un papel.</p></li>
-<li><p>Haz el código más simple y legible posible.</p></li>
-<li><p>Aplica la función a la columna <code>Temp</code> del conjunto <code>airquality</code>, e incorpórala al fichero en una nueva columna <code>Temp_Celsius</code>.</p></li>
-</ul>
+<p>Define a function called <code>temperature_converter</code> that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others</p>
+<p>&amp;nsbp;</p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/flow-structures-functions"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-practico-0-3-3" class="slide level2">
 <h2>🐣 Case study III: mock task</h2>
-<ol type="1">
-<li>Crea un documento <code>.qmd</code> en el que al menos la cabecera contenga</li>
-</ol>
-<ul>
-<li>Título, autor y formato (html)</li>
-<li>Índice con título y situado a la derecha</li>
-</ul>
-<ol start="2" type="1">
-<li><p>Tras ello vuelve a <a href="#/tu-turno-3-3">Exercises del tema 3</a> y estructura un documento donde cada Exercise sea una subsección. En cada subsección pon el enunciado.</p></li>
-<li><p>Debajo de cada enunciado pon el chunk con el código correspondiente, así como comentarios de texto de la salida (con negritas y cursivas)</p></li>
-<li><p>Añade un último chunk en el que, dado un vector <code>x &lt;- 1:5</code>, calcules su media, e incluye con <code>$ $</code> la fórmula de la media aritmética e incrusta además una foto de la fórmula que encuentres por google.</p></li>
-<li><p>Renderiza el documento para obtener el html</p></li>
-</ol>
-</section>
-<section id="ejemplo-de-entrega" class="slide level2">
-<h2>Ejemplo de entrega</h2>
-<p>Vamos a realizar un pequeño simulacro antes de la entrega usando el dataset <code>starwars</code> del paquete <code>{dplyr}</code></p>
+<p>Let’s perform a small simulation before delivery using the <code>starwars</code> dataset from the <code>{dplyr}</code> package.</p>
 
 <img data-src="https://sm.ign.com/t/ign_latam/screenshot/default/baby-yoda-nombre_3x56.1280.jpg" class="r-stretch"></section>
-<section id="ejemplo-de-entrega-1" class="slide level2">
-<h2>Ejemplo de entrega</h2>
+<section id="case-study-iii-mock-task" class="slide level2">
+<h2>🐣 Case study III: mock task</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb473"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb473-1"><a href="#cb473-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb473-2"><a href="#cb473-2"></a>starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -5157,42 +5084,42 @@ Not yet, we are in the 3-th iteration</code></pre>
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
 </div>
-<p>En él tenemos <strong>diferentes variables de los personajes de Star Wars</strong>, con características de su pelo, piel, altura, nombre, etc.</p>
+<p>We have <strong>different variables of the Star Wars characters</strong>, with characteristics of their hair, skin, height, name, etc.</p>
 </section>
-<section id="ejemplo-de-entrega-2" class="slide level2">
-<h2>Ejemplo de entrega</h2>
+<section id="case-study-iii-mock-task-1" class="slide level2">
+<h2>🐣 Case study III: mock task</h2>
 <blockquote>
-<p>Crea un documento <code>.qmd</code> con nombre, título, formato e índice. Cada Exercise posterior será una subsección del documento. Ejecuta los chunks que consideres y comenta las salidas para responder a cada pregunta</p>
+<p>Create a <code>.qmd</code> document with name, title, format and index. Each subsequent Exercise will be a subsection of the document. Run the chunks you consider and comment on the outputs to answer each question</p>
 </blockquote>
 <div class="fragment">
 <blockquote>
-<p>Exercise 1. ¿Cuántos personajes hay guardados en la base de datos? ¿Cuántas características se han medido de cada uno?</p>
-</blockquote>
-</div>
-<div class="fragment">
-<blockquote>
-<p>Exercise 2. Extrae en dos variables distintas <code>nombres</code> y <code>edades</code> las variables correspondientes de la tabla. ¿De qué tipo es la variable nombre? ¿Y la variable birth_year?</p>
+<p>Exercise 1. How many characters are stored in the database? How many characteristics have been measured for each one?</p>
 </blockquote>
 </div>
 <div class="fragment">
 <blockquote>
-<p>Exercise 3. Obtén el vector de nombres de los personajes ordenados de mayores a jóvenes.</p>
+<p>Exercise 2. Extract in two different variables <code>names</code> and <code>ages</code> the corresponding variables from the table. What type is the variable name? And the variable birth_year?</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Exercise 3. Obtain the vector of names of the characters sorted from oldest to youngest.</p>
 </blockquote>
 </div>
 </section>
-<section id="ejemplo-de-entrega-3" class="slide level2">
-<h2>Ejemplo de entrega</h2>
+<section id="case-study-iii-mock-task-2" class="slide level2">
+<h2>🐣 Case study III: mock task</h2>
 <blockquote>
-<p>Exercise 4. Busca ayuda de la función unique(). Úsala para saber que modalidades tiene la variable cualitativa correspondiente al color de ojos. ¿Cuántos distintos hay?</p>
+<p>Exercise 4. Get help from the unique() function. Use it to find out what modalities the qualitative variable for eye color has. How many different ones are there?</p>
 </blockquote>
 <div class="fragment">
 <blockquote>
-<p>Exercise 5. ¿Existe ALGÚN valor ausente en la variable de color ojos?</p>
+<p>Exercise 5. Are there ANY missing values in the eye color variable?</p>
 </blockquote>
 </div>
 <div class="fragment">
 <blockquote>
-<p>Exercise 6. Calcula la media y desviación típica de las variables de estatura y peso (cuidado con los ausentes). Define un nuevo tibble con esas dos variables e incorpora una tercera variable que se llame “IMC” que calcule el índice de masa corporal. Incorpora con <code>$ $</code> la fórmula usada para el IMC.</p>
+<p>Exercise 6. Calculate the mean and standard deviation of the height and weight variables (watch out for missing values). Define a new tibble with these two variables and incorporate a third variable called “BMI” that calculates the body mass index. Incorporate with <code>$ $</code> the formula used for BMI.</p>
 </blockquote>
 </div>
 </section></section>

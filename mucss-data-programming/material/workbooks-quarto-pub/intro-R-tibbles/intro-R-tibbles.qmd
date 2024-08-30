@@ -2245,21 +2245,117 @@ names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia")
 
 
 
-## 🐣 Case study II: ...
+## 🐣 Case study II: survey data
 
-¿tidycensus?
+We will consider the `surveys.RData` file in which we have all poll surveys for Spain from 1982 to 2019.
 
-¿pollspain?
+```{r}
+load(file = "./datos/surveys.RData")
+```
+
+### Question 1
+
+> How many different polling firms we have?
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# 93 polling firms (including parties)
+unique(survey_data$pollster)
+```
+
+### Question 2
+
+> Filter just surveys with known sample size greater than 500
+
+```{r}
+#| eval: false
+#| code-fold: true
+survey_data <-
+  survey_data[survey_data$size > 500 & !is.na(survey_data$size), ]
+```
+
+
+### Question 3
+
+> Filter then just surveys for the 10-11-2019 elections with no absent estimation value
+
+```{r}
+#| eval: false
+#| code-fold: true
+survey_data <- survey_data[survey_data$date_elec == "2019-11-10" &
+                             !is.na(survey_data$estimation), ]
+```
+
+
+### Question 4
+
+> Include a new logical variable to know if a survey was done by CIS (Spanish sociological research center)  or not.
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+survey_data$CIS <- survey_data$pollster == "CIS"
+```
+
+### Question 5
+
+> Which was the average estimation for PSOE provided by the CIS and the rest of surveys? And for PP?
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# average PSOE by CIS
+mean(survey_data[survey_data$CIS &
+                   survey_data$party == "PSOE", ]$estimation)
+# average PSOE by others
+mean(survey_data[!survey_data$CIS &
+                   survey_data$party == "PSOE", ]$estimation)
+# difference of 3 points in average
+
+# average PP by CIS
+mean(survey_data[survey_data$CIS &
+                   survey_data$party == "PP", ]$estimation)
+# average PP by others
+mean(survey_data[!survey_data$CIS &
+                   survey_data$party == "PP", ]$estimation)
+# difference of -4 points in average
+```
+
+
+### Question 6
+
+> Replicate the previous comparison but just considering surveys 90 days before the date of election and with more than 3 field days.
 
 
 
+```{r}
+#| eval: false
+#| code-fold: true
 
+survey_data$days_field <-
+  survey_data$field_date_to - survey_data$field_date_from
+  survey_data[(survey_data$date_elec -
+                survey_data$field_date_from < 90) &
+                survey_data$days_field > 3, ]
 
+# average PSOE by CIS
+mean(survey_data[survey_data$CIS &
+                   survey_data$party == "PSOE", ]$estimation)
+# average PSOE by others
+mean(survey_data[!survey_data$CIS &
+                   survey_data$party == "PSOE", ]$estimation)
+# difference of 3 points in average
 
-
-
-
-
-
-
+# average PP by CIS
+mean(survey_data[survey_data$CIS &
+                   survey_data$party == "PP", ]$estimation)
+# average PP by others
+mean(survey_data[!survey_data$CIS &
+                   survey_data$party == "PP", ]$estimation)
+# difference of -2 points in average
+```
 
