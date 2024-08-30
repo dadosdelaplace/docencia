@@ -134,7 +134,11 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [4](#clase-4) | S2 | 19 sep | Comunicar: apuntes y simulacro de entrega | |  [🐣](#caso-practico-4) |  |
 | [5](#clase-5) | S3 | 23 sep | Entrega I | | | 🎯 5% |
 | [6](#clase-6) | S3 | 26 sep | Estructuras de control | [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  |  [🐣](#caso-practico-6) |  |
+| [7](#clase-7) | S4 | 30 sep | Funciones | [💻](#tu-turno-7)  |  [🐣](#caso-practico-7) |  |
+| [8](#clase-8) | S4 | 3 oct | Tidy data | [💻](#tu-turno-8) |  [🐣](#caso-practico-8) |  |
 | [9](#clase-9) | S5 | 7 oct | Entrega II | | | 🎯 15% |
+| [10](#clase-10) | S5 | 10 oct | Tidyverse: filas (I) | ...|  ... |  |
+| [11](#clase-11) | S6 | 14 oct | Tidyverse: filas (II) | ...|  ... |  |
 :::
 :::
 
@@ -3997,6 +4001,7 @@ plt.show()
 
 # Clase 5: [entrega I]{.flow} {#clase-5}
 
+[**Ponderación: 5%**]{style="color:#444442;"}
 
 ---
 
@@ -4817,9 +4822,9 @@ while (count < 6) {
 
 ## 🐣 Caso práctico {#caso-practico-6}
 
-Diseña un bucle for de 200 iteraciones que, empezando en un valor inicial de 100 (euros), te sume 3€ si el número actual es par y te reste 5€ si es impar. Un número par o impar: un número par será todo aquel número que al dividir entre 2, la división es exacta, es decir, que su resto es nulo. Por ejemplo, al dividir 5 entre 2, el resto es 1, pero al dividir 12 entre 2 el resto es 0. Para calcula ese resto usaremos la función %%.
 
-+ cosas de if-elses
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/control-bucles-if-else/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
+
 
 
 # Clase 7: [funciones]{.flow} {#clase-7}
@@ -5350,7 +5355,7 @@ y # lo que vale fuera
 ---
 
 
-## 💻 Tu turno {#tu-turno-9}
+## 💻 Tu turno {#tu-turno-7}
 
 [**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
 
@@ -5508,15 +5513,10 @@ atajo <- function(x, y) {
 
 ## 🐣 Caso práctico {#caso-practico-7}
 
-Define una función llamada `conversor_temperatura` que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras
+Para practicar con funciones vamos a crear un completo **conversor de temperaturas** que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras
 
-* Piensa qué argumentos necesita el usuario.
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/funciones-en-r/) hasta construirlo.
 
-* Piensa todas las combinaciones posibles e intenta conceptuar la idea antes en un papel.
-
-* Haz el código más simple y legible posible.
-
-* Aplica la función a la columna `Temp` del conjunto `airquality`, e incorpórala al fichero en una nueva columna `Temp_Celsius`.
 
 
 # Clase 8: [tidydata]{.flow} {#clase-8}
@@ -5609,6 +5609,11 @@ En ese contexto de programación funcional, hace una década nacía `{tidyverse}
 ::: columns
 ::: {.column width="45%"}
 ![](img/tidyverrse_universe.jpg)
+
+-   `{lubridate}` manejo de fechas
+-   `{rvest}`: web scraping
+-   `{tidymodels}`: modelización/predicción
+
 :::
 
 ::: {.column width="55%"}
@@ -5619,10 +5624,9 @@ En ese contexto de programación funcional, hace una década nacía `{tidyverse}
 -   `{stringr}`: manejo de textos
 -   `{purrr}`: manejo de listas
 -   `{forcats}`: manejo de cualitativas
--   `{lubridate}` manejo de fechas
 -   `{ggplot2}`: visualización de datos
--   `{rvest}`: web scraping
--   `{tidymodels}`: modelización/predicción
+
+
 
 :::
 :::
@@ -5636,6 +5640,12 @@ En ese contexto de programación funcional, hace una década nacía `{tidyverse}
 ::: columns
 ::: {.column width="45%"}
 ![](img/tidyverrse_universe.jpg)
+
+-   `{lubridate}` manejo de fechas
+-   `{rvest}`: web scraping
+-   `{tidymodels}`: modelización/predicción
+
+
 :::
 
 ::: {.column width="55%"}
@@ -5646,10 +5656,8 @@ En ese contexto de programación funcional, hace una década nacía `{tidyverse}
 -   `{stringr}`: manejo de textos
 -   `{purrr}`: manejo de listas
 -   `{forcats}`: manejo de cualitativas
--   `{lubridate}` manejo de fechas
 -   `{ggplot2}`: visualización de datos
--   `{rvest}`: web scraping
--   `{tidymodels}`: modelización/predicción
+
 :::
 :::
 
@@ -6022,15 +6030,26 @@ relig_tidy
 
 Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
 
-. . .
+```{r}
+relig_tidy 
+```
 
-¿Está bien? Fíjate bien...
+---
+
+## Ejemplo: relig_income
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
 
 ```{r}
 relig_tidy |>
   # Separamos por -
   separate(income, into = c("income_inf", "income_sup"), sep = "-")
 ```
+
+. . .
+
+¿Está ya bien? Fíjate bien...
 
 ---
 
@@ -6089,7 +6108,7 @@ relig_tidy
 
 ## Ejemplo: relig_income
 
-Fíjate que tenemos a veces `"Don't now/refused"`. ¿Qué deberíamos tener en realidad?
+Fíjate que tenemos `"Don't now/refused"`. ¿Qué deberíamos tener?
 
 . . .
 
@@ -6100,7 +6119,6 @@ relig_tidy$income_inf <-
   if_else(str_detect(relig_tidy$income_inf, "refused"), NA, relig_tidy$income_inf)
 relig_tidy$income_sup <-
   if_else(str_detect(relig_tidy$income_sup, "refused"), NA, relig_tidy$income_sup)
-
 relig_tidy
 ```
 
@@ -6131,7 +6149,14 @@ relig_tidy
 
 Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
 
-. . .
+
+
+---
+
+## Ejemplo: relig_income
+
+
+Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
 
 ```{r}
 relig_tidy$income_inf <- as.numeric(relig_tidy$income_inf)
@@ -6188,7 +6213,7 @@ relig_tidy$income_sup <-
 
 ¿Por qué era [**importante tenerlo en tidydata**]{.hl-yellow}? Lo veremos más adelante al visualizar los datos pero esto ya nos permite realizar filtros muy rápidos con muy poco código.
 
-Por ejemplo: ¿cuántas personas agnosticas con ingresos superiores (o iguales) a 30 tenemos?
+Por ejemplo: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos?
 
 . . .
 
@@ -6199,7 +6224,7 @@ sum(relig_tidy$people[relig_tidy$religion == "Agnostic" & relig_tidy$income_inf 
 
 ---
 
-## 💻 Tu turno {#tu-turno-6}
+## 💻 Tu turno {#tu-turno-8}
 
 [**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
 
@@ -6207,7 +6232,7 @@ sum(relig_tidy$people[relig_tidy$religion == "Agnostic" & relig_tidy$income_inf 
 
 ### [**Ejercicio 1**]{.hl-yellow}
 
-📝 Usa el dataset original `relig_income` y trata de responder a la última pregunta:  ¿cuántas personas agnosticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses `R`? ¿Cuál tiene mayor probabilidad de error?
+📝 Usa el dataset original `relig_income` y trata de responder a la última pregunta:  ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses `R`? ¿Cuál tiene mayor probabilidad de error?
 
 ```{r}
 #| code-fold: true
@@ -6287,34 +6312,46 @@ billboard |>
 
 ## 🐣 Caso práctico {#caso-practico-8}
 
-datapasta + 
-
-En el paquete `{tidyr}` contamos con el dataset `who` (dataset de la Organización Mundial de la Salud)
+En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/tidydata/).
 
 ```{r}
-#| eval: false
-library(tidyr)
-who
+who2
 ```
 
 
-1. ¿Qué [**significan los datos**]{.hl-yellow}? ¿Cuántas [**variables y observaciones**]{.hl-yellow} tenemos?
-
-
-
-2. ¿Cuántos [**tipos de variables**]{.hl-yellow} tenemos?
-
-
-3. ¿Todas las variables son necesarias? [**Elimina la información redundante**]{.hl-yellow}.
-
-
-4. [**Convierte a tidydata**]{.hl-yellow} la base de datos realizando todas las opciones que consideres (consejo: usa papel y boli para bocetar como debería quedar la base de datos).
-
 # Clase 9: [entrega II]{.flow} {#clase-9}
 
+[**Ponderación: 15%**]{style="color:#444442;"}
 
 ---
 
 ## Instrucciones
 
+El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow} en formato `.qmd` en el campus.
+
+* **Descomprime la carpeta** (¡importante! si no descomprimes, aunque puedas editar el `.qmd`, no podrás generar el `.html`)
+
+* **Edita la cabecera** con tu nombre y DNI
+
+* Deberás **rellenar cada chunk** con el código que consideres (en algunos te he dejado pistas) y **cambiar** de `#| eval: false` a `#| eval: true` (si los quitas directamente, por defecto ya es true)
+
+* Deberás de **comentar** con texto normal lo que consideres para responder a las preguntas.
+
+* Será [**OBLIGATORIO**]{.hl-yellow} subir el archivo `.html` generado (solo se corregirá dicho archivo) así que ve renderizando según rellenas el documento, no lo dejes para el final.
+
+
+# Clase 10: [tidyverse (filas)]{.flow} {#clase-10}
+
+[**Tidyverse: operaciones por filas (I)**]{style="color:#444442;"}
+
+---
+
+
+## ... 
+
+# Clase 11: [tidyverse (filas)]{.flow} {#clase-11}
+
+[**Tidyverse: operaciones por filas (II)**]{style="color:#444442;"}
+
+---
 

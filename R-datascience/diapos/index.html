@@ -575,6 +575,30 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
+<td style="text-align: center;"><a href="#/clase-7">7</a></td>
+<td style="text-align: center;">S4</td>
+<td style="text-align: center;">30 sep</td>
+<td style="text-align: center;">Funciones</td>
+<td style="text-align: center;"><a href="#/tu-turno-7">💻</a></td>
+<td style="text-align: center;"><a href="#/caso-practico-7">🐣</a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#/clase-8">8</a></td>
+<td style="text-align: center;">S4</td>
+<td style="text-align: center;">3 oct</td>
+<td style="text-align: center;">Tidy data</td>
+<td style="text-align: center;"><a href="#/tu-turno-8">💻</a></td>
+<td style="text-align: center;"><a href="#/caso-practico-8">🐣</a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
 <td style="text-align: center;"><a href="#/clase-9">9</a></td>
 <td style="text-align: center;">S5</td>
 <td style="text-align: center;">7 oct</td>
@@ -582,6 +606,30 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;">🎯 15%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#/clase-10">10</a></td>
+<td style="text-align: center;">S5</td>
+<td style="text-align: center;">10 oct</td>
+<td style="text-align: center;">Tidyverse: filas (I)</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#/clase-11">11</a></td>
+<td style="text-align: center;">S6</td>
+<td style="text-align: center;">14 oct</td>
+<td style="text-align: center;">Tidyverse: filas (II)</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -1746,7 +1794,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-06"</code></pre>
+<pre><code>[1] "2024-08-30"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1756,7 +1804,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-06 09:27:29 EDT"</code></pre>
+<pre><code>[1] "2024-08-30 10:35:26 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -4465,7 +4513,7 @@ multiple of the number of rows [4]</code></pre>
 <section>
 <section id="clase-5" class="title-slide slide level1 center">
 <h1>Clase 5: <span class="flow">entrega I</span></h1>
-
+<p><span style="color:#444442;"><strong>Ponderación: 5%</strong></span></p>
 </section>
 <section id="ejemplo-de-entrega" class="slide level2">
 <h2>Ejemplo de entrega</h2>
@@ -4915,13 +4963,13 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb498-4"><a href="#cb498-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb498-5"><a href="#cb498-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.968    2.387512    2.091
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1283.997 1324.197 1420.983248 1355.009
-       uq      max neval
-    2.378   20.131   500
- 1438.916 4219.802   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min       lq       mean median
+                                y &lt;- x^2    943   1107.0   1488.136   1189
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 746651 769918.5 827198.370 778385
+     uq     max neval
+   1394    8897   500
+ 845830 3082175   500</code></pre>
 </div>
 </div>
 </section>
@@ -5127,14 +5175,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb518"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb518-1"><a href="#cb518-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]       [,2]       [,3]
-[1,] -0.84118963 -0.5132101 -1.0564774
-[2,]  1.00835618 -0.7390054 -0.2715236
-[3,]  1.97126274 -0.7669468  1.4426808
-[4,]  1.02288731 -1.6966127  0.3714644
-[5,]  1.05898845  0.1467753  1.4376012
-[6,] -0.47221495 -0.2463880 -0.6167929
-[7,]  0.09843456  0.2210969 -1.2400156</code></pre>
+<pre><code>           [,1]       [,2]       [,3]
+[1,] -0.4815944  0.5340587 -1.8787352
+[2,]  1.0540719  0.2721120  0.9845310
+[3,]  1.0982326 -0.3460819  0.7014413
+[4,] -1.1141192 -0.8620334  1.1262705
+[5,]  1.9763461 -1.1890993  0.7231093
+[6,] -0.3490592 -0.2608220 -1.1148862
+[7,] -0.4339713  0.1795492 -1.1715511</code></pre>
 </div>
 </div>
 </section>
@@ -5235,10 +5283,7 @@ No todavía, vamos por el ciclo 4</code></pre>
 </section>
 <section id="caso-practico-6" class="slide level2">
 <h2>🐣 Caso práctico</h2>
-<p>Diseña un bucle for de 200 iteraciones que, empezando en un valor inicial de 100 (euros), te sume 3€ si el número actual es par y te reste 5€ si es impar. Un número par o impar: un número par será todo aquel número que al dividir entre 2, la división es exacta, es decir, que su resto es nulo. Por ejemplo, al dividir 5 entre 2, el resto es 1, pero al dividir 12 entre 2 el resto es 0. Para calcula ese resto usaremos la función %%.</p>
-<ul>
-<li>cosas de if-elses</li>
-</ul>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/control-bucles-if-else/"><strong>workbook</strong></a> donde tendrás que diseñar algunos estudios de simulación haciendo uso de <strong>bucles y estructuras condicionales</strong></p>
 </section></section>
 <section>
 <section id="clase-7" class="title-slide slide level1 center">
@@ -5768,7 +5813,7 @@ $tipo
 </div>
 </div>
 </section>
-<section id="tu-turno-9" class="slide level2">
+<section id="tu-turno-7" class="slide level2">
 <h2>💻 Tu turno</h2>
 <p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
 <div class="panel-tabset">
@@ -5910,13 +5955,8 @@ $tipo
 </section>
 <section id="caso-practico-7" class="slide level2">
 <h2>🐣 Caso práctico</h2>
-<p>Define una función llamada <code>conversor_temperatura</code> que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras</p>
-<ul>
-<li><p>Piensa qué argumentos necesita el usuario.</p></li>
-<li><p>Piensa todas las combinaciones posibles e intenta conceptuar la idea antes en un papel.</p></li>
-<li><p>Haz el código más simple y legible posible.</p></li>
-<li><p>Aplica la función a la columna <code>Temp</code> del conjunto <code>airquality</code>, e incorpórala al fichero en una nueva columna <code>Temp_Celsius</code>.</p></li>
-</ul>
+<p>Para practicar con funciones vamos a crear un completo <strong>conversor de temperaturas</strong> que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/funciones-en-r/"><strong>workbook</strong></a> hasta construirlo.</p>
 </section></section>
 <section>
 <section id="clase-8" class="title-slide slide level1 center">
@@ -6012,6 +6052,11 @@ $tipo
 <div class="columns">
 <div class="column" style="width:45%;">
 <p><img data-src="img/tidyverrse_universe.jpg"></p>
+<ul>
+<li><code>{lubridate}</code> manejo de fechas</li>
+<li><code>{rvest}</code>: web scraping</li>
+<li><code>{tidymodels}</code>: modelización/predicción</li>
+</ul>
 </div><div class="column" style="width:55%;">
 <ul>
 <li><code>{tibble}</code>: optimizando data.frame</li>
@@ -6021,10 +6066,7 @@ $tipo
 <li><code>{stringr}</code>: manejo de textos</li>
 <li><code>{purrr}</code>: manejo de listas</li>
 <li><code>{forcats}</code>: manejo de cualitativas</li>
-<li><code>{lubridate}</code> manejo de fechas</li>
 <li><code>{ggplot2}</code>: visualización de datos</li>
-<li><code>{rvest}</code>: web scraping</li>
-<li><code>{tidymodels}</code>: modelización/predicción</li>
 </ul>
 </div>
 </div>
@@ -6034,6 +6076,11 @@ $tipo
 <div class="columns">
 <div class="column" style="width:45%;">
 <p><img data-src="img/tidyverrse_universe.jpg"></p>
+<ul>
+<li><code>{lubridate}</code> manejo de fechas</li>
+<li><code>{rvest}</code>: web scraping</li>
+<li><code>{tidymodels}</code>: modelización/predicción</li>
+</ul>
 </div><div class="column" style="width:55%;">
 <ul>
 <li><code>{tibble}</code>: <span class="hl-yellow"><strong>optimizando data.frame</strong></span></li>
@@ -6043,10 +6090,7 @@ $tipo
 <li><code>{stringr}</code>: manejo de textos</li>
 <li><code>{purrr}</code>: manejo de listas</li>
 <li><code>{forcats}</code>: manejo de cualitativas</li>
-<li><code>{lubridate}</code> manejo de fechas</li>
 <li><code>{ggplot2}</code>: visualización de datos</li>
-<li><code>{rvest}</code>: web scraping</li>
-<li><code>{tidymodels}</code>: modelización/predicción</li>
 </ul>
 </div>
 </div>
@@ -6598,33 +6642,29 @@ $tipo
 <section id="ejemplo-relig_income-4" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <p>Vamos a hilar más fino: ahora mismo en la variable <code>income</code> en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a <span class="hl-yellow"><strong>separar dicha variable e ingresos</strong></span> en dos, llamadas <code>income_inf</code> y <code>income_sup</code></p>
-<div class="fragment">
-<p>¿Está bien? Fíjate bien…</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb642"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb642-1"><a href="#cb642-1"></a>relig_tidy <span class="sc">|&gt;</span></span>
-<span id="cb642-2"><a href="#cb642-2"></a>  <span class="co"># Separamos por -</span></span>
-<span id="cb642-3"><a href="#cb642-3"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb642"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb642-1"><a href="#cb642-1"></a>relig_tidy </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 180 × 4
-   religion income_inf         income_sup people
-   &lt;chr&gt;    &lt;chr&gt;              &lt;chr&gt;       &lt;dbl&gt;
- 1 Agnostic &lt;$10k              &lt;NA&gt;           27
- 2 Agnostic $10                20k            34
- 3 Agnostic $20                30k            60
- 4 Agnostic $30                40k            81
- 5 Agnostic $40                50k            76
- 6 Agnostic $50                75k           137
- 7 Agnostic $75                100k          122
- 8 Agnostic $100               150k          109
- 9 Agnostic &gt;150k              &lt;NA&gt;           84
-10 Agnostic Don't know/refused &lt;NA&gt;           96
+<pre><code># A tibble: 180 × 3
+   religion income             people
+   &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;
+ 1 Agnostic &lt;$10k                  27
+ 2 Agnostic $10-20k                34
+ 3 Agnostic $20-30k                60
+ 4 Agnostic $30-40k                81
+ 5 Agnostic $40-50k                76
+ 6 Agnostic $50-75k               137
+ 7 Agnostic $75-100k              122
+ 8 Agnostic $100-150k             109
+ 9 Agnostic &gt;150k                  84
+10 Agnostic Don't know/refused     96
 # ℹ 170 more rows</code></pre>
-</div>
 </div>
 </div>
 </section>
 <section id="ejemplo-relig_income-5" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
+<p>Vamos a hilar más fino: ahora mismo en la variable <code>income</code> en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a <span class="hl-yellow"><strong>separar dicha variable e ingresos</strong></span> en dos, llamadas <code>income_inf</code> y <code>income_sup</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb644"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb644-1"><a href="#cb644-1"></a>relig_tidy <span class="sc">|&gt;</span></span>
 <span id="cb644-2"><a href="#cb644-2"></a>  <span class="co"># Separamos por -</span></span>
@@ -6646,15 +6686,42 @@ $tipo
 # ℹ 170 more rows</code></pre>
 </div>
 </div>
-<p>Si te fijas la primera columna el <code>"$10k"</code> debería ser una cota superior, no inferior. ¿Cómo indicarle que separe bien ese caso?</p>
+<div class="fragment">
+<p>¿Está ya bien? Fíjate bien…</p>
+</div>
 </section>
 <section id="ejemplo-relig_income-6" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
-<p>Le indicaremos que separe si encuentra <code>"-"</code> o <code>"&lt;"</code> (usamos <code>|</code> para separar ambas opciones)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb646"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb646-1"><a href="#cb646-1"></a>relig_tidy <span class="sc">|&gt;</span></span>
 <span id="cb646-2"><a href="#cb646-2"></a>  <span class="co"># Separamos por -</span></span>
-<span id="cb646-3"><a href="#cb646-3"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb646-3"><a href="#cb646-3"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 180 × 4
+   religion income_inf         income_sup people
+   &lt;chr&gt;    &lt;chr&gt;              &lt;chr&gt;       &lt;dbl&gt;
+ 1 Agnostic &lt;$10k              &lt;NA&gt;           27
+ 2 Agnostic $10                20k            34
+ 3 Agnostic $20                30k            60
+ 4 Agnostic $30                40k            81
+ 5 Agnostic $40                50k            76
+ 6 Agnostic $50                75k           137
+ 7 Agnostic $75                100k          122
+ 8 Agnostic $100               150k          109
+ 9 Agnostic &gt;150k              &lt;NA&gt;           84
+10 Agnostic Don't know/refused &lt;NA&gt;           96
+# ℹ 170 more rows</code></pre>
+</div>
+</div>
+<p>Si te fijas la primera columna el <code>"$10k"</code> debería ser una cota superior, no inferior. ¿Cómo indicarle que separe bien ese caso?</p>
+</section>
+<section id="ejemplo-relig_income-7" class="slide level2">
+<h2>Ejemplo: relig_income</h2>
+<p>Le indicaremos que separe si encuentra <code>"-"</code> o <code>"&lt;"</code> (usamos <code>|</code> para separar ambas opciones)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb648"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb648-1"><a href="#cb648-1"></a>relig_tidy <span class="sc">|&gt;</span></span>
+<span id="cb648-2"><a href="#cb648-2"></a>  <span class="co"># Separamos por -</span></span>
+<span id="cb648-3"><a href="#cb648-3"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 4
    religion income_inf           income_sup people
@@ -6673,14 +6740,14 @@ $tipo
 </div>
 </div>
 </section>
-<section id="ejemplo-relig_income-7" class="slide level2">
+<section id="ejemplo-relig_income-8" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb648"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb648-1"><a href="#cb648-1"></a>relig_tidy <span class="ot">&lt;-</span></span>
-<span id="cb648-2"><a href="#cb648-2"></a>  relig_tidy <span class="sc">|&gt;</span></span>
-<span id="cb648-3"><a href="#cb648-3"></a>  <span class="co"># Separamos por -</span></span>
-<span id="cb648-4"><a href="#cb648-4"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span>
-<span id="cb648-5"><a href="#cb648-5"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb650"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb650-1"><a href="#cb650-1"></a>relig_tidy <span class="ot">&lt;-</span></span>
+<span id="cb650-2"><a href="#cb650-2"></a>  relig_tidy <span class="sc">|&gt;</span></span>
+<span id="cb650-3"><a href="#cb650-3"></a>  <span class="co"># Separamos por -</span></span>
+<span id="cb650-4"><a href="#cb650-4"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span>
+<span id="cb650-5"><a href="#cb650-5"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 4
    religion income_inf           income_sup people
@@ -6700,16 +6767,16 @@ $tipo
 </div>
 <p>Piensa ahora como podemos <span class="hl-yellow"><strong>convertir los límites de ingresos a numéricas (eliminando símbolos, letras, etc)</strong></span></p>
 </section>
-<section id="ejemplo-relig_income-8" class="slide level2">
+<section id="ejemplo-relig_income-9" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <p>Para ello usaremos el paquete <code>{stringr}</code> que hemos visto antes, en concreto la función <code>str_remove_all()</code> a la que le podemos pasar los caracteres que queremos eliminar (fíjate que <code>$</code> al ser un caracter reservado en <code>R</code> hay que indicárselo con <code>\\$</code>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb650"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb650-1"><a href="#cb650-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
-<span id="cb650-2"><a href="#cb650-2"></a>  <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
-<span id="cb650-3"><a href="#cb650-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
-<span id="cb650-4"><a href="#cb650-4"></a>  <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
-<span id="cb650-5"><a href="#cb650-5"></a></span>
-<span id="cb650-6"><a href="#cb650-6"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb652"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb652-1"><a href="#cb652-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
+<span id="cb652-2"><a href="#cb652-2"></a>  <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
+<span id="cb652-3"><a href="#cb652-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
+<span id="cb652-4"><a href="#cb652-4"></a>  <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
+<span id="cb652-5"><a href="#cb652-5"></a></span>
+<span id="cb652-6"><a href="#cb652-6"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 4
    religion income_inf          income_sup people
@@ -6728,18 +6795,17 @@ $tipo
 </div>
 </div>
 </section>
-<section id="ejemplo-relig_income-9" class="slide level2">
+<section id="ejemplo-relig_income-10" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
-<p>Fíjate que tenemos a veces <code>"Don't now/refused"</code>. ¿Qué deberíamos tener en realidad?</p>
+<p>Fíjate que tenemos <code>"Don't now/refused"</code>. ¿Qué deberíamos tener?</p>
 <div class="fragment">
 <p>Debería ser un <span class="hl-yellow"><strong>dato ausente</strong></span> así que usaremos <code>if_else()</code>: si contiene dicha frase, <code>NA</code>, en caso contrario su valor (consejo: <code>str_detect()</code> para detectar patrones en textos, y evitar tener que escribir toda la palabra sin errores)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb652"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb652-1"><a href="#cb652-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
-<span id="cb652-2"><a href="#cb652-2"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"refused"</span>), <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
-<span id="cb652-3"><a href="#cb652-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
-<span id="cb652-4"><a href="#cb652-4"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"refused"</span>), <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_sup)</span>
-<span id="cb652-5"><a href="#cb652-5"></a></span>
-<span id="cb652-6"><a href="#cb652-6"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb654"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb654-1"><a href="#cb654-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
+<span id="cb654-2"><a href="#cb654-2"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"refused"</span>), <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
+<span id="cb654-3"><a href="#cb654-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
+<span id="cb654-4"><a href="#cb654-4"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"refused"</span>), <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_sup)</span>
+<span id="cb654-5"><a href="#cb654-5"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 4
    religion income_inf income_sup people
@@ -6759,10 +6825,10 @@ $tipo
 </div>
 </div>
 </section>
-<section id="ejemplo-relig_income-10" class="slide level2">
+<section id="ejemplo-relig_income-11" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb654"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb654-1"><a href="#cb654-1"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb656"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb656-1"><a href="#cb656-1"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 4
    religion income_inf income_sup people
@@ -6782,16 +6848,16 @@ $tipo
 </div>
 <p>En la primera línea, ese <code>""</code> también debería ser `NA``</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb656"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb656-1"><a href="#cb656-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
-<span id="cb656-2"><a href="#cb656-2"></a>  <span class="fu">if_else</span>(relig_tidy<span class="sc">$</span>income_inf <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
-<span id="cb656-3"><a href="#cb656-3"></a>relig_tidy<span class="sc">$</span>income_suop <span class="ot">&lt;-</span></span>
-<span id="cb656-4"><a href="#cb656-4"></a>  <span class="fu">if_else</span>(relig_tidy<span class="sc">$</span>income_sup <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_sup)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb658"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb658-1"><a href="#cb658-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
+<span id="cb658-2"><a href="#cb658-2"></a>  <span class="fu">if_else</span>(relig_tidy<span class="sc">$</span>income_inf <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
+<span id="cb658-3"><a href="#cb658-3"></a>relig_tidy<span class="sc">$</span>income_suop <span class="ot">&lt;-</span></span>
+<span id="cb658-4"><a href="#cb658-4"></a>  <span class="fu">if_else</span>(relig_tidy<span class="sc">$</span>income_sup <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, relig_tidy<span class="sc">$</span>income_sup)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="ejemplo-relig_income-11" class="slide level2">
+<section id="ejemplo-relig_income-12" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb657"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb657-1"><a href="#cb657-1"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb659"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb659-1"><a href="#cb659-1"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 5
    religion income_inf income_sup people income_suop
@@ -6810,11 +6876,14 @@ $tipo
 </div>
 </div>
 <p>Además si te fijas los números son en realidad caracteres, así que vamos a <span class="hl-yellow"><strong>convertirlos a números</strong></span></p>
-<div class="fragment">
+</section>
+<section id="ejemplo-relig_income-13" class="slide level2">
+<h2>Ejemplo: relig_income</h2>
+<p>Además si te fijas los números son en realidad caracteres, así que vamos a <span class="hl-yellow"><strong>convertirlos a números</strong></span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb659"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb659-1"><a href="#cb659-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_inf)</span>
-<span id="cb659-2"><a href="#cb659-2"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_sup)</span>
-<span id="cb659-3"><a href="#cb659-3"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb661"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb661-1"><a href="#cb661-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_inf)</span>
+<span id="cb661-2"><a href="#cb661-2"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_sup)</span>
+<span id="cb661-3"><a href="#cb661-3"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 5
    religion income_inf income_sup people income_suop
@@ -6832,19 +6901,18 @@ $tipo
 # ℹ 170 more rows</code></pre>
 </div>
 </div>
-</div>
 </section>
-<section id="ejemplo-relig_income-12" class="slide level2">
+<section id="ejemplo-relig_income-14" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <p>¿Se te ocurre alguna forma de <strong>«cuantificar numéricamente»</strong> los valores ausentes que tenemos en este caso?</p>
 <div class="fragment">
 <p>Si te fijas en realidad cuando hay ausente en el límite inferior en realidad podríamos poner un 0 (nadie puede ganar menos de eso) y cuando lo tenemos en el límite superior sería <code>Inf</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb661"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb661-1"><a href="#cb661-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
-<span id="cb661-2"><a href="#cb661-2"></a>  <span class="fu">if_else</span>(<span class="fu">is.na</span>(relig_tidy<span class="sc">$</span>income_inf), <span class="dv">0</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
-<span id="cb661-3"><a href="#cb661-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
-<span id="cb661-4"><a href="#cb661-4"></a>  <span class="fu">if_else</span>(<span class="fu">is.na</span>(relig_tidy<span class="sc">$</span>income_sup), <span class="cn">Inf</span>, relig_tidy<span class="sc">$</span>income_sup)</span>
-<span id="cb661-5"><a href="#cb661-5"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb663"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb663-1"><a href="#cb663-1"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
+<span id="cb663-2"><a href="#cb663-2"></a>  <span class="fu">if_else</span>(<span class="fu">is.na</span>(relig_tidy<span class="sc">$</span>income_inf), <span class="dv">0</span>, relig_tidy<span class="sc">$</span>income_inf)</span>
+<span id="cb663-3"><a href="#cb663-3"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
+<span id="cb663-4"><a href="#cb663-4"></a>  <span class="fu">if_else</span>(<span class="fu">is.na</span>(relig_tidy<span class="sc">$</span>income_sup), <span class="cn">Inf</span>, relig_tidy<span class="sc">$</span>income_sup)</span>
+<span id="cb663-5"><a href="#cb663-5"></a>relig_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 180 × 5
    religion income_inf income_sup people income_suop
@@ -6864,54 +6932,54 @@ $tipo
 </div>
 </div>
 </section>
-<section id="ejemplo-relig_income-13" class="slide level2">
+<section id="ejemplo-relig_income-15" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <p>Aunque nos haya llevado un rato este es el <strong>código completo resumido</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb663"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb663-1"><a href="#cb663-1"></a>relig_tidy <span class="ot">&lt;-</span></span>
-<span id="cb663-2"><a href="#cb663-2"></a>  relig_income <span class="sc">|&gt;</span></span>
-<span id="cb663-3"><a href="#cb663-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"&lt;$10k"</span><span class="sc">:</span><span class="st">"Don't know/refused"</span>, <span class="at">names_to =</span> <span class="st">"income"</span>,</span>
-<span id="cb663-4"><a href="#cb663-4"></a>               <span class="at">values_to =</span> <span class="st">"people"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb663-5"><a href="#cb663-5"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span>
-<span id="cb663-6"><a href="#cb663-6"></a></span>
-<span id="cb663-7"><a href="#cb663-7"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
-<span id="cb663-8"><a href="#cb663-8"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
-<span id="cb663-9"><a href="#cb663-9"></a></span>
-<span id="cb663-10"><a href="#cb663-10"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
-<span id="cb663-11"><a href="#cb663-11"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"refused"</span>) <span class="sc">|</span></span>
-<span id="cb663-12"><a href="#cb663-12"></a>            relig_tidy<span class="sc">$</span>income_inf <span class="sc">==</span> <span class="st">""</span>, <span class="dv">0</span>, <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_inf))</span>
-<span id="cb663-13"><a href="#cb663-13"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
-<span id="cb663-14"><a href="#cb663-14"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"refused"</span>) <span class="sc">|</span></span>
-<span id="cb663-15"><a href="#cb663-15"></a>            relig_tidy<span class="sc">$</span>income_sup <span class="sc">==</span> <span class="st">""</span>, <span class="cn">Inf</span>, <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_sup))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb665"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb665-1"><a href="#cb665-1"></a>relig_tidy <span class="ot">&lt;-</span></span>
+<span id="cb665-2"><a href="#cb665-2"></a>  relig_income <span class="sc">|&gt;</span></span>
+<span id="cb665-3"><a href="#cb665-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"&lt;$10k"</span><span class="sc">:</span><span class="st">"Don't know/refused"</span>, <span class="at">names_to =</span> <span class="st">"income"</span>,</span>
+<span id="cb665-4"><a href="#cb665-4"></a>               <span class="at">values_to =</span> <span class="st">"people"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb665-5"><a href="#cb665-5"></a>  <span class="fu">separate</span>(income, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"income_inf"</span>, <span class="st">"income_sup"</span>), <span class="at">sep =</span> <span class="st">"-|&lt;"</span>)</span>
+<span id="cb665-6"><a href="#cb665-6"></a></span>
+<span id="cb665-7"><a href="#cb665-7"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
+<span id="cb665-8"><a href="#cb665-8"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"</span><span class="sc">\\</span><span class="st">$|&gt;|k"</span>)</span>
+<span id="cb665-9"><a href="#cb665-9"></a></span>
+<span id="cb665-10"><a href="#cb665-10"></a>relig_tidy<span class="sc">$</span>income_inf <span class="ot">&lt;-</span></span>
+<span id="cb665-11"><a href="#cb665-11"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_inf, <span class="st">"refused"</span>) <span class="sc">|</span></span>
+<span id="cb665-12"><a href="#cb665-12"></a>            relig_tidy<span class="sc">$</span>income_inf <span class="sc">==</span> <span class="st">""</span>, <span class="dv">0</span>, <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_inf))</span>
+<span id="cb665-13"><a href="#cb665-13"></a>relig_tidy<span class="sc">$</span>income_sup <span class="ot">&lt;-</span></span>
+<span id="cb665-14"><a href="#cb665-14"></a>  <span class="fu">if_else</span>(<span class="fu">str_detect</span>(relig_tidy<span class="sc">$</span>income_sup, <span class="st">"refused"</span>) <span class="sc">|</span></span>
+<span id="cb665-15"><a href="#cb665-15"></a>            relig_tidy<span class="sc">$</span>income_sup <span class="sc">==</span> <span class="st">""</span>, <span class="cn">Inf</span>, <span class="fu">as.numeric</span>(relig_tidy<span class="sc">$</span>income_sup))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="ejemplo-relig_income-14" class="slide level2">
+<section id="ejemplo-relig_income-16" class="slide level2">
 <h2>Ejemplo: relig_income</h2>
 <p>¿Por qué era <span class="hl-yellow"><strong>importante tenerlo en tidydata</strong></span>? Lo veremos más adelante al visualizar los datos pero esto ya nos permite realizar filtros muy rápidos con muy poco código.</p>
-<p>Por ejemplo: ¿cuántas personas agnosticas con ingresos superiores (o iguales) a 30 tenemos?</p>
+<p>Por ejemplo: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos?</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb664"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb664-1"><a href="#cb664-1"></a><span class="co"># una línea de código</span></span>
-<span id="cb664-2"><a href="#cb664-2"></a><span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span> <span class="sc">&amp;</span> relig_tidy<span class="sc">$</span>income_inf <span class="sc">&gt;=</span> <span class="dv">30</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb666"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb666-1"><a href="#cb666-1"></a><span class="co"># una línea de código</span></span>
+<span id="cb666-2"><a href="#cb666-2"></a><span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span> <span class="sc">&amp;</span> relig_tidy<span class="sc">$</span>income_inf <span class="sc">&gt;=</span> <span class="dv">30</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 609</code></pre>
 </div>
 </div>
 </div>
 </section>
-<section id="tu-turno-6" class="slide level2">
+<section id="tu-turno-8" class="slide level2">
 <h2>💻 Tu turno</h2>
 <p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
 <div class="panel-tabset">
 <ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li><a href="#tabset-12-2"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li><a href="#tabset-12-3"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li><a href="#tabset-12-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li><a href="#tabset-12-5"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1">
-<p>📝 Usa el dataset original <code>relig_income</code> y trata de responder a la última pregunta: ¿cuántas personas agnosticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses <code>R</code>? ¿Cuál tiene mayor probabilidad de error?</p>
+<p>📝 Usa el dataset original <code>relig_income</code> y trata de responder a la última pregunta: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses <code>R</code>? ¿Cuál tiene mayor probabilidad de error?</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb666"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb666-1"><a href="#cb666-1"></a><span class="fu">sum</span>(relig_income[relig_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>,</span>
-<span id="cb666-2"><a href="#cb666-2"></a>             <span class="fu">c</span>(<span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb668"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb668-1"><a href="#cb668-1"></a><span class="fu">sum</span>(relig_income[relig_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>,</span>
+<span id="cb668-2"><a href="#cb668-2"></a>             <span class="fu">c</span>(<span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6920,15 +6988,15 @@ $tipo
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb667"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb667-1"><a href="#cb667-1"></a>relig_tidy<span class="sc">$</span>avg_income <span class="ot">&lt;-</span> </span>
-<span id="cb667-2"><a href="#cb667-2"></a>  <span class="fu">if_else</span>(<span class="fu">is.infinite</span>(relig_tidy<span class="sc">$</span>income_sup), <span class="cn">NA</span>, (relig_tidy<span class="sc">$</span>income_sup <span class="sc">+</span> relig_tidy<span class="sc">$</span>income_inf)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb667-3"><a href="#cb667-3"></a></span>
-<span id="cb667-4"><a href="#cb667-4"></a><span class="co"># Agnosticos vs catolicos</span></span>
-<span id="cb667-5"><a href="#cb667-5"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb667-6"><a href="#cb667-6"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb667-7"><a href="#cb667-7"></a></span>
-<span id="cb667-8"><a href="#cb667-8"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb667-9"><a href="#cb667-9"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb669"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb669-1"><a href="#cb669-1"></a>relig_tidy<span class="sc">$</span>avg_income <span class="ot">&lt;-</span> </span>
+<span id="cb669-2"><a href="#cb669-2"></a>  <span class="fu">if_else</span>(<span class="fu">is.infinite</span>(relig_tidy<span class="sc">$</span>income_sup), <span class="cn">NA</span>, (relig_tidy<span class="sc">$</span>income_sup <span class="sc">+</span> relig_tidy<span class="sc">$</span>income_inf)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb669-3"><a href="#cb669-3"></a></span>
+<span id="cb669-4"><a href="#cb669-4"></a><span class="co"># Agnosticos vs catolicos</span></span>
+<span id="cb669-5"><a href="#cb669-5"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
+<span id="cb669-6"><a href="#cb669-6"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb669-7"><a href="#cb669-7"></a></span>
+<span id="cb669-8"><a href="#cb669-8"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
+<span id="cb669-9"><a href="#cb669-9"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6937,11 +7005,11 @@ $tipo
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb668"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb668-1"><a href="#cb668-1"></a>greatest_income <span class="ot">&lt;-</span></span>
-<span id="cb668-2"><a href="#cb668-2"></a>  relig_tidy[relig_tidy<span class="sc">$</span>income_inf <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> relig_tidy<span class="sc">$</span>religion <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buddhist"</span>, <span class="st">"Hindu"</span>), ]</span>
-<span id="cb668-3"><a href="#cb668-3"></a></span>
-<span id="cb668-4"><a href="#cb668-4"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Buddhist"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb668-5"><a href="#cb668-5"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Hindu"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb670"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb670-1"><a href="#cb670-1"></a>greatest_income <span class="ot">&lt;-</span></span>
+<span id="cb670-2"><a href="#cb670-2"></a>  relig_tidy[relig_tidy<span class="sc">$</span>income_inf <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> relig_tidy<span class="sc">$</span>religion <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buddhist"</span>, <span class="st">"Hindu"</span>), ]</span>
+<span id="cb670-3"><a href="#cb670-3"></a></span>
+<span id="cb670-4"><a href="#cb670-4"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Buddhist"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb670-5"><a href="#cb670-5"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Hindu"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6950,9 +7018,9 @@ $tipo
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb669"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb669-1"><a href="#cb669-1"></a>table4b <span class="sc">|&gt;</span></span>
-<span id="cb669-2"><a href="#cb669-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"1999"</span><span class="sc">:</span><span class="st">"2000"</span>, <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb669-3"><a href="#cb669-3"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb671"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb671-1"><a href="#cb671-1"></a>table4b <span class="sc">|&gt;</span></span>
+<span id="cb671-2"><a href="#cb671-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"1999"</span><span class="sc">:</span><span class="st">"2000"</span>, <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb671-3"><a href="#cb671-3"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6961,12 +7029,12 @@ $tipo
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb670"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb670-1"><a href="#cb670-1"></a>billboard <span class="sc">|&gt;</span></span>
-<span id="cb670-2"><a href="#cb670-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"wk1"</span><span class="sc">:</span><span class="st">"wk76"</span>,</span>
-<span id="cb670-3"><a href="#cb670-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
-<span id="cb670-4"><a href="#cb670-4"></a>               <span class="at">names_prefix =</span> <span class="st">"wk"</span>,</span>
-<span id="cb670-5"><a href="#cb670-5"></a>               <span class="at">values_to =</span> <span class="st">"position"</span>,</span>
-<span id="cb670-6"><a href="#cb670-6"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb672"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb672-1"><a href="#cb672-1"></a>billboard <span class="sc">|&gt;</span></span>
+<span id="cb672-2"><a href="#cb672-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"wk1"</span><span class="sc">:</span><span class="st">"wk76"</span>,</span>
+<span id="cb672-3"><a href="#cb672-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
+<span id="cb672-4"><a href="#cb672-4"></a>               <span class="at">names_prefix =</span> <span class="st">"wk"</span>,</span>
+<span id="cb672-5"><a href="#cb672-5"></a>               <span class="at">values_to =</span> <span class="st">"position"</span>,</span>
+<span id="cb672-6"><a href="#cb672-6"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6975,26 +7043,64 @@ $tipo
 </section>
 <section id="caso-practico-8" class="slide level2">
 <h2>🐣 Caso práctico</h2>
-<p>datapasta +</p>
-<p>En el paquete <code>{tidyr}</code> contamos con el dataset <code>who</code> (dataset de la Organización Mundial de la Salud)</p>
+<p>En el paquete <code>{tidyr}</code> contamos con el dataset <code>who2</code> (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/tidydata/"><strong>workbook</strong></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb671"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb671-1"><a href="#cb671-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb671-2"><a href="#cb671-2"></a>who</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb673"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb673-1"><a href="#cb673-1"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,240 × 58
+   country      year sp_m_014 sp_m_1524 sp_m_2534 sp_m_3544 sp_m_4554 sp_m_5564
+   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1980       NA        NA        NA        NA        NA        NA
+ 2 Afghanistan  1981       NA        NA        NA        NA        NA        NA
+ 3 Afghanistan  1982       NA        NA        NA        NA        NA        NA
+ 4 Afghanistan  1983       NA        NA        NA        NA        NA        NA
+ 5 Afghanistan  1984       NA        NA        NA        NA        NA        NA
+ 6 Afghanistan  1985       NA        NA        NA        NA        NA        NA
+ 7 Afghanistan  1986       NA        NA        NA        NA        NA        NA
+ 8 Afghanistan  1987       NA        NA        NA        NA        NA        NA
+ 9 Afghanistan  1988       NA        NA        NA        NA        NA        NA
+10 Afghanistan  1989       NA        NA        NA        NA        NA        NA
+# ℹ 7,230 more rows
+# ℹ 50 more variables: sp_m_65 &lt;dbl&gt;, sp_f_014 &lt;dbl&gt;, sp_f_1524 &lt;dbl&gt;,
+#   sp_f_2534 &lt;dbl&gt;, sp_f_3544 &lt;dbl&gt;, sp_f_4554 &lt;dbl&gt;, sp_f_5564 &lt;dbl&gt;,
+#   sp_f_65 &lt;dbl&gt;, sn_m_014 &lt;dbl&gt;, sn_m_1524 &lt;dbl&gt;, sn_m_2534 &lt;dbl&gt;,
+#   sn_m_3544 &lt;dbl&gt;, sn_m_4554 &lt;dbl&gt;, sn_m_5564 &lt;dbl&gt;, sn_m_65 &lt;dbl&gt;,
+#   sn_f_014 &lt;dbl&gt;, sn_f_1524 &lt;dbl&gt;, sn_f_2534 &lt;dbl&gt;, sn_f_3544 &lt;dbl&gt;,
+#   sn_f_4554 &lt;dbl&gt;, sn_f_5564 &lt;dbl&gt;, sn_f_65 &lt;dbl&gt;, ep_m_014 &lt;dbl&gt;, …</code></pre>
 </div>
-<ol type="1">
-<li><p>¿Qué <span class="hl-yellow"><strong>significan los datos</strong></span>? ¿Cuántas <span class="hl-yellow"><strong>variables y observaciones</strong></span> tenemos?</p></li>
-<li><p>¿Cuántos <span class="hl-yellow"><strong>tipos de variables</strong></span> tenemos?</p></li>
-<li><p>¿Todas las variables son necesarias? <span class="hl-yellow"><strong>Elimina la información redundante</strong></span>.</p></li>
-<li><p><span class="hl-yellow"><strong>Convierte a tidydata</strong></span> la base de datos realizando todas las opciones que consideres (consejo: usa papel y boli para bocetar como debería quedar la base de datos).</p></li>
-</ol>
+</div>
 </section></section>
 <section>
 <section id="clase-9" class="title-slide slide level1 center">
 <h1>Clase 9: <span class="flow">entrega II</span></h1>
-
+<p><span style="color:#444442;"><strong>Ponderación: 15%</strong></span></p>
 </section>
 <section id="instrucciones" class="slide level2">
 <h2>Instrucciones</h2>
+<p>El día de la entrega tendrás subido una <span class="hl-yellow"><strong>plantilla de entrega</strong></span> en formato <code>.qmd</code> en el campus.</p>
+<ul>
+<li><p><strong>Descomprime la carpeta</strong> (¡importante! si no descomprimes, aunque puedas editar el <code>.qmd</code>, no podrás generar el <code>.html</code>)</p></li>
+<li><p><strong>Edita la cabecera</strong> con tu nombre y DNI</p></li>
+<li><p>Deberás <strong>rellenar cada chunk</strong> con el código que consideres (en algunos te he dejado pistas) y <strong>cambiar</strong> de <code>#| eval: false</code> a <code>#| eval: true</code> (si los quitas directamente, por defecto ya es true)</p></li>
+<li><p>Deberás de <strong>comentar</strong> con texto normal lo que consideres para responder a las preguntas.</p></li>
+<li><p>Será <span class="hl-yellow"><strong>OBLIGATORIO</strong></span> subir el archivo <code>.html</code> generado (solo se corregirá dicho archivo) así que ve renderizando según rellenas el documento, no lo dejes para el final.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="clase-10" class="title-slide slide level1 center">
+<h1>Clase 10: <span class="flow">tidyverse (filas)</span></h1>
+<p><span style="color:#444442;"><strong>Tidyverse: operaciones por filas (I)</strong></span></p>
+</section>
+<section id="section" class="slide level2">
+<h2>…</h2>
+</section></section>
+<section>
+<section id="clase-11" class="title-slide slide level1 center">
+<h1>Clase 11: <span class="flow">tidyverse (filas)</span></h1>
+<p><span style="color:#444442;"><strong>Tidyverse: operaciones por filas (II)</strong></span></p>
+</section>
+<section class="slide level2">
+
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM)</p>
 </div>
