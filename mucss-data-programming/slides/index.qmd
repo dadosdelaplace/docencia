@@ -194,8 +194,6 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 * `airquality` from the `{datasets}` package (already installed by default): daily measurements (153 observations) of air quality in New York, from May to September 1973. Measured **6 variables**: ozone, solar radiation, wind, temperature, month and day.
 
-* `salto_longitud`: guarda cómo ha **progresado el récord de salto de longitud masculino**. Tabla extraída de la wikipedia <https://shorturl.at/Wqif1>
-
 * `pinniped` del paquete `{Biostatistics}`: **peso corporal y cerebral** de 33 especies de pinnípedos (morsas, leones marinos y elefantes marinos) desagregado por sexos y mono/poligamia.
 
 ---
@@ -651,9 +649,11 @@ Now we have a **fourth window**: the window where we will [**write our codes**]{
 . . .
 
 1. **Write the code** to be executed.
+
 . . .
 
 2. **Save the .R file** by clicking on `Save current document`.
+
 . . .
 
 3. The code does not execute unless we indicate it. We have **three options to run a script**:
@@ -1103,7 +1103,7 @@ Text variables (character or string) are [** ALWAYS in quotes**]{.hl-orange}: `T
 
 ## First function: paste
 
-Como hemos comentado `R` llamaremos [**función**]{.hl-yellow} a un trozo de [**código encapsulado**]{.hl-yellow} bajo un nombre, y que depende de unos [**argumentos**]{.hl-yellow} de entrada. Nuestra primera función será `paste()`: dadas dos cadenas de texto nos permite pegarlas.
+As we have commented `R` we will call [**function**]{.hl-yellow} a piece of [**encapsulated code**]{.hl-yellow} under a name, and which depends on some input [**arguments**]{.hl-yellow}. Our first function will be `paste()`: given two strings, it allows us to paste them together.
 
 ```{r}
 paste("Javi", "Álvarez")
@@ -1111,7 +1111,7 @@ paste("Javi", "Álvarez")
 
 . . .
 
-Fíjate que [**por defecto**]{.hl-yellow} nos pega las cadenas con un espacio, pero podemos añadir un [**argumento opcional**]{.hl-yellow} para indicarle el separador (en `sep = ...`). 
+Note that [**default**]{.hl-yellow} pastes strings with a space, but we can add an [**optional argument**]{.hl-yellow} to tell it the separator (in `sep = ...`). 
 
 ```{r}
 paste("Javi", "Álvarez", sep = "*")
@@ -1127,15 +1127,17 @@ paste("Javi", "Álvarez", sep = "*")
 :::
 
 ::: {.column width="50%"}
-¿Cómo saber [**qué argumentos necesita una función**]{.hl-yellow}? Escribiendo en consola `? paste` te aparecerá una [**ayuda**]{.hl-yellow} en el panel multiusos.
 
-En dicha ayuda podrás ver en su cabecera que argumentos ya tiene [**asignados por defecto**]{.hl-yellow} la función
+How do I know [**what arguments does a function need**]{.hl-yellow}?
+
+By typing `? paste` in the console, you will get a [**help**]{.hl-yellow} in the multipurpose panel, where you can see in its header what arguments the function already has [**default arguments**]{.hl-yellow} assigned to it.
+
 :::
 :::
 
 . . .
 
-Existe una función similar llamada `paste0()` que pega por defecto con `sep = ""` (sin nada).
+There is a similar function called `paste0()` that pastes by default with `sep = “”` (without anything).
 
 ```{r}
 paste0("Javi", "Álvarez")
@@ -1145,7 +1147,7 @@ paste0("Javi", "Álvarez")
 
 ## First function: paste
 
-Los argumentos (y su detalle) también pueden ser consultado **tabulando (detras una coma)**.
+The arguments (and their detail) can also be consulted by **tabulating (after a comma)**.
 
 ![](img/tab-functions.png)
 
@@ -1153,8 +1155,7 @@ Los argumentos (y su detalle) también pueden ser consultado **tabulando (detras
 
 ## Functions: default arguments
 
-Es muy importante entender el concepto de [**argumento por defecto de una función**]{.hl-yellow} en `R`: es un valor que la función usa pero a veces podemos no ver porque [**ya tiene un valor asignado**]{.hl-yellow}. 
-
+It is very important to understand the concept of [**default argument of a function**]{.hl-yellow} in `R`: it is a value that the function uses but sometimes we may not see because [**already has a value assigned**]{.hl-yellow}. 
 ```{r}
 # Same
 paste("Javi", "Álvarez")
@@ -1332,6 +1333,7 @@ date_char <- "2021-04-21"
 ```
 
 It looks like a simple text string but [**should represent an instant in time**]{.hl-yellow}. What should happen if [**we add a 1 to a date**]{.hl-purple}?
+
 . . .
 
 ```{r}
@@ -2276,11 +2278,12 @@ t(data_mat)
 ```
 
 . . .
+
 Since we now have two dimensions in our data, to [**access elements with `[]`**]{.hl-yellow} we must provide **two comma-separated indexes**: row and column indexes 
 
 ```{r}
 data_mat[2, 1] # second row, first column
-data_mat[1, 2] # first fila, second column
+data_mat[1, 2] # first row, second column
 ```
 
 ---
@@ -2456,57 +2459,58 @@ mat + 1
 
 ## Second attempt: data.frame
 
-Las matrices tienen el mismo problema que los vectores: si juntamos datos de distinto tipo, se [**perturba la integridad del dato**]{.hl-red} ya que los convierte (fíjate en el código inferior: las edades y los `TRUE/FALSE` los ha convertido a texto)
+Arrays have the same problem as vectors: if we put together data of different types, it [**data integrity is compromised**]{.hl-red} as it converts them (see the code below: the ages and the `TRUE/FALSE` are converted to text).
+
 
 ```{r}
 #| code-line-numbers: "4-5"
-edades <- c(14, 24, NA)
-soltero <- c(TRUE, NA, FALSE)
-nombres <- c("javi", "laura", "lucía")
-matriz <- cbind(edades, soltero, nombres)
-matriz
+ages <- c(14, 24, NA)
+single <- c(TRUE, NA, FALSE)
+names <- c("javi", "laura", "lucía")
+mat <- cbind(ages, single, names)
+mat
 ```
 
 . . .
 
-De hecho al no ser números ya no podemos realizar operaciones aritméticas
+In fact, since they are not numbers, we can no longer perform arithmetic operations.
 
 ```{r}
 #| error: true
-matriz + 1
+mat + 1
 ```
 
 ---
 
 ## Second attempt: data.frame
 
-Para poder trabajar con [**variables de distinto tipo**]{.hl-yellow} tenemos en `R` lo que se conoce como [**data.frame**]{.hl-yellow}: concatenación de variables de igual longitud pero que pueden ser de [**tipo distinto**]{.hl-purple}.
+In order to work with [**variables of different type**]{.hl-yellow} we have in `R` what is known as [**data.frame**]{.hl-yellow}: concatenation of variables of equal length but which can be of [**different type**]{.hl-purple}.
 
 ```{r}
-tabla <- data.frame(edades, soltero, nombres)
-class(tabla)
-tabla
+table <- data.frame(ages, single, names)
+class(table)
+table
 ```
 
 ---
 
 ## Second attempt: data.frame
 
-Dado que un `data.frame` es ya un intento de «base de datos» las variables no son meros vectores matemáticos: [**tienen un significado**]{.hl-yellow} y podemos (debemos) [**ponerles nombres**]{.hl-purple} que describan su significado
+Since a `data.frame` is already an attempt at a `database` the variables are not mere mathematical vectors: [**they have a meaning**]{.hl-yellow} and we can (we must) [**give them names**]{.hl-purple} that describe their meaning.
 
 ```{r}
 library(lubridate)
-tabla <-
-  data.frame("edad" = edades, "estado" = soltero, "nombre" = nombres,
-             "f_nacimiento" = as_date(c("1989-09-10", "1992-04-01", "1980-11-27")))
-tabla
+table <-
+  data.frame("ages" = ages, "single" = single, "names" = names,
+             "birth_date" = as_date(c("1989-09-10", "1992-04-01", "1980-11-27")))
+table
 ```
 
 ---
 
 ## Second attempt: data.frame
 
-[**¡TENEMOS NUESTRO PRIMER CONJUNTO DE DATOS!**]{.hl-yellow} (estrictamente no podemos hablar de base de datos pero de momento como lo si fuesen). Puedes visualizarlo escribiendo su nombre en consola o con `View(tabla)`
+[**We have our first data set!**]{.hl-yellow} (strictly speaking we can't talk about a database but for the moment it looks like one). You can visualize it by typing its name in console or with `View(table)`.
 
 ![](img/view_tabla.jpg)
 
@@ -2514,12 +2518,13 @@ tabla
 
 ## Get variables
 
-Si queremos acceder a sus elementos, al ser de nuevo **datos tabulados**, podemos acceder como en las matrices ([**no recomendable**]{.hl-red}): de nuevo [**tenemos dos índices**]{.hl-yellow} (filas y columnas, dejando libre la que no usemos)
+If we want to access its elements, being again **tabulated data**, we can access as in the matrices ([**not recommended**]{.hl-red}): again [**we have two indexes**]{.hl-yellow} (rows and columns, leaving free the one we don't use)
+
 
 ```{r}
-tabla[2, ]  # segunda fila (todas sus variables)
-tabla[, 3]  # tercera columna (de todos los individuos)
-tabla[2, 1]  # primera característica de la segunda persona
+table[2, ]  # second row (all variables)
+table[, 3]  # third column (all individuals)
+table[2, 1] # first variable of the second individual
 ```
 
 . . .
@@ -2530,7 +2535,9 @@ tabla[2, 1]  # primera característica de la segunda persona
 :::
 
 ::: {.column width="75%"}
-Pero también tiene las ventajas de una [**«base» de datos**]{.hl-yellow} : podemos [**aceder a las variables por su nombre**]{.hl-purple} ([**lo recomendable**]{.hl-green} ya que las variables pueden cambiar de posición y ahora sí tienen un significado), poniendo el nombre de la tabla seguido del símbolo `$` (con el **tabulador**, nos aparecerá un menú de columnas a elegir)
+
+But it also has the advantages of a [**database**]{.hl-yellow} : we can [**access the variables by name**]{.hl-purple} ([**recommended**]{.hl-green} since the variables can change position and now they have a meaning), putting the name of the table followed by the symbol `$` (with the **tab**, a menu of columns to choose from will appear).
+
 :::
 :::
 
@@ -2538,65 +2545,66 @@ Pero también tiene las ventajas de una [**«base» de datos**]{.hl-yellow} : po
 
 ## Ask functions
 
--   `names()`: nos muestra los nombres de las variables
+- `names()`: shows us the variable names
 
 ```{r}
-names(tabla)
+names(table)
 ```
 
 . . .
 
--   `dim()`: nos muestra las dimensiones (también `nrow()` y `ncol()`)
+- `dim()`: shows dimensions (also `nrow()` and `ncol()`)
 
 ```{r}
-dim(tabla)
+dim(table)
 ```
 
 . . .
 
--   Podemos acceder a las variables por su nombre
+-  Variables can be accessed by name
 
 ```{r}
-tabla[c(1, 3), "nombre"]
-tabla$nombre[c(1, 3)]
+table[c(1, 3), "names"]
+table$names[c(1, 3)]
 ```
 
 ---
 
 ## Add a variable
 
-Si tenemos uno ya creado y queremos [**añadir una columna**]{.hl-yellow} es tan simple como usar la función `data.frame()` que ya hemos visto para concatenar la columna. Vamos añadir por ejemplo una nueva variable, el número de hermanos de cada individuo.
+If we have one already created and we want to [**add a column**]{.hl-yellow} it is as simple as using the `data.frame()` function we have already seen to concatenate the column. Let's add for example a new variable, the number of siblings of each individual.
 
 ```{r}
-# Añadimos una nueva columna con nº de hermanos/as
-hermanos <- c(0, 2, 3)
-tabla <- data.frame(tabla, "n_hermanos" = hermanos)
-tabla
+# add a new column
+siblings <- c(0, 2, 3)
+table <- data.frame(table, "n_sib" = siblings)
+table
 ```
 
 ---
 
 ## Last attempt: tibble
 
-Las tablas en formato `data.frame` tienen algunas [**limitaciones**]{.hl-red}. La principal es que [**no permite la recursividad**]{.hl-red}: imagina que definimos una base de datos con estaturas y pesos, y queremos una tercera variable con el IMC
+Tables in `data.frame` format have some [**limitations**]{.hl-red}. The main one is that [**does not allow recursion**]{.hl-red}: imagine that we define a database with heights and weights, and we want a third variable with the BMI.
+
 
 ```{r}
 #| error: true
-data.frame("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70),
-           "IMC" = peso / (estatura^2))
+data.frame("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70),
+           "BMI" = weight / (height^2))
 ```
 
 . . .
 
 
-En adelante usaremos el formato `tibble` ([**data.frame mejorado**]{.hl-yellow}) del paquete `{tibble}`
+Hereafter we will use the `tibble` ([**enhanced data.frame**]{.hl-yellow}) format from the `{tibble}` package.
 
 ```{r}
 library(tibble)
-datos_tb <- 
-  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
-class(datos_tb)
-datos_tb
+data_tb <- 
+  tibble("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70), "BMI" = weight / (height^2))
+class(data_tb)
+data_tb
 ```
 
 ---
@@ -2604,35 +2612,38 @@ datos_tb
 ## Last attempt: tibble
 
 ```{r}
-datos_tb <-
-  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
-datos_tb
+data_tb <- 
+  tibble("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70), "BMI" = weight / (height^2))
+class(data_tb)
+data_tb
 ```
 
 Las tablas en formato `tibble` nos permitirá una [**gestión más ágil, eficiente y coherente**]{.hl-yellow} de los datos, con 4 ventajas principales:
 
 . . .
 
--   [**Metainformación**]{.hl-yellow}: si te fijas en la cabecera, nos dice ya automáticamente el número de filas y columnas, y el tipo de cada variable
+- [**Metainformation**]{.hl-yellow}: if you look at the header, it automatically tells us the number of rows and columns, and the type of each variable
 
 . . .
 
--   [**Recursividad**]{.hl-yellow}: permite definir las variables secuencialmente (como hemos visto)
+- [**Recursivity**]{.hl-yellow}: allows you to define the variables sequentially (as we have seen)
+
+
 
 ---
 
 ## Last attempt: tibble
 
--   [**Consistencia**]{.hl-yellow}: si accedes a una columna que no existe avisa con un warning
+- [**Consistency**]{.hl-yellow}: if you access a column that does not exist, it warns you with a warning
 
 ```{r}
 #| warning: true
-datos_tb$invent
+data_tb$invent
 ```
 
 . . .
 
--   [**Por filas**]{.hl-yellow}: crear por filas (copiar y pegar de una tabla) con `tribble()`
+- [**By rows**]{.hl-yellow}: create by rows (copy and paste from a table) with `tribble()`.
 
 ```{r}
 tribble(~colA, ~colB,
@@ -2643,7 +2654,7 @@ tribble(~colA, ~colB,
 . . .
 
 ::: callout-tip
-El paquete `{datapasta}` nos permite [**copiar y pegar**]{.hl-green} tablas de páginas web y documentos sencillos
+The `{datapasta}` package allows us to [**copy and paste**]{.hl-green} tables from web pages and simple documents.
 :::
 
 
@@ -2652,19 +2663,15 @@ El paquete `{datapasta}` nos permite [**copiar y pegar**]{.hl-green} tablas de p
 
 ## In summary...
 
--   Cada [**celda puede ser de un tipo diverso**]{.hl-yellow}: números, texto, fechas, valores lógicos, etc
+- Each [**cell can be of a different type**]{.hl-yellow}: numbers, text, dates, logical values, etc. A [**vector is a concatenation of cells**]{. hl-yellow} (the future columns of our tables) --> In `R` by default operations are done [**element to element**]{.hl-yellow}.
 
 . . .
 
--   Un [**vector es una concatenación de celdas**]{.hl-yellow} (las futuras columnas de nuestras tablas) --> En `R` por defecto las operaciones se hacen [**elemento a elemento**]{.hl-yellow}
+- A [**matrix**]{.hl-yellow} allows us to concatenate [**variables of the SAME type and SAME length**]{.hl-yellow} --> tabular data.
 
 . . .
 
--   Una [**matriz**]{.hl-yellow} nos permite concatenar [**variables del MISMO tipo y MISMA longitud**]{.hl-yellow} --> datos tabulados
-
-. . .
-
--   Un [**data.frame**]{.hl-yellow} nos permite concatenar [**variables de DISTINTO tipo y MISMA longitud**]{.hl-yellow} --> usaremos [**tibble**]{.hl-yellow} como una opción mejorada de base de datos
+- A [**data.frame**]{.hl-yellow} allows us to concatenate [**variables of DIFFERENT type and SAME length**]{.hl-yellow} --> we will use [**tibble**]{.hl-yellow} as an enhanced database option.
 
 ---
 
@@ -2767,9 +2774,7 @@ names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia")
 
 ## 🐣 Case study I {#caso-practico-0-2-1}
 
-En el paquete `{datasets}` (ya instalado por defecto) tenemos diversos conjuntos de datos y uno de ellos es `airquality`. Debajo te he extraído 3 variables de dicho dataset (fíjate que se hace con `datos$variable`, ese dolar será importante en el futuro).
-
-Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: niveles de ozono, radiación solar, viento, temperatura, mes y día.
+In the `{datasets}` package (already installed by default) we have several datasets and one of them is `airquality`. Below I have extracted 3 variables from that dataset (note that it is done with `data$variable`, that dollar will be important in the future).The data captures [**daily measurements (n = 153 observations) of air quality**]{.hl-yellow} in New York, from May to September 1973. Six **6 variables** were measured: ozone levels, solar radiation, wind, temperature, month and day.
 
 ```{r}
 library(datasets)
@@ -2778,8 +2783,7 @@ month <- airquality$Month
 day <- airquality$Day
 ```
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-base/)
-
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss/)
 
 
 ---
@@ -2794,7 +2798,7 @@ Biostatistics::pinniped
 ```
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-tibbles/)
 
 
 
@@ -3116,20 +3120,21 @@ if (hour(current_dt) > 21) {
 
 ## Loops
 
-Aunque en la mayoría de ocasiones se pueden reemplazar por otras estructuras más eficientes y legibles, es importante conocer una de las expresiones de control más famosas: los [**bucles**]{.hl-yellow}.
+Although in most occasions they can be replaced by other more efficient and readable structures, it is important to know one of the most famous control expressions: the [**loops**]{.hl-yellow}.
 
-* `for { }`: permite [**repetir el mismo código**]{.hl-yellow} en un [**número prefijado y conocido**]{.hl-purple} de veces.
+* `for { }`: allows [**repeating the same code**]{. hl-yellow} in a [**prefixed and known number**]{.hl-purple} of times.
 
-* `while { }`: permite [**repetir el mismo código**]{.hl-yellow} pero en un [**número indeterminado de veces**]{.hl-purple} (hasta que una **condición** deje de cumplirse).
+* `while { }`: allows [**repeating the same code**]{.hl-yellow} but in an [**undetermined number of times**]{.hl-purple} (until a **condition** is no longer fulfilled).
+
 
 ---
 
 ## For loop {auto-animate="true"}
 
-Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
 
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
 
-Vamos a definir un vector `x <- c(0, -7, 1, 4)` y otra variable vacía `y`. Tras ello definiremos un bucle for con `for () { }`: dentro de los paréntesis indicaremos un índice y unos valores a recorrer, dentro de las llaves el código a ejecutar en cada iteración (en este caso, rellenar `y` como `x + 1`)
 
 ```{r}
 x <- c(0, -7, 1, 4)
@@ -3140,10 +3145,10 @@ y <- c()
 
 ## For loop {auto-animate="true"}
 
-Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
 
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
 
-Vamos a definir un vector `x <- c(0, -7, 1, 4)` y otra variable vacía `y`. Tras ello definiremos un bucle for con `for () { }`: dentro de los paréntesis indicaremos un índice y unos valores a recorrer, dentro de las llaves el código a ejecutar en cada iteración (en este caso, rellenar `y` como `x + 1`)
 
 ```{r}
 x <- c(0, -7, 1, 4)
@@ -3158,10 +3163,10 @@ for (i in 1:4) {
 
 ## For loop {auto-animate="true"}
 
-Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
 
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
 
-Vamos a definir un vector `x <- c(0, -7, 1, 4)` y otra variable vacía `y`. Tras ello definiremos un bucle for con `for () { }`: dentro de los paréntesis indicaremos un índice y unos valores a recorrer, dentro de las llaves el código a ejecutar en cada iteración (en este caso, rellenar `y` como `x + 1`)
 
 ```{r}
 x <- c(0, -7, 1, 4)
@@ -3176,7 +3181,7 @@ for (i in 1:4) {
 
 ## For loop
 
-Fíjate que debido a que `R` funciona de manera [**vectorial por defecto**]{.hl-yellow}, el bucle es lo mismo que hacer `x + 1` directamente.
+Note that because `R` works in a [**default vector**]{.hl-yellow} manner, the loop is the same as doing `x + 1` directly.
 
 ```{r}
 x <- c(0, -7, 1, 4)
@@ -3195,7 +3200,7 @@ y2
 
 ## For loop
 
-Otra opción habitual es indicar los índices de manera «automática»: desde el primero `1` hasta el último (que corresponde con la longitud de x `length(x)`)
+Another common option is to indicate the indexes “automatically”: from the first `1` to the last (corresponding to the length of x `length(x)`).
 
 ```{r}
 x <- c(0, -7, 1, 4)
@@ -3213,23 +3218,22 @@ y
 
 ## For loop
 
-Así la [**estructura general de un bucle for**]{.hl-yellow} será siempre la siguiente
+Thus the [**general structure of a for-loop**]{.hl-yellow} will always be as follows
 
 ```{r}
 #| eval: false
-for (índice in conjunto) { 
-  código (dependiente de i)
+for (index in set) { 
+  código (usually depending on index)
 }
 ```
 
-[**SIEMPRE**]{.hl-green} sabemos cuántas iteraciones tenemos (tantas como elementos haya en el conjunto a indexar)
+In the case of for loops [**ALWAYS**]{.hl-green} we know how many iterations we have (as many as there are elements in the set to be indexed).
 
 ---
 
 ## Avoiding loop
 
-
-Como ya hemos aprendido con el paquete`{microbenchmark}` podemos chequear como [**los bucles suelen ser muy ineficientes**]{.hl-yellow} (de ahí que debamos evitarlos en la mayoría de ocasiones
+As we have already learned with the `{microbenchmark}` package, we can check how [**loops are usually very inefficient**]{.hl-yellow} (hence we should avoid them in most occasions)
 
 ```{r}
 library(microbenchmark)
@@ -3244,15 +3248,15 @@ microbenchmark(y <- x^2,
 ## For loop
 
 
-Podemos ver otro ejemplo de bucle  [**combinando números y textos**]{.hl-yellow}: definimos un vector de edades y de nombres, e imprimimos el nombre y edad i-ésima.
+We can see another example of a [**combining numbers and text**]{.hl-yellow} loop: we define a vector of ages and names, and print the i-th name and age.
 
 ```{r}
-nombres <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
-edades <- c(33, 27, 18, 43, 29)
+names <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+ages <- c(33, 27, 18, 43, 29)
 
 for (i in 1:5) { 
   
-  print(glue("{nombres[i]} tiene {edades[i]} años")) 
+  print(glue("{names[i]} are {ages[i]} old")) 
   
 }
 ```
@@ -3262,7 +3266,7 @@ for (i in 1:5) {
 
 ## For loop
 
-Aunque normalmente se suelen indexar con vectors numéricos, los bucles pueden ser [**indexados sobre cualquier estructura vectorial**]{.hl-yellow}, da igual de que tipo sea el conjunto
+Although they are usually indexed with numeric vectors, loops can be [**indexed on any vector structure**]{.hl-yellow}, regardless of the type of the set.
 
 ```{r}
 library(stringr)
@@ -3271,7 +3275,7 @@ week_days <- c("monday", "tuesday", "wednesday", "thursday",
 
 for (days in week_days) {
   
-  print(str_to_upper(days))
+  print(days)
 }
 ```
 
@@ -3279,7 +3283,7 @@ for (days in week_days) {
 
 ## Bucles y condicionales
 
-Vamos a **combinar las estructuras condicionales y los bucles**: usando el conjunto `swiss` del paquete `{datasets}`, vamos a asignar `NA`  si los valores de fertilidad son mayores de 80.
+Let's **combine conditional structures and loops**: using the `swiss` set of the `{datasets}` package, let's assign `NA` if the fertility values are greater than 80.
 
 ```{r}
 for (i in 1:nrow(swiss)) {
@@ -3294,7 +3298,7 @@ for (i in 1:nrow(swiss)) {
 
 . . .
 
-Esto es exactamente igual a un `if_else()` vectorizado
+This is «the same» as a vectorized `if_else()`.
 
 ```{r}
 data("swiss")
@@ -3304,47 +3308,48 @@ swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
 
 ---
 
-## Bucles while
+## While loop
 
-Otra forma de crear un bucle es con la estructura `while { }`, que nos ejecutará un bucle [**un número desconocido de veces**]{.hl-yellow}, hasta que una condición [**deje de cumplirse**]{.hl-yellow} (de hecho puede que nunca termine). Por ejemplo, vamos a inializar una variable `ciclos <- 1`, que incrementaremos en cada paso, y no saldremos del bucle hasta que `ciclos > 4`.
+Another way to create a loop is with the `while { }` structure, which will loop [**an unknown number of times**]{.hl-yellow}, until a condition [**stops being met**]{.hl-yellow} (in fact it may never end). For example, we will inialize a variable `times <- 1`, which we will increment at each step, and we will not exit the loop until `times > 3`.
 
 ```{r}
-ciclos <- 1
-while(ciclos <= 4) {
+times <- 1
+while(times <= 3) {
   
-  print(glue("No todavía, vamos por el ciclo {ciclos}")) 
-  ciclos <- ciclos + 1
+  print(glue("Not yet, we are in the {times}-th iteration")) 
+  times <- times + 1
   
 }
+print(glue("Now! We are in the {times}-th iteration")) 
 ```
 
 ---
 
-## Bucles while
+## While loop
 
-Un bucle `while` será siempre como sigue
+A `while` loop will always look like this
 
 ```{r}
 #| eval: false
-while(condición) {
+while(condition) {
   
-  código a hacer mientras la condición sea TRUE
-  # normalmente aquí se actualiza alguna variable
+  code to be executed while condition is TRUE
+  # usually some variable is updated here
   
 }
 ```
 
 ---
   
-## Bucles while
+## While loop
 
-¿Qué sucede cuando la [**condición nunca es FALSE**]{.hl-yellow}? Pruébalo tu mismo
+What happens when the [**condition is never FALSE**]{.hl-yellow}? Try it yourself
 
 ```{r}
 #| eval: false
 while (1 > 0) {
   
-  print("Presiona ESC para salir del bucle")
+  print("Press ESC to exit")
   
 }
 ```
@@ -3352,25 +3357,25 @@ while (1 > 0) {
 &nbsp;
 
 ::: callout-warning
-## Cuidado
+## Warning
 
-Un bucle `while { }` puede ser bastante «peligroso» sino controlamos bien cómo pararlo.
+A `while { }` loop can be quite “dangerous” if we do not control well how to stop it.
 
 :::
 
 ---
 
-## Bucles while
+## While loop
 
-Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
 
-* `break`: permite [**abortar un bucle**]{.hl-yellow} incluso si no se ha llegado a su final
+* `break`: allows [**abort a loop**]{.hl-yellow} even if its end has not been reached
 
 ```{r}
 for(i in 1:10) {
   if (i == 3) {
     
-    break # si i = 3, abortamos bucle
+    break # if i = 3, we abort
     
   }
   print(i)
@@ -3379,17 +3384,17 @@ for(i in 1:10) {
 
 ---
 
-## Bucles while
+## While loop
 
-Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
 
-* `next`: [**fuerza un bucle a avanzar a la siguiente iteración**]{.hl-yellow} 
+* `next`: [**forces a loop to advance to the next iteration**]{.hl-yellow} 
 
 ```{r}
 for(i in 1:5) {
   if (i == 3) {
     
-    next # si i = 3, la obvia y continua al siguiente
+    next # if i = 3, we advance to the next iteration
     
   }
   print(i)
@@ -3409,7 +3414,7 @@ for(i in 1:5) {
 
 ### [**Exercise 1**]{.hl-yellow}
 
-📝 Modifica el código inferior para que se imprima un mensaje por pantalla si y solo si todos los datos de `airquality` son con mes distinto a enero
+📝 Modify the code below to print a message on the screen if and only if all the data in `airquality` is for a month other than January.
 
 ```{r}
 #| eval: false
@@ -3417,7 +3422,7 @@ library(datasets)
 months <- airquality$Month
 
 if (months == 2) {
-  print("No hay datos de enero")
+  print("No data in January")
 }
 ```
 
@@ -3428,21 +3433,22 @@ library(datasets)
 months <- airquality$Month
 
 if (all(months != 1)) {
-  print("No hay datos de enero")
+  print("No data in January")
 }
 ```
 
 
 ### [**Exercise 2**]{.hl-yellow}
 
-📝 Modifica el código inferior para guardar en una variable llamada `temp_alta` un `TRUE` si alguno de los registros tiene una temperatura superior a 90 grados Farenheit y `FALSE` en cualquier otro caso
+📝 Modify the code below to store in a variable called `temp_high` a `TRUE` if any of the records has a temperature above 90 degrees Fahrenheit and `FALSE` in any other case.
+
  
 ```{r}
 #| eval: false
 temp <- airquality$Temp
 
 if (temp == 100) {
-  print("Algunos de los registros tienen temperaturas superiores a 90 grados Farenheit")
+  print("Some of the records have temperatures in excess of 90 degrees Fahrenheit")
 }
 ```
 
@@ -3452,18 +3458,18 @@ if (temp == 100) {
 #| code-fold: true
 # Option 1
 temp <- airquality$Temp
-temp_alta <- FALSE
+temp_high <- FALSE
 if (any(temp > 90)) {
-   temp_alta <- TRUE
+   temp_high <- TRUE
 }
 
 # Option 2
-temp_alta <- any(airquality$Temp > 90)
+temp_high <- any(airquality$Temp > 90)
 ```
 
 ### [**Exercise 3**]{.hl-yellow}
 
-📝 Modifica el código inferior para diseñar un bucle `for` de 5 iteraciones que solo recorra los primeros 5 impares (y en cada paso del bucle los imprima)
+📝 Modify the code below to design a `for` loop of 5 iterations that only loops through the first 5 odd (and at each step of the loop prints them)
 
 ```{r}
 #| eval: false
@@ -3484,7 +3490,7 @@ for (i in c(1, 3, 5, 7, 9)) {
 
 ### [**Exercise 4**]{.hl-yellow}
 
-📝 Modifica el código inferior para diseñar un bucle `while` que empiece con un contador `count <- 1` y pare cuando llegue a 6
+📝 Modify the code below to design a `while` loop that starts with a counter `count <- 1` and stops when it reaches 6
 
 ```{r}
 #| eval: false
@@ -3513,18 +3519,17 @@ while (count < 6) {
 
 ---
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-No solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas**. ¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
 
-* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
 
-* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
 
-* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
 
-* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
-
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
 
 
 ```{r}
@@ -3536,17 +3541,17 @@ name_fun <- function() {
 
 ---
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-No solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas**. ¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
 
-* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
 
-* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
 
-* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
 
-* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
 
 ```{r}
 #| eval: false
@@ -3557,23 +3562,23 @@ name_fun <- function(arg1, arg2, ...) {
 
 ---
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-No solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas**. ¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
 
-* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
 
-* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
 
-* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
 
-* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
 
 ```{r}
 #| eval: false
 name_fun <- function(arg1, arg2, ...) {
   
-  código a ejecutar
+  code to be executed
   
 }
 ```
@@ -3581,25 +3586,25 @@ name_fun <- function(arg1, arg2, ...) {
 ---
 
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-No solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas**. ¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
 
-* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
 
-* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
 
-* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
 
-* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
 
 ```{r}
 #| eval: false
 name_fun <- function(arg1, arg2, ...) {
   
-  código a ejecutar
+  code to be executed
   
-  return(var_salida)
+  return(var_output)
   
 }
 ```
@@ -3607,46 +3612,46 @@ name_fun <- function(arg1, arg2, ...) {
 
 ---
 
-## Creando funciones
+## Own functions
 
-* `arg1, arg2, ...`: serán los [**argumentos de entrada**]{.hl-yellow}, los argumentos que toma la función para ejecutar el código que tiene dentro
+* `arg1, arg2, ...`: will be the [**input arguments**]{.hl-yellow}, the arguments that the function takes to execute the code inside.
 
-* `código`: líneas de código que queramos que [**ejecute la función**]{.hl-yellow}. 
+* `code`: lines of code that we want to [**execute the function**]{.hl-yellow}.
 
-* `return(var_salida)`: se introducirán los [**argumentos de salida**]{.hl-yellow}.
+* `return(var_output)`: the [**output arguments**]{.hl-yellow} will be entered.
 
 
 ```{r}
 #| eval: false
 name_fun <- function(arg1, arg2, ...) {
   
-  # Código que queramos ejecutar
-  código
+  # Code to be executed
+  code
   
-  # Salida
-  return(var_salida)
+  # Output
+  return(var_output)
   
 }
 ```
 
 ::: callout-important
-## Importante
+## Important
 
-Todas las variables que definamos dentro de la función son [**variables LOCALES: solo existirán dentro de la función**]{.hl-yellow} salvo que especifiquemos lo contrario.
+All variables that we define inside the function are [**LOCAL variables: they will only exist inside the function**]{.hl-yellow} unless we specify otherwise.
 
 :::
 
 ---
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-Veamos un ejemplo muy simple de función para [**calcular el área de un rectángulo**]{.hl-yellow}.
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
 
-Dado que el área de un rectángulo se calcula como el **producto de sus lados**, necesitaremos precisamente eso, sus lados: esos serán los [**argumentos de entrada**]{.hl-yellow} y el [**valor a devolver**]{.hl-purple} será justo su **área** ($lado_1 * lado_2$).
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
 
 ```{r}
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2) {
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
   
 }
 ```
@@ -3654,17 +3659,17 @@ calcular_area <- function(lado_1, lado_2) {
 ---
 
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-Veamos un ejemplo muy simple de función para [**calcular el área de un rectángulo**]{.hl-yellow}.
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
 
-Dado que el área de un rectángulo se calcula como el **producto de sus lados**, necesitaremos precisamente eso, sus lados: esos serán los [**argumentos de entrada**]{.hl-yellow} y el [**valor a devolver**]{.hl-purple} será justo su **área** ($lado_1 * lado_2$).
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
 
 ```{r}
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2) {
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
   
-  area <- lado_1 * lado_2
+  area <- side_1 * side_2
   
 }
 ```
@@ -3672,17 +3677,17 @@ calcular_area <- function(lado_1, lado_2) {
 ---
 
 
-## Creando funciones {auto-animate="true"}
+## Own functions {auto-animate="true"}
 
-Veamos un ejemplo muy simple de función para [**calcular el área de un rectángulo**]{.hl-yellow}.
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
 
-Dado que el área de un rectángulo se calcula como el **producto de sus lados**, necesitaremos precisamente eso, sus lados: esos serán los [**argumentos de entrada**]{.hl-yellow} y el [**valor a devolver**]{.hl-purple} será justo su **área** ($lado_1 * lado_2$).
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
 
 ```{r}
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2) {
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
   
-  area <- lado_1 * lado_2
+  area <- side_1 * side_2
   return(area)
   
 }
@@ -3690,60 +3695,61 @@ calcular_area <- function(lado_1, lado_2) {
 
 ---
 
-## Uso de funciones
+## Own functions
 
-También podemos hacer una definición directa de las variables **sin almacenar por el camino**.
+We can also make a direct definition of variables **without storing along the way**.
 
 ```{r}
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2) {
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
   
-  return(lado_1 * lado_2)
+  return(side_1 * side_2)
   
 }
 ```
 
 . . .
 
-[**¿Cómo aplicar la función?**]{.hl-yellow}
+[**How to apply our function?**]{.hl-yellow}
 
 ```{r}
-calcular_area(5, 3) # área de un rectángulo 5 x 3 
-calcular_area(1, 5) # área de un rectángulo 1 x 5
+compute_area(5, 3) # area of 5 x 3 rectangle
+compute_area(1, 5) # area of 1 x 5 rectangle
 ```
 
 ---
 
-## Uso de funciones
+## Own functions
 
 ::: callout-tip
 
-Aunque no sea necesario, es [**recomendable hacer explícita la llamada de los argumentos**]{.hl-green}, especificando en el código qué valor es para cada argumento para que no dependa de su orden, haciendo el código más legible
+Although it is not necessary, it is [**recommendable to make explicit the calling of the arguments**]{.hl-green}, specifying in the code what value is for each argument so that it does not depend on its order, making the code more readable.
+
 :::
 
 
 ```{r}
-calcular_area(lado_1 = 5, lado_2 = 3) # área de un rectángulo 5 x 3 
-calcular_area(lado_2 = 3, lado_1 = 5) # área de un rectángulo 5 x 3 
+compute_area(side_1 = 5, side_2 = 3) # area of 5 x 3 rectangle
+compute_area(side_2 = 3, side_1 = 5) # area of 5 x 3 rectangle
 ```
 
 ---
 
-## Argumentos por defecto
+## Default arguments
 
-Imagina ahora que nos damos cuenta que el 90% de las veces usamos dicha función para [**calcular por defecto el área de un cuadrado**]{.hl-yellow} (es decir, solo necesitamos un lado). Para ello, podemos definir [**argumentos por defecto**]{.hl-yellow} en la función: tomarán dicho valor salvo que le asignemos otro.
+magine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
 
-¿Por qué no asignar `lado_2 = lado_1` **por defecto**, para ahorrar líneas de código y tiempo?
+Why not assign `side_2 = side_1` **default**, to save lines of code and time?
 
 . . .
 
 ```{r}
-calcular_area <- function(lado_1, lado_2 = lado_1) {
+compute_area <- function(side_1, side_2 = side_1) {
   
-  # Cuerpo de la función
-  area <- lado_1 * lado_2
+  # Code to be executed
+  area <- side_1 * side_2
   
-  # Resultado que devolvemos
+  # Output
   return(area)
   
 }
@@ -3751,173 +3757,171 @@ calcular_area <- function(lado_1, lado_2 = lado_1) {
 
 ---
 
-## Argumentos por defecto
+## Default arguments
 
 
 ```{r}
-calcular_area <- function(lado_1, lado_2 = lado_1) {
+compute_area <- function(side_1, side_2 = side_1) {
   
-  # Cuerpo de la función
-  area <- lado_1 * lado_2
+  # Code to be executed
+  area <- side_1 * side_2
   
-  # Resultado que devolvemos
+  # Output
   return(area)
   
 }
 ```
 
 
-Ahora [**por defecto**]{.hl-yellow} el segundo lado será igual al primero (si se lo añadimos usará ambos).
+Now [**default**]{.hl-yellow} the second side will be equal to the first (if added it will use both).
 
 
 ```{r}
-calcular_area(lado_1 = 5) # cuadrado
-calcular_area(lado_1 = 5, lado_2 = 7) # rectángulo
+compute_area(side_1 = 5) # square
+compute_area(side_1 = 5, side_2 = 7) # rectangle
 ```
 
 ---
  
 
-## Salida múltiple
+## Multiple outputs
 
-Compliquemos un poco la función y añadamos en la salida los valores de cada lado, etiquetados como `lado_1` y `lado_2`, [**empaquetando la salida en una vector**]{.hl-yellow}.
+Let's complicate the function a bit and add in the output the values of each side, labeled `side_1` and `side_2`, [**packing the output in a vector**]{.hl-yellow}.
 
 ```{r}
 #| code-line-numbers: "7-8"
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2 = lado_1) {
+compute_area <- function(side_1, side_2 = side_1) {
   
-  # Cuerpo de la función
-  area <- lado_1 * lado_2
+  # Code
+  area <- side_1 * side_2
   
-  # Resultado
-  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2))
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2))
   
 }
 ```
 
 ---
 
-## Salida múltiple
+## Multiple outputs
 
 Podemos complicar un poco más la salida añadiendo una cuarta variable que nos diga, en función de los argumentos, [**si rectángulo o cuadrado**]{.hl-yellow}, teniendo que añadir en la salida una variable que de tipo caracter (o lógica).
 
 ```{r}
 #| code-line-numbers: "7-9"
-# Definición del nombre de función y argumentos de entrada
-calcular_area <- function(lado_1, lado_2 = lado_1) {
+compute_area <- function(side_1, side_2 = side_1) {
   
-  # Cuerpo de la función
-  area <- lado_1 * lado_2
+  # Code
+  area <- side_1 * side_2
   
-  # Resultado
-  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2,
-           "tipo" = if_else(lado_1 == lado_2, "cuadrado", "rectángulo")))
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2,
+           "type" = if_else(side_1 == side_2, "square", "rectangle")))
   
 }
-calcular_area(5, 3)
+compute_area(5, 3)
 ```
 
 . . .
 
-[**Problema**]{.hl-red}: al intentar juntar números y texto, lo convierte todo a números. Podríamos guardarlo todo en un `tibble()` como hemos aprendido o en un objeto conocido en `R` como [**listas**]{.hl-yellow} (lo veremos más adelante)
-
+[**Problem**]{.hl-red}: when trying to put numbers and text together, it converts everything to numbers. We could store it all in a `tibble()` as we have learned or in an object known in `R` as [**lists**]{.hl-yellow} (we will see it later).
 
 ---
 
-## Orden de los argumentos
+## Order of arguments
 
-Antes nos daba igual el orden de los argumentos pero ahora el [**orden de los argumentos de entrada importa**]{.hl-yellow}, ya que en la salida incluimos `lado_1` y `lado_2`. 
+Before we did not care about the order of the arguments, but now the [**order of the input arguments matters**]{.hl-yellow}, since we include `side_1` and `side_2` in the output. 
 
 . . .
 
 ::: callout-note
-## Recomendación
+## Tip
 
-Como se comentaba, altamente recomendable hacer la llamada a la función [**indicando explícitamente los argumentos**]{.hl-yellow} para mejorar **legibilidad e interpretabilidad**.
+As mentioned, it is highly recommended to make the function call [**explicitly setting the arguments**]{.hl-yellow} to improve **legibility and interpretability**.
 
 ```{r}
-# Equivalente a calcular_area(5, 3)
-calcular_area(lado_1 = 5, lado_2 = 3)
+# Equivalen to compute_area(5, 3)
+compute_area(side_1 = 5, side_2 = 3)
 ```
 
 :::
 
 ---
 
-## Funciones: generando conocimiento
+## Generating knowledge
 
-Parece una tontería lo que hemos hecho pero hemos cruzado una frontera importante: hemos pasado de [**consumir conocimiento**]{.hl-yellow} (código de otros paquetes, elaborado por otros/as), a [**generar conocimiento**]{.hl-purple}, creando nuestras propias funciones.
+It seems silly what we have done but we have crossed an important frontier: we have gone from [**consuming knowledge**]{.hl-yellow} (code from other packages, elaborated by others), to [**generating knowledge**]{.hl-purple}, creating our own functions.
 
 . . .
 
-Las funciones van a ser claves en tu día a día ya que te permitirá automatizar código que vas a repetir una y otra vez: empaquetando ese código bajo un alias (nombre de la función) vas a [**poder usarlo una y otra vez sin necesidad de programarlo (por lo que hacer el doble de trabajo no implicará trabajar el doble)**]{.hl-yellow}
+Functions are going to be key in your day-to-day work because they will allow you to automate code that you are going to repeat over and over again: by packaging that code under an alias (function name) you will [**be able to use it over and over again without programming it (so doing twice as much work will not imply working twice as much)**]{.hl-yellow}
 
 ---
 
-## Variables locales vs globales
+## Local vs global variables
 
-Un aspecto importante sobre el que reflexionar con las funciones: ¿qué sucede si [**nombramos a una variable dentro**]{.hl-yellow} de una función a la que se nos ha **olvidado asignar** un valor dentro de la misma?
+An important aspect to think about with functions: what happens if we [**name a variable inside**]{.hl-yellow} a function to which we have **forgotten to assign** a value inside the function.
 
 . . .
 
-Debemos ser cautos al usar funciones en `R`, ya que debido a la [**«regla lexicográfica»**]{.hl-yellow}, si una variable no se define dentro de la función, `R` [**buscará dicha variable en el entorno**]{.hl-purple} de variables.
+We must be cautious when using functions in `R`, since due to the [**"lexicographic rule ”**]{.hl-yellow}, if a variable is not defined inside the function, `R` will [**look for that variable in the environment**]{.hl-purple} of variables.
+
 
 ```{r}
 x <- 1
-funcion_ejemplo <- function() {
+fun_example <- function() {
     
-  print(x) # No devuelve nada, solo realiza la acción 
+  print(x) # No output, just doing an action
 }
-funcion_ejemplo()
+fun_example()
 ```
 
 ---
 
-## Variables locales vs globales
+## Local vs global variables
 
-Si una variable  [**ya está definida fuera de la función (entorno global)**]{.hl-yellow}, y además es usada dentro de cambiando su valor, el valor [**solo cambia dentro**]{.hl-yellow} pero [**no en el entorno global**]{.hl-red}.
+If a variable [**is already defined outside the function (global environment)**]{.hl-yellow}, and is also used inside changing its value, the value [**only changes inside**]{.hl-yellow} but [**not in the global environment**]{.hl-red}.
 
 ```{r}
 x <- 1
-funcion_ejemplo <- function() {
+fun_example <- function() {
     
   x <- 2
-  print(x) # lo que vale dentro
+  print(x) # value inside of function
 }
 ```
 
 ```{r}
-# lo que vale dentro
-funcion_ejemplo() #<<
-# lo que vale fuera
-print(x) #<<
+# value inside of function (local)
+fun_example()
+# value output of function (global)
+print(x)
 ```
 
 ---
 
-## Variables locales vs globales
+## Local vs global variables
 
 
-Si queremos que además de cambiar localmente lo haga [**globalmente**]{.hl-yellow} deberemos usar la [**doble asignación**]{.hl-yellow} (`<<-`).
+If we want it to change locally as well as [**globally**]{.hl-yellow} we must use the [**double assignment**]{.hl-yellow} (`<<-`).
 
 ```{r}
 x <- 1
 y <- 2
-funcion_ejemplo <- function() {
+fun_example <- function() {
   
-  # no cambia globalmente, solo localmente
+  # no change in a global way, just locally
   x <- 3 
-  # cambia globalmente
+  # change in a global way
   y <<- 0 #<<
   
   print(x)
   print(y)
 }
 
-funcion_ejemplo() # lo que vale dentro
-x # lo que vale fuera
-y # lo que vale fuera
+fun_example() # value inside function (local)
+x # global value
+y # global value
 ```
 
 ---
@@ -3929,133 +3933,141 @@ y # lo que vale fuera
 
 ::: panel-tabset
 
-### [**Ej 1**]{.hl-yellow}
+### [**Ex 1**]{.hl-yellow}
 
-📝 Modifica el código inferior para definir una función llamada `funcion_suma`, de forma que dados dos elementos, devuelve su suma.
+📝 Modify the code below to define a function called `sum_function`, so that given two elements, it returns their sum.
 
 ```{r}
 #| eval: false
-nombre <- function(x, y) {
-  suma <- # código a ejecutar
+name <- function(x, y) {
+  sum_output <- # code
   return()
 }
-# Aplicamos la función
-suma(3, 7)
+# we apply the function
+sum_function(3, 7)
 ```
 
 ```{r}
 #| code-fold: true
 #| eval: false
-funcion_suma <- function(x, y) {
-  suma <- x + y
-  return(suma)
+sum_function<- function(x, y) {
+  sum_output <- x + y
+  return(sum_output)
 }
-funcion_suma(3, 7)
+sum_function(3, 7)
 ```
 
-### [**Ej 2**]{.hl-yellow}
+### [**Ex 2**]{.hl-yellow}
 
-📝 Modifica el código inferior para definir una función llamada `funcion_producto`, de forma que dados dos elementos, devuelve su producto, pero que por defecto calcule el cuadrado
+📝 Modify the code below to define a function called `product_function`, so that given two elements, it returns their product, but by default it calculates the square
 
 ```{r}
 #| eval: false
-nombre <- function(x, y) {
-  producto <- # código de la multiplicación
+name <- function(x, y) {
+  prod_output <- # code
   return()
 }
-producto(3)
-producto(3, -7)
+product_function(3)
+product_function(3, -7)
 ```
 
 ```{r}
 #| code-fold: true
 #| eval: false
-funcion_producto <- function(x, y = x) {
-  producto <- x * y
-  return(producto)
-}
-funcion_producto(3)
-funcion_producto(3, -7)
-```
-
-### [**Ej 3**]{.hl-yellow}
-
-📝 Define una función llamada `igualdad_nombres` que, dados dos nombres, nos diga si son iguales o no. Hazlo considerando importantes las mayúsculas, y sin que importen las mayúsculas. Usa el paquete `{stringr}`.
-
-```{r}
-#| code-fold: true
-#| eval: false
-# Distinguiendo mayúsculas
-igualdad_nombres <- function(persona_1, persona_2) {
-  return(persona_1 == persona_2)
-}
-igualdad_nombres("Javi", "javi")
-igualdad_nombres("Javi", "Lucía")
-
-# Sin importar mayúsculas
-igualdad_nombres <- function(persona_1, persona_2) {
-  return(toupper(persona_1) == toupper(persona_2))
-}
-igualdad_nombres("Javi", "javi")
-igualdad_nombres("Javi", "Lucía")
-```
-
-### [**Ej 4**]{.hl-yellow}
-
-📝 Crea una función llamada `calculo_IMC` que, dados dos argumentos (peso y estatura en metros) y un nombre, devuelva una lista con el IMC ($peso/(estatura_m^2)$) y el nombre.
-
-```{r}
-#| code-fold: true
-#| eval: false
-calculo_IMC <- function(nombre, peso, estatura) {
+product_function <- function(x, y = x) {
   
-  return(list("nombre" = nombre, "IMC" = peso/(estatura^2)))
+  prod_output <- x * y
+  return(prod_output)
+  
 }
+product_function(3)
+product_function(3, -7)
 ```
 
-### [**Ej 5**]{.hl-yellow}
+### [**Ex 3**]{.hl-yellow}
 
-📝 Repite el Exercise anterior pero con otro argumento opcional que se llame unidades (por defecto, `unidades = "metros"`). Desarrolla la función de forma que haga lo correcto si `unidades = "metros"` y si `unidades = "centímetros"`.
+📝 Define a function called `equal_names` that, given two names, tells us if they are equal or not. Do this by considering case-sensitive, and case-insensitive. Use the `{stringr}` package.
 
 ```{r}
 #| code-fold: true
 #| eval: false
-calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
+# Case-sensitive
+equal_names <- function(person_1, person_2) {
   
-  return(list("nombre" = nombre,
-              "IMC" = peso/(if_else(unidades == "metros", estatura, estatura/100)^2)))
+  return(person_1 == person_2)
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+
+# Case-insensitive
+equal_names <- function(person_1, person_2) {
+  
+  return(toupper(person_1) == toupper(person_2))
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+```
+
+### [**Ex 4**]{.hl-yellow}
+
+📝 Create a function called `compute_BMI` that, given two arguments (weight and height in meters) and a name, returns a list with the BMI ($weight/(height^2)$) and the name.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height) {
+  
+  return(list("name" = name, "BMI" = weight/(height^2)))
+  
+}
+```
+
+### [**Ex 5**]{.hl-yellow}
+
+📝 Repeat the previous exercise but with another optional argument called units (by default, `units = “meters”`). Develop the function so that it does the right thing if `units = “meters”` and if `units = “centimeters”`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height, units = "meters") {
+  
+  return(list("name" = name,
+              "BMI" = weight / (if_else(units == "meters", height, height/100)^2)))
+  
 }
 ```
 
  
-### [**Ej 6**]{.hl-yellow}
+### [**Ex 6**]{.hl-yellow}
 
-📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y aplica la función definida de forma que obtengamos una cuarta columna con su IMC.
+📝 Create a fictitious tibble of 7 persons, with three variables (invent name, and simulate weight, height in centimeters), and apply the defined function so that we obtain a fourth column with their BMI.
 
 ```{r}
 #| code-fold: true
 #| eval: false
-datos <-
-  tibble("nombres" = c("javi", "sandra", "laura",
+data <-
+  tibble("name" = c("javi", "sandra", "laura",
                        "ana", "carlos", "leo", NA),
-         "peso" = rnorm(n = 7, mean = 70, sd = 1),
-         "estatura" = rnorm(n = 7, mean = 168, sd = 5))
+         "weight" = rnorm(n = 7, mean = 70, sd = 1),
+         "height" = rnorm(n = 7, mean = 168, sd = 5))
 
-datos |> 
-  mutate(IMC = calculo_IMC(nombres, peso, estatura, unidades = "centímetros")$IMC)
+data |> 
+  mutate(BMI = compute_BMI(name, weight, height, units = "centimeters")$BMI)
 ```
 
 
-### [**Ej 7**]{.hl-yellow}
+### [**Ex 7**]{.hl-yellow}
 
-📝 Crea una función llamada `atajo` que tenga dos argumentos numéricos `x` e `y`. Si ambos son iguales, debes devolver `"iguales"` y hacer que la función acaba automáticamente (piensa cuándo una función sale). OJO: `x` e `y` podrían ser vectores. Si son distintos (de igual de longitud) calcula la proporción de elementos  diferentes. Si son distintos (por ser distinta longitud), devuelve los elementos que no sean comunes.
+📝 Create a function called `shortcut` that has two numeric arguments `x` and `y`. If both are equal, you should return `equal` and have the function terminate automatically (think about when a function exits). WARNING: `x` and `y` could be vectors. If they are different (of equal length) calculate the proportion of different elements. If they are different (being of different length), it returns the elements that are not common.
 
 ```{r}
 #| code-fold: true
 #| eval: false
-atajo <- function(x, y) {
+shortcut <- function(x, y) {
   
-  if (all(x == y) & length(x) == length(y)) { return("iguales") }
+  if (all(x == y) & length(x) == length(y)) { return("equal") }
   else {
    
     if (length(x) == length(y)) {
@@ -4079,20 +4091,21 @@ atajo <- function(x, y) {
 
 ---
 
-## Comunicar: rmd y Quarto
+## Communicate: rmd and Quarto
 
-Una de las [**principales fortalezas**]{.hl-yellow} de `R` es la [**facilidad para generar informes, libros, webs, apuntes y hasta diapositivas**]{.hl-yellow} (este mismo material por ejemplo). Para ello [**instalaremos**]{.hl-purple} antes
+One of the [**main strengths**]{.hl-yellow} of `R` is the [**easiness to generate reports, books, webs, notes and even slides**]{.hl-yellow} (this same material for example). To do this, [**install**]{.hl-purple} before
 
 ::: columns
 ::: {.column width="40%"}
--   el paquete `{rmarkdown}` (para generar archivos `.rmd`)
+- the `{rmarkdown}` package (to generate `.rmd` files)
 
 ```{r}
 #| eval: false
 install.packages("rmarkdown")
 ```
 
-- instalar [**Quarto**](https://quarto.org/docs/get-started/) (si ya conocías `R`, el «nuevo» `.rmd` ahora como `.qmd`)
+- install [**Quarto**](https://quarto.org/docs/get-started/) (if you already knew `R`, the “new” `.rmd` now as `.qmd`)
+
 :::
 
 ::: {.column width="60%"}
@@ -4102,61 +4115,59 @@ install.packages("rmarkdown")
 
 ---
 
-## Comunicar: rmd y Quarto
+## Communicate: rmd and Quarto
 
-Hasta ahora solo hemos programado en scripts (archivos `.R`) dentro de proyectos, pero en muchas ocasiones [**no trabajaremos solos**]{.hl-yellow} y necesitaremos [**comunicar los resultados**]{.hl-yellow} en diferentes formatos:
+So far we have only programmed in scripts (`.R` files) within projects, but in many occasions [**we will not work alone**]{.hl-yellow} and we will need to [**communicate the results**]{.hl-yellow} in different formats:
 
-- apuntes (para nosotros mismos)
-- diapositivas
+- notes (for ourselves)
+- slides
 - web
-- informes
+- reports
 
 
-Para todo ello usaremos [**Quarto**]{.hl-yellow} (ver más en <https://ivelasq.quarto.pub/intro-to-quarto/>)
-
-
----
-
-## Comunicar: rmd y Quarto
-
-Los archivos de extensión `.qmd` (o `.rmd` antes) nos permitirán fácilmente combinar:
-
--   [**Markdown**]{.hl-yellow}: [**lenguaje tipado**]{.hl-purple} que nos permite crear contenido simple (tipo wordpress, con texto, **negritas**, _cursivas_, etc) con un diseño legible.
-
-. . .
-
--   [**Matemáticas (latex)**]{.hl-yellow}: lenguaje para escribir notación matemática como $x^2$ o $\sqrt{y}$ o $\int_{a}^{b} f(x) dx$
-
-. . .
-
--   [**Código y salidas**]{.hl-yellow}: podremos no solo mostrar el paso final sino el código que has ido realizando (en `R`, `Python`, `C++`, `Julia`, ...), con [**cajitas de código llamadas CHUNKS**]{.hl-purple}.
-
-. . .
-
--   Imágenes, [**gráficas**]{.hl-yellow}, tablas, estilos (css, js), etc.
+For all this we will use [**Quarto**]{.hl-yellow} (see more in <https://ivelasq.quarto.pub/intro-to-quarto/>)
 
 ---
 
-## Comunicar: rmd y Quarto
+## Communicate: rmd and Quarto
 
-La principal ventaja de realizar este tipo de material en Quarto/Rmarkdown es que, al hacerlo desde `RStudio`, puedes generar un [**informe o una presentación sin salirte del entorno de programación**]{.hl-yellow} en el que estás trabajando
+The `.qmd` (or `.rmd` before) extension files will allow us to easily combine:- [**Markdown**]{.hl-yellow}: 
 
-De esta forma podrás analizar los datos, resumirlos y a la vez comunicarlos con la misma herramienta.
+- [**typed language**]{.hl-purple} that allows us to create simple content (wordpress type, with text, **bold**, _cursives_, etc) with a readable layout.
 
 . . .
 
-Recientemente el equipo de `RStudio` desarrolló [**Quarto**]{.hl-yellow}, una versión mejorada de Rmarkdown (archivos `.qmd`), con un formato un poco más estético y simple. Tienes toda la documentación y ejemplos en [**https://quarto.org/**](https://quarto.org/)
+- [**Math (latex)**]{. hl-yellow}: language for writing mathematical notation such as $x^2$ or $\sqrt{y}$ or $\int_{a}^{b} f(x) dx$.
+
+. . .
+
+- [**Code and outputs**]{.hl-yellow}: we can not only show the final step but also the code you have been doing (in `R`, `Python`, `C++`, `Julia`, ...), with [**code boxes called CHUNKS**]{.hl-purple}.
+
+. . .
+
+- Images, [**graphs**]{.hl-yellow}, tables, styles (css, js), etc.
 
 ---
 
-## Usos de Quarto
+## Communicate: rmd and Quarto
+
+The main advantage of making this type of material in Quarto/Rmarkdown is that, by doing it from `RStudio`, you can generate a [**report or presentation without leaving the programming environment**]{.hl-yellow} in which you are working. This way you can analyze the data, summarize it and at the same time communicate it with the same tool.
+
+
+. . .
+
+Recently the `RStudio` team developed [**Quarto**]{.hl-yellow}, an improved version of Rmarkdown (`.qmd` files), with a slightly more aesthetic and simpler format. You have all the documentation and examples at [**https://quarto.org/**](https://quarto.org/)
+
+---
+
+## Quarto examples
 
 ::: panel-tabset
 ### Webs
 
 ![](./img/website.png){height="350"}
 
-### Libros
+### Books
 
 ![](./img/book.png){height="350"}
 
@@ -4164,20 +4175,20 @@ Recientemente el equipo de `RStudio` desarrolló [**Quarto**]{.hl-yellow}, una v
 
 ![](./img/blog.png){height="350"}
 
-### Presentaciones
+### Slides
 
 ![](./img/presentation.png){height="350"}
 
-### Revistas
+### Journals
 
 ![](https://user-images.githubusercontent.com/163582/42351114-e5deaa1c-8078-11e8-90de-2aff57bba255.png){height="350"}
 :::
 
-Imágenes obtenidas de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
+Images obtained from <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
 
 ---
 
-## Nuestro primer informe
+## Our first report
 
 ::: columns
 ::: {.column width="55%"}
@@ -4185,7 +4196,7 @@ Imágenes obtenidas de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-wit
 :::
 
 ::: {.column width="45%"}
-Vamos a crear el [**primer fichero rmarkdown con Quarto**]{.hl-yellow} con extensión `.qmd`. Para ello solo necesitaremos hacer click en
+We are going to create the [**first rmarkdown file with Quarto**]{.hl-yellow} with extension `.qmd`. For this we will only need to click on
 
 `File << New File << Quarto Document`
 :::
@@ -4193,7 +4204,7 @@ Vamos a crear el [**primer fichero rmarkdown con Quarto**]{.hl-yellow} con exten
 
 ---
 
-## Nuestro primer informe
+## Our first report
 
 :::: columns
 ::: {.column width="45%"}
@@ -4201,21 +4212,24 @@ Vamos a crear el [**primer fichero rmarkdown con Quarto**]{.hl-yellow} con exten
 :::
 
 ::: {.column width="55%"}
-Tras hacerlo nos aparecerán varias [**opciones de formatos de salida**]{.hl-yellow}:
+After doing so, several [**output format options**]{.hl-yellow}:
 
--   archivo `.pdf`
--   archivo `.html` ([**recomendable**]{.hl-yellow}): documento dinámico, permite la interacción con el usuario, como una «página web».
--   archivo `.doc` (nada recomendable)
+- `.pdf` file
+
+- `.html` file ([**recommendable**]{.hl-yellow}): dynamic document, allows user interaction, like a “web page”.
+
+- `.doc` file (not recommended).
+
+
 :::
 ::::
 
 . . .
 
-De momento dejaremos marcado el [**formato HTML que viene por defecto**]{.hl-yellow}, y escribiremos el [**título**]{.hl-yellow} de nuestro documento. Tras ello tendremos nuestro [**archivo .qmd**]{.hl-yellow} (ya no es un script .R como los que hemos abierto hasta ahora).
-
+For the moment we will leave the [**default HTML format**]{.hl-yellow} checked, and we will write the [**title**]{.hl-yellow} of our document. After that we will have our [**file .qmd**]{.hl-yellow} (it is no longer an .R script like the ones we have opened so far).
 ---
 
-## Nuestro primer informe
+## Our first report
 
 :::: columns
 ::: {.column width="60%"}
@@ -4224,34 +4238,34 @@ De momento dejaremos marcado el [**formato HTML que viene por defecto**]{.hl-yel
 
 ::: {.column width="40%"}
 
-Deberías tener algo similar a la captura de la imagen con [**dos modos de edición**]{.hl-yellow}: `Source` (con código, la opción recomendada hasta que lo domines) y `Visual` (más parecido a un blog)
+You should have something similar to the image capture with [**two editing modes**]{.hl-yellow}: `Source` (with code, the recommended option until you master it) and `Visual` (more like a blog).
 
 :::
 ::::
 
-Para [**ejecutar TODO el documento**]{.hl-yellow} debes clickar `Render on Save` y darle a guardar.
+To [**run the WHOLE document**]{.hl-yellow} you must click `Render on Save` and hit save.
 
 ---
 
-## Salida de Quarto
+## Quarto output format
 
 ![](img/quarto-prueba-html.png)
 
-Deberías haber obtenido una [**salida en html similar a esta**]{.hl-yellow} (y se te ha generado en tu ordenador un [**archivo html**]{.hl-yellow})
+You should have obtained an [**html output similar to this**]{.hl-yellow} (and a [**html file**]{.hl-yellow} has been generated on your computer).
 
 ---
 
 ## Editor: source vs visual
 
-Como se indicaba, tienes dos formas de trabajar: con código puro y algo parecido a un Notion (blog)
+As indicated, you have two ways of working: with pure code and something similar to a Notion (blog).
 
 ![](./img/rstudio-source-visual.png)
 
-Imagen obtenida de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
+Image retrieved from <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
 
 ---
 
-## Nuestro primer informe
+## Our first report
 
 :::: columns
 ::: {.column width="50%"}
@@ -4261,34 +4275,34 @@ Imagen obtenida de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-th
 
 ::: {.column width="50%"}
 
-Un fichero `.qmd` se [**divide básicamente en tres partes**]{.hl-yellow}:
+A `.qmd` file is [**basically divided into three parts**]{.hl-yellow}:
 
-* [**Cabecera**]{.hl-yellow}: la parte que tienes al inicio entre `---`.
+* [**Header**]{.hl-yellow}: the part you have at the beginning between `---`.
 
-* [**Texto**]{.hl-yellow}: que podremos formatear y mejorar con negritas (escrito como **negritas**, con doble astérisco al inicio y final), cursivas (_cursivas_, con barra baja al inicio y final) o destacar nombres de funciones o variables de R. Puedes añadir ecuaciones como $x^2$ (he escrito `$x^2$`, entre dólares).
+* [**Text**]{. hl-yellow}: which we can format and enhance with bold (written as **bold**, with double asterisk at the beginning and end), italics (_cursive_, with underscore at the beginning and end) or highlight function or variable names from R. You can add equations like $x^2$ (I have written `$x^2$`, between dollars).
 
-* [**Código R**]{.hl-yellow}
+* [**R code**]{.hl-yellow}
 
 :::
 ::::
 
 ---
 
-## Cabecera de un qmd {auto-animate="true"}
+## Header {auto-animate="true"}
 
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+The [**header is in YAML**]{.hl-yellow} format and contains the [**metadata**]{.hl-yellow} of the document.
 
 :::: columns
 ::: {.column width="60%"}
 
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
+* `title` and `subtitle`: the title/subtitle of the document
+* `author`: author of the document
+* `format`: output format (we can customize)
+  * `theme`: if you have any style file
+  * `toc`: if you want index or not
+  * `toc-location`: index position
+  * `toc-title`: index title
+* `editor`: if you are in visual or source mode.
 
 :::
 
@@ -4308,21 +4322,21 @@ editor: visual
 
 ---
 
-## Cabecera de un qmd {auto-animate="true"}
+## Header {auto-animate="true"}
 
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+The [**header is in YAML**]{.hl-yellow} format and contains the [**metadata**]{.hl-yellow} of the document.
 
 :::: columns
 ::: {.column width="60%"}
 
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
+* `title` and `subtitle`: the title/subtitle of the document
+* `author`: author of the document
+* `format`: output format (we can customize)
+  * `theme`: if you have any style file
+  * `toc`: if you want index or not
+  * `toc-location`: index position
+  * `toc-title`: index title
+* `editor`: if you are in visual or source mode.
 
 :::
 
@@ -4343,21 +4357,21 @@ editor: visual
 
 ---
 
-## Cabecera de un qmd {auto-animate="true"}
+## Header {auto-animate="true"}
 
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+The [**header is in YAML**]{.hl-yellow} format and contains the [**metadata**]{.hl-yellow} of the document.
 
 :::: columns
 ::: {.column width="60%"}
 
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
+* `title` and `subtitle`: the title/subtitle of the document
+* `author`: author of the document
+* `format`: output format (we can customize)
+  * `theme`: if you have any style file
+  * `toc`: if you want index or not
+  * `toc-location`: index position
+  * `toc-title`: index title
+* `editor`: if you are in visual or source mode.
 
 :::
 
@@ -4380,21 +4394,21 @@ editor: visual
 
 ---
 
-## Cabecera de un qmd {auto-animate="true"}
+## Header {auto-animate="true"}
 
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+The [**header is in YAML**]{.hl-yellow} format and contains the [**metadata**]{.hl-yellow} of the document.
 
 :::: columns
 ::: {.column width="60%"}
 
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
+* `title` and `subtitle`: the title/subtitle of the document
+* `author`: author of the document
+* `format`: output format (we can customize)
+  * `theme`: if you have any style file
+  * `toc`: if you want index or not
+  * `toc-location`: index position
+  * `toc-title`: index title
+* `editor`: if you are in visual or source mode.
 
 :::
 
@@ -4418,21 +4432,21 @@ editor: visual
 
 ---
 
-## Cabecera de un qmd {auto-animate="true"}
+## Header {auto-animate="true"}
 
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+The [**header is in YAML**]{.hl-yellow} format and contains the [**metadata**]{.hl-yellow} of the document.
 
 :::: columns
 ::: {.column width="60%"}
 
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
+* `title` and `subtitle`: the title/subtitle of the document
+* `author`: author of the document
+* `format`: output format (we can customize)
+  * `theme`: if you have any style file
+  * `toc`: if you want index or not
+  * `toc-location`: index position
+  * `toc-title`: index title
+* `editor`: if you are in visual or source mode.
 
 :::
 
@@ -4458,9 +4472,9 @@ editor: visual
 
 ---
 
-## Texto de un qmd
+## Text
 
-Respecto a la escritura solo hay una [**cosa importante**]{.hl-yellow}: salvo que indiquemos lo contrario, [**TODO lo que vamos a escribir es texto (normal)**]{.hl-yellow}. No código R.
+Regarding typing there is only one [**important thing**]{.hl-yellow}: unless we indicate otherwise, [**EVERYTHING we are going to type is (normal)**]{.hl-yellow} text; no R code.
 
 :::: columns
 ::: {.column width="35%"}
@@ -4469,11 +4483,11 @@ Respecto a la escritura solo hay una [**cosa importante**]{.hl-yellow}: salvo qu
 :::
 
 ::: {.column width="65%"}
-Vamos a empezar escribiendo una sección al inicio (`# Intro` y detrás por ej. la frase
+We are going to start by writing a section at the beginning (`# Intro` and behind it, for example, the sentence
 
-> Este material ha sido diseñado por el profesor Javier Álvarez Liébana, docente en la Universidad Complutense de Madrid
+> This material has been designed by Professor Javier Álvarez Liébana, professor at the Complutense University of Madrid
 
-Además al `Running Code` le añadiremos una almohadilla `#`: las [**almohadillas FUERA DE CHUNKS**]{.hl-yellow} nos servirán para crear [**epígrafes (secciones)**]{.hl-yellow} en el documento
+In addition to the `Running Code` we will add a `#` pad: the [**outside-chunks**]{.hl-yellow} pads will help us create [**epigraphs (sections)**]{.hl-yellow} in the document.
 
 
 :::
@@ -4482,7 +4496,7 @@ Además al `Running Code` le añadiremos una almohadilla `#`: las [**almohadilla
 
 ---
 
-## Índice de un qmd
+## Index
 
 :::: columns
 ::: {.column width="40%"}
@@ -4491,17 +4505,17 @@ Además al `Running Code` le añadiremos una almohadilla `#`: las [**almohadilla
 :::
 
 ::: {.column width="60%"}
-Para que el [**índice capture dichas secciones**]{.hl-yellow} modificaremos la cabecera del archivo como se observa en la imagen (puedes cambiar la localización del índice y el título si quieres para probar).
+
+To make the [**index capture those sections**]{.hl-yellow} we will modify the header of the file as shown in the image (you can change the location of the index and the title if you want to test).
 
 :::
 ::::
 
 ---
 
-## Texto en un qmd
+## Text
 
-Vamos a [**personalizar un poco el texto**]{.hl-yellow} haciendo lo siguiente:
-
+Let's [**customize the text**]{.hl-yellow} a bit by doing the following:
 
 :::: columns
 ::: {.column width="50%"}
@@ -4510,20 +4524,21 @@ Vamos a [**personalizar un poco el texto**]{.hl-yellow} haciendo lo siguiente:
 :::
 
 ::: {.column width="50%"}
-* Vamos a añadir [**negrita al nombre**]{.hl-yellow} (poniendo ** al inicio y al final).
 
-* Vamos añadir [**cursiva**]{.hl-yellow} a la palabra material (poniendo _ al inicio y al final).
+* We will add [**bold to the name**]{.hl-yellow} (putting ** at the beginning and at the end).
 
-* Vamos añadir un [**enlace**]{.hl-yellow} <https://www.ucm.es>, asociándolo al nombre de la Universidad. Para ello el título lo ponemos entre corchetes y justo detrás el enlace entre paréntesis `[«Universidad Complutense de Madrid»](https://www.ucm.es)`
+* We will add [**cursive**]{.hl-yellow} to the word material (putting _ at the beginning and at the end).
+
+* We will add a [**link**]{.hl-yellow} <https://www.ucm.es>, associating it to the name of the University. To do this we put the title in square brackets and just behind the link in brackets `[“Universidad Complutense de Madrid”](https://www.ucm.es)`.
 
 :::
 ::::
 
 ---
 
-## Código en un qmd
+## Code
 
-Para [**añadir código R**]{.hl-yellow} debemos crear nuestras [**cajas de código llamadas chunks**]{.hl-yellow}: altos en el camino en nuestro texto markdown donde podremos incluir código de casi cualquier lenguaje (y sus salidas).
+To [**include R code**]{.hl-yellow} we must create our [**code boxes called chunks**]{.hl-yellow}: high in the path in our markdown text where we can include code from almost any language (and its outputs).
 
 &nbsp;
 
@@ -4534,16 +4549,17 @@ Para [**añadir código R**]{.hl-yellow} debemos crear nuestras [**cajas de cód
 
 ::: {.column width="50%"}
 
-Para incluir uno deberá de ir [**encabezado**]{.hl-yellow} de la siguiente forma tienes un atajo `Command + Option + I` (Mac) o `Ctrl + Shift + I` (Windows)
+To include one you must go [**header**]{.hl-yellow} as follows you have a shortcut `Command + Option + I` (Mac) or `Ctrl + Shift + I` (Windows)
+
 :::
 
 ::::
 
 ---
 
-## Código en un qmd
+## Code
 
-Dentro de dicha cajita (que tiene ahora otro color en el documento) [**escribiremos código R**]{.hl-yellow} como lo veníamos haciendo hasta ahora en los scripts.
+Inside this box (which now has a different color in the document) [**write code R**]{.hl-yellow} as we have been doing so far in the scripts.
 
 :::: columns
 ::: {.column width="50%"}
@@ -4553,10 +4569,10 @@ Dentro de dicha cajita (que tiene ahora otro color en el documento) [**escribire
 
 ::: {.column width="50%"}
 
- Vamos por ejemplo a definir dos variables y su suma de la siguiente manera, escribiendo dicho código en nuestro `.qmd` (dentro de ese chunk)
-
+Let's for example define two variables and their sum in the following way, writing this code in our `.qmd` (inside that chunk)
+ 
 ```{r}
-# Código R
+# R code
 x <- 1
 y <- 2
 x + y
@@ -4569,7 +4585,7 @@ x + y
 
 ---
 
-## Etiquetando chunks
+## Running chunks
 
 
 :::: columns
@@ -4579,14 +4595,16 @@ x + y
 :::
 
 ::: {.column width="50%"}
-Los chunks pueden tener un [**nombre o etiqueta**]{.hl-yellow}, de forma que podamos referenciarlos de nuevo para no repetir código.
+
+Chunks can have a [**name or tag**]{.hl-yellow}, so that we can reference them again to avoid repeating code.
+
 :::
 ::::
 
 
 ---
 
-## Ejecutando chunks
+## Running chunks
 
 :::: columns
 ::: {.column width="40%"}
@@ -4595,15 +4613,18 @@ Los chunks pueden tener un [**nombre o etiqueta**]{.hl-yellow}, de forma que pod
 :::
 
 ::: {.column width="60%"}
-En cada chunk aparecen [**dos botones**]{.hl-yellow}:
 
-* botón de [**play**]{.hl-yellow}: activa la [**ejecución y salida de ese chunk particular**]{.hl-yellow} (lo puedes visualizar dentro de tu propio `RStudio`)
+In each chunk there are [**two buttons**]{.hl-yellow}:
 
-* botón de [**rebobinar**]{.hl-yellow}: activa la [**ejecución y salida de todos los chunk hasta ese**]{.hl-yellow} (sin llegar a él)
+* [**play**]{.hl-yellow} button: activates the [**play and exit of that particular chunk**]{.hl-yellow} (you can view it within your own `RStudio`)
+
+* [**rewind**]{.hl-yellow} button: activates the [**play and exit of all chunks up to that one**]{.hl-yellow} (without reaching it).
+
 
 &nbsp;
 
-Además podemos [**incluir código R dentro de la línea de texto**]{.hl-yellow} (en lugar de mostrar el texto x ejecuta el código R mostrando la variable).
+In addition we can [**include R code inside the text line**]{.hl-yellow} (instead of displaying the text x execute the R code displaying the variable).
+
 :::
 ::::
 
@@ -4611,32 +4632,32 @@ Además podemos [**incluir código R dentro de la línea de texto**]{.hl-yellow}
 
 ---
 
-## Personalización de chunks
+## Customizing chunks
 
-Los [**chunks podemos personalizarlos**]{.hl-yellow} con opciones al inicio del chunk precedido de `#|`:
+The [**chunks can be customized**]{.hl-yellow} with options at the beginning of the chunk preceded by `#|`:
 
-* `#| echo: false`: [**ejecuta código**]{.hl-green} y se [**muestra resultado**]{.hl-green} pero [**no visualiza código**]{.hl-red} en la salida.
+* `#| echo: false`: [**execute code**]{.hl-green} and [**show result**]{.hl-green} but [**does not display code**]{.hl-red} in the output. hl-red} on output.
 
-* `#| include: false`: [**ejecuta código**]{.hl-green} pero [**no muestra resultado**]{.hl-red} y [**no visualiza código**]{.hl-red} en la salida.
+* `#| include: false`: [**executes code**]{.hl-green} but [**does not display result**]{.hl-red} and [**does not display code**]{.hl-red} on output.
 
-* `#| eval: false`: [**no ejecuta código**]{.hl-red}, [**no muestra resultado**]{.hl-red} pero [**sí visualiza código**]{.hl-green} en la salida.
+* `#| eval: false`: [**does not execute code**]{. hl-red}, [**does not display result**]{.hl-red} but [**does display code**]{.hl-green} on output.
 
-* `#| message: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de salida**]{.hl-red}.
+* `#| message: false`: [**executes code**]{.hl-green} but [**does not display output messages**]{.hl-red}.
 
-* `#| warning: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de warning**]{.hl-red}.
+* `#| warning: false`: [**runs code**]{.hl-green} but [**does not display warning messages**]{.hl-red}.
 
-* `#| error: true`: [**ejecuta código**]{.hl-green} y [**permite que haya errores**]{.hl-green} mostrando el mensaje de error en la salida.
+* `#| error: true`: [**runs code**]{.hl-green} and [**allows errors**]{.hl-green} displaying the error message in the output.
 
 
 ![](img/quarto-options-chunk.png){width=380}
 
-Estas opciones podemos aplicarlas chunk a chunk o fijar los parámetros de forma global con `knitr::opts_chunk$set()` al inicio del documento (dentro de un chunk).
+These options can be applied chunk by chunk or set globally with `knitr::opts_chunk$set()` at the beginning of the document (within a chunk).
 
 ---
 
-## Personalizando chunks
+## Customizing chunks
 
-Si queremos que aplique la **opción a todos los chunks por defecto** debemos incluirlo al final de la cabecera, como [**opciones de ejecución**]{.hl-yellow}
+If we want to apply the **option to all chunks by default** we must include it at the end of the header, as [**run options**]{.hl-yellow}
 
 ``` yaml
 ---
@@ -4650,23 +4671,19 @@ execute:
 
 ---
 
-## Organizando qmd
+## Organizing
 
-Además de texto y código podemos introducir lo siguiente:
+In addition to text and code we can enter the following:
 
-* [**Ecuaciones**]{.hl-yellow}: puedes añadir además ecuaciones como $x^2$ (he escrito `$x^2$`, la ecuación entre dólares).
+* [**Equations**]{.hl-yellow}: you can also add equations like $x^2$ (I have written `$x^2$`, the equation between dollars).
 
-* [**Listas**]{.hl-yellow}: puedes itemizar elementos poniendo `*`
+* [**Lists**]{. hl-yellow}: you can itemize elements by putting `* Step 1: ... *Step 2: ...`
 
-`* Paso 1: ...`
-
-`* Paso 2: ...`
-
-* [**Cross-references**]{.hl-yellow}: puedes etiquetar partes del documento (la etiqueta se construye con `{#nombre-seccion}`) y llamarlas luego con `[Sección](@nombre-seccion)`
+* [**Cross-references**]{.hl-yellow}: you can tag parts of the document (the tag is constructed with `{#section-name}`) and then call them with `[Section](@section-name)`.
 
 ---
 
-## Gráficas/imágenes en qmd
+## Figures and images
 
 :::: columns
 ::: {.column width="50%"}
@@ -4675,7 +4692,10 @@ Además de texto y código podemos introducir lo siguiente:
 :::
 
 ::: {.column width="50%"}
-Por último, también podemos [**añadir pies de gráficas o imágenes**]{.hl-yellow} añadiendo `#| fig-cap: "..."`
+
+
+Finally, we can also [**add captions to graphics or images**]{.hl-yellow} by adding `#| fig-cap: "..."`.
+
 :::
 ::::
 
@@ -4683,7 +4703,9 @@ Por último, también podemos [**añadir pies de gráficas o imágenes**]{.hl-ye
 
 :::: columns
 ::: {.column width="65%"}
-Fíjate que el [**caption está en el margen**]{.hl-yellow} (por ejemplo). Puedes cambiarlo introduciendo [**ajustes en la cabecera**]{.hl-yellow} (todo lo relativo a figuras empieza por `fig-`, y puedes ver las opciones tabulando). Tienes más información en **<https://quarto.org/>**
+
+Notice that the [**caption is in the margin**]{.hl-yellow} (for example). You can change it by entering [**header settings**]{.hl-yellow} (everything about figures starts with `fig-`, and you can see the options by tabbing). You have more information at **<https://quarto.org/>**
+
 :::
 
 ::: {.column width="35%"}
@@ -4693,7 +4715,7 @@ Fíjate que el [**caption está en el margen**]{.hl-yellow} (por ejemplo). Puede
 
 ---
 
-## Añadir estilos
+## Styles
 
 :::: columns
 ::: {.column width="50%"}
@@ -4702,41 +4724,44 @@ Fíjate que el [**caption está en el margen**]{.hl-yellow} (por ejemplo). Puede
 :::
 
 ::: {.column width="50%"}
-Por último puedes añadir un [**tema personalizado**]{.hl-yellow} incluyendo un [**archivo de estilos**]{.hl-yellow} (archivo en formato `.scss` o `.css`). Te he dejado uno en <https://github.com/dadosdelaplace/docencia-R-master-bio-2324/tree/main/material>.
+
+Finally you can add a [**custom theme**]{.hl-yellow} including a [**style file**]{.hl-yellow} (`.scss` or `.css` file). I have left one for you at <https://github.com/dadosdelaplace/docencia-R-master-bio-2324/tree/main/material>.
 
 ::: callout-important
-## Importante
+## Important
 
-El archivo de estilos debe estar en la misma carpeta que el archivo `.qmd`
+The style file must be in the same folder as the `.qmd` file.
+
 :::
 :::
 ::::
 
 ---
 
-## Añadir estilos
+## Styles
 
-También puedes hacerlo de manera sencilla [**añadiendo a los textos un poco de HTML**]{.hl-yellow}. Por ejemplo, para personalizar el color de un texto va entre corchetes y justo tras el texto, entre llaves, las opciones de estilo
+You can also do it in a simple way [**adding a bit of HTML**]{.hl-yellow} to the text. For example, to customize the color of a text it goes between square brackets and right after the text, between braces, the style options
 
 ``` html
-Esta palabra es [roja]{style="color:red;"} ...
+This word is [red]{style="color:red;"} ...
 ```
 
 ``` html
-... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
+... and this is [green in bold]{style="color:green; font-weight: bold;"}
 ```
 
 . . .
 
-Esta palabra es [roja]{style="color:red;"} ...
+This word is [red]{style="color:red;"} ...
 
-... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
+... and this is [green in bold]{style="color:green; font-weight: bold;"}
 
 ---
 
 ## Revealjs
 
-Puedes añadir algunas «animaciones» usando lo que se conoce como Revealjs (javascript), especifcándolo en la cabecera y usando [**bloques**]{.hl-yellow} de dicho lenguaje delimitados por `:::` al inicio y final, y la palabra de la «herramienta» a usar. Por ejemplo `{.incremental}` hace una transición de los elementos.
+You can add some “animations” using what is known as Revealjs (javascript), specifying it in the header and using [**blocks**]{.hl-yellow} of that language delimited by `:::` at the beginning and end, and the word of the “tool” to use. For example `{.incremental}` transitions the elements.
+
 
 ``` yaml
 format:
@@ -4746,24 +4771,24 @@ format:
 
 ``` revealjs
 ::: {.incremental}
-- Me
-- llamo
+- I
+- am
 - Javi
 :::
 ```
 
 
 ::: {.incremental}
-- Me
-- llamo
+- I
+- am
 - Javi
 :::
 
 ---
 
-## Bloques de llamada
+## Call blocks
 
-También puedes usar los [**bloques de llamada**]{.hl-yellow} que por defecto son `note`, `tip`, `warning`, `caution` e `important` (aunque los puedes crear y personalizar). Para ello basta con usar `:::{.callout-tipo}` y el tipo que quieras
+You can also use the [**callout-blocks**]{.hl-yellow} which by default are `note`, `tip`, `warning`, `caution` and `important` (although you can create and customize them). To do this, just use `::{.callout-type}` and the type you want to use
 
 ``` html
 :::{.callout-tip}
@@ -4778,7 +4803,8 @@ Note that there are five types of callouts, including:
 
 :::{.callout-tip}
 
-Recuerda que los 5 tipos son `note`, `tip`, `warning`, `caution` e `important`.
+Note that there are five types of callouts, including: 
+`note`, `tip`, `warning`, `caution`, and `important`.
 
 :::
 
@@ -4786,20 +4812,20 @@ Recuerda que los 5 tipos son `note`, `tip`, `warning`, `caution` e `important`.
 
 :::{.callout-caution}
 
-Úsalos con cabeza, a veces mucho recursos estético puede marear.
+Use them wisely, sometimes a lot of aesthetic resources can be dizzying.
 
 :::
 
 ---
 
-## Múltiples columnas
+## Multiple columns layout
 
-Con `:::: columns` podemos definir una disposición de [**múltiples columnas**]{.hl-yellow} donde cada una viene definida por `::: {.column width="65%"} cosa :::`, indicando al lado del porcentaje cuanto quieres que ocupe cada columna (¡cuidado, no dejar espacios!)
+With `:::: columns` we can define a layout of [**multiple columns**]{.hl-yellow} where each one is defined by `::: {.column width=“65%”} something :::`, indicating next to the percentage how much you want each column to occupy (be careful not to leave spaces!).
 
 ``` html
 :::: columns
 ::: {.column width="65%"}
-Así se define un vector
+This is how to define a vector
 :::
 ::: {.column width="35%"}
 x <- c(1, 2, 3)
@@ -4813,7 +4839,7 @@ x
 
 :::: columns
 ::: {.column width="65%"}
-Así se define un vector
+This is how to define a vector
 :::
 
 ::: {.column width="35%"}
@@ -4827,9 +4853,10 @@ x
 
 ---
 
-## Código ajeno a R
+## Non-R code
 
-Además `{reticulate}` nos permite crear chunks de `python` dentro de un Quarto en `R` (ver <https://quarto.org/docs/computations/python.html> para crear jupyter notebooks directamente desde Quarto)
+In addition `{reticulate}` allows us to create `python` chunks inside a Quarto in `R` (see <https://quarto.org/docs/computations/python.html> to create jupyter notebooks directly from Quarto).
+
 
 ```{r}
 #| echo: false
@@ -4841,9 +4868,9 @@ library(reticulate)
 # install.packages("reticulate")
 library(reticulate)
 
-install_python("3.9.12") # Instalar python en PC sino lo tienes
+install_python("3.9.12") # Installing python if you have not done before
 
-# Instalar paquetes de Python
+# Installing Python libraries
 reticulate::py_install("numpy")
 reticulate::py_install("matplotlib")
 ```

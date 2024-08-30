@@ -1,0 +1,8 @@
+- source: intro-R-base.qmd
+  quarto-pub:
+    - id: bc0cf8ea-636f-456c-b6cb-7aef85fe173f
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-base'
+- source: intro-R-tibbles.qmd
+  quarto-pub:
+    - id: a982ab41-0d6c-47bc-a07b-bb7e55f5db50
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss'

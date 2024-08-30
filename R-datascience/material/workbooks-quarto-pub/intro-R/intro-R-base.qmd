@@ -1,3 +1,5 @@
+
+
 ---
 title: "Introducción a R base"
 subtitle: "Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)"
@@ -1511,10 +1513,3 @@ microbenchmark::microbenchmark(sort(temp_celsius[month == 8]),
 
 # ¡Es más eficiente datos[order(datos)] que sort(datos!
 ```
-
-
-
-
-
-
-

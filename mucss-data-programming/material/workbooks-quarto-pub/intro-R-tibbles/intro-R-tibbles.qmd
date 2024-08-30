@@ -1,0 +1,2265 @@
+---
+title: "Introduction to R base. First operations and databases"
+subtitle: "Practical workbooks of Data Programming in Master in Computational Social Science  (2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+## Introduction to R and R Studio
+
+### Intro aspects
+
+#### Requirements
+
+For the course, the only requirements will be:
+
+1. [**Internet connection**]{.hl-yellow} (to download some data and packages).
+
+
+2. [**Install R**]{.hl-yellow}: it will be our language. We will download it (for free) from <https://cran.r-project.org/>
+
+
+3. [**Install RStudio**]{.hl-yellow} from <https://posit.co/download/rstudio-desktop/>
+
+
+![](img/cranR.jpg){width="420"}
+
+
+![](img/rstudio.jpg){width="420"}
+
+
+#### R vs RStudio
+
+
+![](img/gramatica.webp){width="360"}
+
+![](img/word.jpg){width="430"}
+
+
+We will program as we write:
+
+-   We will need a [**grammar, a language**]{.hl-yellow} (`R`)
+
+-   And an environment, such as [**Word**]{.hl-yellow} (`RStudio`) to write it
+
+
+#### Installing R
+
+The `R` language will be our [**grammar and spelling**]{.hl-yellow} (our rules of the game)
+
+
+-   [**Step 1**]{.hl-yellow}: go to <https://cran.r-project.org/> and select your operating system.
+
+-   [**Step 2**]{.hl-yellow}: for Mac, simply click on the **.pkg file**, and open it once downloaded. For Windows systems, we need to click on **install R for the first time** and then on **Download R for Windows**. Once downloaded, open it like any installation file.
+
+-   [**Step 3**]{.hl-yellow}: open the installation executable.
+
+
+::: callout-warning
+
+Whenever you need to download something from CRAN (either `R` itself or a package), [**make sure you have an internet connection**]{.hl-orange}.
+
+:::
+
+
+##### First operations
+
+
+
+To check the installation, after opening `R`, you should see the `R GUI` (Graphical User Interface) with a **white screen** similar to this ([**console**]{.hl-yellow}).
+
+
+![](img/consola.jpg){width="200"}
+
+[**First code**]{.hl-yellow}: we will **assign** the value `1` to a variable called `a` (we will write the code in the console and press "enter"). Then we will do the sum `a + b`.
+
+
+```{r}
+#| code-line-numbers: "3"
+a <- 1
+b <- 2
+a + b
+```
+
+::: callout-note
+## Note that...
+
+In the console, a number `[1]` appears: it's simply an element counter (like counting rows in Word)
+
+:::
+
+
+#### Installing R Studio
+
+`RStudio` will be the [**Word**]{.hl-yellow} we will use to write (what is known as an [**IDE: Integrated Development Environment**]{.hl-yellow}).
+
+-   [**Step 1**]{.hl-yellow}: go to the [official RStudio website](https://posit.co/download/rstudio-desktop/) (now called Posit) and select the free download.
+
+-   [**Step 2**]{.hl-yellow}: select the executable that appears according to your operating system.
+
+-   [**Step 3**]{.hl-yellow}: after downloading the executable, open it like any other and let the installation finish.
+
+
+##### RStudio Organization
+
+When you open `RStudio` you will likely have three windows:
+
+
+-   [**Console**]{.hl-yellow}: is the name for the large window that takes up most of your screen. Try writing the same code as before (the sum of the variables) in it. The console is where **we will execute commands and display results**.
+
+![](img/consola_rstudio.jpg){width="420"}
+
+
+-   [**Environment**]{.hl-yellow}: the small screen (you can adjust the margins with the mouse to your liking) that we have in the top right corner. It will show us the **variables we have defined**.
+
+
+![](img/environment.jpg){width="420"}
+
+
+-   [**Multi-purpose panel**]{.hl-yellow}: the window at the bottom right will be used to **look for function help**, as well as to **visualize plots**.
+
+![](img/multiusos.jpg){width="420"}
+
+#### What is R? Why R?
+
+![](img/meme_barco.jpg)
+
+
+`R` is the evolution of the work of Bell Laboratories with the `S` language, which was brought into the open-source world by Ross Ihaka and Robert Gentleman in the 1990s. The version `R 1.0.0` was released on February 29, 2000. `R` is the [**statistical language par excellence**]{.hl-yellow}, created by and for statisticians, with 6 fundamental advantages [**over Excel, SAS, Stata, or SPSS**]{.hl-red}:
+
+
+-   [**Programming language**]{.hl-yellow}: the obvious → [**replicable**]{.hl-purple} analysis
+
+
+
+-   [**Free**]{.hl-yellow}: the philosophy of the `R` community is to share code under **copyleft** → **ethical use of spending and algorithms**
+
+
+-   [**Open-source software**]{.hl-yellow}: not only is it free, but it also allows free access to others' code, even to the **source code itself** → [**flexibility and transparency**]{.hl-purple} (Free and Open Source Software FOSS)
+
+
+-   [**Modular language**]{.hl-yellow}: we have installed the minimum, but there are codes from other people that we can reuse (almost 20,000 [**packages**]{.hl-yellow}) → [**time saving**]{.hl-purple} and [**immediate innovation**]{.hl-purple}
+
+-   [**High-level language**]{.hl-yellow}: facilitates programming (like Python) → [**lower learning curve**]{.hl-purple}
+
+
+- [**Community and employability**]{.hl-yellow}: along with Python, it is the most used language in the field of statistics and data science in research, teaching, companies (Línea Directa, Mapfre, Telefónica, Orange, Apple, Spotify, Netflix, El País, Civio, HP, etc.) and public organizations (ISCIII, CNIC, CNIO, INE, IGN, CIS, CEO, DGT, AEMET, RTVE, etc.)
+
+##### Why programming?
+
+![](img/incel_excel.png)
+
+
+-   [**Automate**]{.hl-yellow} → it will allow you to automate recurring tasks.
+
+-   [**Replicability**]{.hl-yellow} → you will be able to replicate your analysis in the same way every time.
+
+-   [**Flexibility**]{.hl-yellow} → you will be able to adapt the software to your needs.
+
+-   [**Transparency**]{.hl-yellow} → to be audited by the community.
+
+![](img/the_general_problem.png)
+
+##### Fundamental Idea: R packages
+
+One of the key ideas of `R` is the [**use of packages**]{.hl-yellow}: codes that other people have implemented to **solve a problem**
+
+
+![](img/paquetes.png)
+
+-   [**Installation**]{.hl-yellow}: we download the codes from the web (we need internet) → [**buy a book**]{.hl-purple}, only once (per computer)
+
+
+```{r}
+#| eval: false
+install.packages("ggplot2")
+```
+
+-   [**Loading**]{.hl-yellow}: with the package downloaded, we indicate which packages we want to use each time we open `RStudio` → [**take the book off the shelf**]{.hl-purple}
+
+```{r}
+#| eval: false
+library(ggplot2)
+```
+
+
+Once installed, there are **two ways to use a package** (take it off the shelf)
+
+
+-   [**Whole package**]{.hl-yellow}: with `library()`, using the package name without quotes, we load [**the whole book**]{.hl-purple} into the session
+
+
+```{r}
+#| eval: false
+library(ggplot2)
+```
+
+-   [**Specific functions**]{.hl-yellow} using `package::function+  we indicate that we only want [**a specific page of that book**]{.hl-purple}
+
+
+```{r}
+#| eval: false
+ggplot2::geom_point()
+```
+
+
+#### You will be wrong
+
+During your learning, it will be very common for things not to work out on the first try → [**you will be wrong**]{.hl-yellow}. It will not only be important to accept it but also [**to read the error messages**]{.hl-yellow} to learn from them.
+
+
+-   [**Error messages**]{.hl-red}: preceded by **"Error in..."** and will be those failures that [**prevent execution**]{.hl-red}
+
+```{r}
+#| error: true
+"a" + 1 
+```
+
+
+
+-   [**Warning messages**]{.hl-orange}: preceded by **«Warning in...»** they are the (possible) more delicate errors as they are inconsistencies that [**do not prevent execution**]{.hl-orange}
+
+
+```{r}
+#| warning: true
+# Ejecuta la orden pero el resultado es NaN, **Not A Number**, un valor que no existe
+sqrt(-1)
+```
+
+
+#### Scripts (.R files)
+
+
+![](img/abrir_script.jpg){width="350"}
+
+A [**script**]{.hl-yellow} will be the document in which we program, our `.doc` file (here with a `.R` extension) where we will write the commands. To **open our first script**, click on the menu in `File < New File < R Script`.
+
+
+::: callout-warning
+## Be careful
+
+It's important **not to overuse the console**: everything you don't write in a script, when you close, [**will be lost**]{.hl-orange}.
+
+:::
+
+
+::: callout-warning
+## Be careful
+
+`R` is [**case-sensitive**]{.hl-orange}: it is sensitive to uppercase and lowercase, so `x` and `X` represent different variables.
+
+:::
+
+
+Now we have a **fourth window**: the window where we will [**write our codes**]{.hl-yellow}. How do we run it?
+
+
+1. **Write the code** to be executed.
+
+
+2. **Save the .R file** by clicking on `Save current document`.
+
+
+3. The code does not execute unless we indicate it. We have **three options to run a script**:
+
+- [**Copy and paste**]{.hl-yellow} into the console.
+- [**Select lines**]{.hl-yellow} and press `Ctrl+Enter`
+- [**Enable Source on Save**]{.hl-yellow} next to save: not only saves but also executes the **entire code**.
+
+#### Organizing in projects in RStudio
+
+Just as we usually work [**organized by folders**]{.hl-yellow} on the computer, in `RStudio` we can do the same to work [**efficiently by creating projects**]{.hl-yellow}.
+
+
+A [**project will be a "folder"**]{.hl-yellow} within `RStudio`, so our root directory will automatically be the project folder itself (allowing us to switch from one project to another using the top right menu). We can create one in a new folder or in an existing folder."
+
+![](img/rstudio_proyectos.png){width="370"}
+
+
+
+### 💻 It's your turn
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Create in your computer a folder of the subject and create inside it the `RStudio` project: it is there where you are going to save everything that we will do along this course, after creating the project you will have an `R Project` file. Then create in this folder two subfolders: `data` (this is where you will save the different datasets that we will use) and `scripts` (this is where you will save the `.R` files of each class).
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Inside the project create a script `Exercises-class1.R` (inside the `scripts` folder). Once created, define in it a variable named `a` and whose value is -1. Execute the code in the (three) ways explained before.
+
+```{r}
+#| code-fold: true
+a <- -1
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Add below another line to define a variable `b` with the value 5. Then save the multiplication of both variables. Execute the code as you want.
+
+```{r}
+#| code-fold: true
+#| eval: false
+b <- 5
+a * b # without saving it
+mult <- a * b # save it
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Modify the code below to define two variables c and d, with values 3 and -1. Then divide the variables and save the result.
+
+```{r}
+#| eval: false
+c <- # you should assign 3
+d <- # you should assign -1
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+c <- 3
+d <- -1
+c / d
+div <- c / d
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Assign to `x` a positive value and then compute its square root; assign to `y` a negative number and compute its absolute value using `abs()`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- 5
+sqrt(x)
+
+y <- -2
+abs(y)
+```
+
+::: callout-note
+## Note that...
+
+Commands like `sqrt()`, `abs()` or `max()` are what we call [**functions**]{.hl-purple}: lines of code that we have "encapsulated" under a name, and given some input arguments, execute the commands (a sort of shortcut). In the functions the [**arguments will ALWAYS be enclosed in parentheses**]{.hl-yellow}
+
+:::
+
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Using the variable `x` already defined, complete/modify the code below to store in a new variable `z` the result stored in `x` minus 5.
+
+```{r}
+#| eval: false
+z <- ? - ? # complete the code
+z
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- x - 5
+z
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Define an `x` variable and assign it the value `-1`. Define another `y` and assign it the value `0`. Then perform the operations a) `x` by `y`; b) square root of `x`. What do you get?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- -1
+y <- 0
+
+x / y
+sqrt(x)
+```
+
+### [**Exercise 8**]{.hl-yellow}
+
+📝 Write the code below in your script. Why do you think it doesn't work?
+
+```{r}
+#| error: true
+x <- -1
+y <- 0
+
+X + y
+```
+
+:::
+
+
+## First steps in R (base)
+
+
+What [**data type**]{.hl-yellow} can we have in each **cell of a table**?
+
+![](img/celdas.jpg)
+
+- [**Cell**]{.hl-yellow}: an individual piece of data of a specific type.
+- [**Variable**]{.hl-yellow}: **concatenation** of values of the same type ([**vectors in R**]{.hl-purple}).
+- [**Matrix**]{.hl-yellow}: concatenation of variables of the **same type and length**.
+- [**Table**]{.hl-yellow}: concatenation of variables of [**different types but the same length**]{.hl-purple}
+- [**List**]{.hl-yellow}: concatenation of variables of [**different types and different lengths**]{.hl-purple}
+:::
+
+Before we continue, it’s important to know something as soon as possible: [**starting with programming can be frustrating**]{.hl-yellow}. Just like when learning a new language, the first obstacle is not so much what to say but how to say it correctly. The same goes for `R`, so let’s [**standardize our programming style**]{.hl-yellow} as much as possible to avoid future errors.
+
+
+* [**Tip 1**]{.hl-green}: [**assignment, evaluation, and comparison are not the same**]{.hl-yellow}. If you’ve noticed in `R`, we use `<-` to assign values to variables. We use `=` to evaluate function arguments and `==` to check if two elements are equal.
+
+```{r}
+#| eval: false
+x <- 1 # asign
+x = 1 # evaluation
+x == 1 # comparison
+```
+
+
+* [**Tip 2**]{.hl-green}: program like you write. Just like when writing in Spanish, get used to incorporating [**spaces and line breaks**]{.hl-yellow} to avoid making your code hard to read (it's a good practice, not a requirement, because `R` does not process spaces).
+
+
+```{r}
+#| eval: false
+x <- 1 # optimal
+x<-1 # meh
+x<- 1 # worst (make up your mind)
+```
+
+* [**Tip 3**]{.hl-green}: don’t be chaotic, [**standardize names**]{.hl-yellow}. Always get used to naming variables consistently. The only requirement is that **they must always start with a letter** (and without accents). The most recommended form is `snake_case`.
+
+
+```{r}
+#| eval: false
+variable_in_snake_case
+anotherHarderToReadFormat
+there.are.people.who.use.this
+Even_People_Here.Confusing_That_Do_Not_Deserve_Our_ATTENTION
+```
+
+* [**Tip 4**]{.hl-green}: make reading and writing easier, [**set limits**]{.hl-yellow}. In `Tools < Global Options`, you can customize some options in `RStudio`. In `Code < Display`, you can set `Show margin` to display an "imaginary" margin (not interacting with the code) to "force" you to make line breaks.
+
+![](img/show_margin.jpg)
+
+
+* [**Tip 5**]{.hl-green}: the [**tab key is your best friend**]{.hl-yellow}. In `RStudio`, there’s a wonderful tool: if you type part of a variable or function name and press tab, `RStudio` will autocomplete it for you.
+
+
+![](img/tab-autocompletar.png)  
+
+* [**Tip 6**]{.hl-green}: no single parentheses. Whenever you open a parenthesis, you must close it. To make this task easier, go to `Tools < Global Options < Code < Display` and enable the `Rainbow parentheses option`.
+
+![](img/rainbow-parentheses.jpg)
+
+
+* [**Tip 7**]{.hl-green}: pay attention to the left side. You will not only see the line of code you are on but also, in case of a [**syntax error**]{.hl-red}, `RStudio` will notify you.
+
+![](img/rstudio-error-sintaxis.png)
+
+* [**Tip 8**]{.hl-green}: try to [**always work by projects**]{.hl-yellow} (for this class, create a script `class1.R` in the project we created before)
+
+
+&nbsp;
+
+See more tips at <https://r4ds.had.co.nz/workflow-basics.html#whats-in-a-name>
+
+### Data types (cells)
+
+Are there [**variables beyond numbers in data science**]{.hl-yellow}? For example, think about the data you might store about a person:
+
+
+-  Age or weight will be a [**number**]{.hl-yellow}.
+
+```{r}
+age <- 33
+```
+
+- Their name will be a string of [**text (known as string or char)**]{.hl-yellow}.
+
+```{r}
+name <- "javi"
+```
+
+-   The answer to the question "Are you enrolled in the Faculty?" will be what we call a [**logical variable**]{.hl-yellow} (`TRUE` if enrolled or `FALSE` otherwise).
+
+
+```{r}
+enrolled <- TRUE
+```
+
+-   Their date of birth will be precisely that, a [**date**]{.hl-yellow}.
+
+#### Numerical variables
+
+The simplest data (which we’ve already used) will be [**numeric variables**]{.hl-yellow}. To find out the [**data class in R**]{.hl-yellow} of a variable, we use the `class()` function.
+
+```{r}
+a <- 5
+class(a)
+```
+
+```{r}
+a <- 5
+b <- 2
+a + b
+```
+
+To know its [**typology (format)**]{.hl-yellow} variable we have `typeof()`.
+
+```{r}
+typeof(1) # 1 value but stored as a real number (double precision)
+typeof(as.integer(1)) # 1 value but stored as a floor number
+```
+
+::: callout-note
+## Note that...
+
+In `R` we have a collection of functions starting with `as.x()` that serve as [**conversion functions**]{.hl-yellow}: a data that was of one type, we convert it to type `x`.
+:::
+
+
+In addition to the "common" numbers we will have the [**plus/minus infinity**]{.hl-yellow} coded as `Inf` or `-Inf`.
+
+```{r}
+1/0
+```
+
+```{r}
+-1/0
+```
+
+
+And values that [**are not real numbers**]{.hl-yellow} _not a number_ (indeterminacies, complexes numbers, etc) encoded as `NaN`.
+
+```{r}
+0/0
+```
+
+```{r}
+sqrt(-2)
+```
+
+
+With numeric variables we can perform the [**arithmetic operations**]{.hl-yellow} of a calculator: adding (`+`)...
+
+```{r}
+a + b
+```
+
+
+...square root (`sqrt()`)...
+
+```{r}
+sqrt(a)
+```
+
+... power (`^2`, `^3`)...
+
+```{r}
+a^2
+```
+
+...absolute value (`abs()`), etc.
+
+```{r}
+abs(a)
+```
+
+#### String variables
+
+Let us imagine that, in addition to the age of a person we want to store his/her name: now the variable will be of type `character`.
+
+```{r}
+name <- "Javi"
+class(name)
+```
+
+
+The [**text strings**]{.hl-yellow} are a type with which we obviously [**cannot perform arithmetic operations**]{.hl-red} (other operations such as pasting or locating patterns can be performed).
+
+```{r}
+#| error: true
+name + 1 # error when we try to sum 1 to a text
+```
+
+
+::: callout-warning
+## Reminder
+
+Text variables (character or string) are [** ALWAYS in quotes**]{.hl-orange}: `TRUE` (logical, binary value) is not the same as `"TRUE"` (text).
+
+:::
+
+
+##### First function: paste
+
+As we have commented `R` we will call [**function**]{.hl-yellow} a piece of [**encapsulated code**]{.hl-yellow} under a name, and which depends on some input [**arguments**]{.hl-yellow}. Our first function will be `paste()`: given two strings, it allows us to paste them together.
+
+```{r}
+paste("Javi", "Álvarez")
+```
+
+
+Note that [**default**]{.hl-yellow} pastes strings with a space, but we can add an [**optional argument**]{.hl-yellow} to tell it the separator (in `sep = ...`). 
+
+```{r}
+paste("Javi", "Álvarez", sep = "*")
+```
+
+
+![](img/paste_help.jpg)
+
+How do I know [**what arguments does a function need**]{.hl-yellow}?
+
+By typing `? paste` in the console, you will get a [**help**]{.hl-yellow} in the multipurpose panel, where you can see in its header what arguments the function already has [**default arguments**]{.hl-yellow} assigned to it.
+
+&nbsp;
+
+The arguments (and their detail) can also be consulted by **tabulating (after a comma)**.
+
+```{r}
+paste0("Javi", "Álvarez")
+```
+
+![](img/tab-functions.png)
+
+
+It is very important to understand the concept of [**default argument of a function**]{.hl-yellow} in `R`: it is a value that the function uses but sometimes we may not see because [**already has a value assigned**]{.hl-yellow}. 
+
+```{r}
+# Same
+paste("Javi", "Álvarez")
+paste("Javi", "Álvarez", sep = " ")
+```
+
+::: callout-note
+
+The `=` operator is [**reserved for assigning arguments**]{.hl-yellow} within functions. For all other assignments, we will use `<-`.
+
+:::
+
+
+##### First package: glue
+
+A more intuitive way to work with text is to use the `{glue}` package: the first thing to do is to "buy the book" (if we have never done it before). After that [**load the package**]{.hl-yellow}
+
+```{r}
+#| eval: false
+install.packages("glue") # just the first time
+library(glue)
+```
+
+```{r}
+#| echo: false
+library(glue)
+```
+
+
+With the `glue()` function of that package we can use [**variables inside strings**]{.hl-yellow}. For example, "age is ... years old", where the age is stored in a variable.
+
+```{r}
+age <- 34
+glue("I am {age} old")
+```
+
+
+Within the keys we can also [**execute operations**]{.hl-yellow}
+
+```{r}
+units <- "days"
+glue("I am {age * 365} {units} old")
+```
+
+#### Logical variables
+
+Another fundamental type will be the [**logical or binary variables**]{.hl-yellow} (**two values**):
+
+- `TRUE`: [**true**]{.hl-yellow} stored internally as a 1.
+
+- `FALSE`: [**false**]{.hl-yellow} stored internally as a 0.
+
+```{r}
+single <- FALSE # Single? --> NO
+class(single)
+```
+
+Since they are stored internally as binary variables, we can [**perform arithmetic operations**]{.hl-yellow} on them
+
+
+```{r}
+2 * TRUE
+FALSE - 1
+```
+
+
+
+As we will see shortly, logical variables can actually take a third value: `NA` or [**missing data**]{.hl-yellow}, representing *not available*, and it will be very common to find it within a database.
+
+```{r}
+missing <- NA
+missing + 1
+```
+
+
+::: callout-important
+## Important
+
+Logical variables [**NOT text variables**]{.hl-red}: `"TRUE"` is a text, `TRUE` is a logical value.
+
+```{r}
+#| error: true
+TRUE + 1
+"TRUE" + 1
+```
+:::
+
+
+##### Logical conditions
+
+Logical values are usually the result of [**evaluate logical conditions**]{.hl-yellow}. For example, imagine that we want to [**check**]{.hl-yellow} whether a person is named Javi.
+
+
+```{r}
+name <- "María"
+```
+
+
+With the [**logical operator**]{.hl-yellow} `==` we ask if what we have stored on the left is [**same as**]{.hl-purple} what we have on the right: [**we ASK**]{.hl-yellow}
+
+```{r}
+name == "Javi"
+```
+
+With its opposite `!=` we ask [**if different**]{.hl-purple}.
+
+```{r}
+name != "Javi"
+```
+
+
+::: callout-note
+## Note that...
+
+It is not the same `<-` ([**assignment**]{.hl-yellow}) as `==` (we are [**asking**]{.hl-yellow}, it is a logical comparison).
+
+:::
+
+
+In addition to "equal to" versus "different" comparisons, also order comparisons such as [**less than**]{.hl-purple} `<`, [**greater than**]{.hl-purple} `>`, `<=` or `>=`.
+**Is the person less than 32 years old?**
+
+```{r}
+age <- 34
+age < 32 # less than 32 years old?
+```
+
+
+**Age is greater than or equal to 38 years?**
+
+```{r}
+age >= 38
+```
+
+
+**Is the saved name equal to Javi?**
+
+```{r}
+name <- "Javi"
+name == "Javi"
+```
+
+
+#### Date variables
+
+A very special data type: the [**date type data**]{.hl-yellow}.
+
+```{r}
+date_char <- "2021-04-21"
+```
+
+It looks like a simple text string but [**should represent an instant in time**]{.hl-yellow}. What should happen if [**we add a 1 to a date**]{.hl-purple}?
+
+
+```{r}
+#| error: true
+date_char + 1
+```
+
+
+Dates [**cannot be string/text**]{.hl-red}: we must convert the text string to date.
+
+
+
+&nbsp;
+
+To work with dates we will use the `{lubridate}` package, which we must install before we can use it.
+
+```{r}
+#| eval: false
+install.packages("lubridate")
+```
+
+
+
+Once installed, of all the packages (books) that we have, we will indicate it to load this one concretely.
+
+```{r}
+library(lubridate) 
+```
+
+To [**convert to date type**]{.hl-yellow} we will use the `as_date()` function of the `{lubridate}` package (default in `yyyy-mm-dd` format).
+
+
+&nbsp;
+
+```{r}
+#| error: true
+
+# it's not a date, it's a text!
+date_char + 1
+class(date_char)
+```
+
+```{r}
+date <- as_date("2023-03-28")
+date + 1
+class(date)
+```
+
+In `as_date()` the default date format is `yyyy-mm-dd` so if the string is not entered correctly...
+
+```{r}
+as_date("28-08-2024")
+```
+
+
+For [**any other format we must specify it**]{.hl-yellow} in the optional argument `format = ...` such that `%d` represents days, `%m` months, `%Y` in 4-year format and `%y` in 2-year format.
+
+
+```{r}
+as_date("28-03-2023", format = "%d-%m-%Y")
+as_date("28-03-23", format = "%d-%m-%y")
+as_date("03-28-2023", format = "%m-%d-%Y")
+as_date("28/03/2023", format = "%d/%m/%Y")
+```
+
+In this package we have very useful functions for [**date management**]{.hl-yellow}:
+
+- With `today()` we can directly obtain the [**current date**]{.hl-purple}.
+
+```{r}
+today()
+```
+
+
+-  With `now()` we can obtain [**current date and time**]{.hl-purple}
+
+```{r}
+now()
+```
+
+
+
+- With `year()`, `month()` or `day()` we can [**extract year, month and day**]{.hl-purple}
+
+```{r}
+date_today <- today()
+year(date_today)
+month(date_today)
+```
+
+#### Cheatsheets
+
+![](img/lubridate.png)
+
+::: callout-note
+## More information
+
+You have a pdf summary of the most important packages in the [**corresponding folder on campus**]{.hl-green}
+
+:::
+
+
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Define a variable that stores your age (called `age`) and another with your name (called `name`).
+
+```{r}
+#| code-fold: true
+age <- 34
+name <- "Javi"
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Check with this variable `age` if it is NOT 60 years old or if it is called `"Ornitorrinco"` (you must obtain logical variables as a result).
+
+```{r}
+#| code-fold: true
+#| eval: false
+age != 60 # different to
+name == "Ornitorrinco" # equal to
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Why does the lower code give an error?
+
+```{r}
+#| error: true
+age + name
+```
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Define another variable called `siblings` that answers the question "do you have siblings?" and another variable that stores your date of birth (called `birth_date`).
+
+```{r}
+#| code-fold: true
+siblings <- TRUE
+
+library(lubridate) # if not before
+birth_date <- as_date("1989-09-10")
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Define another variable with your last name (called `surname`) and use `glue()` to have, in a single variable called `full_name`, your first and last name separated by a comma.
+
+```{r}
+#| code-fold: true
+#| eval: false
+surname <- "Álvarez Liébana"
+full_name <- glue("{name}, {surname}")
+full_name
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 From `birth_date` extract the month.
+
+```{r}
+#| code-fold: true
+#| eval: false
+month(birth_date)
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Calculate the days that have passed since your birth date until today (with the birth date defined in Exercise 4).
+
+```{r}
+#| code-fold: true
+#| eval: false
+today() - birth_date
+```
+
+### [**Exercise 8**]{.hl-yellow}
+
+📝 Define the vector `x` as the concatenation of the first 5 odd numbers. Calculate the length of the vector
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Two ways
+x <- c(1, 3, 5, 7, 9)
+x <- seq(1, 9, by = 2)
+
+length(x)
+```
+
+### [**Exercise 9**]{.hl-yellow}
+
+📝 Accesses the third element of `x`. Accesses the last element (regardless of length, a code that can always be executed). Removes the first element.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[3]
+x[length(x)]
+x[-1]
+```
+
+### [**Exercise 10**]{.hl-yellow}
+
+📝 Get the elements of `x` greater than 4. Calculate the vector `1/x` and store it in a variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 4]
+z <- 1/x
+z
+```
+
+### [**Exercise 11**]{.hl-yellow}
+
+📝 Create a vector representing the names of 5 people, one of whom is unknown.
+
+```{r}
+#| code-fold: true
+#| eval: false
+names <- c("Javi", "Sandra", NA, "Laura", "Carlos")
+names
+```
+
+### [**Exercise 12**]{.hl-yellow}
+
+📝 Find from the vector `x` of previous exercises the elements greater (strictly) than 1 AND also less (strictly) than 7. Find a way to find out if all the elements are positive or not.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+### [**Exercise 13**]{.hl-yellow}
+
+📝 Given the vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, why does its mean return not a number but what is shown in the code below?
+
+```{r}
+x <- c(1, -5, 8, NA, 10, -3, 9)
+mean(x)
+```
+
+### [**Exercise 14**]{.hl-yellow}
+
+📝 Given the vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, extract the elements occupying the locations 1, 2, 5, 6. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- c(1, -5, 8, NA, 10, -3, 9)
+x[c(1, 2, 5, 6)]
+x[-2]
+```
+
+### [**Exercise 15**]{.hl-yellow}
+
+📝 Given the vector `x` from the previous exercise, which ones have missing data? Hint: the `is.something()` functions check if the element is of type `something` (press tab).
+
+```{r}
+#| code-fold: true
+#| eval: false
+is.na(x)
+```
+
+
+### [**Exercise 16**]{.hl-yellow}
+
+📝 Define the vector `x` as the concatenation of the first 4 even numbers. Calculate the number of elements of `x` strictly less than 5.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x < 5] 
+sum(x < 5)
+```
+
+
+### [**Exercise 17**]{.hl-yellow}
+
+📝 Calculate the vector `1/x` and get the ordered version (from smallest to largest) in the two possible ways
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- 1/x
+sort(z)
+z[order(z)]
+```
+
+
+### [**Ejercicio 18**]{.hl-yellow}
+
+📝 Find of the vector `x` the elements greater (strictly) than 1 and less (strictly) than 6. Find a way to find out if all the elements are negative or not.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+:::
+
+
+### Vectors: concatenation
+
+When working with data, we often have [**columns that represent variables**]{.hl-yellow}: we will refer to these as [**vectors**]{.hl-yellow}, which are a [**concatenation**]{.hl-purple} of cells (values) of the [**same type**]{.hl-purple} (similar to a column in a table).
+
+The simplest way to create a vector is with the `c()` function (c stands for **concatenate**), and you just need to input the **elements within parentheses, separated by commas**.
+
+```{r}
+ages <- c(32, 27, 60, 61)
+ages
+```
+
+
+::: callout-tip
+
+An individual number `x <- 1` (or `x <- c(1)`) is actually a **vector of length one** --> everything we know how to [**do with a number, we can do with a vector of numbers**]{.hl-green}.
+
+:::
+
+
+![](img/edades_environment.jpg)
+
+As you can see now in the `environment`, we have a **collection of elements** stored.
+
+
+```{r}
+ages # ages = edades in spanish
+```
+
+
+The [**length of a vector**]{.hl-yellow} can be calculated with `length()`.
+
+
+```{r}
+length(ages)
+```
+
+
+
+We can also [**concatenate vectors**]{.hl-yellow} together (it repeats them one after another).
+
+```{r}
+c(ages, ages, 8)
+```
+
+
+#### Numeric sequences
+
+The most common type of vector is numeric, specifically, the well-known [**numeric sequences**]{.hl-yellow} (e.g., the days of the month), used among other things, to index loops.
+
+The `seq(start, end)` function allows us to create a [**numeric sequence]**{.hl-yellow} from a starting element to an ending one, [**advancing one by one**]{.hl-purple}.
+
+
+```{r}
+seq(1, 31)
+```
+
+Note that if we try this with [**characters, it won't work**]{.hl-red} since there is no predefined order among text strings.
+
+```{r}
+#| error: true
+"a":"z"
+```
+
+
+A shortcut is the `1:n` command, which returns the same as `seq(1, n)`.
+
+
+```{r}
+1:7
+```
+
+If the starting element is greater than the ending one, it understands that the sequence is in [**descending order**]{.hl-purple}.
+
+```{r}
+7:-3
+```
+
+We can also define [**a different step**]{.hl-yellow} between consecutive elements with the `by = ...` argument.
+
+
+```{r}
+seq(1, 7, by = 0.5) # seq from 1 to 7, with a step of 0.5
+```
+
+
+Sometimes we may want to define a [**sequence with a specific length**]{.hl-yellow}.
+
+
+```{r}
+seq(1, 50, l = 7) # seq from 1 to 50 with length equal to 7
+```
+
+
+We might also want to generate a vector of [**n repeated elements**]{.hl-yellow}.
+
+```{r}
+rep(0, 7) # vector of 7 0's
+```
+
+
+
+Since they are internally stored as numbers, we can also do this with [**dates**]{.hl-yellow}.
+
+
+```{r}
+seq(as_date("2023-09-01"), as_date("2023-09-10"), by = 1)
+```
+
+
+
+#### String vectors
+
+A vector is a **concatenation** of elements of the [**same type**]{.hl-yellow}, but they don't necessarily have to be numbers. Let's create a sample sentence.
+
+```{r}
+sentence <- "My name is Javi"
+sentence
+length(sentence)
+```
+
+In the previous case, it wasn't a vector, it was a single text element. To create a vector, we need to use `c()` again and separate elements with commas.
+
+
+```{r}
+sentence <- c("My", "name", "is", "Javi")
+sentence
+length(sentence)
+```
+
+What will happen if we [**concatenate elements of different types**]{.hl-yellow}?
+
+
+```{r}
+c(1, 2, "javi", "3", TRUE)
+```
+
+Note that since all elements must be of the same type, what `R` does is [**convert**]{.hl-yellow} everything to text, violating the [**data integrity**]{.hl-red}.
+
+
+```{r}
+c(3, 4, TRUE, FALSE)
+```
+
+It's important to understand that logical values are actually [**internally stored as 0/1**]{.hl-yellow}.
+
+
+#### Operations with vectors
+
+With numeric vectors, we can perform the same [**arithmetic operations**]{.hl-yellow} as with numbers → a [**number is a vector**]{.hl-purple} (of length one).
+
+
+What will happen if we [**add or subtract a value**]{.hl-yellow} to a vector?
+
+
+```{r}
+x <- c(1, 3, 5, 7)
+x + 1
+x * 2
+```
+
+::: callout-warning
+## Warning
+
+Unless otherwise specified, in `R`,  vector operations are always [**element by element**]{.hl-orange}.
+
+:::
+
+
+##### Adding 
+
+Vectors can also interact with each other, so we can define, for example, [**vector sums**]{.hl-yellow} (element by element).
+
+
+```{r}
+x <- c(2, 4, 6)
+y <- c(1, 3, 5)
+x + y
+```
+
+
+Since the operation (e.g., a sum) is performed element by element, what will happen if we [**add two vectors of different lengths**]{.hl-yellow}?
+
+
+
+
+```{r}
+z <- c(1, 3, 5, 7)
+x + z
+```
+
+What it does is [**recycle elements**]{.hl-yellow}: if we have a vector of 4 elements and we add another with 3 elements, it will recycle the elements from the shorter vector.
+
+##### Comparing
+
+A very common operation is to [**ask questions of the data**]{.hl-yellow} using [**logical conditions**]{.hl-purple}. For example, if we define a vector of temperatures...
+
+[**Which days were below 22 degrees?**]{.hl-yellow}
+
+
+```{r}
+x <- c(15, 20, 31, 27, 15, 29)
+```
+
+
+```{r}
+x < 22
+```
+
+This will return a [**logical vector**]{.hl-yellow}, depending on whether **each element** meets the given condition (of the **same length** as the vector being queried). If we had a [**missing value**]{.hl-yellow} (due to a sensor error that day), the evaluated condition would also be `NA`.
+
+
+```{r}
+y <- c(15, 20, NA, 31, 27, 7, 29, 10)
+y < 22
+```
+
+
+[**Logical conditions can be combined**]{.hl-yellow} in two ways:
+
+- [**Intersection**]{.hl-yellow}: [**all**]{.hl-purple} concatenated conditions must be met ([**AND conjunction**]{.hl-purple} with `&`) to return `TRUE`.
+
+
+```{r}
+x < 30 & x > 15
+```
+
+- [**Union**]{.hl-yellow}: it is enough for [**at least one**]{.hl-purple} condition to be met ([**OR conjunction**]{.hl-purple} with `|`).
+
+
+```{r}
+x < 30 | x > 15
+```
+
+With `any()` and `all()`, we can check if [**all elements**]{.hl-yellow} satisfy the condition.
+
+```{r}
+any(x < 30)
+all(x < 30)
+```
+
+##### Getting elements
+
+Another common operation is [**accessing or getting elements**]{.hl-yellow}. The simplest way is to use the `[i]`  operator (access the i-th element).
+
+```{r}
+ages <- c(20, 30, 33, NA, 61) 
+ages[3] # get the age's third person
+```
+
+
+Since a number is just a vector of length one, this operation can also be applied using a [**vector of indices to select**]{.hl-yellow}.
+
+```{r}
+y <- c("hi", "how", "are", "you", "?")
+y[c(1:2, 4)] # first, second and fourth element
+```
+
+
+::: callout-tip
+
+To access the last element without worrying about its position, you can pass the vector's length as the index `x[length(x)]`.
+
+:::
+
+##### Removing elements
+
+Sometimes, instead of selecting, we may want to [**remove elements**]{.hl-yellow}. This is done with the same operation but using [**negative indexing**]{.hl-purple}: the opetator `[-i]` «un-select» the i-th element 
+
+```{r}
+y
+y[-2] # everything except the second element
+```
+
+
+In many cases, we want to [**select or remove elements based on logical conditions**]{.hl-yellow}, depending on the values, so we will pass the condition itself as the index (remember, `x < 2` returns a logical vector).
+
+
+```{r}
+ages <- c(15, 21, 30, 17, 45)
+names <- c("javi", "maría", "sandra", "carla", "luis")
+names[ages < 18] # names of people under 18
+```
+
+
+##### Stats operations
+
+We can also make use of [**statistical operations**]{.hl-yellow}, such as `sum()`, which, given a vector, returns the sum of all its elements.
+
+```{r}
+x <- c(1, -2, 3, -1)
+sum(x)
+```
+
+[**What happens when a data point is missing?**]{.hl-yellow}
+
+
+```{r}
+x <- c(1, -2, 3, NA, -1)
+sum(x)
+```
+
+By default, if we have a missing data point, the [**operation will also result in a missing value**]{.hl-yellow}. To [**ignore that missing data**]{.hl-purple}, we use the optional argument `na.rm = TRUE`.
+
+
+```{r}
+sum(x, na.rm = TRUE)
+```
+
+As we've mentioned, logical values are internally stored as 0 and 1, so we can use them in arithmetic operations.
+
+For example, if we want to [**find out the number of elements that meet a condition**]{.hl-yellow} (e.g., less than 3), those that do will be assigned a 1 (`TRUE`), and those that don't will get a 0 (`FALSE`). Therefore, summing the logical vector will give us the number of elements that meet the condition.
+
+
+```{r}
+x <- c(2, 4, 6)
+sum(x < 3)
+```
+
+tats operations
+
+Another common operation that can be useful is the [**cumulative sum**]{.hl-yellow} with `cumsum()`, which, given a vector, returns a vector where each element is the sum of the first, the first plus the second, the first plus the second plus the third, and so on.
+
+```{r}
+x <- c(1, 5, 2, -1, 8)
+cumsum(x)
+```
+
+[**What happens when a data point is missing?**]{.hl-yellow}
+
+
+```{r}
+x <- c(1, -2, 3, NA, -1)
+cumsum(x)
+```
+
+In the case of the cumulative sum, what happens is that [**from that point onward, all subsequent accumulated values will be missing**]{.hl-yellow}.
+
+
+Another common operation that can be useful is the [**difference (with delay)**]{.hl-yellow} with `diff()` which, given a vector, returns a vector with the second minus the first, the third minus the second, the fourth minus the third...and so on.
+
+
+```{r}
+x <- c(1, 8, 5, 3, 9, 0, -1, 5)
+diff(x)
+```
+
+Using the argument `lag = ` we can indicate the [**delay**]{.hl-yellow} of this difference (e.g. `lag = 3` implies that the fourth minus the first, the fifth minus the second, etc.).
+
+
+```{r}
+x <- c(1, 8, 5, 3, 9, 0, -1, 5)
+diff(x, lag = 3)
+```
+
+
+Other common operations are [**mean**]{.hl-yellow}, [**median**]{.hl-yellow}, [**percentiles**]{.hl-yellow}, etc.
+
+- [**mean**]{.hl-yellow}: centrality measure that consists of adding all the elements and dividing by the number of elements added. The best known but the [**least robust**]{.hl-red}: given a set, if outliers (very large or very small values) are introduced, the mean is very easily perturbed.
+
+
+```{r}
+x <- c(165, 170, 181, 191, 150, 155, 167, NA, 173, 177)
+mean(x, na.rm = TRUE)
+```
+
+
+-   [**Median**]{.hl-yellow}: measure of centrality that consists of ordering the elements and keeping the one that occupies the middle.
+
+```{r}
+x <- c(165, 170, 181, 191, 150, 155, 167, 173, 177)
+median(x)
+```
+
+
+
+-   [**Quantiles**]{.hl-yellow}: position measurements (they divide the data into equal parts).
+
+```{r}
+quantile(x) # by default quantiles/percentiles 0-25-50-75-100
+quantile(x, probs = c(0.1, 0.4, 0.9))
+```
+
+
+##### Sorting
+
+Finally, a common action is to know [**sort values**]{.hl-yellow}:
+
+- `sort()`: returns the [**sorted vector**]{.hl-yellow}. By default from smallest to largest but with `decreasing = TRUE` we can change it.
+
+
+```{r}
+ages <- c(81, 7, 25, 41, 65, 20, 33, 23, 77)
+sort(ages)
+sort(ages, decreasing = TRUE)
+```
+
+
+-   `order()`: returns the [**index vector**]{.hl-yellow} that we would have to use to have the vector ordered
+
+```{r}
+order(ages)
+ages[order(ages)]
+```
+
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Define the vector `x` as the concatenation of the first 5 odd numbers. Calculate the length of the vector
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Two ways
+x <- c(1, 3, 5, 7, 9)
+x <- seq(1, 9, by = 2)
+
+length(x)
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Access the third element of `x`. Access the last element (regardless of length, a code that can always be executed). Delete the first element.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[3]
+x[length(x)]
+x[-1]
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Get the elements of `x` greater than 4. Calculate the vector `1/x` and store it in a variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 4]
+z <- 1/x
+z
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Create a vector representing the names of 5 people, one of whom is unknown.
+
+```{r}
+#| code-fold: true
+#| eval: false
+names <- c("Javi", "Sandra", NA, "Laura", "Carlos")
+names
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Find from the vector `x` of exercises above the elements greater (strictly) than 1 and less (strictly) than 7. Find a way to find out if all the elements are positive or not.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Given the vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, why does its mean return not a number but what is shown in the code below?
+
+```{r}
+x <- c(1, -5, 8, NA, 10, -3, 9)
+mean(x)
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Given the vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, extract the elements occupying the locations 1, 2, 5, 6. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- c(1, -5, 8, NA, 10, -3, 9)
+x[c(1, 2, 5, 6)]
+x[-2]
+```
+
+### [**Exercise 8**]{.hl-yellow}
+
+📝 Given the `x` vector of the previous exercise, which ones have a missing data? Hint: the `is.something()` functions check if the element is of type `something` (press tab).
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+is.na(x)
+```
+
+
+### [**Exercise 9**]{.hl-yellow}
+
+📝 Define the vector `x` as the concatenation of the first 4 even numbers. Calculate the number of elements of `x` strictly less than 5.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x < 5] 
+sum(x < 5)
+```
+
+
+### [**Exercise 10**]{.hl-yellow}
+
+📝 Calculate the vector `1/x` and obtain the ordered version (from smallest to largest) in the two possible ways
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- 1/x
+sort(z)
+z[order(z)]
+```
+
+### [**Exercise 11**]{.hl-yellow}
+
+📝 Calculate min and max of previous `x` vector
+
+```{r}
+#| code-fold: true
+#| eval: false
+min(x)
+max(x)
+```
+
+### [**Exercise 12**]{.hl-yellow}
+
+📝 Find of the vector `x` the elements greater (strictly) than 1 and less (strictly) than 6. Find a way to find out if all the elements are negative or not.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+:::
+
+## 🐣 Case study I: airquality
+
+In the `{datasets}` package (already installed by default) we have several datasets and one of them is `airquality`. Below I have extracted 3 variables from that dataset (note that it is done with `data$variable`, that dollar will be important).
+
+The data captures [**daily measurements (n = 153 observations) of air quality**]{.hl-yellow} in New York, from May to September 1973. Six **6 variables** were measured: ozone levels, solar radiation, wind, temperature, month and day.
+
+```{r}
+library(datasets)
+temperature <- airquality$Temp
+month <- airquality$Month
+day <- airquality$Day
+```
+
+### Question 1
+
+> How to find out what [**represents the data**]{.hl-yellow}? Think of a command that gives us information about objects in R, knowing that the dataset name is `airquality`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+? airquality
+
+# By using `? ...` we can look up in the help panel what the object means.
+```
+
+
+### Question 2
+
+
+> Access only the first 5 temperature records. Then access the first, second, fifth and tenth.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# 1 to 5
+temperature[1:5] 
+
+# other way
+temperature[c(1, 2, 3, 4, 5)]
+
+# first, second, fifth and tenth element
+temperature[c(1, 2, 5, 10)]
+```
+
+
+
+### Question 3
+
+> Access only the May temperature records (you have the temperatures stored, think about how to access them but now using a condition instead of specific indexes). Then access the May, April and June elements.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+temperature[month == 5]
+
+# april, may and june
+temperature[month == 4 | month == 5 | month == 6]
+
+# another more readable form: %in% checks if
+# the values are within an allowed list
+temperature[month %in% c(4, 5, 6)]
+```
+
+### Question 4
+
+> How many [**records do we have from May**]{.hl-yellow}? And from April? 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# A form for May registrations
+sum(month == 5)
+
+# Another way: the length of a vector
+length(temperature[month == 5])
+
+# idem in April
+sum(month == 4)
+```
+
+### Question 5
+
+> Construct a new variable `date` with the date of each record (combining year, month and day), knowing that all the data are from 1973. Hint: to construct a date before you must have a vector of texts (for example, “1973-01-01”).
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# date variable
+library(lubridate)
+dates <- as_date(glue("{1973}-{month}-{day}"))
+```
+
+### Question 6
+
+> Create a new variable `temp_celsius` with the temperature in ºC (knowing that it is calculated as $celsius = (fahr - 32) * (5/9)$). Then calculate how many days in June exceeded 30 degrees ºC.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Temp in celsius
+temp_celsius <- (temperature - 32) * (5/9)
+temp_celsius 
+
+sum(temp_celsius[month == 6] > 30)
+
+# other way
+length(temp_celsius[month == 6 & temp_celsius > 30])
+```
+
+### Question 7
+
+> What was the average temperature for the month of August? 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# average in August
+mean(temperature[month == 8], na.rm = TRUE)
+mean(temp_celsius[month == 8], na.rm = TRUE)
+```
+
+### Question 8
+
+>  Given the August temperature vector, order the temperatures (coldest first, warmest second). 
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# sort
+temp_sort <- sort(temp_celsius[month == 8])
+temp_sort
+
+# order
+temp_ord <- temp_celsius[month == 8][order(temp_celsius[month == 8])]
+temp_ord
+```
+
+## First databases
+
+When analyzing data we usually have [**several variables**]{.hl-yellow} for each individual: we need a "table" to collect them.
+
+### First attempt: matrices
+
+The most immediate option is [**matrices**]{.hl-yellow}: concatenation of variables of [**same type and equal length**]{.hl-purple}.
+
+&nbsp;
+
+Imagine we have heights and weights of 4 people. How to [**create a dataset with the two variables**]{.hl-yellow}? The most common option is to use `cbind()`: [**concatenate (bind) vectors in the form of columns (c)**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: "3"
+h <- c(150, 160, 170, 180)
+w <- c(63, 70, 85, 95)
+data_mat <- cbind(h, w)
+data_mat 
+```
+
+
+We can also [**build the matrix by rows**]{.hl-yellow} with the `rbind()` function (concatenate - bind - by rows - r), although it is [**recommended to have each variable in column**]{.hl-green} and individual in row as we will see later.
+
+```{r}
+rbind(h, w) # Matrix by rows
+```
+
+- We can [**"view" the matrix**]{.hl-yellow} with `View(matrix)`.
+
+-   We can [**check dimensions**]{.hl-yellow} with `dim()`, `nrow()` and `ncol()`: matrices are a type of **tabular data** (organized in rows and columns).
+
+```{r}
+dim(data_mat)
+nrow(data_mat)
+ncol(data_mat)
+```
+
+
+We can also [**"flip" (transposed matrix)**]{.hl-yellow} with `t()`.
+
+```{r}
+t(data_mat)
+```
+
+
+Since we now have two dimensions in our data, to [**access elements with `[]`**]{.hl-yellow} we must provide **two comma-separated indexes**: row and column indexes 
+
+```{r}
+data_mat[2, 1] # second row, first column
+data_mat[1, 2] # first row, second column
+```
+
+In some cases we will want to get the [**total data for an individual**]{.hl-yellow} (a particular row but all columns) or the values of [**a whole variable**]{.hl-yellow} for all individuals (a particular column but all rows). To do so, we leave [**one of the indexes**]{.hl-yellow} unfilled.
+
+```{r}
+data_mat[2, ] # second individual
+data_mat[, 1] # first variable
+```
+
+
+Much of what we have learned with vectors we can do with matrices, so we can for example access multiple rows and/or columns using the [**sequences of integers 1:n**]{.hl-yellow}
+
+
+```{r}
+data_mat[c(1, 3), 1] # first variable for first and third individual
+```
+
+
+We can also define a [**matrix from a numeric vector**]{.hl-yellow}, rearranging the values in the form of a matrix (knowing that the elements are [**placed by columns**]{.hl-purple}).
+
+```{r}
+z <- matrix(1:9, ncol = 3) 
+z
+```
+
+We can even [**define an array of constant values**]{.hl-yellow}, e.g. of zeros (to be filled later)
+
+
+```{r}
+matrix(0, nrow = 2, ncol = 3)
+```
+
+#### Matrix operations
+
+With matrices it is the same as with vectors: when we apply an [**arithmetic operation we do it element by element**]{.hl-yellow}
+
+```{r}
+z/5
+```
+
+
+To perform [**operations in a matrix sense**]{.hl-yellow} we must add `%%%`, for example, to multiply matrices it will be `%*%`.
+
+```{r}
+z * t(z)
+z %*% t(z)
+```
+
+
+We can also [**perform operations by columns/rows**]{.hl-yellow} without loops with the `apply()` function, and we will indicate as **arguments**
+
+- the matrix
+- the sense of the operation (`MARGIN = 1` for rows, `MARGIN = 2` for columns)
+- the function to apply
+- extra arguments needed by the function
+
+
+For example, to apply an average to each variable, it will be `mean` applied with `MARGIN = 2` (same function for each column).
+
+```{r}
+# Mean for each column (MARGIN = 2)
+apply(data_mat, MARGIN = 2, FUN = "mean")
+```
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Modify the code below to define an `x` matrix of ones, with 3 rows and 7 columns.
+
+```{r}
+#| eval: false
+x <- matrix(0, nrow = 2, ncol = 3)
+x
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- matrix(1, nrow = 3, ncol = 7)
+x
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 To the above matrix, add 1 to each number in the matrix and divide the result by 5. Then calculate its transpose
+
+```{r}
+#| code-fold: true
+#| eval: false
+new_matrix <- (x + 1)/5
+t(new_matrix)
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Why does the code below return such a warning message?
+
+```{r}
+#| warning: TRUE
+matrix(1:15, nrow = 4)
+```
+
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Define the matrix `x <- matrix(1:12, nrow = 4)`. Then get the data of the first individual, the data of the third variable, and the element `(4, 1)`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- matrix(1:12, nrow = 4)
+x[1, ] # first row
+x[, 3] # third column
+x[4, 1] # (4, 1) element
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Define a matrix of 2 variables and 3 individuals such that each variable captures the height and age of 3 persons, so that the age of the second person is unknown (absent). Then calculate the mean of each variable (we should get a number!).
+
+```{r}
+#| code-fold: true
+#| eval: false
+data <- cbind("age" = c(20, NA, 25), "h" = c(160, 165, 170))
+apply(data, MARGIN = 2, FUN = "mean", na.rm = TRUE) # mean by columns
+
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Why does the lower code return an error? What is wrong?
+
+```{r}
+#| error: true
+mat <- cbind("age" = c(15, 20, 25), "names" = c("javi", "sandra", "carlos"))
+mat
+mat + 1
+```
+
+:::
+
+
+### Second attempt: data.frame
+
+Arrays have the same problem as vectors: if we put together data of different types, it [**data integrity is compromised**]{.hl-red} as it converts them (see the code below: the ages and the `TRUE/FALSE` are converted to text).
+
+```{r}
+#| code-line-numbers: "4-5"
+ages <- c(14, 24, NA)
+single <- c(TRUE, NA, FALSE)
+names <- c("javi", "laura", "lucía")
+mat <- cbind(ages, single, names)
+mat
+```
+
+
+In fact, since they are not numbers, we can no longer perform arithmetic operations.
+
+```{r}
+#| error: true
+mat + 1
+```
+
+In order to work with [**variables of different type**]{.hl-yellow} we have in `R` what is known as [**data.frame**]{.hl-yellow}: concatenation of variables of equal length but which can be of [**different type**]{.hl-purple}.
+
+```{r}
+table <- data.frame(ages, single, names)
+class(table)
+table
+```
+
+Since a `data.frame` is already an attempt at a `database` the variables are not mere mathematical vectors: [**they have a meaning**]{.hl-yellow} and we can (we must) [**give them names**]{.hl-purple} that describe their meaning.
+
+```{r}
+library(lubridate)
+table <-
+  data.frame("ages" = ages, "single" = single, "names" = names,
+             "birth_date" = as_date(c("1989-09-10", "1992-04-01", "1980-11-27")))
+table
+```
+
+
+[**We have our first data set!**]{.hl-yellow} (strictly speaking we can't talk about a database but for the moment it looks like one). You can visualize it by typing its name in console or with `View(table)`.
+
+![](img/view_tabla.jpg)
+
+#### Get variables
+
+If we want to access its elements, being again **tabulated data**, we can access as in the matrices ([**not recommended**]{.hl-red}): again [**we have two indexes**]{.hl-yellow} (rows and columns, leaving free the one we don't use)
+
+```{r}
+table[2, ]  # second row (all variables)
+table[, 3]  # third column (all individuals)
+table[2, 1] # first variable of the second individual
+```
+
+
+![](img/menu_data_frame.jpg)
+
+But it also has the advantages of a [**database**]{.hl-yellow} : we can [**access the variables by name**]{.hl-purple} ([**recommended**]{.hl-green} since the variables can change position and now they have a meaning), putting the name of the table followed by the symbol `$` (with the **tab**, a menu of columns to choose from will appear).
+
+
+#### Ask functions
+
+- `names()`: shows us the variable names
+
+```{r}
+names(table)
+```
+
+- `dim()`: shows dimensions (also `nrow()` and `ncol()`)
+
+```{r}
+dim(table)
+```
+
+
+- Variables can be accessed by name
+
+```{r}
+table[c(1, 3), "names"]
+table$names[c(1, 3)]
+```
+
+
+#### Add a variable
+
+If we have one already created and we want to [**add a column**]{.hl-yellow} it is as simple as using the `data.frame()` function we have already seen to concatenate the column. Let's add for example a new variable, the number of siblings of each individual.
+
+```{r}
+# add a new column
+siblings <- c(0, 2, 3)
+table <- data.frame(table, "n_sib" = siblings)
+table
+```
+
+### Last attempt: tibble
+
+Tables in `data.frame` format have some [**limitations**]{.hl-red}. The main one is that [**does not allow recursion**]{.hl-red}: imagine that we define a database with heights and weights, and we want a third variable with the BMI.
+
+```{r}
+#| error: true
+data.frame("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70),
+           "BMI" = weight / (height^2))
+```
+
+Hereafter we will use the `tibble` ([**enhanced data.frame**]{.hl-yellow}) format from the `{tibble}` package.
+
+```{r}
+library(tibble)
+data_tb <- 
+  tibble("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70), "BMI" = weight / (height^2))
+class(data_tb)
+data_tb
+```
+
+Tables in `tibble` format will allow a [**more agile, efficient and coherent**]{.hl-yellow} data management, with 4 main advantages:
+
+- [**Metainformation**]{.hl-yellow}: if you look at the header, it automatically tells us the number of rows and columns, and the type of each variable
+
+- [**Recursivity**]{.hl-yellow}: allows you to define the variables sequentially (as we have seen)
+
+- [**Consistency**]{.hl-yellow}: if you access a column that does not exist, it warns you with a warning
+
+```{r}
+#| warning: true
+data_tb$invent
+```
+
+- [**By rows**]{.hl-yellow}: create by rows (copy and paste from a table) with `tribble()`.
+
+```{r}
+tribble(~colA, ~colB,
+        "a",   1,
+        "b",   2)
+```
+
+
+::: callout-tip
+The `{datapasta}` package allows us to [**copy and paste**]{.hl-green} tables from web pages and simple documents.
+:::
+
+
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Load from the `{datasets}` package the `airquality` dataset (New York air quality variables from May through September 1973). Is the airquality dataset of type tibble? If not, convert it to tibble (look in the package documentation at <https://tibble.tidyverse.org/index.html>).
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tibble)
+class(datasets::airquality)
+airquality_tb <- as_tibble(datasets::airquality)
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Once converted to `tibble` get the name of the variables and the dimensions of the data set. How many variables are there? How many days have been measured?
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb)
+ncol(airquality_tb)
+nrow(airquality_tb)
+```
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Filters only the data of the fifth observation
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Filter only the data for the month of August. How to tell it that we want only the rows that meet a specific condition?
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Select those data that are not from July or August.
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month != 7 & Month != 8, ]
+airquality_tb[!(Month %in% c(7, 8)), ]
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Modify the following code to keep only the ozone and temperature variables (no matter what position they are).
+
+```{r}
+#| eval: false
+airquality_tb[, 3]
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Select the temperature and wind data for August. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, c("Temp", "Wind")]
+```
+
+### [**Exercise 8**]{.hl-yellow}
+
+📝 Translate the name of the variables into your native language.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia") 
+```
+
+:::
+
+
+
+## 🐣 Case study II: ...
+
+¿tidycensus?
+
+¿pollspain?
+
+
+
+
+
+
+
+
+
+
+
+
+
