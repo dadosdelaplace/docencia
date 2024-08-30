@@ -150,7 +150,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [0-1](#clase-0-1) | S1 | 2 sep | First steps: R base programming | [💻](#tu-turno-0-1-1) [💻](#tu-turno-0-1-2)  |  |  | 
 | [0-2](#clase-0-2) | S1 | 4 sep | First data: concatenate values and databases | [💻](#tu-turno-0-2-1) [💻](#tu-turno-0-2-2) [💻](#tu-turno-0-2-3) |  [🐣](#caso-practico-0-2-1) [🐣](#caso-practico-0-2-2) |  |
 | [0-3](#clase-0-3) | S1 | 6 sep | Quarto and flow structures | [💻](#tu-turno-0-3-1) [💻](#tu-turno-0-3-2) [💻](#tu-turno-0-3-3) |  [🐣](#caso-practico-0-3-1) [🐣](#caso-practico-0-3-2) [🐣](#caso-practico-0-3-3) |  |
-| [0-4](#clase-0-4) | S2 | 10 sep | Final task (70%) | | | [🎯](#clase-0-4) |
+| [0-4](#clase-0-4) | S2 | 10 sep | Final task| | | [🎯 (70%)](#clase-0-4) |
 :::
 :::
 
@@ -4919,7 +4919,7 @@ plt.show()
 
 To practice control structures we are going to perform a [**simulation exercise**]{.hl-yellow}
 
-&nsbp;
+&nbsp;
 
 Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structure)
 
@@ -4929,7 +4929,7 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 
 Define a function called `temperature_converter` that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others
 
-&nsbp;
+&nbsp;
 
 Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions)
 
