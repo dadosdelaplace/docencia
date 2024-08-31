@@ -40,6 +40,9 @@
 * [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material)
 * [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
 * 🛠 Workbooks:
-  - [Introducción a R base (intro to R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
+  - [Introducción a R base (intro R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
   - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
+  - [Estructuras de control: if-else y bucles (flow structures)](https://javieralvarezliebana.quarto.pub/control-bucles-if-else/)
+  - [Funciones en R (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r/)
+  - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata/)
 
