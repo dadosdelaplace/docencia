@@ -9,14 +9,14 @@
 // general
 $body-bg: #ffffff !default; // color de fondo
 $body-color: #444442 !default; // color de texto
-$link-color: #2972A8 !default; // color de links
+$link-color: #a86c29 !default; // color de links
 $link-weight: bold !default;
 $presentation-font-size-root: 1.9em;
 $font-family-sans-serif: 'KoHo', sans-serif !default;
 
 // headings
 $presentation-heading-font: "Quicksand", sans-serif !default;
-$presentation-heading-color: #2972A8 !default; // color headings
+$presentation-heading-color: #a86c29 !default; // color headings
 $presentation-heading-font-weight: bold !default;
 $h1-font-size: 2.2em !default;
 $h2-font-size: 2em !default;
@@ -73,13 +73,13 @@ code span.ot {
 
 // Background generator
 @mixin bodyBackground() {
-  @include radial-gradient(#E8F3F5, #ffffff);
+  @include radial-gradient(#f5f0e8, #ffffff);
 }
 
 /*-- scss:rules --*/
 
 .backgrounds .title-slide {
-    background-color: #E4F2FC !important;
+    background-color: #f5f0e8 !important;
 }
  
   
@@ -107,7 +107,7 @@ code span.ot {
 
 
 .reveal h1, h2 {
-  color: #2972A8 !important;
+  color: #a86c29 !important;
   font-weight: bold !important;
 }
 
