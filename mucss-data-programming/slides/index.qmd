@@ -206,11 +206,14 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 &nbsp;
 
-* `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>)
+* `relig_income` from the `{tidyr}` package: compiles annual income data by religion (original source <https://www.pewresearch.org/religion/religious-landscape-study/>)
 
-* `who` del paquete `{tidyr}`: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.
+* `who2` from the `{tidyr}` package: WHO data on tuberculosis infections, disaggregated by disease type, sex and age.
 
-* `billboard` del paquete `{tidyr}`: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.
+* `billboard` from the `{tidyr}` package: top 100 ranking of songs according to Billboard (something like The 40) for the year 2000.
+
+* `world_bank_pop` from the `{tidyr}` package: data from the World Bank about population per country from 2000 to 2018.
+
 
 # L1: [first steps]{.flow} {#clase-0-1}
 
@@ -5024,13 +5027,691 @@ The day of the submission you will have uploaded a [**submission template**]{.hl
 
 ---
 
+## Previously, in Breaking Bad...
+
+Our [**final database format**]{.hl-yellow} will be the `tibble` type object, an enhanced `data.frame`.
+
+```{r}
+library(tibble)
+tibble("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70), "BMI" = weight / (height^2))
+```
+
+- [**Metainformation**]{.hl-yellow}: in the header it automatically tells us the number of rows and columns, and the type of each variable.
+
+- [**Recursivity**]{.hl-yellow}: allows to define the variables sequentially (as we have seen).
+
+- [**Consistency**]{.hl-yellow}: if you access a column that does not exist it warns you with a warning.
+
+- [**By rows**]{.hl-yellow}: allows to create by rows with `tribble()`.
+
+---
+
+## Previously, in Breaking Bad...
+
+To define a `tibble()` ourselves we have two options:
+
+* [**Concatenating vectors**]{.hl-yellow} that we already have defined, making use of the `tibble()` function of the `{tibble}` package (already included in `{tidyverse}`)
+
+```{r}
+height <- c(1.7, 1.8, 1.6)
+weight <- c(80, 75, 70)
+BMI <- weight / (height^2)
+tibble("height" = height, "weight" = weight, "BMI" = BMI)
+```
+
+---
+
+## Previously, in Breaking Bad...
+
+* [**Directly in a tibble**]{.hl-yellow} manually providing values and variable names
+
+```{r}
+tibble("height" = c(1.7, 1.8, 1.6),
+       "weight" = c(80, 75, 70),
+       "BMI" = weight / (height^2))
+```
+
+---
+
+## R base vs Tidyverse
+
+So far, everything we have done in `R` has been done in the programming paradigm known as [**R base**]{.hl-yellow}. When `R` was born as a language, many of those who programmed in it imitated forms and methodologies inherited from other languages, based on the use of
+
+- Loops [**for**]{.hl-yellow} and [**while**]{.hl-yellow}
+
+- Dollar `$` to access to the variables 
+
+- Structures [**if-else**]{.hl-yellow}
+
+And although knowing these structures can be interesting in some cases, in [**most cases they are obsolete and we will be able to avoid them**]{.hl-red} (especially loops) since `R` is specially [**designed to work in a functional way**]{.hl-yellow} (instead of element-by-element).
+
+---
+
+## What is tidyverse?
+
+::: columns
+::: {.column width="50%"}
+![](img/tidyverrse_universe.jpg)
+:::
+
+::: {.column width="50%"}
+![](img/flow_tidyverse.jpg)
+:::
+:::
+
+In this context of functional programming, a decade ago `{tidyverse}` was born, a [**“universe” of packages**]{.hl-yellow} to guarantee an efficient, coherent and lexicographically simple to understand workflow, based on the idea that [**our data is clean and tidy**]{.hl-purple}.
+
+---
+
+## What is tidyverse?
+
+::: columns
+::: {.column width="45%"}
+![](img/tidyverrse_universe.jpg)
+
+- `{lubridate}`: date management
+- `{rvest}`: web scraping
+- `{tidymodels}`: modeling/prediction
+
+:::
+
+::: {.column width="55%"}
+
+- `{tibble}`: optimizing data.frame
+- `{tidyr}`: data cleaning
+- `{readr}`: load rectangular data (.csv), `{readxl}`: import .xls and .xlsx files
+- `{dplyr}`: grammar for debugging
+- `{stringr}`: text handling
+- `{purrr}`: list handling
+- `{forcats}`: qualitative handling
+- `{ggplot2}`: data visualization
+
+:::
+:::
+
+
+
+---
+
+## What is tidyverse?
+
+::: columns
+::: {.column width="45%"}
+![](img/tidyverrse_universe.jpg)
+
+- `{lubridate}`: date management
+- `{rvest}`: web scraping
+- `{tidymodels}`: modeling/prediction
+
+:::
+
+::: {.column width="55%"}
+
+- `{tibble}`: [**optimizing data.frame**]{.hl-yellow}
+- `{tidyr}`: [**data cleaning**]{.hl-yellow}
+- `{readr}`: load rectangular data (.csv), `{readxl}`: import .xls and .xlsx files
+- `{dplyr}`: grammar for debugging
+- `{stringr}`: text handling
+- `{purrr}`: list handling
+- `{forcats}`: qualitative handling
+- `{ggplot2}`: data visualization
+
+:::
+:::
+
+
+---
+
+## Basic idea: tidy data
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way (Hadley Wickham, Chief Scientist en RStudio)
+
+::: {style="font-size:120px; text-align: center; color:#F8DF58;"}
+<b>TIDY</b><b>[VERSE</b>]{style="color:#CAB0EE;"}
+:::
+
+The [**universe**]{.hl-purple} of `{tidyverse}` packages is based on the idea introduced by **Hadley Wickham** (the God we pray to) of [**standardizing**]{.hl-yellow} the format of data to
+
+::: incremental
+- [**systematize**]{.hl-green} debugging
+- make it easier [**simpler**]{.hl-green} to manipulate
+- [**legible**]{.hl-green} code.
+:::
+
+---
+
+## Rules
+
+The first thing will therefore be to understand what the [**tidydata sets**]{.hl-yellow} are, since the whole `{tidyverse}` is based on the data being standardized.
+
+::: columns
+::: {.column width="50%"}
+::: {.fragment .fade-in}
+1.  Each [**variable**]{.hl-yellow} in a [**single column**]{.hl-purple}
+:::
+
+::: {.fragment .fade-in}
+2.  Each [**individual**]{.hl-yellow} in a [**different row**]{.hl-purple}
+:::
+
+::: {.fragment .fade-in}
+3.  Each [**cell**]{.hl-yellow} with a [**single value**]{.hl-purple}
+:::
+
+::: {.fragment .fade-in}
+4.  Each [**dataset**]{.hl-yellow} in a [**tibble**]{.hl-purple}
+:::
+
+::: {.fragment .fade-in}
+5.  If we want to join [**multiple datasets**]{.hl-yellow} we must have a [**common (key) column**]{.hl-purple}.
+:::
+:::
+
+::: {.column width="50%"}
+![](img/tidy_def.jpg){width="160%"}
+:::
+:::
+
+---
+
+## Pipe
+
+In `{tidyverse}` the [**operator pipe (pipe)**]{.hl-yellow} defined as `|>` ([**ctrl+shift+M**]{.hl-purple}) will be key: it will be a [**pipe that traverses the data**]{.hl-yellow} and transforms it.
+. . .
+
+::: columns
+::: {.column width="50%"}
+
+In R base, if we want to apply three functions `first()`, `second()` and `third()` in order, it would be
+
+```{r}
+#| eval: false
+third(second(first(data)))
+```
+:::
+
+::: {.column width="50%"}
+
+In `{tidyverse}` we can [**read from left to right**]{.hl-yellow} and separate data from the actions
+
+```{r}
+#| eval: false
+data |> first() |> second() |> third()
+```
+:::
+:::
+
+
+. . .
+
+::: callout-caution
+## Important
+
+Since version 4.1.0 of `R` we have `|>`, a **native** pipe available [**outside tidyverse**]{.hl-purple}, replacing the [**old pipe**]{.hl-red} `%>%` which depended on the `{magrittr}` package (quite problematic).
+
+:::
+
+---
+
+## Pipe
+
+The main advantage is that the [**code is very readable (almost literal)**]{.hl-yellow} and you can do large operations on the data with very little code.
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+data |>
+  tidy(...) |>
+  filter(...) |>
+  select(...) |>
+  arrange(...) |>
+  modify(...) |>
+  rename(...) |>
+  group(...) |>
+  count(...) |>
+  summarise(...) |>
+  plot(...)
+```
+:::
+
+::: {.column width="50%"}
+<center><img src="img/logo_pipe.png" width="360px"/></center>
+:::
+:::
+
+---
+
+## Messy data
+
+But what does the [**non-tidy (messy) data**]{.hl-yellow} look like? Let's load the `table4a` table from the `{tidyr}` package (we already have it loaded from the `{tidyverse}` environment).
+
+
+```{r}
+library(tidyr)
+table4a
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+---
+
+## Pivot longer
+
+::: columns
+::: {.column width="40%"}
+```{r}
+table4a
+```
+:::
+
+::: {.column width="60%"}
+❎ Each [**row represents two observations**]{.hl-red} (1999 and 2000) → the columns `1999` and `2000` should actually themselves be [**values of a variable**]{.hl-yellow} and not column names.
+:::
+:::
+
+. . .
+
+We will include a [**new column**]{.hl-yellow} that stores the year and another one that stores the value of the variable of interest in each of those years. And we will do it with the `pivot_longer()` function: [**pivot the table**]{.hl-yellow} to long format:
+
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"), names_to = "year", values_to = "cases")
+```
+
+---
+
+## Pivot longer
+
+::: columns
+::: {.column width="50%"}
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"),
+               names_to = "year",
+               values_to = "cases")
+```
+:::
+
+::: {.column width="50%"}
+![](img/table4a.jpg)
+:::
+:::
+
+- `cols`: [**name of the variables to pivot**]{.hl-yellow}.
+- `names_to`: name of the new variable to which we send the [**header**]{.hl-yellow} of the table (the names).
+- `values_to`: name of the new variable to which we are going to send the [**data**]{.hl-yellow}.
+
+---
+
+## Messy data
+
+Let's see another example with table `table2`.
+
+```{r}
+table2
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+---
+
+## Pivot wider
+
+::: columns
+::: {.column width="60%"}
+```{r}
+#| echo: false
+table2
+```
+:::
+
+::: {.column width="40%"}
+❎ Each [**observation is divided into two rows**]{.hl-red} → the [**records with the same year should be the same**]{.hl-yellow}
+:::
+:::
+
+. . .
+
+What we will do will be the opposite: with `pivot_wider()` [**we will widen the table**]{.hl-yellow}
+
+```{r}
+table2 |>  pivot_wider(names_from = type, values_from = count)
+```
+
+---
+
+## Messy data
+
+Let's see another example with table `table3`.
+
+```{r}
+table3
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+---
+
+## Separate
+
+::: columns
+::: {.column width="60%"}
+```{r}
+table3
+```
+:::
+
+::: {.column width="40%"}
+❎ Each [**cell contains several values**]{.hl-red}
+:::
+:::
+
+. . .
+
+What we will do is make use of the `separate()` function to send [**separate each value**]{.hl-yellow} to a different column.
+
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+---
+
+## Separate
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+Notice that the data, although it has separated them, [**kept them as text**]{.hl-red} when in fact they should be numeric variables. For this we can add the optional argument `convert = TRUE`.
+
+. . .
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"), convert = TRUE)
+```
+
+---
+
+## Messy data
+
+Let's see the last example with table `table5`.
+
+```{r}
+table5
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+---
+
+## Unite
+
+::: columns
+::: {.column width="50%"}
+```{r}
+table5
+```
+:::
+
+::: {.column width="50%"}
+❎ We have [**same values divided in two columns**]{.hl-red}
+:::
+:::
+
+. . .
+
+We will use `unite()` to [**unite the values**]{.hl-yellow} of century and year in the same column
+
+```{r}
+table5 |> unite(col = whole_year, century, year, sep = "")
+```
+
+---
+
+## Nest data
+
+We can also [**nest datasets inside another one**]{.hl-yellow}: imagine we have a dataset with variables `x` and `y`, with two records, another with one and another with 3 of them.
+
+```{r}
+data <-
+  tibble("dataset" = c(1, 1, 2, 3, 3, 3), 
+         "x" = c(0, 2, NA, -2, 6, 7),
+         "y" = c(-1, NA, 5, 1.5, NA, -2))
+data
+```
+
+In reality everything that has an equal value in `dataset` should form its own `tibble` so let's create one inside the one we have
+
+---
+
+## Nest data
+
+For it we will use the function `nest()` indicating it which variables form the datasets that will be nested (in this case variables `x` and `y`). Notice that inside what it stores is a variable of type list (since each dataset has a different length).
+
+```{r}
+data_nest <-
+  data |>
+  nest(data = c(x, y))
+data_nest
+```
+
+---
+
+## Nest data
+
+To [**unnest**]{.hl-yellow} just use the `unnest()` function indicating the column to unnest.
+
+```{r}
+data_nest |> unnest(cols = c(data))
+```
+
+---
+
+## Example: world bank pop
+
+In the `{tidyr}` package we have the `world_bank_pop` dataset which contains data from the World Bank about population per country from 2000 to 2018.
+
+```{r}
+library(tidyr)
+world_bank_pop
+```
+
+[**What could be wrong?**]{.hl-red}
+
+---
+
+## Example: world bank pop
+
+First of all, we can see that we effectively have the same variable in 18 columns: population.
+
+. . .
+
+What we should have is a column called `pop` with these values and another `year` indicating to which year corresponds the measurement. And for this we will do it with `pivot_longer()`.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop |> 
+  pivot_longer(cols = -(country:indicator), names_to = "year", values_to = "value")
+world_bank_pop_tidy
+```
+
+---
+
+## Example: world bank pop
+
+```{r}
+world_bank_pop_tidy
+```
+
+[**Is everything correct?**]{.hl-red}
+
+. . .
+
+If you notice we have two types of population measures, total `...TOTL` and its growth `...GROW`, but in addition we have them for each country in global `SP.POP...` and only in urban area `SP.URB...`.
+
+```{r}
+unique(world_bank_pop_tidy$indicator)
+```
+
+---
+
+## Example: world bank pop
+
+
+What should be done?
+
+. . .
+
+We will separate this variable into 3: one for the prefix `SP` (which we will eliminate later), one for the area (`POP/URB`) and one for the value (`variable`), which can be total or growth.
+
+```{r}
+world_bank_pop_tidy2 <-
+  world_bank_pop_tidy |>
+  separate(indicator, c("dummy", "area", "variable"))
+world_bank_pop_tidy2$dummy <- NULL
+world_bank_pop_tidy2
+```
+
+---
+
+## Example: world bank pop
+
+This can be done in a simpler way by indicating in the variable that we want to eliminate that it is `NA` inside `separate()`.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop_tidy |>
+  separate(indicator, c(NA, "area", "variable"))
+world_bank_pop_tidy
+```
+
+. . .
+
+Have we got it yet? Think carefully: does each variable have its own column?
+
+---
+
+## Example: world bank pop
+
+If you actually look at the total population and growth variables, they should be different variables, since they even have different units: one is inhabitants, the other is percentage points.
+
+. . .
+
+To do the reverse of the initial operation, `pivot_wider()` (later we will use a tremendously useful function, `{janitor}`'s `clean_names()` which unifies variable names).
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop_tidy |>
+  pivot_wider(names_from = "variable", values_from = "value") |> 
+  janitor::clean_names()
+world_bank_pop_tidy
+```
+
+---
+
+## Example: world bank pop
+
+The complete code would be this: short, concise, readable and self-descriptive.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop |> 
+  pivot_longer(cols = -(country:indicator), names_to = "year", values_to = "value") |> 
+  separate(indicator, c(NA, "area", "variable")) |> 
+  pivot_wider(names_from = "variable", values_from = "value") |> 
+  janitor::clean_names()
+world_bank_pop_tidy
+```
+
+---
+
 ## Example: who dataset
 
-En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/tidydata/).
+In`{tidyr}` package we have `who2` dataset (World Health Organization dataset)
 
 ```{r}
 library(tidyr)
 who2
+```
+
+**Is it tidy data? Why?**
+
+---
+
+## Example: who dataset
+
+First step for tidy data: we must pivot the table (tip: use paper and pen to sketch how the database should look like) so that there is a column called `cases` (since all columns starting from `year` is actually the same, cases of a disease).
+
+. . .
+
+```{r}
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = "type", values_to = "cases")
+who_tidy
+```
+
+---
+
+## Example: who dataset
+
+If you notice there are a lot of rows that do not make sense to keep because we have no cases! Investigate the `pivot_longer()` options to see how we can directly remove them in the pivot.
+
+. . .
+
+```{r}
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = "type", values_to = "cases",
+               values_drop_na = TRUE)
+who_tidy
+```
+
+
+---
+
+## Example: who dataset
+
+Now in `type` we have coded the information as `diagnosis_sex_age`. How to separate it in 3 columns? Investigate both `separate()` and `pivot_longer()` options.
+
+```{r}
+# separate
+who_tidy <-
+  who_tidy |> 
+  separate(col = "type", into = c("diagnosis", "sex", "age"))
+
+# pivot_longer
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = c("diagnosis", "sex", "age"),
+               values_to = "cases", values_drop_na = TRUE,
+               names_sep = "_")
+who_tidy
+```
+ 
+
+
+---
+
+## Example: who dataset
+
+Finally, separate in two (`age_inf`, `age_sup`) the age range (which are numbers). Think about how to do it since it is not always 4 numbers (if there is no upper age range defined, put `Inf` as an upper bound).
+
+. . .
+
+```{r}
+who_tidy <-
+  who_tidy |> 
+  separate(col = "age", into = c("age_inf", "age_sup"), sep = -2, convert = TRUE)
+who_tidy$age_inf <- if_else(is.na(who_tidy$age_inf), 65, who_tidy$age_inf)
+who_tidy$age_sup <- if_else(who_tidy$age_sup == 65, Inf, who_tidy$age_sup)
+who_tidy
 ```
 
 ---
@@ -5044,55 +5725,65 @@ who2
 
 ### [**Exercise 1**]{.hl-yellow}
 
-📝 Usa el dataset original `relig_income` y trata de responder a la última pregunta:  ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses `R`? ¿Cuál tiene mayor probabilidad de error?
+
+📝 Use the original `who2` dataset from the `{tidyr}` package and try to answer the question: how many cases of tuberculosis were there in Spain in 1995 among women? Do it without converting it to tidydata. After that, pivot in a simple way and compare the code to be done when we have tidydata to when we don't. Which one is more readable if you didn't know `R`? Which one has higher error probability?
 
 ```{r}
 #| code-fold: true
 #| eval: false
 
-sum(relig_income[relig_income$religion == "Agnostic",
-             c("$30-40k", "$40-50k", "$50-75k", "$75-100k", "$100-150k", ">150k")])
+# messy data
+sum(who2[who2$country == "Spain" & who2$year == 1995,
+     names(who2)[str_detect(names(who2), "f_")]], na.rm = TRUE)
+
+# tidy data (at this moment)
+sum(who_tidy[who_tidy$country == "Spain" &
+           who_tidy$year == 1995 &
+           who_tidy$sex == "f", ]$cases)
+
+# in the future
+who_tidy |> 
+  filter(country == "Spain" & year == 1995 & sex == "f") |> 
+  summarise(sum(cases))
 ```
 
 
 ### [**Exercise 2**]{.hl-yellow}
 
-📝 Usando `relig_tidy` determina quién tiene más ingresos medios, ¿católicos (`Catholic`) o agnósticos (`Agnostic`)? Crea antes una variable `avg_income` (ingresos medios por intervalo): si hay 5 personas entre 20 y 30, y 3 personas entre 30 y 50, la media sería $(25*5 + 40*3)/8$ (si es `Inf` por arriba, `NA`)
+📝 Using `who_tidy` determine which sex has had more cases, men or women? Create a new variable `avg_age` (mean age of the interval): if the range is 25 to 34, the mean age will be $(25 + 34)/2 = 29.5$ (if `Inf` above, `NA`)
 
 ```{r}
 #| code-fold: true
 #| eval: false
-relig_tidy$avg_income <- 
-  if_else(is.infinite(relig_tidy$income_sup), NA, (relig_tidy$income_sup + relig_tidy$income_inf)/2)
 
-# Agnosticos vs catolicos
-sum((relig_tidy$avg_income[relig_tidy$religion == "Agnostic"] * relig_tidy$people[relig_tidy$religion == "Agnostic"]), na.rm = TRUE) /
-  sum(relig_tidy$people[relig_tidy$religion == "Agnostic"], na.rm = TRUE)
+# f vs m
+sum(who_tidy[who_tidy$sex == "m", ]$cases)
+sum(who_tidy[who_tidy$sex == "f", ]$cases)
 
-sum((relig_tidy$avg_income[relig_tidy$religion == "Catholic"] * relig_tidy$people[relig_tidy$religion == "Catholic"]), na.rm = TRUE) /
-  sum(relig_tidy$people[relig_tidy$religion == "Catholic"], na.rm = TRUE)
+# ave age
+who_tidy$ave_age <- 
+  if_else(is.infinite(who_tidy$age_sup), NA, (who_tidy$age_inf + who_tidy$age_sup)/2)
 ```
 
 
 ### [**Exercise 3**]{.hl-yellow}
 
-📝 Si debemos elegir budismo (`Buddhist`) e hinduismo (`Hindu`), ¿cuál de las dos es la religión mayoritaria entre los que ganan más de 50 000$ anuales?
+📝 If we must choose a country in which we have the lowest probability of infection, which country, between the United Kingdom (`United Kingdom of Great Britain and Northern Ireland`) and France (similar population), had the fewest cases in the most recent year (whichever it was, even if the table was updated)?
 
 ```{r}
 #| code-fold: true
 #| eval: false
 
-greatest_income <-
-  relig_tidy[relig_tidy$income_inf >= 50 & relig_tidy$religion %in% c("Buddhist", "Hindu"), ]
-
-sum(greatest_income$people[greatest_income$religion == "Buddhist"], na.rm = TRUE)
-sum(greatest_income$people[greatest_income$religion == "Hindu"], na.rm = TRUE)
+last_cases <- who_tidy[who_tidy$year == max(who_tidy$year), ]
+sum(last_cases[last_cases$country == "United Kingdom of Great Britain and Northern Ireland", "cases"])
+sum(last_cases[last_cases$country == "France", "cases"])
+# better France
 ```
 
 
 ### [**Exercise 4**]{.hl-yellow}
 
-📝 Echa un vistazo a la tabla `table4b` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+📝 Take a look at table `table4b` in package `{tidyr}`. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?
 
 ```{r}
 #| code-fold: true
@@ -5105,7 +5796,7 @@ table4b |>
 
 ### [**Exercise 5**]{.hl-yellow}
 
-📝 Echa un vistazo a la tabla `billboard` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+📝 Take a look at the `billboard` table in the `{tidyr}` package. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?
 
 ```{r}
 #| code-fold: true
@@ -5124,7 +5815,20 @@ billboard |>
 ---
 
 
-## 🐣 Case study: religion income {#caso-practico-1}
+## 🐣 Case study {#caso-practico-1}
+
+Let's perform a case study with the `relig_income` table in `{tidyr}` package. As indicated (`? relig_income`), the table represents the number of people in each annual income bracket (20k = 20 000$) and in each religion.
+
+```{r}
+#| eval: false
+relig_income
+```
 
 
+&nbsp;
 
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidy-data-mucss)
+
+# L2: [tidyverse]{.flow} {#clase-2}
+
+[**TBA**]{style="color:#444442;"}

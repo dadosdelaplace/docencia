@@ -645,9 +645,10 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 </ul>
 <p>&nbsp;</p>
 <ul>
-<li><p><code>relig_income</code> del paquete <code>{tidyr}</code>: recopila los datos de ingresos anuales en función de la religión (fuente original <a href="https://www.pewresearch.org/religion/religious-landscape-study/" class="uri">https://www.pewresearch.org/religion/religious-landscape-study/</a>)</p></li>
-<li><p><code>who</code> del paquete <code>{tidyr}</code>: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.</p></li>
-<li><p><code>billboard</code> del paquete <code>{tidyr}</code>: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.</p></li>
+<li><p><code>relig_income</code> from the <code>{tidyr}</code> package: compiles annual income data by religion (original source <a href="https://www.pewresearch.org/religion/religious-landscape-study/" class="uri">https://www.pewresearch.org/religion/religious-landscape-study/</a>)</p></li>
+<li><p><code>who2</code> from the <code>{tidyr}</code> package: WHO data on tuberculosis infections, disaggregated by disease type, sex and age.</p></li>
+<li><p><code>billboard</code> from the <code>{tidyr}</code> package: top 100 ranking of songs according to Billboard (something like The 40) for the year 2000.</p></li>
+<li><p><code>world_bank_pop</code> from the <code>{tidyr}</code> package: data from the World Bank about population per country from 2000 to 2018.</p></li>
 </ul>
 </section>
 <section>
@@ -1757,7 +1758,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-31"</code></pre>
+<pre><code>[1] "2024-09-01"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1767,7 +1768,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-08-31 11:47:19 CEST"</code></pre>
+<pre><code>[1] "2024-09-01 13:51:03 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -1783,7 +1784,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 </div>
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1"></a><span class="fu">month</span>(date_today)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
+<pre><code>[1] 9</code></pre>
 </div>
 </div>
 </div>
@@ -3617,13 +3618,13 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb378-4"><a href="#cb378-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb378-5"><a href="#cb378-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr    min       lq       mean median
-                                y &lt;- x^2    984   1148.0   1366.038   1189
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 735089 755363.5 848541.494 767192
-       uq     max neval
-   1312.0    6560   500
- 795748.5 3822963   500</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.845    2.056396    1.927
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1261.283 1275.879 1345.791790 1284.530
+       uq      max neval
+    2.050   15.006   500
+ 1298.613 3247.405   500</code></pre>
 </div>
 </div>
 </section>
@@ -5135,12 +5136,826 @@ Not yet, we are in the 3-th iteration</code></pre>
 <h2>💻 Task correction</h2>
 <p><span style="color:#444442;"><strong>Try to perform the following exercises without looking at the solutions</strong></span></p>
 </section>
+<section id="previously-in-breaking-bad" class="slide level2">
+<h2>Previously, in Breaking Bad…</h2>
+<p>Our <span class="hl-yellow"><strong>final database format</strong></span> will be the <code>tibble</code> type object, an enhanced <code>data.frame</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb475"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb475-1"><a href="#cb475-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb475-2"><a href="#cb475-2"></a><span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"weight"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>), <span class="st">"BMI"</span> <span class="ot">=</span> weight <span class="sc">/</span> (height<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  height weight   BMI
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1    1.7     80  27.7
+2    1.8     75  23.1
+3    1.6     70  27.3</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>Metainformation</strong></span>: in the header it automatically tells us the number of rows and columns, and the type of each variable.</p></li>
+<li><p><span class="hl-yellow"><strong>Recursivity</strong></span>: allows to define the variables sequentially (as we have seen).</p></li>
+<li><p><span class="hl-yellow"><strong>Consistency</strong></span>: if you access a column that does not exist it warns you with a warning.</p></li>
+<li><p><span class="hl-yellow"><strong>By rows</strong></span>: allows to create by rows with <code>tribble()</code>.</p></li>
+</ul>
+</section>
+<section id="previously-in-breaking-bad-1" class="slide level2">
+<h2>Previously, in Breaking Bad…</h2>
+<p>To define a <code>tibble()</code> ourselves we have two options:</p>
+<ul>
+<li><span class="hl-yellow"><strong>Concatenating vectors</strong></span> that we already have defined, making use of the <code>tibble()</code> function of the <code>{tibble}</code> package (already included in <code>{tidyverse}</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb477"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb477-1"><a href="#cb477-1"></a>height <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>)</span>
+<span id="cb477-2"><a href="#cb477-2"></a>weight <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>)</span>
+<span id="cb477-3"><a href="#cb477-3"></a>BMI <span class="ot">&lt;-</span> weight <span class="sc">/</span> (height<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb477-4"><a href="#cb477-4"></a><span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> height, <span class="st">"weight"</span> <span class="ot">=</span> weight, <span class="st">"BMI"</span> <span class="ot">=</span> BMI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  height weight   BMI
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1    1.7     80  27.7
+2    1.8     75  23.1
+3    1.6     70  27.3</code></pre>
+</div>
+</div>
+</section>
+<section id="previously-in-breaking-bad-2" class="slide level2">
+<h2>Previously, in Breaking Bad…</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Directly in a tibble</strong></span> manually providing values and variable names</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb479"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb479-1"><a href="#cb479-1"></a><span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>),</span>
+<span id="cb479-2"><a href="#cb479-2"></a>       <span class="st">"weight"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
+<span id="cb479-3"><a href="#cb479-3"></a>       <span class="st">"BMI"</span> <span class="ot">=</span> weight <span class="sc">/</span> (height<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  height weight   BMI
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1    1.7     80  27.7
+2    1.8     75  23.1
+3    1.6     70  27.3</code></pre>
+</div>
+</div>
+</section>
+<section id="r-base-vs-tidyverse" class="slide level2">
+<h2>R base vs Tidyverse</h2>
+<p>So far, everything we have done in <code>R</code> has been done in the programming paradigm known as <span class="hl-yellow"><strong>R base</strong></span>. When <code>R</code> was born as a language, many of those who programmed in it imitated forms and methodologies inherited from other languages, based on the use of</p>
+<ul>
+<li><p>Loops <span class="hl-yellow"><strong>for</strong></span> and <span class="hl-yellow"><strong>while</strong></span></p></li>
+<li><p>Dollar <code>$</code> to access to the variables</p></li>
+<li><p>Structures <span class="hl-yellow"><strong>if-else</strong></span></p></li>
+</ul>
+<p>And although knowing these structures can be interesting in some cases, in <span class="hl-red"><strong>most cases they are obsolete and we will be able to avoid them</strong></span> (especially loops) since <code>R</code> is specially <span class="hl-yellow"><strong>designed to work in a functional way</strong></span> (instead of element-by-element).</p>
+</section>
+<section id="what-is-tidyverse" class="slide level2">
+<h2>What is tidyverse?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/tidyverrse_universe.jpg"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/flow_tidyverse.jpg"></p>
+</div>
+</div>
+<p>In this context of functional programming, a decade ago <code>{tidyverse}</code> was born, a <span class="hl-yellow"><strong>“universe” of packages</strong></span> to guarantee an efficient, coherent and lexicographically simple to understand workflow, based on the idea that <span class="hl-purple"><strong>our data is clean and tidy</strong></span>.</p>
+</section>
+<section id="what-is-tidyverse-1" class="slide level2">
+<h2>What is tidyverse?</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="img/tidyverrse_universe.jpg"></p>
+<ul>
+<li><code>{lubridate}</code>: date management</li>
+<li><code>{rvest}</code>: web scraping</li>
+<li><code>{tidymodels}</code>: modeling/prediction</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<ul>
+<li><code>{tibble}</code>: optimizing data.frame</li>
+<li><code>{tidyr}</code>: data cleaning</li>
+<li><code>{readr}</code>: load rectangular data (.csv), <code>{readxl}</code>: import .xls and .xlsx files</li>
+<li><code>{dplyr}</code>: grammar for debugging</li>
+<li><code>{stringr}</code>: text handling</li>
+<li><code>{purrr}</code>: list handling</li>
+<li><code>{forcats}</code>: qualitative handling</li>
+<li><code>{ggplot2}</code>: data visualization</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="what-is-tidyverse-2" class="slide level2">
+<h2>What is tidyverse?</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="img/tidyverrse_universe.jpg"></p>
+<ul>
+<li><code>{lubridate}</code>: date management</li>
+<li><code>{rvest}</code>: web scraping</li>
+<li><code>{tidymodels}</code>: modeling/prediction</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<ul>
+<li><code>{tibble}</code>: <span class="hl-yellow"><strong>optimizing data.frame</strong></span></li>
+<li><code>{tidyr}</code>: <span class="hl-yellow"><strong>data cleaning</strong></span></li>
+<li><code>{readr}</code>: load rectangular data (.csv), <code>{readxl}</code>: import .xls and .xlsx files</li>
+<li><code>{dplyr}</code>: grammar for debugging</li>
+<li><code>{stringr}</code>: text handling</li>
+<li><code>{purrr}</code>: list handling</li>
+<li><code>{forcats}</code>: qualitative handling</li>
+<li><code>{ggplot2}</code>: data visualization</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="basic-idea-tidy-data" class="slide level2">
+<h2>Basic idea: tidy data</h2>
+<blockquote>
+<p>Tidy datasets are all alike, but every messy dataset is messy in its own way (Hadley Wickham, Chief Scientist en RStudio)</p>
+</blockquote>
+<div style="font-size:120px; text-align: center; color:#F8DF58;">
+<p><b>TIDY</b><b><span style="color:#CAB0EE;">VERSE</span></b></p>
+</div>
+<p>The <span class="hl-purple"><strong>universe</strong></span> of <code>{tidyverse}</code> packages is based on the idea introduced by <strong>Hadley Wickham</strong> (the God we pray to) of <span class="hl-yellow"><strong>standardizing</strong></span> the format of data to</p>
+<div>
+<ul>
+<li class="fragment"><span class="hl-green"><strong>systematize</strong></span> debugging</li>
+<li class="fragment">make it easier <span class="hl-green"><strong>simpler</strong></span> to manipulate</li>
+<li class="fragment"><span class="hl-green"><strong>legible</strong></span> code.</li>
+</ul>
+</div>
+</section>
+<section id="rules" class="slide level2">
+<h2>Rules</h2>
+<p>The first thing will therefore be to understand what the <span class="hl-yellow"><strong>tidydata sets</strong></span> are, since the whole <code>{tidyverse}</code> is based on the data being standardized.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment fade-in">
+<ol type="1">
+<li>Each <span class="hl-yellow"><strong>variable</strong></span> in a <span class="hl-purple"><strong>single column</strong></span></li>
+</ol>
+</div>
+<div class="fragment fade-in">
+<ol start="2" type="1">
+<li>Each <span class="hl-yellow"><strong>individual</strong></span> in a <span class="hl-purple"><strong>different row</strong></span></li>
+</ol>
+</div>
+<div class="fragment fade-in">
+<ol start="3" type="1">
+<li>Each <span class="hl-yellow"><strong>cell</strong></span> with a <span class="hl-purple"><strong>single value</strong></span></li>
+</ol>
+</div>
+<div class="fragment fade-in">
+<ol start="4" type="1">
+<li>Each <span class="hl-yellow"><strong>dataset</strong></span> in a <span class="hl-purple"><strong>tibble</strong></span></li>
+</ol>
+</div>
+<div class="fragment fade-in">
+<ol start="5" type="1">
+<li>If we want to join <span class="hl-yellow"><strong>multiple datasets</strong></span> we must have a <span class="hl-purple"><strong>common (key) column</strong></span>.</li>
+</ol>
+</div>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/tidy_def.jpg" style="width:160.0%"></p>
+</div>
+</div>
+</section>
+<section id="pipe" class="slide level2">
+<h2>Pipe</h2>
+<p>In <code>{tidyverse}</code> the <span class="hl-yellow"><strong>operator pipe (pipe)</strong></span> defined as <code>|&gt;</code> (<span class="hl-purple"><strong>ctrl+shift+M</strong></span>) will be key: it will be a <span class="hl-yellow"><strong>pipe that traverses the data</strong></span> and transforms it. . . .</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>In R base, if we want to apply three functions <code>first()</code>, <code>second()</code> and <code>third()</code> in order, it would be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb481"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb481-1"><a href="#cb481-1"></a><span class="fu">third</span>(<span class="fu">second</span>(<span class="fu">first</span>(data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>In <code>{tidyverse}</code> we can <span class="hl-yellow"><strong>read from left to right</strong></span> and separate data from the actions</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb482"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb482-1"><a href="#cb482-1"></a>data <span class="sc">|&gt;</span> <span class="fu">first</span>() <span class="sc">|&gt;</span> <span class="fu">second</span>() <span class="sc">|&gt;</span> <span class="fu">third</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Since version 4.1.0 of <code>R</code> we have <code>|&gt;</code>, a <strong>native</strong> pipe available <span class="hl-purple"><strong>outside tidyverse</strong></span>, replacing the <span class="hl-red"><strong>old pipe</strong></span> <code>%&gt;%</code> which depended on the <code>{magrittr}</code> package (quite problematic).</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipe-1" class="slide level2">
+<h2>Pipe</h2>
+<p>The main advantage is that the <span class="hl-yellow"><strong>code is very readable (almost literal)</strong></span> and you can do large operations on the data with very little code.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb483"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb483-1"><a href="#cb483-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb483-2"><a href="#cb483-2"></a>  <span class="fu">tidy</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-3"><a href="#cb483-3"></a>  <span class="fu">filter</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-4"><a href="#cb483-4"></a>  <span class="fu">select</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-5"><a href="#cb483-5"></a>  <span class="fu">arrange</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-6"><a href="#cb483-6"></a>  <span class="fu">modify</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-7"><a href="#cb483-7"></a>  <span class="fu">rename</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-8"><a href="#cb483-8"></a>  <span class="fu">group</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-9"><a href="#cb483-9"></a>  <span class="fu">count</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-10"><a href="#cb483-10"></a>  <span class="fu">summarise</span>(...) <span class="sc">|&gt;</span></span>
+<span id="cb483-11"><a href="#cb483-11"></a>  <span class="fu">plot</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<center>
+<img src="img/logo_pipe.png" width="360px">
+</center>
+</div>
+</div>
+</section>
+<section id="messy-data" class="slide level2">
+<h2>Messy data</h2>
+<p>But what does the <span class="hl-yellow"><strong>non-tidy (messy) data</strong></span> look like? Let’s load the <code>table4a</code> table from the <code>{tidyr}</code> package (we already have it loaded from the <code>{tidyverse}</code> environment).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb484"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb484-1"><a href="#cb484-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb484-2"><a href="#cb484-2"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  country     `1999` `2000`
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;
+1 Afghanistan    745   2666
+2 Brazil       37737  80488
+3 China       212258 213766</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>What could be wrong?</strong></span></p>
+</section>
+<section id="pivot-longer" class="slide level2">
+<h2>Pivot longer</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb486"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb486-1"><a href="#cb486-1"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  country     `1999` `2000`
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;
+1 Afghanistan    745   2666
+2 Brazil       37737  80488
+3 China       212258 213766</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<p>❎ Each <span class="hl-red"><strong>row represents two observations</strong></span> (1999 and 2000) → the columns <code>1999</code> and <code>2000</code> should actually themselves be <span class="hl-yellow"><strong>values of a variable</strong></span> and not column names.</p>
+</div>
+</div>
+<div class="fragment">
+<p>We will include a <span class="hl-yellow"><strong>new column</strong></span> that stores the year and another one that stores the value of the variable of interest in each of those years. And we will do it with the <code>pivot_longer()</code> function: <span class="hl-yellow"><strong>pivot the table</strong></span> to long format:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb488"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb488-1"><a href="#cb488-1"></a>table4a <span class="sc">|&gt;</span> </span>
+<span id="cb488-2"><a href="#cb488-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"1999"</span>, <span class="st">"2000"</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country     year   cases
+  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;
+1 Afghanistan 1999     745
+2 Afghanistan 2000    2666
+3 Brazil      1999   37737
+4 Brazil      2000   80488
+5 China       1999  212258
+6 China       2000  213766</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pivot-longer-1" class="slide level2">
+<h2>Pivot longer</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb490"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb490-1"><a href="#cb490-1"></a>table4a <span class="sc">|&gt;</span> </span>
+<span id="cb490-2"><a href="#cb490-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"1999"</span>, <span class="st">"2000"</span>),</span>
+<span id="cb490-3"><a href="#cb490-3"></a>               <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb490-4"><a href="#cb490-4"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country     year   cases
+  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;
+1 Afghanistan 1999     745
+2 Afghanistan 2000    2666
+3 Brazil      1999   37737
+4 Brazil      2000   80488
+5 China       1999  212258
+6 China       2000  213766</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/table4a.jpg"></p>
+</div>
+</div>
+<ul>
+<li><code>cols</code>: <span class="hl-yellow"><strong>name of the variables to pivot</strong></span>.</li>
+<li><code>names_to</code>: name of the new variable to which we send the <span class="hl-yellow"><strong>header</strong></span> of the table (the names).</li>
+<li><code>values_to</code>: name of the new variable to which we are going to send the <span class="hl-yellow"><strong>data</strong></span>.</li>
+</ul>
+</section>
+<section id="messy-data-1" class="slide level2">
+<h2>Messy data</h2>
+<p>Let’s see another example with table <code>table2</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb492"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb492-1"><a href="#cb492-1"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   country      year type            count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>What could be wrong?</strong></span></p>
+</section>
+<section id="pivot-wider" class="slide level2">
+<h2>Pivot wider</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   country      year type            count
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
+ 1 Afghanistan  1999 cases             745
+ 2 Afghanistan  1999 population   19987071
+ 3 Afghanistan  2000 cases            2666
+ 4 Afghanistan  2000 population   20595360
+ 5 Brazil       1999 cases           37737
+ 6 Brazil       1999 population  172006362
+ 7 Brazil       2000 cases           80488
+ 8 Brazil       2000 population  174504898
+ 9 China        1999 cases          212258
+10 China        1999 population 1272915272
+11 China        2000 cases          213766
+12 China        2000 population 1280428583</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>❎ Each <span class="hl-red"><strong>observation is divided into two rows</strong></span> → the <span class="hl-yellow"><strong>records with the same year should be the same</strong></span></p>
+</div>
+</div>
+<div class="fragment">
+<p>What we will do will be the opposite: with <code>pivot_wider()</code> <span class="hl-yellow"><strong>we will widen the table</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb495"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb495-1"><a href="#cb495-1"></a>table2 <span class="sc">|&gt;</span>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country      year  cases population
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="messy-data-2" class="slide level2">
+<h2>Messy data</h2>
+<p>Let’s see another example with table <code>table3</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb497"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb497-1"><a href="#cb497-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country      year rate             
+  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;            
+1 Afghanistan  1999 745/19987071     
+2 Afghanistan  2000 2666/20595360    
+3 Brazil       1999 37737/172006362  
+4 Brazil       2000 80488/174504898  
+5 China        1999 212258/1272915272
+6 China        2000 213766/1280428583</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>What could be wrong?</strong></span></p>
+</section>
+<section id="separate" class="slide level2">
+<h2>Separate</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb499"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb499-1"><a href="#cb499-1"></a>table3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country      year rate             
+  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;            
+1 Afghanistan  1999 745/19987071     
+2 Afghanistan  2000 2666/20595360    
+3 Brazil       1999 37737/172006362  
+4 Brazil       2000 80488/174504898  
+5 China        1999 212258/1272915272
+6 China        2000 213766/1280428583</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p>❎ Each <span class="hl-red"><strong>cell contains several values</strong></span></p>
+</div>
+</div>
+<div class="fragment">
+<p>What we will do is make use of the <code>separate()</code> function to send <span class="hl-yellow"><strong>separate each value</strong></span> to a different column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb501"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb501-1"><a href="#cb501-1"></a>table3 <span class="sc">|&gt;</span> <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"pop"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country      year cases  pop       
+  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     
+1 Afghanistan  1999 745    19987071  
+2 Afghanistan  2000 2666   20595360  
+3 Brazil       1999 37737  172006362 
+4 Brazil       2000 80488  174504898 
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="separate-1" class="slide level2">
+<h2>Separate</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb503"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb503-1"><a href="#cb503-1"></a>table3 <span class="sc">|&gt;</span> <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"pop"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country      year cases  pop       
+  &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     
+1 Afghanistan  1999 745    19987071  
+2 Afghanistan  2000 2666   20595360  
+3 Brazil       1999 37737  172006362 
+4 Brazil       2000 80488  174504898 
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+</div>
+</div>
+<p>Notice that the data, although it has separated them, <span class="hl-red"><strong>kept them as text</strong></span> when in fact they should be numeric variables. For this we can add the optional argument <code>convert = TRUE</code>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb505"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb505-1"><a href="#cb505-1"></a>table3 <span class="sc">|&gt;</span> <span class="fu">separate</span>(rate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cases"</span>, <span class="st">"pop"</span>), <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country      year  cases        pop
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;int&gt;      &lt;int&gt;
+1 Afghanistan  1999    745   19987071
+2 Afghanistan  2000   2666   20595360
+3 Brazil       1999  37737  172006362
+4 Brazil       2000  80488  174504898
+5 China        1999 212258 1272915272
+6 China        2000 213766 1280428583</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="messy-data-3" class="slide level2">
+<h2>Messy data</h2>
+<p>Let’s see the last example with table <code>table5</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb507"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb507-1"><a href="#cb507-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     century year  rate             
+  &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
+1 Afghanistan 19      99    745/19987071     
+2 Afghanistan 20      00    2666/20595360    
+3 Brazil      19      99    37737/172006362  
+4 Brazil      20      00    80488/174504898  
+5 China       19      99    212258/1272915272
+6 China       20      00    213766/1280428583</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>What could be wrong?</strong></span></p>
+</section>
+<section id="unite" class="slide level2">
+<h2>Unite</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb509"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb509-1"><a href="#cb509-1"></a>table5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  country     century year  rate             
+  &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
+1 Afghanistan 19      99    745/19987071     
+2 Afghanistan 20      00    2666/20595360    
+3 Brazil      19      99    37737/172006362  
+4 Brazil      20      00    80488/174504898  
+5 China       19      99    212258/1272915272
+6 China       20      00    213766/1280428583</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p>❎ We have <span class="hl-red"><strong>same values divided in two columns</strong></span></p>
+</div>
+</div>
+<div class="fragment">
+<p>We will use <code>unite()</code> to <span class="hl-yellow"><strong>unite the values</strong></span> of century and year in the same column</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb511"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb511-1"><a href="#cb511-1"></a>table5 <span class="sc">|&gt;</span> <span class="fu">unite</span>(<span class="at">col =</span> whole_year, century, year, <span class="at">sep =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  country     whole_year rate             
+  &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;            
+1 Afghanistan 1999       745/19987071     
+2 Afghanistan 2000       2666/20595360    
+3 Brazil      1999       37737/172006362  
+4 Brazil      2000       80488/174504898  
+5 China       1999       212258/1272915272
+6 China       2000       213766/1280428583</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="nest-data" class="slide level2">
+<h2>Nest data</h2>
+<p>We can also <span class="hl-yellow"><strong>nest datasets inside another one</strong></span>: imagine we have a dataset with variables <code>x</code> and <code>y</code>, with two records, another with one and another with 3 of them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb513"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb513-1"><a href="#cb513-1"></a>data <span class="ot">&lt;-</span></span>
+<span id="cb513-2"><a href="#cb513-2"></a>  <span class="fu">tibble</span>(<span class="st">"dataset"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>), </span>
+<span id="cb513-3"><a href="#cb513-3"></a>         <span class="st">"x"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">7</span>),</span>
+<span id="cb513-4"><a href="#cb513-4"></a>         <span class="st">"y"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">5</span>, <span class="fl">1.5</span>, <span class="cn">NA</span>, <span class="sc">-</span><span class="dv">2</span>))</span>
+<span id="cb513-5"><a href="#cb513-5"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  dataset     x     y
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1       1     0  -1  
+2       1     2  NA  
+3       2    NA   5  
+4       3    -2   1.5
+5       3     6  NA  
+6       3     7  -2  </code></pre>
+</div>
+</div>
+<p>In reality everything that has an equal value in <code>dataset</code> should form its own <code>tibble</code> so let’s create one inside the one we have</p>
+</section>
+<section id="nest-data-1" class="slide level2">
+<h2>Nest data</h2>
+<p>For it we will use the function <code>nest()</code> indicating it which variables form the datasets that will be nested (in this case variables <code>x</code> and <code>y</code>). Notice that inside what it stores is a variable of type list (since each dataset has a different length).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb515"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb515-1"><a href="#cb515-1"></a>data_nest <span class="ot">&lt;-</span></span>
+<span id="cb515-2"><a href="#cb515-2"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb515-3"><a href="#cb515-3"></a>  <span class="fu">nest</span>(<span class="at">data =</span> <span class="fu">c</span>(x, y))</span>
+<span id="cb515-4"><a href="#cb515-4"></a>data_nest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  dataset data            
+    &lt;dbl&gt; &lt;list&gt;          
+1       1 &lt;tibble [2 × 2]&gt;
+2       2 &lt;tibble [1 × 2]&gt;
+3       3 &lt;tibble [3 × 2]&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="nest-data-2" class="slide level2">
+<h2>Nest data</h2>
+<p>To <span class="hl-yellow"><strong>unnest</strong></span> just use the <code>unnest()</code> function indicating the column to unnest.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb517"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb517-1"><a href="#cb517-1"></a>data_nest <span class="sc">|&gt;</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  dataset     x     y
+    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1       1     0  -1  
+2       1     2  NA  
+3       2    NA   5  
+4       3    -2   1.5
+5       3     6  NA  
+6       3     7  -2  </code></pre>
+</div>
+</div>
+</section>
+<section id="example-world-bank-pop" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>In the <code>{tidyr}</code> package we have the <code>world_bank_pop</code> dataset which contains data from the World Bank about population per country from 2000 to 2018.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb519"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb519-1"><a href="#cb519-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb519-2"><a href="#cb519-2"></a>world_bank_pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,064 × 20
+   country indicator      `2000`  `2001`  `2002`  `2003`  `2004`  `2005`  `2006`
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL    4.16e4 4.20e+4 4.22e+4 4.23e+4 4.23e+4 4.24e+4 4.26e+4
+ 2 ABW     SP.URB.GROW    1.66e0 9.56e-1 4.01e-1 1.97e-1 9.46e-2 1.94e-1 3.67e-1
+ 3 ABW     SP.POP.TOTL    8.91e4 9.07e+4 9.18e+4 9.27e+4 9.35e+4 9.45e+4 9.56e+4
+ 4 ABW     SP.POP.GROW    2.54e0 1.77e+0 1.19e+0 9.97e-1 9.01e-1 1.00e+0 1.18e+0
+ 5 AFE     SP.URB.TOTL    1.16e8 1.20e+8 1.24e+8 1.29e+8 1.34e+8 1.39e+8 1.44e+8
+ 6 AFE     SP.URB.GROW    3.60e0 3.66e+0 3.72e+0 3.71e+0 3.74e+0 3.81e+0 3.81e+0
+ 7 AFE     SP.POP.TOTL    4.02e8 4.12e+8 4.23e+8 4.34e+8 4.45e+8 4.57e+8 4.70e+8
+ 8 AFE     SP.POP.GROW    2.58e0 2.59e+0 2.61e+0 2.62e+0 2.64e+0 2.67e+0 2.70e+0
+ 9 AFG     SP.URB.TOTL    4.31e6 4.36e+6 4.67e+6 5.06e+6 5.30e+6 5.54e+6 5.83e+6
+10 AFG     SP.URB.GROW    1.86e0 1.15e+0 6.86e+0 7.95e+0 4.59e+0 4.47e+0 5.03e+0
+# ℹ 1,054 more rows
+# ℹ 11 more variables: `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;,
+#   `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;,
+#   `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>What could be wrong?</strong></span></p>
+</section>
+<section id="example-world-bank-pop-1" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>First of all, we can see that we effectively have the same variable in 18 columns: population.</p>
+<div class="fragment">
+<p>What we should have is a column called <code>pop</code> with these values and another <code>year</code> indicating to which year corresponds the measurement. And for this we will do it with <code>pivot_longer()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb521"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb521-1"><a href="#cb521-1"></a>world_bank_pop_tidy <span class="ot">&lt;-</span></span>
+<span id="cb521-2"><a href="#cb521-2"></a>  world_bank_pop <span class="sc">|&gt;</span> </span>
+<span id="cb521-3"><a href="#cb521-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>(country<span class="sc">:</span>indicator), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
+<span id="cb521-4"><a href="#cb521-4"></a>world_bank_pop_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year  value
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-world-bank-pop-2" class="slide level2">
+<h2>Example: world bank pop</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb523"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb523-1"><a href="#cb523-1"></a>world_bank_pop_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 4
+   country indicator   year  value
+   &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL 2000  41625
+ 2 ABW     SP.URB.TOTL 2001  42025
+ 3 ABW     SP.URB.TOTL 2002  42194
+ 4 ABW     SP.URB.TOTL 2003  42277
+ 5 ABW     SP.URB.TOTL 2004  42317
+ 6 ABW     SP.URB.TOTL 2005  42399
+ 7 ABW     SP.URB.TOTL 2006  42555
+ 8 ABW     SP.URB.TOTL 2007  42729
+ 9 ABW     SP.URB.TOTL 2008  42906
+10 ABW     SP.URB.TOTL 2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>Is everything correct?</strong></span></p>
+<div class="fragment">
+<p>If you notice we have two types of population measures, total <code>...TOTL</code> and its growth <code>...GROW</code>, but in addition we have them for each country in global <code>SP.POP...</code> and only in urban area <code>SP.URB...</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb525"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb525-1"><a href="#cb525-1"></a><span class="fu">unique</span>(world_bank_pop_tidy<span class="sc">$</span>indicator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "SP.URB.TOTL" "SP.URB.GROW" "SP.POP.TOTL" "SP.POP.GROW"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-world-bank-pop-3" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>What should be done?</p>
+<div class="fragment">
+<p>We will separate this variable into 3: one for the prefix <code>SP</code> (which we will eliminate later), one for the area (<code>POP/URB</code>) and one for the value (<code>variable</code>), which can be total or growth.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb527"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb527-1"><a href="#cb527-1"></a>world_bank_pop_tidy2 <span class="ot">&lt;-</span></span>
+<span id="cb527-2"><a href="#cb527-2"></a>  world_bank_pop_tidy <span class="sc">|&gt;</span></span>
+<span id="cb527-3"><a href="#cb527-3"></a>  <span class="fu">separate</span>(indicator, <span class="fu">c</span>(<span class="st">"dummy"</span>, <span class="st">"area"</span>, <span class="st">"variable"</span>))</span>
+<span id="cb527-4"><a href="#cb527-4"></a>world_bank_pop_tidy2<span class="sc">$</span>dummy <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb527-5"><a href="#cb527-5"></a>world_bank_pop_tidy2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 5
+   country area  variable year  value
+   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     URB   TOTL     2000  41625
+ 2 ABW     URB   TOTL     2001  42025
+ 3 ABW     URB   TOTL     2002  42194
+ 4 ABW     URB   TOTL     2003  42277
+ 5 ABW     URB   TOTL     2004  42317
+ 6 ABW     URB   TOTL     2005  42399
+ 7 ABW     URB   TOTL     2006  42555
+ 8 ABW     URB   TOTL     2007  42729
+ 9 ABW     URB   TOTL     2008  42906
+10 ABW     URB   TOTL     2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-world-bank-pop-4" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>This can be done in a simpler way by indicating in the variable that we want to eliminate that it is <code>NA</code> inside <code>separate()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb529"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb529-1"><a href="#cb529-1"></a>world_bank_pop_tidy <span class="ot">&lt;-</span></span>
+<span id="cb529-2"><a href="#cb529-2"></a>  world_bank_pop_tidy <span class="sc">|&gt;</span></span>
+<span id="cb529-3"><a href="#cb529-3"></a>  <span class="fu">separate</span>(indicator, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"area"</span>, <span class="st">"variable"</span>))</span>
+<span id="cb529-4"><a href="#cb529-4"></a>world_bank_pop_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19,152 × 5
+   country area  variable year  value
+   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;
+ 1 ABW     URB   TOTL     2000  41625
+ 2 ABW     URB   TOTL     2001  42025
+ 3 ABW     URB   TOTL     2002  42194
+ 4 ABW     URB   TOTL     2003  42277
+ 5 ABW     URB   TOTL     2004  42317
+ 6 ABW     URB   TOTL     2005  42399
+ 7 ABW     URB   TOTL     2006  42555
+ 8 ABW     URB   TOTL     2007  42729
+ 9 ABW     URB   TOTL     2008  42906
+10 ABW     URB   TOTL     2009  43079
+# ℹ 19,142 more rows</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Have we got it yet? Think carefully: does each variable have its own column?</p>
+</div>
+</section>
+<section id="example-world-bank-pop-5" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>If you actually look at the total population and growth variables, they should be different variables, since they even have different units: one is inhabitants, the other is percentage points.</p>
+<div class="fragment">
+<p>To do the reverse of the initial operation, <code>pivot_wider()</code> (later we will use a tremendously useful function, <code>{janitor}</code>’s <code>clean_names()</code> which unifies variable names).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb531"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb531-1"><a href="#cb531-1"></a>world_bank_pop_tidy <span class="ot">&lt;-</span></span>
+<span id="cb531-2"><a href="#cb531-2"></a>  world_bank_pop_tidy <span class="sc">|&gt;</span></span>
+<span id="cb531-3"><a href="#cb531-3"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"variable"</span>, <span class="at">values_from =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb531-4"><a href="#cb531-4"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb531-5"><a href="#cb531-5"></a>world_bank_pop_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9,576 × 5
+   country area  year   totl   grow
+   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1 ABW     URB   2000  41625 1.66  
+ 2 ABW     URB   2001  42025 0.956 
+ 3 ABW     URB   2002  42194 0.401 
+ 4 ABW     URB   2003  42277 0.197 
+ 5 ABW     URB   2004  42317 0.0946
+ 6 ABW     URB   2005  42399 0.194 
+ 7 ABW     URB   2006  42555 0.367 
+ 8 ABW     URB   2007  42729 0.408 
+ 9 ABW     URB   2008  42906 0.413 
+10 ABW     URB   2009  43079 0.402 
+# ℹ 9,566 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-world-bank-pop-6" class="slide level2">
+<h2>Example: world bank pop</h2>
+<p>The complete code would be this: short, concise, readable and self-descriptive.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb533"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb533-1"><a href="#cb533-1"></a>world_bank_pop_tidy <span class="ot">&lt;-</span></span>
+<span id="cb533-2"><a href="#cb533-2"></a>  world_bank_pop <span class="sc">|&gt;</span> </span>
+<span id="cb533-3"><a href="#cb533-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>(country<span class="sc">:</span>indicator), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb533-4"><a href="#cb533-4"></a>  <span class="fu">separate</span>(indicator, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"area"</span>, <span class="st">"variable"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb533-5"><a href="#cb533-5"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"variable"</span>, <span class="at">values_from =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb533-6"><a href="#cb533-6"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb533-7"><a href="#cb533-7"></a>world_bank_pop_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9,576 × 5
+   country area  year   totl   grow
+   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1 ABW     URB   2000  41625 1.66  
+ 2 ABW     URB   2001  42025 0.956 
+ 3 ABW     URB   2002  42194 0.401 
+ 4 ABW     URB   2003  42277 0.197 
+ 5 ABW     URB   2004  42317 0.0946
+ 6 ABW     URB   2005  42399 0.194 
+ 7 ABW     URB   2006  42555 0.367 
+ 8 ABW     URB   2007  42729 0.408 
+ 9 ABW     URB   2008  42906 0.413 
+10 ABW     URB   2009  43079 0.402 
+# ℹ 9,566 more rows</code></pre>
+</div>
+</div>
+</section>
 <section id="example-who-dataset" class="slide level2">
 <h2>Example: who dataset</h2>
-<p>En el paquete <code>{tidyr}</code> contamos con el dataset <code>who2</code> (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/tidydata/"><strong>workbook</strong></a>.</p>
+<p>In<code>{tidyr}</code> package we have <code>who2</code> dataset (World Health Organization dataset)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb475"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb475-1"><a href="#cb475-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb475-2"><a href="#cb475-2"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb535"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb535-1"><a href="#cb535-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb535-2"><a href="#cb535-2"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7,240 × 58
    country      year sp_m_014 sp_m_1524 sp_m_2534 sp_m_3544 sp_m_4554 sp_m_5564
@@ -5164,6 +5979,128 @@ Not yet, we are in the 3-th iteration</code></pre>
 #   sn_f_4554 &lt;dbl&gt;, sn_f_5564 &lt;dbl&gt;, sn_f_65 &lt;dbl&gt;, ep_m_014 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
+<p><strong>Is it tidy data? Why?</strong></p>
+</section>
+<section id="example-who-dataset-1" class="slide level2">
+<h2>Example: who dataset</h2>
+<p>First step for tidy data: we must pivot the table (tip: use paper and pen to sketch how the database should look like) so that there is a column called <code>cases</code> (since all columns starting from <code>year</code> is actually the same, cases of a disease).</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb537"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb537-1"><a href="#cb537-1"></a>who_tidy <span class="ot">&lt;-</span></span>
+<span id="cb537-2"><a href="#cb537-2"></a>  who2 <span class="sc">|&gt;</span> </span>
+<span id="cb537-3"><a href="#cb537-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>(country<span class="sc">:</span>year), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span>
+<span id="cb537-4"><a href="#cb537-4"></a>who_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 405,440 × 4
+   country      year type      cases
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1980 sp_m_014     NA
+ 2 Afghanistan  1980 sp_m_1524    NA
+ 3 Afghanistan  1980 sp_m_2534    NA
+ 4 Afghanistan  1980 sp_m_3544    NA
+ 5 Afghanistan  1980 sp_m_4554    NA
+ 6 Afghanistan  1980 sp_m_5564    NA
+ 7 Afghanistan  1980 sp_m_65      NA
+ 8 Afghanistan  1980 sp_f_014     NA
+ 9 Afghanistan  1980 sp_f_1524    NA
+10 Afghanistan  1980 sp_f_2534    NA
+# ℹ 405,430 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-who-dataset-2" class="slide level2">
+<h2>Example: who dataset</h2>
+<p>If you notice there are a lot of rows that do not make sense to keep because we have no cases! Investigate the <code>pivot_longer()</code> options to see how we can directly remove them in the pivot.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb539"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb539-1"><a href="#cb539-1"></a>who_tidy <span class="ot">&lt;-</span></span>
+<span id="cb539-2"><a href="#cb539-2"></a>  who2 <span class="sc">|&gt;</span> </span>
+<span id="cb539-3"><a href="#cb539-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>(country<span class="sc">:</span>year), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>,</span>
+<span id="cb539-4"><a href="#cb539-4"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb539-5"><a href="#cb539-5"></a>who_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 76,046 × 4
+   country      year type      cases
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+ 1 Afghanistan  1997 sp_m_014      0
+ 2 Afghanistan  1997 sp_m_1524    10
+ 3 Afghanistan  1997 sp_m_2534     6
+ 4 Afghanistan  1997 sp_m_3544     3
+ 5 Afghanistan  1997 sp_m_4554     5
+ 6 Afghanistan  1997 sp_m_5564     2
+ 7 Afghanistan  1997 sp_m_65       0
+ 8 Afghanistan  1997 sp_f_014      5
+ 9 Afghanistan  1997 sp_f_1524    38
+10 Afghanistan  1997 sp_f_2534    36
+# ℹ 76,036 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="example-who-dataset-3" class="slide level2">
+<h2>Example: who dataset</h2>
+<p>Now in <code>type</code> we have coded the information as <code>diagnosis_sex_age</code>. How to separate it in 3 columns? Investigate both <code>separate()</code> and <code>pivot_longer()</code> options.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb541"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb541-1"><a href="#cb541-1"></a><span class="co"># separate</span></span>
+<span id="cb541-2"><a href="#cb541-2"></a>who_tidy <span class="ot">&lt;-</span></span>
+<span id="cb541-3"><a href="#cb541-3"></a>  who_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb541-4"><a href="#cb541-4"></a>  <span class="fu">separate</span>(<span class="at">col =</span> <span class="st">"type"</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>))</span>
+<span id="cb541-5"><a href="#cb541-5"></a></span>
+<span id="cb541-6"><a href="#cb541-6"></a><span class="co"># pivot_longer</span></span>
+<span id="cb541-7"><a href="#cb541-7"></a>who_tidy <span class="ot">&lt;-</span></span>
+<span id="cb541-8"><a href="#cb541-8"></a>  who2 <span class="sc">|&gt;</span> </span>
+<span id="cb541-9"><a href="#cb541-9"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>(country<span class="sc">:</span>year), <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"diagnosis"</span>, <span class="st">"sex"</span>, <span class="st">"age"</span>),</span>
+<span id="cb541-10"><a href="#cb541-10"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>, <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb541-11"><a href="#cb541-11"></a>               <span class="at">names_sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb541-12"><a href="#cb541-12"></a>who_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 76,046 × 6
+   country      year diagnosis sex   age   cases
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+ 1 Afghanistan  1997 sp        m     014       0
+ 2 Afghanistan  1997 sp        m     1524     10
+ 3 Afghanistan  1997 sp        m     2534      6
+ 4 Afghanistan  1997 sp        m     3544      3
+ 5 Afghanistan  1997 sp        m     4554      5
+ 6 Afghanistan  1997 sp        m     5564      2
+ 7 Afghanistan  1997 sp        m     65        0
+ 8 Afghanistan  1997 sp        f     014       5
+ 9 Afghanistan  1997 sp        f     1524     38
+10 Afghanistan  1997 sp        f     2534     36
+# ℹ 76,036 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="example-who-dataset-4" class="slide level2">
+<h2>Example: who dataset</h2>
+<p>Finally, separate in two (<code>age_inf</code>, <code>age_sup</code>) the age range (which are numbers). Think about how to do it since it is not always 4 numbers (if there is no upper age range defined, put <code>Inf</code> as an upper bound).</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb543"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb543-1"><a href="#cb543-1"></a>who_tidy <span class="ot">&lt;-</span></span>
+<span id="cb543-2"><a href="#cb543-2"></a>  who_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb543-3"><a href="#cb543-3"></a>  <span class="fu">separate</span>(<span class="at">col =</span> <span class="st">"age"</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"age_inf"</span>, <span class="st">"age_sup"</span>), <span class="at">sep =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">convert =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb543-4"><a href="#cb543-4"></a>who_tidy<span class="sc">$</span>age_inf <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(who_tidy<span class="sc">$</span>age_inf), <span class="dv">65</span>, who_tidy<span class="sc">$</span>age_inf)</span>
+<span id="cb543-5"><a href="#cb543-5"></a>who_tidy<span class="sc">$</span>age_sup <span class="ot">&lt;-</span> <span class="fu">if_else</span>(who_tidy<span class="sc">$</span>age_sup <span class="sc">==</span> <span class="dv">65</span>, <span class="cn">Inf</span>, who_tidy<span class="sc">$</span>age_sup)</span>
+<span id="cb543-6"><a href="#cb543-6"></a>who_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 76,046 × 7
+   country      year diagnosis sex   age_inf age_sup cases
+   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 Afghanistan  1997 sp        m           0      14     0
+ 2 Afghanistan  1997 sp        m          15      24    10
+ 3 Afghanistan  1997 sp        m          25      34     6
+ 4 Afghanistan  1997 sp        m          35      44     3
+ 5 Afghanistan  1997 sp        m          45      54     5
+ 6 Afghanistan  1997 sp        m          55      64     2
+ 7 Afghanistan  1997 sp        m          65     Inf     0
+ 8 Afghanistan  1997 sp        f           0      14     5
+ 9 Afghanistan  1997 sp        f          15      24    38
+10 Afghanistan  1997 sp        f          25      34    36
+# ℹ 76,036 more rows</code></pre>
+</div>
+</div>
+</div>
 </section>
 <section id="tu-turno-1-2" class="slide level2">
 <h2>💻 It’s your turn</h2>
@@ -5172,67 +6109,75 @@ Not yet, we are in the 3-th iteration</code></pre>
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1"><span class="hl-yellow"><strong>Exercise 1</strong></span></a></li><li><a href="#tabset-10-2"><span class="hl-yellow"><strong>Exercise 2</strong></span></a></li><li><a href="#tabset-10-3"><span class="hl-yellow"><strong>Exercise 3</strong></span></a></li><li><a href="#tabset-10-4"><span class="hl-yellow"><strong>Exercise 4</strong></span></a></li><li><a href="#tabset-10-5"><span class="hl-yellow"><strong>Exercise 5</strong></span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1">
-<p>📝 Usa el dataset original <code>relig_income</code> y trata de responder a la última pregunta: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses <code>R</code>? ¿Cuál tiene mayor probabilidad de error?</p>
+<p>📝 Use the original <code>who2</code> dataset from the <code>{tidyr}</code> package and try to answer the question: how many cases of tuberculosis were there in Spain in 1995 among women? Do it without converting it to tidydata. After that, pivot in a simple way and compare the code to be done when we have tidydata to when we don’t. Which one is more readable if you didn’t know <code>R</code>? Which one has higher error probability?</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb477"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb477-1"><a href="#cb477-1"></a><span class="fu">sum</span>(relig_income[relig_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>,</span>
-<span id="cb477-2"><a href="#cb477-2"></a>             <span class="fu">c</span>(<span class="st">"$30-40k"</span>, <span class="st">"$40-50k"</span>, <span class="st">"$50-75k"</span>, <span class="st">"$75-100k"</span>, <span class="st">"$100-150k"</span>, <span class="st">"&gt;150k"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb545"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb545-1"><a href="#cb545-1"></a><span class="co"># messy data</span></span>
+<span id="cb545-2"><a href="#cb545-2"></a><span class="fu">sum</span>(who2[who2<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Spain"</span> <span class="sc">&amp;</span> who2<span class="sc">$</span>year <span class="sc">==</span> <span class="dv">1995</span>,</span>
+<span id="cb545-3"><a href="#cb545-3"></a>     <span class="fu">names</span>(who2)[<span class="fu">str_detect</span>(<span class="fu">names</span>(who2), <span class="st">"f_"</span>)]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb545-4"><a href="#cb545-4"></a></span>
+<span id="cb545-5"><a href="#cb545-5"></a><span class="co"># tidy data (at this moment)</span></span>
+<span id="cb545-6"><a href="#cb545-6"></a><span class="fu">sum</span>(who_tidy[who_tidy<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"Spain"</span> <span class="sc">&amp;</span></span>
+<span id="cb545-7"><a href="#cb545-7"></a>           who_tidy<span class="sc">$</span>year <span class="sc">==</span> <span class="dv">1995</span> <span class="sc">&amp;</span></span>
+<span id="cb545-8"><a href="#cb545-8"></a>           who_tidy<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"f"</span>, ]<span class="sc">$</span>cases)</span>
+<span id="cb545-9"><a href="#cb545-9"></a></span>
+<span id="cb545-10"><a href="#cb545-10"></a><span class="co"># in the future</span></span>
+<span id="cb545-11"><a href="#cb545-11"></a>who_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb545-12"><a href="#cb545-12"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Spain"</span> <span class="sc">&amp;</span> year <span class="sc">==</span> <span class="dv">1995</span> <span class="sc">&amp;</span> sex <span class="sc">==</span> <span class="st">"f"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb545-13"><a href="#cb545-13"></a>  <span class="fu">summarise</span>(<span class="fu">sum</span>(cases))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-10-2">
-<p>📝 Usando <code>relig_tidy</code> determina quién tiene más ingresos medios, ¿católicos (<code>Catholic</code>) o agnósticos (<code>Agnostic</code>)? Crea antes una variable <code>avg_income</code> (ingresos medios por intervalo): si hay 5 personas entre 20 y 30, y 3 personas entre 30 y 50, la media sería <span class="math inline">\((25*5 + 40*3)/8\)</span> (si es <code>Inf</code> por arriba, <code>NA</code>)</p>
+<p>📝 Using <code>who_tidy</code> determine which sex has had more cases, men or women? Create a new variable <code>avg_age</code> (mean age of the interval): if the range is 25 to 34, the mean age will be <span class="math inline">\((25 + 34)/2 = 29.5\)</span> (if <code>Inf</code> above, <code>NA</code>)</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb478"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb478-1"><a href="#cb478-1"></a>relig_tidy<span class="sc">$</span>avg_income <span class="ot">&lt;-</span> </span>
-<span id="cb478-2"><a href="#cb478-2"></a>  <span class="fu">if_else</span>(<span class="fu">is.infinite</span>(relig_tidy<span class="sc">$</span>income_sup), <span class="cn">NA</span>, (relig_tidy<span class="sc">$</span>income_sup <span class="sc">+</span> relig_tidy<span class="sc">$</span>income_inf)<span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb478-3"><a href="#cb478-3"></a></span>
-<span id="cb478-4"><a href="#cb478-4"></a><span class="co"># Agnosticos vs catolicos</span></span>
-<span id="cb478-5"><a href="#cb478-5"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb478-6"><a href="#cb478-6"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Agnostic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb478-7"><a href="#cb478-7"></a></span>
-<span id="cb478-8"><a href="#cb478-8"></a><span class="fu">sum</span>((relig_tidy<span class="sc">$</span>avg_income[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>] <span class="sc">*</span> relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span></span>
-<span id="cb478-9"><a href="#cb478-9"></a>  <span class="fu">sum</span>(relig_tidy<span class="sc">$</span>people[relig_tidy<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Catholic"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb546"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb546-1"><a href="#cb546-1"></a><span class="co"># f vs m</span></span>
+<span id="cb546-2"><a href="#cb546-2"></a><span class="fu">sum</span>(who_tidy[who_tidy<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"m"</span>, ]<span class="sc">$</span>cases)</span>
+<span id="cb546-3"><a href="#cb546-3"></a><span class="fu">sum</span>(who_tidy[who_tidy<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"f"</span>, ]<span class="sc">$</span>cases)</span>
+<span id="cb546-4"><a href="#cb546-4"></a></span>
+<span id="cb546-5"><a href="#cb546-5"></a><span class="co"># ave age</span></span>
+<span id="cb546-6"><a href="#cb546-6"></a>who_tidy<span class="sc">$</span>ave_age <span class="ot">&lt;-</span> </span>
+<span id="cb546-7"><a href="#cb546-7"></a>  <span class="fu">if_else</span>(<span class="fu">is.infinite</span>(who_tidy<span class="sc">$</span>age_sup), <span class="cn">NA</span>, (who_tidy<span class="sc">$</span>age_inf <span class="sc">+</span> who_tidy<span class="sc">$</span>age_sup)<span class="sc">/</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-10-3">
-<p>📝 Si debemos elegir budismo (<code>Buddhist</code>) e hinduismo (<code>Hindu</code>), ¿cuál de las dos es la religión mayoritaria entre los que ganan más de 50 000$ anuales?</p>
+<p>📝 If we must choose a country in which we have the lowest probability of infection, which country, between the United Kingdom (<code>United Kingdom of Great Britain and Northern Ireland</code>) and France (similar population), had the fewest cases in the most recent year (whichever it was, even if the table was updated)?</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb479"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb479-1"><a href="#cb479-1"></a>greatest_income <span class="ot">&lt;-</span></span>
-<span id="cb479-2"><a href="#cb479-2"></a>  relig_tidy[relig_tidy<span class="sc">$</span>income_inf <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> relig_tidy<span class="sc">$</span>religion <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Buddhist"</span>, <span class="st">"Hindu"</span>), ]</span>
-<span id="cb479-3"><a href="#cb479-3"></a></span>
-<span id="cb479-4"><a href="#cb479-4"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Buddhist"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb479-5"><a href="#cb479-5"></a><span class="fu">sum</span>(greatest_income<span class="sc">$</span>people[greatest_income<span class="sc">$</span>religion <span class="sc">==</span> <span class="st">"Hindu"</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb547"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb547-1"><a href="#cb547-1"></a>last_cases <span class="ot">&lt;-</span> who_tidy[who_tidy<span class="sc">$</span>year <span class="sc">==</span> <span class="fu">max</span>(who_tidy<span class="sc">$</span>year), ]</span>
+<span id="cb547-2"><a href="#cb547-2"></a><span class="fu">sum</span>(last_cases[last_cases<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"United Kingdom of Great Britain and Northern Ireland"</span>, <span class="st">"cases"</span>])</span>
+<span id="cb547-3"><a href="#cb547-3"></a><span class="fu">sum</span>(last_cases[last_cases<span class="sc">$</span>country <span class="sc">==</span> <span class="st">"France"</span>, <span class="st">"cases"</span>])</span>
+<span id="cb547-4"><a href="#cb547-4"></a><span class="co"># better France</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-10-4">
-<p>📝 Echa un vistazo a la tabla <code>table4b</code> del paquete <code>{tidyr}</code>. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?</p>
+<p>📝 Take a look at table <code>table4b</code> in package <code>{tidyr}</code>. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb480"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb480-1"><a href="#cb480-1"></a>table4b <span class="sc">|&gt;</span></span>
-<span id="cb480-2"><a href="#cb480-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"1999"</span><span class="sc">:</span><span class="st">"2000"</span>, <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb480-3"><a href="#cb480-3"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb548"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb548-1"><a href="#cb548-1"></a>table4b <span class="sc">|&gt;</span></span>
+<span id="cb548-2"><a href="#cb548-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"1999"</span><span class="sc">:</span><span class="st">"2000"</span>, <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb548-3"><a href="#cb548-3"></a>               <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-10-5">
-<p>📝 Echa un vistazo a la tabla <code>billboard</code> del paquete <code>{tidyr}</code>. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?</p>
+<p>📝 Take a look at the <code>billboard</code> table in the <code>{tidyr}</code> package. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb481"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb481-1"><a href="#cb481-1"></a>billboard <span class="sc">|&gt;</span></span>
-<span id="cb481-2"><a href="#cb481-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"wk1"</span><span class="sc">:</span><span class="st">"wk76"</span>,</span>
-<span id="cb481-3"><a href="#cb481-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
-<span id="cb481-4"><a href="#cb481-4"></a>               <span class="at">names_prefix =</span> <span class="st">"wk"</span>,</span>
-<span id="cb481-5"><a href="#cb481-5"></a>               <span class="at">values_to =</span> <span class="st">"position"</span>,</span>
-<span id="cb481-6"><a href="#cb481-6"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb549"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb549-1"><a href="#cb549-1"></a>billboard <span class="sc">|&gt;</span></span>
+<span id="cb549-2"><a href="#cb549-2"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="st">"wk1"</span><span class="sc">:</span><span class="st">"wk76"</span>,</span>
+<span id="cb549-3"><a href="#cb549-3"></a>               <span class="at">names_to =</span> <span class="st">"week"</span>,</span>
+<span id="cb549-4"><a href="#cb549-4"></a>               <span class="at">names_prefix =</span> <span class="st">"wk"</span>,</span>
+<span id="cb549-5"><a href="#cb549-5"></a>               <span class="at">values_to =</span> <span class="st">"position"</span>,</span>
+<span id="cb549-6"><a href="#cb549-6"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -5240,11 +6185,21 @@ Not yet, we are in the 3-th iteration</code></pre>
 </div>
 </section>
 <section id="caso-practico-1" class="slide level2">
-<h2>🐣 Case study: religion income</h2>
+<h2>🐣 Case study</h2>
+<p>Let’s perform a case study with the <code>relig_income</code> table in <code>{tidyr}</code> package. As indicated (<code>? relig_income</code>), the table represents the number of people in each annual income bracket (20k = 20 000$) and in each religion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb550"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb550-1"><a href="#cb550-1"></a>relig_income</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;</p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/tidy-data-mucss"><strong>workbook</strong></a></p>
+</section></section>
+<section id="clase-2" class="title-slide slide level1 center">
+<h1>L2: <span class="flow">tidyverse</span></h1>
+<p><span style="color:#444442;"><strong>TBA</strong></span></p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Master in Computational Social Sciences (UC3M)</p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 

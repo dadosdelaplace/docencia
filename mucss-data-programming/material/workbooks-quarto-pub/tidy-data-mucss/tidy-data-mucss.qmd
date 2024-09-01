@@ -1,0 +1,2244 @@
+---
+title: "Introduction to tidyverse: tidy data"
+subtitle: "Practical workbooks of Data Programming in Master in Computational Social Science  (2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+## Introduction to tidy data
+
+As commented, our [**final database format**]{.hl-yellow} will be the `tibble` type object, an enhanced `data.frame`.
+
+```{r}
+library(tibble)
+tibble("height" = c(1.7, 1.8, 1.6), "weight" = c(80, 75, 70), "BMI" = weight / (height^2))
+```
+
+- [**Metainformation**]{.hl-yellow}: in the header it automatically tells us the number of rows and columns, and the type of each variable.
+
+- [**Recursivity**]{.hl-yellow}: allows to define the variables sequentially (as we have seen).
+
+- [**Consistency**]{.hl-yellow}: if you access a column that does not exist it warns you with a warning.
+
+- [**By rows**]{.hl-yellow}: allows to create by rows with `tribble()`.
+
+
+### R base vs Tidyverse
+
+So far, everything we have done in `R` has been done in the programming paradigm known as [**R base**]{.hl-yellow}. When `R` was born as a language, many of those who programmed in it imitated forms and methodologies inherited from other languages, based on the use of
+
+- Loops [**for**]{.hl-yellow} and [**while**]{.hl-yellow}
+
+- Dollar `$` to access to the variables 
+
+- Structures [**if-else**]{.hl-yellow}
+
+And although knowing these structures can be interesting in some cases, in [**most cases they are obsolete and we will be able to avoid them**]{.hl-red} (especially loops) since `R` is specially [**designed to work in a functional way**]{.hl-yellow} (instead of element-by-element).
+
+
+&nbsp;
+
+In this context of functional programming, a decade ago `{tidyverse}` was born, a [**“universe” of packages**]{.hl-yellow} to guarantee an efficient, coherent and lexicographically simple to understand workflow, based on the idea that [**our data is clean and tidy**]{.hl-purple}.
+
+
+![](img/tidyverrse_universe.jpg)
+
+![](img/flow_tidyverse.jpg)
+
+
+- `{tibble}`: [**optimizing data.frame**]{.hl-yellow}
+- `{tidyr}`: [**data cleaning**]{.hl-yellow}
+- `{readr}`: load rectangular data (.csv), `{readxl}`: import .xls and .xlsx files
+- `{dplyr}`: grammar for debugging
+- `{stringr}`: text handling
+- `{purrr}`: list handling
+- `{forcats}`: qualitative handling
+- `{ggplot2}`: data visualization
+- `{lubridate}`: date management
+- `{rvest}`: web scraping
+- `{tidymodels}`: modeling/prediction
+
+
+
+### Basic idea: tidy data
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way (Hadley Wickham, Chief Scientist en RStudio)
+
+::: {style="font-size:120px; text-align: center; color:#F8DF58;"}
+<b>TIDY</b><b>[VERSE</b>]{style="color:#CAB0EE;"}
+:::
+
+The [**universe**]{.hl-purple} of `{tidyverse}` packages is based on the idea introduced by **Hadley Wickham** (the God we pray to) of [**standardizing**]{.hl-yellow} the format of data to
+
+
+- [**systematize**]{.hl-green} debugging
+- make it easier [**simpler**]{.hl-green} to manipulate
+- [**legible**]{.hl-green} code.
+:::
+
+
+#### Rules in the tidy universe
+
+The first thing will therefore be to understand what the [**tidydata sets**]{.hl-yellow} are, since the whole `{tidyverse}` is based on the data being standardized.
+
+1.  Each [**variable**]{.hl-yellow} in a [**single column**]{.hl-purple}
+2.  Each [**individual**]{.hl-yellow} in a [**different row**]{.hl-purple}
+3.  Each [**cell**]{.hl-yellow} with a [**single value**]{.hl-purple}
+4.  Each [**dataset**]{.hl-yellow} in a [**tibble**]{.hl-purple}
+5.  If we want to join [**multiple datasets**]{.hl-yellow} we must have a [**common (key) column**]{.hl-purple}.
+
+![](img/tidy_def.jpg){width="160%"}
+
+
+#### Pipe
+
+In `{tidyverse}` the [**operator pipe (pipe)**]{.hl-yellow} defined as `|>` ([**ctrl+shift+M**]{.hl-purple}) will be key: it will be a [**pipe that traverses the data**]{.hl-yellow} and transforms it.
+
+In R base, if we want to apply three functions `first()`, `second()` and `third()` in order, it would be
+
+```{r}
+#| eval: false
+third(second(first(data)))
+```
+
+
+
+In `{tidyverse}` we can [**read from left to right**]{.hl-yellow} and separate data from the actions
+
+```{r}
+#| eval: false
+data |> first() |> second() |> third()
+```
+
+::: callout-caution
+## Important
+
+Since version 4.1.0 of `R` we have `|>`, a **native** pipe available [**outside tidyverse**]{.hl-purple}, replacing the [**old pipe**]{.hl-red} `%>%` which depended on the `{magrittr}` package (quite problematic).
+
+:::
+
+
+
+The main advantage is that the [**code is very readable (almost literal)**]{.hl-yellow} and you can do large operations on the data with very little code.
+
+```{r}
+#| eval: false
+data |>
+  tidy(...) |>
+  filter(...) |>
+  select(...) |>
+  arrange(...) |>
+  modify(...) |>
+  rename(...) |>
+  group(...) |>
+  count(...) |>
+  summarise(...) |>
+  plot(...)
+```
+
+<center><img src="img/logo_pipe.png" width="360px"/></center>
+
+### Messy data: examples
+
+#### pivot_longer()
+
+But what does the [**non-tidy (messy) data**]{.hl-yellow} look like? Let's load the `table4a` table from the `{tidyr}` package (we already have it loaded from the `{tidyverse}` environment).
+
+
+```{r}
+library(tidyr)
+table4a
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+&nbsp;
+
+❎ Each [**row represents two observations**]{.hl-red} (1999 and 2000) → the columns `1999` and `2000` should actually themselves be [**values of a variable**]{.hl-yellow} and not column names.
+
+&nbsp;
+
+We will include a [**new column**]{.hl-yellow} that stores the year and another one that stores the value of the variable of interest in each of those years. And we will do it with the `pivot_longer()` function: [**pivot the table**]{.hl-yellow} to long format:
+
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"), names_to = "year", values_to = "cases")
+```
+
+
+![](img/table4a.jpg)
+
+
+- `cols`: [**name of the variables to pivot**]{.hl-yellow}.
+- `names_to`: name of the new variable to which we send the [**header**]{.hl-yellow} of the table (the names).
+- `values_to`: name of the new variable to which we are going to send the [**data**]{.hl-yellow}.
+
+
+
+#### pivot_wider()
+
+Let's see another example with table `table2`.
+
+```{r}
+table2
+```
+
+
+[**What could be wrong?**]{.hl-red}
+
+&nbsp;
+
+
+❎ Each [**observation is divided into two rows**]{.hl-red} → the [**records with the same year should be the same**]{.hl-yellow}
+
+&nbsp;
+
+What we will do will be the opposite: with `pivot_wider()` [**we will widen the table**]{.hl-yellow}
+
+```{r}
+table2 |>  pivot_wider(names_from = type, values_from = count)
+```
+
+#### separate()
+
+Let's see another example with table `table3`.
+
+```{r}
+table3
+```
+
+&nbsp;
+
+[**What could be wrong?**]{.hl-red}
+
+&nbsp;
+
+❎ Each [**cell contains several values**]{.hl-red}
+
+&nbsp;
+
+What we will do is make use of the `separate()` function to send [**separate each value**]{.hl-yellow} to a different column.
+
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+
+Notice that the data, although it has separated them, [**kept them as text**]{.hl-red} when in fact they should be numeric variables. For this we can add the optional argument `convert = TRUE`.
+
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"), convert = TRUE)
+```
+
+#### unite()
+
+Let's see the last example with table `table5`.
+
+```{r}
+table5
+```
+
+&nbsp;
+
+[**What could be wrong?**]{.hl-red}
+
+&nbsp;
+
+❎ We have [**same values divided in two columns**]{.hl-red}
+
+&nbsp;
+
+We will use `unite()` to [**unite the values**]{.hl-yellow} of century and year in the same column
+
+```{r}
+table5 |> unite(col = whole_year, century, year, sep = "")
+```
+
+### Nest data
+
+We can also [**nest datasets inside another one**]{.hl-yellow}: imagine we have a dataset with variables `x` and `y`, with two records, another with one and another with 3 of them.
+
+```{r}
+data <-
+  tibble("dataset" = c(1, 1, 2, 3, 3, 3), 
+         "x" = c(0, 2, NA, -2, 6, 7),
+         "y" = c(-1, NA, 5, 1.5, NA, -2))
+data
+```
+
+Everything that has an equal value in `dataset` should form its own `tibble` so let's create one inside the one we have
+
+&nbsp;
+
+For it we will use the function `nest()` indicating it which variables form the datasets that will be nested (in this case variables `x` and `y`). Notice that inside what it stores is a variable of type list (since each dataset has a different length).
+
+```{r}
+data_nest <-
+  data |>
+  nest(data = c(x, y))
+data_nest
+```
+
+To **unnest** just use the `unnest()` function indicating the column to unnest.
+
+```{r}
+data_nest |> unnest(cols = c(data))
+```
+
+
+### Example: world bank pop
+
+In the `{tidyr}` package we have the `world_bank_pop` dataset which contains data from the World Bank about population per country from 2000 to 2018.
+
+```{r}
+library(tidyr)
+world_bank_pop
+```
+
+&nbsp;
+
+[**What could be wrong?**]{.hl-red}
+
+&nbsp;
+
+First of all, we can see that we effectively have the same variable in 18 columns: population. What we should have is a column called `pop` with these values and another `year` indicating to which year corresponds the measurement. And for this we will do it with `pivot_longer()`.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop |> 
+  pivot_longer(cols = -(country:indicator), names_to = "year", values_to = "value")
+world_bank_pop_tidy
+```
+
+
+```{r}
+world_bank_pop_tidy
+```
+
+&nbsp;
+
+[**Is everything correct?**]{.hl-red}
+
+&nbsp;
+
+If you notice we have two types of population measures, total `...TOTL` and its growth `...GROW`, but in addition we have them for each country in global `SP.POP...` and only in urban area `SP.URB...`.
+
+```{r}
+unique(world_bank_pop_tidy$indicator)
+```
+
+&nbsp;
+
+What should be done?
+
+&nbsp;
+
+We will separate this variable into 3: one for the prefix `SP` (which we will eliminate later), one for the area (`POP/URB`) and one for the value (`variable`), which can be total or growth.
+
+```{r}
+world_bank_pop_tidy2 <-
+  world_bank_pop_tidy |>
+  separate(indicator, c("dummy", "area", "variable"))
+world_bank_pop_tidy2$dummy <- NULL
+world_bank_pop_tidy2
+```
+
+
+This can be done in a simpler way by indicating in the variable that we want to eliminate that it is `NA` inside `separate()`.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop_tidy |>
+  separate(indicator, c(NA, "area", "variable"))
+world_bank_pop_tidy
+```
+
+&nbsp;
+
+Have we got it yet? **Think carefully: does each variable have its own column?**
+
+&nbsp;
+
+If you actually look at the total population and growth variables, they should be different variables, since they even have different units: one is inhabitants, the other is percentage points. To do the reverse of the initial operation, `pivot_wider()` (later we will use a tremendously useful function, `{janitor}`'s `clean_names()` which unifies variable names).
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop_tidy |>
+  pivot_wider(names_from = "variable", values_from = "value") |> 
+  janitor::clean_names()
+world_bank_pop_tidy
+```
+
+&nbsp;
+
+The complete code would be this: [**short, concise, readable and self-descriptive**]{.hl-yellow}.
+
+```{r}
+world_bank_pop_tidy <-
+  world_bank_pop |> 
+  pivot_longer(cols = -(country:indicator), names_to = "year", values_to = "value") |> 
+  separate(indicator, c(NA, "area", "variable")) |> 
+  pivot_wider(names_from = "variable", values_from = "value") |> 
+  janitor::clean_names()
+world_bank_pop_tidy
+```
+
+
+### Example: who dataset
+
+In`{tidyr}` package we have `who2` dataset (World Health Organization dataset)
+
+```{r}
+library(tidyr)
+who2
+```
+
+&nbsp;
+
+**Is it tidy data? Why?**
+
+&nbsp;
+
+First step for tidy data: we must pivot the table (tip: use paper and pen to sketch how the database should look like) so that there is a column called `cases` (since all columns starting from `year` is actually the same, cases of a disease).
+
+
+```{r}
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = "type", values_to = "cases")
+who_tidy
+```
+
+
+If you notice there are a lot of rows that do not make sense to keep because we have no cases! Investigate the `pivot_longer()` options to see how we can directly remove them in the pivot.
+
+
+```{r}
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = "type", values_to = "cases",
+               values_drop_na = TRUE)
+who_tidy
+```
+
+
+
+Now in `type` we have coded the information as `diagnosis_sex_age`. How to separate it in 3 columns? Investigate both `separate()` and `pivot_longer()` options.
+
+```{r}
+# separate
+who_tidy <-
+  who_tidy |> 
+  separate(col = "type", into = c("diagnosis", "sex", "age"))
+
+# pivot_longer
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year), names_to = c("diagnosis", "sex", "age"),
+               values_to = "cases", values_drop_na = TRUE,
+               names_sep = "_")
+who_tidy
+```
+ 
+
+Finally, separate in two (`age_inf`, `age_sup`) the age range (which are numbers). Think about how to do it since it is not always 4 numbers (if there is no upper age range defined, put `Inf` as an upper bound).
+
+
+```{r}
+library(dplyr)
+who_tidy <-
+  who_tidy |> 
+  separate(col = "age", into = c("age_inf", "age_sup"), sep = -2, convert = TRUE)
+who_tidy$age_inf <- if_else(is.na(who_tidy$age_inf), 65, who_tidy$age_inf)
+who_tidy$age_sup <- if_else(who_tidy$age_sup == 65, Inf, who_tidy$age_sup)
+who_tidy
+```
+
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+
+📝 Use the original `who2` dataset from the `{tidyr}` package and try to answer the question: how many cases of tuberculosis were there in Spain in 1995 among women? Do it without converting it to tidydata. After that, pivot in a simple way and compare the code to be done when we have tidydata to when we don't. Which one is more readable if you didn't know `R`? Which one has higher error probability?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# messy data
+sum(who2[who2$country == "Spain" & who2$year == 1995,
+     names(who2)[str_detect(names(who2), "f_")]], na.rm = TRUE)
+
+# tidy data (at this moment)
+sum(who_tidy[who_tidy$country == "Spain" &
+           who_tidy$year == 1995 &
+           who_tidy$sex == "f", ]$cases)
+
+# in the future
+who_tidy |> 
+  filter(country == "Spain" & year == 1995 & sex == "f") |> 
+  summarise(sum(cases))
+```
+
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Using `who_tidy` determine which sex has had more cases, men or women? Create a new variable `avg_age` (mean age of the interval): if the range is 25 to 34, the mean age will be $(25 + 34)/2 = 29.5$ (if `Inf` above, `NA`)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# f vs m
+sum(who_tidy[who_tidy$sex == "m", ]$cases)
+sum(who_tidy[who_tidy$sex == "f", ]$cases)
+
+# ave age
+who_tidy$ave_age <- 
+  if_else(is.infinite(who_tidy$age_sup), NA, (who_tidy$age_inf + who_tidy$age_sup)/2)
+```
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 If we must choose a country in which we have the lowest probability of infection, which country, between the United Kingdom (`United Kingdom of Great Britain and Northern Ireland`) and France (similar population), had the fewest cases in the most recent year (whichever it was, even if the table was updated)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+last_cases <- who_tidy[who_tidy$year == max(who_tidy$year), ]
+sum(last_cases[last_cases$country == "United Kingdom of Great Britain and Northern Ireland", "cases"])
+sum(last_cases[last_cases$country == "France", "cases"])
+# better France
+```
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Take a look at table `table4b` in package `{tidyr}`. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table4b |>
+  pivot_longer(cols = "1999":"2000", names_to = "year",
+               values_to = "cases")
+```
+
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Take a look at the `billboard` table in the `{tidyr}` package. Is it tidydata? If not, what is wrong, how to convert it to tidy data in case it is not already?
+
+```{r}
+#| code-fold: true
+#| eval: false
+billboard |>
+  pivot_longer(cols = "wk1":"wk76",
+               names_to = "week",
+               names_prefix = "wk",
+               values_to = "position",
+               values_drop_na = TRUE)
+```
+
+:::
+
+
+
+## 🐣 Case study: religion income
+
+Let's perform a case study with the `relig_income` table of the `{tidyr}` package. As indicated in the `? relig_income` help, the table represents the number of people in each annual income bracket (20k = 20 000$) and in each religion.
+
+
+```{r}
+library(tidyr)
+relig_income
+```
+
+### Question 1
+
+
+## Ejemplo: relig_income
+
+```{r}
+relig_income
+```
+
+[**¿Es tidydata?**]{.hl-yellow} 
+
+---
+
+## Ejemplo: relig_income
+
+```{r}
+relig_income
+```
+
+No lo es ya que en realidad [**solo deberíamos tener una variable de ingresos**]{.hl-red} y la tenemos dividida en 11: todas ellas es la misma variable solo que adopta un valor diferente.  [**¿Cómo convertirla a tidy data?**]{.hl-green}
+
+---
+
+## Ejemplo: relig_income
+
+
+La idea es [**pivotar todas las columnas de ingresos**]{.hl-yellow} para que acaben en una sola columna llamada `income`, y los valores (el número de personas) en otra llamada `people` (por ejemplo). La tabla la haremos más larga y menos ancha así que...
+
+. . .
+
+```{r}
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people")
+relig_tidy 
+```
+
+---
+
+## Ejemplo: relig_income
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
+```{r}
+relig_tidy 
+```
+
+---
+
+## Ejemplo: relig_income
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-")
+```
+
+. . .
+
+¿Está ya bien? Fíjate bien...
+
+---
+
+## Ejemplo: relig_income
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-")
+```
+
+Si te fijas la primera columna el `"$10k"` debería ser una cota superior, no inferior. ¿Cómo indicarle que separe bien ese caso?
+
+---
+
+## Ejemplo: relig_income
+
+Le indicaremos que separe si encuentra `"-"` o `"<"` (usamos `|` para separar ambas opciones)
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+```
+
+---
+
+## Ejemplo: relig_income
+
+```{r}
+relig_tidy <-
+  relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+relig_tidy
+```
+
+Piensa ahora como podemos [**convertir los límites de ingresos a numéricas (eliminando símbolos, letras, etc)**]{.hl-yellow}
+
+---
+
+## Ejemplo: relig_income
+
+Para ello usaremos el paquete `{stringr}` que hemos visto antes, en concreto la función `str_remove_all()` a la que le podemos pasar los caracteres que queremos eliminar (fíjate que `$` al ser un caracter reservado en `R` hay que indicárselo con `\\$`)
+
+```{r}
+library(stringr)
+relig_tidy$income_inf <-
+  str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <-
+  str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy
+```
+
+---
+
+## Ejemplo: relig_income
+
+Fíjate que tenemos `"Don't now/refused"`. ¿Qué deberíamos tener?
+
+. . .
+
+Debería ser un [**dato ausente**]{.hl-yellow} así que usaremos `if_else()`: si contiene dicha frase, `NA`, en caso contrario su valor (consejo: `str_detect()` para detectar patrones en textos, y evitar tener que escribir toda la palabra sin errores)
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused"), NA, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused"), NA, relig_tidy$income_sup)
+relig_tidy
+```
+
+---
+
+## Ejemplo: relig_income
+
+```{r}
+relig_tidy
+```
+
+En la primera línea, ese `""` también debería ser `NA``
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(relig_tidy$income_inf == "", NA, relig_tidy$income_inf)
+relig_tidy$income_suop <-
+  if_else(relig_tidy$income_sup == "", NA, relig_tidy$income_sup)
+```
+
+---
+
+## Ejemplo: relig_income
+
+```{r}
+relig_tidy
+```
+
+Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
+
+
+
+---
+
+## Ejemplo: relig_income
+
+
+Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
+
+```{r}
+relig_tidy$income_inf <- as.numeric(relig_tidy$income_inf)
+relig_tidy$income_sup <- as.numeric(relig_tidy$income_sup)
+relig_tidy
+```
+
+---
+
+## Ejemplo: relig_income
+
+¿Se te ocurre alguna forma de **«cuantificar numéricamente»** los valores ausentes que tenemos en este caso?
+
+. . .
+
+Si te fijas en realidad cuando hay ausente en el límite inferior en realidad podríamos poner un 0 (nadie puede ganar menos de eso) y cuando lo tenemos en el límite superior sería `Inf`
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(is.na(relig_tidy$income_inf), 0, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(is.na(relig_tidy$income_sup), Inf, relig_tidy$income_sup)
+relig_tidy
+```
+
+---
+
+## Ejemplo: relig_income
+
+Aunque nos haya llevado un rato este es el **código completo resumido**
+
+```{r}
+#| eval: false
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people") |>
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+
+relig_tidy$income_inf <- str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <- str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused") |
+            relig_tidy$income_inf == "", 0, as.numeric(relig_tidy$income_inf))
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused") |
+            relig_tidy$income_sup == "", Inf, as.numeric(relig_tidy$income_sup))
+```
+
+---
+
+## Ejemplo: relig_income
+
+¿Por qué era [**importante tenerlo en tidydata**]{.hl-yellow}? Lo veremos más adelante al visualizar los datos pero esto ya nos permite realizar filtros muy rápidos con muy poco código.
+
+Por ejemplo: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos?
+
+. . .
+
+```{r}
+# una línea de código
+sum(relig_tidy$people[relig_tidy$religion == "Agnostic" & relig_tidy$income_inf >= 30])
+```
+
+A [**flow or control structure**]{.hl-yellow} consists of a series of commands oriented to [**decide the path**]{.hl-yellow} that your code must follow
+
+* If condition A is met, what happens?
+
+* What if B happens?
+
+* How can I repeat the same expression (depending on a variable)?
+
+
+If you have programmed before, you may be familiar with what are known as [**conditional structures**]{.hl-yellow} such as `if (bla bla) {...} else {...}` or [**loops**]{.hl-yellow} `for/while` (to be avoided whenever possible).
+
+
+### Conditional structures
+
+#### If
+
+One of the most famous control structures are those known as [**conditional structures**]{.hl-yellow} `if`.
+
+> IF a set of conditions is met (TRUE), then execute whatever is inside the curly brackets.
+
+
+For example, the structure `if (x == 1) { code A }` what it will do is [**execute code A in braces**]{.hl-yellow} but [**ONLY IF**]{.hl-purple} the [**condition in brackets is true**]{.hl-purple} (only if `x` is 1). In any other case, it will do nothing
+
+Let's define a vector of ages of 8 people
+
+
+```{r}
+ages <- c(14, 17, 24, 56, 31, 20, 87, 73)
+ages < 18
+```
+
+
+
+Our conditional structure will do the following: [**if there is a minor, it will print**]{.hl-yellow} a message.
+
+```{r}
+if (any(ages < 18)) { 
+  
+  print("There is a minor")
+  
+}
+```
+
+
+
+```{r}
+#| eval: false
+if (any(ages < 18)) { 
+  
+  print("There is a minor")
+  
+}
+```
+
+
+In case the [**conditions are not true**]{.hl-yellow} inside `if()` (`FALSE`), nothing happens.
+
+
+```{r}
+if (all(ages >= 18)) { 
+  
+  print("All of them are of legal age")
+  
+}
+```
+
+**We get no message** because the condition `all(ages >= 18)` is not `TRUE`, so it does not execute anything.
+
+
+#### If-else
+
+The structure `if (condition) { code A }` can be combined with an `else { code B }`: when the [**condition is not checked**]{.hl-yellow}, it will [**execute the alternative code B**]{. hl-yellow} inside `else { }`, allowing us to decide what happens when it is satisfied and when it is not
+
+For example, `if (x == 1) { code A } else { code B }` will execute A if `x` is equal to 1 and B in any other case.
+
+```{r}
+if (all(ages >= 18)) { 
+  
+  print("All of them are of legal age")
+  
+} else {
+  
+  print("There is a minor")
+}
+```
+
+
+
+Esta estructura `if - else` puede ser [**anidada**]{.hl-yellow}: imagina que queremos ejecutar un código si todos son menores; si no sucede, pero todos son mayores de 16, hacer otra cosa; en cualquier otra cosa, otra acción.
+
+```{r}
+if (all(ages >= 18)) { 
+  
+  print("All of them are of legal age")
+  
+} else if (all(ages >= 16)) {
+  
+  print("There is a minor but all of them are greater or equal to 16 years old")
+  
+} else { print("There are any persons under 16 years of age") }
+```
+
+::: callout-note
+## Tip
+
+You can **collapse the structures** by clicking on the left arrow in your script.
+
+:::
+
+
+#### If-else vectorized
+
+
+This conditional structure can be [**vectorized**]{.hl-yellow} (in a single line) with `if_else()` (from the `{dplyr}` package), whose arguments are
+
+* the condition to evaluate
+
+* what happens when it is met and when not
+
+* an optional argument for when the condition to evaluate is `NA`
+
+We will label without are greater/lesser and an `unknown` when we don't know.
+
+```{r}
+library(dplyr)
+ages <- c(NA, ages)
+if_else(ages >= 18, "legal age", "minor", missing = "unknown")
+```
+
+In `R` base there is `ifelse()`: it does not let you specify what to do with the absent ones but allows you to specify different types of data in `TRUE` and `FALSE`.
+
+### 💻 It's your turn
+
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 What will be the output of the following code?
+
+```{r}
+#| eval: false
+if_else(sqrt(9) < 2, sqrt(9), 0)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+The output is 0 since sqrt(9) equals 3, and since it is not less than 2, it returns the second argument which is 0.
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 What will be the output of the following code?
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+The output is the vector c(0, NA, NA, 1) since sqrt(1) is less than 2, sqrt(9) is not, and in the case of both sqrt(NA) (root of absent) and sqrt(-1) (returns NaN, not a number), its square root cannot be checked whether it is less than 2 or not, so the output is NA.
+```
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Modify the code below so that, when the square root of a number cannot be verified to be less than 2, it returns -1.
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1, missing = -1)
+```
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 What are the values of `x` and `y` of the lower code for `z <- 1`, `z <- -1` and `z <- -5`?
+
+```{r}
+#| eval: false
+z <- -1
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+In the first case x = 1 and y = -1. In the second case x = 1 and y = 1. In the third case -1 and 2.
+```
+
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 What will happen if we execute the code below?
+
+```{r}
+#| eval: false
+z <- "a"
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# will give error since it is not a numeric argument
+Error in z^3 : non-numeric argument to binary operator
+```
+
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 From the `{lubridate}` package, the `hour()` function returns the time of a given date, and the `now()` function returns the date and time of the current time. With both functions, have `cat()` (`cat()`) print “good night” only after 21:00.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# loading library
+library(lubridate)
+
+# Current date-time
+current_dt <- now()
+
+# If structure
+if (hour(current_dt) > 21) {
+  
+  cat("Good night") # print or cat (two ways of printing)
+}
+```
+
+
+:::
+
+### Loops
+
+Although in most occasions they can be replaced by other more efficient and readable structures, it is important to know one of the most famous control expressions: the [**loops**]{.hl-yellow}.
+
+* `for { }`: allows [**repeating the same code**]{. hl-yellow} in a [**prefixed and known number**]{.hl-purple} of times.
+
+* `while { }`: allows [**repeating the same code**]{.hl-yellow} but in an [**undetermined number of times**]{.hl-purple} (until a **condition** is no longer fulfilled).
+
+
+#### For loop 
+
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
+
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
+
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  
+  y[i] <- x[i] + 1
+  
+}
+```
+
+Note that because `R` works in a [**default vector**]{.hl-yellow} manner, the loop is the same as doing `x + 1` directly.
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  
+  y[i] <- x[i] + 1
+  
+}
+y
+
+y2 <- x + 1
+y2
+```
+
+Another common option is to indicate the indexes “automatically”: from the first `1` to the last (corresponding to the length of x `length(x)`).
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:length(x)) {
+  
+  y[i] <- x[i] + 1
+  
+}
+y
+```
+
+
+Thus the [**general structure of a for-loop**]{.hl-yellow} will always be as follows
+
+```{r}
+#| eval: false
+for (index in set) { 
+  
+  código (usually depending on index)
+  
+}
+```
+
+In the case of for loops [**ALWAYS**]{.hl-green} we know how many iterations we have (as many as there are elements in the set to be indexed). We can see another example of a [**combining numbers and text**]{.hl-yellow} loop: we define a vector of ages and names, and print the i-th name and age.
+
+```{r}
+library(glue)
+names <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+ages <- c(33, 27, 18, 43, 29)
+
+for (i in 1:5) { 
+  
+  print(glue("{names[i]} are {ages[i]} old")) 
+  
+}
+```
+
+Although they are usually indexed with numeric vectors, loops can be [**indexed on any vector structure**]{.hl-yellow}, regardless of the type of the set.
+
+```{r}
+library(stringr)
+week_days <- c("monday", "tuesday", "wednesday", "thursday",
+               "friday", "saturday", "sunday")
+
+for (days in week_days) {
+  
+  print(days)
+}
+```
+
+##### for + if-else
+
+Let's **combine conditional structures and loops**: using the `swiss` set of the `{datasets}` package, let's assign `NA` if the fertility values are greater than 80.
+
+```{r}
+for (i in 1:nrow(swiss)) {
+  
+  if (swiss$Fertility[i] > 80) { 
+    
+    swiss$Fertility[i] <- NA
+    
+  }
+}
+```
+
+
+This is «the same» as a vectorized `if_else()`.
+
+```{r}
+data("swiss")
+swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
+```
+
+
+#### While loop
+
+Another way to create a loop is with the `while { }` structure, which will loop [**an unknown number of times**]{.hl-yellow}, until a condition [**stops being met**]{.hl-yellow} (in fact it may never end). For example, we will inialize a variable `times <- 1`, which we will increment at each step, and we will not exit the loop until `times > 3`.
+
+```{r}
+times <- 1
+while(times <= 3) {
+  
+  print(glue("Not yet, we are in the {times}-th iteration")) 
+  times <- times + 1
+  
+}
+print(glue("Now! We are in the {times}-th iteration")) 
+```
+
+A `while` loop will always look like this
+
+```{r}
+#| eval: false
+while(condition) {
+  
+  code to be executed while condition is TRUE
+  # usually some variable is updated here
+  
+}
+```
+
+
+What happens when the [**condition is never FALSE**]{.hl-yellow}? Try it yourself
+
+```{r}
+#| eval: false
+while (1 > 0) {
+  
+  print("Press ESC to exit")
+  
+}
+```
+
+&nbsp;
+
+::: callout-warning
+## Warning
+
+A `while { }` loop can be quite “dangerous” if we do not control well how to stop it.
+
+:::
+
+##### break and next
+
+We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
+
+* `break`: allows [**abort a loop**]{.hl-yellow} even if its end has not been reached
+
+```{r}
+for(i in 1:10) {
+  if (i == 3) {
+    
+    break # if i = 3, we abort
+    
+  }
+  print(i)
+}
+```
+
+
+* `next`: [**forces a loop to advance to the next iteration**]{.hl-yellow} 
+
+```{r}
+for(i in 1:5) {
+  if (i == 3) {
+    
+    next # if i = 3, we advance to the next iteration
+    
+  }
+  print(i)
+}
+```
+
+
+### 💻 It's your turn
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Modify the code below to print a message on the screen if and only if all the data in `airquality` is for a month other than January.
+
+```{r}
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (months == 2) {
+  print("No data in January")
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (all(months != 1)) {
+  print("No data in January")
+}
+```
+
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Modify the code below to store in a variable called `temp_high` a `TRUE` if any of the records has a temperature above 90 degrees Fahrenheit and `FALSE` in any other case.
+
+ 
+```{r}
+#| eval: false
+temp <- airquality$Temp
+
+if (temp == 100) {
+  print("Some of the records have temperatures in excess of 90 degrees Fahrenheit")
+}
+```
+
+ 
+```{r}
+#| eval: false
+#| code-fold: true
+# Option 1
+temp <- airquality$Temp
+temp_high <- FALSE
+if (any(temp > 90)) {
+   temp_high <- TRUE
+}
+
+# Option 2
+temp_high <- any(airquality$Temp > 90)
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Modify the code below to design a `for` loop of 5 iterations that only loops through the first 5 odd (and at each step of the loop prints them)
+
+```{r}
+#| eval: false
+for (i in 1:5) {
+  
+  print(i)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+for (i in c(1, 3, 5, 7, 9)) {
+  
+  print(i)
+}
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Modify the code below to design a `while` loop that starts with a counter `count <- 1` and stops when it reaches 6
+
+```{r}
+#| eval: false
+count <- 1
+while (count == 2) {
+  
+  print(count)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+count <- 1
+while (count < 6) {
+  
+  print(count)
+  count <- count + 1
+  
+}
+```
+
+
+:::
+
+
+
+## 🐣 Case study I: ...
+
+
+To practice control structures we are going to perform a [**simulation exercise**]{.hl-yellow}
+
+### Question 1
+
+
+> Define a variable called `amount` that starts at 100. Design a loop of 20 iterations where on each iteration, amount is reduced to half its value. Think about what kind of loop structure you should use. The final value of `amount` should be `0.000095367` (approx).
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# We use a for since we know the number of iterations
+# by default (and it does not depend on anything).
+
+# we initially define amount in 100
+amount <- 100 
+
+# for the loop we use e.g. i as index, ranging from 1 to 20
+for (i in 1:20) {
+  
+  # the code is the same and does not depend on i
+  amount <- amount/2
+}
+amount
+```
+
+
+### Question 2
+
+> Design a loop structure so that you find the iteration where `amount` is less than 0.001 for the first time. Once found save it in `iter` and stop the loop.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# two ways: for and while
+
+# for
+amount <- 100 
+
+# we already know that in 20 it is less than 0.001 so we can set
+# that amount as a ceiling knowing that it will not be reached
+for (i in 1:20) {
+  
+  # if it is still not less, we continue dividing
+  if (amount >= 0.001) {
+    
+    amount <- amount/2
+    
+  } else {
+    
+    # if it is already smaller, we save the iteration (think why i - 1)
+    iter <- i - 1 
+    
+    # and abort it
+    break
+  }
+  
+}
+
+# while
+amount <- 100 
+
+iter <- 0 # we must initialize the iterations
+
+# we don't know how many iterations, only that it should stop when
+# amount is below that amount
+while (amount >= 0.001) {
+  
+  amount <- amount/2
+    
+  # classic while structure: if iteration runs
+  # we update a value (in this case to count one iteration)
+  iter <- iter + 1
+}
+
+iter
+```
+
+
+### Question 3
+
+> In `R` we have the function `%%`: if we put `a %% b` it returns the remainder that would give the division $a/b$. For example, `4 %%% 2` gives 0 since 4 is an even number (that is, its remainder when dividing by 2 is 0). If we put `13 %% 5` we get 3, since the remainder of dividing 13 by 5 is 3.
+
+```{r}
+# Remainder by dividing by 2
+3 %% 2
+4 %% 2
+5 %% 2
+6 %% 2
+
+# Remainder by dividing by 3
+9 %% 3
+10 %% 3
+11 %% 3
+12 %% 3
+```
+
+> Starting at an initial amount `initial_amount` of 100 (euros), design a loop that adds 3€ plus the iteration you are on if the current amount is even and subtracts 5€ minus the iteration you are on if it is odd, UNLESS the amount is already equal or below 0 (in that case it should neither add nor subtract). Example: if amount is 50 euros and you are in iteration 13, it will add 3 + 13 (66 in total); if amount is 51 euros and you are in iteration 13, it will subtract 5 + 13 (33 in total); if amount is -2 euros and you are in iteration 13, it will add 3 + 13 (14 in total); if amount is -1 euros and you are in iteration 13, it will do nothing. Save the resulting amounts for each iteration (maximum of 150 iterations). Start from iteration 2
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+initial_amount <- 100
+amount <- c(initial_amount, rep(NA, 149))
+for (i in 2:150) {
+  
+  if (amount[i - 1] %% 2 == 0) {
+    
+    amount[i] <- amount[i - 1] + 3 + i
+    
+  } else if (amount[i - 1] > 0) {
+    
+    amount[i] <- amount[i - 1] - (5 + i)
+    
+  } else {
+    
+    amount[i] <- amount[i - 1]
+    
+  }
+}
+```
+
+> What happened?
+
+
+## Functions in R
+
+
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}?
+
+### Basic scheme
+
+ Let's look at its **basic scheme**:
+ 
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
+
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
+
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
+
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  code to be executed
+  
+  return(var_output)
+  
+}
+```
+
+
+* `arg1, arg2, ...`: will be the [**input arguments**]{.hl-yellow}, the arguments that the function takes to execute the code inside.
+
+* `code`: lines of code that we want to [**execute the function**]{.hl-yellow}.
+
+* `return(var_output)`: the [**output arguments**]{.hl-yellow} will be entered.
+
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  # Code to be executed
+  code
+  
+  # Output
+  return(var_output)
+  
+}
+```
+
+::: callout-important
+## Important
+
+All variables that we define inside the function are [**LOCAL variables: they will only exist inside the function**]{.hl-yellow} unless we specify otherwise.
+
+:::
+
+
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
+
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+  area <- side_1 * side_2
+  return(area)
+  
+}
+```
+
+
+We can also make a direct definition of variables **without storing along the way**.
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+  return(side_1 * side_2)
+  
+}
+```
+
+&nbsp;
+
+[**How to apply our function?**]{.hl-yellow}
+
+```{r}
+compute_area(5, 3) # area of 5 x 3 rectangle
+compute_area(1, 5) # area of 1 x 5 rectangle
+```
+
+
+::: callout-tip
+
+Although it is not necessary, it is [**recommendable to make explicit the calling of the arguments**]{.hl-green}, specifying in the code what value is for each argument so that it does not depend on its order, making the code more readable.
+
+:::
+
+
+```{r}
+compute_area(side_1 = 5, side_2 = 3) # area of 5 x 3 rectangle
+compute_area(side_2 = 3, side_1 = 5) # area of 5 x 3 rectangle
+```
+
+
+### Default arguments
+
+Imagine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
+
+Why not assign `side_2 = side_1` **default**, to save lines of code and time?
+
+
+```{r}
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code to be executed
+  area <- side_1 * side_2
+  
+  # Output
+  return(area)
+  
+}
+```
+
+
+Now [**default**]{.hl-yellow} the second side will be equal to the first (if added it will use both).
+
+
+```{r}
+compute_area(side_1 = 5) # square
+compute_area(side_1 = 5, side_2 = 7) # rectangle
+```
+
+
+### Multiple outputs
+
+Let's complicate the function a bit and add in the output the values of each side, labeled `side_1` and `side_2`, [**packing the output in a vector**]{.hl-yellow}.
+
+```{r}
+#| code-line-numbers: "7-8"
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code
+  area <- side_1 * side_2
+  
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2))
+  
+}
+```
+
+
+
+We can complicate the output a little more by adding a fourth variable that tells us, depending on the arguments, [**whether rectangle or square**]{.hl-yellow}, having to add a character (or logic) variable in the output.
+
+
+```{r}
+#| code-line-numbers: "7-9"
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code
+  area <- side_1 * side_2
+  
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2,
+           "type" = if_else(side_1 == side_2, "square", "rectangle")))
+  
+}
+compute_area(5, 3)
+```
+
+
+[**Problem**]{.hl-red}: when trying to put numbers and text together, it converts everything to numbers. We could store it all in a `tibble()` as we have learned or in an object known in `R` as [**lists**]{.hl-yellow} (we will see it later).
+
+
+### Order of arguments
+
+Before we did not care about the order of the arguments, but now the [**order of the input arguments matters**]{.hl-yellow}, since we include `side_1` and `side_2` in the output. 
+
+
+
+::: callout-note
+## Tip
+
+As mentioned, it is highly recommended to make the function call [**explicitly setting the arguments**]{.hl-yellow} to improve **legibility and interpretability**.
+
+```{r}
+# Equivalent to compute_area(5, 3)
+compute_area(side_1 = 5, side_2 = 3)
+```
+
+:::
+
+
+It seems silly what we have done but we have crossed an important frontier: we have gone from [**consuming knowledge**]{.hl-yellow} (code from other packages, elaborated by others), to [**generating knowledge**]{.hl-purple}, creating our own functions.
+
+Functions are going to be key in your day-to-day work because they will allow you to automate code that you are going to repeat over and over again: by packaging that code under an alias (function name) you will [**be able to use it over and over again without programming it (so doing twice as much work will not imply working twice as much)**]{.hl-yellow}
+
+
+### Local vs global variables
+
+An important aspect to think about with functions: what happens if we [**name a variable inside**]{.hl-yellow} a function to which we have **forgotten to assign** a value inside the function.
+
+We must be cautious when using functions in `R`, since due to the [**"lexicographic rule ”**]{.hl-yellow}, if a variable is not defined inside the function, `R` will [**look for that variable in the environment**]{.hl-purple} of variables.
+
+
+```{r}
+x <- 1
+fun_example <- function() {
+    
+  print(x) # No output, just doing an action
+}
+fun_example()
+```
+
+
+If a variable [**is already defined outside the function (global environment)**]{.hl-yellow}, and is also used inside changing its value, the value [**only changes inside**]{.hl-yellow} but [**not in the global environment**]{.hl-red}.
+
+```{r}
+x <- 1
+fun_example <- function() {
+    
+  x <- 2
+  print(x) # value inside of function
+}
+```
+
+```{r}
+# value inside of function (local)
+fun_example()
+# value output of function (global)
+print(x)
+```
+
+
+
+If we want it to change locally as well as [**globally**]{.hl-yellow} we must use the [**double assignment**]{.hl-yellow} (`<<-`).
+
+```{r}
+x <- 1
+y <- 2
+fun_example <- function() {
+  
+  # no change in a global way, just locally
+  x <- 3 
+  # change in a global way
+  y <<- 0 #<<
+  
+  print(x)
+  print(y)
+}
+
+fun_example() # value inside function (local)
+x # global value
+y # global value
+```
+
+### 💻 It's your turn 
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ex 1**]{.hl-yellow}
+
+📝 Modify the code below to define a function called `sum_function`, so that given two elements, it returns their sum.
+
+```{r}
+#| eval: false
+name <- function(x, y) {
+  sum_output <- # code
+  return()
+}
+# we apply the function
+sum_function(3, 7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+sum_function<- function(x, y) {
+  sum_output <- x + y
+  return(sum_output)
+}
+sum_function(3, 7)
+```
+
+### [**Ex 2**]{.hl-yellow}
+
+📝 Modify the code below to define a function called `product_function`, so that given two elements, it returns their product, but by default it calculates the square
+
+```{r}
+#| eval: false
+name <- function(x, y) {
+  prod_output <- # code
+  return()
+}
+product_function(3)
+product_function(3, -7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+product_function <- function(x, y = x) {
+  
+  prod_output <- x * y
+  return(prod_output)
+  
+}
+product_function(3)
+product_function(3, -7)
+```
+
+### [**Ex 3**]{.hl-yellow}
+
+📝 Define a function called `equal_names` that, given two names, tells us if they are equal or not. Do this by considering case-sensitive, and case-insensitive. Use the `{stringr}` package.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Case-sensitive
+equal_names <- function(person_1, person_2) {
+  
+  return(person_1 == person_2)
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+
+# Case-insensitive
+equal_names <- function(person_1, person_2) {
+  
+  return(toupper(person_1) == toupper(person_2))
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+```
+
+### [**Ex 4**]{.hl-yellow}
+
+📝 Create a function called `compute_BMI` that, given two arguments (weight and height in meters) and a name, returns a list with the BMI ($weight/(height^2)$) and the name.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height) {
+  
+  return(list("name" = name, "BMI" = weight/(height^2)))
+  
+}
+```
+
+### [**Ex 5**]{.hl-yellow}
+
+📝 Repeat the previous exercise but with another optional argument called units (by default, `units = “meters”`). Develop the function so that it does the right thing if `units = “meters”` and if `units = “centimeters”`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height, units = "meters") {
+  
+  return(list("name" = name,
+              "BMI" = weight / (if_else(units == "meters", height, height/100)^2)))
+  
+}
+```
+
+ 
+### [**Ex 6**]{.hl-yellow}
+
+📝 Create a fictitious tibble of 7 persons, with three variables (invent name, and simulate weight, height in centimeters), and apply the defined function so that we obtain a fourth column with their BMI.
+
+```{r}
+#| code-fold: true
+#| eval: false
+data <-
+  tibble("name" = c("javi", "sandra", "laura",
+                       "ana", "carlos", "leo", NA),
+         "weight" = rnorm(n = 7, mean = 70, sd = 1),
+         "height" = rnorm(n = 7, mean = 168, sd = 5))
+
+data |> 
+  mutate(BMI = compute_BMI(name, weight, height, units = "centimeters")$BMI)
+```
+
+
+### [**Ex 7**]{.hl-yellow}
+
+📝 Create a function called `shortcut` that has two numeric arguments `x` and `y`. If both are equal, you should return `equal` and have the function terminate automatically (think about when a function exits). WARNING: `x` and `y` could be vectors. If they are different (of equal length) calculate the proportion of different elements. If they are different (being of different length), it returns the elements that are not common.
+
+```{r}
+#| code-fold: true
+#| eval: false
+shortcut <- function(x, y) {
+  
+  if (all(x == y) & length(x) == length(y)) { return("equal") }
+  else {
+   
+    if (length(x) == length(y)) {
+      
+      n_diff <- sum(x != y) / length(x)
+      return(n_diff)
+      
+    } else {
+      
+      diff_elem <- unique(c(setdiff(x, y), setdiff(y, x)))
+      return(diff_elem)
+    }
+    
+  }
+}
+```
+
+
+:::
+
+## 🐣 Case study II: temperature converter
+
+To practice using functions we are going to create a temperature converter. Let's start simple. Try to conceptualize the idea on paper first.
+
+### Question 1
+
+> Define a function called `celsius_to_kelvin` that, given a temperature in Celsius (e.g. `temp` as argument) converts it to Kelvin according to the conversion formula below. After defining the function apply it to a vector of temperatures.
+
+$$K = °C + 273.15$$
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# define function name and arguments
+celsius_to_kelvin <- function(temp) {
+  
+  # convert
+  kelvin <- temp + 273.15
+  
+  # output
+  return(kelvin)
+  
+}
+
+x <- c(-15, -3, 0, 15, 27.5)
+celsius_to_kelvin(x)
+```
+
+### Question 2
+
+> Create the inverse function `kelvin_to_celsius` and apply it to another vector of temperatures. You will have to make sure that the temperature in Kelvin does not take negative values (since it is an absolute scale). In case this is not true, return `NA`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# define function name and arguments
+kelvin_to_celsius <- function(temp) {
+  
+  # if negative in Kelvin, we stop and return absent
+  # otherwise, we convert
+  celsius <- if_else(temp < 0, NA, temp - 273.15)
+  
+  # Think why we haven't done it with an if (...) else (...)
+
+  # output
+  return(celsius)
+  
+}
+
+y <- c(0, 250, 300, 350)
+kelvin_to_celsius(y)
+```
+
+### Question 3
+
+> Create a joint function `converter_temp` that has two arguments: temperature and a text argument that tells us if it is kelvin or celsius (and that by default the input temperature is Celsius). The function must use that string to decide in which direction it converts (check that the text argument does not have an option other than the two allowed; otherwise, return error using the stop(“error message...”) command). Apply it to the previous vectors and check that it gives the same.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# define function name and arguments
+# default, units in celsius
+conversor_temp <- function(temp, units = "celsius") {
+  
+  # we check that units are correct
+  # within the allowed values
+  if (units %in% c("celsius", "kelvin")) {
+    
+    if (units == "celsius") {
+      
+      temp_out <- celsius_to_kelvin(temp) 
+      
+    } else {
+      
+      temp_out <- kelvin_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    # otherwise we stop the function with an error message
+    stop("Error: just 'celsius' or 'kelvin' as units")
+  }
+  
+  # output
+  return(temp_out)
+  
+}
+
+# Notice that we have not used `if_else()` because the number of elements
+# to evaluate in the condition must be equal to the number of elements that
+# it returns, by doing it vectorially.
+conversor_temp(x)
+conversor_temp(y, units = "kelvin")
+```
+
+
+### Question 4
+
+> Repeats the previous function but regardless of whether units are in upper or lower case.
+
+```{r}
+#| error: true
+conversor_temp(y, units = "Kelvin")
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# define function name and arguments
+# default, units in celsius
+library(stringr)
+conversor_temp <- function(temp, units = "celsius") {
+  
+  # we use str_to_lower to make everything lowercase
+  if (str_to_lower(units) %in% c("celsius", "kelvin")) {
+    
+    if (units == "celsius") {
+      
+      temp_out <- celsius_to_kelvin(temp) 
+      
+    } else {
+      
+      temp_out <- kelvin_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    # otherwise we stop the function with an error message
+    stop("Error: just 'celsius' or 'kelvin' units")
+  }
+  
+  # devolvemos
+  return(temp_out)
+  
+}
+
+conversor_temp(y, units = "Kelvin")
+```
+
+### Question 5
+
+
+> Repeat all the above process creating `converter_temp2` but to convert between Celsius and Fahrenheit following the formula below
+
+$$ºC = (ºF − 32) * \frac{5}{9}, \quad ºF = 32 + ºC * \frac{9}{5}$$
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+celsius_to_fahr <- function(temp) {
+
+  fahr <- 32 + temp * (9/5)
+  return(fahr)
+  
+}
+celsius_to_fahr(x)
+
+fahr_to_celsius <- function(temp) {
+  
+  celsius <- (temp - 32) * (5/9)
+  return(celsius)
+  
+}
+
+z <- c(40, 60, 80, 100)
+fahr_to_celsius(z)
+
+conversor_temp2 <- function(temp, units = "celsius") {
+  
+  if (str_to_lower(units) %in% c("celsius", "fahr")) {
+    
+    if (units == "celsius") {
+      
+      temp_out <- celsius_to_fahr(temp) 
+      
+    } else {
+      
+      temp_out <- fahr_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    stop("Error: just 'celsius' or 'fahr' units")
+  }
+  
+  return(temp_out)
+  
+}
+
+conversor_temp2(x)
+conversor_temp2(z, units = "fahr")
+```
+
+### Question 6
+
+> Finally, create the superfunction `converter_temp_total` that allows as input argument a temperature in one of the 3 units, a text indicating in which units it comes and another one indicating in which units it is to be output.  By default it converts from celsius to kelvin.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+converter_temp_total <-
+  function(temp, units_input = "celsius",
+           units_output = "kelvin") {
+  
+  if (str_to_lower(units_input) %in% c("celsius", "fahr", "kelvin") &
+      str_to_lower(units_output) %in% c("celsius", "fahr", "kelvin")) {
+    
+    if (units_input == units_output) {
+      
+      return(temp)
+      
+    }
+    
+    else if (units_input == "celsius") {
+      
+      if (units_output == "kelvin") {
+        
+        temp_out <- celsius_to_kelvin(temp) 
+        
+      } else { 
+        
+        temp_out <- celsius_to_fahr(temp) 
+      }
+      
+    } else if (units_input == "kelvin") {
+      
+      if (units_output== "celsius") {
+        
+        temp_out <- kelvin_to_celsius(temp) 
+    
+      } else { 
+        
+        temp_out <- celsius_to_fahr(kelvin_to_celsius(temp))
+      }
+      
+    } else {
+      
+      if (units_output == "celsius") {
+        
+        temp_out <- fahr_to_celsius(temp) 
+    
+      } else { 
+        
+        temp_out <- celsius_to_kelvin(fahr_to_celsius(temp))
+      }
+      
+    }
+    
+  } else {
+    
+    stop("Error: just 'celsius', 'kelvin' or 'fahr'")
+  }
+  
+  return(temp_out)
+  
+}
+
+converter_temp_total(x, units_input = "celsius",
+                     units_output = "celsius")
+converter_temp_total(y, units_input = "kelvin",
+                     units_output = "kelvin")
+converter_temp_total(y, units_input = "kelvin",
+                     units_output = "celsius")
+converter_temp_total(z, units_input = "fahr",
+                     units_output = "celsius")
+
+converter_temp_total(z, units_input = "fahr",
+                     units_output = "celsius")
+converter_temp_total(converter_temp_total(z, units_input = "fahr",
+                                          units_output = "kelvin"),
+                     units_input = "kelvin",
+                     units_output = "celsius")
+```
