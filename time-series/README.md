@@ -24,23 +24,25 @@
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
 </div>
 
-<h1 align="left">R for Computational Social Science</h1>
+<h1 align="left">R for datascience</h1>
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/slides"><img width="600" alt="image" src="https://github.com/user-attachments/assets/b2233c9b-7edd-4fc5-a2fb-ad53e91eb8b9">
+<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 </a>
 </div>
             
-🕸 You can check the course at <https://javieralvarezliebana.es/docencia/mucss-data-programming>
+🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
 
 <h2 align="left">Teaching materials</h2>
 
-* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/mucss-data-programming/slides)
-* [📦 Material](https://javieralvarezliebana.es/docencia/mucss-data-programming/material)
-* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/datos)
+* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-datascience/diapos)
+* [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material)
+* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
 * 🛠 Workbooks:
-  - [Introduction to R base. First operations and databases](https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss/)
-  - [Flow structures (if-else and loops). Functions in R](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
-
+  - [Introducción a R base (intro R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
+  - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
+  - [Estructuras de control: if-else y bucles (flow structures)](https://javieralvarezliebana.quarto.pub/control-bucles-if-else/)
+  - [Funciones en R (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r/)
+  - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata/)
 
