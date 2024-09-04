@@ -1,0 +1,8 @@
+- source: intro-R-base.qmd
+  quarto-pub:
+    - id: bc0cf8ea-636f-456c-b6cb-7aef85fe173f
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-base'
+- source: intro-R-vectores-tibbles.qmd
+  quarto-pub:
+    - id: 438301c3-fef5-4295-8687-1151cec143e9
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-vectores-tibble-biostats'
