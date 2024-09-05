@@ -2187,7 +2187,7 @@ nrow(airquality_tb)
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[5, ]
 ```
 
 ### [**Exercise 4**]{.hl-yellow}
@@ -2197,8 +2197,10 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[airquality_tb$Month == 8, ]
 ```
+
+
 
 ### [**Exercise 5**]{.hl-yellow}
 
@@ -2207,8 +2209,8 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month != 7 & Month != 8, ]
-airquality_tb[!(Month %in% c(7, 8)), ]
+airquality_tb[airquality_tb$Month != 7 & airquality_tb$Month != 8, ]
+airquality_tb[!(airquality_tb$Month %in% c(7, 8)), ]
 ```
 
 ### [**Exercise 6**]{.hl-yellow}
@@ -2227,7 +2229,7 @@ airquality_tb[, 3]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, c("Temp", "Wind")]
+airquality_tb[airquality_tb$Month == 8, c("Temp", "Wind")]
 ```
 
 ### [**Exercise 8**]{.hl-yellow}

@@ -187,7 +187,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 ## Datasets
 
-* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/data>**
 
 &nbsp;
 
@@ -202,7 +202,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 ## Datasets
 
-* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/data>**
 
 &nbsp;
 
@@ -2716,7 +2716,7 @@ nrow(airquality_tb)
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[5, ]
 ```
 
 ### [**Exercise 4**]{.hl-yellow}
@@ -2726,7 +2726,11 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[airquality_tb$Month == 8, ]
+
+# other way
+var_month <- airquality_tb$Month
+airquality_tb[var_month == 8, ]
 ```
 
 ### [**Exercise 5**]{.hl-yellow}
@@ -2736,8 +2740,8 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month != 7 & Month != 8, ]
-airquality_tb[!(Month %in% c(7, 8)), ]
+airquality_tb[airquality_tb$Month != 7 & airquality_tb$Month != 8, ]
+airquality_tb[!(airquality_tb$Month %in% c(7, 8)), ]
 ```
 
 ### [**Exercise 6**]{.hl-yellow}
@@ -2756,7 +2760,7 @@ airquality_tb[, 3]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, c("Temp", "Wind")]
+airquality_tb[airquality_tb$Month == 8, c("Temp", "Wind")]
 ```
 
 ### [**Exercise 8**]{.hl-yellow}
