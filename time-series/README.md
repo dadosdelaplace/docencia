@@ -24,11 +24,11 @@
 <a href="https://github.com/dadosdelaplace/docencia/blob/master/LICENSE"><img src="https://img.shields.io/github/license/dadosdelaplace/docencia?color=2b9348" alt="License Badge"/></a>
 </div>
 
-<h1 align="left">R for datascience</h1>
+<h1 align="left">Series temporales (time series)</h1>
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
+<a href="https://javieralvarezliebana.es/docencia/time-series/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
 </a>
 </div>
             
@@ -36,13 +36,9 @@
 
 <h2 align="left">Teaching materials</h2>
 
-* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-datascience/diapos)
-* [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material)
-* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
+* [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/time-series/diapos)
+* [📦 Material](https://javieralvarezliebana.es/docencia/time-series/material)
+* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/time-series/diapos/datos)
 * 🛠 Workbooks:
-  - [Introducción a R base (intro R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
-  - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
-  - [Estructuras de control: if-else y bucles (flow structures)](https://javieralvarezliebana.quarto.pub/control-bucles-if-else/)
-  - [Funciones en R (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r/)
-  - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata/)
+  - [Introducción a la asignatura y a R base (intro to time series and R base)](https://javieralvarezliebana.quarto.pub/repaso-r-ts/)
 
