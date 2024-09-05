@@ -185,14 +185,266 @@ Durante la carrera es probable que hayas tratado con multitud de datos pero hay 
 
 . . .
 
+Vamos a cargar el fichero `retiro_temp.csv` donde tenemos los datos de temperaturas diarios (AEMET) desde 1980 hasta 2024 de la estación instalada en El Retiro (Madrid).
 
-Modificar un dataset (aemet por ejemplo) para comparar reg-clas-timeseries
+```{r}
+#| code-fold: true
+library(readr) # de tidyverse
+# en tidyverse, read_ en lugar de read.
+# tendremos datos en formato tibble en lugar de data.frame
+retiro <- read_csv(file = "./datos/retiro_temp.csv")
+retiro
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+
+¿Qué analizar de estos datos?
+
+. . .
+
+:::: columns
+::: {.column width="20%"}
+
+Podemos por ejemplo visualizar un [**boxplot de las temperaturas medias de cada día**]{.hl-yellow} durante estos últimos 44 años...
+
+:::
+
+::: {.column width="80%"}
+
+```{r}
+#| code-fold: true
+library(tidyverse)
+ggplot(retiro) +
+  geom_boxplot(aes(y = tmed)) +
+  scale_y_continuous(labels =
+                       scales::label_number(suffix = "ºC")) +
+  theme_minimal() +
+  labs(title = "Temperatura desde 1980 hasta 2024",
+       x = "Cuatrimestre", y = "Temperatura media diaria")
+```
+
+:::
+::::
+
+---
+
+## ¿Qué es una serie temporal?
+
+:::: columns
+::: {.column width="20%"}
+
+... la densidad de la temperatura durante todo ese tiempo...
+
+:::
+
+::: {.column width="80%"}
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_density(aes(x = tmed)) +
+  scale_x_continuous(labels =
+                       scales::label_number(suffix = "ºC")) +
+  theme_minimal() +
+  labs(title = "Temperatura desde 1980 hasta 2024",
+       x = "Temperatura media diaria")
+```
+
+:::
+::::
+
+---
+
+## ¿Qué es una serie temporal?
+
+:::: columns
+::: {.column width="20%"}
+
+... pero también podríamos querer [**relacionar la temperatura media con el mes**]{.hl-yellow} (por ejemplo con una regresión)...
+
+:::
+
+::: {.column width="80%"}
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         mutate(mes = as_factor(lubridate::month(fecha))) |> 
+         summarise(mean_temp = mean(tmed, na.rm = TRUE),
+                   .by = "mes")) +
+  geom_col(aes(x = mes, y = mean_temp)) +
+  theme_minimal() +
+  labs(title = "Temperatura media por mes",
+       x = "Mes", y = "ºC (media)")
+```
+
+:::
+::::
+
+---
+
+## ¿Qué es una serie temporal?
+
+:::: columns
+::: {.column width="20%"}
+
+... o analizar cómo la [**temperatura media va incrementándose en cada década**]{.hl-yellow}...
+
+:::
+
+::: {.column width="80%"}
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         mutate(periodo =
+                  if_else(fecha < as_date("1990-01-01"),
+                          "1980-1990",
+                          if_else(fecha < as_date("2000-01-01"),
+                                  "1990-2000",
+                                  if_else(fecha < as_date("2010-01-01"),
+                                          "2000-2010",
+                                          if_else(fecha < as_date("2020-01-01"),
+                                          "2010-2020", "después de 2020")))))) +
+  geom_boxplot(aes(x = periodo, y = tmed)) +
+  theme_minimal() +
+  labs(title = "Temperatura media según periodo",
+       x = "periodo", y = "ºC (media)")
+```
+
+:::
+::::
+
+---
+
+## ¿Qué es una serie temporal?
+
+En todos ejemplos anteriores hemos analizado una [**variable continua (temperatura)**]{.hl-yellow} en función de una [**variable discreta o de grupo**]{.hl-purple} (periodo, década, etc). 
+
+&nbsp;
+
+. . .
+
+¿Pero y si queremos relacionarla con una [**variable temporal "continua"**]{.hl-yellow} como es la propia fecha?
+
+---
+
+## ¿Qué es una serie temporal?
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+
+Fíjate bien...¿qué elementos detectas?
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+* [**Tendencia**]{.hl-yellow}: lo que ajustarías con un modelo clásico (por ejemplo, una regresión lineal) y representa el [**comportamiento global de la serie**]{.hl-purple}, algo así como un **nivel base respecto al que la serie oscila**.
+
+(en nuestro caso: la temperatura global aumenta con el paso de los años)
+
+```{r}
+#| code-fold: true
+ggplot(retiro, aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+* [**Estacionalidad**]{.hl-yellow}: al margen de esa tendencia general, si hacemos zoom, en muchas series podemos observar un [**patrón que se repite cada x unidades temporales**]{.hl-purple}. En el caso de la temperatura, hay un patrón anual: diciembre hace más frío que en agosto.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))),
+                aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_smooth(method = "loess") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+* [**Atípicos**]{.hl-yellow}: como sucede siempre en estadística será importantísimo analizar y tratar los [**datos atípicos muy alejados de lo esperado**]{.hl-purple}. Por ejemplo, en nuestro caso, Filomena.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))) |>
+         mutate(filomena = between(fecha, as_date("2020-12-25"), as_date("2021-01-22"))),
+                aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_point(aes(alpha = filomena), color = "#991545") +
+  scale_alpha_manual(values = c(0, 1)) +
+  guides(alpha = "none") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## ¿Qué es una serie temporal?
+
+* [**Intervenciones**]{.hl-yellow}: incluso podría suceder que la serie tuviese un [**corte o salto en su comportamiento**]{.hl-purple}. Por ejemplo, imagina que de repente el aparato de medición empieza a medir +25 grados de la temperatura real.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))) |>
+         mutate(tmed = if_else(fecha <= "2021-12-31", tmed, tmed + 25))) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  guides(alpha = "none") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       subtitle = "Error de +25ºC a partir de 2022",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
 
 ---
 
 ## Ejemplos de series
 
-estacionarias y no tanto
+En esta asignatura será fundamental un concepto: [**estacionariedad**]{.hl-yellow}. Diremos que una [**serie es estacionaria si oscila de manera estable con una media y varianza constante**]{.hl-yellow}.
+
+![](https://estrategiastrading.com/wp-content/plugins/phastpress/phast.php/c2VydmljZT1pbWFnZXMmc3JjPWh0dHBzJTNBJTJGJTJGZXN0cmF0ZWdpYXN0cmFkaW5nLmNvbSUyRndwLWNvbnRlbnQlMkZ1cGxvYWRzJTJGMjAxNiUyRjEyJTJGbWVkaWFfZXN0YWNpb25hcmlhLnBuZyZjYWNoZU1hcmtlcj0xNjMyOTAyOTc5LTc5NjQmdG9rZW49M2Y0ZTg4NWMyZjM0NmE2MA.q.png)
+
+![](https://estrategiastrading.com/wp-content/plugins/phastpress/phast.php/c2VydmljZT1pbWFnZXMmc3JjPWh0dHBzJTNBJTJGJTJGZXN0cmF0ZWdpYXN0cmFkaW5nLmNvbSUyRndwLWNvbnRlbnQlMkZ1cGxvYWRzJTJGMjAxNiUyRjEyJTJGaG9tb3NjZWRhc3RpY2lkYWQucG5nJmNhY2hlTWFya2VyPTE2MzI5MDI5NzktOTA0MyZ0b2tlbj1mNjhiMDIwYjg2NGE1M2Rl.q.png)
 
 ---
 

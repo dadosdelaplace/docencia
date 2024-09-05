@@ -1,0 +1,3249 @@
+---
+title: "Introducción a la asignatura y a R base"
+subtitle: "Cuadernos prácticos de Series Temporales del Grado en Estadística Aplicada (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+## Introducción a la asignatura
+
+## ¿Qué es una serie temporal?
+
+Durante la carrera es probable que hayas tratado con multitud de datos pero hay uno muy especial que trataremos en esta asignatura de manera diferente: las [**series temporales**]{.hl-yellow}.
+
+&nbsp;
+
+Vamos a cargar el fichero `retiro_temp.csv` donde tenemos los datos de temperaturas diarios (AEMET) desde 1980 hasta 2024 de la estación instalada en El Retiro (Madrid).
+
+```{r}
+#| code-fold: true
+library(readr) # de tidyverse
+# en tidyverse, read_ en lugar de read.
+# tendremos datos en formato tibble en lugar de data.frame
+retiro <- read_csv(file = "./datos/retiro_temp.csv")
+retiro
+```
+
+
+**¿Qué analizar de estos datos?**
+
+&nbsp;
+
+
+Podemos por ejemplo visualizar un [**boxplot de las temperaturas medias de cada día**]{.hl-yellow} durante estos últimos 44 años...
+
+
+```{r}
+#| code-fold: true
+library(tidyverse)
+ggplot(retiro) +
+  geom_boxplot(aes(y = tmed)) +
+  scale_y_continuous(labels =
+                       scales::label_number(suffix = "ºC")) +
+  theme_minimal() +
+  labs(title = "Temperatura desde 1980 hasta 2024",
+       x = "Cuatrimestre", y = "Temperatura media diaria")
+```
+
+
+... la densidad de la temperatura durante todo ese tiempo...
+
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_density(aes(x = tmed)) +
+  scale_x_continuous(labels =
+                       scales::label_number(suffix = "ºC")) +
+  theme_minimal() +
+  labs(title = "Temperatura desde 1980 hasta 2024",
+       x = "Temperatura media diaria")
+```
+
+
+... pero también podríamos querer [**relacionar la temperatura media con el mes**]{.hl-yellow} (por ejemplo con una regresión)...
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         mutate(mes = as_factor(lubridate::month(fecha))) |> 
+         summarise(mean_temp = mean(tmed, na.rm = TRUE),
+                   .by = "mes")) +
+  geom_col(aes(x = mes, y = mean_temp)) +
+  theme_minimal() +
+  labs(title = "Temperatura media por mes",
+       x = "Mes", y = "ºC (media)")
+```
+
+... o analizar cómo la [**temperatura media va incrementándose en cada década**]{.hl-yellow}...
+
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         mutate(periodo =
+                  if_else(fecha < as_date("1990-01-01"),
+                          "1980-1990",
+                          if_else(fecha < as_date("2000-01-01"),
+                                  "1990-2000",
+                                  if_else(fecha < as_date("2010-01-01"),
+                                          "2000-2010",
+                                          if_else(fecha < as_date("2020-01-01"),
+                                          "2010-2020", "después de 2020")))))) +
+  geom_boxplot(aes(x = periodo, y = tmed)) +
+  theme_minimal() +
+  labs(title = "Temperatura media según periodo",
+       x = "periodo", y = "ºC (media)")
+```
+
+
+En todos ejemplos anteriores hemos analizado una [**variable continua (temperatura)**]{.hl-yellow} en función de una [**variable discreta o de grupo**]{.hl-purple} (periodo, década, etc). 
+
+&nbsp;
+
+
+¿Pero y si queremos relacionarla con una [**variable temporal "continua"**]{.hl-yellow} como es la propia fecha?
+
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+
+Fíjate bien...¿qué elementos detectas?
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+* [**Tendencia**]{.hl-yellow}: lo que ajustarías con un modelo clásico (por ejemplo, una regresión lineal) y representa el [**comportamiento global de la serie**]{.hl-purple}, algo así como un **nivel base respecto al que la serie oscila**.
+
+(en nuestro caso: la temperatura global aumenta con el paso de los años)
+
+```{r}
+#| code-fold: true
+ggplot(retiro, aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+* [**Estacionalidad**]{.hl-yellow}: al margen de esa tendencia general, si hacemos zoom, en muchas series podemos observar un [**patrón que se repite cada x unidades temporales**]{.hl-purple}. En el caso de la temperatura, hay un patrón anual: diciembre hace más frío que en agosto.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))),
+                aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_smooth(method = "loess") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+* [**Atípicos**]{.hl-yellow}: como sucede siempre en estadística será importantísimo analizar y tratar los [**datos atípicos muy alejados de lo esperado**]{.hl-purple}. Por ejemplo, en nuestro caso, Filomena.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))) |>
+         mutate(filomena = between(fecha, as_date("2020-12-25"), as_date("2021-01-22"))),
+                aes(x = fecha, y = tmed)) +
+  geom_line(linewidth = 0.3, alpha = 0.7) +
+  geom_point(aes(alpha = filomena), color = "#991545") +
+  scale_alpha_manual(values = c(0, 1)) +
+  guides(alpha = "none") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+* [**Intervenciones**]{.hl-yellow}: incluso podría suceder que la serie tuviese un [**corte o salto en su comportamiento**]{.hl-purple}. Por ejemplo, imagina que de repente el aparato de medición empieza a medir +25 grados de la temperatura real.
+
+```{r}
+#| code-fold: true
+ggplot(retiro |> 
+         filter(between(fecha, as_date("2020-01-01"), as_date("2023-12-31"))) |>
+         mutate(tmed = if_else(fecha <= "2021-12-31", tmed, tmed + 25))) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  guides(alpha = "none") +
+  theme_minimal() +
+  labs(title = "Temperatura media diaria de 2020 a 2023",
+       subtitle = "Error de +25ºC a partir de 2022",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+
+### Estacionariedad
+
+En esta asignatura será fundamental un concepto: [**estacionariedad**]{.hl-yellow}. Diremos que una [**serie es estacionaria si oscila de manera estable con una media y varianza constante**]{.hl-yellow}.
+
+![](https://estrategiastrading.com/wp-content/plugins/phastpress/phast.php/c2VydmljZT1pbWFnZXMmc3JjPWh0dHBzJTNBJTJGJTJGZXN0cmF0ZWdpYXN0cmFkaW5nLmNvbSUyRndwLWNvbnRlbnQlMkZ1cGxvYWRzJTJGMjAxNiUyRjEyJTJGbWVkaWFfZXN0YWNpb25hcmlhLnBuZyZjYWNoZU1hcmtlcj0xNjMyOTAyOTc5LTc5NjQmdG9rZW49M2Y0ZTg4NWMyZjM0NmE2MA.q.png)
+
+![](https://estrategiastrading.com/wp-content/plugins/phastpress/phast.php/c2VydmljZT1pbWFnZXMmc3JjPWh0dHBzJTNBJTJGJTJGZXN0cmF0ZWdpYXN0cmFkaW5nLmNvbSUyRndwLWNvbnRlbnQlMkZ1cGxvYWRzJTJGMjAxNiUyRjEyJTJGaG9tb3NjZWRhc3RpY2lkYWQucG5nJmNhY2hlTWFya2VyPTE2MzI5MDI5NzktOTA0MyZ0b2tlbj1mNjhiMDIwYjg2NGE1M2Rl.q.png)
+
+
+## Introducción a R (base)
+
+### Conceptos básicos
+
+#### Instalación de R
+
+El lenguaje `R` será nuestra [**gramática y ortografía**]{.hl-yellow} (nuestras reglas de juego)
+
+-   [**Paso 1**]{.hl-yellow}: entra en <https://cran.r-project.org/> y selecciona tu sistema operativo.
+
+-   [**Paso 2**]{.hl-yellow}: para Mac basta con que hacer click en el **archivo .pkg**, y abrirlo una vez descargado. Para sistemas Windows, debemos clickar en **install R for the first time** y después en **Download R for Windows**. Una vez descargado, abrirlo como cualquier archivo de instalación.
+
+-   [**Paso 3**]{.hl-yellow}: abrir el ejecutable de instalación.
+
+
+::: callout-warning
+Siempre que tengas que descargar algo de CRAN (ya sea el propio R o un paquete), [**asegúrate de tener conexión a internet**]{.hl-orange}.
+:::
+
+
+#### Instalación de R Studio
+
+`RStudio` será el [**Word**]{.hl-yellow} que usaremos para escribir (lo que se conoce como un [**IDE: entorno integrado de desarrollo**]{.hl-yellow}).
+
+-   [**Paso 1**]{.hl-yellow}: entra la [web oficial de RStudio](https://posit.co/download/rstudio-desktop/) (ahora llamado Posit) y selecciona la descarga gratuita.
+
+-   [**Paso 2**]{.hl-yellow}: selecciona el ejecutable que te aparezca acorde a tu sistema operativo.
+
+-   [**Paso 3**]{.hl-yellow}: tras descargar el ejecutable, hay que abrirlo como otro cualquier otro y dejar que termine la instalación.
+
+
+#### Scripts (documentos .R)
+
+
+![](img/abrir_script.jpg){width="350"}
+
+Un [**script**]{.hl-yellow} será el documento en el que programamos, nuestro archivo `.doc` (aquí con extensión `.R`) donde escribiremos las órdenes. Para **abrir nuestro primero script**, haz click en el menú en `File < New File < R Script`.
+
+::: callout-warning
+## Cuidado
+
+Es importante **no abusar de la consola**: todo lo que no escribas en un script, cuando cierres, [**lo habrás perdido**]{.hl-orange}.
+:::
+
+
+::: callout-warning
+## Cuidado
+
+`R` es [**case-sensitive**]{.hl-orange}: es sensible a mayúsculas y minúsculas por lo que `x` y `X` representa variables distintas.
+:::
+
+
+#### Ejecutando el primer script
+
+Ahora tenemos una **cuarta ventana**: la ventana donde [**escribiremos nuestros códigos**]{.hl-yellow}. ¿Cómo ejecutarlo?
+
+
+1.  **Escribimos** el código a ejecutar.
+
+
+2.  **Guardamos** el archivo .R haciendo click en `Save current document`.
+
+
+3.  El código no se ejecuta salvo que se lo indiquemos. Tenemos **tres opciones de ejecutar un script**:
+
+-   [**Copiar y pegar**]{.hl-yellow} en consola.
+-   [**Seleccionar líneas**]{.hl-yellow} y `Ctrl+Enter`
+-   [**Activar Source on save**]{.hl-yellow} a la derecha de guardar: no solo guarda sino que ejecuta el código **completo**.
+
+
+#### Sé organizado: proyectos
+
+De la misma manera que en el ordenador solemos trabajar de manera [**ordenada por carpetas**]{.hl-yellow}, en `RStudio` podemos hacer lo mismo para trabajar de [**manera eficaz creando proyectos**]{.hl-yellow}.
+
+
+Un [**proyecto será una «carpeta»**]{.hl-yellow} dentro de `RStudio`, de manera que nuestro directorio raíz automáticamente será la propia carpeta de proyecto (pudiendo pasar de un proyecto a otro con el menu superior derecho).
+
+Podemos crear uno en una carpeta nueva o en una carpeta ya existente.
+
+![](img/rstudio_proyectos.png){width="370"}
+
+
+#### Buenas prácticas
+
+
+* [**Tip 1**]{.hl-green}: [**asignar, evaluar y comparar no es lo mismo**]{.hl-yellow}. Si te has fijado en `R` estamos usando `<-` para asignar valores a variables. Usaremos `=` para evaluar argumentos en funciones y `==` para saber si dos elementos son iguales.
+
+```{r}
+#| eval: false
+x <- 1 # asignar
+x = 1 # evaluar
+x == 1 # comparar
+```
+
+
+* [**Tip 2**]{.hl-green}: programa como escribes. Al igual que cuando redactas en castellano, acostúmbrate a incorporar [**espacios y saltos de línea**]{.hl-yellow} paranoquedarteciego (es una buena práctica y no un requisito porque `R` no procesa los espacios)
+
+```{r}
+#| eval: false
+x <- 1 # óptimo
+x<-1 # regu
+x<- 1 # peor (decídete)
+```
+
+
+* [**Tip 3**]{.hl-green}: no seas caótico, [**estandariza nombres**]{.hl-yellow}, acostúmbrate siempre a hacerlo igual. El único requisito es que **debe empezar siempre por una letra** (y sin tildes). La forma más recomendable es la conocida como `snake_case`
+
+```{r}
+#| eval: false
+variable_en_modo_snake_case
+otraFormaMasDificilDeLeer
+hay.gente.que.usa.esto
+Incluso_Haygente.Caotica_que.NoMereceNuestraATENCION
+```
+
+
+* [**Tip 4**]{.hl-green}: facilita la lectura y escritura, [**pon márgenes**]{.hl-yellow}. En `Tools < Global Options` puedes personalizar algunas opciones de `RStudio`. En `Code < Display` podemos indicarle en `Show margin`  (no interacciona con el código).
+
+![](img/show_margin.jpg){height="200"}
+
+
+
+* [**Tip 5**]{.hl-green}: el [**tabulador es tu mejor amigo**]{.hl-yellow}. En `RStudio` tenemos una herramienta maravillosa: si escribes parte del nombre de una variable o función y tabulas, `RStudio` te autocompleta
+
+![](img/tab-autocompletar.png)  
+
+
+* [**Tip 6**]{.hl-green}: ni un paréntesis soltero. Siempre que abras un paréntesis deberás cerrarlo. Para facilitar esta tarea entra en `Tools < Global Options < Code < Display` y activa la opción `Rainbow parentheses`
+
+![](img/rainbow-parentheses.jpg)
+
+* [**Tip 7**]{.hl-green}: fíjate en el lateral izquierdo. No solo podrás ver la línea de código por la que vas sino que, en caso de estar cometiendo un [**error de sintaxis**]{.hl-red}, el propio `RStudio` te avisará.
+
+![](img/rstudio-error-sintaxis.png)
+
+* [**Tip 8**]{.hl-green}: intenta [**trabajar siempre por proyectos**]{.hl-yellow} (para esta clase, crea un script `clase2.R` en el proyecto que creamos en la anterior clase)
+
+&nbsp;
+
+Ver más tips en <https://r4ds.had.co.nz/workflow-basics.html#whats-in-a-name>
+
+### Tipos de datos
+
+¿Existen [**variables más allá de los números en la ciencia de datos**]{.hl-yellow}? Piensa por ejemplo en los datos que podrías guardar de una persona:
+
+
+-   La edad o el peso será un [**número**]{.hl-yellow}.
+
+```{r}
+edad <- 33
+```
+
+-   Su nombre será una cadena de [**texto (conocida como string o char)**]{.hl-yellow}.
+
+```{r}
+nombre <- "javi"
+```
+
+-   A la pregunta «¿estás matriculado en la Facultad?» la respuesta será lo que llamamos una [**variable lógica**]{.hl-yellow} (`TRUE` si está matriculado o `FALSE` en otro caso).
+
+```{r}
+matriculado <- TRUE
+```
+
+-   Su fecha de nacimiento será precisamente eso, una [**fecha**]{.hl-yellow}, un tipo de variable **crucial en esta asignatura**
+
+Puedes ver más detalles básicos de variables en `R` en <https://javieralvarezliebana.es/docencia/R-datascience/diapos/#/title-slide>
+
+#### Variables de fecha
+
+Un tipo de datos muy especial: los [**datos de tipo fecha**]{.hl-yellow}.
+
+```{r}
+fecha_char <- "2021-04-21"
+```
+
+Parece una simple cadena de texto pero [**debería representar un instante en el tiempo**]{.hl-yellow}. ¿Qué debería suceder si [**sumamos un 1 a una fecha**]{.hl-purple}?
+
+```{r}
+#| error: true
+fecha_char + 1
+```
+
+
+Las fechas [**NO pueden ser texto**]{.hl-red}: debemos convertir la cadena de texto a fecha.
+
+
+
+&nbsp;
+
+Para trabajar con fechas usaremos el paquete `{lubridate}`, que deberemos instalar antes de poder usarlo.
+
+```{r}
+#| eval: false
+install.packages("lubridate")
+```
+
+
+Una vez instalado, de todos los paquetes (libros) que tenemos, le indicaremos que nos cargue ese concretamente.
+
+```{r}
+library(lubridate) # instala si no lo has hecho
+```
+
+
+
+Para [**convertir a tipo fecha**]{.hl-yellow} usaremos la función `as_date()` del paquete `{lubridate}` (por defecto en formato `yyyy-mm-dd`)
+
+&nbsp;
+
+```{r}
+#| error: true
+# ¡no es una fecha, es un texto!
+fecha_char + 1
+class(fecha_char)
+```
+
+
+```{r}
+fecha <- as_date("2023-03-28")
+fecha + 1
+class(fecha)
+```
+
+
+En `as_date()` el formato de fecha por defecto es `yyyy-mm-dd` así si la cadena de texto no se introduce de manera adecuada...
+
+```{r}
+as_date("28-03-2023")
+```
+
+
+Para [**cualquier otro formato debemos especificarlo**]{.hl-yellow} en el argumento opcional `format = ...` tal que `%d` representa días, `%m` meses, `%Y` en formato de 4 años y `%y` en formato de 2 años.
+
+```{r}
+as_date("28-03-2023", format = "%d-%m-%Y")
+as_date("28-03-23", format = "%d-%m-%y")
+as_date("03-28-2023", format = "%m-%d-%Y")
+as_date("28/03/2023", format = "%d/%m/%Y")
+```
+
+En dicho paquete tenemos funciones muy útiles para [**manejar fechas**]{.hl-yellow}:
+
+-   Con `today()` podemos obtener directamente la [**fecha actual**]{.hl-purple}.
+
+```{r}
+today()
+```
+
+
+-   Con `now()` podemos obtener la [**fecha y hora actual**]{.hl-purple}
+
+```{r}
+now()
+```
+
+
+-   Con `year()`, `month()` o `day()` podemos [**extraer el año, mes y día**]{.hl-purple}
+
+```{r}
+fecha <- today()
+year(fecha)
+month(fecha)
+```
+
+
+![](img/lubridate.png)
+
+::: callout-note
+## Amplia contenido
+
+Tienes un resumen en pdf de los paquetes más importantes en la [**carpeta correspondiente en el campus**]{.hl-green}
+:::
+
+### Vectores: concatenar
+
+Cuando trabajamos con datos normalmente tendremos [**columnas que representan variables**]{.hl-yellow}: llamaremos [**vectores**]{.hl-yellow} a una [**concatenación**]{.hl-purple} de celdas (valores) del [**mismo tipo**]{.hl-purple} (lo que sería una columna de una tabla).
+
+La forma más sencilla es con el comando `c()` (c de **concatenar**), y basta con introducir sus **elementos entre paréntesis y separados por comas**
+
+```{r}
+edades <- c(32, 27, 60, 61)
+edades
+```
+
+::: callout-tip
+Un número individual `x <- 1` (o bien `x <- c(1)`) es en realidad un **vector de longitud uno** --> todo lo que sepamos [**hacer con un número podemos hacerlo con un vector de ellos**]{.hl-green}.
+:::
+
+
+### 💻 Tu turno {#tu-turno-1-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Define el vector `x` como la concatenación de los 5 primeros números impares. Calcula la longitud del vector
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Dos formas
+x <- c(1, 3, 5, 7, 9)
+x <- seq(1, 9, by = 2)
+
+length(x)
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Accede al tercer elemento de `x`. Accede al último elemento (sin importar la longitud, un código que pueda ejecutarse siempre). Elimina el primer elemento.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[3]
+x[length(x)]
+x[-1]
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Obtén los elementos de `x` mayores que 4. Calcula el vector `1/x` y guárdalo en una variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 4]
+z <- 1/x
+z
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Crea un vector que represente los nombres de 5 personas, de los cuales uno es desconocido.
+
+```{r}
+#| code-fold: true
+#| eval: false
+nombres <- c("Javi", "Sandra", NA, "Laura", "Carlos")
+nombres
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Encuentra del vector `x` de ejercicios anteriores los elementos mayores (estrictos) que 1 Y ADEMÁS menores (estrictos) que 7. Encuentra una forma de averiguar si todos los elementos son o no positivos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Dado el vector `x <- c(1, -5, 8, NA, 10, -3, 9)`,  ¿por qué su media no devuelve un número sino lo que se muestra en el código inferior?
+
+```{r}
+x <- c(1, -5, 8, NA, 10, -3, 9)
+mean(x)
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Dado el vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, extrae los elementos que ocupan los lugares 1, 2, 5, 6. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- c(1, -5, 8, NA, 10, -3, 9)
+x[c(1, 2, 5, 6)]
+x[-2]
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Dado el vector `x` del ejercicio anterior, ¿cuales tienen un dato ausente? Pista: las funciones `is.algo()` comprueban si el elemento es tipo `algo` (tabula)
+
+```{r}
+#| code-fold: true
+#| eval: false
+is.na(x)
+```
+
+
+### [**Ejercicio 9**]{.hl-yellow}
+
+📝 Define el vector `x` como la concatenación de los 4 primeros números pares. Calcula el número de elementos de `x` menores estrictamente que 5.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x < 5] 
+sum(x < 5)
+```
+
+
+### [**Ejercicio 10**]{.hl-yellow}
+
+📝 Calcula el vector `1/x` y obtén la versión ordenada (de menor a mayor) de las dos formas posibles
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- 1/x
+sort(z)
+z[order(z)]
+```
+
+
+### [**Ejercicio 11**]{.hl-yellow}
+
+📝 Encuentra del vector `x` los elementos mayores (estrictos) que 1 y menores (estrictos) que 6. Encuentra una forma de averiguar si todos los elementos son o no negativos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+:::
+
+### Primera base de datos
+
+Cuando analizamos datos solemos tener [**varias variables**]{.hl-yellow} de cada individuo: necesitamos una «tabla» que las recopile. La opción más inmediata son las [**matrices**]{.hl-yellow}: concatenación de variables del [**mismo tipo e igual longitud**]{.hl-purple}.
+
+Imagina que tenemos estaturas y pesos de 4 personas. ¿Cómo [**crear un dataset con las dos variables**]{.hl-yellow}? La opción más habitual es usando `cbind()`: [**concatenamos (bind) vectores en forma de columnas (c)**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: "3"
+estaturas <- c(150, 160, 170, 180)
+pesos <- c(63, 70, 85, 95)
+datos_matriz <- cbind(estaturas, pesos)
+datos_matriz
+```
+
+#### Primer intento: matrices
+
+También podemos [**construir la matriz por filas**]{.hl-yellow} con la función `rbind()` (concatenar - bind - por filas  - rows), aunque lo [**recomendable es tener cada variable en columna**]{.hl-green} e individuo en fila como luego veremos.
+
+```{r}
+rbind(estaturas, pesos) # Construimos la matriz por filas
+```
+
+-   Podemos [**comprobar las dimensiones**]{.hl-yellow} con `dim()`, `nrow()` y `ncol()`: las matrices son un tipo de **datos tabulados** (organizados en filas y columnas)
+
+```{r}
+dim(datos_matriz)
+nrow(datos_matriz)
+ncol(datos_matriz)
+```
+
+#### Segundo intento: data.frame
+
+Las matrices tienen el mismo problema que los vectores: si juntamos datos de distinto tipo, se [**perturba la integridad del dato**]{.hl-red} ya que los convierte (fíjate en el código inferior: las edades y los `TRUE/FALSE` los ha convertido a texto)
+
+```{r}
+#| code-line-numbers: "4-5"
+edades <- c(14, 24, NA)
+soltero <- c(TRUE, NA, FALSE)
+nombres <- c("javi", "laura", "lucía")
+matriz <- cbind(edades, soltero, nombres)
+matriz
+```
+
+De hecho al no ser números ya no podemos realizar operaciones aritméticas
+
+```{r}
+#| error: true
+matriz + 1
+```
+
+Para poder trabajar con [**variables de distinto tipo**]{.hl-yellow} tenemos en `R` lo que se conoce como [**data.frame**]{.hl-yellow}: concatenación de variables de igual longitud pero que pueden ser de [**tipo distinto**]{.hl-purple}.
+
+```{r}
+tabla <- data.frame(edades, soltero, nombres)
+class(tabla)
+tabla
+```
+
+
+Dado que un `data.frame` es ya un intento de «base de datos» las variables no son meros vectores matemáticos: [**tienen un significado**]{.hl-yellow} y podemos (debemos) [**ponerles nombres**]{.hl-purple} que describan su significado
+
+```{r}
+library(lubridate)
+tabla <-
+  data.frame("edad" = edades, "estado" = soltero, "nombre" = nombres,
+             "f_nacimiento" = as_date(c("1989-09-10", "1992-04-01", "1980-11-27")))
+tabla
+```
+
+
+#### Intento final: tibble
+
+Las tablas en formato `data.frame` tienen algunas [**limitaciones**]{.hl-red}. La principal es que [**no permite la recursividad**]{.hl-red}: imagina que definimos una base de datos con estaturas y pesos, y queremos una tercera variable con el IMC
+
+```{r}
+#| error: true
+data.frame("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70),
+           "IMC" = peso / (estatura^2))
+```
+
+
+En adelante usaremos el formato `tibble` ([**data.frame mejorado**]{.hl-yellow}) del paquete `{tibble}`
+
+```{r}
+library(tibble)
+datos_tb <- 
+  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
+class(datos_tb)
+datos_tb
+```
+
+
+```{r}
+datos_tb <-
+  tibble("estatura" = c(1.7, 1.8, 1.6), "peso" = c(80, 75, 70), "IMC" = peso / (estatura^2))
+datos_tb
+```
+
+Las tablas en formato `tibble` nos permitirá una [**gestión más ágil, eficiente y coherente**]{.hl-yellow} de los datos, con 4 ventajas principales:
+
+
+-   [**Metainformación**]{.hl-yellow}: si te fijas en la cabecera, nos dice ya automáticamente el número de filas y columnas, y el tipo de cada variable
+
+
+-   [**Recursividad**]{.hl-yellow}: permite definir las variables secuencialmente (como hemos visto)
+
+-   [**Consistencia**]{.hl-yellow}: si accedes a una columna que no existe avisa con un warning
+
+```{r}
+#| warning: true
+datos_tb$invent
+```
+
+
+-   [**Por filas**]{.hl-yellow}: crear por filas (copiar y pegar de una tabla) con `tribble()`
+
+```{r}
+tribble(~colA, ~colB,
+        "a",   1,
+        "b",   2)
+```
+
+
+::: callout-tip
+El paquete `{datapasta}` nos permite [**copiar y pegar**]{.hl-green} tablas de páginas web y documentos sencillos
+:::
+
+
+
+### 💻 Tu turno (tb/df) {#tu-turno-1-2}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Carga del paquete `{datasets}` el conjunto de datos `airquality` (variables de la calidad del aire de Nueva York desde mayo hasta septiembre de 1973). ¿Es el conjunto de datos airquality de tipo tibble? En caso negativo, conviértelo a tibble (busca en la documentación del paquete en <https://tibble.tidyverse.org/index.html>).
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tibble)
+class(datasets::airquality)
+airquality_tb <- as_tibble(datasets::airquality)
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Una vez convertido a `tibble` obtén el nombre de las variables y las dimensiones del conjunto de datos. ¿Cuántas variables hay? ¿Cuántos días se han medido?
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb)
+ncol(airquality_tb)
+nrow(airquality_tb)
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Filtra solo los datos de la quinta observación
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Filtra solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores "formateados")
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, ]
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Selecciona aquellos datos que no sean ni de julio ni de agosto.
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month != 7 & Month != 8, ]
+airquality_tb[!(Month %in% c(7, 8)), ]
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Modifica el siguiente código para quedarte solo con las variable de ozono y temperatura (sin importar qué posición ocupen)
+
+```{r}
+#| eval: false
+airquality_tb[, 3]
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Selecciona los datos de temperatura y viento de agosto. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[Month == 8, c("Temp", "Wind")]
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Traduce a castellano el nombre de las variables.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia") 
+```
+
+:::
+
+
+
+### Comunicar: rmd y Quarto
+
+Una de las [**principales fortalezas**]{.hl-yellow} de `R` es la [**facilidad para generar informes, libros, webs, apuntes y hasta diapositivas**]{.hl-yellow} (este mismo material por ejemplo). Para ello [**instalaremos**]{.hl-purple} antes
+
+
+-   el paquete `{rmarkdown}` (para generar archivos `.rmd`)
+
+```{r}
+#| eval: false
+install.packages("rmarkdown")
+```
+
+- instalar [**Quarto**](https://quarto.org/docs/get-started/) (si ya conocías `R`, el «nuevo» `.rmd` ahora como `.qmd`)
+
+![](img/quarto.png)
+
+Hasta ahora solo hemos programado en scripts (archivos `.R`) dentro de proyectos, pero en muchas ocasiones [**no trabajaremos solos**]{.hl-yellow} y necesitaremos [**comunicar los resultados**]{.hl-yellow} en diferentes formatos:
+
+- apuntes (para nosotros mismos)
+- diapositivas
+- web
+- informes
+
+
+Para todo ello usaremos [**Quarto**]{.hl-yellow} (ver más en <https://ivelasq.quarto.pub/intro-to-quarto/>)
+
+
+Los archivos de extensión `.qmd` (o `.rmd` antes) nos permitirán fácilmente combinar:
+
+-   [**Markdown**]{.hl-yellow}: [**lenguaje tipado**]{.hl-purple} que nos permite crear contenido simple (tipo wordpress, con texto, **negritas**, _cursivas_, etc) con un diseño legible.
+
+
+-   [**Matemáticas (latex)**]{.hl-yellow}: lenguaje para escribir notación matemática como $x^2$ o $\sqrt{y}$ o $\int_{a}^{b} f(x) dx$
+
+-   [**Código y salidas**]{.hl-yellow}: podremos no solo mostrar el paso final sino el código que has ido realizando (en `R`, `Python`, `C++`, `Julia`, ...), con [**cajitas de código llamadas CHUNKS**]{.hl-purple}.
+
+-   Imágenes, [**gráficas**]{.hl-yellow}, tablas, estilos (css, js), etc.
+
+La principal ventaja de realizar este tipo de material en Quarto/Rmarkdown es que, al hacerlo desde `RStudio`, puedes generar un [**informe o una presentación sin salirte del entorno de programación**]{.hl-yellow} en el que estás trabajando
+
+De esta forma podrás analizar los datos, resumirlos y a la vez comunicarlos con la misma herramienta. Recientemente el equipo de `RStudio` desarrolló [**Quarto**]{.hl-yellow}, una versión mejorada de Rmarkdown (archivos `.qmd`), con un formato un poco más estético y simple. Tienes toda la documentación y ejemplos en [**https://quarto.org/**](https://quarto.org/)
+
+
+#### Uso de Quarto
+
+::: panel-tabset
+### Webs
+
+![](./img/website.png){height="350"}
+
+### Libros
+
+![](./img/book.png){height="350"}
+
+### Blogs
+
+![](./img/blog.png){height="350"}
+
+### Presentaciones
+
+![](./img/presentation.png){height="350"}
+
+### Revistas
+
+![](https://user-images.githubusercontent.com/163582/42351114-e5deaa1c-8078-11e8-90de-2aff57bba255.png){height="350"}
+:::
+
+Imágenes obtenidas de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
+
+#### Nuestro primer informe
+
+
+![](img/quarto-create.png)
+
+Vamos a crear el [**primer fichero rmarkdown con Quarto**]{.hl-yellow} con extensión `.qmd`. Para ello solo necesitaremos hacer click en
+
+`File << New File << Quarto Document`
+
+![](img/quarto-format.png)
+
+Tras hacerlo nos aparecerán varias [**opciones de formatos de salida**]{.hl-yellow}:
+
+-   archivo `.pdf`
+-   archivo `.html` ([**recomendable**]{.hl-yellow}): documento dinámico, permite la interacción con el usuario, como una «página web».
+-   archivo `.doc` (nada recomendable)
+
+De momento dejaremos marcado el [**formato HTML que viene por defecto**]{.hl-yellow}, y escribiremos el [**título**]{.hl-yellow} de nuestro documento. Tras ello tendremos nuestro [**archivo .qmd**]{.hl-yellow} (ya no es un script .R como los que hemos abierto hasta ahora).
+
+
+![](img/quarto-example.png)
+
+Deberías tener algo similar a la captura de la imagen con [**dos modos de edición**]{.hl-yellow}: `Source` (con código, la opción recomendada hasta que lo domines) y `Visual` (más parecido a un blog)
+
+
+Para [**ejecutar TODO el documento**]{.hl-yellow} debes clickar `Render on Save` y darle a guardar.
+
+
+![](img/quarto-prueba-html.png)
+
+Deberías haber obtenido una [**salida en html similar a esta**]{.hl-yellow} (y se te ha generado en tu ordenador un [**archivo html**]{.hl-yellow})
+
+
+Como se indicaba, tienes dos formas de trabajar: con código puro y algo parecido a un Notion (blog)
+
+![](./img/rstudio-source-visual.png)
+
+Imagen obtenida de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
+
+
+![](img/quarto-example.png)
+
+
+Un fichero `.qmd` se [**divide básicamente en tres partes**]{.hl-yellow}:
+
+* [**Cabecera**]{.hl-yellow}: la parte que tienes al inicio entre `---`.
+
+* [**Texto**]{.hl-yellow}: que podremos formatear y mejorar con negritas (escrito como **negritas**, con doble astérisco al inicio y final), cursivas (_cursivas_, con barra baja al inicio y final) o destacar nombres de funciones o variables de R. Puedes añadir ecuaciones como $x^2$ (he escrito `$x^2$`, entre dólares).
+
+* [**Código R**]{.hl-yellow}
+
+
+La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
+
+
+* `title` y `subtitle`: el título/subtítulo del documento
+* `author`: autor del mismo
+* `format`: formato de salida (podremos personalizar)
+  * `theme`: si tienes algún archivo de estilos
+  * `toc`: si quieres índice o no
+  * `toc-location`: posición del índice
+  * `toc-title`: título del índice
+* `editor`: si estás en modo visual o source.
+
+
+
+``` yaml
+---
+title: "prueba"
+author: "javier álvarez liébana"
+format:
+  html:
+    style: style.css
+    toc: true
+    toc-location: left
+    toc-title: Índice
+editor: visual
+---
+```
+
+
+Respecto a la escritura solo hay una [**cosa importante**]{.hl-yellow}: salvo que indiquemos lo contrario, [**TODO lo que vamos a escribir es texto (normal)**]{.hl-yellow}. No código R.
+
+
+![](img/quarto-prueba-qmd2.png){width=350}
+![](img/quarto-prueba-html2.png){width=320}
+
+Vamos a empezar escribiendo una sección al inicio (`# Intro` y detrás por ej. la frase
+
+> Este material ha sido diseñado por el profesor Javier Álvarez Liébana, docente en la Universidad Complutense de Madrid
+
+Además al `Running Code` le añadiremos una almohadilla `#`: las [**almohadillas FUERA DE CHUNKS**]{.hl-yellow} nos servirán para crear [**epígrafes (secciones)**]{.hl-yellow} en el documento
+
+
+
+![](img/quarto-indice-qmd-2.png){width=370}
+![](img/quarto-indice-html2.png){width=370}
+
+Para que el [**índice capture dichas secciones**]{.hl-yellow} modificaremos la cabecera del archivo como se observa en la imagen (puedes cambiar la localización del índice y el título si quieres para probar).
+
+
+Vamos a [**personalizar un poco el texto**]{.hl-yellow} haciendo lo siguiente:
+
+
+![](img/quarto-texto-mejorado-qmd.png){width=370}
+![](img/quarto-texto-mejorado-html.png){width=370}
+
+* Vamos a añadir [**negrita al nombre**]{.hl-yellow} (poniendo ** al inicio y al final).
+
+* Vamos añadir [**cursiva**]{.hl-yellow} a la palabra material (poniendo _ al inicio y al final).
+
+* Vamos añadir un [**enlace**]{.hl-yellow} <https://www.ucm.es>, asociándolo al nombre de la Universidad. Para ello el título lo ponemos entre corchetes y justo detrás el enlace entre paréntesis `[«Universidad Complutense de Madrid»](https://www.ucm.es)`
+
+
+
+Para [**añadir código R**]{.hl-yellow} debemos crear nuestras [**cajas de código llamadas chunks**]{.hl-yellow}: altos en el camino en nuestro texto markdown donde podremos incluir código de casi cualquier lenguaje (y sus salidas).
+
+&nbsp;
+
+![](img/quarto-chunk-qmd.png){width=470}
+
+
+Para incluir uno deberá de ir [**encabezado**]{.hl-yellow} de la siguiente forma tienes un atajo `Command + Option + I` (Mac) o `Ctrl + Shift + I` (Windows)
+
+
+Dentro de dicha cajita (que tiene ahora otro color en el documento) [**escribiremos código R**]{.hl-yellow} como lo veníamos haciendo hasta ahora en los scripts.
+
+
+![](img/quarto-chunk-1-qmd.png){width=410}
+![](img/quarto-chunk-1-html.png){width=410}
+
+Vamos por ejemplo a definir dos variables y su suma de la siguiente manera, escribiendo dicho código en nuestro `.qmd` (dentro de ese chunk)
+
+```{r}
+# Código R
+x <- 1
+y <- 2
+x + y
+```
+
+![](img/quarto-tag-chunks-qmd.png){width=400}
+![](img/quarto-tag-chunks-html.png){width=400}
+
+Los chunks pueden tener un [**nombre o etiqueta**]{.hl-yellow}, de forma que podamos referenciarlos de nuevo para no repetir código.
+
+
+![](img/quarto-inline-qmd.png){width=400}
+![](img/quarto-inline-html.png){width=380}
+
+
+En cada chunk aparecen [**dos botones**]{.hl-yellow}:
+
+* botón de [**play**]{.hl-yellow}: activa la [**ejecución y salida de ese chunk particular**]{.hl-yellow} (lo puedes visualizar dentro de tu propio `RStudio`)
+
+* botón de [**rebobinar**]{.hl-yellow}: activa la [**ejecución y salida de todos los chunk hasta ese**]{.hl-yellow} (sin llegar a él)
+
+&nbsp;
+
+Además podemos [**incluir código R dentro de la línea de texto**]{.hl-yellow} (en lugar de mostrar el texto x ejecuta el código R mostrando la variable).
+
+
+
+Los [**chunks podemos personalizarlos**]{.hl-yellow} con opciones al inicio del chunk precedido de `#|`:
+
+* `#| echo: false`: [**ejecuta código**]{.hl-green} y se [**muestra resultado**]{.hl-green} pero [**no visualiza código**]{.hl-red} en la salida.
+
+* `#| include: false`: [**ejecuta código**]{.hl-green} pero [**no muestra resultado**]{.hl-red} y [**no visualiza código**]{.hl-red} en la salida.
+
+* `#| eval: false`: [**no ejecuta código**]{.hl-red}, [**no muestra resultado**]{.hl-red} pero [**sí visualiza código**]{.hl-green} en la salida.
+
+* `#| message: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de salida**]{.hl-red}.
+
+* `#| warning: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de warning**]{.hl-red}.
+
+* `#| error: true`: [**ejecuta código**]{.hl-green} y [**permite que haya errores**]{.hl-green} mostrando el mensaje de error en la salida.
+
+
+![](img/quarto-options-chunk.png){width=380}
+
+Estas opciones podemos aplicarlas chunk a chunk o fijar los parámetros de forma global con `knitr::opts_chunk$set()` al inicio del documento (dentro de un chunk).
+
+
+Si queremos que aplique la **opción a todos los chunks por defecto** debemos incluirlo al final de la cabecera, como [**opciones de ejecución**]{.hl-yellow}
+
+``` yaml
+---
+title: "¡Hola!"
+format: html
+editor: visual
+execute:
+  echo: false
+---
+```
+
+Además de texto y código podemos introducir lo siguiente:
+
+* [**Ecuaciones**]{.hl-yellow}: puedes añadir además ecuaciones como $x^2$ (he escrito `$x^2$`, la ecuación entre dólares).
+
+* [**Listas**]{.hl-yellow}: puedes itemizar elementos poniendo `*`
+
+`* Paso 1: ...`
+
+`* Paso 2: ...`
+
+* [**Cross-references**]{.hl-yellow}: puedes etiquetar partes del documento (la etiqueta se construye con `{#nombre-seccion}`) y llamarlas luego con `[Sección](@nombre-seccion)`
+
+
+![](img/quarto-fig-qmd.png){width=340}
+![](img/quarto-fig-html.png){width=390}
+
+Por último, también podemos [**añadir pies de gráficas o imágenes**]{.hl-yellow} añadiendo `#| fig-cap: "..."`
+
+Fíjate que el [**caption está en el margen**]{.hl-yellow} (por ejemplo). Puedes cambiarlo introduciendo [**ajustes en la cabecera**]{.hl-yellow} (todo lo relativo a figuras empieza por `fig-`, y puedes ver las opciones tabulando). Tienes más información en **<https://quarto.org/>**
+
+![](img/quarto-cabecera-desplegable.png){width=400}
+
+
+![](img/quarto-estilos-qmd.png){width=400}
+![](img/quarto-estilos-html.png){width=400}
+
+Por último puedes añadir un [**tema personalizado**]{.hl-yellow} incluyendo un [**archivo de estilos**]{.hl-yellow} (archivo en formato `.scss` o `.css`). Te he dejado uno en <https://github.com/dadosdelaplace/docencia-R-master-bio-2324/tree/main/material>.
+
+::: callout-important
+## Importante
+
+El archivo de estilos debe estar en la misma carpeta que el archivo `.qmd`
+:::
+
+
+
+También puedes hacerlo de manera sencilla [**añadiendo a los textos un poco de HTML**]{.hl-yellow}. Por ejemplo, para personalizar el color de un texto va entre corchetes y justo tras el texto, entre llaves, las opciones de estilo
+
+``` html
+Esta palabra es [roja]{style="color:red;"} ...
+```
+
+``` html
+... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
+```
+
+
+Esta palabra es [roja]{style="color:red;"} ...
+
+... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
+
+&nbsp;
+
+
+También puedes usar los [**bloques de llamada**]{.hl-yellow} que por defecto son `note`, `tip`, `warning`, `caution` e `important` (aunque los puedes crear y personalizar). Para ello basta con usar `:::{.callout-tipo}` y el tipo que quieras
+
+``` html
+:::{.callout-tip}
+
+Note that there are five types of callouts, including: 
+`note`, `tip`, `warning`, `caution`, and `important`.
+
+:::
+```
+
+:::{.callout-tip}
+
+Recuerda que los 5 tipos son `note`, `tip`, `warning`, `caution` e `important`.
+
+:::
+
+
+:::{.callout-caution}
+
+Úsalos con cabeza, a veces mucho recursos estético puede marear.
+
+:::
+
+
+Además `{reticulate}` nos permite crear chunks de `python` dentro de un Quarto en `R` (ver <https://quarto.org/docs/computations/python.html> para crear jupyter notebooks directamente desde Quarto)
+
+```{r}
+#| echo: false
+library(reticulate)
+```
+
+```{r}
+#| eval: false
+# install.packages("reticulate")
+library(reticulate)
+
+install_python("3.9.12") # Instalar python en PC sino lo tienes
+
+# Instalar paquetes de Python
+reticulate::py_install("numpy")
+reticulate::py_install("matplotlib")
+```
+
+```{python}
+#| eval: false
+import numpy as np
+import matplotlib.pyplot as plt
+r = np.arange(0, 2, 0.05)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+plt.show()
+```
+
+```{python}
+#| echo: false
+import numpy as np
+import matplotlib.pyplot as plt
+r = np.arange(0, 2, 0.05)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+plt.show()
+```
+
+
+
+
+#### Ejemplo de entrega
+
+Vamos a realizar un pequeño simulacro antes de la entrega usando el dataset `starwars` del paquete `{dplyr}`
+
+![](https://sm.ign.com/t/ign_latam/screenshot/default/baby-yoda-nombre_3x56.1280.jpg)
+
+
+```{r}
+library(dplyr)
+starwars
+```
+
+En él tenemos **diferentes variables de los personajes de Star Wars**, con características de su pelo, piel, altura, nombre, etc.
+
+
+
+> Crea un documento `.qmd` con nombre, título, formato e índice. Cada ejercicio posterior será una subsección del documento. Ejecuta los chunks que consideres y comenta las salidas para responder a cada pregunta
+
+> Ejercicio 1. ¿Cuántos personajes hay guardados en la base de datos? ¿Cuántas características se han medido de cada uno?
+
+
+
+> Ejercicio 2. Extrae en dos variables distintas `nombres` y `edades` las variables correspondientes de la tabla. ¿De qué tipo es la variable nombre? ¿Y la variable birth_year?
+
+
+
+> Ejercicio 3. Obtén el vector de nombres de los personajes ordenados de mayores a jóvenes.
+
+
+
+> Ejercicio 4. Busca ayuda de la función unique(). Úsala para saber que modalidades tiene la variable cualitativa correspondiente al color de ojos. ¿Cuántos distintos hay?
+
+
+
+> Ejercicio 5. ¿Existe ALGÚN valor ausente en la variable de color ojos? 
+
+
+
+> Ejercicio 6.  Calcula la media y desviación típica de las variables de estatura y peso (cuidado con los ausentes). Define un nuevo tibble con esas dos variables e incorpora una tercera variable que se llame “IMC” que calcule el índice de masa corporal. Incorpora con `$ $` la fórmula usada para el IMC.
+
+
+### Estructuras de control
+
+Una [**estructura de control**]{.hl-yellow} se compone de una serie de comandos orientados a  [**decidir el camino**]{.hl-yellow} que tu código debe recorrer
+
+* Si se cumple la condición A, ¿qué sucede?
+
+* ¿Y si sucede B?
+
+* ¿Cómo puedo repetir una misma expresión (dependiendo de una variable)?
+
+
+Si has programado antes, quizás te sea familiar las conocidas como [**estructuras condicionales**]{.hl-yellow} tales como `if (blabla) {...} else {...}`  o [**bucles**]{.hl-yellow} `for/while` (a evitar siempre que podamos).
+
+
+Una de las estructuras de control más famosas son las conocidas como [**estructuras condicionales**]{.hl-yellow} `if`.
+
+> SI (IF) un conjunto de condiciones se cumple (TRUE), entonces ejecuta lo que haya dentro de las llaves
+
+Por ejemplo, la estructura `if (x == 1) { código A }` lo que hará será [**ejecutar el código A entre llaves**]{.hl-yellow} pero [**SOLO SI**]{.hl-purple} la [**condición entre paréntesis es cierta**]{.hl-purple} (solo si `x` es 1). En cualquier otro caso, no hará nada.
+
+
+
+Por ejemplo, definamos un vector de edades de 8 personas
+
+```{r}
+edad <- c(14, 17, 24, 56, 31, 20, 87, 73)
+edad < 18
+```
+
+
+Nuestra estructura condicional hará lo siguiente: [**si existe algún menor de edad, imprimirá**]{.hl-yellow} por pantalla un mensaje.
+
+```{r}
+if (any(edad < 18)) { 
+  
+  print("Existe alguna persona menor de edad")
+  
+}
+```
+
+
+```{r}
+#| eval: false
+if (any(edad < 18)) { 
+  
+  print("Existe alguna persona menor de edad")
+  
+}
+```
+
+
+En caso de que las [**condiciones no sean ciertas**]{.hl-yellow} dentro de `if()` (`FALSE`), no sucede nada
+
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+}
+```
+
+**No obtenemos ningún mensaje** porque la condición `all(edad >= 18)` no es `TRUE`, así que no ejecuta nada.
+
+La estructura `if (condicion) { código A }` puede combinarse con un `else { código B }`: cuando la [**condición no está verificada**]{.hl-yellow}, se [**ejecutará el código alternativo B**]{.hl-yellow} dentro de `else { }`, permitiéndonos decidir que sucede cuando se cumple y cuando no.
+
+
+Por ejemplo, `if (x == 1) { código A } else { código B }` ejecutará A si `x` es igual a 1 y B en cualquier otro caso.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else {
+  
+  print("Existe alguna persona menor de edad")
+}
+```
+
+
+Esta estructura `if - else` puede ser [**anidada**]{.hl-yellow}: imagina que queremos ejecutar un código si todos son menores; si no sucede, pero todos son mayores de 16, hacer otra cosa; en cualquier otra cosa, otra acción.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else if (all(edad >= 16)) {
+  
+  print("Hay algún menor de edad pero todos con 16 años o más")
+  
+} else { print("Hay alguna persona con menos de 16 años") }
+```
+
+::: callout-note
+## Truco
+
+Puedes **colapsar las estructuras** haciendo click en la flecha a la izquierda que aparece en tu script.
+
+:::
+
+
+
+
+Esta estructura condicional se puede [**vectorizar**]{.hl-yellow} (en una sola línea) con `if_else()` (del paquete `{dplyr}`), cuyos argumentos son
+
+* la condición a evaluar
+* lo que sucede cuando se cumple y cuando no
+* un argumento opcional para cuando la condición a evaluar es `NA`
+
+Vamos a etiquetar sin son mayores/menores y un "desconocido" cuando no conocemos
+
+```{r}
+library(dplyr)
+edad <- c(NA, edad)
+if_else(edad >= 18, "mayor", "menor", missing = "desconocido")
+```
+
+En `R` base existe `ifelse()`: no deja especificar que hacer con los ausentes pero permite especificar distintos tipos de datos en `TRUE` y en `FALSE`.
+
+
+### Bucles
+
+Aunque en la mayoría de ocasiones se pueden reemplazar por otras estructuras más eficientes y legibles, es importante conocer una de las expresiones de control más famosas: los [**bucles**]{.hl-yellow}.
+
+* `for { }`: permite [**repetir el mismo código**]{.hl-yellow} en un [**número prefijado y conocido**]{.hl-purple} de veces.
+
+* `while { }`: permite [**repetir el mismo código**]{.hl-yellow} pero en un [**número indeterminado de veces**]{.hl-purple} (hasta que una **condición** deje de cumplirse).
+
+#### Bucles for
+
+
+Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+
+
+Vamos a definir un vector `x <- c(0, -7, 1, 4)` y otra variable vacía `y`. Tras ello definiremos un bucle for con `for () { }`: dentro de los paréntesis indicaremos un índice y unos valores a recorrer, dentro de las llaves el código a ejecutar en cada iteración (en este caso, rellenar `y` como `x + 1`)
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  y[i] <- x[i] + 1
+}
+```
+
+
+Fíjate que debido a que `R` funciona de manera [**vectorial por defecto**]{.hl-yellow}, el bucle es lo mismo que hacer `x + 1` directamente.
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  y[i] <- x[i] + 1
+}
+y
+
+y2 <- x + 1
+y2
+```
+
+
+
+Otra opción habitual es indicar los índices de manera «automática»: desde el primero `1` hasta el último (que corresponde con la longitud de x `length(x)`)
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:length(x)) {
+  y[i] <- x[i] + 1
+}
+y
+
+```
+
+
+Así la [**estructura general de un bucle for**]{.hl-yellow} será siempre la siguiente
+
+```{r}
+#| eval: false
+for (índice in conjunto) { 
+  código (dependiente de i)
+}
+```
+
+[**SIEMPRE**]{.hl-green} sabemos cuántas iteraciones tenemos (tantas como elementos haya en el conjunto a indexar). Como ya hemos aprendido con el paquete`{microbenchmark}` podemos chequear como [**los bucles suelen ser muy ineficientes**]{.hl-yellow} (de ahí que debamos evitarlos en la mayoría de ocasiones
+
+```{r}
+library(microbenchmark)
+x <- 1:1000
+microbenchmark(y <- x^2, 
+               for (i in 1:100) { y[i] <- x[i]^2 },
+               times = 500)
+```
+
+
+Podemos ver otro ejemplo de bucle  [**combinando números y textos**]{.hl-yellow}: definimos un vector de edades y de nombres, e imprimimos el nombre y edad i-ésima.
+
+```{r}
+nombres <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+edades <- c(33, 27, 18, 43, 29)
+library(glue)
+for (i in 1:5) { 
+  
+  print(glue("{nombres[i]} tiene {edades[i]} años")) 
+  
+}
+```
+
+
+Aunque normalmente se suelen indexar con vectors numéricos, los bucles pueden ser [**indexados sobre cualquier estructura vectorial**]{.hl-yellow}, da igual de que tipo sea el conjunto
+
+```{r}
+library(stringr)
+week_days <- c("monday", "tuesday", "wednesday", "thursday",
+               "friday", "saturday", "sunday")
+
+for (days in week_days) {
+  
+  print(str_to_upper(days))
+}
+```
+
+Vamos a **combinar las estructuras condicionales y los bucles**: usando el conjunto `swiss` del paquete `{datasets}`, vamos a asignar `NA`  si los valores de fertilidad son mayores de 80.
+
+```{r}
+for (i in 1:nrow(swiss)) {
+  
+  if (swiss$Fertility[i] > 80) { 
+    
+    swiss$Fertility[i] <- NA
+    
+  }
+}
+```
+
+
+Esto es exactamente igual a un `if_else()` vectorizado
+
+```{r}
+data("swiss")
+swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
+```
+
+#### Bucles while
+
+Otra forma de crear un bucle es con la estructura `while { }`, que nos ejecutará un bucle [**un número desconocido de veces**]{.hl-yellow}, hasta que una condición [**deje de cumplirse**]{.hl-yellow} (de hecho puede que nunca termine). Por ejemplo, vamos a inializar una variable `ciclos <- 1`, que incrementaremos en cada paso, y no saldremos del bucle hasta que `ciclos > 4`.
+
+```{r}
+ciclos <- 1
+while(ciclos <= 4) {
+  
+  print(glue("No todavía, vamos por el ciclo {ciclos}")) 
+  ciclos <- ciclos + 1
+  
+}
+```
+
+
+Un bucle `while` será siempre como sigue
+
+```{r}
+#| eval: false
+while(condición) {
+  
+  código a hacer mientras la condición sea TRUE
+  # normalmente aquí se actualiza alguna variable
+  
+}
+```
+
+
+
+¿Qué sucede cuando la [**condición nunca es FALSE**]{.hl-yellow}? Pruébalo tu mismo
+
+```{r}
+#| eval: false
+while (1 > 0) {
+  
+  print("Presiona ESC para salir del bucle")
+  
+}
+```
+
+&nbsp;
+
+::: callout-warning
+## Cuidado
+
+Un bucle `while { }` puede ser bastante «peligroso» sino controlamos bien cómo pararlo.
+
+:::
+
+
+Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+
+* `break`: permite [**abortar un bucle**]{.hl-yellow} incluso si no se ha llegado a su final
+
+```{r}
+for(i in 1:10) {
+  if (i == 3) {
+    
+    break # si i = 3, abortamos bucle
+    
+  }
+  print(i)
+}
+```
+
+Contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+
+* `next`: [**fuerza un bucle a avanzar a la siguiente iteración**]{.hl-yellow} 
+
+```{r}
+for(i in 1:5) {
+  if (i == 3) {
+    
+    next # si i = 3, la obvia y continua al siguiente
+    
+  }
+  print(i)
+}
+```
+
+
+
+### 💻 Tu turno {#tu-turno-1-3}
+
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 ¿Cuál es la salida del siguiente código?
+
+```{r}
+#| eval: false
+if_else(sqrt(9) < 2, sqrt(9), 0)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+La salida es 0 ya que sqrt(9) es igual 3, y dado que no es menor que 2, devuelve el segundo argumento que es 0
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 ¿Cuál es la salida del siguiente código?
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+La salida es el vector c(0, NA, NA, 1) ya que sqrt(1) sí es menor que 2, sqrt(9) no lo es, y tanto en el caso de sqrt(NA) (raíz de ausente) como sqrt(-1) (devuelve NaN, not a number), su raíz cuadrada no puede verificarse si es menor que 2 o no, así que la salida es NA.
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Modifica el código inferior para que, cuando no se pueda verificar si la raíz cuadrada de un número es menor que 2, devuelva -1
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1, missing = -1)
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 ¿Cuál es son los valores de `x` e `y` del código inferior para `z <- 1`, `z <- -1` y `z <- -5`?
+
+```{r}
+#| eval: false
+z <- -1
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -1 y 2
+```
+
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 ¿Qué sucederá si ejecutamos el código inferior?
+
+```{r}
+#| eval: false
+z <- "a"
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# dará error ya que no es un argumento numérico
+Error in z^3 : non-numeric argument to binary operator
+```
+
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Del paquete `{lubridate}`, la función `hour()` nos devuelve la hora de una fecha dada, y la función `now()` nos devuelve fecha y hora del momento actual. Con ambas funciones haz que se imprima por pantalla (`cat()`) "buenas noches" solo a partir de las 21 horas.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Cargamos librería
+library(lubridate)
+
+# Fecha-hora actual
+fecha_actual <- now()
+
+# Estructura if
+if (hour(fecha_actual) > 21) {
+  
+  cat("Buenas noches") # print/cat dos formas de imprimir por pantalla
+}
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Modifica el código inferior para que se imprima un mensaje por pantalla si y solo si todos los datos de `airquality` son con mes distinto a enero
+
+```{r}
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (months == 2) {
+  print("No hay datos de enero")
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (all(months != 1)) {
+  print("No hay datos de enero")
+}
+```
+
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Modifica el código inferior para guardar en una variable llamada `temp_alta` un `TRUE` si alguno de los registros tiene una temperatura superior a 90 grados Farenheit y `FALSE` en cualquier otro caso
+ 
+```{r}
+#| eval: false
+temp <- airquality$Temp
+
+if (temp == 100) {
+  print("Algunos de los registros tienen temperaturas superiores a 90 grados Farenheit")
+}
+```
+
+ 
+```{r}
+#| eval: false
+#| code-fold: true
+# Option 1
+temp <- airquality$Temp
+temp_alta <- FALSE
+if (any(temp > 90)) {
+   temp_alta <- TRUE
+}
+
+# Option 2
+temp_alta <- any(airquality$Temp > 90)
+```
+
+### [**Ejercicio 9**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `for` de 5 iteraciones que solo recorra los primeros 5 impares (y en cada paso del bucle los imprima)
+
+```{r}
+#| eval: false
+for (i in 1:5) {
+  
+  print(i)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+for (i in c(1, 3, 5, 7, 9)) {
+  
+  print(i)
+}
+```
+
+### [**Ejercicio 10**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `while` que empiece con un contador `count <- 1` y pare cuando llegue a 6
+
+```{r}
+#| eval: false
+count <- 1
+while (count == 2) {
+  
+  print(count)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+count <- 1
+while (count < 6) {
+  
+  print(count)
+  count <- count + 1
+  
+}
+```
+
+
+:::
+
+
+
+### Funciones
+
+
+
+No solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas**. ¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+
+* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+
+* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+
+* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+
+* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  código a ejecutar
+  
+  return(var_salida)
+  
+}
+```
+
+
+* `arg1, arg2, ...`: serán los [**argumentos de entrada**]{.hl-yellow}, los argumentos que toma la función para ejecutar el código que tiene dentro
+
+* `código`: líneas de código que queramos que [**ejecute la función**]{.hl-yellow}. 
+
+* `return(var_salida)`: se introducirán los [**argumentos de salida**]{.hl-yellow}.
+
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  # Código que queramos ejecutar
+  código
+  
+  # Salida
+  return(var_salida)
+  
+}
+```
+
+::: callout-important
+## Importante
+
+Todas las variables que definamos dentro de la función son [**variables LOCALES: solo existirán dentro de la función**]{.hl-yellow} salvo que especifiquemos lo contrario.
+
+:::
+
+Veamos un ejemplo muy simple de función para [**calcular el área de un rectángulo**]{.hl-yellow}.
+
+Dado que el área de un rectángulo se calcula como el **producto de sus lados**, necesitaremos precisamente eso, sus lados: esos serán los [**argumentos de entrada**]{.hl-yellow} y el [**valor a devolver**]{.hl-purple} será justo su **área** ($lado_1 * lado_2$).
+
+
+```{r}
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2) {
+  
+  area <- lado_1 * lado_2
+  return(area)
+  
+}
+```
+
+
+También podemos hacer una definición directa de las variables **sin almacenar por el camino**.
+
+```{r}
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2) {
+  
+  return(lado_1 * lado_2)
+  
+}
+```
+
+[**¿Cómo aplicar la función?**]{.hl-yellow}
+
+```{r}
+calcular_area(5, 3) # área de un rectángulo 5 x 3 
+calcular_area(1, 5) # área de un rectángulo 1 x 5
+```
+
+
+::: callout-tip
+
+Aunque no sea necesario, es [**recomendable hacer explícita la llamada de los argumentos**]{.hl-green}, especificando en el código qué valor es para cada argumento para que no dependa de su orden, haciendo el código más legible
+:::
+
+
+```{r}
+calcular_area(lado_1 = 5, lado_2 = 3) # área de un rectángulo 5 x 3 
+calcular_area(lado_2 = 3, lado_1 = 5) # área de un rectángulo 5 x 3 
+```
+
+#### Argumentos por defecto
+
+Imagina ahora que nos damos cuenta que el 90% de las veces usamos dicha función para [**calcular por defecto el área de un cuadrado**]{.hl-yellow} (es decir, solo necesitamos un lado). Para ello, podemos definir [**argumentos por defecto**]{.hl-yellow} en la función: tomarán dicho valor salvo que le asignemos otro.
+
+¿Por qué no asignar `lado_2 = lado_1` **por defecto**, para ahorrar líneas de código y tiempo?
+
+
+
+```{r}
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado que devolvemos
+  return(area)
+  
+}
+```
+
+
+```{r}
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado que devolvemos
+  return(area)
+  
+}
+```
+
+
+Ahora [**por defecto**]{.hl-yellow} el segundo lado será igual al primero (si se lo añadimos usará ambos).
+
+
+```{r}
+calcular_area(lado_1 = 5) # cuadrado
+calcular_area(lado_1 = 5, lado_2 = 7) # rectángulo
+```
+
+
+ 
+
+#### Salida múltiple
+
+Compliquemos un poco la función y añadamos en la salida los valores de cada lado, etiquetados como `lado_1` y `lado_2`, [**empaquetando la salida en una vector**]{.hl-yellow}.
+
+```{r}
+#| code-line-numbers: "7-8"
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado
+  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2))
+  
+}
+```
+
+
+Podemos complicar un poco más la salida añadiendo una cuarta variable que nos diga, en función de los argumentos, [**si rectángulo o cuadrado**]{.hl-yellow}, teniendo que añadir en la salida una variable que de tipo caracter (o lógica).
+
+```{r}
+#| code-line-numbers: "7-9"
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado
+  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2,
+           "tipo" = if_else(lado_1 == lado_2, "cuadrado", "rectángulo")))
+  
+}
+calcular_area(5, 3)
+```
+
+
+
+[**Problema**]{.hl-red}: al intentar juntar números y texto, lo convierte todo a números. Podríamos guardarlo todo en un `tibble()` como hemos aprendido o en un objeto conocido en `R` como [**listas**]{.hl-yellow}
+
+
+#### Orden de los argumentos
+
+Antes nos daba igual el orden de los argumentos pero ahora el [**orden de los argumentos de entrada importa**]{.hl-yellow}, ya que en la salida incluimos `lado_1` y `lado_2`. 
+
+
+
+::: callout-note
+## Recomendación
+
+Como se comentaba, altamente recomendable hacer la llamada a la función [**indicando explícitamente los argumentos**]{.hl-yellow} para mejorar **legibilidad e interpretabilidad**.
+
+```{r}
+# Equivalente a calcular_area(5, 3)
+calcular_area(lado_1 = 5, lado_2 = 3)
+```
+
+:::
+
+
+
+#### Variables locales vs globales
+
+Un aspecto importante sobre el que reflexionar con las funciones: ¿qué sucede si [**nombramos a una variable dentro**]{.hl-yellow} de una función a la que se nos ha **olvidado asignar** un valor dentro de la misma?
+
+Debemos ser cautos al usar funciones en `R`, ya que debido a la [**«regla lexicográfica»**]{.hl-yellow}, si una variable no se define dentro de la función, `R` [**buscará dicha variable en el entorno**]{.hl-purple} de variables.
+
+```{r}
+x <- 1
+funcion_ejemplo <- function() {
+    
+  print(x) # No devuelve nada, solo realiza la acción 
+}
+funcion_ejemplo()
+```
+
+Si una variable  [**ya está definida fuera de la función (entorno global)**]{.hl-yellow}, y además es usada dentro de cambiando su valor, el valor [**solo cambia dentro**]{.hl-yellow} pero [**no en el entorno global**]{.hl-red}.
+
+```{r}
+x <- 1
+funcion_ejemplo <- function() {
+    
+  x <- 2
+  print(x) # lo que vale dentro
+}
+```
+
+```{r}
+# lo que vale dentro
+funcion_ejemplo() #<<
+# lo que vale fuera
+print(x) #<<
+```
+
+
+Si queremos que además de cambiar localmente lo haga [**globalmente**]{.hl-yellow} deberemos usar la [**doble asignación**]{.hl-yellow} (`<<-`).
+
+```{r}
+x <- 1
+y <- 2
+funcion_ejemplo <- function() {
+  
+  # no cambia globalmente, solo localmente
+  x <- 3 
+  # cambia globalmente
+  y <<- 0 #<<
+  
+  print(x)
+  print(y)
+}
+
+funcion_ejemplo() # lo que vale dentro
+x # lo que vale fuera
+y # lo que vale fuera
+```
+
+### 💻 Tu turno {#tu-turno-1-4}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ej 1**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir una función llamada `funcion_suma`, de forma que dados dos elementos, devuelve su suma.
+
+```{r}
+#| eval: false
+nombre <- function(x, y) {
+  suma <- # código a ejecutar
+  return()
+}
+# Aplicamos la función
+suma(3, 7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+funcion_suma <- function(x, y) {
+  suma <- x + y
+  return(suma)
+}
+funcion_suma(3, 7)
+```
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir una función llamada `funcion_producto`, de forma que dados dos elementos, devuelve su producto, pero que por defecto calcule el cuadrado
+
+```{r}
+#| eval: false
+nombre <- function(x, y) {
+  producto <- # código de la multiplicación
+  return()
+}
+producto(3)
+producto(3, -7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+funcion_producto <- function(x, y = x) {
+  producto <- x * y
+  return(producto)
+}
+funcion_producto(3)
+funcion_producto(3, -7)
+```
+
+### [**Ej 3**]{.hl-yellow}
+
+📝 Define una función llamada `igualdad_nombres` que, dados dos nombres, nos diga si son iguales o no. Hazlo considerando importantes las mayúsculas, y sin que importen las mayúsculas. Usa el paquete `{stringr}`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Distinguiendo mayúsculas
+igualdad_nombres <- function(persona_1, persona_2) {
+  return(persona_1 == persona_2)
+}
+igualdad_nombres("Javi", "javi")
+igualdad_nombres("Javi", "Lucía")
+
+# Sin importar mayúsculas
+igualdad_nombres <- function(persona_1, persona_2) {
+  return(toupper(persona_1) == toupper(persona_2))
+}
+igualdad_nombres("Javi", "javi")
+igualdad_nombres("Javi", "Lucía")
+```
+
+### [**Ej 4**]{.hl-yellow}
+
+📝 Crea una función llamada `calculo_IMC` que, dados dos argumentos (peso y estatura en metros) y un nombre, devuelva una lista con el IMC ($peso/(estatura_m^2)$) y el nombre.
+
+```{r}
+#| code-fold: true
+#| eval: false
+calculo_IMC <- function(nombre, peso, estatura) {
+  
+  return(list("nombre" = nombre, "IMC" = peso/(estatura^2)))
+}
+```
+
+### [**Ej 5**]{.hl-yellow}
+
+📝 Repite el ejercicio anterior pero con otro argumento opcional que se llame unidades (por defecto, `unidades = "metros"`). Desarrolla la función de forma que haga lo correcto si `unidades = "metros"` y si `unidades = "centímetros"`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
+  
+  return(list("nombre" = nombre,
+              "IMC" = peso/(if_else(unidades == "metros", estatura, estatura/100)^2)))
+}
+```
+
+ 
+### [**Ej 6**]{.hl-yellow}
+
+📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y aplica la función definida de forma que obtengamos una cuarta columna con su IMC.
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos <-
+  tibble("nombres" = c("javi", "sandra", "laura",
+                       "ana", "carlos", "leo", NA),
+         "peso" = rnorm(n = 7, mean = 70, sd = 1),
+         "estatura" = rnorm(n = 7, mean = 168, sd = 5))
+
+datos |> 
+  mutate(IMC = calculo_IMC(nombres, peso, estatura, unidades = "centímetros")$IMC)
+```
+
+
+### [**Ej 7**]{.hl-yellow}
+
+📝 Crea una función llamada `atajo` que tenga dos argumentos numéricos `x` e `y`. Si ambos son iguales, debes devolver `"iguales"` y hacer que la función acaba automáticamente (piensa cuándo una función sale). OJO: `x` e `y` podrían ser vectores. Si son distintos (de igual de longitud) calcula la proporción de elementos  diferentes. Si son distintos (por ser distinta longitud), devuelve los elementos que no sean comunes.
+
+```{r}
+#| code-fold: true
+#| eval: false
+atajo <- function(x, y) {
+  
+  if (all(x == y) & length(x) == length(y)) { return("iguales") }
+  else {
+   
+    if (length(x) == length(y)) {
+      
+      n_diff <- sum(x != y) / length(x)
+      return(n_diff)
+      
+    } else {
+      
+      diff_elem <- unique(c(setdiff(x, y), setdiff(y, x)))
+      return(diff_elem)
+    }
+    
+  }
+}
+```
+
+
+:::
+
+
+
+
+
+### R base vs Tidyverse
+
+Hasta ahora todo lo que hemos repasado en `R` lo hemos realizado en el paradigma de programación conocido como [**R base**]{.hl-yellow}. Y es que cuando `R` nació como lenguaje, muchos de los que programaban en él imitaron formas y metodologías heredadas de otros lenguajes, basado en el uso de
+
+-   Bucles [**for**]{.hl-yellow}
+
+-   Bucles [**while**]{.hl-yellow}
+
+-   Estructuras [**if-else**]{.hl-yellow}
+
+
+Y aunque conocer dichas estructuras puede sernos en algunos casos interesantes, en la [**mayoría de ocasiones han quedado caducas y vamos a poder evitarlas**]{.hl-red} (en especial los bucles) ya que `R` está especialmente [**diseñado para trabajar de manera funcional**]{.hl-yellow} (en lugar de elemento a elemento).
+
+
+![](img/tidyverrse_universe.jpg)
+
+![](img/flow_tidyverse.jpg)
+
+En ese contexto de programación funcional, hace una década nacía `{tidyverse}`, un [**«universo» de paquetes**]{.hl-yellow} para garantizar un flujo de trabajo eficiente, coherente y lexicográficamente sencillo de entender, basado en la idea de que [**nuestros datos están limpios y ordenados (tidy)**]{.hl-purple}
+
+![](img/tidyverrse_universe.jpg)
+
+#### Filosofía base: tidy data
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way (Hadley Wickham, Chief Scientist en RStudio)
+
+::: {style="font-size:120px; text-align: center; color:#F8DF58;"}
+<b>TIDY</b><b>[VERSE</b>]{style="color:#CAB0EE;"}
+:::
+
+El [**universo**]{.hl-purple} de paquetes `{tidyverse}` se basa en la idea introducida por **Hadley Wickham** (el Dios al que rezamos) de [**estandarizar**]{.hl-yellow} el formato de los datos para
+
+-   [**sistematizar**]{.hl-green} la depuración
+-   hacer más [**sencillo**]{.hl-green} su manipulación.
+-   código [**legible**]{.hl-green}
+
+
+Lo primero por tanto será entender qué son los [**conjuntos tidydata**]{.hl-yellow} ya que todo `{tidyverse}` se basa en que los datos están estandarizados.
+
+
+1.  Cada [**variable**]{.hl-yellow} en una [**única columna**]{.hl-purple}
+
+2.  Cada [**individuo**]{.hl-yellow} en una [**fila diferente**]{.hl-purple}
+
+3.  Cada [**celda**]{.hl-yellow} con un [**único valor**]{.hl-purple}
+
+4.  Cada [**dataset**]{.hl-yellow} en un [**tibble**]{.hl-purple}
+
+5.  Si queremos cruzar [**múltiples tablas**]{.hl-yellow} debemos tener una [**columna común**]{.hl-purple}
+
+![](img/tidy_def.jpg){width="160%"}
+
+
+#### Tubería (pipe)
+
+En `{tidyverse}` será clave el [**operador pipe (tubería)**]{.hl-yellow} definido como `|>` ([**ctrl+shift+M**]{.hl-purple}): será una [**tubería que recorre los datos**]{.hl-yellow} y los transforma.
+
+
+En R base, si queremos aplicar tres funciones `first()`, `second()` y `third()` en orden, sería
+
+```{r}
+#| eval: false
+third(second(first(datos)))
+```
+
+En `{tidyverse}` podremos [**leer de izquierda a derecha**]{.hl-yellow} y separar los datos de las acciones
+
+```{r}
+#| eval: false
+datos |> first() |> second() |> third()
+```
+
+
+::: callout-caution
+## Apunte importante
+
+Desde la versión 4.1.0 de `R` disponemos de `|>`, un pipe **nativo** disponible [**fuera de tidyverse**]{.hl-purple}, sustituyendo al [**antiguo pipe**]{.hl-red} `%>%` que dependía del paquete `{magrittr}` (bastante problemático).
+:::
+
+
+La principal ventaja es que el [**código sea muy legible (casi literal)**]{.hl-yellow} pudiendo hacer grandes operaciones con los datos con apenas código.
+
+
+
+```{r}
+#| eval: false
+datos |>
+  limpio(...) |>
+  filtro(...) |>
+  selecciono(...) |>
+  ordeno(...) |>
+  modifico(...) |>
+  renombro(...) |>
+  agrupo(...) |>
+  cuento(...) |>
+  resumo(...) |>
+  pinto(...)
+```
+
+#### Datos SUCIOS: messy data
+
+¿Pero qué aspecto tienen los [**datos no tidy**]{.hl-yellow}? Vamos a cargar la tabla `table4a` del paquete `{tidyr}` (ya lo tenemos cargado del entorno tidyverse).
+
+
+```{r}
+library(tidyr)
+table4a
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+
+```{r}
+table4a
+```
+
+
+❎ Cada [**fila representa dos observaciones**]{.hl-red} (1999 y 2000) → las columnas `1999` y `2000` en realidad deberían ser en sí [**valores de una variable**]{.hl-yellow} y no nombres de columnas.
+
+
+Incluiremos una [**nueva columna**]{.hl-yellow} que nos guarde el año y otra que guarde el valor de la variable de interés en cada uno de esos años. Y lo haremos con la función `pivot_longer()`: [**pivotaremos la tabla**]{.hl-yellow} a formato long:
+
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"), names_to = "year", values_to = "cases")
+```
+
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"),
+               names_to = "year",
+               values_to = "cases")
+```
+
+
+![](img/table4a.jpg)
+
+
+
+-   `cols`: [**nombre de las variables a pivotar**]{.hl-yellow}
+-   `names_to`: nombre de la nueva variable a la quemandamos la [**cabecera**]{.hl-yellow} de la tabla (los nombres).
+-   `values_to`: nombre de la nueva variable a la que vamos a mandar los [**datos**]{.hl-yellow}.
+
+
+
+Veamos otro ejemplo con la tabla `table2`
+
+
+```{r}
+table2
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+```{r}
+#| echo: false
+table2
+```
+
+❎ Cada [**observación está dividido en dos filas**]{.hl-red} → los [**registros con el mismo año deberían ser el mismo**]{.hl-yellow}
+
+Lo que haremos será lo opuesto: con `pivot_wider()` [**ensancharemos la tabla**]{.hl-yellow}
+
+```{r}
+table2 |>  pivot_wider(names_from = type, values_from = count)
+```
+
+Veamos otro ejemplo con la tabla `table3`
+
+
+```{r}
+table3
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+```{r}
+table3
+```
+
+❎ Cada [**celda contiene varios valores**]{.hl-red}
+
+Lo que haremos será hacer uso de la función `separate()` para mandar [**separar cada valor**]{.hl-yellow} a una columna diferente.
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+Fíjate que los datos, aunque los ha separado, [**los ha mantenido como texto**]{.hl-red} cuando en realidad deberían ser variables numéricas. Para ello podemos añadir el argumento opcional `convert = TRUE`
+
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"), convert = TRUE)
+```
+
+
+Veamos el último ejemplo con la tabla `table5`
+
+
+```{r}
+table5
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+```{r}
+table5
+```
+
+❎ Tenemos [**mismos valores divididos en dos columnas**]{.hl-red}
+
+Usaremos `unite()` para [**unir los valores**]{.hl-yellow} de siglo y año en una misma columna
+
+```{r}
+table5 |> unite(col = year_completo, century, year, sep = "")
+```
+
+#### Ejemplo: relig_income
+
+Vamos a realizar un ejemplo juntos con la tabla `relig_income` del paquete `{tidyr}`. Como se indica en la ayuda `? relig_income`, la tabla representa la cantidad de personas que hay en cada tramo de ingresos anuales (20k = 20 000$) y en cada religión.
+
+```{r}
+relig_income
+```
+
+
+
+[**¿Es tidydata?**]{.hl-yellow} 
+
+
+
+No lo es ya que en realidad [**solo deberíamos tener una variable de ingresos**]{.hl-red} y la tenemos dividida en 11: todas ellas es la misma variable solo que adopta un valor diferente.  [**¿Cómo convertirla a tidy data?**]{.hl-green}
+
+
+La idea es [**pivotar todas las columnas de ingresos**]{.hl-yellow} para que acaben en una sola columna llamada `income`, y los valores (el número de personas) en otra llamada `people` (por ejemplo). La tabla la haremos más larga y menos ancha así que...
+
+
+
+```{r}
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people")
+relig_tidy 
+```
+
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
+```{r}
+relig_tidy 
+```
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-")
+```
+
+
+¿Está ya bien? Fíjate bien...
+
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-")
+```
+
+Si te fijas la primera columna el `"$10k"` debería ser una cota superior, no inferior. ¿Cómo indicarle que separe bien ese caso? Le indicaremos que separe si encuentra `"-"` o `"<"` (usamos `|` para separar ambas opciones)
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+```
+
+```{r}
+relig_tidy <-
+  relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+relig_tidy
+```
+
+Piensa ahora como podemos [**convertir los límites de ingresos a numéricas (eliminando símbolos, letras, etc)**]{.hl-yellow}
+
+Para ello usaremos el paquete `{stringr}`, en concreto la función `str_remove_all()`, a la que le podemos pasar los caracteres que queremos eliminar (fíjate que `$` al ser un caracter reservado en `R` hay que indicárselo con `\\$`)
+
+```{r}
+relig_tidy$income_inf <-
+  str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <-
+  str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy
+```
+
+Fíjate que tenemos `"Don't now/refused"`. ¿Qué deberíamos tener?
+
+
+Debería ser un [**dato ausente**]{.hl-yellow} así que usaremos `if_else()`: si contiene dicha frase, `NA`, en caso contrario su valor (consejo: `str_detect()` para detectar patrones en textos, y evitar tener que escribir toda la palabra sin errores)
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused"), NA, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused"), NA, relig_tidy$income_sup)
+relig_tidy
+```
+
+
+
+En la primera línea, ese `""` también debería ser `NA``
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(relig_tidy$income_inf == "", NA, relig_tidy$income_inf)
+relig_tidy$income_suop <-
+  if_else(relig_tidy$income_sup == "", NA, relig_tidy$income_sup)
+```
+
+
+
+Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
+
+
+```{r}
+relig_tidy$income_inf <- as.numeric(relig_tidy$income_inf)
+relig_tidy$income_sup <- as.numeric(relig_tidy$income_sup)
+relig_tidy
+```
+
+
+¿Se te ocurre alguna forma de **«cuantificar numéricamente»** los valores ausentes que tenemos en este caso? Si te fijas en realidad cuando hay ausente en el límite inferior en realidad podríamos poner un 0 (nadie puede ganar menos de eso) y cuando lo tenemos en el límite superior sería `Inf`
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(is.na(relig_tidy$income_inf), 0, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(is.na(relig_tidy$income_sup), Inf, relig_tidy$income_sup)
+relig_tidy
+```
+
+
+Aunque nos haya llevado un rato este es el **código completo resumido**
+
+```{r}
+#| eval: false
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people") |>
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+
+relig_tidy$income_inf <- str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <- str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused") |
+            relig_tidy$income_inf == "", 0, as.numeric(relig_tidy$income_inf))
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused") |
+            relig_tidy$income_sup == "", Inf, as.numeric(relig_tidy$income_sup))
+```
+
+
+¿Por qué era [**importante tenerlo en tidydata**]{.hl-yellow}? Lo veremos más adelante al visualizar los datos pero esto ya nos permite realizar filtros muy rápidos con muy poco código.
+
+Por ejemplo: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos?
+
+```{r}
+# una línea de código
+sum(relig_tidy$people[relig_tidy$religion == "Agnostic" & relig_tidy$income_inf >= 30])
+```
+
+### 💻 Tu turno {#tu-turno-1-5}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Usa el dataset original `relig_income` y trata de responder a la última pregunta:  ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses `R`? ¿Cuál tiene mayor probabilidad de error?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+sum(relig_income[relig_income$religion == "Agnostic",
+             c("$30-40k", "$40-50k", "$50-75k", "$75-100k", "$100-150k", ">150k")])
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Usando `relig_tidy` determina quién tiene más ingresos medios, ¿católicos (`Catholic`) o agnósticos (`Agnostic`)? Crea antes una variable `avg_income` (ingresos medios por intervalo): si hay 5 personas entre 20 y 30, y 3 personas entre 30 y 50, la media sería $(25*5 + 40*3)/8$ (si es `Inf` por arriba, `NA`)
+
+```{r}
+#| code-fold: true
+#| eval: false
+relig_tidy$avg_income <- 
+  if_else(is.infinite(relig_tidy$income_sup), NA, (relig_tidy$income_sup + relig_tidy$income_inf)/2)
+
+# Agnosticos vs catolicos
+sum((relig_tidy$avg_income[relig_tidy$religion == "Agnostic"] * relig_tidy$people[relig_tidy$religion == "Agnostic"]), na.rm = TRUE) /
+  sum(relig_tidy$people[relig_tidy$religion == "Agnostic"], na.rm = TRUE)
+
+sum((relig_tidy$avg_income[relig_tidy$religion == "Catholic"] * relig_tidy$people[relig_tidy$religion == "Catholic"]), na.rm = TRUE) /
+  sum(relig_tidy$people[relig_tidy$religion == "Catholic"], na.rm = TRUE)
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Si debemos elegir budismo (`Buddhist`) e hinduismo (`Hindu`), ¿cuál de las dos es la religión mayoritaria entre los que ganan más de 50 000$ anuales?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+greatest_income <-
+  relig_tidy[relig_tidy$income_inf >= 50 & relig_tidy$religion %in% c("Buddhist", "Hindu"), ]
+
+sum(greatest_income$people[greatest_income$religion == "Buddhist"], na.rm = TRUE)
+sum(greatest_income$people[greatest_income$religion == "Hindu"], na.rm = TRUE)
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Echa un vistazo a la tabla `table4b` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table4b |>
+  pivot_longer(cols = "1999":"2000", names_to = "year",
+               values_to = "cases")
+```
+
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Echa un vistazo a la tabla `billboard` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+
+```{r}
+#| code-fold: true
+#| eval: false
+billboard |>
+  pivot_longer(cols = "wk1":"wk76",
+               names_to = "week",
+               names_prefix = "wk",
+               values_to = "position",
+               values_drop_na = TRUE)
+```
+
+:::
+
+
+
+## 🐣 Caso práctico I: tibble {#caso-practico-1-1}
+
+Del paquete `{Biostatistics}` usaremos el conunto de datos `pinniped`, que guarda los **datos de peso de cuerpo y cerebro** (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.
+
+
+```{r}
+Biostatistics::pinniped
+```
+
+
+Del paquete `{Biostatistics}` usaremos el conunto de datos `pinniped`, que guarda los datos de peso de cuerpo y cerebro (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.
+
+
+```{r}
+Biostatistics::pinniped
+```
+
+### Pregunta 1
+
+> Comprueba si los datos están en formato tibble. En caso negativo conviértelo.
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# chequeamos si es tibble
+library(tibble)
+is_tibble(Biostatistics::pinniped)
+
+# Convertimos a tibble
+pinniped_tb <- as_tibble(Biostatistics::pinniped)
+```
+
+### Pregunta 2
+
+> ¿Cuántos registros hay? ¿Cuántas variables? ¿De qué tipo es cada una? ¿Cuáles son sus nombres?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+nrow(pinniped_tb)
+ncol(pinniped_tb)
+names(pinniped_tb)
+```
+
+### Pregunta 3
+
+> Incorpora una variable nueva llamada `phoca` que sea de tipo lógico y que nos diga si una especie es de la categoría `Phoca` o no.
+
+```{r}
+#| code-fold: true
+#| eval: false
+pinniped_tb$phoca <- pinniped_tb$Species == "Phoca"
+```
+
+### Pregunta 4
+
+> ¿A qué sexo le pesa más el cerebro: a las hembras o a los machos?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# ¿a quién le pesa más el cerebro?
+mean(pinniped_tb$Male_brain_g, na.rm = TRUE) >
+  mean(pinniped_tb$Female_brain_g, na.rm = TRUE)
+```
+
+### Pregunta 5
+
+> ¿A quienes les pesa más el cuerpo a los monógamos o a los polígamos? Recuerda que tienes los pesos divididos por sexos en variables distintas que tendrás que juntar de alguna forma
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# ¿a quién le pesa más el cerebro?
+mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "mono"],
+       pinniped_tb$Female_mass_Kg[pinniped_tb$Mate_type == "mono"])) >
+  mean(c(pinniped_tb$Male_mass_Kg[pinniped_tb$Mate_type == "poly"],
+         pinniped_tb$Female_mass_Kg[pinniped_tb$Mate_type == "poly"]))
+```
+
+
+### Pregunta 6
+
+> Incopora una nueva variable llamada `dif_m_f` que represente la diferencia entre el peso del cerebro entre machos y hembras (machos - hembras) para cada especie.
+
+```{r}
+#| code-fold: true
+#| eval: false
+pinniped_tb$dif_m_f <- pinniped_tb$Male_brain_g - pinniped_tb$Female_brain_g
+pinniped_tb
+```
+
+
+
+## 🐣 Caso práctico II: bucles y condicionales {#caso-practico-1-2}
+
+
+Para practicar estructuras de control vamos a realizar un [**ejercicio de simulación**]{.hl-yellow}
+
+
+
+### Pregunta 1
+
+> Define una varible llamada `importe` que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, importe se reduzca a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de `importe` deberia ser `0.000095367` (aprox)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Usamos un for ya que sabemos el número de iteraciones 
+# de manera prefijada (y no depende de nada)
+
+# definimos inicialmente importe en 100
+importe <- 100 
+
+# para el bucle usamos por ejemplo i como índice, que va de 1 a 20
+for (i in 1:20) {
+  
+  # el código fíjate que es el mismo y no depende de i
+  importe <- importe/2
+}
+importe
+```
+
+
+### Pregunta 2
+
+> Diseña una estructura de bucle de manera que encuentres la iteración en la que `importe` es menor que 0.001 por primera vez. Una vez encontrado guárdalo en `iter` y para el bucle.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# dos formas de hacerlo: for y while
+
+# con for
+importe <- 100 
+
+# ya sabemos que en 20 es menor que 0.001 así que podemos poner
+# dicha cantidad como tope sabiendo que no llegará
+for (i in 1:20) {
+  
+  # si todavía no es menor, seguimos dividiendo
+  if (importe >= 0.001) {
+    
+    importe <- importe/2
+    
+  } else {
+    
+    # si ya es menor, guardamos la iteración (piensa por qué i - 1)
+    iter <- i - 1 
+    
+    # y paramos
+    break
+  }
+  
+}
+
+# con while
+importe <- 100 
+
+iter <- 0 # debemos inicializar las iteraciones
+
+# no sabemos cuantas iteraciones, solo que debe parar cuando
+# importe esté por debajo de dicha cantidad
+while (importe >= 0.001) {
+  
+  importe <- importe/2
+    
+  # estructura clásica de while: si se corre iteración
+  # actualizamos un valor (en este caso que cuente una iteración)
+  iter <- iter + 1
+}
+
+iter
+```
+
+
+### Pregunta 3
+
+> En `R` tenemos la función `%%`: si ponemos `a %% b` nos devuelve el resto que daría la división $a/b$. Por ejemplo, `4 %% 2` da 0 ya que 4 es un número par (es decir, su resto al dividir entre 2 es 0). Si ponemos `13 %% 5` nos devuelve 3, ya que el resto de dividir 13 entre 5 es 3.
+
+```{r}
+# Resto al dividir entre 2
+3 %% 2
+4 %% 2
+5 %% 2
+6 %% 2
+
+# Resto al dividir entre 3
+9 %% 3
+10 %% 3
+11 %% 3
+12 %% 3
+```
+
+> Empezando en un importe inicial `importe_inicial` de 100 (euros), diseña un bucle que te sume 3€ más la iteración por la que estés si el importe actual es par y te reste 5€ menos la iteración por la que estés si es impar, SALVO que el importe ya esté igual o por debajo de 0 (en ese caso no debe sumar ni retar). Ejemplo: si importe tiene 50 euros y estás en la iteración 13, sumará 3 + 13 (66 en total); si importe tiene 51 euros y estás en la iteración 13, restará 5 + 13 (33 en total); si importe tiene -2 euros y estás en la iteración 13, sumará 3 + 13 (14 en total); si importe tiene -1 euros y estás en la iteración 13, no hará nada. Guarda los importes resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+importe_inicial <- 100
+importe <- c(importe_inicial, rep(NA, 149))
+for (i in 2:150) {
+  
+  if (importe[i - 1] %% 2 == 0) {
+    
+    importe[i] <- importe[i - 1] + 3 + i
+    
+  } else if (importe[i - 1] > 0) {
+    
+    importe[i] <- importe[i - 1] - (5 + i)
+    
+  } else {
+    
+    importe[i] <- importe[i - 1]
+    
+  }
+}
+```
+
+> ¿Qué ha pasado?
+
+
+### Pregunta 4
+
+> En `R` la función `sample(x = ..., size = ...)` va sernos muy útil: de una colección de elementos `x`, selecciona un número `size` al azar de ellos.
+
+Por ejemplo, si queremos simular 3 veces el lanzamiento de un dado tenemos 6 elementos posibles (`x = 1:6`) y lo seleccionamos 3 veces (`size = 3`)
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+Al ser aleatorio, cada vez que lo ejecutas saldrá algo distinto
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+¿Y si queremos tirar 10 veces?
+
+```{r}
+#| error: true
+sample(x = 1:6, size = 10)
+```
+
+Al tener solo 6 elementos posibles y elegir 10, no puede, así que le tenemos que indicar que queremos un sample (muestreo) con reemplazamiento (como sucede en el dado, cada cara puede repetirse al volver a tirarlo)
+
+
+```{r}
+sample(x = 1:6, size = 10, replace = TRUE)
+```
+
+> Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos y 25 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Definimos las posibilidades
+puertas <- c(1, 2, 3)
+
+# Definimos los intentos
+intentos <- c(10, 50, 100, 500, 1000, 10000, 25000)
+
+# Para cada escenario de intentos, definimos las veces que hemos ganado
+# (al inicio empieza en 0 claro)
+exitos <- rep(0, length(intentos))
+
+# primer bucle: cantidad de intentos permitidos
+for (i in 1:length(intentos)) {
+  
+  # segundo bucle: para cada intento, simulaciones una eleccion de 
+  # puerta y un premio
+  for (j in 1:intentos[i]) {
+    
+    # premio: de 3 puertas, solo está en una
+    premio <- sample(x = puertas, size = 1)
+    
+    # puerta que seleccionas como concursante: de 3 puertas, te quedas con una
+    eleccion <- sample(x = puertas, size = 1)
+    
+    # si la puerta seleccionada coincide con la que tiene el premio
+    # sumas un éxito, sino te quedas como estás
+    exitos[i] <- if_else(eleccion == premio, exitos[i] + 1, exitos[i])
+    
+  }
+  # Tras jugar, lo dividimos entre el número de veces que has jugado
+  # para tener una proporción
+  exitos[i] <- exitos[i] / intentos[i]
+}
+exitos
+```
+
+> ¿Y si en cada ronda, te abriesen una de las puertas no premiadas que no has elegido, cambiarías de puerta o te mantendrías? Simula ambos casos y descubre cuál es la estrategia correcta (este problema se conoce como problema de Monty Hall y aparece incluso en películas como 21 Black Jack)
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+puertas <- c(1, 2, 3)
+intentos <- c(10, 50, 100, 500, 1000, 10000, 25000)
+exitos_mantengo <- exitos_cambio <- rep(0, length(intentos))
+
+for (i in 1:length(intentos)) {
+  for (j in 1:intentos[i]) {
+    
+    # puerta que seleccionas como concursante: de 3 puertas, te quedas con una
+    eleccion_inicial <- sample(x = puertas, size = 1)
+    
+    # premio: de 3 puertas, solo está en una
+    premio <- sample(x = puertas, size = 1)
+    
+    # De la no elegida, el presentador te abre una no premiada
+    puerta_abierta <-
+      puertas[puertas != eleccion_inicial & puertas != premio]
+    
+    # si solo hay una opción (es decir que tu eleccion inicial
+    # y el premio son puertas distintas) no haces nada
+    
+    # Si hubiese 2 opciones (si tu eleccion y el premio coinciden)
+    # te abrirá una al azar
+    if (length(puerta_abierta) > 1) {
+      
+      puerta_abierta <- sample(x = puerta_abierta, size = 1)
+    }
+      
+    
+    # si mantienes es como antes
+    exitos_mantengo[i] <-
+      if_else(eleccion == premio, exitos_mantengo[i] + 1, exitos_mantengo[i])
+    
+    # si cambias es a una puerta distinta de la inicial y de la abierta, la que quede
+    cambio <- puertas[puertas != eleccion_inicial & puertas != puerta_abierta]
+    exitos_cambio[i] <-
+      if_else(cambio == premio, exitos_cambio[i] + 1, exitos_cambio[i])
+    
+  }
+  # Tras jugar, lo dividimos entre el número de veces que has jugado
+  # para tener una proporción
+  exitos_mantengo[i] <- exitos_mantengo[i] / intentos[i]
+  exitos_cambio[i] <- exitos_cambio[i] / intentos[i]
+}
+exitos_mantengo
+exitos_cambio
+```
+
+> ¿Qué sucede?
+
+
+## 🐣 Caso práctico III: tidy data {#caso-practico-1-3}
+
+
+En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud - OMS)
+
+```{r}
+library(tidyr)
+who2
+```
+
+Échale un vistazo y piensa qué cosas te podría pedir para convertirlo a tidydata.
+
+### Pregunta 1
+
+> ¿Qué significan los datos? ¿Cuántas variables y observaciones tenemos?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+library(tidyr)
+? who2
+```
+
+
+### Pregunta 2
+
+> ¿Es tidy data? ¿Por qué
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# No es tidy data porque en realidad todas las variable
+# a partir de year es lo mismo: casos de tuberculosis
+# Son todo casos, solo que en distintas edades o sexo o tipos
+# de diagnosis, pero la variable es "cases"
+```
+
+
+### Pregunta 3
+
+> Primer paso para tidy data: pivota la tabla (consejo: usa papel y boli para bocetar como debería quedar la base de datos) tal que exista una columna llamada `cases`
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_tidy <-
+  who2 |> 
+  # fíjate que en lugar de elegir las 56 columnas
+  # le decimos las que NO queremos pivotar
+  # los nombres de columnas los mandamos a "type" (tipo de caso)
+  pivot_longer(cols = -(country:year),
+               names_to = "type",
+               values_to = "cases")
+who_tidy 
+```
+
+
+### Pregunta 4
+
+> Si te fijas hay muchísimas filas que no tiene sentido mantener ya que ¡no tenemos casos! Investiga las opciones de `pivot_longer()` para ver como podemos directamente eliminarlas en el pivotaje
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_tidy <-
+  who2 |> 
+  # con values_drop_na = TRUE eliminamos los NA
+  pivot_longer(cols = -(country:year),
+               names_to = "type",
+               values_to = "cases",
+               values_drop_na = TRUE)
+who_tidy 
+```
+
+### Pregunta 5
+
+> Si te fijas ahora en type tenemos codificada la información como diagnosis_sexo_edad. ¿Cómo separarlo en 3 columnas? Investiga tanto `separate()` como las opciones de `pivot_longer()`
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# con separate
+who_tidy <-
+  who_tidy |> 
+  separate(col = "type", into = c("diagnosis", "sex", "age"))
+
+# con pivot_longer
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year),
+               names_to = c("diagnosis", "sex", "age"),
+               values_to = "cases",
+               values_drop_na = TRUE,
+               names_sep = "_")
+who_tidy 
+```
+
+### Pregunta 6
+
+> Por último, separa en dos (age_inf, age_sup) el tramo etario (que sean números). Piensa cómo hacerlo ya que no siempre son 4 números
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Usamos separate y le indicamos las posiciones, pero desde atrás 
+# ya que siempre el límite superior es un número de 2 cifras
+# y usamos convert = TRUE para convertir a números
+who_tidy <-
+  who_tidy |> 
+  separate(col = "age", into = c("age_inf", "age_sup"),
+           sep = -2, convert = TRUE)
+```
+
