@@ -28,11 +28,11 @@
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/time-series/diapos"><img width="600" alt="image" src="https://github.com/dadosdelaplace/docencia/assets/26646492/45637cca-8a8c-40c9-88c5-7c7334de4e52">
+<a href="https://javieralvarezliebana.es/docencia/time-series/diapos"><img width="600" alt="image" src="https://github.com/user-attachments/assets/3c789cf6-5ffd-46e6-8757-c2cdba79f255">
 </a>
 </div>
             
-🕸 You can check the course at <https://javieralvarezliebana.es/docencia/R-datascience>
+🕸 You can check the course at <https://javieralvarezliebana.es/docencia/time-series>
 
 <h2 align="left">Teaching materials</h2>
 
