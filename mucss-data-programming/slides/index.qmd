@@ -3125,979 +3125,6 @@ if (hour(current_dt) > 21) {
 
 ---
 
-## Loops
-
-Although in most occasions they can be replaced by other more efficient and readable structures, it is important to know one of the most famous control expressions: the [**loops**]{.hl-yellow}.
-
-* `for { }`: allows [**repeating the same code**]{. hl-yellow} in a [**prefixed and known number**]{.hl-purple} of times.
-
-* `while { }`: allows [**repeating the same code**]{.hl-yellow} but in an [**undetermined number of times**]{.hl-purple} (until a **condition** is no longer fulfilled).
-
-
----
-
-## For loop {auto-animate="true"}
-
-A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
-
-Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
-
-
-```{r}
-x <- c(0, -7, 1, 4)
-y <- c()
-```
-
----
-
-## For loop {auto-animate="true"}
-
-A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
-
-Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
-
-
-```{r}
-x <- c(0, -7, 1, 4)
-y <- c()
-
-for (i in 1:4) {
-  
-}
-```
-
----
-
-## For loop {auto-animate="true"}
-
-A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
-
-Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
-
-
-```{r}
-x <- c(0, -7, 1, 4)
-y <- c()
-
-for (i in 1:4) {
-  y[i] <- x[i] + 1
-}
-```
-
----
-
-## For loop
-
-Note that because `R` works in a [**default vector**]{.hl-yellow} manner, the loop is the same as doing `x + 1` directly.
-
-```{r}
-x <- c(0, -7, 1, 4)
-y <- c()
-
-for (i in 1:4) {
-  y[i] <- x[i] + 1
-}
-y
-
-y2 <- x + 1
-y2
-```
-
----
-
-## For loop
-
-Another common option is to indicate the indexes “automatically”: from the first `1` to the last (corresponding to the length of x `length(x)`).
-
-```{r}
-x <- c(0, -7, 1, 4)
-y <- c()
-
-for (i in 1:length(x)) {
-  y[i] <- x[i] + 1
-}
-y
-
-```
-
-
----
-
-## For loop
-
-Thus the [**general structure of a for-loop**]{.hl-yellow} will always be as follows
-
-```{r}
-#| eval: false
-for (index in set) { 
-  código (usually depending on index)
-}
-```
-
-In the case of for loops [**ALWAYS**]{.hl-green} we know how many iterations we have (as many as there are elements in the set to be indexed).
-
----
-
-## Avoiding loop
-
-As we have already learned with the `{microbenchmark}` package, we can check how [**loops are usually very inefficient**]{.hl-yellow} (hence we should avoid them in most occasions)
-
-```{r}
-library(microbenchmark)
-x <- 1:1000
-microbenchmark(y <- x^2, 
-               for (i in 1:100) { y[i] <- x[i]^2 },
-               times = 500)
-```
-
----
- 
-## For loop
-
-
-We can see another example of a [**combining numbers and text**]{.hl-yellow} loop: we define a vector of ages and names, and print the i-th name and age.
-
-```{r}
-names <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
-ages <- c(33, 27, 18, 43, 29)
-
-for (i in 1:5) { 
-  
-  print(glue("{names[i]} are {ages[i]} old")) 
-  
-}
-```
-
-
----
-
-## For loop
-
-Although they are usually indexed with numeric vectors, loops can be [**indexed on any vector structure**]{.hl-yellow}, regardless of the type of the set.
-
-```{r}
-library(stringr)
-week_days <- c("monday", "tuesday", "wednesday", "thursday",
-               "friday", "saturday", "sunday")
-
-for (days in week_days) {
-  
-  print(days)
-}
-```
-
----
-
-## For + if-else
-
-Let's **combine conditional structures and loops**: using the `swiss` set of the `{datasets}` package, let's assign `NA` if the fertility values are greater than 80.
-
-```{r}
-for (i in 1:nrow(swiss)) {
-  
-  if (swiss$Fertility[i] > 80) { 
-    
-    swiss$Fertility[i] <- NA
-    
-  }
-}
-```
-
-. . .
-
-This is «the same» as a vectorized `if_else()`.
-
-```{r}
-data("swiss")
-swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
-```
-
-
----
-
-## While loop
-
-Another way to create a loop is with the `while { }` structure, which will loop [**an unknown number of times**]{.hl-yellow}, until a condition [**stops being met**]{.hl-yellow} (in fact it may never end). For example, we will inialize a variable `times <- 1`, which we will increment at each step, and we will not exit the loop until `times > 3`.
-
-```{r}
-times <- 1
-while(times <= 3) {
-  
-  print(glue("Not yet, we are in the {times}-th iteration")) 
-  times <- times + 1
-  
-}
-print(glue("Now! We are in the {times}-th iteration")) 
-```
-
----
-
-## While loop
-
-A `while` loop will always look like this
-
-```{r}
-#| eval: false
-while(condition) {
-  
-  code to be executed while condition is TRUE
-  # usually some variable is updated here
-  
-}
-```
-
----
-  
-## While loop
-
-What happens when the [**condition is never FALSE**]{.hl-yellow}? Try it yourself
-
-```{r}
-#| eval: false
-while (1 > 0) {
-  
-  print("Press ESC to exit")
-  
-}
-```
-
-&nbsp;
-
-::: callout-warning
-## Warning
-
-A `while { }` loop can be quite “dangerous” if we do not control well how to stop it.
-
-:::
-
----
-
-## While loop
-
-We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
-
-* `break`: allows [**abort a loop**]{.hl-yellow} even if its end has not been reached
-
-```{r}
-for(i in 1:10) {
-  if (i == 3) {
-    
-    break # if i = 3, we abort
-    
-  }
-  print(i)
-}
-```
-
----
-
-## While loop
-
-We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
-
-* `next`: [**forces a loop to advance to the next iteration**]{.hl-yellow} 
-
-```{r}
-for(i in 1:5) {
-  if (i == 3) {
-    
-    next # if i = 3, we advance to the next iteration
-    
-  }
-  print(i)
-}
-```
-
-
----
-
-
-## 💻 It's your turn {#tu-turno-0-3-2}
-
-[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
-
-
-::: panel-tabset
-
-### [**Exercise 1**]{.hl-yellow}
-
-📝 Modify the code below to print a message on the screen if and only if all the data in `airquality` is for a month other than January.
-
-```{r}
-#| eval: false
-library(datasets)
-months <- airquality$Month
-
-if (months == 2) {
-  print("No data in January")
-}
-```
-
-```{r}
-#| code-fold: true
-#| eval: false
-library(datasets)
-months <- airquality$Month
-
-if (all(months != 1)) {
-  print("No data in January")
-}
-```
-
-
-### [**Exercise 2**]{.hl-yellow}
-
-📝 Modify the code below to store in a variable called `temp_high` a `TRUE` if any of the records has a temperature above 90 degrees Fahrenheit and `FALSE` in any other case.
-
- 
-```{r}
-#| eval: false
-temp <- airquality$Temp
-
-if (temp == 100) {
-  print("Some of the records have temperatures in excess of 90 degrees Fahrenheit")
-}
-```
-
- 
-```{r}
-#| eval: false
-#| code-fold: true
-# Option 1
-temp <- airquality$Temp
-temp_high <- FALSE
-if (any(temp > 90)) {
-   temp_high <- TRUE
-}
-
-# Option 2
-temp_high <- any(airquality$Temp > 90)
-```
-
-### [**Exercise 3**]{.hl-yellow}
-
-📝 Modify the code below to design a `for` loop of 5 iterations that only loops through the first 5 odd (and at each step of the loop prints them)
-
-```{r}
-#| eval: false
-for (i in 1:5) {
-  
-  print(i)
-}
-```
-
-```{r}
-#| eval: false
-#| code-fold: true
-for (i in c(1, 3, 5, 7, 9)) {
-  
-  print(i)
-}
-```
-
-### [**Exercise 4**]{.hl-yellow}
-
-📝 Modify the code below to design a `while` loop that starts with a counter `count <- 1` and stops when it reaches 6
-
-```{r}
-#| eval: false
-count <- 1
-while (count == 2) {
-  
-  print(count)
-}
-```
-
-```{r}
-#| eval: false
-#| code-fold: true
-count <- 1
-while (count < 6) {
-  
-  print(count)
-  count <- count + 1
-  
-}
-```
-
-
-:::
-
-
----
-
-## Own functions {auto-animate="true"}
-
-Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
-
-* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
-
-* Define [**input arguments**]{.hl-yellow} (inside `function()`).
-
-* [**Body**]{.hl-yellow} of the function inside `{ }`.
-
-* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
-
-
-```{r}
-#| eval: false
-name_fun <- function() {
-  
-}
-```
-
----
-
-## Own functions {auto-animate="true"}
-
-Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
-
-* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
-
-* Define [**input arguments**]{.hl-yellow} (inside `function()`).
-
-* [**Body**]{.hl-yellow} of the function inside `{ }`.
-
-* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
-
-```{r}
-#| eval: false
-name_fun <- function(arg1, arg2, ...) {
-  
-}
-```
-
----
-
-## Own functions {auto-animate="true"}
-
-Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
-
-* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
-
-* Define [**input arguments**]{.hl-yellow} (inside `function()`).
-
-* [**Body**]{.hl-yellow} of the function inside `{ }`.
-
-* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
-
-```{r}
-#| eval: false
-name_fun <- function(arg1, arg2, ...) {
-  
-  code to be executed
-  
-}
-```
-
----
-
-
-## Own functions {auto-animate="true"}
-
-Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
-
-* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
-
-* Define [**input arguments**]{.hl-yellow} (inside `function()`).
-
-* [**Body**]{.hl-yellow} of the function inside `{ }`.
-
-* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
-
-```{r}
-#| eval: false
-name_fun <- function(arg1, arg2, ...) {
-  
-  code to be executed
-  
-  return(var_output)
-  
-}
-```
-
-
----
-
-## Own functions
-
-* `arg1, arg2, ...`: will be the [**input arguments**]{.hl-yellow}, the arguments that the function takes to execute the code inside.
-
-* `code`: lines of code that we want to [**execute the function**]{.hl-yellow}.
-
-* `return(var_output)`: the [**output arguments**]{.hl-yellow} will be entered.
-
-
-```{r}
-#| eval: false
-name_fun <- function(arg1, arg2, ...) {
-  
-  # Code to be executed
-  code
-  
-  # Output
-  return(var_output)
-  
-}
-```
-
-::: callout-important
-## Important
-
-All variables that we define inside the function are [**LOCAL variables: they will only exist inside the function**]{.hl-yellow} unless we specify otherwise.
-
-:::
-
----
-
-## Own functions {auto-animate="true"}
-
-Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
-
-Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
-
-```{r}
-# We define the name of function and input arguments
-compute_area <- function(side_1, side_2) {
-  
-}
-```
-
----
-
-
-## Own functions {auto-animate="true"}
-
-Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
-
-Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
-
-```{r}
-# We define the name of function and input arguments
-compute_area <- function(side_1, side_2) {
-  
-  area <- side_1 * side_2
-  
-}
-```
-
----
-
-
-## Own functions {auto-animate="true"}
-
-Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
-
-Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
-
-```{r}
-# We define the name of function and input arguments
-compute_area <- function(side_1, side_2) {
-  
-  area <- side_1 * side_2
-  return(area)
-  
-}
-```
-
----
-
-## Own functions
-
-We can also make a direct definition of variables **without storing along the way**.
-
-```{r}
-# We define the name of function and input arguments
-compute_area <- function(side_1, side_2) {
-  
-  return(side_1 * side_2)
-  
-}
-```
-
-. . .
-
-[**How to apply our function?**]{.hl-yellow}
-
-```{r}
-compute_area(5, 3) # area of 5 x 3 rectangle
-compute_area(1, 5) # area of 1 x 5 rectangle
-```
-
----
-
-## Own functions
-
-::: callout-tip
-
-Although it is not necessary, it is [**recommendable to make explicit the calling of the arguments**]{.hl-green}, specifying in the code what value is for each argument so that it does not depend on its order, making the code more readable.
-
-:::
-
-
-```{r}
-compute_area(side_1 = 5, side_2 = 3) # area of 5 x 3 rectangle
-compute_area(side_2 = 3, side_1 = 5) # area of 5 x 3 rectangle
-```
-
----
-
-## Default arguments
-
-magine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
-
-Why not assign `side_2 = side_1` **default**, to save lines of code and time?
-
-. . .
-
-```{r}
-compute_area <- function(side_1, side_2 = side_1) {
-  
-  # Code to be executed
-  area <- side_1 * side_2
-  
-  # Output
-  return(area)
-  
-}
-```
-
----
-
-## Default arguments
-
-
-```{r}
-compute_area <- function(side_1, side_2 = side_1) {
-  
-  # Code to be executed
-  area <- side_1 * side_2
-  
-  # Output
-  return(area)
-  
-}
-```
-
-
-Now [**default**]{.hl-yellow} the second side will be equal to the first (if added it will use both).
-
-
-```{r}
-compute_area(side_1 = 5) # square
-compute_area(side_1 = 5, side_2 = 7) # rectangle
-```
-
----
- 
-
-## Multiple outputs
-
-Let's complicate the function a bit and add in the output the values of each side, labeled `side_1` and `side_2`, [**packing the output in a vector**]{.hl-yellow}.
-
-```{r}
-#| code-line-numbers: "7-8"
-compute_area <- function(side_1, side_2 = side_1) {
-  
-  # Code
-  area <- side_1 * side_2
-  
-  # Output
-  return(c("area" = area, "side_1" = side_1, "side_2" = side_2))
-  
-}
-```
-
----
-
-## Multiple outputs
-
-We can complicate the output a little more by adding a fourth variable that tells us, depending on the arguments, [**whether rectangle or square**]{.hl-yellow}, having to add a character (or logic) variable in the output.
-
-```{r}
-#| code-line-numbers: "7-9"
-compute_area <- function(side_1, side_2 = side_1) {
-  
-  # Code
-  area <- side_1 * side_2
-  
-  # Output
-  return(c("area" = area, "side_1" = side_1, "side_2" = side_2,
-           "type" = if_else(side_1 == side_2, "square", "rectangle")))
-  
-}
-compute_area(5, 3)
-```
-
-. . .
-
-[**Problem**]{.hl-red}: when trying to put numbers and text together, it converts everything to numbers. We could store it all in a `tibble()` as we have learned or in an object known in `R` as [**lists**]{.hl-yellow} (we will see it later).
-
----
-
-## Order of arguments
-
-Before we did not care about the order of the arguments, but now the [**order of the input arguments matters**]{.hl-yellow}, since we include `side_1` and `side_2` in the output. 
-
-. . .
-
-::: callout-note
-## Tip
-
-As mentioned, it is highly recommended to make the function call [**explicitly setting the arguments**]{.hl-yellow} to improve **legibility and interpretability**.
-
-```{r}
-# Equivalent to compute_area(5, 3)
-compute_area(side_1 = 5, side_2 = 3)
-```
-
-:::
-
----
-
-## Generating knowledge
-
-It seems silly what we have done but we have crossed an important frontier: we have gone from [**consuming knowledge**]{.hl-yellow} (code from other packages, elaborated by others), to [**generating knowledge**]{.hl-purple}, creating our own functions.
-
-. . .
-
-Functions are going to be key in your day-to-day work because they will allow you to automate code that you are going to repeat over and over again: by packaging that code under an alias (function name) you will [**be able to use it over and over again without programming it (so doing twice as much work will not imply working twice as much)**]{.hl-yellow}
-
----
-
-## Local vs global variables
-
-An important aspect to think about with functions: what happens if we [**name a variable inside**]{.hl-yellow} a function to which we have **forgotten to assign** a value inside the function.
-
-. . .
-
-We must be cautious when using functions in `R`, since due to the [**"lexicographic rule ”**]{.hl-yellow}, if a variable is not defined inside the function, `R` will [**look for that variable in the environment**]{.hl-purple} of variables.
-
-
-```{r}
-x <- 1
-fun_example <- function() {
-    
-  print(x) # No output, just doing an action
-}
-fun_example()
-```
-
----
-
-## Local vs global variables
-
-If a variable [**is already defined outside the function (global environment)**]{.hl-yellow}, and is also used inside changing its value, the value [**only changes inside**]{.hl-yellow} but [**not in the global environment**]{.hl-red}.
-
-```{r}
-x <- 1
-fun_example <- function() {
-    
-  x <- 2
-  print(x) # value inside of function
-}
-```
-
-```{r}
-# value inside of function (local)
-fun_example()
-# value output of function (global)
-print(x)
-```
-
----
-
-## Local vs global variables
-
-
-If we want it to change locally as well as [**globally**]{.hl-yellow} we must use the [**double assignment**]{.hl-yellow} (`<<-`).
-
-```{r}
-x <- 1
-y <- 2
-fun_example <- function() {
-  
-  # no change in a global way, just locally
-  x <- 3 
-  # change in a global way
-  y <<- 0 #<<
-  
-  print(x)
-  print(y)
-}
-
-fun_example() # value inside function (local)
-x # global value
-y # global value
-```
-
----
-
-
-## 💻 It's your turn {#tu-turno-0-3-3}
-
-[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
-
-::: panel-tabset
-
-### [**Ex 1**]{.hl-yellow}
-
-📝 Modify the code below to define a function called `sum_function`, so that given two elements, it returns their sum.
-
-```{r}
-#| eval: false
-name <- function(x, y) {
-  sum_output <- # code
-  return()
-}
-# we apply the function
-sum_function(3, 7)
-```
-
-```{r}
-#| code-fold: true
-#| eval: false
-sum_function<- function(x, y) {
-  sum_output <- x + y
-  return(sum_output)
-}
-sum_function(3, 7)
-```
-
-### [**Ex 2**]{.hl-yellow}
-
-📝 Modify the code below to define a function called `product_function`, so that given two elements, it returns their product, but by default it calculates the square
-
-```{r}
-#| eval: false
-name <- function(x, y) {
-  prod_output <- # code
-  return()
-}
-product_function(3)
-product_function(3, -7)
-```
-
-```{r}
-#| code-fold: true
-#| eval: false
-product_function <- function(x, y = x) {
-  
-  prod_output <- x * y
-  return(prod_output)
-  
-}
-product_function(3)
-product_function(3, -7)
-```
-
-### [**Ex 3**]{.hl-yellow}
-
-📝 Define a function called `equal_names` that, given two names, tells us if they are equal or not. Do this by considering case-sensitive, and case-insensitive. Use the `{stringr}` package.
-
-```{r}
-#| code-fold: true
-#| eval: false
-# Case-sensitive
-equal_names <- function(person_1, person_2) {
-  
-  return(person_1 == person_2)
-  
-}
-equal_names("Javi", "javi")
-equal_names("Javi", "Lucía")
-
-# Case-insensitive
-equal_names <- function(person_1, person_2) {
-  
-  return(toupper(person_1) == toupper(person_2))
-  
-}
-equal_names("Javi", "javi")
-equal_names("Javi", "Lucía")
-```
-
-### [**Ex 4**]{.hl-yellow}
-
-📝 Create a function called `compute_BMI` that, given two arguments (weight and height in meters) and a name, returns a list with the BMI ($weight/(height^2)$) and the name.
-
-```{r}
-#| code-fold: true
-#| eval: false
-compute_BMI <- function(name, weight, height) {
-  
-  return(list("name" = name, "BMI" = weight/(height^2)))
-  
-}
-```
-
-### [**Ex 5**]{.hl-yellow}
-
-📝 Repeat the previous exercise but with another optional argument called units (by default, `units = “meters”`). Develop the function so that it does the right thing if `units = “meters”` and if `units = “centimeters”`.
-
-```{r}
-#| code-fold: true
-#| eval: false
-compute_BMI <- function(name, weight, height, units = "meters") {
-  
-  return(list("name" = name,
-              "BMI" = weight / (if_else(units == "meters", height, height/100)^2)))
-  
-}
-```
-
- 
-### [**Ex 6**]{.hl-yellow}
-
-📝 Create a fictitious tibble of 7 persons, with three variables (invent name, and simulate weight, height in centimeters), and apply the defined function so that we obtain a fourth column with their BMI.
-
-```{r}
-#| code-fold: true
-#| eval: false
-data <-
-  tibble("name" = c("javi", "sandra", "laura",
-                       "ana", "carlos", "leo", NA),
-         "weight" = rnorm(n = 7, mean = 70, sd = 1),
-         "height" = rnorm(n = 7, mean = 168, sd = 5))
-
-data |> 
-  mutate(BMI = compute_BMI(name, weight, height, units = "centimeters")$BMI)
-```
-
-
-### [**Ex 7**]{.hl-yellow}
-
-📝 Create a function called `shortcut` that has two numeric arguments `x` and `y`. If both are equal, you should return `equal` and have the function terminate automatically (think about when a function exits). WARNING: `x` and `y` could be vectors. If they are different (of equal length) calculate the proportion of different elements. If they are different (being of different length), it returns the elements that are not common.
-
-```{r}
-#| code-fold: true
-#| eval: false
-shortcut <- function(x, y) {
-  
-  if (all(x == y) & length(x) == length(y)) { return("equal") }
-  else {
-   
-    if (length(x) == length(y)) {
-      
-      n_diff <- sum(x != y) / length(x)
-      return(n_diff)
-      
-    } else {
-      
-      diff_elem <- unique(c(setdiff(x, y), setdiff(y, x)))
-      return(diff_elem)
-    }
-    
-  }
-}
-```
-
-
-:::
-
-
----
-
 ## Communicate: rmd and Quarto
 
 One of the [**main strengths**]{.hl-yellow} of `R` is the [**easiness to generate reports, books, webs, notes and even slides**]{.hl-yellow} (this same material for example). To do this, [**install**]{.hl-purple} before
@@ -5836,3 +4863,979 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 # L2: [tidyverse]{.flow} {#clase-2}
 
 [**TBA**]{style="color:#444442;"}
+
+
+# Extras
+
+
+---
+
+## Loops
+
+Although in most occasions they can be replaced by other more efficient and readable structures, it is important to know one of the most famous control expressions: the [**loops**]{.hl-yellow}.
+
+* `for { }`: allows [**repeating the same code**]{. hl-yellow} in a [**prefixed and known number**]{.hl-purple} of times.
+
+* `while { }`: allows [**repeating the same code**]{.hl-yellow} but in an [**undetermined number of times**]{.hl-purple} (until a **condition** is no longer fulfilled).
+
+
+---
+
+## For loop {auto-animate="true"}
+
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
+
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
+
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+```
+
+---
+
+## For loop {auto-animate="true"}
+
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
+
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
+
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  
+}
+```
+
+---
+
+## For loop {auto-animate="true"}
+
+A [**for**]{.hl-yellow} loop is a structure that allows to [**repeat**]{.hl-yellow} a set of commands a [**finite, prefixed and known number of times**]{.hl-purple} given a set of indices.
+
+Let's define a vector `x <- c(0, -7, 1, 4)` and another empty variable `y`. After that we will define a for loop with `for () { }`: inside the brackets we will indicate an index and some values to traverse, inside the braces the code to execute in each iteration (in this case, fill `y` as `x + 1`).
+
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  y[i] <- x[i] + 1
+}
+```
+
+---
+
+## For loop
+
+Note that because `R` works in a [**default vector**]{.hl-yellow} manner, the loop is the same as doing `x + 1` directly.
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  y[i] <- x[i] + 1
+}
+y
+
+y2 <- x + 1
+y2
+```
+
+---
+
+## For loop
+
+Another common option is to indicate the indexes “automatically”: from the first `1` to the last (corresponding to the length of x `length(x)`).
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:length(x)) {
+  y[i] <- x[i] + 1
+}
+y
+
+```
+
+
+---
+
+## For loop
+
+Thus the [**general structure of a for-loop**]{.hl-yellow} will always be as follows
+
+```{r}
+#| eval: false
+for (index in set) { 
+  código (usually depending on index)
+}
+```
+
+In the case of for loops [**ALWAYS**]{.hl-green} we know how many iterations we have (as many as there are elements in the set to be indexed).
+
+---
+
+## Avoiding loop
+
+As we have already learned with the `{microbenchmark}` package, we can check how [**loops are usually very inefficient**]{.hl-yellow} (hence we should avoid them in most occasions)
+
+```{r}
+library(microbenchmark)
+x <- 1:1000
+microbenchmark(y <- x^2, 
+               for (i in 1:100) { y[i] <- x[i]^2 },
+               times = 500)
+```
+
+---
+ 
+## For loop
+
+
+We can see another example of a [**combining numbers and text**]{.hl-yellow} loop: we define a vector of ages and names, and print the i-th name and age.
+
+```{r}
+names <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+ages <- c(33, 27, 18, 43, 29)
+
+for (i in 1:5) { 
+  
+  print(glue("{names[i]} are {ages[i]} old")) 
+  
+}
+```
+
+
+---
+
+## For loop
+
+Although they are usually indexed with numeric vectors, loops can be [**indexed on any vector structure**]{.hl-yellow}, regardless of the type of the set.
+
+```{r}
+library(stringr)
+week_days <- c("monday", "tuesday", "wednesday", "thursday",
+               "friday", "saturday", "sunday")
+
+for (days in week_days) {
+  
+  print(days)
+}
+```
+
+---
+
+## For + if-else
+
+Let's **combine conditional structures and loops**: using the `swiss` set of the `{datasets}` package, let's assign `NA` if the fertility values are greater than 80.
+
+```{r}
+for (i in 1:nrow(swiss)) {
+  
+  if (swiss$Fertility[i] > 80) { 
+    
+    swiss$Fertility[i] <- NA
+    
+  }
+}
+```
+
+. . .
+
+This is «the same» as a vectorized `if_else()`.
+
+```{r}
+data("swiss")
+swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
+```
+
+
+---
+
+## While loop
+
+Another way to create a loop is with the `while { }` structure, which will loop [**an unknown number of times**]{.hl-yellow}, until a condition [**stops being met**]{.hl-yellow} (in fact it may never end). For example, we will inialize a variable `times <- 1`, which we will increment at each step, and we will not exit the loop until `times > 3`.
+
+```{r}
+times <- 1
+while(times <= 3) {
+  
+  print(glue("Not yet, we are in the {times}-th iteration")) 
+  times <- times + 1
+  
+}
+print(glue("Now! We are in the {times}-th iteration")) 
+```
+
+---
+
+## While loop
+
+A `while` loop will always look like this
+
+```{r}
+#| eval: false
+while(condition) {
+  
+  code to be executed while condition is TRUE
+  # usually some variable is updated here
+  
+}
+```
+
+---
+  
+## While loop
+
+What happens when the [**condition is never FALSE**]{.hl-yellow}? Try it yourself
+
+```{r}
+#| eval: false
+while (1 > 0) {
+  
+  print("Press ESC to exit")
+  
+}
+```
+
+&nbsp;
+
+::: callout-warning
+## Warning
+
+A `while { }` loop can be quite “dangerous” if we do not control well how to stop it.
+
+:::
+
+---
+
+## While loop
+
+We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
+
+* `break`: allows [**abort a loop**]{.hl-yellow} even if its end has not been reached
+
+```{r}
+for(i in 1:10) {
+  if (i == 3) {
+    
+    break # if i = 3, we abort
+    
+  }
+  print(i)
+}
+```
+
+---
+
+## While loop
+
+We have two reserved commands to [**abort a loop or force it forward**]{.hl-yellow}:
+
+* `next`: [**forces a loop to advance to the next iteration**]{.hl-yellow} 
+
+```{r}
+for(i in 1:5) {
+  if (i == 3) {
+    
+    next # if i = 3, we advance to the next iteration
+    
+  }
+  print(i)
+}
+```
+
+
+---
+
+
+## 💻 It's your turn {#tu-turno-0-3-2}
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Modify the code below to print a message on the screen if and only if all the data in `airquality` is for a month other than January.
+
+```{r}
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (months == 2) {
+  print("No data in January")
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (all(months != 1)) {
+  print("No data in January")
+}
+```
+
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Modify the code below to store in a variable called `temp_high` a `TRUE` if any of the records has a temperature above 90 degrees Fahrenheit and `FALSE` in any other case.
+
+ 
+```{r}
+#| eval: false
+temp <- airquality$Temp
+
+if (temp == 100) {
+  print("Some of the records have temperatures in excess of 90 degrees Fahrenheit")
+}
+```
+
+ 
+```{r}
+#| eval: false
+#| code-fold: true
+# Option 1
+temp <- airquality$Temp
+temp_high <- FALSE
+if (any(temp > 90)) {
+   temp_high <- TRUE
+}
+
+# Option 2
+temp_high <- any(airquality$Temp > 90)
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Modify the code below to design a `for` loop of 5 iterations that only loops through the first 5 odd (and at each step of the loop prints them)
+
+```{r}
+#| eval: false
+for (i in 1:5) {
+  
+  print(i)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+for (i in c(1, 3, 5, 7, 9)) {
+  
+  print(i)
+}
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Modify the code below to design a `while` loop that starts with a counter `count <- 1` and stops when it reaches 6
+
+```{r}
+#| eval: false
+count <- 1
+while (count == 2) {
+  
+  print(count)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+count <- 1
+while (count < 6) {
+  
+  print(count)
+  count <- count + 1
+  
+}
+```
+
+
+:::
+
+
+---
+
+## Own functions {auto-animate="true"}
+
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
+
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
+
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
+
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
+
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
+
+
+```{r}
+#| eval: false
+name_fun <- function() {
+  
+}
+```
+
+---
+
+## Own functions {auto-animate="true"}
+
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
+
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
+
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
+
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
+
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+}
+```
+
+---
+
+## Own functions {auto-animate="true"}
+
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
+
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
+
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
+
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
+
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  code to be executed
+  
+}
+```
+
+---
+
+
+## Own functions {auto-animate="true"}
+
+Not only can we use **default functions** that come already loaded in packages, we can also [**create our own functions**]{.hl-yellow} to **automate tasks**. How to [**create our own function**]{.hl-purple}? Let's look at its **basic scheme**:
+
+* [**Name**]{.hl-yellow}: for example `name_fun` (no spaces or strange characters). To the name we [**assign the reserved word**]{.hl-yellow} `function()`.
+
+* Define [**input arguments**]{.hl-yellow} (inside `function()`).
+
+* [**Body**]{.hl-yellow} of the function inside `{ }`.
+
+* We end the function with the [**output arguments**]{.hl-yellow} with `return()`.
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  code to be executed
+  
+  return(var_output)
+  
+}
+```
+
+
+---
+
+## Own functions
+
+* `arg1, arg2, ...`: will be the [**input arguments**]{.hl-yellow}, the arguments that the function takes to execute the code inside.
+
+* `code`: lines of code that we want to [**execute the function**]{.hl-yellow}.
+
+* `return(var_output)`: the [**output arguments**]{.hl-yellow} will be entered.
+
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  # Code to be executed
+  code
+  
+  # Output
+  return(var_output)
+  
+}
+```
+
+::: callout-important
+## Important
+
+All variables that we define inside the function are [**LOCAL variables: they will only exist inside the function**]{.hl-yellow} unless we specify otherwise.
+
+:::
+
+---
+
+## Own functions {auto-animate="true"}
+
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
+
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+}
+```
+
+---
+
+
+## Own functions {auto-animate="true"}
+
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
+
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+  area <- side_1 * side_2
+  
+}
+```
+
+---
+
+
+## Own functions {auto-animate="true"}
+
+Let's look at a very simple example of a function for [**calculating the area of a rectangle**]{.hl-yellow}.
+
+Since the area of a rectangle is calculated as the **product of its sides**, we will need just that, its sides: those will be the [**input arguments**]{.hl-yellow} and the [**value to return**]{.hl-purple} will be just its **area** ($side_1 * side_2$).
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+  area <- side_1 * side_2
+  return(area)
+  
+}
+```
+
+---
+
+## Own functions
+
+We can also make a direct definition of variables **without storing along the way**.
+
+```{r}
+# We define the name of function and input arguments
+compute_area <- function(side_1, side_2) {
+  
+  return(side_1 * side_2)
+  
+}
+```
+
+. . .
+
+[**How to apply our function?**]{.hl-yellow}
+
+```{r}
+compute_area(5, 3) # area of 5 x 3 rectangle
+compute_area(1, 5) # area of 1 x 5 rectangle
+```
+
+---
+
+## Own functions
+
+::: callout-tip
+
+Although it is not necessary, it is [**recommendable to make explicit the calling of the arguments**]{.hl-green}, specifying in the code what value is for each argument so that it does not depend on its order, making the code more readable.
+
+:::
+
+
+```{r}
+compute_area(side_1 = 5, side_2 = 3) # area of 5 x 3 rectangle
+compute_area(side_2 = 3, side_1 = 5) # area of 5 x 3 rectangle
+```
+
+---
+
+## Default arguments
+
+magine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
+
+Why not assign `side_2 = side_1` **default**, to save lines of code and time?
+
+. . .
+
+```{r}
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code to be executed
+  area <- side_1 * side_2
+  
+  # Output
+  return(area)
+  
+}
+```
+
+---
+
+## Default arguments
+
+
+```{r}
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code to be executed
+  area <- side_1 * side_2
+  
+  # Output
+  return(area)
+  
+}
+```
+
+
+Now [**default**]{.hl-yellow} the second side will be equal to the first (if added it will use both).
+
+
+```{r}
+compute_area(side_1 = 5) # square
+compute_area(side_1 = 5, side_2 = 7) # rectangle
+```
+
+---
+ 
+
+## Multiple outputs
+
+Let's complicate the function a bit and add in the output the values of each side, labeled `side_1` and `side_2`, [**packing the output in a vector**]{.hl-yellow}.
+
+```{r}
+#| code-line-numbers: "7-8"
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code
+  area <- side_1 * side_2
+  
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2))
+  
+}
+```
+
+---
+
+## Multiple outputs
+
+We can complicate the output a little more by adding a fourth variable that tells us, depending on the arguments, [**whether rectangle or square**]{.hl-yellow}, having to add a character (or logic) variable in the output.
+
+```{r}
+#| code-line-numbers: "7-9"
+compute_area <- function(side_1, side_2 = side_1) {
+  
+  # Code
+  area <- side_1 * side_2
+  
+  # Output
+  return(c("area" = area, "side_1" = side_1, "side_2" = side_2,
+           "type" = if_else(side_1 == side_2, "square", "rectangle")))
+  
+}
+compute_area(5, 3)
+```
+
+. . .
+
+[**Problem**]{.hl-red}: when trying to put numbers and text together, it converts everything to numbers. We could store it all in a `tibble()` as we have learned or in an object known in `R` as [**lists**]{.hl-yellow} (we will see it later).
+
+---
+
+## Order of arguments
+
+Before we did not care about the order of the arguments, but now the [**order of the input arguments matters**]{.hl-yellow}, since we include `side_1` and `side_2` in the output. 
+
+. . .
+
+::: callout-note
+## Tip
+
+As mentioned, it is highly recommended to make the function call [**explicitly setting the arguments**]{.hl-yellow} to improve **legibility and interpretability**.
+
+```{r}
+# Equivalent to compute_area(5, 3)
+compute_area(side_1 = 5, side_2 = 3)
+```
+
+:::
+
+---
+
+## Generating knowledge
+
+It seems silly what we have done but we have crossed an important frontier: we have gone from [**consuming knowledge**]{.hl-yellow} (code from other packages, elaborated by others), to [**generating knowledge**]{.hl-purple}, creating our own functions.
+
+. . .
+
+Functions are going to be key in your day-to-day work because they will allow you to automate code that you are going to repeat over and over again: by packaging that code under an alias (function name) you will [**be able to use it over and over again without programming it (so doing twice as much work will not imply working twice as much)**]{.hl-yellow}
+
+---
+
+## Local vs global variables
+
+An important aspect to think about with functions: what happens if we [**name a variable inside**]{.hl-yellow} a function to which we have **forgotten to assign** a value inside the function.
+
+. . .
+
+We must be cautious when using functions in `R`, since due to the [**"lexicographic rule ”**]{.hl-yellow}, if a variable is not defined inside the function, `R` will [**look for that variable in the environment**]{.hl-purple} of variables.
+
+
+```{r}
+x <- 1
+fun_example <- function() {
+    
+  print(x) # No output, just doing an action
+}
+fun_example()
+```
+
+---
+
+## Local vs global variables
+
+If a variable [**is already defined outside the function (global environment)**]{.hl-yellow}, and is also used inside changing its value, the value [**only changes inside**]{.hl-yellow} but [**not in the global environment**]{.hl-red}.
+
+```{r}
+x <- 1
+fun_example <- function() {
+    
+  x <- 2
+  print(x) # value inside of function
+}
+```
+
+```{r}
+# value inside of function (local)
+fun_example()
+# value output of function (global)
+print(x)
+```
+
+---
+
+## Local vs global variables
+
+
+If we want it to change locally as well as [**globally**]{.hl-yellow} we must use the [**double assignment**]{.hl-yellow} (`<<-`).
+
+```{r}
+x <- 1
+y <- 2
+fun_example <- function() {
+  
+  # no change in a global way, just locally
+  x <- 3 
+  # change in a global way
+  y <<- 0 #<<
+  
+  print(x)
+  print(y)
+}
+
+fun_example() # value inside function (local)
+x # global value
+y # global value
+```
+
+---
+
+
+## 💻 It's your turn {#tu-turno-0-3-3}
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ex 1**]{.hl-yellow}
+
+📝 Modify the code below to define a function called `sum_function`, so that given two elements, it returns their sum.
+
+```{r}
+#| eval: false
+name <- function(x, y) {
+  sum_output <- # code
+  return()
+}
+# we apply the function
+sum_function(3, 7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+sum_function<- function(x, y) {
+  sum_output <- x + y
+  return(sum_output)
+}
+sum_function(3, 7)
+```
+
+### [**Ex 2**]{.hl-yellow}
+
+📝 Modify the code below to define a function called `product_function`, so that given two elements, it returns their product, but by default it calculates the square
+
+```{r}
+#| eval: false
+name <- function(x, y) {
+  prod_output <- # code
+  return()
+}
+product_function(3)
+product_function(3, -7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+product_function <- function(x, y = x) {
+  
+  prod_output <- x * y
+  return(prod_output)
+  
+}
+product_function(3)
+product_function(3, -7)
+```
+
+### [**Ex 3**]{.hl-yellow}
+
+📝 Define a function called `equal_names` that, given two names, tells us if they are equal or not. Do this by considering case-sensitive, and case-insensitive. Use the `{stringr}` package.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Case-sensitive
+equal_names <- function(person_1, person_2) {
+  
+  return(person_1 == person_2)
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+
+# Case-insensitive
+equal_names <- function(person_1, person_2) {
+  
+  return(toupper(person_1) == toupper(person_2))
+  
+}
+equal_names("Javi", "javi")
+equal_names("Javi", "Lucía")
+```
+
+### [**Ex 4**]{.hl-yellow}
+
+📝 Create a function called `compute_BMI` that, given two arguments (weight and height in meters) and a name, returns a list with the BMI ($weight/(height^2)$) and the name.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height) {
+  
+  return(list("name" = name, "BMI" = weight/(height^2)))
+  
+}
+```
+
+### [**Ex 5**]{.hl-yellow}
+
+📝 Repeat the previous exercise but with another optional argument called units (by default, `units = “meters”`). Develop the function so that it does the right thing if `units = “meters”` and if `units = “centimeters”`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+compute_BMI <- function(name, weight, height, units = "meters") {
+  
+  return(list("name" = name,
+              "BMI" = weight / (if_else(units == "meters", height, height/100)^2)))
+  
+}
+```
+
+ 
+### [**Ex 6**]{.hl-yellow}
+
+📝 Create a fictitious tibble of 7 persons, with three variables (invent name, and simulate weight, height in centimeters), and apply the defined function so that we obtain a fourth column with their BMI.
+
+```{r}
+#| code-fold: true
+#| eval: false
+data <-
+  tibble("name" = c("javi", "sandra", "laura",
+                       "ana", "carlos", "leo", NA),
+         "weight" = rnorm(n = 7, mean = 70, sd = 1),
+         "height" = rnorm(n = 7, mean = 168, sd = 5))
+
+data |> 
+  mutate(BMI = compute_BMI(name, weight, height, units = "centimeters")$BMI)
+```
+
+
+### [**Ex 7**]{.hl-yellow}
+
+📝 Create a function called `shortcut` that has two numeric arguments `x` and `y`. If both are equal, you should return `equal` and have the function terminate automatically (think about when a function exits). WARNING: `x` and `y` could be vectors. If they are different (of equal length) calculate the proportion of different elements. If they are different (being of different length), it returns the elements that are not common.
+
+```{r}
+#| code-fold: true
+#| eval: false
+shortcut <- function(x, y) {
+  
+  if (all(x == y) & length(x) == length(y)) { return("equal") }
+  else {
+   
+    if (length(x) == length(y)) {
+      
+      n_diff <- sum(x != y) / length(x)
+      return(n_diff)
+      
+    } else {
+      
+      diff_elem <- unique(c(setdiff(x, y), setdiff(y, x)))
+      return(diff_elem)
+    }
+    
+  }
+}
+```
+
+
+:::

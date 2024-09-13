@@ -183,9 +183,35 @@ medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de may
 
 * `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>)
 
-* `who` del paquete `{tidyr}`: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.
+* `who/who2` del paquete `{tidyr}`: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.
 
 * `billboard` del paquete `{tidyr}`: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.
+
+
+---
+
+## Datasets
+
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+
+&nbsp;
+
+* `starwars` del paquete `{dplyr}`: características de 87 personajes de las sagas de Starwars
+
+* `lotr`: conteo de palabras por raza y género de los personajes de El Señor de los Anillos en cada una de las películas de la trilogía. Extraídos de <https://github.com/jennybc/lotr-tidy/tree/master/data>.
+
+* `billboard` del paquete `{tidyr}`: representa algo parecido a Los 40 principales (pero versión americana y un top 100 en lugar de 40), para cada artista y canción se guarda la fecha en la que entró en el ranking, y la posición que ocupaba en el ranking en cada una de las semanas
+
+---
+
+## Datasets
+
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+
+&nbsp;
+
+* `futbol`: dataset que captura las estadísticas de los jugadores de las 5 principales ligas de futbol masculinas, desde 2005 hasta 2019. Los datos se han extraído directamente haciendo uso del paquete `{worldfootballR}`, que nos permite extraer datos de <https://www.fbref.com>
+
 
 # Clase 1: [primeros pasos]{.flow} {#clase-1}
 
@@ -4831,6 +4857,12 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 [**¿Qué es una función? ¿Cómo se definen? Variables locales vs globales**]{style="color:#444442;"}
 
+* [💻 Ejercicios resueltos: funciones](#tu-turno-7) 
+
+* [🐣 Workbook/caso práctico](#caso-practico-7)
+
+* [📆 Planificación](#planificacion)
+
 ---
 
 ## Creando funciones {auto-animate="true"}
@@ -5523,6 +5555,11 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 [**Nuestra base de datos: tibble. Tidydata: un multiverso de datos limpios**]{style="color:#444442;"}
 
+* [💻 Ejercicios resueltos: tidy data](#tu-turno-8) 
+
+* [🐣 Workbook/caso práctico](#caso-practico-8)
+
+* [📆 Planificación](#planificacion)
 ---
 
 ## Previously, in Breaking Bad...
@@ -6342,16 +6379,2569 @@ El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow}
 
 # Clase 10: [tidyverse (filas)]{.flow} {#clase-10}
 
-[**Tidyverse: operaciones por filas (I)**]{style="color:#444442;"}
+[**Tidyverse: operaciones por filas**]{style="color:#444442;"}
+
+* [💻 Ejercicios resueltos: filter](#tu-turno-10-1) 
+
+* [💻 Ejercicios resueltos: slice y sample](#tu-turno-10-2) 
+
+* [📆 Planificación](#planificacion)
 
 ---
 
 
-## ... 
+## ¿Qué es tidyverse?
 
-# Clase 11: [tidyverse (filas)]{.flow} {#clase-11}
+::: columns
+::: {.column width="45%"}
+![](img/tidyverrse_universe.jpg)
+:::
 
-[**Tidyverse: operaciones por filas (II)**]{style="color:#444442;"}
+::: {.column width="55%"}
+-   `{tibble}`: [**optimizando data.frame**]{.hl-yellow}
+-   `{tidyr}`: limpieza de datos
+-   `{readr}`: carga datos rectangulares (.csv)
+-   `{dplyr}`: [**gramática para depurar**]{.hl-yellow}
+-   `{stringr}`: manejo de textos
+-   `{ggplot2}`: visualización de datos
+-   `{tidymodels}`: modelización/predicción
+:::
+:::
+
+
 
 ---
+
+## Preprocesamiento: dplyr
+
+Dentro de `{tidyverse}` usaremos el paquete `{dplyr}` para el [**preprocesamiento y depuración**]{.hl-yellow} de los datos.
+
+::: columns
+::: {.column width="60%"}
+![](img/dplyr.png){width=450}
+:::
+
+::: {.column width="40%"}
+```{r}
+#| eval: false
+datos |>
+  limpio(...) |>
+  filtro(...) |>
+  selecciono(...) |>
+  ordeno(...) |>
+  modifico(...) |>
+  renombro(...) |>
+  agrupo(...) |>
+  cuento(...) |>
+  resumo(...) |>
+  pinto(...)
+```
+:::
+:::
+
+La idea es que el [**código sea legible**]{.hl-yellow}, como si fuese una **lista de instrucciones** que al leerla nos diga de manera muy evidente lo que está haciendo.
+
+---
+
+## Hipótesis: tidydata
+
+::: columns
+::: {.column width="50%"}
+Toda la depuración que vamos a realizar es sobre la [**hipótesis de que nuestros datos están en tidydata**]{.hl-yellow}
+:::
+
+::: {.column width="50%"}
+![](img/tidy_def.jpg){width="160%"}
+:::
+::::
+
+Recuerda que en `{tidyverse}` será clave el [**operador pipe (tubería)**]{.hl-yellow} definido como `|>` ([**ctrl+shift+M**]{.hl-purple}): será una [**tubería que recorre los datos**]{.hl-yellow} y los transforma.
+
+. . .
+
+Vamos a practicar con el dataset `starwars` del paquete cargado `{dplyr}`
+
+```{r}
+#| eval: false
+library(tidyverse)
+starwars
+```
+
+---
+
+
+## Muestreo
+
+:::: columns
+::: {.column width="60%"}
+
+Una de las operaciones más comunes es lo que se conoce en estadística como [**muestreo**]{.hl-yellow}: una [**selección o filtrado de registros**]{.hl-yellow} (una submuestra)
+
+:::
+
+::: {.column width="40%"}
+
+![](img/muestreo.jpeg){width=500}
+:::
+::::
+
+. . .
+
+
+* [**No aleatorio (por cuotas)**]{.hl-purple}: en base a condiciones lógicas sobre los registros (`filter()`)
+
+. . .
+
+* [**No aleatorio (intencional/discreccional)**]{.hl-purple}: en base a posición (`slice()`)
+
+. . .
+
+* [**Aleatorio simple**]{.hl-purple} (`slice_sample()`)
+
+. . .
+
+* [**Aleatorio estratificado**]{.hl-purple} (`group_by()` + `slice_sample()`)
+
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+El más simple es cuando [**filtramos registros**]{.hl-yellow} en base a alguna condición lógica: con `filter()` se seleccionarán solo individuos que cumplan ciertas condiciones (muestreo no aleatorio por condiciones)
+
+
+::: incremental
+-   `==`, `!=`: [**igual**]{.hl-purple} o [**distinto**]{.hl-yellow} que (`|> filter(variable == "a")`)
+-   `>`, `<`: [**mayor**]{.hl-purple} o [**menor**]{.hl-yellow} que (`|> filter(variable < 3)`)
+-   `>=`, `<=`: [**mayor o igual**]{.hl-yellow} o [**menor o igual**]{.hl-purple} que (`|> filter(variable >= 5)`)
+-   `%in%`: valores [**pertenencen**]{.hl-yellow} a un listado de opciones (`|> filter(variable %in% c("azul", "verde"))`)
+-   `between(variable, val1, val2)`: si los valores (continuos) [**caen dentro de un rango**]{.hl-yellow} de valores (`|> filter(between(variable, 160, 180))`)
+:::
+
+---
+
+## Filtrar filas: filter()
+
+Dichas [**condiciones lógicas**]{.hl-yellow} las podemos [**combinar**]{.hl-yellow} de diferentes maneras (y, o, o excluyente)
+
+![](img/tablas_verdad.png)
+
+. . .
+
+
+::: callout-tip
+## Importante
+
+Recuerda que dentro de `filter()` debe ir siempre algo que devuelva un [**vector de valores lógicos**]{.hl-green}.
+:::
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías para... [**filtrar**]{.hl-yellow} los personajes de [**ojos marrones**]{.hl-purple}?
+
+. . .
+
+[**¿Qué tipo de variable es?**]{.hl-yellow} --> La variable `eye_color` es cualitativa así que está representada por textos
+
+. . .
+
+```{r}
+#| echo: false
+#| include: false
+library(tidyverse)
+```
+
+```{r}
+starwars |>
+  filter(eye_color == "brown")
+```
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías para... [**filtrar**]{.hl-yellow} los personajes que [**no tienen ojos marrones**]{.hl-purple}?
+
+. . .
+
+
+```{r}
+starwars |>
+  filter(eye_color != "brown")
+```
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías para ... [**filtrar**]{.hl-yellow} los personajes que [**tengan los ojos marrones o azules**]{.hl-purple}?
+
+. . .
+
+```{r}
+starwars |>
+  filter(eye_color %in% c("blue", "brown"))
+```
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+Fíjate que `%in%` es equivalente a concatenar varios `==` con una conjunción o (`|`)
+
+```{r}
+starwars |>
+  filter(eye_color == "blue" | eye_color == "brown")
+```
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías para ... [**filtrar**]{.hl-yellow} los personajes que [**midan entre 120 y 160 cm**]{.hl-purple}?
+
+. . .
+
+[**¿Qué tipo de variable es?**]{.hl-yellow} --> La variable `height` es cuantitativa continua así que deberemos filtrar por rangos de valores (intervalos) --> usaremos `between()`
+
+. . .
+
+```{r}
+starwars |>
+  filter(between(height, 120, 160))
+```
+
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías... [**filtrar**]{.hl-yellow} los personajes que [**tengan ojos y no sean humanos**]{.hl-purple}?
+
+. . .
+
+```{r}
+starwars |>
+  filter(eye_color == "brown" & species != "Human")
+```
+
+---
+
+## Filtrar filas: filter()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  filtro(condicion)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  filter(condicion)
+```
+:::
+:::
+
+¿Cómo harías... [**filtrar**]{.hl-yellow} los personajes que [**tengan ojos y no sean humanos, o que tengan más de 60 años**]{.hl-purple}? Piénsalo bien: los [**paréntesis son importantes**]{.hl-yellow}: no es lo mismo $(a+b)*c$ que $a+(b*c)$
+
+. . .
+
+```{r}
+starwars |>
+  filter((eye_color == "brown" & species != "Human") | birth_year > 60)
+```
+
+---
+
+## Eliminar ausentes: drop_na()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  retirar_ausentes(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  drop_na(var1, var2, ...)
+```
+:::
+:::
+
+Hay un **filtro especial** para una de las operaciones más habituales en depuración: [**retirar los ausentes**]{.hl-yellow}. Para ello podemos usar dentro de un filtro `is.na()`, que nos devuelve `TRUE/FALSE` en función de si es ausente, o bien ...
+
+. . .
+
+Usar `drop_na()`: si no indicamos variable, elimina registros con ausente en cualquier variable. Más adelante veremos como [**imputar esos ausentes**]{.hl-yellow} 
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  drop_na(mass, height)
+```
+
+```{r}
+#| echo: false
+starwars |>
+  drop_na(mass, height, sex) |> 
+  select(name, mass, height, hair_color) |> 
+  slice(1:7)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  drop_na()
+```
+
+```{r}
+#| echo: false
+starwars |>
+  drop_na() |> 
+  select(name, mass, height, hair_color) |> 
+  slice(1:7)
+```
+:::
+:::
+
+---
+
+## 💻 Tu turno {#tu-turno-10-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Selecciona del conjunto de starwars solo los personajes que sean androides o cuyo valor en `species` sea desconocido
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  filter(species == "Droid" | is.na(species))
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Selecciona del conjunto de starwars solo los personajes cuyo peso esté entre 65 y 90 kg.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> filter(between(mass, 65, 90))
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Tras limpiar de ausentes en todas las variables, selecciona del conjunto de starwars solo los personajes que sean humanos y que vengan de Tatooine
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  drop_na() |> 
+  filter(species == "Human" & homeworld == "Tatooine")
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Selecciona del conjunto original de starwars los personajes no humanos, `male` en el sexo y que midan entre 120 y 170 cm, o los personajes con ojos marrones o rojos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  filter((species != "Human" & sex == "male" &
+            between(height, 120, 170)) |
+           eye_color %in% c("brown", "red"))
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Busca información en la ayuda de la función `str_detect()` del paquete `{stringr}` (cargado en `{tidyverse}`). Consejo: prueba antes las funciones que vayas a usar con algún vector de prueba para poder comprobar su funcionamiento. Tras saber lo que hace, filtra solo aquellos personajes con apellido `Skywalker`
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> filter(str_detect(name, "Skywalker"))
+```
+:::
+
+---
+
+## Rebanadas de datos: slice()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> rebanadas(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> slice(posiciones)
+```
+:::
+:::
+
+A veces nos puede interesar realizar un [**muestreo no aleatorio discreccional**]{.hl-yellow}, o lo que es lo mismo, [**filtrar por posición**]{.hl-yellow}: con `slice(posiciones)` podremos seleccionar filas concretas pasando como argumento un [**vector de índices**]{.hl-yellow}
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+
+# fila 1
+starwars |>
+  slice(1)
+```
+
+```{r}
+#| echo: false
+starwars |> slice(1) |> select(name:hair_color)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+
+# filas de la 7 a la 9
+starwars |>
+  slice(7:9)
+```
+
+```{r}
+#| echo: false
+starwars |> slice(7:9) |> select(name:hair_color)
+```
+:::
+:::
+
+. . .
+
+```{r}
+#| eval: false
+
+# filas 2, 7, 10 y 31
+starwars |>
+  slice(c(2, 7, 10, 31))
+```
+
+```{r}
+#| echo: false
+starwars |>
+  slice(c(2, 7, 10, 31)) |> select(name:sex)
+```
+
+---
+
+## Rebanadas de datos: slice()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  rebanadas(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  slice(posiciones)
+```
+:::
+:::
+
+Disponemos de opciones por defecto:
+
+* con `slice_head(n = ...)` y `slice_tail(n = ...)` podemos obtener la [**cabecera y cola**]{.hl-yellow} de la tabla
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> slice_head(n = 2)
+```
+
+```{r}
+#| echo: false
+starwars |> slice_head(n = 2) |> select(name:hair_color)
+```
+:::
+
+::: {.column width="\"50%"}
+```{r}
+#| eval: false
+starwars |> slice_tail(n = 2)
+```
+
+```{r}
+#| echo: false
+starwars |> slice_tail(n = 2) |> select(name:hair_color)
+```
+:::
+:::
+
+---
+
+## Rebanadas de datos: slice()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  rebanadas(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  slice(posiciones)
+```
+:::
+:::
+
+Disponemos de opciones por defecto:
+
+* con `slice_max()` y `slice_min()` obtenemos la [**filas con menor/mayor valor de una variable**]{.hl-yellow} (si empate, todas salvo que `with_ties = FALSE`) que indicamos en `order_by = ...`
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> slice_min(mass, n = 2)
+```
+
+```{r}
+#| echo: false
+starwars |> slice_min(n = 2, order_by = mass) |> select(name:hair_color)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> slice_max(height, n = 2)
+```
+
+```{r}
+#| echo: false
+starwars |> slice_max(n = 2, order_by = height) |> select(name:hair_color)
+```
+:::
+:::
+
+---
+
+## Aleatorio: slice_sample()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  rebanadas_aleatorias(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  slice_sample(posiciones)
+```
+:::
+:::
+
+El conocido como [**muestreo aleatorio simple**]{.hl-yellow} se basa en [**seleccionar individuos aleatoriamente**]{.hl-yellow}, de forma que cada uno tenga ciertas [**probabilidades**]{.hl-yellow} de ser seleccionado. Con `slice_sample(n = ...)` podemos extraer n registros aleatoriamente (a priori equiprobables).
+
+```{r}
+starwars |> slice_sample(n = 2)
+```
+
+. . .
+
+::: callout-important
+## Importante...
+
+[**«Aleatorio» no implica equiprobable**]{.hl-yellow}: es igual de aleatorio un dado normal que uno trucado. No hay cosas «más aleatorias» que otras, simplemente tienen subyacente distintas leyes de probabilidad.
+
+:::
+
+---
+
+## Aleatorio: slice_sample()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  rebanadas_aleatorias(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  slice_sample(posiciones)
+```
+:::
+:::
+
+También podremos indicarle la [**proporción de datos a samplear**]{.hl-yellow} (en lugar del número) y si queremos que sea [**con reemplazamiento (que se puedan repetir)**]{.hl-yellow}.
+
+```{r}
+# 5% de registros aleatorios con reemplazamiento
+starwars |> 
+  slice_sample(prop = 0.05, replace = TRUE)
+
+```
+
+
+---
+
+
+## Aleatorio: slice_sample()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  rebanadas_aleatorias(posiciones)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  slice_sample(posiciones)
+```
+:::
+:::
+
+Como decíamos, «aleatorio» no es igual que «equiprobable», así que podemos pasarle un [**vector de probabilidades**]{.hl-yellow}. Por ejemplo, vamos a forzar que sea muy improbable sacar una fila que no sean las dos primeras
+
+```{r}
+starwars |>
+  slice_sample(n = 2, weight_by = c(0.495, 0.495, rep(0.01/85, 85)))
+```
+
+. . .
+
+```{r}
+starwars |>
+  slice_sample(n = 2, weight_by = c(0.495, 0.495, rep(0.01/85, 85)))
+```
+
+---
+
+## Paréntesis: sample()
+
+La función `slice_sample()` es simplemente una integración de `{tidyverse}` de la función básica de `R` conocida como `sample()` que nos permite [**muestrear elementos**]{.hl-yellow}
+
+. . .
+
+Por ejemplo, vamos a [**muestrear 10 tiradas de un dado**]{.hl-yellow}, indicándole
+
+- [**soporte**]{.hl-purple} de nuestra variable aleatorio (valores permitidos en `x`)
+- [**tamaño**]{.hl-purple} muestral (`size`)
+- [**reemplazamiento**]{.hl-purple} (si `TRUE` entonces pueden salir repetidas, como en el caso del dado)
+
+```{r}
+sample(x = 1:6, size = 10, replace = TRUE)
+```
+
+---
+
+## Paréntesis: sample()
+
+La opción anterior lo que genera son sucesos de una variable aleatoria [**equiprobable**]{.hl-yellow} pero al igual que antes, podemos asignarle un vector de probabilidades o [**función de masa**]{.hl-yellow} concreta con el argumento  `prob = ...`
+
+```{r}
+sample(x = 1:6, size = 50, replace = TRUE,
+       prob = c(0.5, 0.2, 0.1, 0.1, 0.05, 0.05))
+```
+
+---
+
+
+## Paréntesis: sample()
+
+**¿Cómo harías el siguiente enunciado?**
+
+&nbsp;
+
+Supongamos que en una ciudad se han estudiado episodios de gripe estacional. Sean las variables aleatorias $X_m$ y $X_p$ tal que $X_m=1$ si la madre tiene gripe, $X_m=0$ si la madre no tiene gripe, $X_p=1$ si el padre tiene gripe y $X_p=0$ si el padre no tiene gripe. El modelo teórico asociado a este tipo de epidemias indica que la distribución conjunta viene dada por $P(X_m = 1, X_p=1)=0.02$, $P(X_m = 1, X_p=0)=0.08$, $P(X_m = 1, X_p=0)=0.1$ y $P(X_m = 0, X_p=0)=0.8$
+
+**Genera una muestra** de tamaño $n = 1000$ (soporte `"10"`, `"01"`, `"00"` y `"11"`) haciendo uso de `runif()` y haciendo uso de `sample()`
+
+---
+
+
+## Reordenar filas: arrange()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> ordenar(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> arrange(var1, var2, ...)
+```
+:::
+:::
+
+También podemos [**ordenar filas**]{.hl-yellow} en función de alguna variable con `arrange()`
+
+```{r}
+#| eval: false
+starwars |> arrange(mass)
+```
+
+```{r}
+#| echo: false
+starwars |> arrange(mass) |> select(name:eye_color) |> slice(1:5) 
+```
+
+. . .
+
+Por [**defecto de menor a mayor**]{.hl-yellow} pero podemos [**invertir el orden**]{.hl-purple} con `desc()`
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> arrange(desc(height))
+```
+
+```{r}
+#| echo: false
+starwars |> arrange(desc(height)) |> select(name:mass) |> slice(1:5) 
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> arrange(mass, desc(height))
+```
+
+```{r}
+#| echo: false
+starwars |> arrange(mass, desc(height)) |> select(name:mass) |> slice(1:5) 
+```
+:::
+:::
+
+---
+
+## Eliminar duplicados: distinct()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> sin_duplicados(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> distinct(var1, var2, ...)
+```
+:::
+:::
+
+Muchas veces necesitaremos asegurarnos que no hay duplicados en alguna variable (DNI) y podemos [**eliminar filas duplicadas**]{.hl-yellow} con `distinct()`.
+
+```{r}
+starwars |> distinct(sex)
+```
+
+. . .
+
+Para mantener todas las columnas de la tabla usaremos `.keep_all = TRUE`.
+
+```{r}
+#| eval: false
+starwars |> distinct(sex, .keep_all = TRUE)
+```
+
+```{r}
+#| echo: false
+starwars |> distinct(sex, .keep_all = TRUE) |> slice(1:3)
+```
+
+---
+
+## Añadir filas: bind_rows()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tibble1 |> encuadernar_filas(tibble2)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+tibble1 |> bind_rows(tibble2)
+```
+:::
+:::
+
+Por último, podemos [**concatenar nuevas filas**]{.hl-yellow} con `bind_rows()` con [**las nuevas observaciones en tabla**]{.hl-red} (si no cuadran columnas rellena con ausentes)
+
+```{r}
+datos <-
+  tibble("nombre" = c("javi", "laura"), "edad" = c(33, 50))
+datos
+```
+
+. . .
+
+```{r}
+datos |> bind_rows(tibble("nombre" = c("carlos", NA), "cp" = c(28045, 28019)))
+```
+
+---
+
+
+## 💻 Tu turno {#tu-turno-10-2}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Selecciona solo los personajes que sean humanos y de ojos marrones, para después ordernarlos en altura descendente y peso ascendente.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  filter(eye_color == "brown" & species == "Human") |> 
+  arrange(height, desc(mass))
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Extrae 3 registros aleatoriamente.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> slice_sample(n = 3)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Extrae el 10% de los registros aleatoriamente.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> slice_sample(prop = 0.1)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Extrae aleatoriamente 10 personajes pero de forma que la probabilidad de que salga cada uno sea proporcional a su peso (más pesados, más probable)
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  drop_na(mass) |> 
+  slice_sample(n = 10, weight_by = mass)
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Selecciona los 3 personajes más mayores.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> slice_max(birth_year, n = 3)
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Para saber que valores únicos hay en el color de pelo, elimina duplicados de la variable `hair_color`, eliminando antes los ausentes de dicha variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  drop_na(hair_color) |> 
+  distinct(hair_color)
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 De los personajes que son humanos y miden más de 160 cm, elimina duplicados en color de ojos, elimina ausentes en peso, selecciona los 3 más altos, y orden de mayor a menor peso. Devuelve la tabla.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  filter(species == "Human" & height > 160) |> 
+  distinct(eye_color, .keep_all = TRUE) |> 
+  drop_na(mass) |> 
+  slice_max(height, n = 3) |> 
+  arrange(desc(mass))
+```
+
+:::
+
+
+---
+
+## Resumen
+
+
+La clave de `{tidyverse}` es la [**legibilidad**]{.hl-yellow}: es importantísimo que el código se entienda, por nuestro yo el futuro pero también por la [**transparencia algorítmica**]{.hl-yellow} hacia los demás
+
+[**Por ejemplo**]{.hl-purple}: quitaremos ausentes de la variable peso, filtraremos los personajes humanos y altura superior a 140cm, sin duplicados en el color de pelo, extrayendo los 5 más altos y obteniendo 2 personajes aleatorios finalmente.
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "2"
+starwars |>
+  elimino_ausentes(peso) |> 
+  filtro(especie humana Y altura > 140 cm) |> 
+  sin_duplicados(color de pelo) |>
+  rebanadas_max(peso, n = 5) |> 
+  rebanadas_aleatorias(n = 2)
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "2"
+starwars |>
+  drop_na(mass) |> 
+  filter(species == "Human" & height > 140) |> 
+  distinct(hair_color, .keep_all = TRUE) |>
+  slice_max(mass, n = 5) |> 
+  slice_sample(n = 2)
+```
+:::
+:::
+
+---
+
+## Resumen
+
+
+La clave de `{tidyverse}` es la [**legibilidad**]{.hl-yellow}: es importantísimo que el código se entienda, por nuestro yo el futuro pero también por la [**transparencia algorítmica**]{.hl-yellow} hacia los demás
+
+[**Por ejemplo**]{.hl-purple}: quitaremos ausentes de la variable peso, filtraremos los personajes humanos y altura superior a 140cm, sin duplicados en el color de pelo, extrayendo los 5 más altos y obteniendo 2 personajes aleatorios finalmente.
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+starwars |>
+  elimino_ausentes(peso) |> 
+  filtro(especie humana Y altura > 140 cm) |> 
+  sin_duplicados(color de pelo) |>
+  rebanadas_max(peso, n = 5) |> 
+  rebanadas_aleatorias(n = 2)
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+starwars |>
+  drop_na(mass) |> 
+  filter(species == "Human" & height > 140) |> 
+  distinct(hair_color, .keep_all = TRUE) |>
+  slice_max(mass, n = 5) |> 
+  slice_sample(n = 2)
+```
+:::
+:::
+
+---
+
+## Resumen
+
+
+La clave de `{tidyverse}` es la [**legibilidad**]{.hl-yellow}: es importantísimo que el código se entienda, por nuestro yo el futuro pero también por la [**transparencia algorítmica**]{.hl-yellow} hacia los demás
+
+[**Por ejemplo**]{.hl-purple}: quitaremos ausentes de la variable peso, filtraremos los personajes humanos y altura superior a 140cm, sin duplicados en el color de pelo, extrayendo los 5 más altos y obteniendo 2 personajes aleatorios finalmente.
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "4"
+starwars |>
+  elimino_ausentes(peso) |> 
+  filtro(especie humana Y altura > 140 cm) |> 
+  sin_duplicados(color de pelo) |>
+  rebanadas_max(peso, n = 5) |> 
+  rebanadas_aleatorias(n = 2)
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "4"
+starwars |>
+  drop_na(mass) |> 
+  filter(species == "Human" & height > 140) |> 
+  distinct(hair_color, .keep_all = TRUE) |>
+  slice_max(mass, n = 5) |> 
+  slice_sample(n = 2)
+```
+:::
+:::
+
+---
+
+## Resumen
+
+
+La clave de `{tidyverse}` es la [**legibilidad**]{.hl-yellow}: es importantísimo que el código se entienda, por nuestro yo el futuro pero también por la [**transparencia algorítmica**]{.hl-yellow} hacia los demás
+
+[**Por ejemplo**]{.hl-purple}: quitaremos ausentes de la variable peso, filtraremos los personajes humanos y altura superior a 140cm, sin duplicados en el color de pelo, extrayendo los 5 más altos y obteniendo 2 personajes aleatorios finalmente.
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "5"
+starwars |>
+  elimino_ausentes(peso) |> 
+  filtro(especie humana Y altura > 140 cm) |> 
+  sin_duplicados(color de pelo) |>
+  rebanadas_max(peso, n = 5) |> 
+  rebanadas_aleatorias(n = 2)
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "5"
+starwars |>
+  drop_na(mass) |> 
+  filter(species == "Human" & height > 140) |> 
+  distinct(hair_color, .keep_all = TRUE) |>
+  slice_max(mass, n = 5) |> 
+  slice_sample(n = 2)
+```
+:::
+:::
+
+---
+
+## Resumen
+
+La clave de `{tidyverse}` es la [**legibilidad**]{.hl-yellow}: es importantísimo que el código se entienda, por nuestro yo el futuro pero también por la [**transparencia algorítmica**]{.hl-yellow} hacia los demás
+
+[**Por ejemplo**]{.hl-purple}: quitaremos ausentes de la variable peso, filtraremos los personajes humanos y altura superior a 140cm, sin duplicados en el color de pelo, extrayendo los 5 más altos y obteniendo 2 personajes aleatorios finalmente.
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "6"
+starwars |>
+  elimino_ausentes(peso) |> 
+  filtro(especie humana Y altura > 140 cm) |> 
+  sin_duplicados(color de pelo) |>
+  rebanadas_max(peso, n = 5) |> 
+  rebanadas_aleatorias(n = 2)
+```
+:::
+
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+#| code-line-numbers: "6"
+starwars |>
+  drop_na(mass) |> 
+  filter(species == "Human" & height > 140) |> 
+  distinct(hair_color, .keep_all = TRUE) |>
+  slice_max(mass, n = 5) |> 
+  slice_sample(n = 2)
+```
+:::
+:::
+
+---
+
+## 🐣 Caso práctico {#caso-practico-10}
+
+Vamos a volver aun viejon conocido: en el paquete `{datasets}` (ya instalado por defecto) teníamos diversos conjuntos de datos y uno de ellos era `airquality` con el que ya trabajamos. Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973.
+
+En ese momento lo trabajamos desde la perspectiva de R base y extrayendo algunas variables del mismo. El objetivo ahora será trabajarlo desde la perspectiva de `{tidyverse}` fijándonos en las diferencias de una y otra forma.
+
+```{r}
+#| eval: false
+library(datasets)
+airquality
+```
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-i-airquality-tidyverse).
+
+
+# Clase 11: [tidyverse (columnas)]{.flow} {#clase-11}
+
+[**Tidyverse: operaciones por columnas**]{style="color:#444442;"}
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+Hasta ahora todas las operaciones realizadas (aunque usásemos info de columnas) eran por filas. En elc aso de columnas, la acción más sencilla es [**seleccionar variables por nombre**]{.hl-yellow} con `select()`, dando como argumentos los nombres de columnas [**sin comillas**]{.hl-purple}.
+
+```{r}
+starwars |> select(name, hair_color)
+```
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+La función `select()` nos permite seleccionar varias variables a la vez, incluso [**concatenando sus nombres como si fuesen índices numéricos**]{.hl-yellow}
+
+```{r}
+#| eval: false
+starwars |> select(name:eye_color) 
+```
+
+```{r}
+#| echo: false
+starwars |> select(name:eye_color) |> slice(1:4)
+```
+
+. . .
+
+Y podemos [**deseleccionar columnas**]{.hl-yellow} con `-` delante
+
+```{r}
+#| eval: false
+starwars |>  select(-mass, -(eye_color:starships))
+```
+
+```{r}
+#| echo: false
+starwars |> select(-mass, -(eye_color:starships)) |> slice(1:4)
+```
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+Tenemos además [**palabras reservadas**]{.hl-yellow}: `everything()` [**todas las variables**]{.hl-purple}...
+
+```{r}
+#| eval: false
+starwars |> select(mass, homeworld, everything())
+```
+
+```{r}
+#| echo: false
+starwars |> select(mass, homeworld, everything()) |> slice(1:4)
+```
+
+. . .
+
+...y `last_col()` para referirnos a [**la última columna**]{.hl-purple}.
+
+```{r}
+#| eval: false
+starwars |> select(name:mass, homeworld, last_col())
+```
+
+```{r}
+#| echo: false
+starwars |> select(name:mass, homeworld, last_col()) |> slice(1:4)
+```
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+También podemos jugar con [**patrones**]{.hl-yellow} en el nombre, aquellas que [**comiencen por un prefijo**]{.hl-purple} (`starts_with()`), [**terminen con un sufijo**]{.hl-purple} (`ends_with()`), [**contengan un texto**]{.hl-purple} (`contains()`) o cumplan una [**expresión regular**]{.hl-purple} (`matches()`).
+
+```{r}
+# variables cuyo nombre acaba en "color" y contengan sexo o género
+starwars |> select(ends_with("color"), matches("sex|gender"))
+```
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+Incluso podemos [**seleccionar por rango numérico**]{.hl-yellow} si tenemos variables con un prefijo y números.
+
+```{r}
+datos <-
+  tibble("semana1" = c(115, 141, 232), "semana2" = c(7, NA, 17),
+         "semana3" = c(95, 162, NA), "semana4" = c(11, 19, 15),
+         "semana5" = c(NA, 262, 190), "semana6" = c(21, 15, 23))
+```
+
+. . .
+
+Con `num_range()` podemos seleccionar con un prefijo y una secuencia numérica.
+
+```{r}
+datos |> select(num_range("semana", 1:4))
+```
+
+---
+
+## Selección columnas: select()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> selecciono(var1, var2, ...)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> select(var1, var2, ...)
+```
+:::
+:::
+
+Por último, podemos seleccionar columnas por [**tipo de dato**]{.hl-yellow} haciendo uso de `where()` y dentro una función que devuelva un valor lógico de tipo de dato.
+
+```{r}
+# Solo columnas numéricas o de texto
+starwars |> select(where(is.numeric) | where(is.character))
+```
+
+
+---
+
+## Mover columnas: relocate()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  recolocar(var1, despues_de = var2)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  relocate(var1, .after = var2)
+```
+:::
+:::
+
+Para facilitar la [**recolocación de variables**]{.hl-yellow} tenemos una función para ello, `relocate()`, indicándole en `.after` o `.before` [**detrás**]{.hl-purple} o [**delante**]{.hl-purple} de qué columnas queremos moverlas.
+
+```{r}
+starwars |> relocate(species, .before = name)
+```
+
+---
+
+## Renombrar: rename()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> renombrar(nuevo = antiguo)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> rename(nuevo = antiguo)
+```
+:::
+:::
+
+A veces también podemos querer [**modificar la «metainformación»**]{.hl-yellow} de los datos, [**renombrando columnas**]{.hl-yellow}. Para ello usaremos de `rename()` poniendo [**primero el nombre nuevo**]{.hl-purple} y luego el [**antiguo**]{.hl-purple}.
+
+```{r}
+starwars |> rename(nombre = name, altura = height, peso = mass)
+```
+
+---
+
+## Extraer columnas: pull()
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> retirar(var)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> pull(var)
+```
+:::
+:::
+
+
+Si observas la salida de los `select()` [**sigue siendo una tabla tibble**]{.hl-yellow}, ya que nos preserva la naturaleza de nuestros datos.
+
+```{r}
+starwars |> select(name)
+```
+
+---
+
+
+## Extraer columnas: pull()
+
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> retirar(var)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> pull(var)
+```
+:::
+:::
+
+
+A veces no querremos dicha estructura sino [**extraer literalmente la columna en un VECTOR**]{.hl-yellow}, algo que podemos hacer con `pull()`
+
+```{r}
+starwars |> pull(name)
+```
+
+
+---
+
+
+## 💻 Tu turno {#tu-turno-11-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Filtra el conjunto de personajes y quédate solo con aquellos que en la variable `height` no tengan un dato ausente. Con los datos obtenidos del filtro anterior, selecciona solo las variables name, height, así como todas aquellas variables que CONTENGAN la palabra color en su nombre.
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Con los datos obtenidos del ejercicio anterior, traduce el nombre de las columnas a castellano
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Con los datos obtenidos del ejercicio anterior, coloca la variable de color de pelo justo detrás de la variable de nombres.
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Con los datos obtenidos del ejercicio anterior, comprueba cuántas modalidades únicas hay en la variable de color de pelo (sin usar `unique()`).
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Del conjunto de datos originales, elimina las columnas de tipo lista, y tras ello elimina duplicados en la variable `eye_color`. Tras eliminar duplicados extrae dicha columna en un vector.
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Del conjunto de datos original de starwars, con solo los personajes cuya altura es conocida, extrae en un vector con dicha variable.
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Tras obtener el vector del ejercicio anterior, usa dicho vector para realizar un muestreo aleatorio del 50% de los datos de manera que la probabilidad de cada personaje de ser elegido sea inversamente proporcional a su altura (más bajitos, más opciones).
+
+
+
+:::
+
+
+
+---
+
+## Modificar columnas: mutate()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> modificar(nueva = funcion())
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> mutate(nueva = funcion())
+```
+:::
+:::
+
+En muchas ocasiones querremos [**modificar o crear variables**]{.hl-yellow} con `mutate()`. 
+
+
+. . . 
+
+Vamos a crear por ejemplo una nueva variable `height_m` con la altura en metros.
+
+```{r}
+starwars |> mutate(height_m = height / 100)
+```
+
+---
+
+## Modificar columnas: mutate()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> modificar(nueva = funcion())
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> mutate(nueva = funcion())
+```
+:::
+:::
+
+Además con los argumentos opcionales podemos [**recolocar la columna modificada**]{.hl-yellow}
+
+```{r}
+starwars |> 
+  mutate(height_m = height / 100,
+         IMC = mass / (height_m^2), .before = name)
+```
+
+---
+
+## Modificar columnas: mutate()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> modificar(nueva = funcion())
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> mutate(nueva = funcion())
+```
+:::
+:::
+
+::: callout-important
+## Importante...
+
+Cuando aplicamos `mutate()`, debemos de acordarnos que las [**operaciones se realizan de manera vectorial**]{.hl-yellow}, elemento a elemento, por lo que la función que usemos dentro debe devolver un vector de igual longitud. En caso contrario, [**devolverá una constante**]{.hl-red}
+:::
+
+. . .
+
+```{r}
+starwars |> 
+  mutate(constante = mean(mass, na.rm = TRUE), .before = name)
+```
+
+---
+
+## Recategorizar: if_else()
+
+También podemos combinar `mutate()` con la expresión de control `if_else()` para [**recategorizar la variable**]{.hl-yellow}: si [**se cumple una condición**]{.hl-purple}, hace una cosa, en caso contrario otra.
+
+```{r}
+starwars |> 
+  mutate(human = if_else(species == "Human", "Human", "Not Human"),
+         .after = name) |> 
+  select(name:mass)
+```
+
+---
+
+## Recategorizar: case_when()
+
+Para [**recategorizaciones más complejas**]{.hl-yellow} tenemos `case_when()`, por ejemplo, para crear una categoría de los personajes en función de su altura.
+
+```{r}
+starwars |> 
+  drop_na(height) |> 
+  mutate(altura = case_when(height < 120 ~ "enanos",
+                            height < 160 ~ "bajito",
+                            height < 180 ~ "normal",
+                            height < 200 ~ "alto",
+                            TRUE ~ "gigante"), .before = name)
+```
+
+---
+
+## Datos anidados
+
+También podemos [**anidar o incrustar datasets uno dentro de otro**]{.hl-yellow}. Imagina que tenemos un dataset de variables `x` e `y ` con 2 registros, otro con las mismas variables pero solo un registro y otro de 3 registros.
+
+```{r}
+data_1 <- tibble("x" = c(0, 2), "y" = c(-1, NA))
+data_2 <- tibble("x" = c(NA), "y" = c(5))
+data_3 <- tibble("x" = c(-2, 6, 7), "y" = c(1.5, NA, -2))
+```
+
+. . .
+
+Hasta ahora la única manera que sabemos de [**juntar los 3 datasets**]{.hl-yellow} es haciendo uso de `bind_rows()` (por cierto, si usas el argumento `.id = "nombre_variable"` podemos hacer que se añade sola una nueva variable que nos diga a que dataset pertenecía cada fila
+
+```{r}
+data <- bind_rows(data_1, data_2, data_3, .id = "dataset")
+data
+```
+---
+
+## Datos anidados
+
+```{r}
+data <- bind_rows(data_1, data_2, data_3, .id = "dataset")
+data
+```
+
+Sin embargo en muchas ocasiones lo que querremos es tener [**los 3 en un mismo objeto PERO cada dataset por su cuenta**]{.hl-yellow}: un objeto (una lista) que almacene los 3 datasets separados entre sí.
+
+. . .
+
+Para ello usaremos la función `nest()` indicando que variables comunes forman los datasets (en este caso `x` e `y`)
+
+
+```{r}
+data_nest <-
+  data |>
+  nest(data = c(x, y))
+data_nest
+```
+
+---
+
+## Datos anidados
+
+```{r}
+data_nest
+```
+
+Fíjate que ahora `data` es una lista ya que cada dataset almacenado podría tener diferentes longitudes
+
+---
+
+## Datos anidados
+
+Para [**desanidar podemos usar unnest()**]{.hl-yellow} indicando la columna que contiene los datasets
+
+```{r}
+data_nest |> unnest(cols = c(data))
+```
+
+---
+
+## 💻 Tu turno {#tu-turno-11}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Selecciona solo las variables nombre, altura y así como todas aquellas variables relacionadas con el color, a la vez que te quedas solo con aquellos que no tengan ausente en la altura.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  select(name, height, contains("color")) |> 
+  drop_na(height)
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Con los datos obtenidos del ejercicio anterior, traduce el nombre de las columnas a castellano.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  select(name, height, contains("color")) |> 
+  drop_na(height) |> 
+  rename(nombre = name, altura = height,
+         color_pelo = eye_color, color_piel = skin_color,
+         color_pelo = hair_color)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Con los datos obtenidos del ejercicio anterior, coloca la variable de color de pelo justo detrás de la variable de nombres.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  select(name, height, contains("color")) |> 
+  drop_na(height) |> 
+  rename(nombre = name, altura = height,
+         color_pelo = eye_color, color_piel = skin_color,
+         color_pelo = hair_color) |> 
+  relocate(color_pelo, .after = nombre)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Con los datos originales, comprueba cuántas modalidades únicas hay en la variable de color de pelo.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  distinct(hair_color) |> 
+  nrow()
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Del dataset original, selecciona solo las variables numéricas y de tipo texto. Tras ello define una nueva variable llamada `under_18` que nos recategorice la variable de edad: `TRUE` si es menor de edad y `FALSE` en caso contrario
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  select(where(is.numeric) | where(is.character)) |> 
+  mutate(under_18 = birth_year < 18)
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Del dataset original, crea una nueva columna llamada `auburn` (cobrizo/caoba) que nos diga TRUE si el color de pelo contiene dicha palabra y FALSE en caso contrario (reminder `str_detect()`).
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  mutate(auburn = str_detect(hair_color, "auburn"))
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Del dataset original, incluye una columna que calcule el IMC. Tras ello, crea una nueva variable que valga `NA` si no es humano, `delgadez` por debajo de 18, `normal` entre 18 y 30, `sobrepeso` por encima de 30.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> 
+  mutate(IMC = mass / ((height/100)^2),
+         IMC_recat = case_when(species != "Human" ~ NA,
+                               IMC < 18 ~ "delgadez",
+                               IMC < 30 ~ "normal",
+                               TRUE ~ "sobrepeso"),
+         .after = name)
+```
+
+:::
+
+---
+
+
+## 🐣 Caso práctico I {#caso-11-1}
+
+
+Haciendo uso de todo lo aprendido, vamos a proceder a [**crear una tabla con datos de bebés**]{.hl-yellow} de tamaño `n = 20` en donde [**simulemos el sexo de los bebés y su peso**]{.hl-yellow}
+
+1. Crea un `tibble` con dos columnas, una llamada `id_bebe` y otra llamada `sexo`. En el primer caso debe ir de 1 a 20. En el segundo caso, simula su sexo de manera que haya un 0.5 de probabilidad de `chico` y 0.5 de `chica`.
+
+2. Conocido el sexo, crea una tercera columna llamada `peso` en la que simules dicho valor. Supondremos que para los chicos el peso sigue una distribución $N(\mu = 3.266kg, \sigma = 0.514)$ y que para las chicas sigue una distribución $N(\mu = 3.155kg, \sigma = 0.495)$.
+
+&nbsp;
+
+Puedes ver la solución en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-i-simulaci%C3%B3n)
+
+
+--- 
+
+## 🐣 Caso práctico II {#caso-11-2}
+
+pendiente de añadir: repetir entrega previa con tidyverse
+
+---
+
+## 🐣 Caso práctico III {#caso-11-3}
+
+
+Para practicar algunas funciones de `{dplyr}` vamos a usar datos de las películas de la [**trilogía de El Señor de los Anillos**]{.hl-yellow}. Los datos los cargaremos directamente desde la web (Github en este caso), sin pasar por el ordenador antes, simplemente **indicando como ruta la web donde está el archivo**
+
+* La comunidad del anillo -> <https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv>
+
+* Las 2 torres -> <https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv>
+
+* El Retorno del Rey ->  <https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv>
+
+```{r}
+#| code-fold: true
+library(readr)
+lotr_1 <-
+  read_csv(file = "https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
+lotr_2 <-
+  read_csv(file = "https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv")
+lotr_3 <-
+  read_csv(file = "https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv")
+```
+
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-el-se%C3%B1or-de-los-anillos)
+
+# Clase 12: [tidyverse (resúmenes)]{.flow} {#clase-12}
+
+[**Summarise y group_by(). Contar y resumir: estadísticas desagregadas por factores/grupos.**]{style="color:#444442;"}
+
+---
+
+
+## Contar: count()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> contar(var1, var2)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> count(var1, var2)
+```
+:::
+:::
+
+Hasta ahora solo hemos transformado o consultado los datos pero no hemos generado estadísticas. Empecemos por lo sencillo: [**¿cómo contar (frecuencias)?**]{.hl-yellow}
+
+. . .
+
+Cuando lo usamos en solitario `count()` nos devolverá simplemente el número de registros , pero cuando lo usamos con variables `count()` calcula lo que se conoce como [**frecuencias**]{.hl-yellow}: [**número de elementos de cada modalidad**]{.hl-purple}.
+
+```{r}
+starwars |> count(sex)
+```
+
+---
+
+## Contar: count()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> contar(var1, var2)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> count(var1, var2)
+```
+:::
+:::
+
+Además si pasamos varias variables nos calcula lo que se conoce como una [**tabla de contigencia**]{.hl-yellow}. Con `sort = TRUE` nos devolverá el [**conteo ordenado**]{.hl-purple} (más frecuentes primero).
+
+```{r}
+starwars |> count(sex, gender, sort = TRUE)
+```
+
+---
+
+## Agrupar: group_by()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  agrupar(var1, var2) |> 
+  accion() |> 
+  desagrupar()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  group_by(var1, var2) |> 
+  accion() |> 
+  ungroup()
+```
+:::
+:::
+
+Una de las [**funciones más potentes**]{.hl-yellow} a combinar con las acciones vistas es `group_by()`, que nos permitirá [**agrupar nuestros registros**]{.hl-yellow} previamente
+
+```{r}
+starwars |> 
+  group_by(sex) |>
+  count() |>
+  ungroup()
+```
+
+---
+
+## Agrupar: group_by()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  agrupar(var1, var2) |> 
+  accion() |> 
+  desagrupar()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  group_by(var1, var2) |> 
+  accion() |> 
+  ungroup()
+```
+:::
+:::
+
+Cuando apliquemos `group_by()` es importante entender que [**NO MODIFICA los datos**]{.hl-yellow}, sino que nos crea una [**variable de grupo**]{.hl-yellow} (subtablas por cada grupo) que modificará las acciones futuras: las [**operaciones se aplicarán a cada subtabla por separado**]{.hl-purple}
+
+. . .
+
+Por ejemplo, imaginemos que queremos extraer el personaje más alto con `slice_max()`.
+
+```{r}
+starwars |> slice_max(height)
+```
+
+
+---
+
+## Agrupar: group_by()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  agrupar(var1, var2) |> 
+  accion() |> 
+  desagrupar()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  group_by(var1, var2) |> 
+  accion() |> 
+  ungroup()
+```
+:::
+:::
+
+¿Y si queremos [**extraer el personaje más alto pero...de cada uno de los sexos**]{.hl-yellow}?
+
+. . .
+
+```{r}
+starwars |>
+  group_by(sex) |> 
+  slice_max(height) |> 
+  ungroup()
+```
+
+---
+
+## Agrupar: group_by()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  agrupar(var1, var2) |> 
+  accion() |> 
+  desagrupar()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  group_by(var1, var2) |> 
+  accion() |> 
+  ungroup()
+```
+:::
+:::
+
+::: columns
+::: {.column width="50%"}
+![](img/tidydatatutor_1.jpg)
+:::
+
+::: {.column width="50%"}
+![](img/tidydatatutor_2.jpg)
+:::
+:::
+
+La web <https://tidydatatutor.com/> permite visualizar las operaciones de `{tidyverse}` (con el pipe antiguo)
+
+---
+
+## Agrupar: group_by()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |>
+  agrupar(var1, var2) |> 
+  accion() |>
+  desagrupar()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |>
+  group_by(var1, var2) |> 
+  accion() |>
+  ungroup()
+```
+:::
+:::
+
+::: callout-important
+## Importante
+
+Recuerda siempre [**hacer ungroup**]{.hl-red} para eliminar la variable de grupo creada
+:::
+
+. . .
+
+En la nueva versión de `{dplyr}` ahora se [**permite incluir la variable de grupo**]{.hl-yellow} en la llamada a muchas funciones con el argumento `by = ...` o `.by = ...`
+
+```{r}
+#| eval: false
+starwars |> slice_max(height, by = sex)
+```
+
+```{r}
+#| echo: false
+starwars |> slice_max(height, by = sex) |> select(name:eye_color)
+```
+
+---
+
+## Fila-a-fila: rowwise()
+
+Una opción muy útil usada antes de una operación también es `rowwise()`: toda [**operación que venga después se aplicará en cada fila por separado**]{.hl-yellow}. Por ejemplo, vamos a definir un conjunto dummy de notas.
+
+```{r}
+notas <- tibble("mates" = c(7.5, 8, 9.1, 3),
+                "lengua" = c(8, 6, 6.5, 9.2))
+```
+
+. . .
+
+Si aplicamos la media directamente el valor será idéntico ya que nos ha hecho la media global, pero nos gustaría sacar una [**media por registro**]{.hl-yellow}. Para eso usaremos `rowwise()`
+
+```{r}
+notas |> 
+  rowwise() |> 
+  mutate(media_curso = mean(c(mates, lengua)))
+```
+
+---
+
+## Resumir: summarise()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> resumir()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> summarise()
+```
+:::
+:::
+
+Por último tenemos `summarise()`, que nos permitirá sacar resúmenes estadísticos. Por ejemplo, vamos a [**calcular la media de las alturas**]{.hl-yellow}.
+
+```{r}
+starwars |> 
+  drop_na(height) |> 
+  summarise(media_altura = mean(height))
+```
+
+. . .
+
+::: callout-warning
+## Cuidado
+
+Fíjate que `mutate()` devuelve [**tantas filas como registros originales**]{.hl-yellow}, mientras que con `summarise()` calcula un [**nuevo dataset de resumen**]{.hl-purple}, solo incluyendo aquello que esté indicado.
+:::
+
+---
+
+## Resumir: summarise()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> resumir()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> summarise()
+```
+:::
+:::
+
+Si además esto lo [**combinamos con la agrupación**]{.hl-yellow} de `group_by()` o `.by = ...`, en pocas líneas de código puedes obtener [**estadísticas desagreagadas**]{.hl-purple}
+
+```{r}
+starwars |> 
+  drop_na(sex, height, mass) |> 
+  summarise(media_altura = mean(height),
+            media_peso = mean(mass),
+            .by = sex)
+```
+
+---
+
+## Resumir: reframe()
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| eval: false
+datos |> resumir()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| eval: false
+starwars |> reframe()
+```
+:::
+:::
+
+En el nuevo `{dplyr}` han incluido `reframe()` para evitar problemas de `summarise()` cuando [**devolvemos más de un valor por variable**]{.hl-yellow}.
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| warning: true
+starwars |>
+  drop_na(mass) |>
+  summarise(quantile(mass))
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+starwars |>
+  drop_na(mass) |>
+  reframe(quantile(mass))
+```
+:::
+:::
+
+---
+
+## Selectores: across()
+
+Un truco es [**hacer uso de selectores**]{.hl-yellow} `across()` y `where()`. El primero nos permite [**actuar sobre varias columnas por nombre**]{.hl-purple} (con `mutate()` o `summarise()`)
+
+```{r}
+starwars |> summarise(medias = across(height:mass, mean, na.rm = TRUE), .by = sex)
+```
+
+. . .
+
+El segundo, `where()`, nos permite hacer lo mismo pero [**seleccionando por tipo**]{.hl-yellow}.
+
+```{r}
+starwars |> 
+  summarise(across(where(is.numeric), mean, na.rm = TRUE), .by = c(sex, gender))
+```
+
+
+---
+
+## 💻 Tu turno {#tu-turno-12-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Calcula cuántos personajes hay de cada especie, ordenados de más a menor frecuencia.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |> count(species, sort = TRUE)
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Tras eliminar ausentes en las variables de peso y estatura, añade una nueva variable que nos calcule el IMC de cada personaje, y determina el IMC medio de nuestros personajes desagregada por sexo
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  drop_na(mass, height) |> 
+  mutate(IMC = mass / ((height/100)^2)) |> 
+  summarise(IMC_medio = mean(IMC), .by = sex)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Obtén el personaje más joven por cada sexo.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  slice_min(birth_year, by = sex)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Obtén la edad del personaje más joven y más viejo de cada sexo.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  drop_na(birth_year) |>
+  summarise(min(birth_year), max(birth_year), .by = sex)
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Determina la cantidad de personajes en cada década (echa un vistazo a `round()`, primero sin desagregar y luego desagregado por sexo.
+
+```{r}
+#| code-fold: true
+#| eval: false
+starwars |>
+  count(birth_decade = round(birth_year, -1))
+```
+:::
+
+---
+
+## 🐣 Caso práctico I: billboard {#caso-12-1}
+
+
+Vamos a hacer un **repaso de lo aprendido** en `{tidyverse}` con la tabla billboard del paquete `{tidyr}`. El dataset representa algo parecido a Los 40 principales (pero versión americana y un top 100 en lugar de 40): para cada artista y canción se guarda la fecha en la que entró en el ranking, y la posición que ocupaba en el ranking en cada una de las semanas (`wk1`, `wk2`, ...)
+
+
+```{r}
+#| eval: false
+billboard
+```
+
+```{r}
+#| echo: false
+billboard[, 1:8]
+```
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-i-billboard)
+
+
+---
+
+## 🐣 Caso práctico II: fútbol  {#caso-12-2}
+
+Vamos a seguir  **practicando lo aprendido** en `{tidyverse}` con el fichero `futbol.csv`, donde tenemos **datos de los jugadores de las 5 principales ligas de futbol masculinas**, desde 2005 hasta 2019, recopilando diferentes estadísticas. Los datos se han extraído directamente haciendo uso del paquete `{worldfootballR}`, que nos permite extraer datos de <https://www.fbref.com>
+
+```{r}
+datos <- read_csv(file = "./datos/futbol.csv")
+datos
+```
+
+---
+
+## 🐣 Caso práctico II: fútbol
+
+
+Las variables capturan la siguiente información:
+
+* `season`, `team`, `league`: temporada, equipo y liga
+* `player`, `country`, `position`, `date_birth`: nombre del jugador, país, posición y año de nacimiento.
+* `minutes_playing`, `matches`: minutos totales jugados y partidos jugados en media (es decir, cuantos partidos de 90 minutos ha jugado con los minutos jugados).
+* `goals`, `assist`: goles y asistencias totales
+* `pk`, `pk_attemp`, `goals_minus_pk`: penalties marcados, penalties tirados y goles marcados sin contar los penalties.
+* `yellow_card`, `red_card`: tarjetas amarillas/rojas.
+
+---
+
+## 🐣 Caso práctico II: fútbol
+
+```{r}
+datos
+```
+
+&nbsp;
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-ii-messi-vs-ronaldo)
+
+
+# clase 13: base vs tidyverse
+
+---
+
+solo practicar
+
+- futbol
+
+- encuesta viogen
+
+- discursos
+
+- contaminación
+
+- accidentes de tráfico
+
+
+---
+
+# clase 14: importar/exportar + joins
+
+---
+
+# clase 15: practicar
+
+---
+
+# clase 16: map
+
+---
+
+# clase 17: practicar
+
+
+
 

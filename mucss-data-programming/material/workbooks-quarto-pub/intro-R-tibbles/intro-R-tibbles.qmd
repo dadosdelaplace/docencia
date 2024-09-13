@@ -2340,24 +2340,27 @@ mean(survey_data[!survey_data$CIS &
 
 survey_data$days_field <-
   survey_data$field_date_to - survey_data$field_date_from
-  survey_data[(survey_data$date_elec -
-                survey_data$field_date_from < 90) &
+survey_data$days_to_elec <-
+  survey_data$date_elec - survey_data$field_date_from
+
+survey_data_filtered <-
+  survey_data[survey_data$days_to_elec < 90 &
                 survey_data$days_field > 3, ]
 
 # average PSOE by CIS
-mean(survey_data[survey_data$CIS &
-                   survey_data$party == "PSOE", ]$estimation)
+mean(survey_data_filtered[survey_data$CIS &
+                            survey_data_filtered$party == "PSOE", ]$estimation)
 # average PSOE by others
-mean(survey_data[!survey_data$CIS &
-                   survey_data$party == "PSOE", ]$estimation)
+mean(survey_data_filtered[!survey_data_filtered$CIS &
+                            survey_data_filtered$party == "PSOE", ]$estimation)
 # difference of 3 points in average
 
 # average PP by CIS
-mean(survey_data[survey_data$CIS &
-                   survey_data$party == "PP", ]$estimation)
+mean(survey_data_filtered[survey_data_filtered$CIS &
+                            survey_data_filtered$party == "PP", ]$estimation)
 # average PP by others
-mean(survey_data[!survey_data$CIS &
-                   survey_data$party == "PP", ]$estimation)
+mean(survey_data_filtered[!survey_data_filtered$CIS &
+                            survey_data_filtered$party == "PP", ]$estimation)
 # difference of -2 points in average
 ```
 
