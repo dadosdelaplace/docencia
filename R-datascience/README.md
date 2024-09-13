@@ -45,4 +45,5 @@
   - [Estructuras de control: if-else y bucles (flow structures)](https://javieralvarezliebana.quarto.pub/control-bucles-if-else/)
   - [Funciones en R (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r/)
   - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata/)
+  - [Introducción a dplyr de tidyverse (intro to tidyverse)](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/)
 
