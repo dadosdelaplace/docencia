@@ -31,7 +31,7 @@ execute:
 
 ## ¡Buenas!
 
-[**Correo**]{.hl-green}: **<javalv09@ucm.es>**. [**Despacho**]{.hl-green}: 722 (3ª planta). [**Tutorías (curso 2024-2025)**]{.hl-green}: ...
+[**Correo**]{.hl-green}: **<javalv09@ucm.es>**. [**Despacho**]{.hl-green}: 722 (3ª planta). [**Tutorías (curso 2024-2025)**]{.hl-green}: lunes y martes de 11 a 13.
 
 ::: columns
 ::: {.column width="30%"}
@@ -40,19 +40,19 @@ execute:
 
 ::: {.column width="70%"}
 ::: incremental
--   [**Javier Álvarez Liébana**]{.hl-yellow}, de Carabanchel (Bajo).
-
--   Licenciado en Matemáticas (UCM). [**Doctorado en estadística**]{.hl-yellow} (UGR).
+-   [**Javier Álvarez Liébana**]{.hl-yellow}, de Carabanchel. Licenciado en Matemáticas (UCM). [**Doctor en estadística**]{.hl-yellow} (UGR)
 
 -   Encargado de la [**visualización y análisis de datos covid**]{.hl-yellow} del Principado de Asturias (2021-2022).
 
 -   Miembro de la [**Sociedad Española de Estadística e IO**]{.hl-yellow} y la [**Real Sociedad Matemática Española**]{.hl-yellow}.
+
+- Formador de `R` en RTVE y ISCIII (actualmente) y el Ayuntamiento de Madrid (2024).
+
 :::
 :::
 :::
 
-
-Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM**]{.hl-yellow}. Divulgando por [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
+Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM**]{.hl-yellow}, e investigador colaborador del [**Network Science Institute**]{.hl-yellow} de la Northeastern University (Boston). Divulgando por [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
 
 
 ---
@@ -102,13 +102,13 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 ## Planificación entregas
 
-* [**Entrega I (5%)**]{.hl-yellow}: lunes 23 de septiembre (segunda mitad de clase, 60 minutos).
+* [**Entrega I (5%)**]{.hl-yellow}: 26 de septiembre (segunda mitad de clase, 60 minutos).
 
-* [**Entrega II (15%)**]{.hl-yellow}: lunes 7 de octubre (120 minutos).
+* [**Entrega II (15%)**]{.hl-yellow}: 10 de octubre (120 minutos).
 
-* [**Entrega III (25%)**]{.hl-yellow}: 11 de noviembre (120 minutos).
+* [**Entrega III (25%)**]{.hl-yellow}: aprox 11 de noviembre (120 minutos).
 
-* [**Entrega IV (30%)**]{.hl-yellow}: 19 de diciembre (120 minutos).
+* [**Entrega IV (30%)**]{.hl-yellow}: aprox 19 de diciembre (120 minutos).
 
 &nbsp;
 
@@ -132,15 +132,17 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [2](#clase-2) | S1 | 12 sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
 | [3](#clase-3) | S2 | 16 sep | Textos y primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  |
 | [4](#clase-4) | S2 | 19 sep | Comunicar: apuntes y simulacro de entrega | |  [🐣](#caso-practico-4) |  |
-| [5](#clase-5) | S3 | 23 sep | Entrega I | | | 🎯 5% |
-| [6](#clase-6) | S3 | 26 sep | Estructuras de control | [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  |  [🐣](#caso-practico-6) |  |
-| [7](#clase-7) | S4 | 30 sep | Funciones | [💻](#tu-turno-7)  |  [🐣](#caso-practico-7) |  |
-| [8](#clase-8) | S4 | 3 oct | Tidy data | [💻](#tu-turno-8) |  [🐣](#caso-practico-8) |  |
-| [9](#clase-9) | S5 | 7 oct | Entrega II | | | 🎯 15% |
-| [10](#clase-10) | S5 | 10 oct | Tidyverse: filas (I) | ...|  ... |  |
-| [11](#clase-11) | S6 | 14 oct | Tidyverse: filas (II) | ...|  ... |  |
+| [5](#clase-5) | S3 | 26 sep | Entrega I | | | [🎯 5%](#clase-5) |
+| [6](#clase-6) | S4 | 30 sep | Estructuras de control | [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  |  [🐣](#caso-practico-6) |  |
+| [7](#clase-7) | S4 | 3 oct | Funciones | [💻](#tu-turno-7)  |  [🐣](#caso-practico-7) |  |
+| [8](#clase-8) | S5 | 7 oct | Tidy data | [💻](#tu-turno-8) |  [🐣](#caso-practico-8) |  |
+| [9](#clase-9) | S5 | 10 oct | Entrega II | | | [🎯 15%](#clase-9) |
+| [10](#clase-10) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-10-1) [💻](#tu-turno-10-2) | [🐣](#caso-practico-10) |  |
+| [11](#clase-11) | S6 | 17 oct | Tidyverse: columnas | [💻](#tu-turno-11-1) [💻](#tu-turno-11-2) | [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  [🐣](#caso-practico-11-3) |  |
+| [12](#clase-12) | S7 | 21 oct | Tidyverse: resúmenes | [💻](#tu-turno-12-1) |  [🐣](#caso-practico-12-1) [🐣](#caso-practico-12-2)  |  |
 :::
 :::
+
 
 ---
 
@@ -200,15 +202,6 @@ medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de may
 
 * `lotr`: conteo de palabras por raza y género de los personajes de El Señor de los Anillos en cada una de las películas de la trilogía. Extraídos de <https://github.com/jennybc/lotr-tidy/tree/master/data>.
 
-* `billboard` del paquete `{tidyr}`: representa algo parecido a Los 40 principales (pero versión americana y un top 100 en lugar de 40), para cada artista y canción se guarda la fecha en la que entró en el ranking, y la posición que ocupaba en el ranking en cada una de las semanas
-
----
-
-## Datasets
-
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
-
-&nbsp;
 
 * `futbol`: dataset que captura las estadísticas de los jugadores de las 5 principales ligas de futbol masculinas, desde 2005 hasta 2019. Los datos se han extraído directamente haciendo uso del paquete `{worldfootballR}`, que nos permite extraer datos de <https://www.fbref.com>
 
@@ -6383,7 +6376,9 @@ El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow}
 
 * [💻 Ejercicios resueltos: filter](#tu-turno-10-1) 
 
-* [💻 Ejercicios resueltos: slice y sample](#tu-turno-10-2) 
+* [💻 Ejercicios resueltos: slice, sample, arrange](#tu-turno-10-2) 
+
+* [🐣 Workbook/caso práctico](#caso-practico-10)
 
 * [📆 Planificación](#planificacion)
 
@@ -7679,6 +7674,18 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 [**Tidyverse: operaciones por columnas**]{style="color:#444442;"}
 
+* [💻 Ejercicios resueltos: select](#tu-turno-11-1) 
+
+* [💻 Ejercicios resueltos: mutate, if_else, case_when](#tu-turno-11-2) 
+
+* [🐣 Workbook/caso práctico I: simulación](#caso-practico-11-1)
+
+* [🐣 Workbook/caso práctico II](#caso-practico-11-2)
+
+* [🐣 Workbook/caso práctico III: El Señor de los Anillos](#caso-practico-11-3)
+
+* [📆 Planificación](#planificacion)
+
 ---
 
 ## Selección columnas: select()
@@ -8184,6 +8191,7 @@ Hasta ahora la única manera que sabemos de [**juntar los 3 datasets**]{.hl-yell
 data <- bind_rows(data_1, data_2, data_3, .id = "dataset")
 data
 ```
+
 ---
 
 ## Datos anidados
@@ -8229,7 +8237,7 @@ data_nest |> unnest(cols = c(data))
 
 ---
 
-## 💻 Tu turno {#tu-turno-11}
+## 💻 Tu turno {#tu-turno-11-2}
 
 [**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
 
@@ -8333,7 +8341,7 @@ starwars |>
 ---
 
 
-## 🐣 Caso práctico I {#caso-11-1}
+## 🐣 Caso práctico I: simulación {#caso-practico-11-1}
 
 
 Haciendo uso de todo lo aprendido, vamos a proceder a [**crear una tabla con datos de bebés**]{.hl-yellow} de tamaño `n = 20` en donde [**simulemos el sexo de los bebés y su peso**]{.hl-yellow}
@@ -8349,13 +8357,13 @@ Puedes ver la solución en el [**workbook**](https://javieralvarezliebana.quarto
 
 --- 
 
-## 🐣 Caso práctico II {#caso-11-2}
+## 🐣 Caso práctico II: surprise {#caso-practico-11-2}
 
 pendiente de añadir: repetir entrega previa con tidyverse
 
 ---
 
-## 🐣 Caso práctico III {#caso-11-3}
+## 🐣 Caso práctico III: señor de los anillos {#caso-practico-11-3}
 
 
 Para practicar algunas funciones de `{dplyr}` vamos a usar datos de las películas de la [**trilogía de El Señor de los Anillos**]{.hl-yellow}. Los datos los cargaremos directamente desde la web (Github en este caso), sin pasar por el ordenador antes, simplemente **indicando como ruta la web donde está el archivo**
@@ -8384,6 +8392,15 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 # Clase 12: [tidyverse (resúmenes)]{.flow} {#clase-12}
 
 [**Summarise y group_by(). Contar y resumir: estadísticas desagregadas por factores/grupos.**]{style="color:#444442;"}
+
+
+* [💻 Ejercicios resueltos](#tu-turno-12-1) 
+
+* [🐣 Workbook/caso práctico I: billboard](#caso-practico-12-1)
+
+* [🐣 Workbook/caso práctico II: fútbol](#caso-practico-12-2)
+
+* [📆 Planificación](#planificacion)
 
 ---
 
@@ -8850,7 +8867,7 @@ starwars |>
 
 ---
 
-## 🐣 Caso práctico I: billboard {#caso-12-1}
+## 🐣 Caso práctico I: billboard {#caso-practico-12-1}
 
 
 Vamos a hacer un **repaso de lo aprendido** en `{tidyverse}` con la tabla billboard del paquete `{tidyr}`. El dataset representa algo parecido a Los 40 principales (pero versión americana y un top 100 en lugar de 40): para cada artista y canción se guarda la fecha en la que entró en el ranking, y la posición que ocupaba en el ranking en cada una de las semanas (`wk1`, `wk2`, ...)
@@ -8872,7 +8889,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## 🐣 Caso práctico II: fútbol  {#caso-12-2}
+## 🐣 Caso práctico II: fútbol  {#caso-practico-12-2}
 
 Vamos a seguir  **practicando lo aprendido** en `{tidyverse}` con el fichero `futbol.csv`, donde tenemos **datos de los jugadores de las 5 principales ligas de futbol masculinas**, desde 2005 hasta 2019, recopilando diferentes estadísticas. Los datos se han extraído directamente haciendo uso del paquete `{worldfootballR}`, que nos permite extraer datos de <https://www.fbref.com>
 
