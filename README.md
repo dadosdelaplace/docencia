@@ -26,11 +26,11 @@
 
 <h1 align="left">Welcome to my teaching materials</h1>
          
-<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="310" alt="image" src="https://github.com/user-attachments/assets/bbf69c21-2b5c-4d8c-9227-67aaab475836">
-<a href="https://javieralvarezliebana.es/docencia/R-biostats/diapos"><img width="310" alt="image" src="https://github.com/user-attachments/assets/66cf71b5-13c8-4f5c-90ea-6537e6109f34">
-<a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos"><img width="310" alt="image" src="https://github.com/user-attachments/assets/7001c9df-e8d0-48d0-a975-b5c9496a96fe">
-<a href="https://javieralvarezliebana.es/docencia/time-series/diapos"><img width="310" alt="image" src="https://github.com/user-attachments/assets/0c92263e-e035-4486-930c-dca74bb0fe36">
-<a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/slides"><img width="310" alt="image" src="https://github.com/user-attachments/assets/b2233c9b-7edd-4fc5-a2fb-ad53e91eb8b9">
+<a href="https://javieralvarezliebana.es/docencia/R-datascience/diapos"><img width="260" alt="image" src="https://github.com/user-attachments/assets/bbf69c21-2b5c-4d8c-9227-67aaab475836">
+<a href="https://javieralvarezliebana.es/docencia/R-biostats/diapos"><img width="260" alt="image" src="https://github.com/user-attachments/assets/66cf71b5-13c8-4f5c-90ea-6537e6109f34">
+<a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos"><img width="260" alt="image" src="https://github.com/user-attachments/assets/7001c9df-e8d0-48d0-a975-b5c9496a96fe">
+<a href="https://javieralvarezliebana.es/docencia/time-series/diapos"><img width="260" alt="image" src="https://github.com/user-attachments/assets/0c92263e-e035-4486-930c-dca74bb0fe36">
+<a href="https://javieralvarezliebana.es/docencia/mucss-data-programming/slides"><img width="260" alt="image" src="https://github.com/user-attachments/assets/b2233c9b-7edd-4fc5-a2fb-ad53e91eb8b9">
             
 🕸 You can check all teaching materials at <https://javieralvarezliebana.es/docencia/>
 
