@@ -8020,31 +8020,101 @@ starwars |> pull(name)
 
 📝 Filtra el conjunto de personajes y quédate solo con aquellos que en la variable `height` no tengan un dato ausente. Con los datos obtenidos del filtro anterior, selecciona solo las variables name, height, así como todas aquellas variables que CONTENGAN la palabra color en su nombre.
 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars_2 <-
+  starwars |> 
+  drop_na(height) |> 
+  select(name, height, contains("color"))
+```
+
 ### [**Ejercicio 2**]{.hl-yellow}
 
-📝 Con los datos obtenidos del ejercicio anterior, traduce el nombre de las columnas a castellano
+📝 Con los datos obtenidos del ejercicio anterior, traduce el nombre de las columnas a castellano.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars_2 |> 
+  rename(nombre = name, altura = height, color_pelo = hair_color,
+         color_piel = skin_color, color_ojos = eye_color)
+```
+
 
 ### [**Ejercicio 3**]{.hl-yellow}
 
-📝 Con los datos obtenidos del ejercicio anterior, coloca la variable de color de pelo justo detrás de la variable de nombres.
+📝 Con los datos obtenidos del ejercicio 1, coloca la variable de color de pelo justo detrás de la variable de nombres.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars_2 |>
+  relocate(hair_color, .after = name)
+```
 
 ### [**Ejercicio 4**]{.hl-yellow}
 
-📝 Con los datos obtenidos del ejercicio anterior, comprueba cuántas modalidades únicas hay en la variable de color de pelo (sin usar `unique()`).
+📝 Con los datos obtenidos del ejercicio 1, comprueba cuántas modalidades únicas hay en la variable de color de pelo (sin usar `unique()`).
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars_2 |>
+  distinct(hair_color) |> 
+  nrow()
+```
+
 
 ### [**Ejercicio 5**]{.hl-yellow}
 
 📝 Del conjunto de datos originales, elimina las columnas de tipo lista, y tras ello elimina duplicados en la variable `eye_color`. Tras eliminar duplicados extrae dicha columna en un vector.
 
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars |> 
+  select(-where(is.list)) |> 
+  distinct(eye_color, .keep_all = TRUE) |> 
+  pull(eye_color)
+```
+
 ### [**Ejercicio 6**]{.hl-yellow}
 
 📝 Del conjunto de datos original de starwars, con solo los personajes cuya altura es conocida, extrae en un vector con dicha variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+starwars |> 
+  drop_na(height) |> 
+  pull(height)
+```
 
 ### [**Ejercicio 7**]{.hl-yellow}
 
 📝 Tras obtener el vector del ejercicio anterior, usa dicho vector para realizar un muestreo aleatorio del 50% de los datos de manera que la probabilidad de cada personaje de ser elegido sea inversamente proporcional a su altura (más bajitos, más opciones).
 
+```{r}
+#| code-fold: true
+#| eval: false
 
+heights <-
+  starwars |> 
+  drop_na(height) |> 
+  pull(height)
+  
+starwars |> 
+  slice_sample(prop = 0.5, weight_by = 1/heights)
+```
 
 :::
 
