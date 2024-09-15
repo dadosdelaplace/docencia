@@ -38,7 +38,7 @@
 
 * [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/mucss-data-programming/slides)
 * [📦 Material](https://javieralvarezliebana.es/docencia/mucss-data-programming/material)
-* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/data)
+* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/material/data)
 * 🛠 Workbooks:
   - [Introduction to R base. First operations and databases](https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss/)
   - [Flow structures (if-else and loops). Functions in R](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
