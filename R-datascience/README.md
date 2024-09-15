@@ -38,7 +38,7 @@
 
 * [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-datascience/diapos)
 * [📦 Material](https://javieralvarezliebana.es/docencia/R-datascience/material)
-* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/diapos/datos)
+* [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-datascience/material/datos)
 * 🛠 Workbooks:
   - [Introducción a R base (intro R base)](https://javieralvarezliebana.quarto.pub/introduccion-a-r-base/)
   - [Tratamiento de textos y primeras bases de datos (stringr package and first databases)](https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd/)
