@@ -105,7 +105,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 . . .
 
-- [**2 individual tasks**]{.hl-yellow} done during the course (15%-25%)
+- [**2 individual tasks**]{.hl-yellow} done during the course (20%-25%)
 
 . . .
 
@@ -113,7 +113,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 . . .
 
-- [**Final exam**]{.hl-yellow} with all materials and internet (30%). [**You are exempt if you get more than 7.5/10**]{.hl-purple} in the previous tasks.
+- [**Final exam**]{.hl-yellow} with all materials and internet (25%). [**You are exempt if you get more than 7.5/10**]{.hl-purple} in the previous tasks.
 
 . . .
 
@@ -128,7 +128,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 &nbsp;
 
-* [**Individual task I (15%)**]{.hl-yellow}: deadline 03/11/2024
+* [**Individual task I (20%)**]{.hl-yellow}: deadline 03/11/2024
 
 * [**Individual task II (25%)**]{.hl-yellow}: deadline 30/11/2024
 
@@ -136,7 +136,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 &nbsp;
 
-* [**Final examen (30% if required)**]{.hl-yellow}: TBA
+* [**Final exam (25% if required)**]{.hl-yellow}: TBA
 
 
 ---

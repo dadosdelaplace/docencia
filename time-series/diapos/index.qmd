@@ -103,7 +103,7 @@ Si tienes que hacer el examen final, será **obligatorio presentarse y sacar má
 
 ## Planificación entregas
 
-* [**Entrega I (20%)**]{.hl-yellow}: ... (120 minutos).
+* [**Entrega I (20%)**]{.hl-yellow}: 8 de octubre (120 minutos).
 
 * [**Entrega II (25%)**]{.hl-yellow}: ... (120 minutos).
 
@@ -129,8 +129,8 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 ::: {style="font-size:20px"}
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [1](#clase-1) | S1 | 9 sep | Repaso de R | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) [💻](#tu-turno-1-4) [💻](#tu-turno-1-5) | [🐣](#caso-practico-1-1) [🐣](#caso-practico-1-2) [🐣](#caso-practico-1-3) |  | 
-| [2](#clase-2) | S1 | 12 sep | Repaso de estadística | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
+| [1-2](#clase-1) | S1 | 9-12 sep | Repaso de R | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) [💻](#tu-turno-1-4) [💻](#tu-turno-1-5) | [🐣](#caso-practico-1-1) [🐣](#caso-practico-1-2) [🐣](#caso-practico-1-3) |  | 
+| [3](#clase-2) | S1 | 12 sep | Repaso de estadística | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
 :::
 :::
 
@@ -159,10 +159,8 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 * `airquality` del paquete `{datasets}` (ya instalado por defecto):
 medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: ozono, radiación solar, viento, temperatura, mes y día.
 
-...
 
-
-# Clase 1: [objetivos y repaso R]{.flow} {#clase-1}
+# Clases 1 y 2: [objetivos y repaso R]{.flow} {#clase-1}
 
 
 
@@ -1302,7 +1300,7 @@ Biostatistics::pinniped
 ```
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-R-ts/)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-r-ts/)
 
 
 
@@ -2823,7 +2821,7 @@ while (count < 6) {
 ## 🐣 Caso práctico II {#caso-practico-1-2}
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-R-ts/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-r-ts/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
 
 
 ---
@@ -4125,15 +4123,15 @@ billboard |>
 
 ## 🐣 Caso práctico III {#caso-practico-1-3}
 
-En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-R-ts/).
+En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/repaso-r-ts/).
 
 ```{r}
 who2
 ```
 
-# Clase 2: [repaso estadística]{.flow} {#clase-2}
+# Clase 3: [introducción a series]{.flow} {#clase-3}
 
-[**Medidas de centralización y dispersión. Correlación. Regresión lineal**]{style="color:#444442;"}
+[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
 
 
 * [💻 ...](#tu-turno-2-1)
@@ -4142,4 +4140,506 @@ who2
 
 ---
 
-## en proceso
+## ¿Qué es una serie temporal?
+
+Como ya hemos visto, una [**serie temporal**]{.hl-yellow} se puede definir de manera informal como una [**muestra de una variable**]{.hl-yellow} (usualmente continua) recogida de manera [**secuencial en el tiempo**]{.hl-purple}
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## Un poco de historia
+
+Las [**primeras series temporales**]{.hl-yellow} aparecieron en el siglo XIX, cuando el matemático **Laplace** (matemático, profesor de Napoleón y luego ministro) se dedicaba a estudiar la [**relación entre las fases de La Luna y la presión**]{.hl-yellow} atmosférica (por el nivel del mar).
+
+. . .
+
+Aunque su primera aproximación fue un poco chapuza (intentó ajustar una función seno sin tener en cuenta el tiempo), [**Arthur Schuster decidió aplicar los trabajos de Fourier para que dichas sinusoidales dependiesen del tiempo**]{.hl-yellow} (Fourier había demostrado que toda función periódica podía descomponerse como suma de senos y cosenos).
+
+---
+
+## Un poco de historia
+
+Treinta años más tarde, [**Yule y Slutsky aplicaron las ideas de la regresión**]{.hl-yellow} desarrollados por Galton y Pearson al estudio de procesos cuya variable regresora es ella misma en otro instante temporal (**procesos autoregresivos**), aunque no fue hasta la llegada de **Kolmogorov** cuando se formalizó su definición matemática en el contexto de los [**procesos estocásticos**]{.hl-yellow}.
+
+. . .
+
+Tras acabar la Segunda Guerra Mundial quedaron desclasificados algunos trabajos de Wiener, Kolmogorov, Bartlett y Tukey sobre la predicción de series temporales, así como su estudio  en función del análisis de las [**correlaciones**]{.hl-yellow}. Tras los trabajos de alisado de Holt y Winter en los años 60, en 1970 [**Box y Jenkins publican «La Biblia» de las series temporales**]{.hl-yellow}, un manual donde se presenta una metodología para la identificación, estimación y predicción de series temporales (los conocidos como **procesos SARIMA**)
+
+
+---
+
+## Métodos de análisis
+
+
+* [**Métodos descriptivos o clásicos**]{.hl-yellow}: desarrollados entre 1940 y 1970, están enfocadas principalmente en la [**estimación de los valores de la serie**]{.hl-yellow}, siendo bastante [**malos en la predicción futura**]{.hl-red}.
+
+  * [**Métodos de decomposición**]{.hl-purple} (tendencia-estacionalidad-error):
+    * Suavizado clásico
+    * STL (seasonal-trend decomposition procedure based on loess)
+  * [**Métodos de alisado**]{.hl-purple} (dependencia del pasado disminuye con el tiempo):
+    * Alisado exponencial simple
+    * Alisado doble de Holt y triple de Holt-Winters
+. . .
+
+* [**Métodos probabilísticos**]{.hl-yellow}: enmarcados dentro del análisis de los procesos estocásticos, se considera que la serie temporal observada es solo una muestra de un proceso estocástico. Necesitaremos **hipótesis**.
+
+---
+
+## Métodos descriptivos
+
+Los [**métodos descriptivos o clásicos**]{.hl-yellow} se basan en entender, de manera casi empírica, el comportamiento de la serie, pareciéndose más una interpolación que a una metodología rigurosa de estimación y predicción.
+
+&nbsp;
+
+Vamos a empezar denotando a la serie como $X = \left\lbrace X_t \right\rbrace_{t}$, de la cual observamos una **muestra** $\left(x_0, \ldots, x_{T} \right)$.
+
+. . .
+
+¿Cuál se te ocurre que sería el [**caso más sencillo de serie temporal**]{.hl-yellow}? 
+
+---
+
+## Descomposición clásica: sin tendencia
+
+El caso más sencillo es considerar que la serie es [**completamente aleatoria**]{.hl-yellow}, es decir $X_t = \varepsilon_t$.
+
+. . .
+
+Al término $\left\lbrace \varepsilon_t \right\rbrace_{t \in T}$ le llamaremos [**error o innovación**]{.hl-purple} y, dado que se supone que no captura ningún patrón y que la serie debe [**ser finita**]{.hl-yellow}, tendríamos
+
+$$X_t = \varepsilon_t, \quad {\rm E} \left[X_t \right] = {\rm E} \left[\varepsilon_t \right] = 0, \quad  {\rm Var} \left[\varepsilon_t \right] = \sigma_{\varepsilon}^{2} = cte < \infty$$
+donde normalmente el error sigue una distribución normal de varianza finita.
+
+
+. . .
+
+Además dicho término de error cumplirá que el [**pasado no proporciona ningún tipo de información sobre el futuro**]{.hl-yellow}, es decir, 
+
+$$\varepsilon_{t+1} | \left(\varepsilon_t, \varepsilon_{t-1}, \ldots, \varepsilon_0 \right)  \sim \varepsilon_{t+1} \sim N \left(0, \sigma_{\varepsilon}^{2} \right)$$
+
+---
+
+## Sin tendencia
+
+💻 ¿Cómo podríamos simular dicha serie temporal? 
+
+
+. . .
+
+1. **Paso 1**: construye un tibble de 5 columnas, donde la primera columna contenga los valores $t=1, 2, \ldots, 1000$; y donde la segunda columna contenga valores simulados según una normal $N(0, \sigma = 0.5)$, la tercera con $\sigma = 1$, la cuarta con $\sigma = 2$ y la quinta con $\sigma = 4$.
+
+```{r}
+#| code-fold: true
+n <- 1000
+datos <-
+  tibble("t" = 1:n,
+         "sd_05" = rnorm(n, mean = 0, sd = 0.5), "sd_1" = rnorm(n, mean = 0, sd = 1),
+         "sd_2" = rnorm(n, mean = 0, sd = 2), "sd_4" = rnorm(n, mean = 0, sd = 4))
+```
+
+---
+
+## Sin tendencia
+
+2. **Paso 2**: haz un gráfico (¿cuál harías?) solo considerando $t$ y la primera serie `sd_05`
+
+
+. . .
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_line(aes(x = t, y = sd_05)) +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = eps_t con sd = 0.5")
+```
+
+---
+
+## Sin tendencia
+
+
+:::: columns
+::: {.column width="30%"}
+
+3. **Paso 3**: ¿cómo deberíamos de transformar los datos para poder pintar todas las series a la vez? 
+
+:::
+
+::: {.column width="70%"}
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos |>
+  pivot_longer(cols = "sd_05":"sd_4",
+               names_to = "sd", values_to = "X_t")
+ggplot(datos_tidy) +
+  geom_line(aes(x = t, y = X_t, color = sd),
+            alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~sd) +
+  theme_minimal() +
+  labs(x = "t", y = "X_t", color = "Desv. típica",
+       title = "Serie temporal X_t = eps_t con distintas varianzas")
+```
+
+:::
+::::
+
+Hazte un borrador de cómo sería el código de ggplot para dibujarlo (distinguiendo por ejemplo cada serie de un color, y separada del resto en forma de cuadrícula) y piensa que necesitas
+
+---
+
+## Sin tendencia
+
+4. **Paso 4**. Para automatizarlo, diseña una **función** tal que le introduzcas como argumento un tamaño muestral $n$, un $t$ y un vector de desviaciones típicas, y devuelva en formato tidy data los valores de las series temporales (tantas series como longitud tenga el vector de desviaciones)
+
+```{r}
+#| code-fold: true
+# por defecto t = 1:n y sd = 1
+time_series_error <- function(n, t = 1:n, sd_vec = 1) {
+  
+  datos_tidy <- tibble()
+  
+  for (i in 1:length(sd_vec)) {
+    
+    datos_tidy <- 
+      datos_tidy |>
+      bind_rows(tibble("t" = 1:n, "sd" = glue::glue("sd_{sd_vec[i]}"),
+                       "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
+  }
+  return(datos_tidy)
+}
+```
+
+---
+
+## Sin tendencia
+
+Esta serie temporal $X_t = \varepsilon_t$ es la más sencilla que podemos imaginar y [**no podemos predecirla**]{.hl-red} ya que no hay ningún tipo de patrón determinístico que podamos capturar.
+
+```{r}
+#| code-fold: true
+datos <- time_series_error(n = 1000, sd = c(0.5, 1, 2, 4))
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t, color = sd), alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~sd) +
+  theme_minimal() +
+  labs(x = "t", y = "X_t", color = "Desv. típica",
+       title = "Serie temporal X_t = eps_t con distintas varianzas")
+```
+
+---
+
+## Con tendencia
+
+Normalmente una serie temporal suele ser más complejo y llevo al menos incorporada una [**componente de tendencia o nivel $\mu_t$**]{.hl-yellow} tal que
+
+$$X_t = f \left(\mu_t, \varepsilon_t\right) =^{*} \mu_t + \varepsilon_t, \quad {\rm E} \left[X_t \right] = \mu_t$$
+$*$ De momento estamos considerando una [**descomposición aditiva**]{.hl-yellow}
+
+. . .
+
+Dicha tendencia $\mu_t$ puede ser a su vez modelada en función de $t$ y de un vector de parámetros $\beta$ tal que $\mu_t := f \left(t, \beta \right)$
+
+- [**Constante**]{.hl-purple}: $\mu_t = \beta = \beta_0 = cte$ 
+
+- [**Lineal**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t$ 
+
+- [**Polinómica (no lineal)**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t + \ldots + \beta_r t^{r}$ 
+
+
+---
+
+## Con tendencia
+
+- [**Constante**]{.hl-purple}: $\mu_t = \beta = \beta_0 = cte$ 
+
+
+$$X_t = f \left(\mu_t, \varepsilon_t\right) = \beta_0  + \varepsilon_t , \quad {\rm E} \left[X_t \right] = \beta_0, \quad \widehat{X}_{t + k} = \widehat{\beta}_0$$
+
+```{r}
+#| echo: false
+trend <- 3
+datos <-
+  time_series_error(n = 1000, sd = 1) |> 
+  mutate(X_t = X_t + trend)
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t), alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t = 3")
+```
+
+---
+
+## Con tendencia
+
+- [**Lineal**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t$ 
+
+
+$$X_t = f \left(\mu_t, \varepsilon_t\right) = \beta_0  + \beta_1 t + \varepsilon_t , \quad {\rm E} \left[X_t \right] = \beta_0  + \beta_1 t \to \pm \infty, \quad \widehat{X}_{t + k} = \widehat{\beta}_0 + \widehat{\beta}_1 \left(t + k \right)$$
+
+```{r}
+#| echo: false
+trend <- c(-3, 0.01)
+datos <-
+  time_series_error(n = 1000, sd = 1) |> 
+  mutate(X_t = X_t + trend[1] + trend[2]*t)
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t), alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t = -3 + 0.01*t")
+```
+
+---
+
+## Con tendencia
+
+- [**Polinómica (no lineal)**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t + \ldots + \beta_r t^{r}$ 
+
+$$X_t = f \left(\mu_t, \varepsilon_t\right) = \beta_0 + \beta_1 t + \ldots + \beta_r t^{r} + \varepsilon_t , \quad \widehat{X}_{t + k} = \widehat{\beta}_0 + \widehat{\beta}_1 \left(t + k \right) + \ldots + \widehat{\beta}_r \left(t + k \right)^r$$
+
+```{r}
+#| echo: false
+trend <- c(-1, 0.01, 0.000001, -0.00000001)
+datos <-
+  time_series_error(n = 1000, sd = 1) |> 
+  mutate(X_t = X_t + trend[1] + trend[2]*t + trend[3]*t^2 + trend[4]*t^3)
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t), alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t = -1 + 0.01*t + 0.000001*t^2 -0.00000001*t^3")
+```
+
+---
+
+## Con tendencia
+
+Para la predicción de los valores en un tiempo futuro $t + k$ simplemente necesitamos realizar la [**estimación del vector de parámetros $\widehat{\beta}$**]{.hl-yellow}. Para ello recurriremos al [**método de los minimos cuadrados**]{.hl-yellow} tal que
+
+$$\widehat{\beta} = \arg \min_{\beta \in \mathbb{R}^{r+1}} \sum_{t = 0}^{T} \left(x_t - \widehat{x}_t \right)^2 = \arg \min_{\beta \in \mathbb{R}^{r+1}} \sum_{t = 0}^{T} \left(x_t - \left(\beta_0 + \beta_1 t \ldots \beta_r t^r \right) \right)^2$$
+
+. . .
+
+Como suele ser habitual, para encontrar el mínimo basta con **derivar respecto a los parámetros e igualar a 0**. Por ejemplo...
+
+- [**Constante**]{.hl-purple}: $\frac{\partial \sum_{t=0}^{T} \left(x_t - \beta_0 \right)^2}{\partial \beta_0} = T \beta_0 - \sum_{t=0}^{T} x_t = 0$ -> $\widehat{\beta}_0 = \overline{x}_{t=0, ..., T}$
+
+
+---
+
+## Con tendencia
+
+
+💻 Construye una función que [**simule una serie temporal con error y tendencia constante**]{.hl-yellow}. Usa la función definida anteriormente.
+
+. . .
+
+```{r}
+#| code-fold: true
+time_series_trend_error <- function(n = 1000, trend = 0, sd = 1) {
+  
+  datos <-
+    time_series_error(n = n, sd = sd) |>
+    mutate(X_t = X_t + trend)
+  
+  return(datos)
+}
+
+set.seed(123)
+datos <- time_series_trend_error(n = 1000, trend = 3, sd = 0.5)
+ggplot(datos, aes(x = t, y = X_t)) +
+  geom_line(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t = 3")
+```
+
+---
+
+## Con tendencia
+
+💻 Construye una función que simule una [**serie temporal con error y tendencia lineal**]{.hl-yellow}. Fíjate que la **línea de ajuste de ggplot es literal la estimación** que haríamos si solo consideramos error+tendencia.
+
+. . .
+
+```{r}
+#| code-fold: true
+time_series_trend_error <- function(n = 1000, trend = c(1, -0.01), sd = 1) {
+  
+  datos <-
+    time_series_error(n = n, sd = sd) |>
+    mutate(X_t = X_t + trend[1] + trend[2]*t)
+  
+  return(datos)
+}
+
+set.seed(123)
+datos <- time_series_trend_error(n = 1000, trend = c(1, -0.01), sd = 0.5)
+ggplot(datos, aes(x = t, y = X_t)) +
+  geom_line(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t = 1 - 0.01*t")
+```
+
+
+---
+
+## Con tendencia
+
+
+💻 Construye una función general que simule una [**serie temporal con error y tendencia polinómica**]{.hl-yellow} (que acepte un vector de parámetros general y construya el polinomio). 
+
+```{r}
+#| code-fold: true
+time_series_trend_error <- function(n = 1000, trend = c(1, -0.01, 0.001, -0.0001), sd = 1) {
+  
+  datos <- time_series_error(n = n, sd = sd)
+  for (i in 1:length(trend)) {
+    
+    datos <-
+      datos |>
+      mutate(X_t = X_t + trend[i]*t^(i - 1))
+    
+  } 
+ 
+  return(datos)
+}
+
+set.seed(123)
+datos <- time_series_trend_error(n = 1000, trend = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
+ggplot(datos, aes(x = t, y = X_t)) +
+  geom_line(alpha = 0.7) +
+  geom_smooth(formula = y ~ poly(x, 3), se = FALSE) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
+```
+
+---
+
+## Con tendencia
+
+💻 ¿Se te ocurre alguna forma sencilla en `R` de obtener las estimaciones mínimos cuadrados asumiendo dicho modelo de tendencia + error?
+
+. . .
+
+```{r}
+#| code-fold: true
+set.seed(123)
+datos <-
+  time_series_trend_error(n = 1000, trend = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
+
+# ajustamos un modelo polinómico con lm
+modelo <- datos |> lm(formula = X_t ~ poly(t, 3, raw = TRUE))
+trend_hat <- coef(modelo)
+datos <-
+  datos |> mutate(X_hat = predict(modelo, tibble("t" = t)))
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t), alpha = 0.7) +
+  geom_line(aes(x = t, y = X_hat), alpha = 0.7, color = "red") +
+  theme_minimal() +
+  labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
+```
+
+---
+
+## Caso real: AEMET
+
+Como ya te puedes estar imaginando, esta forma de estimar una serie temporal con un polinomio puede ser [**bastante imprecisa**]{.hl-red}, máxime si aparece en nuestra serie una [**componente estacional**]{.hl-yellow} (un patrón periódico).
+
+Vamos a retomar por ejemplo nuestros **datos de temperatura del AEMET**
+
+```{r}
+#| code-fold: true
+ggplot(retiro) +
+  geom_line(aes(x = fecha, y = tmed), linewidth = 0.3, alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+---
+
+## Caso real: AEMET
+
+💻 Crea una función que, **dada una serie, pueda incluir 3 nuevas columnas con los 3 métodos de estimación (tendencia constante, lineal y polinómica de grado 3)**. Aplica a dichos datos reales del AEMET
+
+. . .
+
+:::: columns
+::: {.column width="32%"}
+
+Como observas las [**predicciones no son precisas cuando hay una componente estacional**]{.hl-red} ya que el ajuste realizado solo se fija en una tendencia con unos **coef ctes**.
+
+&nbsp;
+
+
+¿Se te ocurre alguna **idea para mejorar**?
+
+:::
+
+::: {.column width="68%"}
+
+```{r}
+#| code-fold: true
+estim_ts_trend_error <- function(datos, degree = 1) {
+  
+  if (degree == 0) {
+    modelo <- datos |> lm(formula = X_t ~ 1)
+  } else {
+    modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
+  }
+  trend_hat <- coef(modelo)
+  
+  datos <-
+    datos |> 
+    mutate(X_hat = predict(modelo, tibble("t" = t)))
+  
+  return(datos)
+}
+
+retiro_estim <-
+  retiro |>
+  select(fecha, tmed) |> rename(X_t = tmed) |> 
+  mutate(t = 1:length(fecha)) |>
+  estim_ts_trend_error(degree = 0) |> rename(tmed_hat_0 = X_hat) |>
+  estim_ts_trend_error(degree = 1) |> rename(tmed_hat_1 = X_hat) |> 
+  estim_ts_trend_error(degree = 3) |> rename(tmed_hat_3 = X_hat) |> 
+  rename(tmed = X_t)
+
+ggplot(retiro_estim |> pivot_longer(-c(fecha, t), names_to = "type", values_to = "pred")) +
+  geom_line(aes(x = fecha, y = pred, color = type),
+            linewidth = 0.4, alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+:::
+::::
+
