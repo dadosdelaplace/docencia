@@ -9,11 +9,11 @@
 
 - `airquality` del paquete `{datasets}` (ya instalado por defecto): **medidas diarias (n = 153 observaciones) de la calidad del aire** en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: niveles de ozono, radiación solar, viento, temperatura, mes y día. También **disponible en Github en** <https://raw.githubusercontent.com/dadosdelaplace/docencia/main/R-datascience/material/datos/airquality.csv>
 
-- `salto_longitud`: guarda cómo ha **progresado el récord de salto de longitud masculino**. Tabla extraída de la wikipedia <https://shorturl.at/Wqif1>. **Disponible en Github en** <https://raw.githubusercontent.com/dadosdelaplace/docencia/main/R-datascience/material/datos/salto_longitud.csv>
+- `salto_longitud`: guarda cómo ha **progresado el récord de salto de longitud masculino**. Tabla extraída de la wikipedia <https://shorturl.at/Wqif1>. **Disponible en Github en** <https://github.com/dadosdelaplace/docencia/raw/main/R-datascience/material/datos/salto_longitud.RData>
 
 - `pinniped` del paquete `{Biostatistics}`: **peso corporal y cerebral** de 33 especies de pinnípedos (morsas, leones marinos y elefantes marinos) desagregado por sexos y mono/poligamia. También **disponible en Github en** <https://raw.githubusercontent.com/dadosdelaplace/docencia/main/R-datascience/material/datos/pinniped.csv>
 
-- `discursos`: del repositorio de @lirondos, recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021. **Disponible en Github en** <https://raw.githubusercontent.com/dadosdelaplace/docencia/main/R-datascience/material/datos/discursos.csv>
+- `discursos`: del repositorio de @lirondos, recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021. **Disponible en Github en** <https://github.com/dadosdelaplace/docencia/raw/main/R-datascience/material/datos/discursos.RData>
 
 - `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>) También **disponible en Github en** <https://raw.githubusercontent.com/dadosdelaplace/docencia/main/R-datascience/material/datos/relig_income.csv>
 
