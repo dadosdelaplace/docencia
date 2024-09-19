@@ -2599,17 +2599,22 @@ nrow(airquality_tb)
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[5, ]
 ```
 
 ### [**Ejercicio 4**]{.hl-yellow}
 
-📝 Filtra solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores "formateados")
+📝 Modifica el código inferior para filtrar solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores "formateados")
+
+```{r}
+#| eval: false
+airquality_tb[Month == 8, ]
+```
 
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[airquality_tb$Month == 8, ]
 ```
 
 ### [**Ejercicio 5**]{.hl-yellow}
@@ -2619,8 +2624,10 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month != 7 & Month != 8, ]
-airquality_tb[!(Month %in% c(7, 8)), ]
+airquality_tb[airquality_tb$Month != 7 & airquality_tb$Month != 8, ]
+
+# otra forma
+airquality_tb[!(airquality_tb$Month %in% c(7, 8)), ]
 ```
 
 ### [**Ejercicio 6**]{.hl-yellow}
@@ -2639,7 +2646,7 @@ airquality_tb[, 3]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, c("Temp", "Wind")]
+airquality_tb[airquality_tb$Month == 8, c("Temp", "Wind")]
 ```
 
 ### [**Ejercicio 8**]{.hl-yellow}

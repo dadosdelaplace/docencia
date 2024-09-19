@@ -3596,8 +3596,8 @@ character(0)
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contamos</span></span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>discursos<span class="sc">$</span>spain <span class="ot">&lt;-</span> <span class="fu">str_count</span>(discursos<span class="sc">$</span>texto, <span class="at">pattern =</span> <span class="st">&quot;españoles|españolas|españa&quot;</span>)</span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Años con más menciones</span></span>
-<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>discursos<span class="sc">$</span>year[<span class="fu">order</span>(discursos<span class="sc">$</span>spain, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Años con menos menciones</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>discursos<span class="sc">$</span>year[<span class="fu">order</span>(discursos<span class="sc">$</span>spain)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4129,7 +4129,7 @@ Tip
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[<span class="dv">5</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4138,7 +4138,7 @@ Tip
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4147,8 +4147,8 @@ Tip
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[Month <span class="sc">!=</span> <span class="dv">7</span> <span class="sc">&amp;</span> Month <span class="sc">!=</span> <span class="dv">8</span>, ]</span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>airquality_tb[<span class="sc">!</span>(Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">!=</span> <span class="dv">7</span> <span class="sc">&amp;</span> airquality_tb<span class="sc">$</span>Month <span class="sc">!=</span> <span class="dv">8</span>, ]</span>
+<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>airquality_tb[<span class="sc">!</span>(airquality_tb<span class="sc">$</span>Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4163,7 +4163,7 @@ Tip
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, <span class="fu">c</span>(<span class="st">&quot;Temp&quot;</span>, <span class="st">&quot;Wind&quot;</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">==</span> <span class="dv">8</span>, <span class="fu">c</span>(<span class="st">&quot;Temp&quot;</span>, <span class="st">&quot;Wind&quot;</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4327,10 +4327,10 @@ Tip
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total absoluto</span></span>
-<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>)</span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">&quot;USA&quot;</span>)</span>
 <span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a><span class="co"># porcentaje relativo</span></span>
-<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">==</span> <span class="st">&quot;USA&quot;</span>) <span class="sc">/</span> <span class="fu">length</span>(salto_longitud<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">&quot;USA&quot;</span>) <span class="sc">/</span> <span class="fu">length</span>(salto_longitud<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -4464,7 +4464,7 @@ Tip
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>pinniped_tb<span class="sc">$</span>phoca <span class="ot">&lt;-</span> pinniped_tb<span class="sc">$</span>Species <span class="sc">==</span> <span class="st">&quot;Phoca&quot;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a>pinniped_tb<span class="sc">$</span>phoca <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(pinniped_tb<span class="sc">$</span>Species, <span class="st">&quot;Phoca&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>

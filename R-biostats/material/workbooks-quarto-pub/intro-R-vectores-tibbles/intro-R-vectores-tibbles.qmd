@@ -2148,7 +2148,7 @@ nrow(airquality_tb)
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[5, ]
 ```
 
 ### [**Ejercicio 4**]{.hl-yellow}
@@ -2158,7 +2158,7 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[airquality_tb$Month == 8, ]
 ```
 
 ### [**Ejercicio 5**]{.hl-yellow}
@@ -2168,8 +2168,8 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month != 7 & Month != 8, ]
-airquality_tb[!(Month %in% c(7, 8)), ]
+airquality_tb[airquality_tb$Month != 7 & airquality_tb$Month != 8, ]
+airquality_tb[!(airquality_tb$Month %in% c(7, 8)), ]
 ```
 
 ### [**Ejercicio 6**]{.hl-yellow}
@@ -2188,7 +2188,7 @@ airquality_tb[, 3]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, c("Temp", "Wind")]
+airquality_tb[airquality_tb$Month == 8, c("Temp", "Wind")]
 ```
 
 ### [**Ejercicio 8**]{.hl-yellow}
@@ -2406,7 +2406,9 @@ names(pinniped_tb)
 ```{r}
 #| code-fold: true
 #| eval: false
-pinniped_tb$phoca <- pinniped_tb$Species == "Phoca"
+# tienes más funcionalidades con textos del paquete stringr
+# arriba en el workbook
+pinniped_tb$phoca <- str_detect(pinniped_tb$Species == "Phoca")
 ```
 
 ### Pregunta 4
@@ -2600,10 +2602,10 @@ salto_longitud
 #| eval: false
 
 # total absoluto
-sum(salto_longitud$country == "USA")
+sum(salto_longitud$country != "USA")
 
 # porcentaje relativo
-100*sum(salto_longitud$country == "USA") / length(salto_longitud$country)
+100*sum(salto_longitud$country != "USA") / length(salto_longitud$country)
 ```
 
 

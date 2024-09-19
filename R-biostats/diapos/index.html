@@ -1700,7 +1700,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-04"</code></pre>
+<pre><code>[1] "2024-09-19"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1710,7 +1710,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-04 13:08:07 CEST"</code></pre>
+<pre><code>[1] "2024-09-19 14:13:20 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -3100,16 +3100,19 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb333"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb333-1"><a href="#cb333-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb333"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb333-1"><a href="#cb333-1"></a>airquality_tb[<span class="dv">5</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-5-4">
-<p>📝 Filtra solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores “formateados”)</p>
+<p>📝 Modifica el código inferior para filtrar solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores “formateados”)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb334"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb334-1"><a href="#cb334-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb334"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb334-1"><a href="#cb334-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">==</span> <span class="dv">8</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3118,15 +3121,17 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1"></a>airquality_tb[Month <span class="sc">!=</span> <span class="dv">7</span> <span class="sc">&amp;</span> Month <span class="sc">!=</span> <span class="dv">8</span>, ]</span>
-<span id="cb335-2"><a href="#cb335-2"></a>airquality_tb[<span class="sc">!</span>(Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb336"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb336-1"><a href="#cb336-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">!=</span> <span class="dv">7</span> <span class="sc">&amp;</span> airquality_tb<span class="sc">$</span>Month <span class="sc">!=</span> <span class="dv">8</span>, ]</span>
+<span id="cb336-2"><a href="#cb336-2"></a></span>
+<span id="cb336-3"><a href="#cb336-3"></a><span class="co"># otra forma</span></span>
+<span id="cb336-4"><a href="#cb336-4"></a>airquality_tb[<span class="sc">!</span>(airquality_tb<span class="sc">$</span>Month <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>)), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-5-6">
 <p>📝 Modifica el siguiente código para quedarte solo con las variable de ozono y temperatura (sin importar qué posición ocupen)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb336"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb336-1"><a href="#cb336-1"></a>airquality_tb[, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1"></a>airquality_tb[, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-5-7">
@@ -3134,7 +3139,7 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1"></a>airquality_tb[Month <span class="sc">==</span> <span class="dv">8</span>, <span class="fu">c</span>(<span class="st">"Temp"</span>, <span class="st">"Wind"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a>airquality_tb[airquality_tb<span class="sc">$</span>Month <span class="sc">==</span> <span class="dv">8</span>, <span class="fu">c</span>(<span class="st">"Temp"</span>, <span class="st">"Wind"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3143,7 +3148,7 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a><span class="fu">names</span>(airquality_tb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ozono"</span>, <span class="st">"rad_solar"</span>, <span class="st">"viento"</span>, <span class="st">"temp"</span>, <span class="st">"mes"</span>, <span class="st">"dia"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb339"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb339-1"><a href="#cb339-1"></a><span class="fu">names</span>(airquality_tb) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ozono"</span>, <span class="st">"rad_solar"</span>, <span class="st">"viento"</span>, <span class="st">"temp"</span>, <span class="st">"mes"</span>, <span class="st">"dia"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3154,7 +3159,7 @@ multiple of the number of rows [4]</code></pre>
 <h2>🐣 Caso práctico II: tibble</h2>
 <p>Del paquete <code>{Biostatistics}</code> usaremos el conunto de datos <code>pinniped</code>, que guarda los <strong>datos de peso de cuerpo y cerebro</strong> (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb339"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb339-1"><a href="#cb339-1"></a>Biostatistics<span class="sc">::</span>pinniped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb340"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb340-1"><a href="#cb340-1"></a>Biostatistics<span class="sc">::</span>pinniped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       Species Male_brain_g Female_brain_g Male_mass_Kg
 1       Monachus schauinslandi        370.0             NA        173.0
@@ -3246,7 +3251,7 @@ multiple of the number of rows [4]</code></pre>
 <li>el paquete <code>{rmarkdown}</code> (para generar archivos <code>.rmd</code>)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb341"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb342"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb342-1"><a href="#cb342-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>instalar <a href="https://quarto.org/docs/get-started/"><strong>Quarto</strong></a> (si ya conocías <code>R</code>, el «nuevo» <code>.rmd</code> ahora como <code>.qmd</code>)</li>
@@ -3405,44 +3410,16 @@ multiple of the number of rows [4]</code></pre>
 <li><code>editor</code>: si estás en modo visual o source.</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<div class="sourceCode" id="cb342"><pre class="sourceCode numberSource yaml number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode yaml hljs"><span id="cb342-1" class="hljs-ln-code"><a href="#cb342-1"></a><span class="pp">---</span></span>
-<span id="cb342-2" class="hljs-ln-code"><a href="#cb342-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"prueba"</span></span>
-<span id="cb342-3" class="hljs-ln-code"><a href="#cb342-3"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb342-4" class="hljs-ln-code"><a href="#cb342-4"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb342-5" class="hljs-ln-code"><a href="#cb342-5"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb342-6" class="hljs-ln-code"><a href="#cb342-6"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode numberSource yaml number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode yaml hljs"><span id="cb343-1" class="hljs-ln-code"><a href="#cb343-1"></a><span class="pp">---</span></span>
+<span id="cb343-2" class="hljs-ln-code"><a href="#cb343-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"prueba"</span></span>
+<span id="cb343-3" class="hljs-ln-code"><a href="#cb343-3"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb343-4" class="hljs-ln-code"><a href="#cb343-4"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb343-5" class="hljs-ln-code"><a href="#cb343-5"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb343-6" class="hljs-ln-code"><a href="#cb343-6"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="cabecera-de-un-qmd-1" class="slide level2" data-auto-animate="true">
-<h2 data-id="quarto-animate-title">Cabecera de un qmd</h2>
-<p>La <span class="hl-yellow"><strong>cabecera están en formato YAML</strong></span> y contiene los <span class="hl-yellow"><strong>metadatos</strong></span> del documento</p>
-<div class="columns">
-<div class="column" style="width:60%;">
-<ul>
-<li><code>title</code> y <code>subtitle</code>: el título/subtítulo del documento</li>
-<li><code>author</code>: autor del mismo</li>
-<li><code>format</code>: formato de salida (podremos personalizar)
-<ul>
-<li><code>theme</code>: si tienes algún archivo de estilos</li>
-<li><code>toc</code>: si quieres índice o no</li>
-<li><code>toc-location</code>: posición del índice</li>
-<li><code>toc-title</code>: título del índice</li>
-</ul></li>
-<li><code>editor</code>: si estás en modo visual o source.</li>
-</ul>
-</div><div class="column" style="width:40%;">
-<div class="sourceCode" id="cb343"><pre class="sourceCode numberSource yaml number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode yaml hljs"><span id="cb343-1" class="hljs-ln-code"><a href="#cb343-1"></a><span class="pp">---</span></span>
-<span id="cb343-2" class="hljs-ln-code"><a href="#cb343-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"prueba"</span></span>
-<span id="cb343-3" class="hljs-ln-code"><a href="#cb343-3"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"javier álvarez liébana"</span></span>
-<span id="cb343-4" class="hljs-ln-code"><a href="#cb343-4"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb343-5" class="hljs-ln-code"><a href="#cb343-5"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb343-6" class="hljs-ln-code"><a href="#cb343-6"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb343-7" class="hljs-ln-code"><a href="#cb343-7"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="cabecera-de-un-qmd-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Cabecera de un qmd</h2>
 <p>La <span class="hl-yellow"><strong>cabecera están en formato YAML</strong></span> y contiene los <span class="hl-yellow"><strong>metadatos</strong></span> del documento</p>
 <div class="columns">
@@ -3465,14 +3442,12 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb344-3" class="hljs-ln-code"><a href="#cb344-3"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"javier álvarez liébana"</span></span>
 <span id="cb344-4" class="hljs-ln-code"><a href="#cb344-4"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb344-5" class="hljs-ln-code"><a href="#cb344-5"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb344-6" class="hljs-ln-code"><a href="#cb344-6"></a><span class="at">    </span><span class="fu">style</span><span class="kw">:</span><span class="at"> style.css</span></span>
-<span id="cb344-7" class="hljs-ln-code"><a href="#cb344-7"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb344-8" class="hljs-ln-code"><a href="#cb344-8"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb344-9" class="hljs-ln-code"><a href="#cb344-9"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb344-6" class="hljs-ln-code"><a href="#cb344-6"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb344-7" class="hljs-ln-code"><a href="#cb344-7"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="cabecera-de-un-qmd-3" class="slide level2" data-auto-animate="true">
+<section id="cabecera-de-un-qmd-2" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Cabecera de un qmd</h2>
 <p>La <span class="hl-yellow"><strong>cabecera están en formato YAML</strong></span> y contiene los <span class="hl-yellow"><strong>metadatos</strong></span> del documento</p>
 <div class="columns">
@@ -3497,13 +3472,12 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb345-5" class="hljs-ln-code"><a href="#cb345-5"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
 <span id="cb345-6" class="hljs-ln-code"><a href="#cb345-6"></a><span class="at">    </span><span class="fu">style</span><span class="kw">:</span><span class="at"> style.css</span></span>
 <span id="cb345-7" class="hljs-ln-code"><a href="#cb345-7"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb345-8" class="hljs-ln-code"><a href="#cb345-8"></a><span class="at">    </span><span class="fu">toc-location</span><span class="kw">:</span><span class="at"> left</span></span>
-<span id="cb345-9" class="hljs-ln-code"><a href="#cb345-9"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb345-10" class="hljs-ln-code"><a href="#cb345-10"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb345-8" class="hljs-ln-code"><a href="#cb345-8"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb345-9" class="hljs-ln-code"><a href="#cb345-9"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="cabecera-de-un-qmd-4" class="slide level2" data-auto-animate="true">
+<section id="cabecera-de-un-qmd-3" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">Cabecera de un qmd</h2>
 <p>La <span class="hl-yellow"><strong>cabecera están en formato YAML</strong></span> y contiene los <span class="hl-yellow"><strong>metadatos</strong></span> del documento</p>
 <div class="columns">
@@ -3529,9 +3503,40 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb346-6" class="hljs-ln-code"><a href="#cb346-6"></a><span class="at">    </span><span class="fu">style</span><span class="kw">:</span><span class="at"> style.css</span></span>
 <span id="cb346-7" class="hljs-ln-code"><a href="#cb346-7"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb346-8" class="hljs-ln-code"><a href="#cb346-8"></a><span class="at">    </span><span class="fu">toc-location</span><span class="kw">:</span><span class="at"> left</span></span>
-<span id="cb346-9" class="hljs-ln-code"><a href="#cb346-9"></a><span class="at">    </span><span class="fu">toc-title</span><span class="kw">:</span><span class="at"> Índice</span></span>
-<span id="cb346-10" class="hljs-ln-code"><a href="#cb346-10"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb346-11" class="hljs-ln-code"><a href="#cb346-11"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb346-9" class="hljs-ln-code"><a href="#cb346-9"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb346-10" class="hljs-ln-code"><a href="#cb346-10"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="cabecera-de-un-qmd-4" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">Cabecera de un qmd</h2>
+<p>La <span class="hl-yellow"><strong>cabecera están en formato YAML</strong></span> y contiene los <span class="hl-yellow"><strong>metadatos</strong></span> del documento</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li><code>title</code> y <code>subtitle</code>: el título/subtítulo del documento</li>
+<li><code>author</code>: autor del mismo</li>
+<li><code>format</code>: formato de salida (podremos personalizar)
+<ul>
+<li><code>theme</code>: si tienes algún archivo de estilos</li>
+<li><code>toc</code>: si quieres índice o no</li>
+<li><code>toc-location</code>: posición del índice</li>
+<li><code>toc-title</code>: título del índice</li>
+</ul></li>
+<li><code>editor</code>: si estás en modo visual o source.</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="sourceCode" id="cb347"><pre class="sourceCode numberSource yaml number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode yaml hljs"><span id="cb347-1" class="hljs-ln-code"><a href="#cb347-1"></a><span class="pp">---</span></span>
+<span id="cb347-2" class="hljs-ln-code"><a href="#cb347-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"prueba"</span></span>
+<span id="cb347-3" class="hljs-ln-code"><a href="#cb347-3"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"javier álvarez liébana"</span></span>
+<span id="cb347-4" class="hljs-ln-code"><a href="#cb347-4"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb347-5" class="hljs-ln-code"><a href="#cb347-5"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb347-6" class="hljs-ln-code"><a href="#cb347-6"></a><span class="at">    </span><span class="fu">style</span><span class="kw">:</span><span class="at"> style.css</span></span>
+<span id="cb347-7" class="hljs-ln-code"><a href="#cb347-7"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb347-8" class="hljs-ln-code"><a href="#cb347-8"></a><span class="at">    </span><span class="fu">toc-location</span><span class="kw">:</span><span class="at"> left</span></span>
+<span id="cb347-9" class="hljs-ln-code"><a href="#cb347-9"></a><span class="at">    </span><span class="fu">toc-title</span><span class="kw">:</span><span class="at"> Índice</span></span>
+<span id="cb347-10" class="hljs-ln-code"><a href="#cb347-10"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb347-11" class="hljs-ln-code"><a href="#cb347-11"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3596,10 +3601,10 @@ multiple of the number of rows [4]</code></pre>
 </div><div class="column" style="width:50%;">
 <p>Vamos por ejemplo a definir dos variables y su suma de la siguiente manera, escribiendo dicho código en nuestro <code>.qmd</code> (dentro de ese chunk)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb347"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb347-1"><a href="#cb347-1"></a><span class="co"># Código R</span></span>
-<span id="cb347-2"><a href="#cb347-2"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb347-3"><a href="#cb347-3"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb347-4"><a href="#cb347-4"></a>x <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb348"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb348-1"><a href="#cb348-1"></a><span class="co"># Código R</span></span>
+<span id="cb348-2"><a href="#cb348-2"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb348-3"><a href="#cb348-3"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb348-4"><a href="#cb348-4"></a>x <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -3650,13 +3655,13 @@ multiple of the number of rows [4]</code></pre>
 <section id="personalizando-chunks" class="slide level2">
 <h2>Personalizando chunks</h2>
 <p>Si queremos que aplique la <strong>opción a todos los chunks por defecto</strong> debemos incluirlo al final de la cabecera, como <span class="hl-yellow"><strong>opciones de ejecución</strong></span></p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb349-1"><a href="#cb349-1"></a><span class="pp">---</span></span>
-<span id="cb349-2"><a href="#cb349-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"¡Hola!"</span></span>
-<span id="cb349-3"><a href="#cb349-3"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
-<span id="cb349-4"><a href="#cb349-4"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
-<span id="cb349-5"><a href="#cb349-5"></a><span class="fu">execute</span><span class="kw">:</span></span>
-<span id="cb349-6"><a href="#cb349-6"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb349-7"><a href="#cb349-7"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb350-1"><a href="#cb350-1"></a><span class="pp">---</span></span>
+<span id="cb350-2"><a href="#cb350-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"¡Hola!"</span></span>
+<span id="cb350-3"><a href="#cb350-3"></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span>
+<span id="cb350-4"><a href="#cb350-4"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span>
+<span id="cb350-5"><a href="#cb350-5"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb350-6"><a href="#cb350-6"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb350-7"><a href="#cb350-7"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="organizando-qmd" class="slide level2">
 <h2>Organizando qmd</h2>
@@ -3716,8 +3721,8 @@ multiple of the number of rows [4]</code></pre>
 <section id="añadir-estilos-1" class="slide level2">
 <h2>Añadir estilos</h2>
 <p>También puedes hacerlo de manera sencilla <span class="hl-yellow"><strong>añadiendo a los textos un poco de HTML</strong></span>. Por ejemplo, para personalizar el color de un texto va entre corchetes y justo tras el texto, entre llaves, las opciones de estilo</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb350-1"><a href="#cb350-1"></a>Esta palabra es [roja]{style="color:red;"} ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb351"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb351-1"><a href="#cb351-1"></a>... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb351-1"><a href="#cb351-1"></a>Esta palabra es [roja]{style="color:red;"} ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb352-1"><a href="#cb352-1"></a>... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <p>Esta palabra es <span style="color:red;">roja</span> …</p>
 <p>… y esta <span style="color:green; font-weight: bold;">verde y en negrita</span></p>
@@ -3726,14 +3731,14 @@ multiple of the number of rows [4]</code></pre>
 <section id="revealjs" class="slide level2">
 <h2>Revealjs</h2>
 <p>Puedes añadir algunas «animaciones» usando lo que se conoce como Revealjs (javascript), especifcándolo en la cabecera y usando <span class="hl-yellow"><strong>bloques</strong></span> de dicho lenguaje delimitados por <code>:::</code> al inicio y final, y la palabra de la «herramienta» a usar. Por ejemplo <code>{.incremental}</code> hace una transición de los elementos.</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb352-1"><a href="#cb352-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb352-2"><a href="#cb352-2"></a><span class="at">  revealjs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb353-1"><a href="#cb353-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb353-2"><a href="#cb353-2"></a><span class="at">  revealjs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>&nbsp;</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode numberSource revealjs number-lines code-with-copy"><code class="sourceCode"><span id="cb353-1"><a href="#cb353-1"></a>::: {.incremental}</span>
-<span id="cb353-2"><a href="#cb353-2"></a>- Me</span>
-<span id="cb353-3"><a href="#cb353-3"></a>- llamo</span>
-<span id="cb353-4"><a href="#cb353-4"></a>- Javi</span>
-<span id="cb353-5"><a href="#cb353-5"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode numberSource revealjs number-lines code-with-copy"><code class="sourceCode"><span id="cb354-1"><a href="#cb354-1"></a>::: {.incremental}</span>
+<span id="cb354-2"><a href="#cb354-2"></a>- Me</span>
+<span id="cb354-3"><a href="#cb354-3"></a>- llamo</span>
+<span id="cb354-4"><a href="#cb354-4"></a>- Javi</span>
+<span id="cb354-5"><a href="#cb354-5"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div>
 <ul>
 <li class="fragment">Me</li>
@@ -3745,12 +3750,12 @@ multiple of the number of rows [4]</code></pre>
 <section id="bloques-de-llamada" class="slide level2">
 <h2>Bloques de llamada</h2>
 <p>También puedes usar los <span class="hl-yellow"><strong>bloques de llamada</strong></span> que por defecto son <code>note</code>, <code>tip</code>, <code>warning</code>, <code>caution</code> e <code>important</code> (aunque los puedes crear y personalizar). Para ello basta con usar <code>:::{.callout-tipo}</code> y el tipo que quieras</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb354-1"><a href="#cb354-1"></a>:::{.callout-tip}</span>
-<span id="cb354-2"><a href="#cb354-2"></a></span>
-<span id="cb354-3"><a href="#cb354-3"></a>Note that there are five types of callouts, including: </span>
-<span id="cb354-4"><a href="#cb354-4"></a>`note`, `tip`, `warning`, `caution`, and `important`.</span>
-<span id="cb354-5"><a href="#cb354-5"></a></span>
-<span id="cb354-6"><a href="#cb354-6"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb355-1"><a href="#cb355-1"></a>:::{.callout-tip}</span>
+<span id="cb355-2"><a href="#cb355-2"></a></span>
+<span id="cb355-3"><a href="#cb355-3"></a>Note that there are five types of callouts, including: </span>
+<span id="cb355-4"><a href="#cb355-4"></a>`note`, `tip`, `warning`, `caution`, and `important`.</span>
+<span id="cb355-5"><a href="#cb355-5"></a></span>
+<span id="cb355-6"><a href="#cb355-6"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -3785,15 +3790,15 @@ multiple of the number of rows [4]</code></pre>
 <section id="múltiples-columnas" class="slide level2">
 <h2>Múltiples columnas</h2>
 <p>Con <code>:::: columns</code> podemos definir una disposición de <span class="hl-yellow"><strong>múltiples columnas</strong></span> donde cada una viene definida por <code>::: {.column width="65%"} cosa :::</code>, indicando al lado del porcentaje cuanto quieres que ocupe cada columna (¡cuidado, no dejar espacios!)</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb355-1"><a href="#cb355-1"></a>:::: columns</span>
-<span id="cb355-2"><a href="#cb355-2"></a>::: {.column width="65%"}</span>
-<span id="cb355-3"><a href="#cb355-3"></a>Así se define un vector</span>
-<span id="cb355-4"><a href="#cb355-4"></a>:::</span>
-<span id="cb355-5"><a href="#cb355-5"></a>::: {.column width="35%"}</span>
-<span id="cb355-6"><a href="#cb355-6"></a>x <span class="er">&lt;</span>- c(1, 2, 3)</span>
-<span id="cb355-7"><a href="#cb355-7"></a>x</span>
-<span id="cb355-8"><a href="#cb355-8"></a>:::</span>
-<span id="cb355-9"><a href="#cb355-9"></a>::::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb356-1"><a href="#cb356-1"></a>:::: columns</span>
+<span id="cb356-2"><a href="#cb356-2"></a>::: {.column width="65%"}</span>
+<span id="cb356-3"><a href="#cb356-3"></a>Así se define un vector</span>
+<span id="cb356-4"><a href="#cb356-4"></a>:::</span>
+<span id="cb356-5"><a href="#cb356-5"></a>::: {.column width="35%"}</span>
+<span id="cb356-6"><a href="#cb356-6"></a>x <span class="er">&lt;</span>- c(1, 2, 3)</span>
+<span id="cb356-7"><a href="#cb356-7"></a>x</span>
+<span id="cb356-8"><a href="#cb356-8"></a>:::</span>
+<span id="cb356-9"><a href="#cb356-9"></a>::::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>&nbsp;</p>
 <div class="fragment">
 <div class="columns">
@@ -3801,8 +3806,8 @@ multiple of the number of rows [4]</code></pre>
 <p>Así se define un vector</p>
 </div><div class="column" style="width:35%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb356"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb356-1"><a href="#cb356-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb356-2"><a href="#cb356-2"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb357"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb357-1"><a href="#cb357-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb357-2"><a href="#cb357-2"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
@@ -3814,19 +3819,19 @@ multiple of the number of rows [4]</code></pre>
 <section id="pestañas" class="slide level2">
 <h2>Pestañas</h2>
 <p>Con <code>::: panel-tabset :::</code> podemos también definir un panel de pestañas</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb358-1"><a href="#cb358-1"></a>### Ejercicios</span>
-<span id="cb358-2"><a href="#cb358-2"></a></span>
-<span id="cb358-3"><a href="#cb358-3"></a>Resuelve los siguientes ejercicios</span>
-<span id="cb358-4"><a href="#cb358-4"></a>::: panel-tabset</span>
-<span id="cb358-5"><a href="#cb358-5"></a></span>
-<span id="cb358-6"><a href="#cb358-6"></a>#### Ejercicio 1</span>
-<span id="cb358-7"><a href="#cb358-7"></a></span>
-<span id="cb358-8"><a href="#cb358-8"></a>Define un vector x con los primeros 3 números naturales</span>
-<span id="cb358-9"><a href="#cb358-9"></a></span>
-<span id="cb358-10"><a href="#cb358-10"></a>#### Ejercicio 2</span>
-<span id="cb358-11"><a href="#cb358-11"></a></span>
-<span id="cb358-12"><a href="#cb358-12"></a>Haz la suma del vector anterior</span>
-<span id="cb358-13"><a href="#cb358-13"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode numberSource html number-lines code-with-copy"><code class="sourceCode html"><span id="cb359-1"><a href="#cb359-1"></a>### Ejercicios</span>
+<span id="cb359-2"><a href="#cb359-2"></a></span>
+<span id="cb359-3"><a href="#cb359-3"></a>Resuelve los siguientes ejercicios</span>
+<span id="cb359-4"><a href="#cb359-4"></a>::: panel-tabset</span>
+<span id="cb359-5"><a href="#cb359-5"></a></span>
+<span id="cb359-6"><a href="#cb359-6"></a>#### Ejercicio 1</span>
+<span id="cb359-7"><a href="#cb359-7"></a></span>
+<span id="cb359-8"><a href="#cb359-8"></a>Define un vector x con los primeros 3 números naturales</span>
+<span id="cb359-9"><a href="#cb359-9"></a></span>
+<span id="cb359-10"><a href="#cb359-10"></a>#### Ejercicio 2</span>
+<span id="cb359-11"><a href="#cb359-11"></a></span>
+<span id="cb359-12"><a href="#cb359-12"></a>Haz la suma del vector anterior</span>
+<span id="cb359-13"><a href="#cb359-13"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="fragment">
 <h3 id="ejercicios">Ejercicios</h3>
 <p>Resuelve los siguientes ejercicios</p>
@@ -3847,32 +3852,32 @@ multiple of the number of rows [4]</code></pre>
 <h2>Código ajeno a R</h2>
 <p>Además <code>{reticulate}</code> nos permite crear chunks de <code>python</code> dentro de un Quarto en <code>R</code> (ver <a href="https://quarto.org/docs/computations/python.html" class="uri">https://quarto.org/docs/computations/python.html</a> para crear jupyter notebooks directamente desde Quarto)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb359"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb359-1"><a href="#cb359-1"></a><span class="co"># install.packages("reticulate")</span></span>
-<span id="cb359-2"><a href="#cb359-2"></a><span class="fu">library</span>(reticulate)</span>
-<span id="cb359-3"><a href="#cb359-3"></a></span>
-<span id="cb359-4"><a href="#cb359-4"></a><span class="fu">install_python</span>(<span class="st">"3.9.12"</span>) <span class="co"># Instalar python en PC sino lo tienes</span></span>
-<span id="cb359-5"><a href="#cb359-5"></a></span>
-<span id="cb359-6"><a href="#cb359-6"></a><span class="co"># Instalar paquetes de Python</span></span>
-<span id="cb359-7"><a href="#cb359-7"></a>reticulate<span class="sc">::</span><span class="fu">py_install</span>(<span class="st">"numpy"</span>)</span>
-<span id="cb359-8"><a href="#cb359-8"></a>reticulate<span class="sc">::</span><span class="fu">py_install</span>(<span class="st">"matplotlib"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb360"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb360-1"><a href="#cb360-1"></a><span class="co"># install.packages("reticulate")</span></span>
+<span id="cb360-2"><a href="#cb360-2"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb360-3"><a href="#cb360-3"></a></span>
+<span id="cb360-4"><a href="#cb360-4"></a><span class="fu">install_python</span>(<span class="st">"3.9.12"</span>) <span class="co"># Instalar python en PC sino lo tienes</span></span>
+<span id="cb360-5"><a href="#cb360-5"></a></span>
+<span id="cb360-6"><a href="#cb360-6"></a><span class="co"># Instalar paquetes de Python</span></span>
+<span id="cb360-7"><a href="#cb360-7"></a>reticulate<span class="sc">::</span><span class="fu">py_install</span>(<span class="st">"numpy"</span>)</span>
+<span id="cb360-8"><a href="#cb360-8"></a>reticulate<span class="sc">::</span><span class="fu">py_install</span>(<span class="st">"matplotlib"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb360"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb360-1"><a href="#cb360-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb360-2"><a href="#cb360-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb360-3"><a href="#cb360-3"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.05</span>)</span>
-<span id="cb360-4"><a href="#cb360-4"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
-<span id="cb360-5"><a href="#cb360-5"></a>fig, ax <span class="op">=</span> plt.subplots(</span>
-<span id="cb360-6"><a href="#cb360-6"></a>  subplot_kw <span class="op">=</span> {<span class="st">'projection'</span>: <span class="st">'polar'</span>} </span>
-<span id="cb360-7"><a href="#cb360-7"></a>)</span>
-<span id="cb360-8"><a href="#cb360-8"></a>ax.plot(theta, r)</span>
-<span id="cb360-9"><a href="#cb360-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb361"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb361-1"><a href="#cb361-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb361-2"><a href="#cb361-2"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb361-3"><a href="#cb361-3"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.05</span>)</span>
+<span id="cb361-4"><a href="#cb361-4"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
+<span id="cb361-5"><a href="#cb361-5"></a>fig, ax <span class="op">=</span> plt.subplots(</span>
+<span id="cb361-6"><a href="#cb361-6"></a>  subplot_kw <span class="op">=</span> {<span class="st">'projection'</span>: <span class="st">'polar'</span>} </span>
+<span id="cb361-7"><a href="#cb361-7"></a>)</span>
+<span id="cb361-8"><a href="#cb361-8"></a>ax.plot(theta, r)</span>
+<span id="cb361-9"><a href="#cb361-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:40%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-178-1.png" width="614"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-179-1.png" width="614"></p>
 </div>
 </div>
 </div>
@@ -3886,8 +3891,8 @@ multiple of the number of rows [4]</code></pre>
 <section id="ejemplo-de-entrega-1" class="slide level2">
 <h2>Ejemplo de entrega</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb361"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb361-1"><a href="#cb361-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb361-2"><a href="#cb361-2"></a>starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb362"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb362-1"><a href="#cb362-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb362-2"><a href="#cb362-2"></a>starwars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
    name     height  mass hair_color skin_color eye_color birth_year sex   gender
