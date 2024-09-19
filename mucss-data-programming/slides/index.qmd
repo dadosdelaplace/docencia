@@ -5954,7 +5954,7 @@ library(datasets)
 airquality
 ```
 
-Try to answer the questions posed in the [**workbook**](...).
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
 # L3: [tidyverse (columns)]{.flow} {#clase-3}
@@ -6706,7 +6706,7 @@ starwars |>
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](...).
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
 
@@ -6741,7 +6741,7 @@ lotr_3 <-
 ```
 
 
-Try to answer the questions posed in the [**workbook**](...).
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
 # L4: [tidyverse (summaries)]{.flow} {#clase-4}
@@ -7244,7 +7244,7 @@ billboard[, 1:8]
 ```
 
 
-Try to answer the questions posed in the [**workbook**](...).
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
 ---
@@ -7283,7 +7283,7 @@ data
 &nbsp;
 
 
-Try to answer the questions posed in the [**workbook**](...).
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
 # Extras

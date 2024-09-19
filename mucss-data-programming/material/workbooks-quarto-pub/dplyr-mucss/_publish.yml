@@ -1,0 +1,20 @@
+- source: intro-R-base.qmd
+  quarto-pub:
+    - id: bc0cf8ea-636f-456c-b6cb-7aef85fe173f
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-base'
+- source: intro-R-tibbles.qmd
+  quarto-pub:
+    - id: a982ab41-0d6c-47bc-a07b-bb7e55f5db50
+      url: 'https://javieralvarezliebana.quarto.pub/intro-r-base-tibbles-mucss'
+- source: flow-structure-functions.qmd
+  quarto-pub:
+    - id: 27c91599-a160-4bbc-8788-8603fcdf0173
+      url: 'https://javieralvarezliebana.quarto.pub/flow-structures-functions'
+- source: tidy-data-mucss.qmd
+  quarto-pub:
+    - id: 6c1a7632-a384-4e81-bd47-150fd6ff73f2
+      url: 'https://javieralvarezliebana.quarto.pub/tidy-data-mucss'
+- source: dplyr-mucss.qmd
+  quarto-pub:
+    - id: f6e6930b-aa3a-462b-bfc5-21b278bb3337
+      url: 'https://javieralvarezliebana.quarto.pub/tidyverse-mucss'

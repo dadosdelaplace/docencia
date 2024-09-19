@@ -130,9 +130,9 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 9 sep | Primeros pasos en R | [💻](#tu-turno-1) |  |  | 
 | [2](#clase-2) | S1 | 12 sep | Tipos básicos de datos y vectores | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |  [🐣](#caso-practico-2) |  |
-| [3](#clase-3) | S2 | 16 sep | Textos y primeras bases de datos | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  |
-| [4](#clase-4) | S2 | 19 sep | Comunicar: apuntes y simulacro de entrega | |  [🐣](#caso-practico-4) |  |
-| [5](#clase-5) | S3 | 26 sep | Entrega I | | | [🎯 5%](#clase-5) |
+| [3](#clase-3) | S2 | 16 sep | Textos | [💻](#tu-turno-3-1)  |  [🐣](#caso-practico-3-1) |  |
+| [4](#clase-4) | S2 | 19 sep | Primeras bases de datos | [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) |  [🐣](#caso-practico-3-2) |  |
+| [5](#clase-5) | S3 | 26 sep | Quarto y entrega I | | [🐣](#caso-practico-4)  | [🎯 5%](#clase-5) |
 | [6](#clase-6) | S4 | 30 sep | Estructuras de control | [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  |  [🐣](#caso-practico-6) |  |
 | [7](#clase-7) | S4 | 3 oct | Funciones | [💻](#tu-turno-7)  |  [🐣](#caso-practico-7) |  |
 | [8](#clase-8) | S5 | 7 oct | Tidy data | [💻](#tu-turno-8) |  [🐣](#caso-practico-8) |  |
@@ -2134,19 +2134,14 @@ day <- airquality$Day
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-base/)
 
 
-# Clase 3: [textos y primeras tablas]{.flow} {#clase-3}
+# Clase 3: [textos]{.flow} {#clase-3}
 
-[**Profundizando en variables de tipo texto. Primeras bases de datos**]{style="color:#444442;"}
+[**Profundizando en variables de tipo texto**]{style="color:#444442;"}
 
 * [💻 Ejercicios resueltos: variables de texto](#tu-turno-3-1) 
 
 * [🐣 Workbook/caso práctico](#caso-practico-3-1)
 
-* [💻 Ejercicios resueltos: matrices](#tu-turno-3-2) 
-
-* [💻 Ejercicios resueltos: data.frame y tibble](#tu-turno-3-3) 
-
-* [🐣 Workbook/caso práctico](#caso-practico-3-2)
 
 * [📆 Planificación](#planificacion)
 
@@ -2527,8 +2522,8 @@ discursos$year[order(discursos$long, decreasing = TRUE)[1:5]]
 # Contamos
 discursos$spain <- str_count(discursos$texto, pattern = "españoles|españolas|españa")
 
-# Años con más menciones
-discursos$year[order(discursos$spain, decreasing = TRUE)[1:5]]
+# Años con menos menciones
+discursos$year[order(discursos$spain)[1:5]]
 ```
 
 ### [**Ej 6**]{.hl-yellow}
@@ -2572,6 +2567,17 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 
 
+# Clase 4: [primeras tablas]{.flow} {#clase-4}
+
+[**Primeras bases de datos**]{style="color:#444442;"}
+
+* [💻 Ejercicios resueltos: matrices](#tu-turno-3-2) 
+
+* [💻 Ejercicios resueltos: data.frame y tibble](#tu-turno-3-3) 
+
+* [🐣 Workbook/caso práctico](#caso-practico-3-2)
+
+* [📆 Planificación](#planificacion)
 
 ---
 
@@ -3056,22 +3062,33 @@ nrow(airquality_tb)
 
 ### [**Ejercicio 3**]{.hl-yellow}
 
-📝 Filtra solo los datos de la quinta observación
+📝 Cambia el código inferior para filtrar solo los datos de la quinta observación
 
 ```{r}
-#| code-fold: true
 #| eval: false
 airquality_tb[Month == 8, ]
 ```
 
+```{r}
+#| code-fold: true
+#| eval: false
+airquality_tb[5, ]
+```
+
 ### [**Ejercicio 4**]{.hl-yellow}
 
-📝 Filtra solo los datos del mes de agosto. ¿Cómo indicarle que queremos solo las filas que cumplan una condición concreta? (pista: en realidad todo son vectores "formateados")
+📝 Cambia el código inferior para filtrar solo los datos del mes de agosto.
+
+
+```{r}
+#| eval: false
+airquality_tb[Month == 8, ]
+```
 
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, ]
+airquality_tb[airquality_tb$Month == 8, ]
 ```
 
 ### [**Ejercicio 5**]{.hl-yellow}
@@ -3081,8 +3098,10 @@ airquality_tb[Month == 8, ]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month != 7 & Month != 8, ]
-airquality_tb[!(Month %in% c(7, 8)), ]
+airquality_tb[airquality_tb$Month != 7 & airquality_tb$Month != 8, ]
+
+# otra opción
+airquality_tb[!(airquality_tb$Month %in% c(7, 8)), ]
 ```
 
 ### [**Ejercicio 6**]{.hl-yellow}
@@ -3101,7 +3120,7 @@ airquality_tb[, 3]
 ```{r}
 #| code-fold: true
 #| eval: false
-airquality_tb[Month == 8, c("Temp", "Wind")]
+airquality_tb[airquality_tb$Month == 8, c("Temp", "Wind")]
 ```
 
 ### [**Ejercicio 8**]{.hl-yellow}
@@ -3136,7 +3155,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 
 
-# Clase 4: [Quarto]{.flow} {#clase-4}
+# Clase 5: [entrega y Quarto]{.flow} {#clase-5}
 
 
 [**Comunicar: elaborar apuntes, diapositivas, etc**]{style="color:#444442;"}
@@ -4010,11 +4029,6 @@ plt.show()
 6. Renderiza el documento para obtener el html
 
 
-
-# Clase 5: [entrega I]{.flow} {#clase-5}
-
-[**Ponderación: 5%**]{style="color:#444442;"}
-
 ---
 
 ## Ejemplo de entrega
@@ -4070,7 +4084,7 @@ En él tenemos **diferentes variables de los personajes de Star Wars**, con cara
 
 ---
 
-## Entrega I
+## Entrega I (5%)
 
 El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow} en formato `.qmd` en el campus.
 
