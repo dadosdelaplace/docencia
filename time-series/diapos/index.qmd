@@ -4134,8 +4134,6 @@ who2
 [**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
 
 
-* [💻 ...](#tu-turno-2-1)
-* [🐣 ...](#caso-practico-2-1)
 * [📆 Planificación](#planificacion)
 
 ---
@@ -4340,24 +4338,46 @@ ggplot(datos) +
        title = "Serie temporal X_t = eps_t con distintas varianzas")
 ```
 
+# Clase 4: [tendencia y estacionalidad]{.flow} {#clase-4}
+
+[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
+
+
+* [💻 ...](#tu-turno-2-1)
+* [🐣 ...](#caso-practico-2-1)
+* [📆 Planificación](#planificacion)
+
+
 ---
 
 ## Con tendencia
 
-Normalmente una serie temporal suele ser más complejo y llevo al menos incorporada una [**componente de tendencia o nivel $\mu_t$**]{.hl-yellow} tal que
+Normalmente una serie temporal suele ser más complejo y lleva al menos incorporada una [**componente de tendencia o nivel $\mu_t$**]{.hl-yellow} tal que
 
 $$X_t = f \left(\mu_t, \varepsilon_t\right) =^{*} \mu_t + \varepsilon_t, \quad {\rm E} \left[X_t \right] = \mu_t$$
 $*$ De momento estamos considerando una [**descomposición aditiva**]{.hl-yellow}
 
-. . .
+&nbsp;
 
-Dicha tendencia $\mu_t$ puede ser a su vez modelada en función de $t$ y de un vector de parámetros $\beta$ tal que $\mu_t := f \left(t, \beta \right)$
+Fíjate que ahora ${\rm E} \left[X_t \right] = \mu_t$ ya que la esperanza de la parte aleatoria (ruido) será asumida siempre nula: $\mu_t$ es el nivel de la serie respecto a la que oscila en el infinito.
+
+---
+
+
+## Con tendencia
+
+
+$$X_t = f \left(\mu_t, \varepsilon_t\right) =^{*} \mu_t + \varepsilon_t, \quad {\rm E} \left[X_t \right] = \mu_t$$
+
+Dicha tendencia $\mu_t$ puede ser a su vez modelada en función de $t$ y de un vector de parámetros $\beta$ tal que $\mu_t := f \left(t, \beta \right)$. Esa función $f \left( \cdot \right)$ puede ser cualquier función que se te ocurre pero algunas de las tendencias más habituales son:
 
 - [**Constante**]{.hl-purple}: $\mu_t = \beta = \beta_0 = cte$ 
 
 - [**Lineal**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t$ 
 
 - [**Polinómica (no lineal)**]{.hl-purple}: $\mu_t = \beta_0 + \beta_1 t + \ldots + \beta_r t^{r}$ 
+
+- [**No polinómica**]{.hl-purple}: $\mu_t = \sin \left(\pi t \right)$ 
 
 
 ---
@@ -4432,7 +4452,7 @@ ggplot(datos) +
 
 ## Con tendencia
 
-Para la predicción de los valores en un tiempo futuro $t + k$ simplemente necesitamos realizar la [**estimación del vector de parámetros $\widehat{\beta}$**]{.hl-yellow}. Para ello recurriremos al [**método de los minimos cuadrados**]{.hl-yellow} tal que
+Si nuestra tendencia está definida de forma **paramétrica**, para la predicción de los valores en un tiempo futuro $t + k$ simplemente necesitamos realizar la [**estimación del vector de parámetros $\widehat{\beta}$**]{.hl-yellow}. Para ello recurriremos al [**método de los minimos cuadrados**]{.hl-yellow}. Por ejemplo, en el caso de tendencia polinómica
 
 $$\widehat{\beta} = \arg \min_{\beta \in \mathbb{R}^{r+1}} \sum_{t = 0}^{T} \left(x_t - \widehat{x}_t \right)^2 = \arg \min_{\beta \in \mathbb{R}^{r+1}} \sum_{t = 0}^{T} \left(x_t - \left(\beta_0 + \beta_1 t \ldots \beta_r t^r \right) \right)^2$$
 
@@ -4445,12 +4465,39 @@ Como suele ser habitual, para encontrar el mínimo basta con **derivar respecto 
 
 ---
 
-## Con tendencia
+## 💻 Tu turno {#tu-turno-4-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
 
 
-💻 Construye una función que [**simule una serie temporal con error y tendencia constante**]{.hl-yellow}. Usa la función definida anteriormente.
+💻 Construye una función llamada `time_series_error` que [**simule una serie temporal solo con error**]{.hl-yellow}. Los argumentos deben ser el tamañom muestral `n` y la desviación típica `sd` que queramos, y debe permitir que en el argumento `sd` pueda haber un vector de desviaciones (simular varias series a la vez, pero ya colocadas en tidydata para poder dibujarlas luego)
 
-. . .
+
+```{r}
+#| code-fold: true
+# por defecto t = 1:n y sd = 1
+time_series_error <- function(n, t = 1:n, sd_vec = 1) {
+  
+  datos_tidy <- tibble()
+  for (i in 1:length(sd_vec)) {
+    
+    datos_tidy <- 
+      datos_tidy |>
+      bind_rows(tibble("t" = 1:n, "sd" = glue::glue("sd_{sd_vec[i]}"),
+                       "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
+  }
+  return(datos_tidy)
+}
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+
+💻 Haciendo uso de la función anterior, define una función `time_series_trend_error` que simule una serie temporal con tendencia constante y error. Piensa como diseñarla de manera que solo tenga tres argumentos: el tamaño muestral, la desviación del error y la constante. A continuación usa dicha función y dibuja la serie.
 
 ```{r}
 #| code-fold: true
@@ -4474,13 +4521,11 @@ ggplot(datos, aes(x = t, y = X_t)) +
        title = "Serie temporal X_t = mu_t + eps_t con mu_t = 3")
 ```
 
----
+### [**Ejercicio 3**]{.hl-yellow}
 
-## Con tendencia
 
-💻 Construye una función que simule una [**serie temporal con error y tendencia lineal**]{.hl-yellow}. Fíjate que la **línea de ajuste de ggplot es literal la estimación** que haríamos si solo consideramos error+tendencia.
+💻 Generliza la función anterior de manera que simule una [**serie temporal con error y tendencia lineal**]{.hl-yellow}, pero con solo 3 argumentos (donde antes definíamos solo una constante ahora será un vector de coeficientes). Fíjate que la **línea de ajuste de ggplot es literal la estimación** que haríamos si solo consideramos error + tendencia.
 
-. . .
 
 ```{r}
 #| code-fold: true
@@ -4505,12 +4550,10 @@ ggplot(datos, aes(x = t, y = X_t)) +
 ```
 
 
----
-
-## Con tendencia
+### [**Ejercicio 4**]{.hl-yellow}
 
 
-💻 Construye una función general que simule una [**serie temporal con error y tendencia polinómica**]{.hl-yellow} (que acepte un vector de parámetros general y construya el polinomio). 
+💻 Generaliza la función anterior de manera que simule una [**serie temporal con error y tendencia polinómica**]{.hl-yellow} (que acepte un vector de parámetros general y construya el polinomio). 
 
 ```{r}
 #| code-fold: true
@@ -4539,31 +4582,43 @@ ggplot(datos, aes(x = t, y = X_t)) +
        title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
 ```
 
----
+### [**Ejercicio 5**]{.hl-yellow}
 
-## Con tendencia
 
-💻 ¿Se te ocurre alguna forma sencilla en `R` de obtener las estimaciones mínimos cuadrados asumiendo dicho modelo de tendencia + error?
-
-. . .
+💻 Diseña una función `estim_ts_trend_error` que, dada una serie (un tibble de dos columnas `t` y `X_t`), nos devuelva la misma tabla pero con una tercera columna con su estimación asumiendo una tendencia polinómica (necesitamos dos argumentos: la serie en sí y el grado del polinomio que queremos ajustar, y hacer uso dentro de la función de `poly()`, chequea en la ayuda de la función)
 
 ```{r}
 #| code-fold: true
+estim_ts_trend_error <- function(datos, degree = 1) {
+  
+  if (degree == 0) {
+    modelo <- datos |> lm(formula = X_t ~ 1)
+  } else {
+    modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
+  }
+
+  datos <-
+    datos |> 
+    mutate(X_hat = predict(modelo, tibble("t" = t)))
+  
+  return(datos)
+}
+
+
 set.seed(123)
 datos <-
   time_series_trend_error(n = 1000, trend = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
 
 # ajustamos un modelo polinómico con lm
-modelo <- datos |> lm(formula = X_t ~ poly(t, 3, raw = TRUE))
-trend_hat <- coef(modelo)
-datos <-
-  datos |> mutate(X_hat = predict(modelo, tibble("t" = t)))
-ggplot(datos) +
+modelo <- datos |> estim_ts_trend_error(degree = 3)
+ggplot(modelo) +
   geom_line(aes(x = t, y = X_t), alpha = 0.7) +
   geom_line(aes(x = t, y = X_hat), alpha = 0.7, color = "red") +
   theme_minimal() +
   labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
 ```
+
+:::
 
 ---
 
@@ -4586,7 +4641,7 @@ ggplot(retiro) +
 
 ## Caso real: AEMET
 
-💻 Crea una función que, **dada una serie, pueda incluir 3 nuevas columnas con los 3 métodos de estimación (tendencia constante, lineal y polinómica de grado 3)**. Aplica a dichos datos reales del AEMET
+💻 Aplica la función de estimación definida anteriormente a los datos reales del AEMET para incluir 3 nuevas columnas con los 3 métodos de estimación (tendencia constante, lineal y polinómica de grado 3)
 
 . . .
 
@@ -4606,23 +4661,7 @@ Como observas las [**predicciones no son precisas cuando hay una componente esta
 
 ```{r}
 #| code-fold: true
-estim_ts_trend_error <- function(datos, degree = 1) {
-  
-  if (degree == 0) {
-    modelo <- datos |> lm(formula = X_t ~ 1)
-  } else {
-    modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
-  }
-  trend_hat <- coef(modelo)
-  
-  datos <-
-    datos |> 
-    mutate(X_hat = predict(modelo, tibble("t" = t)))
-  
-  return(datos)
-}
-
-retiro_estim <-
+retiro_estim <- 
   retiro |>
   select(fecha, tmed) |> rename(X_t = tmed) |> 
   mutate(t = 1:length(fecha)) |>
@@ -4642,4 +4681,331 @@ ggplot(retiro_estim |> pivot_longer(-c(fecha, t), names_to = "type", values_to =
 
 :::
 ::::
+
+
+---
+
+## Estacionalidad
+
+El problema del ajuste anterior es que, amén de la parte puramente estocástica y la tendencia (más o menos compleja que pueda tener), [**existe una parte ESTACIONAL**]{.hl-yellow}
+
+. . .
+
+Diremos que una serie tiene una [**componente estacional**]{.hl-yellow} siempre que presente un [**patrón que se repite en periodos (aprox.) fijos en el tiempo**]{.hl-yellow} tal que ahora
+
+$$X_t = f \left(\mu_t, S_t, \varepsilon_t\right) =^{adit} \mu_t + S_t + \varepsilon_t, \quad X_t =^{mult} \mu_t * S_t * \varepsilon_t$$
+
+. . .
+
+Trataremos de **manera general con los modelos aditivos** ya que, en caso de ser multiplicativo, $\log \left(X_t\right) =\log \left( \mu_t \right) + \log \left(S_t \right) + \log \left( \varepsilon_t \right)$
+
+---
+
+## Medias móviles
+
+Existen diferentes estrategias para tener en cuenta la estacionalidad, muchas de ellas basadas en la idea de considerar que la [**tendencia no es algo estático**]{.hl-yellow}
+
+. . .
+
+:::: columns
+::: {.column width="35%"}
+
+La más famosa (y sencilla) probablemente sea la idea de [**suavizado de medias móviles**]{.hl-yellow}: en lugar de suavizar la serie considerando una media global, vamos [**mirar la serie por una pequeña ventana**]{.hl-yellow} donde para cada $t$ solo observemos un pequeño trozo de la serie.
+
+:::
+
+::: {.column width="65%"}
+
+![](img/window-ma.webp)
+:::
+::::
+
+---
+
+## Medias móviles
+
+
+Imagina que tenemos la siguiente serie
+
+```{r}
+datos <- tibble("t" = 1:15,
+                "x" = c(0.8, 1.3, 1.6, 1.5, 2.2, 2.3, 2.2, 2.4, 2, 1.5, 1.2, 1.3, 1.2, 1, 0.7))
+```
+
+```{r}
+#| echo: false
+ggplot(datos) +
+  geom_line(aes(x = t, y = x)) +
+  theme_minimal()
+```
+
+
+---
+
+## Medias móviles
+
+
+```{r}
+datos <- tibble("t" = 1:15,
+                "x" = c(0.8, 1.3, 1.6, 1.5, 2.2, 2.3, 2.2, 2.4,
+                        2, 1.5, 1.2, 1.3, 1.2, 1, 0.7))
+```
+
+La idea de las [**medias móviles**]{.hl-yellow} es la siguiente:
+
+. . .
+
+1. Decide la [**anchura de tu ventana**]{.hl-yellow} (cuantos datos permites que entren), por ejemplo $5$.
+
+. . .
+
+2. Decide qué [**peso vas a asignar**]{.hl-yellow} a cada uno de los puntos (por ejemplo, $1/5$ en nuestro caso)
+
+. . .
+
+3. [**Avanza en la serie con tu ventana**]{.hl-yellow} en cada valor de $t$ y centra la ventana en cada punto (si lo tenemos)
+
+---
+
+## Medias móviles
+
+$y_1 = \color{red}{x_1}$
+
+. . .
+
+$y_2 = \frac{x_1 + \color{red}{x_2} + x_3}{3}$
+
+. . .
+
+$y_3 = \frac{x_1 + x_2 + \color{red}{x_3} + x_4 + x_5}{5}$
+
+. . .
+
+$y_4 = \frac{x_2 + x_3 + \color{red}{x_4} + x_5 + x_6}{5}$
+
+. . .
+
+$y_5 = \frac{x_3 + x_4 + \color{red}{x_5} + x_6 + x_7}{5}$
+
+. . .
+
+$y_6 = \frac{x_4 + x_5 + \color{red}{x_6} + x_7 + x_8}{5}$
+
+. . .
+
+$y_7 = \frac{x_5 + x_6 + \color{red}{x_7} + x_8 + x_9}{5}$
+
+. . .
+
+En general llamaremos [**media móvil**]{.hl-yellow} a la tranformación **lineal** 
+
+$$y_t = \sum_{r = -q}^{s} a_r x_{t+r}, \quad t = q + 1, \ldots, n-s, \quad \sum_{r = -q}^{s} a_r = 1$$
+
+---
+
+## Medias móviles
+
+$$y_t = \sum_{r = -q}^{s} a_r x_{t+r}, \quad t = q + 1, \ldots, n-s, \quad \sum_{r = -q}^{s} a_r = 1$$
+
+La transformación es una [**media ponderada**]{.hl-yellow} de $q + s + 1$ valores donde, según avanzamos, se **elimina el dato más antiguo y entra el más nuevo**
+
+. . .
+
+* Si los [**pesos son todos iguales**]{.hl-purple} $a_j = \frac{1}{N}$, con $N = q+s+1$, se conoce como **media móvil de orden N**.
+
+. . .
+
+* Si $q = s$ tal que $a_{-j} = a_j$, para todo $j=1,\ldots,q$ tal que $k = 2*q + 1$, se conoce como [**k MA (moving average simétrica)**]{.hl-yellow}
+
+. . .
+
+* El problema de determinar los primeros/últimos valores se conoce como [**problema de los efectos terminales**]{.hl-yellow}
+
+---
+
+## Medias móviles
+
+Para calcular una [**media móvil de orden $k=2*q+1$**]{.hl-yellow} en `R` podemos hacerlo con `filter()` del paquete `{stats}` ([**¡cuidado!**]{.hl-red}: si tienes cargado `{tidyverse}` debes especificar que `filter()` es)
+
+```{r}
+k <- 3
+
+datos <-
+  datos |> 
+  mutate(x_linear = predict(datos |> lm(formula = x ~ t), datos),
+         x_smooth_3ma = stats::filter(x, filter = rep(1/k, k)))
+datos
+```
+
+---
+
+## Medias móviles
+
+```{r}
+#| code-fold: true
+ggplot(datos |>
+         pivot_longer(cols = -t, names_to = "var", values_to = "values")) +
+  geom_line(aes(x = t, y = values, color = var, linetype = var),
+            linewidth = 0.9, alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal()
+```
+
+Fíjate cómo ahora la curva queda [**suavizada pero de manera dinámica**]{.hl-yellow}
+
+---
+
+## Medias móviles
+
+```{r}
+datos <-
+  datos |> 
+  mutate(x_smooth_5ma = stats::filter(x, filter = rep(1/5, 5)),
+         x_smooth_7ma = stats::filter(x, filter = rep(1/7, 7)),
+         x_smooth_9ma = stats::filter(x, filter = rep(1/9, 9)))
+```
+
+:::: columns
+::: {.column width="25%"}
+
+Fíjate que [**cuando aumenta $k$, la serie es más suavizada**]{.hl-green} (más agresiva con las fluctuaciones) pero [**hay más datos ausentes**]{.hl-red} (problema de efectos terminales)
+
+:::
+
+::: {.column width="75%"}
+
+```{r}
+#| code-fold: true
+ggplot(datos |>
+         pivot_longer(cols = -t, names_to = "var", values_to = "values")) +
+  geom_line(aes(x = t, y = values, color = var),
+            linewidth = 0.9, alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal()
+```
+
+:::
+::::
+
+
+---
+
+## Caso real: AEMET
+
+💻 Aplica el suavizado de medias móviles con $k=7, 14, 28, 365$ a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación 
+
+. . .
+
+
+
+```{r}
+#| code-fold: true
+retiro_estim <-
+  retiro_estim |> 
+  mutate(x_smooth_7ma = stats::filter(tmed, filter = rep(1/7, 7)),
+         x_smooth_14ma = stats::filter(tmed, filter = rep(1/14, 14)),
+         x_smooth_28ma = stats::filter(tmed, filter = rep(1/28, 28)),
+         x_smooth_365ma = stats::filter(tmed, filter = rep(1/365, 365)))
+
+ggplot(retiro_estim |>
+         pivot_longer(-c(fecha, t), names_to = "type", values_to = "pred") |>
+         filter(between(fecha, as_date("2016-01-01"), as_date("2022-01-01")))) +
+  geom_line(aes(x = fecha, y = pred, color = type),
+            linewidth = 0.7, alpha = 0.85) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(title = "Temperatura media como SERIE TEMPORAL",
+       x = "t (fecha)", y = "ºC (media)")
+```
+
+
+
+---
+
+
+## Regresión local
+
+Dado que la mayoría de veces la serie temporal [**no se va a poder definir mediante una tendencia fija**]{.hl-red} (aunque dependa de $t$, los coeficientes de los que dependen no varian en el tiempo), una de las alternativas es lo que se conoce como [**regresión local LOESS o LOWESS**]{.hl-yellow}.
+
+. . .
+
+La idea de un ajuste local es [**ajustar a los datos una regresión polinómica (ponderada en el caso de LOWESS)**]{.hl-yellow}, de manera en cada punto el ajuste se hace  utilizando una metodología de [**mínimos cuadrados ponderado**]{.hl-yellow} dando **más peso a los puntos cercanos al punto cuya respuesta está siendo estimando y menos peso a los puntos más lejanos**.
+
+```{r}
+estim_ts_trend_error <- function(datos, degree = 1, span = NULL) {
+  
+  if (is.null(span)) {
+    if (degree == 0) {
+      modelo <- datos |> lm(formula = X_t ~ 1)
+    } else {
+      modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
+    }
+  } else {
+    
+    modelo <- datos |> loess(formula = X_t ~ t, degree = degree, span = span)
+    
+  }
+
+  datos <-
+    datos |> 
+    mutate(X_hat = predict(modelo, tibble("t" = t)))
+  
+  return(datos)
+}
+```
+
+
+
+---
+
+
+- medias móviles
+
+---
+
+- ¿estacional?
+
+
+
+---
+
+siguiente clase: STL y multiplicativo
+
+24/09/2024
+
+
+---
+
+
+27/09/2024: alisado
+
+---
+
+1/10/2024: repaso todo en R
+
+---
+
+4/10: ¿a mano? ejercicios
+
+---
+
+8/10: entrega
+
+---
+
+11/10: teoría procesos estocásticos
+15/10
+
+---
+
+5-6 clases de box-jenkins
+
+---
+
+2 predicci´
+
+
+
+
+
 
