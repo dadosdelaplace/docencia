@@ -103,7 +103,7 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 ## Planificación entregas
 
-* [**Entrega I (5%)**]{.hl-yellow}: 23 de septiembre (120 minutos).
+* [**Entrega I (5%)**]{.hl-yellow}: 25 de septiembre (120 minutos).
 
 * [**Entrega II (15%)**]{.hl-yellow}: ... (120 minutos).
 
@@ -131,8 +131,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 11 sep | Primeros pasos. Tipos básicos de datos | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) |  |  | 
 | [2](#clase-2) | S2 | 16 sep | Vectores y primeras bases de datos | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) [💻](#tu-turno-2-3) |  [🐣](#caso-practico-2-1) [🐣](#caso-practico-2-2)  |  |
-| [3](#clase-3) | S2 | 18 sep | Comunicar: apuntes y simulacro de entrega |   |   [🐣](#caso-practico-3) |  |
-| [4](#clase-4) | S3 | 23 sep | Entrega I | | | 🎯 5% |
+| [3](#clase-3) | S3 | 25 sep | Comunicar: apuntes. Entrega I | | [🐣](#caso-practico-3) | [🎯 5%](#entrega-I) |
 :::
 :::
 
@@ -3608,14 +3607,9 @@ En él tenemos **diferentes variables de los personajes de Star Wars**, con cara
 6. Renderiza el documento para obtener el html
 
 
-
-# Clase 4: [entrega I]{.flow} {#clase-4}
-
-[**Ponderación: 5%**]{style="color:#444442;"}
-
 ---
 
-## Entrega I
+## Entrega I  {#entrega-I}
 
 El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow} en formato `.qmd` en el campus.
 
