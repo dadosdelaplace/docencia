@@ -4266,21 +4266,53 @@ ggplot(datos) +
 ## Sin tendencia
 
 
-:::: columns
-::: {.column width="30%"}
+3. **Paso 3**: ¿cómo deberíamos de transformar los datos para poder pintar todas las series a la vez?  Hazte un borrador de cómo sería el código de ggplot para dibujarlo.
 
-3. **Paso 3**: ¿cómo deberíamos de transformar los datos para poder pintar todas las series a la vez? 
+. . .
 
-:::
+La idea es que si tenemos $p$ series, en lugar de tener $p$ variables distintas, tengamos una serie «debajo de» otra. Por ejemplo, vamos a definir la primera y pongamos debajo al segunda otra.
 
-::: {.column width="70%"}
+```{r}
+n <- 1000
+datos <- tibble("t" = 1:n, "X_t" = rnorm(n, mean = 0, sd = 0.5), "sd" = "sd_0.5")
+datos_tidy <- 
+  rbind(datos, tibble("t" = 1:n, "X_t" = rnorm(n, mean = 0, sd = 1), "sd" = "sd_1"))
+datos_tidy
+```
+
+---
+
+## Sin tendencia
+
+El resto las iremos concatenando de la misma manera, añadiendo filas al `datos_tidy` que ya tenemos.
+
+```{r}
+datos_tidy <- 
+  rbind(datos_tidy, tibble("t" = 1:n, "X_t" = rnorm(n, mean = 0, sd = 2), "sd" = "sd_2"))
+
+datos_tidy <- 
+  rbind(datos_tidy, tibble("t" = 1:n, "X_t" = rnorm(n, mean = 0, sd = 4), "sd" = "sd_4"))
+```
+
+. . .
+
+Lo anterior se pueda hacer más "conciso" con `{tidyverse}` haciendo uso de `pivot_longer()`.
+
+```{r}
+#| eval: false
+datos_tidy <-
+  datos |>
+  pivot_longer(cols = "sd_05":"sd_4", names_to = "sd", values_to = "X_t")
+```
+
+---
+
+
+## Sin tendencia
+
 
 ```{r}
 #| code-fold: true
-datos_tidy <-
-  datos |>
-  pivot_longer(cols = "sd_05":"sd_4",
-               names_to = "sd", values_to = "X_t")
 ggplot(datos_tidy) +
   geom_line(aes(x = t, y = X_t, color = sd),
             alpha = 0.7) +
@@ -4291,10 +4323,7 @@ ggplot(datos_tidy) +
        title = "Serie temporal X_t = eps_t con distintas varianzas")
 ```
 
-:::
-::::
 
-Hazte un borrador de cómo sería el código de ggplot para dibujarlo (distinguiendo por ejemplo cada serie de un color, y separada del resto en forma de cuadrícula) y piensa que necesitas
 
 ---
 
@@ -4304,7 +4333,6 @@ Hazte un borrador de cómo sería el código de ggplot para dibujarlo (distingui
 
 ```{r}
 #| code-fold: true
-# por defecto t = 1:n y sd = 1
 time_series_error <- function(n, t = 1:n, sd_vec = 1) {
   
   datos_tidy <- tibble()
@@ -4313,8 +4341,9 @@ time_series_error <- function(n, t = 1:n, sd_vec = 1) {
     
     datos_tidy <- 
       datos_tidy |>
-      bind_rows(tibble("t" = 1:n, "sd" = glue::glue("sd_{sd_vec[i]}"),
-                       "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
+      rbind(datos_tidy,
+            tibble("t" = t, "sd" = glue::glue("sd_{sd_vec[i]}"),
+                   "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
   }
   return(datos_tidy)
 }
@@ -4338,13 +4367,12 @@ ggplot(datos) +
        title = "Serie temporal X_t = eps_t con distintas varianzas")
 ```
 
-# Clase 4: [tendencia y estacionalidad]{.flow} {#clase-4}
+# Clase 4: [simulación error + tendencia]{.flow} {#clase-4}
 
 [**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
 
 
-* [💻 ...](#tu-turno-2-1)
-* [🐣 ...](#caso-practico-2-1)
+* [💻 Ejercicios de simulación](#tu-turno-4-1)
 * [📆 Planificación](#planificacion)
 
 
@@ -4467,150 +4495,151 @@ Como suele ser habitual, para encontrar el mínimo basta con **derivar respecto 
 
 ## 💻 Tu turno {#tu-turno-4-1}
 
-[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
-
-::: panel-tabset
-
 ### [**Ejercicio 1**]{.hl-yellow}
 
-
-💻 Construye una función llamada `time_series_error` que [**simule una serie temporal solo con error**]{.hl-yellow}. Los argumentos deben ser el tamañom muestral `n` y la desviación típica `sd` que queramos, y debe permitir que en el argumento `sd` pueda haber un vector de desviaciones (simular varias series a la vez, pero ya colocadas en tidydata para poder dibujarlas luego)
+💻 Si aún no lo has hecho, haz una función llamada `time_series_error` que [**simule una serie temporal solo con error**]{.hl-yellow}. Los argumentos deben ser: tamaño muestral `n`, un vector temporal `t` y la desv típica `sd` (debes permitir que pueda ser un vector para simular varias a la vez, ya colocadas en tidydata)
 
 
 ```{r}
 #| code-fold: true
-# por defecto t = 1:n y sd = 1
+#| eval: false
 time_series_error <- function(n, t = 1:n, sd_vec = 1) {
   
   datos_tidy <- tibble()
   for (i in 1:length(sd_vec)) {
-    
     datos_tidy <- 
       datos_tidy |>
-      bind_rows(tibble("t" = 1:n, "sd" = glue::glue("sd_{sd_vec[i]}"),
-                       "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
+      rbind(datos_tidy,
+            tibble("t" = t, "sd" = glue::glue("sd_{sd_vec[i]}"),
+                   "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
   }
   return(datos_tidy)
 }
+time_series_error(n = 100, sd = c(0.5, 2))
 ```
+
+---
+
+## 💻 Tu turno
 
 ### [**Ejercicio 2**]{.hl-yellow}
 
 
-💻 Haciendo uso de la función anterior, define una función `time_series_trend_error` que simule una serie temporal con tendencia constante y error. Piensa como diseñarla de manera que solo tenga tres argumentos: el tamaño muestral, la desviación del error y la constante. A continuación usa dicha función y dibuja la serie.
+💻 Usando la función anterior, define  `time_series_trend_error()` que simule una serie temporal con **tendencia cte** y error, con solo 4 argumentos: `n`, `t`, desviación y la constante. Usa dicha función y dibuja.
 
 ```{r}
 #| code-fold: true
-time_series_trend_error <- function(n = 1000, trend = 0, sd = 1) {
+time_series_trend_error <- function(n = 1000, t = 1:n, beta_0 = 0, sd = 1) {
+  # modo R base
+  datos <- time_series_error(n = n, t = t, sd = sd)
+  datos$X_t <- datos$X_t + beta_0
   
-  datos <-
-    time_series_error(n = n, sd = sd) |>
-    mutate(X_t = X_t + trend)
-  
+  # modo tidyverse
+  # datos <- time_series_error(n = n, t = t, sd = sd) |> mutate(X_t = X_t + trend)
   return(datos)
 }
 
-set.seed(123)
-datos <- time_series_trend_error(n = 1000, trend = 3, sd = 0.5)
+datos <- time_series_trend_error(n = 1000, beta_0 = 3, sd = 0.5)
 ggplot(datos, aes(x = t, y = X_t)) +
   geom_line(alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   ggthemes::scale_color_colorblind() +
   theme_minimal() +
-  labs(x = "t", y = "X_t",
-       title = "Serie temporal X_t = mu_t + eps_t con mu_t = 3")
+  labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t = 3")
 ```
+
+---
+
+## 💻 Tu turno
 
 ### [**Ejercicio 3**]{.hl-yellow}
 
-
-💻 Generliza la función anterior de manera que simule una [**serie temporal con error y tendencia lineal**]{.hl-yellow}, pero con solo 3 argumentos (donde antes definíamos solo una constante ahora será un vector de coeficientes). Fíjate que la **línea de ajuste de ggplot es literal la estimación** que haríamos si solo consideramos error + tendencia.
+💻 Generaliza la función anterior para simular una [**serie temporal con error y tendencia lineal**]{.hl-yellow} (donde antes definíamos solo una constante ahora será un vector de coeficientes). Fíjate que la **línea de ajuste de ggplot es literal la estimación** que haríamos si solo consideramos error + tendencia.
 
 
 ```{r}
 #| code-fold: true
-time_series_trend_error <- function(n = 1000, trend = c(1, -0.01), sd = 1) {
+time_series_trend_error <- function(n = 1000, t = 1:n, beta = c(1, -0.01), sd = 1) {
   
-  datos <-
-    time_series_error(n = n, sd = sd) |>
-    mutate(X_t = X_t + trend[1] + trend[2]*t)
-  
+  datos <- time_series_error(n = n, t = t, sd = sd)
+  datos$X_t <- datos$X_t + (beta[1] + beta[2]*datos$t)
   return(datos)
 }
 
-set.seed(123)
-datos <- time_series_trend_error(n = 1000, trend = c(1, -0.01), sd = 0.5)
+datos <- time_series_trend_error(n = 1000, beta = c(1, -0.01), sd = 0.5)
 ggplot(datos, aes(x = t, y = X_t)) +
   geom_line(alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE) +
   ggthemes::scale_color_colorblind() +
   theme_minimal() +
-  labs(x = "t", y = "X_t",
-       title = "Serie temporal X_t = mu_t + eps_t con mu_t = 1 - 0.01*t")
+  labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t = 1 - 0.01*t")
 ```
 
+
+---
+
+## 💻 Tu turno
 
 ### [**Ejercicio 4**]{.hl-yellow}
 
 
-💻 Generaliza la función anterior de manera que simule una [**serie temporal con error y tendencia polinómica**]{.hl-yellow} (que acepte un vector de parámetros general y construya el polinomio). 
+💻 Generaliza la función anterior de manera que simule una [**serie temporal con error y tendencia polinómica**]{.hl-yellow} (que acepte un vector de parámetros general). 
 
 ```{r}
 #| code-fold: true
-time_series_trend_error <- function(n = 1000, trend = c(1, -0.01, 0.001, -0.0001), sd = 1) {
+time_series_trend_error <-
+  function(n = 1000, t = 1:n, beta = c(1, -0.01, 0.001, -0.0001), sd = 1) {
   
-  datos <- time_series_error(n = n, sd = sd)
-  for (i in 1:length(trend)) {
-    
-    datos <-
-      datos |>
-      mutate(X_t = X_t + trend[i]*t^(i - 1))
-    
+  datos <- time_series_error(n = n, t = t, sd = sd)
+  for (i in 1:length(beta)) {
+    datos$X_t <- datos$X_t + beta[i]*(datos$t^(i - 1))
   } 
- 
   return(datos)
 }
 
-set.seed(123)
-datos <- time_series_trend_error(n = 1000, trend = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
+datos <- time_series_trend_error(n = 1000, beta = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
 ggplot(datos, aes(x = t, y = X_t)) +
   geom_line(alpha = 0.7) +
   geom_smooth(formula = y ~ poly(x, 3), se = FALSE) +
   ggthemes::scale_color_colorblind() +
   theme_minimal() +
-  labs(x = "t", y = "X_t",
-       title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
+  labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
 ```
+
+
+# Clase 5: [simulación error + tendencia]{.flow} {#clase-5}
+
+[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
+
+* [💻 Ejercicios de simulación](#tu-turno-5-1)
+* [📆 Planificación](#planificacion)
+
+---
+
+## 💻 Tu turno {#tu-turno-5-1}
 
 ### [**Ejercicio 5**]{.hl-yellow}
 
-
-💻 Diseña una función `estim_ts_trend_error` que, dada una serie (un tibble de dos columnas `t` y `X_t`), nos devuelva la misma tabla pero con una tercera columna con su estimación asumiendo una tendencia polinómica (necesitamos dos argumentos: la serie en sí y el grado del polinomio que queremos ajustar, y hacer uso dentro de la función de `poly()`, chequea en la ayuda de la función)
+💻 Diseña una función `estim_ts_trend_error()` que, dada una serie (un tibble de dos columnas `t` y `X_t`), nos devuelva la misma tabla pero con una **tercera columna con su estimación** asumiendo una tendencia polinómica (necesitamos dos argumentos: la tabla y el grado del polinomio; haz uso dentro de `poly()`, chequea en la ayuda de la función `? poly()`)
 
 ```{r}
 #| code-fold: true
 estim_ts_trend_error <- function(datos, degree = 1) {
-  
   if (degree == 0) {
     modelo <- datos |> lm(formula = X_t ~ 1)
   } else {
     modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
   }
-
-  datos <-
-    datos |> 
-    mutate(X_hat = predict(modelo, tibble("t" = t)))
-  
+  datos$X_hat <- predict(modelo, tibble("t" = datos$t))
   return(datos)
 }
-
-
-set.seed(123)
-datos <-
-  time_series_trend_error(n = 1000, trend = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
-
-# ajustamos un modelo polinómico con lm
+datos <- time_series_trend_error(n = 1000, beta = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
+# ajustamos un modelo polinómico de tendencia
 modelo <- datos |> estim_ts_trend_error(degree = 3)
+```
+
+```{r}
+#| echo: false
 ggplot(modelo) +
   geom_line(aes(x = t, y = X_t), alpha = 0.7) +
   geom_line(aes(x = t, y = X_hat), alpha = 0.7, color = "red") +
@@ -4618,7 +4647,7 @@ ggplot(modelo) +
   labs(x = "t", y = "X_t", title = "Serie temporal X_t = mu_t + eps_t con mu_t cúbica")
 ```
 
-:::
+
 
 ---
 
@@ -4645,8 +4674,23 @@ ggplot(retiro) +
 
 . . .
 
+```{r}
+retiro_estim <-
+  tibble("fecha" = retiro$fecha, "t" = 1:length(fecha), "X_t" = retiro$tmed) |>
+  # aplicamos función y renombramos variable de salida de la estimación
+  estim_ts_trend_error(degree = 0) |> rename(X_t_hat_0 = X_hat) |>
+  estim_ts_trend_error(degree = 1) |> rename(X_t_hat_1 = X_hat) |> 
+  estim_ts_trend_error(degree = 3) |> rename(X_t_hat_3 = X_hat) 
+```
+
+
+---
+
+## Caso real: AEMET
+
+
 :::: columns
-::: {.column width="32%"}
+::: {.column width="25%"}
 
 Como observas las [**predicciones no son precisas cuando hay una componente estacional**]{.hl-red} ya que el ajuste realizado solo se fija en una tendencia con unos **coef ctes**.
 
@@ -4657,20 +4701,12 @@ Como observas las [**predicciones no son precisas cuando hay una componente esta
 
 :::
 
-::: {.column width="68%"}
+::: {.column width="75%"}
 
 ```{r}
 #| code-fold: true
-retiro_estim <- 
-  retiro |>
-  select(fecha, tmed) |> rename(X_t = tmed) |> 
-  mutate(t = 1:length(fecha)) |>
-  estim_ts_trend_error(degree = 0) |> rename(tmed_hat_0 = X_hat) |>
-  estim_ts_trend_error(degree = 1) |> rename(tmed_hat_1 = X_hat) |> 
-  estim_ts_trend_error(degree = 3) |> rename(tmed_hat_3 = X_hat) |> 
-  rename(tmed = X_t)
-
-ggplot(retiro_estim |> pivot_longer(-c(fecha, t), names_to = "type", values_to = "pred")) +
+ggplot(retiro_estim |>
+         pivot_longer(-c(fecha, t), names_to = "type", values_to = "pred")) +
   geom_line(aes(x = fecha, y = pred, color = type),
             linewidth = 0.4, alpha = 0.75) +
   ggthemes::scale_color_colorblind() +
@@ -4729,7 +4765,8 @@ Imagina que tenemos la siguiente serie
 
 ```{r}
 datos <- tibble("t" = 1:15,
-                "x" = c(0.8, 1.3, 1.6, 1.5, 2.2, 2.3, 2.2, 2.4, 2, 1.5, 1.2, 1.3, 1.2, 1, 0.7))
+                "x" = c(0.8, 1.3, 1.6, 1.5, 2.2, 2.3, 2.2, 2.4,
+                        2, 1.5, 1.2, 1.3, 1.2, 1, 0.7))
 ```
 
 ```{r}
@@ -4829,11 +4866,8 @@ Para calcular una [**media móvil de orden $k=2*q+1$**]{.hl-yellow} en `R` podem
 
 ```{r}
 k <- 3
-
-datos <-
-  datos |> 
-  mutate(x_linear = predict(datos |> lm(formula = x ~ t), datos),
-         x_smooth_3ma = stats::filter(x, filter = rep(1/k, k)))
+datos$x_linear <- predict(datos |> lm(formula = x ~ t), datos)
+datos$x_smooth_3ma <- stats::filter(datos$x, filter = rep(1/k, k))
 datos
 ```
 
@@ -4902,10 +4936,11 @@ ggplot(datos |>
 #| code-fold: true
 retiro_estim <-
   retiro_estim |> 
-  mutate(x_smooth_7ma = stats::filter(tmed, filter = rep(1/7, 7)),
-         x_smooth_14ma = stats::filter(tmed, filter = rep(1/14, 14)),
-         x_smooth_28ma = stats::filter(tmed, filter = rep(1/28, 28)),
-         x_smooth_365ma = stats::filter(tmed, filter = rep(1/365, 365)))
+  drop_na(X_t) |> 
+  mutate(x_smooth_7ma = stats::filter(X_t, filter = rep(1/7, 7)),
+         x_smooth_14ma = stats::filter(X_t, filter = rep(1/14, 14)),
+         x_smooth_28ma = stats::filter(X_t, filter = rep(1/28, 28)),
+         x_smooth_365ma = stats::filter(X_t, filter = rep(1/365, 365)))
 
 ggplot(retiro_estim |>
          pivot_longer(-c(fecha, t), names_to = "type", values_to = "pred") |>
@@ -4919,6 +4954,8 @@ ggplot(retiro_estim |>
 ```
 
 
+
+# CLASE 6
 
 ---
 
