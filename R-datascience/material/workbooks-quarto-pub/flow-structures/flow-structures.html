@@ -3074,7 +3074,7 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Estructuras de control: bucles y estructuras condicionales</h1>
-<p class="subtitle lead">Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)</p>
+<p class="subtitle lead">Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)</p>
 </div>
 
 
@@ -3503,13 +3503,13 @@ Marta tiene 29 años</code></pre>
 nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq       mean   median
-                                y &lt;- x^2    1.681    1.886    2.16849    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1211.591 1224.034 1318.18715 1235.699
-       uq      max neval
-    2.091   11.357   500
- 1254.620 5426.514   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min       lq       mean   median
+                                y &lt;- x^2    984   1189.0   1534.138   1230.0
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 697287 735109.5 909896.436 746220.5
+     uq      max neval
+   1353    23206   500
+ 767397 11032444   500</code></pre>
 </div>
 </div>
 </section>
@@ -3638,14 +3638,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]       [,2]       [,3]
-[1,] -0.2850670  1.6425440  0.1653813
-[2,] -0.2669281 -2.2720465  1.4144921
-[3,]  0.6152448  2.1754225 -1.3760174
-[4,] -2.1438438  0.6513000  0.7412174
-[5,]  0.7990266  0.4191679 -0.7913131
-[6,]  1.1142493 -0.5306475  0.5679592
-[7,] -0.6933082 -1.2791164 -2.0809883</code></pre>
+<pre><code>           [,1]       [,2]        [,3]
+[1,]  0.4944915 -0.1068297  0.34929694
+[2,] -0.4274543 -2.2587700 -0.84132539
+[3,] -1.7343735 -0.0273422  1.57680736
+[4,] -0.4813804 -0.8327388  0.47431027
+[5,] -2.0888726  2.4381694  1.69556341
+[6,] -1.4214281 -0.2768565 -0.08777829
+[7,] -0.2222833  1.2060244 -0.94384409</code></pre>
 </div>
 </div>
 </section>
@@ -3751,7 +3751,7 @@ Cuidado
 <section id="pregunta-1" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="pregunta-1"><span class="header-section-number">3.1</span> Pregunta 1</h3>
 <blockquote class="blockquote">
-<p>Define una varible llamada <code>importe</code> que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, importe se reduzca a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de <code>importe</code> deberia ser <code>0.000095367</code> (aprox)</p>
+<p>Define una variable llamada <code>glucosa</code> que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, los niveles de glucosa se reduzcan a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de <code>glucosa</code> deberia ser <code>0.000095367</code> (aprox)</p>
 </blockquote>
 <div class="cell">
 <details>
@@ -3759,23 +3759,24 @@ Cuidado
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos un for ya que sabemos el número de iteraciones </span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># de manera prefijada (y no depende de nada)</span></span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># definimos inicialmente importe en 100</span></span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>importe <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co"># definimos inicialmente glucosa en 100</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
 <span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co"># para el bucle usamos por ejemplo i como índice, que va de 1 a 20</span></span>
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># el código fíjate que es el mismo y no depende de i</span></span>
-<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  importe <span class="ot">&lt;-</span> importe<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>importe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  glucosa <span class="ot">&lt;-</span> glucosa<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a>glucosa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="pregunta-2" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="pregunta-2"><span class="header-section-number">3.2</span> Pregunta 2</h3>
 <blockquote class="blockquote">
-<p>Diseña una estructura de bucle de manera que encuentres la iteración en la que <code>importe</code> es menor que 0.001 por primera vez. Una vez encontrado guárdalo en <code>iter</code> y para el bucle.</p>
+<p>Diseña una estructura de bucle de manera que encuentres la iteración en la que <code>glucosa</code> es menor que 0.001 por primera vez. Una vez encontrado guárdalo en <code>iter</code> y para el bucle.</p>
 </blockquote>
 <div class="cell">
 <details>
@@ -3783,16 +3784,16 @@ Cuidado
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dos formas de hacerlo: for y while</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># con for</span></span>
-<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>importe <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
 <span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ya sabemos que en 20 es menor que 0.001 así que podemos poner</span></span>
 <span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="co"># dicha cantidad como tope sabiendo que no llegará</span></span>
 <span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>) {</span>
 <span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># si todavía no es menor, seguimos dividiendo</span></span>
-<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (importe <span class="sc">&gt;=</span> <span class="fl">0.001</span>) {</span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (glucosa <span class="sc">&gt;=</span> <span class="fl">0.001</span>) {</span>
 <span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>    importe <span class="ot">&lt;-</span> importe<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>    glucosa <span class="ot">&lt;-</span> glucosa<span class="sc">/</span><span class="dv">2</span></span>
 <span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
 <span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -3806,15 +3807,15 @@ Cuidado
 <span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-26"><a href="#cb68-26" aria-hidden="true" tabindex="-1"></a><span class="co"># con while</span></span>
-<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a>importe <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb68-27"><a href="#cb68-27" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
 <span id="cb68-28"><a href="#cb68-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-29"><a href="#cb68-29" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># debemos inicializar las iteraciones</span></span>
 <span id="cb68-30"><a href="#cb68-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-31"><a href="#cb68-31" aria-hidden="true" tabindex="-1"></a><span class="co"># no sabemos cuantas iteraciones, solo que debe parar cuando</span></span>
-<span id="cb68-32"><a href="#cb68-32" aria-hidden="true" tabindex="-1"></a><span class="co"># importe esté por debajo de dicha cantidad</span></span>
-<span id="cb68-33"><a href="#cb68-33" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (importe <span class="sc">&gt;=</span> <span class="fl">0.001</span>) {</span>
+<span id="cb68-32"><a href="#cb68-32" aria-hidden="true" tabindex="-1"></a><span class="co"># glucosa esté por debajo de dicha cantidad</span></span>
+<span id="cb68-33"><a href="#cb68-33" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (glucosa <span class="sc">&gt;=</span> <span class="fl">0.001</span>) {</span>
 <span id="cb68-34"><a href="#cb68-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb68-35"><a href="#cb68-35" aria-hidden="true" tabindex="-1"></a>  importe <span class="ot">&lt;-</span> importe<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb68-35"><a href="#cb68-35" aria-hidden="true" tabindex="-1"></a>  glucosa <span class="ot">&lt;-</span> glucosa<span class="sc">/</span><span class="dv">2</span></span>
 <span id="cb68-36"><a href="#cb68-36" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb68-37"><a href="#cb68-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># estructura clásica de while: si se corre iteración</span></span>
 <span id="cb68-38"><a href="#cb68-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># actualizamos un valor (en este caso que cuente una iteración)</span></span>
@@ -3867,26 +3868,26 @@ Cuidado
 </div>
 </div>
 <blockquote class="blockquote">
-<p>Empezando en un importe inicial <code>importe_inicial</code> de 100 (euros), diseña un bucle que te sume 3€ más la iteración por la que estés si el importe actual es par y te reste 5€ menos la iteración por la que estés si es impar, SALVO que el importe ya esté igual o por debajo de 0 (en ese caso no debe sumar ni retar). Ejemplo: si importe tiene 50 euros y estás en la iteración 13, sumará 3 + 13 (66 en total); si importe tiene 51 euros y estás en la iteración 13, restará 5 + 13 (33 en total); si importe tiene -2 euros y estás en la iteración 13, sumará 3 + 13 (14 en total); si importe tiene -1 euros y estás en la iteración 13, no hará nada. Guarda los importes resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2</p>
+<p>Empezando en un nivel de glucosa inicial <code>glucosa_inicial</code> de 100 mg/dl, diseña un bucle que te sume 3 mg/dl más la iteración por la que estés si el valor actual es par y te reste 5 mg/dl menos la iteración por la que estés si es impar, SALVO que el valor ya esté igual o por debajo de 0 (en ese caso no debe sumar ni restar). Ejemplo: si glucosa tiene 50 mg/dl y estás en la iteración 13, sumará 3 + 13 (66 en total); si glucosa tiene 51 mg/dl y estás en la iteración 13, restará 5 + 13 (33 en total); si glucosa tiene -2 mg/dl y estás en la iteración 13, sumará 3 + 13 (14 en total); si glucosa tiene -1 mg/dl y estás en la iteración 13, no hará nada. Guarda los niveles de glucosa resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2</p>
 </blockquote>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>importe_inicial <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>importe <span class="ot">&lt;-</span> <span class="fu">c</span>(importe_inicial, <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">149</span>))</span>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>glucosa_inicial <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>glucosa <span class="ot">&lt;-</span> <span class="fu">c</span>(glucosa_inicial, <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="dv">149</span>))</span>
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">150</span>) {</span>
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (importe[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (glucosa[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>) {</span>
 <span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>    importe[i] <span class="ot">&lt;-</span> importe[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> i</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>    glucosa[i] <span class="ot">&lt;-</span> glucosa[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> i</span>
 <span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (importe[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (glucosa[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
 <span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a>    importe[i] <span class="ot">&lt;-</span> importe[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">-</span> (<span class="dv">5</span> <span class="sc">+</span> i)</span>
+<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a>    glucosa[i] <span class="ot">&lt;-</span> glucosa[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">-</span> (<span class="dv">5</span> <span class="sc">+</span> i)</span>
 <span id="cb85-12"><a href="#cb85-12" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb85-13"><a href="#cb85-13" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
 <span id="cb85-14"><a href="#cb85-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a>    importe[i] <span class="ot">&lt;-</span> importe[i <span class="sc">-</span> <span class="dv">1</span>]</span>
+<span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a>    glucosa[i] <span class="ot">&lt;-</span> glucosa[i <span class="sc">-</span> <span class="dv">1</span>]</span>
 <span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb85-17"><a href="#cb85-17" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb85-18"><a href="#cb85-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3905,14 +3906,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5 4 3</code></pre>
+<pre><code>[1] 1 3 2</code></pre>
 </div>
 </div>
 <p>Al ser aleatorio, cada vez que lo ejecutas saldrá algo distinto</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3 4 1</code></pre>
+<pre><code>[1] 4 3 1</code></pre>
 </div>
 </div>
 <p>¿Y si queremos tirar 10 veces?</p>
@@ -3926,7 +3927,7 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 2 3 5 4 6 2 4 5 3 1</code></pre>
+<pre><code> [1] 1 3 2 2 4 6 4 3 3 4</code></pre>
 </div>
 </div>
 <blockquote class="blockquote">

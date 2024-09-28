@@ -4576,9 +4576,19 @@ ggplot(datos, aes(x = t, y = X_t)) +
 ```
 
 
+
+
+# Clase 5: [simulación error + tendencia]{.flow} {#clase-5}
+
+[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
+
+* [💻 Ejercicios de simulación](#tu-turno-5-1)
+* [📆 Planificación](#planificacion)
+
 ---
 
-## 💻 Tu turno
+## 💻 Tu turno {#tu-turno-5-1}
+
 
 ### [**Ejercicio 4**]{.hl-yellow}
 
@@ -4607,16 +4617,10 @@ ggplot(datos, aes(x = t, y = X_t)) +
 ```
 
 
-# Clase 5: [simulación error + tendencia]{.flow} {#clase-5}
-
-[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
-
-* [💻 Ejercicios de simulación](#tu-turno-5-1)
-* [📆 Planificación](#planificacion)
-
 ---
 
-## 💻 Tu turno {#tu-turno-5-1}
+
+## 💻 Tu turno
 
 ### [**Ejercicio 5**]{.hl-yellow}
 
@@ -4719,6 +4723,281 @@ ggplot(retiro_estim |>
 ::::
 
 
+
+# Clase 6: [...]{.flow} {#clase-6}
+
+[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
+
+* [💻 Ejercicios de simulación](#tu-turno-5-1)
+* [📆 Planificación](#planificacion)
+
+
+---
+
+## Recapitulando
+
+Hasta ahora nos hemos centrado sobre todo en dos cosas
+
+* Repasar lo que supiéramos de `R`
+
+* Entender cómo simular y estimar series sencillas
+
+* Visualizar dichas series
+
+. . .
+
+Pero a partir de ahora pulsaremos un poco el acelerador (así quién tenga muchos problemas en la parte de programación, deberá **empezar a usar del mail y las tutorías**)
+
+---
+
+## Recapitulando
+
+¿Qué deberíamos saber hasta ahora?
+
+* Deberíamos tener una función `ts_error()` parecida a esta para [**simular un ruido**]{.hl-yellow} de una varianza dada.
+
+```{r}
+ts_error <- function(n, t = 1:n, sd_vec = 1) {
+  
+  datos_tidy <- tibble()
+  for (i in 1:length(sd_vec)) {
+    datos_tidy <- 
+      rbind(datos_tidy,
+            tibble("t" = t, "sd" = glue::glue("sd_{sd_vec[i]}"),
+                   "X_t" = rnorm(n, mean = 0, sd = sd_vec[i])))
+  }
+  return(datos_tidy)
+}
+ts_error(n = 100, sd = c(0.5, 2))
+```
+
+---
+
+## Recapitulando
+
+¿Qué deberíamos saber hasta ahora?
+
+* Deberíamos tener una función `ts_trend_error` parecida a esta para [**simular una serie formada por tendencia polinómica más ruido**]{.hl-yellow}, con una varianza dada y un vector de coeficientes dado.
+
+```{r}
+ts_trend_error <-
+  function(n = 1000, t = 1:n, beta = c(1, -0.01, 0.001, -0.0001), sd = 1) {
+  
+  datos <- ts_error(n = n, t = t, sd = sd)
+  for (i in 1:length(beta)) {
+    datos$X_t <- datos$X_t + beta[i]*(datos$t^(i - 1))
+  } 
+  return(datos)
+}
+datos <- ts_trend_error(n = 1000, beta = c(1, 0.01, 0.000001, -0.00000001), sd = 0.5)
+```
+
+---
+
+## Recapitulando
+
+¿Qué deberíamos saber hasta ahora?
+
+* Deberías ser capaz de entender cómo [**organizar los datos**]{.hl-yellow} de manera que podamos visualizar de manera sencilla.
+
+:::: columns
+::: {.column width="47%"}
+
+```{r}
+#| eval: false
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t),
+            alpha = 0.6) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t (mu_t cúbica)")
+```
+
+:::
+
+::: {.column width="53%"}
+
+```{r}
+#| echo: false
+ggplot(datos) +
+  geom_line(aes(x = t, y = X_t), alpha = 0.6) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(x = "t", y = "X_t",
+       title = "Serie temporal X_t = mu_t + eps_t (mu_t cúbica)")
+```
+
+:::
+
+::::
+
+---
+
+## Recapitulando
+
+
+* Y por último deberías tener una `estim_ts_trend_error()` similar a esta para que, dada una [**serie cualquiera**]{.hl-yellow}, con dos columnas para $t$ y $X_t$ (con cualquier nombre) haga la estimación. [**Fíjate de los argumentos `tag_estim` y `nuevos_valores` que hacen para facilitarnos la vida a futuro**]{.hl-purple}
+
+```{r}
+estim_ts_trend_error <-
+  function(datos, degree = 1, tag_estim = paste0("estim_poly_", degree),
+           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
+    
+    datos <- # versión tidyverse
+      datos |> select(all_of(col_t), all_of(col_X_t)) |>
+      rename(t = all_of(col_t), X_t = all_of(col_X_t))
+    
+    # R base normal
+    # datos <- datos[, c(col_t, col_X_t)]
+    # names(datos)[names(datos) == col_t] <- "t"
+    # names(datos)[names(datos) == col_X_t] <- "X_t"
+
+    if (degree == 0) {
+      modelo <- datos |> lm(formula = X_t ~ 1)
+    } else {
+      modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
+    }
+    datos[, tag_estim] <- predict(modelo, tibble("t" = datos$t))
+    
+    if (!is.null(nuevos_valores)) {
+      nuevos_datos <- tibble("t" = nuevos_valores, "X_t" = NA)
+      nuevos_datos[, tag_estim] <- predict(modelo, tibble("t" = nuevos_datos$t))
+      datos <- rbind(datos, nuevos_datos)
+    }
+    return(datos)
+}
+
+```
+
+---
+
+## Caso real: AEMET
+
+Con todo esto podemos aplicar nuestras funciones para [**estimar los datos reales del AEMET**]{.hl-yellow}, estimando bajo 4 hipótesis: solo ruido, ruido + tendencia cte, ruido + tendencia lineal y ruido + tendencia polinómica de grado 3.
+
+. . .
+
+```{r}
+retiro_estim <-
+  estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 0,
+                       col_t = "fecha", col_X_t = "tmed")
+retiro_estim$estim_poly_1 <- 
+  estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 1,
+                       col_t = "fecha", col_X_t = "tmed")$estim_poly_1
+retiro_estim$estim_poly_3 <- 
+  estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 3,
+                       col_t = "fecha", col_X_t = "tmed")$estim_poly_3
+retiro_estim$estim_noise <- 0 # fíjate que el ruido la estimación es...0
+retiro_estim_tidy <-
+  retiro_estim |> 
+  pivot_longer(cols = -t, names_to = "serie", values_to = "X_t")
+```
+
+---
+
+## Caso real: AEMET
+
+Fíjate que de cada `estim_ts_trend_error()` solo nos interesa la propia estimación ya que `t` y `X_t` es igual siempre, así que podríamos hacer un `left_join()` de las diferentes tablas.
+
+```{r}
+#| code-line-numbers: 4-9
+retiro_estim <-
+  estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 0,
+                       col_t = "fecha", col_X_t = "tmed") |> 
+  left_join(estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 1,
+                                 col_t = "fecha", col_X_t = "tmed"),
+            by = c("t", "X_t")) |> 
+  left_join(estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 3,
+                                 col_t = "fecha", col_X_t = "tmed"),
+            by = c("t", "X_t"))
+retiro_estim$estim_noise <- 0 # fíjate que el ruido la estimación es...0
+retiro_estim_tidy <-
+  retiro_estim |> 
+  pivot_longer(cols = -t, names_to = "serie", values_to = "X_t")
+```
+
+---
+
+## Caso real: AEMET
+
+Y también deberíamos saber ya visualizar todo
+
+```{r}
+#| code-fold: true
+ggplot(retiro_estim_tidy) +
+  geom_line(aes(x = t, y = X_t, color = serie,
+                linewidth = serie, alpha = serie, linetype = serie)) +
+  ggthemes::scale_color_colorblind() +
+  scale_alpha_manual(values = c(0.85, 0.85, 0.85, 0.85, 1)) +
+  scale_linewidth_manual(values = c(1.1, 1.1, 1.1, 1.1, 0.1)) +
+  scale_linetype_manual(values = c("dotted", "dotted", "dotted", "dotted", "solid")) +
+  theme_minimal() +
+  labs(x = "t", y = "Temperatura (ºC)", title = "Estimación serie AEMET")
+```
+
+---
+
+## Caso real: AEMET
+
+La idea de los métodos de estimación es que podamos usarlos no solo para estimar sino también para [**predecir en instantes temporales futuros**]{.hl-yellow}, haciendo uso de esos **«nuevos valores»** que podemos usar en `estim_ts_trend_error()`.
+
+. . .
+
+Por ejemplo, en los datos tenemos solo hasta el 31 de agosto de 2024: [**¿cuál es la predicción de los distintos métodos para todo el mes de septiembre, octubre y noviembre?**]{.hl-purple}
+
+---
+
+## Caso real: AEMET
+
+
+Por ejemplo, en los datos tenemos solo hasta el 31 de agosto de 2024: [**¿cuál es la predicción de los distintos métodos para lo que queda de 2024 y 2025?**]{.hl-purple}
+
+```{r}
+#| code-line-numbers: "1,6,9,13"
+nuevos_valores <- seq(as_date("2024-09-01"), as_date("2025-12-31"), by = 1)
+
+retiro_predict <-
+  estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 0,
+                       col_t = "fecha", col_X_t = "tmed",
+                       nuevos_valores = nuevos_valores) |> 
+  left_join(estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 1,
+                                 col_t = "fecha", col_X_t = "tmed",
+                                 nuevos_valores = nuevos_valores),
+            by = c("t", "X_t")) |> 
+  left_join(estim_ts_trend_error(retiro[, c("fecha", "tmed")], degree = 3,
+                                 col_t = "fecha", col_X_t = "tmed",
+                                 nuevos_valores = nuevos_valores),
+            by = c("t", "X_t"))
+retiro_predict$estim_noise <- 0 # fíjate que el ruido la predicción es...0
+
+retiro_predict_tidy <-
+  retiro_predict |> 
+  pivot_longer(cols = -t, names_to = "serie", values_to = "X_t")
+```
+
+---
+
+
+## Caso real: AEMET
+
+
+```{r}
+#| code-fold: true
+# filtro un poco para que se vea mejor
+ggplot(retiro_predict_tidy |> 
+         filter(t > as_date("2015-01-01"))) +
+  geom_line(aes(x = t, y = X_t, color = serie,
+                linewidth = serie, alpha = serie, linetype = serie)) +
+  geom_vline(xintercept = max(retiro$fecha), linetype = "twodash", color = "#a61d0f", alpha = 0.5, linewidth = 0.9) +
+  ggthemes::scale_color_colorblind() +
+  scale_alpha_manual(values = c(0.85, 0.85, 0.85, 0.85, 1)) +
+  scale_linewidth_manual(values = c(1, 1, 1, 1, 0.2)) +
+  scale_linetype_manual(values = c("dotted", "dotted", "dotted", "dotted", "solid")) +
+  theme_minimal() +
+  labs(x = "t", y = "Temperatura (ºC)", title = "Predicción serie AEMET")
+```
+
 ---
 
 ## Estacionalidad
@@ -4727,7 +5006,7 @@ El problema del ajuste anterior es que, amén de la parte puramente estocástica
 
 . . .
 
-Diremos que una serie tiene una [**componente estacional**]{.hl-yellow} siempre que presente un [**patrón que se repite en periodos (aprox.) fijos en el tiempo**]{.hl-yellow} tal que ahora
+Diremos que una serie tiene una [**componente estacional**]{.hl-yellow} siempre que presente un [**patrón que se repite en periodos (aprox.) fijos en el tiempo**]{.hl-yellow} tal que 
 
 $$X_t = f \left(\mu_t, S_t, \varepsilon_t\right) =^{adit} \mu_t + S_t + \varepsilon_t, \quad X_t =^{mult} \mu_t * S_t * \varepsilon_t$$
 
@@ -4934,6 +5213,8 @@ ggplot(datos |>
 
 ```{r}
 #| code-fold: true
+#| eval: false
+# versión tidyverse (en R base tabla$variable_nueva <- valor)
 retiro_estim <-
   retiro_estim |> 
   drop_na(X_t) |> 
@@ -4955,7 +5236,7 @@ ggplot(retiro_estim |>
 
 
 
-# CLASE 6
+# CLASE 7
 
 ---
 

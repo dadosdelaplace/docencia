@@ -6,3 +6,7 @@
   quarto-pub:
     - id: e6d18394-59ac-4cf4-82bc-214f42e74e71
       url: 'https://javieralvarezliebana.quarto.pub/control-bucles-if-else'
+- source: flow-structures-biostats.qmd
+  quarto-pub:
+    - id: 9d6fb94b-256c-4ff2-b9fd-4933a72ed637
+      url: 'https://javieralvarezliebana.quarto.pub/control-bucles-if-else-biostats'

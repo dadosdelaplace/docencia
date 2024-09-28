@@ -1,6 +1,6 @@
 ---
 title: "Estructuras de control: bucles y estructuras condicionales"
-subtitle: "Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)"
+subtitle: "Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)"
 author: "Javier Álvarez Liébana"
 format:
   html:
@@ -681,7 +681,7 @@ Para practicar estructuras de control vamos a realizar un [**ejercicio de simula
 
 ### Pregunta 1
 
-> Define una varible llamada `importe` que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, importe se reduzca a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de `importe` deberia ser `0.000095367` (aprox)
+> Define una variable llamada `glucosa` que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, los niveles de glucosa se reduzcan a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de `glucosa` deberia ser `0.000095367` (aprox)
 
 ```{r}
 #| code-fold: true
@@ -690,22 +690,23 @@ Para practicar estructuras de control vamos a realizar un [**ejercicio de simula
 # Usamos un for ya que sabemos el número de iteraciones 
 # de manera prefijada (y no depende de nada)
 
-# definimos inicialmente importe en 100
-importe <- 100 
+# definimos inicialmente glucosa en 100
+glucosa <- 100 
 
 # para el bucle usamos por ejemplo i como índice, que va de 1 a 20
 for (i in 1:20) {
   
   # el código fíjate que es el mismo y no depende de i
-  importe <- importe/2
+  glucosa <- glucosa/2
+  
 }
-importe
+glucosa
 ```
 
 
 ### Pregunta 2
 
-> Diseña una estructura de bucle de manera que encuentres la iteración en la que `importe` es menor que 0.001 por primera vez. Una vez encontrado guárdalo en `iter` y para el bucle.
+> Diseña una estructura de bucle de manera que encuentres la iteración en la que `glucosa` es menor que 0.001 por primera vez. Una vez encontrado guárdalo en `iter` y para el bucle.
 
 
 ```{r}
@@ -715,16 +716,16 @@ importe
 # dos formas de hacerlo: for y while
 
 # con for
-importe <- 100 
+glucosa <- 100 
 
 # ya sabemos que en 20 es menor que 0.001 así que podemos poner
 # dicha cantidad como tope sabiendo que no llegará
 for (i in 1:20) {
   
   # si todavía no es menor, seguimos dividiendo
-  if (importe >= 0.001) {
+  if (glucosa >= 0.001) {
     
-    importe <- importe/2
+    glucosa <- glucosa/2
     
   } else {
     
@@ -738,15 +739,15 @@ for (i in 1:20) {
 }
 
 # con while
-importe <- 100 
+glucosa <- 100 
 
 iter <- 0 # debemos inicializar las iteraciones
 
 # no sabemos cuantas iteraciones, solo que debe parar cuando
-# importe esté por debajo de dicha cantidad
-while (importe >= 0.001) {
+# glucosa esté por debajo de dicha cantidad
+while (glucosa >= 0.001) {
   
-  importe <- importe/2
+  glucosa <- glucosa/2
     
   # estructura clásica de while: si se corre iteración
   # actualizamos un valor (en este caso que cuente una iteración)
@@ -775,27 +776,27 @@ iter
 12 %% 3
 ```
 
-> Empezando en un importe inicial `importe_inicial` de 100 (euros), diseña un bucle que te sume 3€ más la iteración por la que estés si el importe actual es par y te reste 5€ menos la iteración por la que estés si es impar, SALVO que el importe ya esté igual o por debajo de 0 (en ese caso no debe sumar ni retar). Ejemplo: si importe tiene 50 euros y estás en la iteración 13, sumará 3 + 13 (66 en total); si importe tiene 51 euros y estás en la iteración 13, restará 5 + 13 (33 en total); si importe tiene -2 euros y estás en la iteración 13, sumará 3 + 13 (14 en total); si importe tiene -1 euros y estás en la iteración 13, no hará nada. Guarda los importes resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2
+> Empezando en un nivel de glucosa inicial `glucosa_inicial` de 100 mg/dl, diseña un bucle que te sume 3 mg/dl más la iteración por la que estés si el valor actual es par y te reste 5 mg/dl menos la iteración por la que estés si es impar, SALVO que el valor ya esté igual o por debajo de 0 (en ese caso no debe sumar ni restar). Ejemplo: si glucosa tiene 50 mg/dl y estás en la iteración 13, sumará 3 + 13 (66 en total); si glucosa tiene 51 mg/dl y estás en la iteración 13, restará 5 + 13 (33 en total); si glucosa tiene -2 mg/dl y estás en la iteración 13, sumará 3 + 13 (14 en total); si glucosa tiene -1 mg/dl y estás en la iteración 13, no hará nada. Guarda los niveles de glucosa resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2
 
 ```{r}
 #| code-fold: true
 #| eval: false
 
-importe_inicial <- 100
-importe <- c(importe_inicial, rep(NA, 149))
+glucosa_inicial <- 100
+glucosa <- c(glucosa_inicial, rep(NA, 149))
 for (i in 2:150) {
   
-  if (importe[i - 1] %% 2 == 0) {
+  if (glucosa[i - 1] %% 2 == 0) {
     
-    importe[i] <- importe[i - 1] + 3 + i
+    glucosa[i] <- glucosa[i - 1] + 3 + i
     
-  } else if (importe[i - 1] > 0) {
+  } else if (glucosa[i - 1] > 0) {
     
-    importe[i] <- importe[i - 1] - (5 + i)
+    glucosa[i] <- glucosa[i - 1] - (5 + i)
     
   } else {
     
-    importe[i] <- importe[i - 1]
+    glucosa[i] <- glucosa[i - 1]
     
   }
 }

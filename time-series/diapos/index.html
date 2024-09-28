@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-24"</code></pre>
+<pre><code>[1] "2024-09-28"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-24 17:31:28 CEST"</code></pre>
+<pre><code>[1] "2024-09-28 13:42:28 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -2676,13 +2676,13 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-4"><a href="#cb147-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.722    1.927    2.125276    2.009
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1380.429 1392.606 1459.269130 1407.079
-       uq      max neval
-    2.091    7.052   500
- 1419.912 4458.381   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min     lq       mean   median
+                                y &lt;- x^2    902   1107   1217.864   1148.0
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 800730 813153 861060.270 823505.5
+     uq     max neval
+   1230    8323   500
+ 833776 3442237   500</code></pre>
 </div>
 </div>
 </section>
@@ -4753,18 +4753,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t      X_t sd    
-   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.724   sd_0.5
- 2     2 -0.679   sd_0.5
- 3     3 -0.513   sd_0.5
- 4     4  0.367   sd_0.5
- 5     5 -0.230   sd_0.5
- 6     6  0.0562  sd_0.5
- 7     7 -0.638   sd_0.5
- 8     8  1.12    sd_0.5
- 9     9 -0.00448 sd_0.5
-10    10  0.468   sd_0.5
+       t     X_t sd    
+   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
+ 1     1  0.599  sd_0.5
+ 2     2  0.0233 sd_0.5
+ 3     3  1.12   sd_0.5
+ 4     4 -0.852  sd_0.5
+ 5     5  0.176  sd_0.5
+ 6     6 -0.119  sd_0.5
+ 7     7  0.692  sd_0.5
+ 8     8  1.31   sd_0.5
+ 9     9 -0.595  sd_0.5
+10    10 -0.420  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -4986,8 +4986,17 @@ No todavía, vamos por el ciclo 4</code></pre>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-197-1.png" width="960" class="r-stretch"></section>
-<section id="tu-turno-2" class="slide level2">
+<img data-src="index_files/figure-revealjs/unnamed-chunk-197-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="clase-5" class="title-slide slide level1 center">
+<h1>Clase 5: <span class="flow">simulación error + tendencia</span></h1>
+<p><span style="color:#444442;"><strong>Introducción al análisis descriptivo de series temporales</strong></span></p>
+<ul>
+<li><a href="#/tu-turno-5-1">💻 Ejercicios de simulación</a></li>
+<li><a href="#/planificacion">📆 Planificación</a></li>
+</ul>
+</section>
+<section id="tu-turno-5-1" class="slide level2">
 <h2>💻 Tu turno</h2>
 <h3 id="ejercicio-4-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></h3>
 <p>💻 Generaliza la función anterior de manera que simule una <span class="hl-yellow"><strong>serie temporal con error y tendencia polinómica</strong></span> (que acepte un vector de parámetros general).</p>
@@ -5014,17 +5023,8 @@ No todavía, vamos por el ciclo 4</code></pre>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-198-1.png" width="960" class="r-stretch"></section></section>
-<section>
-<section id="clase-5" class="title-slide slide level1 center">
-<h1>Clase 5: <span class="flow">simulación error + tendencia</span></h1>
-<p><span style="color:#444442;"><strong>Introducción al análisis descriptivo de series temporales</strong></span></p>
-<ul>
-<li><a href="#/tu-turno-5-1">💻 Ejercicios de simulación</a></li>
-<li><a href="#/planificacion">📆 Planificación</a></li>
-</ul>
-</section>
-<section id="tu-turno-5-1" class="slide level2">
+<img data-src="index_files/figure-revealjs/unnamed-chunk-198-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-2" class="slide level2">
 <h2>💻 Tu turno</h2>
 <h3 id="ejercicio-5-4"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></h3>
 <p>💻 Diseña una función <code>estim_ts_trend_error()</code> que, dada una serie (un tibble de dos columnas <code>t</code> y <code>X_t</code>), nos devuelva la misma tabla pero con una <strong>tercera columna con su estimación</strong> asumiendo una tendencia polinómica (necesitamos dos argumentos: la tabla y el grado del polinomio; haz uso dentro de <code>poly()</code>, chequea en la ayuda de la función <code>? poly()</code>)</p>
@@ -5103,12 +5103,262 @@ No todavía, vamos por el ciclo 4</code></pre>
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="clase-6" class="title-slide slide level1 center">
+<h1>Clase 6: <span class="flow">…</span></h1>
+<p><span style="color:#444442;"><strong>Introducción al análisis descriptivo de series temporales</strong></span></p>
+<ul>
+<li><a href="#/tu-turno-5-1">💻 Ejercicios de simulación</a></li>
+<li><a href="#/planificacion">📆 Planificación</a></li>
+</ul>
 </section>
+<section id="recapitulando-1" class="slide level2">
+<h2>Recapitulando</h2>
+<p>Hasta ahora nos hemos centrado sobre todo en dos cosas</p>
+<ul>
+<li><p>Repasar lo que supiéramos de <code>R</code></p></li>
+<li><p>Entender cómo simular y estimar series sencillas</p></li>
+<li><p>Visualizar dichas series</p></li>
+</ul>
+<div class="fragment">
+<p>Pero a partir de ahora pulsaremos un poco el acelerador (así quién tenga muchos problemas en la parte de programación, deberá <strong>empezar a usar del mail y las tutorías</strong>)</p>
+</div>
+</section>
+<section id="recapitulando-2" class="slide level2">
+<h2>Recapitulando</h2>
+<p>¿Qué deberíamos saber hasta ahora?</p>
+<ul>
+<li>Deberíamos tener una función <code>ts_error()</code> parecida a esta para <span class="hl-yellow"><strong>simular un ruido</strong></span> de una varianza dada.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb323"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb323-1"><a href="#cb323-1"></a>ts_error <span class="ot">&lt;-</span> <span class="cf">function</span>(n, <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="at">sd_vec =</span> <span class="dv">1</span>) {</span>
+<span id="cb323-2"><a href="#cb323-2"></a>  </span>
+<span id="cb323-3"><a href="#cb323-3"></a>  datos_tidy <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb323-4"><a href="#cb323-4"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sd_vec)) {</span>
+<span id="cb323-5"><a href="#cb323-5"></a>    datos_tidy <span class="ot">&lt;-</span> </span>
+<span id="cb323-6"><a href="#cb323-6"></a>      <span class="fu">rbind</span>(datos_tidy,</span>
+<span id="cb323-7"><a href="#cb323-7"></a>            <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> t, <span class="st">"sd"</span> <span class="ot">=</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"sd_{sd_vec[i]}"</span>),</span>
+<span id="cb323-8"><a href="#cb323-8"></a>                   <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sd_vec[i])))</span>
+<span id="cb323-9"><a href="#cb323-9"></a>  }</span>
+<span id="cb323-10"><a href="#cb323-10"></a>  <span class="fu">return</span>(datos_tidy)</span>
+<span id="cb323-11"><a href="#cb323-11"></a>}</span>
+<span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 200 × 3
+       t sd         X_t
+   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
+ 1     1 sd_0.5  0.379 
+ 2     2 sd_0.5 -0.324 
+ 3     3 sd_0.5  0.865 
+ 4     4 sd_0.5  0.696 
+ 5     5 sd_0.5 -0.268 
+ 6     6 sd_0.5  0.219 
+ 7     7 sd_0.5 -0.0879
+ 8     8 sd_0.5 -0.122 
+ 9     9 sd_0.5 -0.396 
+10    10 sd_0.5  0.286 
+# ℹ 190 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="recapitulando-3" class="slide level2">
+<h2>Recapitulando</h2>
+<p>¿Qué deberíamos saber hasta ahora?</p>
+<ul>
+<li>Deberíamos tener una función <code>ts_trend_error</code> parecida a esta para <span class="hl-yellow"><strong>simular una serie formada por tendencia polinómica más ruido</strong></span>, con una varianza dada y un vector de coeficientes dado.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb325"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb325-1"><a href="#cb325-1"></a>ts_trend_error <span class="ot">&lt;-</span></span>
+<span id="cb325-2"><a href="#cb325-2"></a>  <span class="cf">function</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="at">beta =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.01</span>, <span class="fl">0.001</span>, <span class="sc">-</span><span class="fl">0.0001</span>), <span class="at">sd =</span> <span class="dv">1</span>) {</span>
+<span id="cb325-3"><a href="#cb325-3"></a>  </span>
+<span id="cb325-4"><a href="#cb325-4"></a>  datos <span class="ot">&lt;-</span> <span class="fu">ts_error</span>(<span class="at">n =</span> n, <span class="at">t =</span> t, <span class="at">sd =</span> sd)</span>
+<span id="cb325-5"><a href="#cb325-5"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(beta)) {</span>
+<span id="cb325-6"><a href="#cb325-6"></a>    datos<span class="sc">$</span>X_t <span class="ot">&lt;-</span> datos<span class="sc">$</span>X_t <span class="sc">+</span> beta[i]<span class="sc">*</span>(datos<span class="sc">$</span>t<span class="sc">^</span>(i <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb325-7"><a href="#cb325-7"></a>  } </span>
+<span id="cb325-8"><a href="#cb325-8"></a>  <span class="fu">return</span>(datos)</span>
+<span id="cb325-9"><a href="#cb325-9"></a>}</span>
+<span id="cb325-10"><a href="#cb325-10"></a>datos <span class="ot">&lt;-</span> <span class="fu">ts_trend_error</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">beta =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.01</span>, <span class="fl">0.000001</span>, <span class="sc">-</span><span class="fl">0.00000001</span>), <span class="at">sd =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="recapitulando-4" class="slide level2">
+<h2>Recapitulando</h2>
+<p>¿Qué deberíamos saber hasta ahora?</p>
+<ul>
+<li>Deberías ser capaz de entender cómo <span class="hl-yellow"><strong>organizar los datos</strong></span> de manera que podamos visualizar de manera sencilla.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:47%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb326"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb326-1"><a href="#cb326-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb326-2"><a href="#cb326-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t),</span>
+<span id="cb326-3"><a href="#cb326-3"></a>            <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb326-4"><a href="#cb326-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb326-5"><a href="#cb326-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb326-6"><a href="#cb326-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"X_t"</span>,</span>
+<span id="cb326-7"><a href="#cb326-7"></a>       <span class="at">title =</span> <span class="st">"Serie temporal X_t = mu_t + eps_t (mu_t cúbica)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:53%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-207-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="recapitulando-5" class="slide level2">
+<h2>Recapitulando</h2>
+<ul>
+<li>Y por último deberías tener una <code>estim_ts_trend_error()</code> similar a esta para que, dada una <span class="hl-yellow"><strong>serie cualquiera</strong></span>, con dos columnas para <span class="math inline">\(t\)</span> y <span class="math inline">\(X_t\)</span> (con cualquier nombre) haga la estimación. <span class="hl-purple"><strong>Fíjate de los argumentos <code>tag_estim</code> y <code>nuevos_valores</code> que hacen para facilitarnos la vida a futuro</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb327"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb327-1"><a href="#cb327-1"></a>estim_ts_trend_error <span class="ot">&lt;-</span></span>
+<span id="cb327-2"><a href="#cb327-2"></a>  <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">tag_estim =</span> <span class="fu">paste0</span>(<span class="st">"estim_poly_"</span>, degree),</span>
+<span id="cb327-3"><a href="#cb327-3"></a>           <span class="at">col_t =</span> <span class="st">"t"</span>, <span class="at">col_X_t =</span> <span class="st">"X_t"</span>, <span class="at">nuevos_valores =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb327-4"><a href="#cb327-4"></a>    </span>
+<span id="cb327-5"><a href="#cb327-5"></a>    datos <span class="ot">&lt;-</span> <span class="co"># versión tidyverse</span></span>
+<span id="cb327-6"><a href="#cb327-6"></a>      datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">all_of</span>(col_t), <span class="fu">all_of</span>(col_X_t)) <span class="sc">|&gt;</span></span>
+<span id="cb327-7"><a href="#cb327-7"></a>      <span class="fu">rename</span>(<span class="at">t =</span> <span class="fu">all_of</span>(col_t), <span class="at">X_t =</span> <span class="fu">all_of</span>(col_X_t))</span>
+<span id="cb327-8"><a href="#cb327-8"></a>    </span>
+<span id="cb327-9"><a href="#cb327-9"></a>    <span class="co"># R base normal</span></span>
+<span id="cb327-10"><a href="#cb327-10"></a>    <span class="co"># datos &lt;- datos[, c(col_t, col_X_t)]</span></span>
+<span id="cb327-11"><a href="#cb327-11"></a>    <span class="co"># names(datos)[names(datos) == col_t] &lt;- "t"</span></span>
+<span id="cb327-12"><a href="#cb327-12"></a>    <span class="co"># names(datos)[names(datos) == col_X_t] &lt;- "X_t"</span></span>
+<span id="cb327-13"><a href="#cb327-13"></a></span>
+<span id="cb327-14"><a href="#cb327-14"></a>    <span class="cf">if</span> (degree <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb327-15"><a href="#cb327-15"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb327-16"><a href="#cb327-16"></a>    } <span class="cf">else</span> {</span>
+<span id="cb327-17"><a href="#cb327-17"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="fu">poly</span>(t, degree, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb327-18"><a href="#cb327-18"></a>    }</span>
+<span id="cb327-19"><a href="#cb327-19"></a>    datos[, tag_estim] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> datos<span class="sc">$</span>t))</span>
+<span id="cb327-20"><a href="#cb327-20"></a>    </span>
+<span id="cb327-21"><a href="#cb327-21"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(nuevos_valores)) {</span>
+<span id="cb327-22"><a href="#cb327-22"></a>      nuevos_datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> nuevos_valores, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="cn">NA</span>)</span>
+<span id="cb327-23"><a href="#cb327-23"></a>      nuevos_datos[, tag_estim] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> nuevos_datos<span class="sc">$</span>t))</span>
+<span id="cb327-24"><a href="#cb327-24"></a>      datos <span class="ot">&lt;-</span> <span class="fu">rbind</span>(datos, nuevos_datos)</span>
+<span id="cb327-25"><a href="#cb327-25"></a>    }</span>
+<span id="cb327-26"><a href="#cb327-26"></a>    <span class="fu">return</span>(datos)</span>
+<span id="cb327-27"><a href="#cb327-27"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="caso-real-aemet-3" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<p>Con todo esto podemos aplicar nuestras funciones para <span class="hl-yellow"><strong>estimar los datos reales del AEMET</strong></span>, estimando bajo 4 hipótesis: solo ruido, ruido + tendencia cte, ruido + tendencia lineal y ruido + tendencia polinómica de grado 3.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb328"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb328-1"><a href="#cb328-1"></a>retiro_estim <span class="ot">&lt;-</span></span>
+<span id="cb328-2"><a href="#cb328-2"></a>  <span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">0</span>,</span>
+<span id="cb328-3"><a href="#cb328-3"></a>                       <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)</span>
+<span id="cb328-4"><a href="#cb328-4"></a>retiro_estim<span class="sc">$</span>estim_poly_1 <span class="ot">&lt;-</span> </span>
+<span id="cb328-5"><a href="#cb328-5"></a>  <span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">1</span>,</span>
+<span id="cb328-6"><a href="#cb328-6"></a>                       <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)<span class="sc">$</span>estim_poly_1</span>
+<span id="cb328-7"><a href="#cb328-7"></a>retiro_estim<span class="sc">$</span>estim_poly_3 <span class="ot">&lt;-</span> </span>
+<span id="cb328-8"><a href="#cb328-8"></a>  <span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb328-9"><a href="#cb328-9"></a>                       <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)<span class="sc">$</span>estim_poly_3</span>
+<span id="cb328-10"><a href="#cb328-10"></a>retiro_estim<span class="sc">$</span>estim_noise <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># fíjate que el ruido la estimación es...0</span></span>
+<span id="cb328-11"><a href="#cb328-11"></a>retiro_estim_tidy <span class="ot">&lt;-</span></span>
+<span id="cb328-12"><a href="#cb328-12"></a>  retiro_estim <span class="sc">|&gt;</span> </span>
+<span id="cb328-13"><a href="#cb328-13"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"serie"</span>, <span class="at">values_to =</span> <span class="st">"X_t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="caso-real-aemet-4" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<p>Fíjate que de cada <code>estim_ts_trend_error()</code> solo nos interesa la propia estimación ya que <code>t</code> y <code>X_t</code> es igual siempre, así que podríamos hacer un <code>left_join()</code> de las diferentes tablas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb329" data-code-line-numbers="4-9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb329-1"><a href="#cb329-1"></a>retiro_estim <span class="ot">&lt;-</span></span>
+<span id="cb329-2"><a href="#cb329-2"></a>  <span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">0</span>,</span>
+<span id="cb329-3"><a href="#cb329-3"></a>                       <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb329-4"><a href="#cb329-4"></a>  <span class="fu">left_join</span>(<span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">1</span>,</span>
+<span id="cb329-5"><a href="#cb329-5"></a>                                 <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>),</span>
+<span id="cb329-6"><a href="#cb329-6"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"X_t"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb329-7"><a href="#cb329-7"></a>  <span class="fu">left_join</span>(<span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb329-8"><a href="#cb329-8"></a>                                 <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>),</span>
+<span id="cb329-9"><a href="#cb329-9"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"X_t"</span>))</span>
+<span id="cb329-10"><a href="#cb329-10"></a>retiro_estim<span class="sc">$</span>estim_noise <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># fíjate que el ruido la estimación es...0</span></span>
+<span id="cb329-11"><a href="#cb329-11"></a>retiro_estim_tidy <span class="ot">&lt;-</span></span>
+<span id="cb329-12"><a href="#cb329-12"></a>  retiro_estim <span class="sc">|&gt;</span> </span>
+<span id="cb329-13"><a href="#cb329-13"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"serie"</span>, <span class="at">values_to =</span> <span class="st">"X_t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="caso-real-aemet-5" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<p>Y también deberíamos saber ya visualizar todo</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb330"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb330-1"><a href="#cb330-1"></a><span class="fu">ggplot</span>(retiro_estim_tidy) <span class="sc">+</span></span>
+<span id="cb330-2"><a href="#cb330-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> serie,</span>
+<span id="cb330-3"><a href="#cb330-3"></a>                <span class="at">linewidth =</span> serie, <span class="at">alpha =</span> serie, <span class="at">linetype =</span> serie)) <span class="sc">+</span></span>
+<span id="cb330-4"><a href="#cb330-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb330-5"><a href="#cb330-5"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb330-6"><a href="#cb330-6"></a>  <span class="fu">scale_linewidth_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">1.1</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb330-7"><a href="#cb330-7"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"solid"</span>)) <span class="sc">+</span></span>
+<span id="cb330-8"><a href="#cb330-8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb330-9"><a href="#cb330-9"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"Temperatura (ºC)"</span>, <span class="at">title =</span> <span class="st">"Estimación serie AEMET"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-211-1.png" width="960" class="r-stretch"></section>
+<section id="caso-real-aemet-6" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<p>La idea de los métodos de estimación es que podamos usarlos no solo para estimar sino también para <span class="hl-yellow"><strong>predecir en instantes temporales futuros</strong></span>, haciendo uso de esos <strong>«nuevos valores»</strong> que podemos usar en <code>estim_ts_trend_error()</code>.</p>
+<div class="fragment">
+<p>Por ejemplo, en los datos tenemos solo hasta el 31 de agosto de 2024: <span class="hl-purple"><strong>¿cuál es la predicción de los distintos métodos para todo el mes de septiembre, octubre y noviembre?</strong></span></p>
+</div>
+</section>
+<section id="caso-real-aemet-7" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<p>Por ejemplo, en los datos tenemos solo hasta el 31 de agosto de 2024: <span class="hl-purple"><strong>¿cuál es la predicción de los distintos métodos para lo que queda de 2024 y 2025?</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb331" data-code-line-numbers="1,6,9,13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb331-1"><a href="#cb331-1"></a>nuevos_valores <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">as_date</span>(<span class="st">"2024-09-01"</span>), <span class="fu">as_date</span>(<span class="st">"2025-12-31"</span>), <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb331-2"><a href="#cb331-2"></a></span>
+<span id="cb331-3"><a href="#cb331-3"></a>retiro_predict <span class="ot">&lt;-</span></span>
+<span id="cb331-4"><a href="#cb331-4"></a>  <span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">0</span>,</span>
+<span id="cb331-5"><a href="#cb331-5"></a>                       <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>,</span>
+<span id="cb331-6"><a href="#cb331-6"></a>                       <span class="at">nuevos_valores =</span> nuevos_valores) <span class="sc">|&gt;</span> </span>
+<span id="cb331-7"><a href="#cb331-7"></a>  <span class="fu">left_join</span>(<span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">1</span>,</span>
+<span id="cb331-8"><a href="#cb331-8"></a>                                 <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>,</span>
+<span id="cb331-9"><a href="#cb331-9"></a>                                 <span class="at">nuevos_valores =</span> nuevos_valores),</span>
+<span id="cb331-10"><a href="#cb331-10"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"X_t"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb331-11"><a href="#cb331-11"></a>  <span class="fu">left_join</span>(<span class="fu">estim_ts_trend_error</span>(retiro[, <span class="fu">c</span>(<span class="st">"fecha"</span>, <span class="st">"tmed"</span>)], <span class="at">degree =</span> <span class="dv">3</span>,</span>
+<span id="cb331-12"><a href="#cb331-12"></a>                                 <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>,</span>
+<span id="cb331-13"><a href="#cb331-13"></a>                                 <span class="at">nuevos_valores =</span> nuevos_valores),</span>
+<span id="cb331-14"><a href="#cb331-14"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"t"</span>, <span class="st">"X_t"</span>))</span>
+<span id="cb331-15"><a href="#cb331-15"></a>retiro_predict<span class="sc">$</span>estim_noise <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># fíjate que el ruido la predicción es...0</span></span>
+<span id="cb331-16"><a href="#cb331-16"></a></span>
+<span id="cb331-17"><a href="#cb331-17"></a>retiro_predict_tidy <span class="ot">&lt;-</span></span>
+<span id="cb331-18"><a href="#cb331-18"></a>  retiro_predict <span class="sc">|&gt;</span> </span>
+<span id="cb331-19"><a href="#cb331-19"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"serie"</span>, <span class="at">values_to =</span> <span class="st">"X_t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="caso-real-aemet-8" class="slide level2">
+<h2>Caso real: AEMET</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb332"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb332-1"><a href="#cb332-1"></a><span class="co"># filtro un poco para que se vea mejor</span></span>
+<span id="cb332-2"><a href="#cb332-2"></a><span class="fu">ggplot</span>(retiro_predict_tidy <span class="sc">|&gt;</span> </span>
+<span id="cb332-3"><a href="#cb332-3"></a>         <span class="fu">filter</span>(t <span class="sc">&gt;</span> <span class="fu">as_date</span>(<span class="st">"2015-01-01"</span>))) <span class="sc">+</span></span>
+<span id="cb332-4"><a href="#cb332-4"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> serie,</span>
+<span id="cb332-5"><a href="#cb332-5"></a>                <span class="at">linewidth =</span> serie, <span class="at">alpha =</span> serie, <span class="at">linetype =</span> serie)) <span class="sc">+</span></span>
+<span id="cb332-6"><a href="#cb332-6"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">max</span>(retiro<span class="sc">$</span>fecha), <span class="at">linetype =</span> <span class="st">"twodash"</span>, <span class="at">color =</span> <span class="st">"#a61d0f"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">linewidth =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb332-7"><a href="#cb332-7"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb332-8"><a href="#cb332-8"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="fl">0.85</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb332-9"><a href="#cb332-9"></a>  <span class="fu">scale_linewidth_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb332-10"><a href="#cb332-10"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"dotted"</span>, <span class="st">"solid"</span>)) <span class="sc">+</span></span>
+<span id="cb332-11"><a href="#cb332-11"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb332-12"><a href="#cb332-12"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"t"</span>, <span class="at">y =</span> <span class="st">"Temperatura (ºC)"</span>, <span class="at">title =</span> <span class="st">"Predicción serie AEMET"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-213-1.png" width="960" class="r-stretch"></section>
 <section id="estacionalidad" class="slide level2">
 <h2>Estacionalidad</h2>
 <p>El problema del ajuste anterior es que, amén de la parte puramente estocástica y la tendencia (más o menos compleja que pueda tener), <span class="hl-yellow"><strong>existe una parte ESTACIONAL</strong></span></p>
 <div class="fragment">
-<p>Diremos que una serie tiene una <span class="hl-yellow"><strong>componente estacional</strong></span> siempre que presente un <span class="hl-yellow"><strong>patrón que se repite en periodos (aprox.) fijos en el tiempo</strong></span> tal que ahora</p>
+<p>Diremos que una serie tiene una <span class="hl-yellow"><strong>componente estacional</strong></span> siempre que presente un <span class="hl-yellow"><strong>patrón que se repite en periodos (aprox.) fijos en el tiempo</strong></span> tal que</p>
 <p><span class="math display">\[X_t = f \left(\mu_t, S_t, \varepsilon_t\right) =^{adit} \mu_t + S_t + \varepsilon_t, \quad X_t =^{mult} \mu_t * S_t * \varepsilon_t\]</span></p>
 </div>
 <div class="fragment">
@@ -5132,18 +5382,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h2>Medias móviles</h2>
 <p>Imagina que tenemos la siguiente serie</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb323"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb323-1"><a href="#cb323-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,</span>
-<span id="cb323-2"><a href="#cb323-2"></a>                <span class="st">"x"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.3</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">2.3</span>, <span class="fl">2.2</span>, <span class="fl">2.4</span>,</span>
-<span id="cb323-3"><a href="#cb323-3"></a>                        <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="dv">1</span>, <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb333"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb333-1"><a href="#cb333-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,</span>
+<span id="cb333-2"><a href="#cb333-2"></a>                <span class="st">"x"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.3</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">2.3</span>, <span class="fl">2.2</span>, <span class="fl">2.4</span>,</span>
+<span id="cb333-3"><a href="#cb333-3"></a>                        <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="dv">1</span>, <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-205-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-215-1.png" width="960" class="r-stretch"></section>
 <section id="medias-móviles-2" class="slide level2">
 <h2>Medias móviles</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb324"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb324-1"><a href="#cb324-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,</span>
-<span id="cb324-2"><a href="#cb324-2"></a>                <span class="st">"x"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.3</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">2.3</span>, <span class="fl">2.2</span>, <span class="fl">2.4</span>,</span>
-<span id="cb324-3"><a href="#cb324-3"></a>                        <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="dv">1</span>, <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb334"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb334-1"><a href="#cb334-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,</span>
+<span id="cb334-2"><a href="#cb334-2"></a>                <span class="st">"x"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">1.3</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">2.3</span>, <span class="fl">2.2</span>, <span class="fl">2.4</span>,</span>
+<span id="cb334-3"><a href="#cb334-3"></a>                        <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="dv">1</span>, <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>La idea de las <span class="hl-yellow"><strong>medias móviles</strong></span> es la siguiente:</p>
 <div class="fragment">
@@ -5212,10 +5462,10 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h2>Medias móviles</h2>
 <p>Para calcular una <span class="hl-yellow"><strong>media móvil de orden <span class="math inline">\(k=2*q+1\)</span></strong></span> en <code>R</code> podemos hacerlo con <code>filter()</code> del paquete <code>{stats}</code> (<span class="hl-red"><strong>¡cuidado!</strong></span>: si tienes cargado <code>{tidyverse}</code> debes especificar que <code>filter()</code> es)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb325"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb325-1"><a href="#cb325-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb325-2"><a href="#cb325-2"></a>datos<span class="sc">$</span>x_linear <span class="ot">&lt;-</span> <span class="fu">predict</span>(datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> x <span class="sc">~</span> t), datos)</span>
-<span id="cb325-3"><a href="#cb325-3"></a>datos<span class="sc">$</span>x_smooth_3ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>k, k))</span>
-<span id="cb325-4"><a href="#cb325-4"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb335-2"><a href="#cb335-2"></a>datos<span class="sc">$</span>x_linear <span class="ot">&lt;-</span> <span class="fu">predict</span>(datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> x <span class="sc">~</span> t), datos)</span>
+<span id="cb335-3"><a href="#cb335-3"></a>datos<span class="sc">$</span>x_smooth_3ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>k, k))</span>
+<span id="cb335-4"><a href="#cb335-4"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 4
        t     x x_linear x_smooth_3ma
@@ -5243,25 +5493,25 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb327"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb327-1"><a href="#cb327-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
-<span id="cb327-2"><a href="#cb327-2"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"var"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)) <span class="sc">+</span></span>
-<span id="cb327-3"><a href="#cb327-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> values, <span class="at">color =</span> var, <span class="at">linetype =</span> var),</span>
-<span id="cb327-4"><a href="#cb327-4"></a>            <span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb327-5"><a href="#cb327-5"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb327-6"><a href="#cb327-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
+<span id="cb337-2"><a href="#cb337-2"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"var"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)) <span class="sc">+</span></span>
+<span id="cb337-3"><a href="#cb337-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> values, <span class="at">color =</span> var, <span class="at">linetype =</span> var),</span>
+<span id="cb337-4"><a href="#cb337-4"></a>            <span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb337-5"><a href="#cb337-5"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb337-6"><a href="#cb337-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-208-1.png" width="960" class="r-stretch"><p>Fíjate cómo ahora la curva queda <span class="hl-yellow"><strong>suavizada pero de manera dinámica</strong></span></p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-218-1.png" width="960" class="r-stretch"><p>Fíjate cómo ahora la curva queda <span class="hl-yellow"><strong>suavizada pero de manera dinámica</strong></span></p>
 </section>
 <section id="medias-móviles-7" class="slide level2">
 <h2>Medias móviles</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb328"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb328-1"><a href="#cb328-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb328-2"><a href="#cb328-2"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb328-3"><a href="#cb328-3"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_5ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, <span class="dv">5</span>)),</span>
-<span id="cb328-4"><a href="#cb328-4"></a>         <span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
-<span id="cb328-5"><a href="#cb328-5"></a>         <span class="at">x_smooth_9ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb338-2"><a href="#cb338-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb338-3"><a href="#cb338-3"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_5ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, <span class="dv">5</span>)),</span>
+<span id="cb338-4"><a href="#cb338-4"></a>         <span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
+<span id="cb338-5"><a href="#cb338-5"></a>         <span class="at">x_smooth_9ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:25%;">
@@ -5270,54 +5520,52 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb329"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb329-1"><a href="#cb329-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
-<span id="cb329-2"><a href="#cb329-2"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"var"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)) <span class="sc">+</span></span>
-<span id="cb329-3"><a href="#cb329-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> values, <span class="at">color =</span> var),</span>
-<span id="cb329-4"><a href="#cb329-4"></a>            <span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb329-5"><a href="#cb329-5"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb329-6"><a href="#cb329-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb339"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb339-1"><a href="#cb339-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
+<span id="cb339-2"><a href="#cb339-2"></a>         <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"var"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)) <span class="sc">+</span></span>
+<span id="cb339-3"><a href="#cb339-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> values, <span class="at">color =</span> var),</span>
+<span id="cb339-4"><a href="#cb339-4"></a>            <span class="at">linewidth =</span> <span class="fl">0.9</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb339-5"><a href="#cb339-5"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb339-6"><a href="#cb339-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-210-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-220-1.png" width="960"></p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="caso-real-aemet-3" class="slide level2">
+<section id="caso-real-aemet-9" class="slide level2">
 <h2>Caso real: AEMET</h2>
 <p>💻 Aplica el suavizado de medias móviles con <span class="math inline">\(k=7, 14, 28, 365\)</span> a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación</p>
 <div class="fragment">
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb330"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb330-1"><a href="#cb330-1"></a>retiro_estim <span class="ot">&lt;-</span></span>
-<span id="cb330-2"><a href="#cb330-2"></a>  retiro_estim <span class="sc">|&gt;</span> </span>
-<span id="cb330-3"><a href="#cb330-3"></a>  <span class="fu">drop_na</span>(X_t) <span class="sc">|&gt;</span> </span>
-<span id="cb330-4"><a href="#cb330-4"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
-<span id="cb330-5"><a href="#cb330-5"></a>         <span class="at">x_smooth_14ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">14</span>, <span class="dv">14</span>)),</span>
-<span id="cb330-6"><a href="#cb330-6"></a>         <span class="at">x_smooth_28ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">28</span>, <span class="dv">28</span>)),</span>
-<span id="cb330-7"><a href="#cb330-7"></a>         <span class="at">x_smooth_365ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">365</span>, <span class="dv">365</span>)))</span>
-<span id="cb330-8"><a href="#cb330-8"></a></span>
-<span id="cb330-9"><a href="#cb330-9"></a><span class="fu">ggplot</span>(retiro_estim <span class="sc">|&gt;</span></span>
-<span id="cb330-10"><a href="#cb330-10"></a>         <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(fecha, t), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb330-11"><a href="#cb330-11"></a>         <span class="fu">filter</span>(<span class="fu">between</span>(fecha, <span class="fu">as_date</span>(<span class="st">"2016-01-01"</span>), <span class="fu">as_date</span>(<span class="st">"2022-01-01"</span>)))) <span class="sc">+</span></span>
-<span id="cb330-12"><a href="#cb330-12"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> pred, <span class="at">color =</span> type),</span>
-<span id="cb330-13"><a href="#cb330-13"></a>            <span class="at">linewidth =</span> <span class="fl">0.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb330-14"><a href="#cb330-14"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb330-15"><a href="#cb330-15"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb330-16"><a href="#cb330-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Temperatura media como SERIE TEMPORAL"</span>,</span>
-<span id="cb330-17"><a href="#cb330-17"></a>       <span class="at">x =</span> <span class="st">"t (fecha)"</span>, <span class="at">y =</span> <span class="st">"ºC (media)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb340"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb340-1"><a href="#cb340-1"></a><span class="co"># versión tidyverse (en R base tabla$variable_nueva &lt;- valor)</span></span>
+<span id="cb340-2"><a href="#cb340-2"></a>retiro_estim <span class="ot">&lt;-</span></span>
+<span id="cb340-3"><a href="#cb340-3"></a>  retiro_estim <span class="sc">|&gt;</span> </span>
+<span id="cb340-4"><a href="#cb340-4"></a>  <span class="fu">drop_na</span>(X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb340-5"><a href="#cb340-5"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
+<span id="cb340-6"><a href="#cb340-6"></a>         <span class="at">x_smooth_14ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">14</span>, <span class="dv">14</span>)),</span>
+<span id="cb340-7"><a href="#cb340-7"></a>         <span class="at">x_smooth_28ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">28</span>, <span class="dv">28</span>)),</span>
+<span id="cb340-8"><a href="#cb340-8"></a>         <span class="at">x_smooth_365ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">365</span>, <span class="dv">365</span>)))</span>
+<span id="cb340-9"><a href="#cb340-9"></a></span>
+<span id="cb340-10"><a href="#cb340-10"></a><span class="fu">ggplot</span>(retiro_estim <span class="sc">|&gt;</span></span>
+<span id="cb340-11"><a href="#cb340-11"></a>         <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(fecha, t), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb340-12"><a href="#cb340-12"></a>         <span class="fu">filter</span>(<span class="fu">between</span>(fecha, <span class="fu">as_date</span>(<span class="st">"2016-01-01"</span>), <span class="fu">as_date</span>(<span class="st">"2022-01-01"</span>)))) <span class="sc">+</span></span>
+<span id="cb340-13"><a href="#cb340-13"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> pred, <span class="at">color =</span> type),</span>
+<span id="cb340-14"><a href="#cb340-14"></a>            <span class="at">linewidth =</span> <span class="fl">0.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb340-15"><a href="#cb340-15"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb340-16"><a href="#cb340-16"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb340-17"><a href="#cb340-17"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Temperatura media como SERIE TEMPORAL"</span>,</span>
+<span id="cb340-18"><a href="#cb340-18"></a>       <span class="at">x =</span> <span class="st">"t (fecha)"</span>, <span class="at">y =</span> <span class="st">"ºC (media)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-211-1.png" width="960"></p>
-</div>
 </div>
 </div>
 </section></section>
 <section>
-<section id="clase-6" class="title-slide slide level1 center">
-<h1>CLASE 6</h1>
+<section id="clase-7" class="title-slide slide level1 center">
+<h1>CLASE 7</h1>
 
 </section>
 <section id="regresión-local" class="slide level2">
@@ -5326,26 +5574,26 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="fragment">
 <p>La idea de un ajuste local es <span class="hl-yellow"><strong>ajustar a los datos una regresión polinómica (ponderada en el caso de LOWESS)</strong></span>, de manera en cada punto el ajuste se hace utilizando una metodología de <span class="hl-yellow"><strong>mínimos cuadrados ponderado</strong></span> dando <strong>más peso a los puntos cercanos al punto cuya respuesta está siendo estimando y menos peso a los puntos más lejanos</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb331"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb331-1"><a href="#cb331-1"></a>estim_ts_trend_error <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">span =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb331-2"><a href="#cb331-2"></a>  </span>
-<span id="cb331-3"><a href="#cb331-3"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(span)) {</span>
-<span id="cb331-4"><a href="#cb331-4"></a>    <span class="cf">if</span> (degree <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb331-5"><a href="#cb331-5"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb331-6"><a href="#cb331-6"></a>    } <span class="cf">else</span> {</span>
-<span id="cb331-7"><a href="#cb331-7"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="fu">poly</span>(t, degree, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb331-8"><a href="#cb331-8"></a>    }</span>
-<span id="cb331-9"><a href="#cb331-9"></a>  } <span class="cf">else</span> {</span>
-<span id="cb331-10"><a href="#cb331-10"></a>    </span>
-<span id="cb331-11"><a href="#cb331-11"></a>    modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">loess</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> t, <span class="at">degree =</span> degree, <span class="at">span =</span> span)</span>
-<span id="cb331-12"><a href="#cb331-12"></a>    </span>
-<span id="cb331-13"><a href="#cb331-13"></a>  }</span>
-<span id="cb331-14"><a href="#cb331-14"></a></span>
-<span id="cb331-15"><a href="#cb331-15"></a>  datos <span class="ot">&lt;-</span></span>
-<span id="cb331-16"><a href="#cb331-16"></a>    datos <span class="sc">|&gt;</span> </span>
-<span id="cb331-17"><a href="#cb331-17"></a>    <span class="fu">mutate</span>(<span class="at">X_hat =</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> t)))</span>
-<span id="cb331-18"><a href="#cb331-18"></a>  </span>
-<span id="cb331-19"><a href="#cb331-19"></a>  <span class="fu">return</span>(datos)</span>
-<span id="cb331-20"><a href="#cb331-20"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb341"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1"></a>estim_ts_trend_error <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">span =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb341-2"><a href="#cb341-2"></a>  </span>
+<span id="cb341-3"><a href="#cb341-3"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(span)) {</span>
+<span id="cb341-4"><a href="#cb341-4"></a>    <span class="cf">if</span> (degree <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb341-5"><a href="#cb341-5"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb341-6"><a href="#cb341-6"></a>    } <span class="cf">else</span> {</span>
+<span id="cb341-7"><a href="#cb341-7"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="fu">poly</span>(t, degree, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb341-8"><a href="#cb341-8"></a>    }</span>
+<span id="cb341-9"><a href="#cb341-9"></a>  } <span class="cf">else</span> {</span>
+<span id="cb341-10"><a href="#cb341-10"></a>    </span>
+<span id="cb341-11"><a href="#cb341-11"></a>    modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">loess</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> t, <span class="at">degree =</span> degree, <span class="at">span =</span> span)</span>
+<span id="cb341-12"><a href="#cb341-12"></a>    </span>
+<span id="cb341-13"><a href="#cb341-13"></a>  }</span>
+<span id="cb341-14"><a href="#cb341-14"></a></span>
+<span id="cb341-15"><a href="#cb341-15"></a>  datos <span class="ot">&lt;-</span></span>
+<span id="cb341-16"><a href="#cb341-16"></a>    datos <span class="sc">|&gt;</span> </span>
+<span id="cb341-17"><a href="#cb341-17"></a>    <span class="fu">mutate</span>(<span class="at">X_hat =</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> t)))</span>
+<span id="cb341-18"><a href="#cb341-18"></a>  </span>
+<span id="cb341-19"><a href="#cb341-19"></a>  <span class="fu">return</span>(datos)</span>
+<span id="cb341-20"><a href="#cb341-20"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
