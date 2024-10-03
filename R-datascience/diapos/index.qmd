@@ -4346,11 +4346,52 @@ if (z > 0) {
 ```{r}
 #| eval: false
 #| code-fold: true
-En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -1 y 2
+En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -2.5 y 5
 ```
 
-
 ### [**Ejercicio 5**]{.hl-yellow}
+
+📝 ¿Qué pasaría si ejecutamos el siguiente código? Spoiler: da error. ¿Por qué? ¿Cómo solucionarlo?
+
+```{r}
+#| eval: false
+z <- c(-1, 1, 5)
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+Da error ya que en los `if (condición) { } else { }` "clásicos" necesitamos que
+la condición tenga longitud uno (un solo valor TRU/FALSE)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+# para arreglarlo podemos hacer un if_else vectorial
+z <- c(-1, 1, -5)
+library(dplyr)
+x <- if_else(z > 0, z^3, if_else(abs(z) < 2, z^4, z/2))
+y <- if_else(z > 0, -sqrt(z), if_else(abs(z) < 2, sqrt(-z), abs(z)))
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
 
 📝 ¿Qué sucederá si ejecutamos el código inferior?
 
@@ -4384,7 +4425,7 @@ Error in z^3 : non-numeric argument to binary operator
 ```
 
 
-### [**Ejercicio 6**]{.hl-yellow}
+### [**Ejercicio 7**]{.hl-yellow}
 
 📝 Del paquete `{lubridate}`, la función `hour()` nos devuelve la hora de una fecha dada, y la función `now()` nos devuelve fecha y hora del momento actual. Con ambas funciones haz que se imprima por pantalla (`cat()`) "buenas noches" solo a partir de las 21 horas.
 
@@ -5458,7 +5499,9 @@ igualdad_nombres("Javi", "Lucía")
 
 # Sin importar mayúsculas
 igualdad_nombres <- function(persona_1, persona_2) {
-  return(toupper(persona_1) == toupper(persona_2))
+  return(str_to_upper(persona_1) == str_to_upper(persona_2))
+  # otra opción
+  return(str_equal(persona_1, persona_2, ignore_case = TRUE))
 }
 igualdad_nombres("Javi", "javi")
 igualdad_nombres("Javi", "Lucía")

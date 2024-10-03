@@ -10,7 +10,7 @@ format:
     toc-depth: 5
     toc-location: left
     number-sections: true
-embed-resources: true
+    embed-resources: true
 execute: 
   echo: true
 ---
@@ -245,11 +245,53 @@ if (z > 0) {
 ```{r}
 #| eval: false
 #| code-fold: true
-En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -1 y 2
+En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -2.5 y 5
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 ¿Qué pasaría si ejecutamos el siguiente código? Spoiler: da error. ¿Por qué? ¿Cómo solucionarlo?
+
+```{r}
+#| eval: false
+z <- c(-1, 1, 5)
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+Da error ya que en los `if (condición) { } else { }` "clásicos" necesitamos que
+la condición tenga longitud uno (un solo valor TRU/FALSE)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+# para arreglarlo podemos hacer un if_else vectorial
+z <- c(-1, 1, -5)
+library(dplyr)
+x <- if_else(z > 0, z^3, if_else(abs(z) < 2, z^4, z/2))
+y <- if_else(z > 0, -sqrt(z), if_else(abs(z) < 2, sqrt(-z), abs(z)))
 ```
 
 
-### [**Ejercicio 5**]{.hl-yellow}
+### [**Ejercicio 6**]{.hl-yellow}
 
 📝 ¿Qué sucederá si ejecutamos el código inferior?
 
@@ -283,7 +325,7 @@ Error in z^3 : non-numeric argument to binary operator
 ```
 
 
-### [**Ejercicio 6**]{.hl-yellow}
+### [**Ejercicio 7**]{.hl-yellow}
 
 📝 Del paquete `{lubridate}`, la función `hour()` nos devuelve la hora de una fecha dada, y la función `now()` nos devuelve fecha y hora del momento actual. Con ambas funciones haz que se imprima por pantalla (`cat()`) "buenas noches" solo a partir de las 21 horas.
 
@@ -835,6 +877,8 @@ Al tener solo 6 elementos posibles y elegir 10, no puede, así que le tenemos qu
 sample(x = 1:6, size = 10, replace = TRUE)
 ```
 
+#### Pregunta 4.1
+
 > Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos y 25 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?
 
 ```{r}
@@ -875,6 +919,8 @@ for (i in 1:length(intentos)) {
 }
 exitos
 ```
+
+#### Pregunta 4.2
 
 > ¿Y si en cada ronda, te abriesen una de las puertas no premiadas que no has elegido, cambiarías de puerta o te mantendrías? Simula ambos casos y descubre cuál es la estrategia correcta (este problema se conoce como problema de Monty Hall y aparece incluso en películas como 21 Black Jack)
 

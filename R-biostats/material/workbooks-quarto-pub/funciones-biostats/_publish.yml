@@ -10,3 +10,7 @@
   quarto-pub:
     - id: f545ba4f-d423-45c8-a9ab-a90c878c15a8
       url: 'https://javieralvarezliebana.quarto.pub/funciones-en-r'
+- source: funciones-biostats.qmd
+  quarto-pub:
+    - id: 65406a45-530e-41f8-97ad-e23f0bf4d84a
+      url: 'https://javieralvarezliebana.quarto.pub/funciones-en-r-biostats'

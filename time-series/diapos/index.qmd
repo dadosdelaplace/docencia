@@ -4736,7 +4736,7 @@ ggplot(retiro_estim |>
 
 ## Recapitulando
 
-Hasta ahora nos hemos centrado sobre todo en dos cosas
+Hasta ahora nos hemos centrado sobre todo en tres cosas
 
 * Repasar lo que supiéramos de `R`
 
@@ -5141,11 +5141,13 @@ La transformación es una [**media ponderada**]{.hl-yellow} de $q + s + 1$ valor
 
 ## Medias móviles
 
-Para calcular una [**media móvil de orden $k=2*q+1$**]{.hl-yellow} en `R` podemos hacerlo con `filter()` del paquete `{stats}` ([**¡cuidado!**]{.hl-red}: si tienes cargado `{tidyverse}` debes especificar que `filter()` es)
+Para calcular una [**media móvil de orden $k=2*q+1$**]{.hl-yellow} en `R` podemos hacerlo con `filter()` del paquete `{stats}` teniendo la variable ya **ordenada** ([**¡cuidado!**]{.hl-red}: si tienes cargado `{tidyverse}` debes especificar que `filter()` es)
 
 ```{r}
 k <- 3
 datos$x_linear <- predict(datos |> lm(formula = x ~ t), datos)
+
+datos <- datos[order(datos$t), ]
 datos$x_smooth_3ma <- stats::filter(datos$x, filter = rep(1/k, k))
 datos
 ```
@@ -5171,11 +5173,9 @@ Fíjate cómo ahora la curva queda [**suavizada pero de manera dinámica**]{.hl-
 ## Medias móviles
 
 ```{r}
-datos <-
-  datos |> 
-  mutate(x_smooth_5ma = stats::filter(x, filter = rep(1/5, 5)),
-         x_smooth_7ma = stats::filter(x, filter = rep(1/7, 7)),
-         x_smooth_9ma = stats::filter(x, filter = rep(1/9, 9)))
+datos$x_smooth_5ma <- stats::filter(x, filter = rep(1/5, 5))
+datos$x_smooth_7ma <- stats::filter(x, filter = rep(1/7, 7))
+datos$x_smooth_9ma <- stats::filter(x, filter = rep(1/9, 9))
 ```
 
 :::: columns
@@ -5205,7 +5205,49 @@ ggplot(datos |>
 
 ## Caso real: AEMET
 
-💻 Aplica el suavizado de medias móviles con $k=7, 14, 28, 365$ a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación 
+💻 Diseña una función `estim_ts_smooth_ma()` que, imitando la función `estim_ts_trend_error()`, nos devuelva la estimación de una serie aplicando el suavizado de medias móviles con parámetro $k$. Importante: la serie que le pases a `stats::filter()` no puede tener ausentes.
+
+. . .
+
+```{r}
+estim_ts_smooth_ma <-
+  function(datos, k = 3, tag_estim = paste0("estim_ma_", k),
+           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
+    
+    # R base normal
+    datos <- datos[, c(col_t, col_X_t)]
+    names(datos)[names(datos) == col_t] <- "t"
+    names(datos)[names(datos) == col_X_t] <- "X_t"
+    datos <- datos[order(datos$t), ] # ordenamos por t
+
+    # eliminamos ausentes
+    datos <- datos[!is.na(datos$X_t), ]
+    
+    # Estimamos
+    datos[, tag_estim] <- stats::filter(datos$X_t, filter = rep(1/k, k))
+
+    # Predecimos
+    if (!is.null(nuevos_valores)) {
+      datos <- rbind(datos, nuevos_datos)
+    }
+    return(datos)
+}
+```
+
+
+---
+
+## Caso real: AEMET
+
+💻 Diseña una función general `estim_ts()` donde con un argumento `tipo_estim` dentro llame a `estim_ts_trend_error()` o a `estim_ts_smooth_ma()` en función de lo que queramos. Piensa que esta función grande la opción de dar los mismos argumentos que las funciones a las que va a llamar dentro.
+
+. . .
+
+```{r}
+
+```
+
+el suavizado de medias móviles con $k=7, 14, 28, 365$ a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación 
 
 . . .
 
