@@ -3078,7 +3078,7 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Estructuras de control: bucles y estructuras condicionales</h1>
-<p class="subtitle lead">Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)</p>
+<p class="subtitle lead">Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)</p>
 </div>
 
 
@@ -3546,13 +3546,13 @@ Marta tiene 29 años</code></pre>
 nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq       mean   median
-                                y &lt;- x^2    1.681    1.845    2.03237    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1212.862 1223.952 1295.95580 1230.758
-       uq      max neval
-    2.050    9.758   500
- 1240.599 5102.696   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min     lq       mean   median
+                                y &lt;- x^2    943   1107   1332.746   1189.0
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 696713 717131 796165.142 731255.5
+       uq     max neval
+   1312.0   24436   500
+ 759914.5 3871302   500</code></pre>
 </div>
 </div>
 </section>
@@ -3681,14 +3681,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]        [,2]       [,3]
-[1,]  0.5379858 -0.04292093  0.1558518
-[2,] -0.2952241  0.98006838 -0.6869250
-[3,] -0.6100324  0.79163338 -0.5219287
-[4,]  1.3890196 -0.26098380 -1.9887198
-[5,] -0.6180394  1.38389376  0.2662360
-[6,] -0.3680200 -0.67676516 -1.0329322
-[7,]  0.6511698 -0.44289788  0.6968886</code></pre>
+<pre><code>           [,1]        [,2]        [,3]
+[1,]  0.5304665  0.72911304 -0.55222693
+[2,]  0.8900848  1.54089463 -0.94931656
+[3,]  0.3305962 -0.04118770 -0.72657792
+[4,]  0.8051020  0.01370829  0.08940944
+[5,] -0.2772310 -0.91546807  0.80201984
+[6,] -1.3541458  0.78684792  0.09568340
+[7,] -0.3494099  0.45643607  0.40076417</code></pre>
 </div>
 </div>
 </section>
@@ -3948,14 +3948,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5 1 4</code></pre>
+<pre><code>[1] 5 4 3</code></pre>
 </div>
 </div>
 <p>Al ser aleatorio, cada vez que lo ejecutas saldrá algo distinto</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 5 2</code></pre>
+<pre><code>[1] 3 1 6</code></pre>
 </div>
 </div>
 <p>¿Y si queremos tirar 10 veces?</p>
@@ -3969,50 +3969,52 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 1 1 4 1 2 5 3 1</code></pre>
+<pre><code> [1] 3 3 5 4 1 2 5 3 2 6</code></pre>
 </div>
 </div>
 <section id="pregunta-4.1" class="level4" data-number="3.4.1">
 <h4 data-number="3.4.1" class="anchored" data-anchor-id="pregunta-4.1"><span class="header-section-number">3.4.1</span> Pregunta 4.1</h4>
 <blockquote class="blockquote">
-<p>Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos y 25 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?</p>
+<p>Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos, 20 000 intentos y 30 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?</p>
 </blockquote>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las posibilidades</span></span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>puertas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos los intentos</span></span>
-<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>intentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">25000</span>)</span>
-<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Para cada escenario de intentos, definimos las veces que hemos ganado</span></span>
-<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># (al inicio empieza en 0 claro)</span></span>
-<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>exitos <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(intentos))</span>
-<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co"># primer bucle: cantidad de intentos permitidos</span></span>
-<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(intentos)) {</span>
-<span id="cb97-13"><a href="#cb97-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-14"><a href="#cb97-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># segundo bucle: para cada intento, simulaciones una eleccion de </span></span>
-<span id="cb97-15"><a href="#cb97-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># puerta y un premio</span></span>
-<span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>intentos[i]) {</span>
-<span id="cb97-17"><a href="#cb97-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb97-18"><a href="#cb97-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># premio: de 3 puertas, solo está en una</span></span>
-<span id="cb97-19"><a href="#cb97-19" aria-hidden="true" tabindex="-1"></a>    premio <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> puertas, <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb97-20"><a href="#cb97-20" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb97-21"><a href="#cb97-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># puerta que seleccionas como concursante: de 3 puertas, te quedas con una</span></span>
-<span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    eleccion <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> puertas, <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb97-24"><a href="#cb97-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># si la puerta seleccionada coincide con la que tiene el premio</span></span>
-<span id="cb97-25"><a href="#cb97-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sumas un éxito, sino te quedas como estás</span></span>
-<span id="cb97-26"><a href="#cb97-26" aria-hidden="true" tabindex="-1"></a>    exitos[i] <span class="ot">&lt;-</span> <span class="fu">if_else</span>(eleccion <span class="sc">==</span> premio, exitos[i] <span class="sc">+</span> <span class="dv">1</span>, exitos[i])</span>
-<span id="cb97-27"><a href="#cb97-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb97-28"><a href="#cb97-28" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb97-29"><a href="#cb97-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tras jugar, lo dividimos entre el número de veces que has jugado</span></span>
-<span id="cb97-30"><a href="#cb97-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># para tener una proporción</span></span>
-<span id="cb97-31"><a href="#cb97-31" aria-hidden="true" tabindex="-1"></a>  exitos[i] <span class="ot">&lt;-</span> exitos[i] <span class="sc">/</span> intentos[i]</span>
-<span id="cb97-32"><a href="#cb97-32" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb97-33"><a href="#cb97-33" aria-hidden="true" tabindex="-1"></a>exitos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las posibilidades</span></span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>puertas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos los intentos</span></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>intentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">20000</span>, <span class="dv">30000</span>)</span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Para cada escenario de intentos, definimos las veces que hemos ganado</span></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a><span class="co"># (al inicio empieza en 0 claro)</span></span>
+<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>exitos <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(intentos))</span>
+<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-13"><a href="#cb97-13" aria-hidden="true" tabindex="-1"></a><span class="co"># primer bucle: cantidad de intentos permitidos</span></span>
+<span id="cb97-14"><a href="#cb97-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(intentos)) {</span>
+<span id="cb97-15"><a href="#cb97-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># segundo bucle: para cada intento, simulaciones una eleccion de </span></span>
+<span id="cb97-17"><a href="#cb97-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># puerta y un premio</span></span>
+<span id="cb97-18"><a href="#cb97-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>intentos[i]) {</span>
+<span id="cb97-19"><a href="#cb97-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb97-20"><a href="#cb97-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># premio: de 3 puertas, solo está en una</span></span>
+<span id="cb97-21"><a href="#cb97-21" aria-hidden="true" tabindex="-1"></a>    premio <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> puertas, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># puerta que seleccionas como concursante: de 3 puertas, te quedas con una</span></span>
+<span id="cb97-24"><a href="#cb97-24" aria-hidden="true" tabindex="-1"></a>    eleccion <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> puertas, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb97-25"><a href="#cb97-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb97-26"><a href="#cb97-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># si la puerta seleccionada coincide con la que tiene el premio</span></span>
+<span id="cb97-27"><a href="#cb97-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sumas un éxito, sino te quedas como estás</span></span>
+<span id="cb97-28"><a href="#cb97-28" aria-hidden="true" tabindex="-1"></a>    exitos[i] <span class="ot">&lt;-</span> <span class="fu">if_else</span>(eleccion <span class="sc">==</span> premio, exitos[i] <span class="sc">+</span> <span class="dv">1</span>, exitos[i])</span>
+<span id="cb97-29"><a href="#cb97-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb97-30"><a href="#cb97-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb97-31"><a href="#cb97-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tras jugar, lo dividimos entre el número de veces que has jugado</span></span>
+<span id="cb97-32"><a href="#cb97-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># para tener una proporción</span></span>
+<span id="cb97-33"><a href="#cb97-33" aria-hidden="true" tabindex="-1"></a>  exitos[i] <span class="ot">&lt;-</span> exitos[i] <span class="sc">/</span> intentos[i]</span>
+<span id="cb97-34"><a href="#cb97-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb97-35"><a href="#cb97-35" aria-hidden="true" tabindex="-1"></a>exitos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -4025,7 +4027,7 @@ Cuidado
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>puertas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>intentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">25000</span>)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>intentos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">20000</span>, <span class="dv">30000</span>)</span>
 <span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>exitos_mantengo <span class="ot">&lt;-</span> exitos_cambio <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(intentos))</span>
 <span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(intentos)) {</span>
@@ -4054,7 +4056,7 @@ Cuidado
 <span id="cb98-28"><a href="#cb98-28" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb98-29"><a href="#cb98-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># si mantienes es como antes</span></span>
 <span id="cb98-30"><a href="#cb98-30" aria-hidden="true" tabindex="-1"></a>    exitos_mantengo[i] <span class="ot">&lt;-</span></span>
-<span id="cb98-31"><a href="#cb98-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(eleccion <span class="sc">==</span> premio, exitos_mantengo[i] <span class="sc">+</span> <span class="dv">1</span>, exitos_mantengo[i])</span>
+<span id="cb98-31"><a href="#cb98-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(eleccion_inicial <span class="sc">==</span> premio, exitos_mantengo[i] <span class="sc">+</span> <span class="dv">1</span>, exitos_mantengo[i])</span>
 <span id="cb98-32"><a href="#cb98-32" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb98-33"><a href="#cb98-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># si cambias es a una puerta distinta de la inicial y de la abierta, la que quede</span></span>
 <span id="cb98-34"><a href="#cb98-34" aria-hidden="true" tabindex="-1"></a>    cambio <span class="ot">&lt;-</span> puertas[puertas <span class="sc">!=</span> eleccion_inicial <span class="sc">&amp;</span> puertas <span class="sc">!=</span> puerta_abierta]</span>

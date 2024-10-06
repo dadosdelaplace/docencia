@@ -958,7 +958,7 @@ for (i in 1:length(intentos)) {
     
     # si mantienes es como antes
     exitos_mantengo[i] <-
-      if_else(eleccion == premio, exitos_mantengo[i] + 1, exitos_mantengo[i])
+      if_else(eleccion_inicial == premio, exitos_mantengo[i] + 1, exitos_mantengo[i])
     
     # si cambias es a una puerta distinta de la inicial y de la abierta, la que quede
     cambio <- puertas[puertas != eleccion_inicial & puertas != puerta_abierta]
