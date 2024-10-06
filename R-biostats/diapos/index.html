@@ -1748,7 +1748,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-03"</code></pre>
+<pre><code>[1] "2024-10-06"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1758,7 +1758,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-03 14:22:10 CEST"</code></pre>
+<pre><code>[1] "2024-10-06 10:38:55 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -4443,13 +4443,13 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb400-4"><a href="#cb400-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb400-5"><a href="#cb400-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq       mean   median
-                                y &lt;- x^2    1.722    1.886    2.14758    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1261.693 1284.017 1347.99866 1294.370
-       uq      max neval
-    2.091    9.676   500
- 1325.120 4024.970   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min       lq      mean   median
+                                y &lt;- x^2    943   1148.0   1382.93   1189.0
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 734843 756839.5 805691.82 763276.5
+     uq     max neval
+   1353    6560   500
+ 814547 3314358   500</code></pre>
 </div>
 </div>
 </section>
@@ -4655,14 +4655,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb420"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb420-1"><a href="#cb420-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>             [,1]       [,2]       [,3]
-[1,] -1.241988717  0.3225012  1.5693887
-[2,] -0.195339317 -0.1693707 -2.0305906
-[3,] -0.101834610  1.0656215 -0.6164565
-[4,]  0.004680946  0.8468344 -0.5951113
-[5,]  0.126533621  1.4100873 -0.9134743
-[6,]  0.749000323  0.1444859  0.2105420
-[7,]  0.925630769  1.7124906 -1.1242826</code></pre>
+<pre><code>           [,1]        [,2]       [,3]
+[1,]  0.1862345 -2.11293091  0.6249136
+[2,] -1.2420969  0.23380122  0.9843812
+[3,]  0.3946787  1.07044449  1.1081363
+[4,]  0.8762097  0.02822509  1.6041030
+[5,]  1.2702447 -0.52638303 -0.3470347
+[6,] -1.0745747 -0.67181041  0.5078639
+[7,]  1.2434411 -0.13872869  0.8206176</code></pre>
 </div>
 </div>
 </section>
@@ -5361,7 +5361,7 @@ $tipo
 <span id="cb493-7"><a href="#cb493-7"></a></span>
 <span id="cb493-8"><a href="#cb493-8"></a><span class="co"># Sin importar mayúsculas (ver también str_equal)</span></span>
 <span id="cb493-9"><a href="#cb493-9"></a>igualdad_nombres <span class="ot">&lt;-</span> <span class="cf">function</span>(persona_1, persona_2) {</span>
-<span id="cb493-10"><a href="#cb493-10"></a>  <span class="fu">return</span>(<span class="fu">toupper</span>(persona_1) <span class="sc">==</span> <span class="fu">toupper</span>(persona_2))</span>
+<span id="cb493-10"><a href="#cb493-10"></a>  <span class="fu">return</span>(<span class="fu">str_to_upper</span>(persona_1) <span class="sc">==</span> <span class="fu">str_to_upper</span>(persona_2))</span>
 <span id="cb493-11"><a href="#cb493-11"></a>}</span>
 <span id="cb493-12"><a href="#cb493-12"></a><span class="fu">igualdad_nombres</span>(<span class="st">"Javi"</span>, <span class="st">"javi"</span>)</span>
 <span id="cb493-13"><a href="#cb493-13"></a><span class="fu">igualdad_nombres</span>(<span class="st">"Javi"</span>, <span class="st">"Lucía"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -5394,18 +5394,28 @@ $tipo
 </div>
 </div>
 <div id="tabset-10-6">
-<p>📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y aplica la función definida de forma que obtengamos una cuarta columna con su IMC.</p>
+<p>📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y adapta la función definida antes de forma que obtengamos una cuarta columna con su IMC.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb496"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb496-1"><a href="#cb496-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb496-2"><a href="#cb496-2"></a>  <span class="fu">tibble</span>(<span class="st">"nombres"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"javi"</span>, <span class="st">"sandra"</span>, <span class="st">"laura"</span>,</span>
-<span id="cb496-3"><a href="#cb496-3"></a>                       <span class="st">"ana"</span>, <span class="st">"carlos"</span>, <span class="st">"leo"</span>, <span class="cn">NA</span>),</span>
-<span id="cb496-4"><a href="#cb496-4"></a>         <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb496-5"><a href="#cb496-5"></a>         <span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>, <span class="at">mean =</span> <span class="dv">168</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
-<span id="cb496-6"><a href="#cb496-6"></a></span>
-<span id="cb496-7"><a href="#cb496-7"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb496-8"><a href="#cb496-8"></a>  <span class="fu">mutate</span>(<span class="at">IMC =</span> <span class="fu">calculo_IMC</span>(nombres, peso, estatura, <span class="at">unidades =</span> <span class="st">"centímetros"</span>)<span class="sc">$</span>IMC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb496-2"><a href="#cb496-2"></a>  <span class="fu">tibble</span>(<span class="st">"nombres"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"javi"</span>, <span class="st">"sandra"</span>, <span class="st">"laura"</span>, <span class="st">"ana"</span>, <span class="st">"carlos"</span>, <span class="st">"leo"</span>, <span class="cn">NA</span>),</span>
+<span id="cb496-3"><a href="#cb496-3"></a>         <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb496-4"><a href="#cb496-4"></a>         <span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>, <span class="at">mean =</span> <span class="dv">168</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
+<span id="cb496-5"><a href="#cb496-5"></a></span>
+<span id="cb496-6"><a href="#cb496-6"></a><span class="co"># IMPORTANTE: if_else trabaja de manera vectorial, elemento a elemento</span></span>
+<span id="cb496-7"><a href="#cb496-7"></a><span class="co"># esto significa que la longitud de la condición (en este caso unidades == "metros"</span></span>
+<span id="cb496-8"><a href="#cb496-8"></a><span class="co"># solo es uno, no un vector lógico) debe ser igual que lo que le decimos que haga </span></span>
+<span id="cb496-9"><a href="#cb496-9"></a><span class="co"># cuando es TRUE y cuando es FALSE (en este caso la condicion tiene longitud 1</span></span>
+<span id="cb496-10"><a href="#cb496-10"></a><span class="co"># pero al aplicarla luego - dentro de un mutate a toda una variable de peso y estatura</span></span>
+<span id="cb496-11"><a href="#cb496-11"></a><span class="co"># lo que devuelve es un vector de tamaño 7, por eso hay que usar ifelse (sin _))</span></span>
+<span id="cb496-12"><a href="#cb496-12"></a>calculo_IMC <span class="ot">&lt;-</span> <span class="cf">function</span>(nombre, peso, estatura, <span class="at">unidades =</span> <span class="st">"metros"</span>) {</span>
+<span id="cb496-13"><a href="#cb496-13"></a>  </span>
+<span id="cb496-14"><a href="#cb496-14"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="st">"nombre"</span> <span class="ot">=</span> nombre,</span>
+<span id="cb496-15"><a href="#cb496-15"></a>              <span class="st">"IMC"</span> <span class="ot">=</span> peso<span class="sc">/</span>(<span class="fu">ifelse</span>(unidades <span class="sc">==</span> <span class="st">"metros"</span>, estatura, estatura<span class="sc">/</span><span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>)))</span>
+<span id="cb496-16"><a href="#cb496-16"></a>}</span>
+<span id="cb496-17"><a href="#cb496-17"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb496-18"><a href="#cb496-18"></a>  <span class="fu">mutate</span>(<span class="at">IMC =</span> <span class="fu">calculo_IMC</span>(nombres, peso, estatura, <span class="at">unidades =</span> <span class="st">"centímetros"</span>)<span class="sc">$</span>IMC)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

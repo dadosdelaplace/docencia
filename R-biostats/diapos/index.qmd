@@ -5036,7 +5036,7 @@ igualdad_nombres("Javi", "Lucía")
 
 # Sin importar mayúsculas (ver también str_equal)
 igualdad_nombres <- function(persona_1, persona_2) {
-  return(toupper(persona_1) == toupper(persona_2))
+  return(str_to_upper(persona_1) == str_to_upper(persona_2))
 }
 igualdad_nombres("Javi", "javi")
 igualdad_nombres("Javi", "Lucía")
@@ -5072,17 +5072,27 @@ calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
  
 ### [**Ej 6**]{.hl-yellow}
 
-📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y aplica la función definida de forma que obtengamos una cuarta columna con su IMC.
+📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y adapta la función definida antes de forma que obtengamos una cuarta columna con su IMC.
 
 ```{r}
 #| code-fold: true
 #| eval: false
 datos <-
-  tibble("nombres" = c("javi", "sandra", "laura",
-                       "ana", "carlos", "leo", NA),
+  tibble("nombres" = c("javi", "sandra", "laura", "ana", "carlos", "leo", NA),
          "peso" = rnorm(n = 7, mean = 70, sd = 1),
          "estatura" = rnorm(n = 7, mean = 168, sd = 5))
 
+# IMPORTANTE: if_else trabaja de manera vectorial, elemento a elemento
+# esto significa que la longitud de la condición (en este caso unidades == "metros"
+# solo es uno, no un vector lógico) debe ser igual que lo que le decimos que haga 
+# cuando es TRUE y cuando es FALSE (en este caso la condicion tiene longitud 1
+# pero al aplicarla luego - dentro de un mutate a toda una variable de peso y estatura
+# lo que devuelve es un vector de tamaño 7, por eso hay que usar ifelse (sin _))
+calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
+  
+  return(list("nombre" = nombre,
+              "IMC" = peso/(ifelse(unidades == "metros", estatura, estatura/100)^2)))
+}
 datos |> 
   mutate(IMC = calculo_IMC(nombres, peso, estatura, unidades = "centímetros")$IMC)
 ```

@@ -877,17 +877,18 @@ sample(x = 1:6, size = 10, replace = TRUE)
 
 #### Pregunta 4.1
 
-> Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos y 25 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?
+> Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos, 20 000 intentos y 30 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?
 
 ```{r}
 #| code-fold: true
 #| eval: false
+library(dplyr)
 
 # Definimos las posibilidades
 puertas <- c(1, 2, 3)
 
 # Definimos los intentos
-intentos <- c(10, 50, 100, 500, 1000, 10000, 25000)
+intentos <- c(10, 50, 100, 500, 1000, 10000, 20000, 30000)
 
 # Para cada escenario de intentos, definimos las veces que hemos ganado
 # (al inicio empieza en 0 claro)
@@ -928,7 +929,7 @@ exitos
 #| eval: false
 
 puertas <- c(1, 2, 3)
-intentos <- c(10, 50, 100, 500, 1000, 10000, 25000)
+intentos <- c(10, 50, 100, 500, 1000, 10000, 20000, 30000)
 exitos_mantengo <- exitos_cambio <- rep(0, length(intentos))
 
 for (i in 1:length(intentos)) {
