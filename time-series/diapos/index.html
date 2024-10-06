@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-28"</code></pre>
+<pre><code>[1] "2024-10-06"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-09-28 13:42:28 CEST"</code></pre>
+<pre><code>[1] "2024-10-06 12:08:05 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -1217,7 +1217,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">month</span>(fecha)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9</code></pre>
+<pre><code>[1] 10</code></pre>
 </div>
 </div>
 </div>
@@ -2677,12 +2677,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr    min     lq       mean   median
-                                y &lt;- x^2    902   1107   1217.864   1148.0
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 800730 813153 861060.270 823505.5
+                                    expr    min       lq      mean median
+                                y &lt;- x^2    984   1148.0   1223.85   1189
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 800525 813296.5 864545.35 823403
      uq     max neval
-   1230    8323   500
- 833776 3442237   500</code></pre>
+   1230    6355   500
+ 836646 3276228   500</code></pre>
 </div>
 </div>
 </section>
@@ -4755,16 +4755,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.599  sd_0.5
- 2     2  0.0233 sd_0.5
- 3     3  1.12   sd_0.5
- 4     4 -0.852  sd_0.5
- 5     5  0.176  sd_0.5
- 6     6 -0.119  sd_0.5
- 7     7  0.692  sd_0.5
- 8     8  1.31   sd_0.5
- 9     9 -0.595  sd_0.5
-10    10 -0.420  sd_0.5
+ 1     1 -0.256  sd_0.5
+ 2     2  0.298  sd_0.5
+ 3     3  1.03   sd_0.5
+ 4     4 -0.175  sd_0.5
+ 5     5 -0.0290 sd_0.5
+ 6     6 -0.654  sd_0.5
+ 7     7  0.818  sd_0.5
+ 8     8  0.208  sd_0.5
+ 9     9 -0.0611 sd_0.5
+10    10  0.419  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5106,16 +5106,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 </section></section>
 <section>
 <section id="clase-6" class="title-slide slide level1 center">
-<h1>Clase 6: <span class="flow">…</span></h1>
-<p><span style="color:#444442;"><strong>Introducción al análisis descriptivo de series temporales</strong></span></p>
+<h1>Clase 6: <span class="flow">medias móviles</span></h1>
+<p><span style="color:#444442;"><strong>Suavizado por medias móviles</strong></span></p>
 <ul>
-<li><a href="#/tu-turno-5-1">💻 Ejercicios de simulación</a></li>
+<li><a href="#/tu-turno-6-1">💻 Ejercicios</a></li>
 <li><a href="#/planificacion">📆 Planificación</a></li>
 </ul>
 </section>
 <section id="recapitulando-1" class="slide level2">
 <h2>Recapitulando</h2>
-<p>Hasta ahora nos hemos centrado sobre todo en dos cosas</p>
+<p>Hasta ahora nos hemos centrado sobre todo en tres cosas</p>
 <ul>
 <li><p>Repasar lo que supiéramos de <code>R</code></p></li>
 <li><p>Entender cómo simular y estimar series sencillas</p></li>
@@ -5148,16 +5148,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd         X_t
    &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.379 
- 2     2 sd_0.5 -0.324 
- 3     3 sd_0.5  0.865 
- 4     4 sd_0.5  0.696 
- 5     5 sd_0.5 -0.268 
- 6     6 sd_0.5  0.219 
- 7     7 sd_0.5 -0.0879
- 8     8 sd_0.5 -0.122 
- 9     9 sd_0.5 -0.396 
-10    10 sd_0.5  0.286 
+ 1     1 sd_0.5  0.529 
+ 2     2 sd_0.5 -0.107 
+ 3     3 sd_0.5  0.101 
+ 4     4 sd_0.5 -0.287 
+ 5     5 sd_0.5 -0.0568
+ 6     6 sd_0.5 -0.0853
+ 7     7 sd_0.5  0.397 
+ 8     8 sd_0.5 -0.0361
+ 9     9 sd_0.5 -0.397 
+10    10 sd_0.5  1.08  
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -5354,8 +5354,8 @@ No todavía, vamos por el ciclo 4</code></pre>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-213-1.png" width="960" class="r-stretch"></section>
-<section id="estacionalidad" class="slide level2">
-<h2>Estacionalidad</h2>
+<section id="tendencia-dinámica" class="slide level2">
+<h2>Tendencia «dinámica»</h2>
 <p>El problema del ajuste anterior es que, amén de la parte puramente estocástica y la tendencia (más o menos compleja que pueda tener), <span class="hl-yellow"><strong>existe una parte ESTACIONAL</strong></span></p>
 <div class="fragment">
 <p>Diremos que una serie tiene una <span class="hl-yellow"><strong>componente estacional</strong></span> siempre que presente un <span class="hl-yellow"><strong>patrón que se repite en periodos (aprox.) fijos en el tiempo</strong></span> tal que</p>
@@ -5460,12 +5460,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 </section>
 <section id="medias-móviles-5" class="slide level2">
 <h2>Medias móviles</h2>
-<p>Para calcular una <span class="hl-yellow"><strong>media móvil de orden <span class="math inline">\(k=2*q+1\)</span></strong></span> en <code>R</code> podemos hacerlo con <code>filter()</code> del paquete <code>{stats}</code> (<span class="hl-red"><strong>¡cuidado!</strong></span>: si tienes cargado <code>{tidyverse}</code> debes especificar que <code>filter()</code> es)</p>
+<p>Para calcular una <span class="hl-yellow"><strong>media móvil de orden <span class="math inline">\(k=2*q+1\)</span></strong></span> en <code>R</code> podemos hacerlo con <code>filter()</code> del paquete <code>{stats}</code> teniendo la variable ya <strong>ordenada</strong> (<span class="hl-red"><strong>¡cuidado!</strong></span>: si tienes cargado <code>{tidyverse}</code> debes especificar que <code>filter()</code> es)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb335"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb335-2"><a href="#cb335-2"></a>datos<span class="sc">$</span>x_linear <span class="ot">&lt;-</span> <span class="fu">predict</span>(datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> x <span class="sc">~</span> t), datos)</span>
-<span id="cb335-3"><a href="#cb335-3"></a>datos<span class="sc">$</span>x_smooth_3ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>k, k))</span>
-<span id="cb335-4"><a href="#cb335-4"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb335-3"><a href="#cb335-3"></a></span>
+<span id="cb335-4"><a href="#cb335-4"></a>datos <span class="ot">&lt;-</span> datos[<span class="fu">order</span>(datos<span class="sc">$</span>t), ]</span>
+<span id="cb335-5"><a href="#cb335-5"></a>datos<span class="sc">$</span>x_smooth_3ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>k, k))</span>
+<span id="cb335-6"><a href="#cb335-6"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 4
        t     x x_linear x_smooth_3ma
@@ -5507,11 +5509,9 @@ No todavía, vamos por el ciclo 4</code></pre>
 <section id="medias-móviles-7" class="slide level2">
 <h2>Medias móviles</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb338-2"><a href="#cb338-2"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb338-3"><a href="#cb338-3"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_5ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, <span class="dv">5</span>)),</span>
-<span id="cb338-4"><a href="#cb338-4"></a>         <span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
-<span id="cb338-5"><a href="#cb338-5"></a>         <span class="at">x_smooth_9ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb338"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb338-1"><a href="#cb338-1"></a>datos<span class="sc">$</span>x_smooth_5ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">5</span>, <span class="dv">5</span>))</span>
+<span id="cb338-2"><a href="#cb338-2"></a>datos<span class="sc">$</span>x_smooth_7ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb338-3"><a href="#cb338-3"></a>datos<span class="sc">$</span>x_smooth_9ma <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(datos<span class="sc">$</span>x, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:25%;">
@@ -5534,10 +5534,10 @@ No todavía, vamos por el ciclo 4</code></pre>
 </div>
 </div>
 </section>
-<section id="caso-real-aemet-9" class="slide level2">
-<h2>Caso real: AEMET</h2>
-<p>💻 Aplica el suavizado de medias móviles con <span class="math inline">\(k=7, 14, 28, 365\)</span> a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación</p>
-<div class="fragment">
+<section id="tu-turno-6-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-1-5"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
+<p>💻 Realiza una estimación de la serie aplicando el suavizado de medias móviles con parámetro <span class="math inline">\(k=7, 14, 28, 365\)</span> a los datos AEMET e incluye las 4 nuevas columnas con los 4 nuevos métodos de estimación al conjunto <code>retiro_estim</code> que teníamos de clases anteriores. Importante: la serie que le pases a <code>stats::filter()</code> no puede tener ausentes.</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
@@ -5561,86 +5561,191 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb340-18"><a href="#cb340-18"></a>       <span class="at">x =</span> <span class="st">"t (fecha)"</span>, <span class="at">y =</span> <span class="st">"ºC (media)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</div>
 </section></section>
 <section>
 <section id="clase-7" class="title-slide slide level1 center">
-<h1>CLASE 7</h1>
-
+<h1>Clase 7: <span class="flow">estacionalidad</span></h1>
+<p><span style="color:#444442;"><strong>Introduciendo y estimando la componente estacional</strong></span></p>
+<ul>
+<li><a href="#/tu-turno-7-1">💻 Ejercicios</a></li>
+<li><a href="#/planificacion">📆 Planificación</a></li>
+</ul>
 </section>
-<section id="regresión-local" class="slide level2">
-<h2>Regresión local</h2>
-<p>Dado que la mayoría de veces la serie temporal <span class="hl-red"><strong>no se va a poder definir mediante una tendencia fija</strong></span> (aunque dependa de <span class="math inline">\(t\)</span>, los coeficientes de los que dependen no varian en el tiempo), una de las alternativas es lo que se conoce como <span class="hl-yellow"><strong>regresión local LOESS o LOWESS</strong></span>.</p>
+<section id="componente-estacional" class="slide level2">
+<h2>Componente estacional</h2>
+<p>El problema todos los ajuste anteriores es que <span class="hl-yellow"><strong>existe una parte ESTACIONAL</strong></span> que estamos ignorandome deliberadamente. Diremos que una serie tiene una <span class="hl-yellow"><strong>componente estacional <span class="math inline">\(S_t\)</span></strong></span> siempre que presente un <span class="hl-yellow"><strong>patrón que se repite en periodos (aprox.) fijos en el tiempo</strong></span> tal que</p>
+<p><span class="math display">\[X_t = f \left(\mu_t, S_t, \varepsilon_t\right) =^{adit} \mu_t + S_t + \varepsilon_t, \quad X_t =^{mult} \mu_t * S_t * \varepsilon_t\]</span></p>
 <div class="fragment">
-<p>La idea de un ajuste local es <span class="hl-yellow"><strong>ajustar a los datos una regresión polinómica (ponderada en el caso de LOWESS)</strong></span>, de manera en cada punto el ajuste se hace utilizando una metodología de <span class="hl-yellow"><strong>mínimos cuadrados ponderado</strong></span> dando <strong>más peso a los puntos cercanos al punto cuya respuesta está siendo estimando y menos peso a los puntos más lejanos</strong>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb341"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1"></a>estim_ts_trend_error <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">span =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb341-2"><a href="#cb341-2"></a>  </span>
-<span id="cb341-3"><a href="#cb341-3"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(span)) {</span>
-<span id="cb341-4"><a href="#cb341-4"></a>    <span class="cf">if</span> (degree <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb341-5"><a href="#cb341-5"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb341-6"><a href="#cb341-6"></a>    } <span class="cf">else</span> {</span>
-<span id="cb341-7"><a href="#cb341-7"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="fu">poly</span>(t, degree, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb341-8"><a href="#cb341-8"></a>    }</span>
-<span id="cb341-9"><a href="#cb341-9"></a>  } <span class="cf">else</span> {</span>
-<span id="cb341-10"><a href="#cb341-10"></a>    </span>
-<span id="cb341-11"><a href="#cb341-11"></a>    modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">loess</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> t, <span class="at">degree =</span> degree, <span class="at">span =</span> span)</span>
-<span id="cb341-12"><a href="#cb341-12"></a>    </span>
-<span id="cb341-13"><a href="#cb341-13"></a>  }</span>
-<span id="cb341-14"><a href="#cb341-14"></a></span>
-<span id="cb341-15"><a href="#cb341-15"></a>  datos <span class="ot">&lt;-</span></span>
-<span id="cb341-16"><a href="#cb341-16"></a>    datos <span class="sc">|&gt;</span> </span>
-<span id="cb341-17"><a href="#cb341-17"></a>    <span class="fu">mutate</span>(<span class="at">X_hat =</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> t)))</span>
-<span id="cb341-18"><a href="#cb341-18"></a>  </span>
-<span id="cb341-19"><a href="#cb341-19"></a>  <span class="fu">return</span>(datos)</span>
-<span id="cb341-20"><a href="#cb341-20"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Trataremos de <strong>manera general con los modelos aditivos</strong> ya que, en caso de ser multiplicativo, <span class="math inline">\(\log \left(X_t\right) =\log \left( \mu_t \right) + \log \left(S_t \right) + \log \left( \varepsilon_t \right)\)</span></p>
+</div>
+<div class="fragment">
+<p>Fíjate que ahora <span class="math inline">\({\rm E} \left[X_t \right] = \mu_t + S_t\)</span> y por tanto nuestra <span class="hl-yellow"><strong>estimación muestral</strong></span> vendrá definida como</p>
+<p><span class="math display">\[\widehat{X}_t = \widehat{\mu}_t + \widehat{S}_t\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="hl-purple"><strong>¿Qué significa que <span class="math inline">\(S_t\)</span> estacional (o periódico)?</strong></span></p>
+</div>
+</section>
+<section id="componente-estacional-1" class="slide level2">
+<h2>Componente estacional</h2>
+<p>En general, diremos que una función <span class="hl-yellow"><strong><span class="math inline">\(S_t := S(t)\)</span> es estacional (o periódica) de periodo <span class="math inline">\(s\)</span></strong></span> siempre que <span class="math inline">\(S_t = S_{t + s} = S_{t + 2s}\)</span>: si es estacional de <strong>periodo <span class="math inline">\(s\)</span></strong> significa que, cada <span class="math inline">\(s\)</span> valores, la función se repite.</p>
+<div class="fragment">
+<p>Fíjate que si <span class="math inline">\(S_t = S_{t + s}\)</span> también entonces sucede que <span class="math inline">\(S_t = S_{t - s}\)</span>.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Es importante entender que determinar el <strong>periodo</strong> no es solo determinar si es «anual» o «mensual»: el valor <span class="math inline">\(s\)</span> es el <span class="hl-yellow"><strong>número de valores de la componente <span class="math inline">\(S_t\)</span> que pasan hasta que se repita</strong></span>. Por ejemplo, una serie puede tener una periodicidad anual pero si los datos son recogidos de manera trimestral, <span class="math inline">\(s = 4\)</span>; la misma periodicidad para unos datos recogidos de manera diaria será <span class="math inline">\(s = 365\)</span>.</p>
+<p>En el caso de los datos del AEMET, <span class="math inline">\(s = 365\)</span>, no solo porque la temperatura tengan una periodicidad anual obviamente, sino porque los <strong>datos son diarios</strong> (la misma variable, recogida de manera mensual, tendría <span class="math inline">\(s = 12\)</span>).</p>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="componente-estacional-2" class="slide level2">
+<h2>Componente estacional</h2>
+<p>¿Cómo <span class="hl-yellow"><strong>estimar dicha componente estacional</strong></span>? Los <span class="hl-yellow"><strong>métodos de descomposición clásica</strong></span> tienen la siguiente estructura:</p>
+<ol type="1">
+<li><span class="hl-purple"><strong>Estimación de la tendencia</strong></span>. Dada la serie original <span class="math inline">\(X_t\)</span> se realiza una estimación de su nivel o tendencia <span class="math inline">\(\mu_t\)</span>. Como hemos visto tenemos distintas alternativas:</li>
+</ol>
 <ul>
-<li>medias móviles</li>
+<li><strong>medias móviles</strong> (será clave <strong>determinar la ventana <span class="math inline">\(k\)</span></strong>)</li>
+<li>tendencia polinómica</li>
+<li>regresión local (conocida como <span class="hl-yellow"><strong>regresión LOESS o LOWESS</strong></span>: ajusta a los datos una <strong>regresión polinómica pero de manera LOCAL</strong>, en cada punto solo se utiliza un % de los datos). Ver <a href="https://www.statology.org/lowess-smoothing-r/" class="uri">https://www.statology.org/lowess-smoothing-r/</a></li>
+</ul>
+<div class="fragment">
+<p>Tras estimar la tendencia se construye la <span class="hl-yellow"><strong>serie centrada</strong></span></p>
+<p><span class="math display">\[Y_t = X_t - \mu_t = S_t + \varepsilon_t, \quad \hat{Y}_t = X_t - \hat{\mu}_t\]</span></p>
+</div>
+</section>
+<section id="componente-estacional-3" class="slide level2">
+<h2>Componente estacional</h2>
+<p><span class="math display">\[Y_t = X_t - \mu_t = S_t + \varepsilon_t, \quad \hat{Y}_t = X_t - \hat{\mu}_t\]</span></p>
+<p>Fíjate que <span class="math inline">\(\hat{Y}_t\)</span> es ya una serie sin tendencia, y cuyos <span class="hl-yellow"><strong>valores ya no representan la serie original sino la anomalía</strong></span> que tendría cada <span class="math inline">\(t\)</span> respecto al nivel global (en el caso de las temperaturas, por ejemplo la anomalía promedio de temperatura entre los distintos días del año y el nivel general de la serie).</p>
+<div class="fragment">
+<ol start="2" type="1">
+<li><span class="hl-purple"><strong>Estimar los coeficientes estacionales</strong></span>. El objetivo será obtener un conjunto de <span class="math inline">\(s\)</span> coeficientes <span class="math inline">\(\left(S_1, S_2, \ldots, S_{s-2}, S_{s-1}, S_s \right)\)</span> que cumplirán por definición dos condiciones:</li>
+</ol>
+<ul>
+<li><p>Se repiten cada <span class="math inline">\(s\)</span> valores (por solo necesitamos estimar un tramo).</p></li>
+<li><p>Su suma es cero (ya que representan las anomalías respecto al nivel general, por lo que si hay valores por encima tienen que existir por debajo)</p></li>
+</ul>
+</div>
+</section>
+<section id="componente-estacional-4" class="slide level2">
+<h2>Componente estacional</h2>
+<ol start="2" type="1">
+<li><span class="hl-purple"><strong>Estimar los coeficientes estacionales</strong></span>. El objetivo será obtener un conjunto de <span class="math inline">\(s\)</span> coeficientes <span class="math inline">\(\left(S_1, S_2, \ldots, S_{s-2}, S_{s-1}, S_s \right)\)</span>.</li>
+</ol>
+<p>Para su estimación lo que haremos será calcular, con la serie centrada, la <span class="hl-yellow"><strong>diferencia entre la media de cada periodo estacional</strong></span> y la <strong>media general</strong></p>
+<p><span class="math display">\[\widehat{S}_j = \overline{Y}_j - \overline{Y}, \quad \overline{Y}_j = \frac{1}{n} \sum_{i=1}^{n} Y_{s*i + j}, \quad \overline{Y} = \frac{1}{T} \sum_{i=0}^{n-1} \sum_{j=1}^{s} Y_{s*i + j}, \quad j = 1, \ldots, s\]</span></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Datos AEMET</strong></p>
+</div>
+<div class="callout-content">
+<p>En el <strong>caso del AEMET</strong>: <span class="math inline">\(\widehat{Y}_j\)</span> representa la media (de la serie centrada) de todos los días <span class="math inline">\(j=1, \ldots, 365\)</span>, es decir, la media de los 1-enero, sin importar el año; de los 2-enero, …, de los 31-diciembre (la anomalía de temperatura que en promedio hace el 1-enero respecto a la tendencia general, y así para cada día del año). En este caso <span class="math inline">\(n = 45\)</span> ya que tenemos datos de 45 años (salvo el final de 2024).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="componente-estacional-5" class="slide level2">
+<h2>Componente estacional</h2>
+<ol start="3" type="1">
+<li><span class="hl-purple"><strong>Estimar las innovaciones</strong></span>. Una vez estimada la tendencia y estacionalidad</li>
+</ol>
+<p><span class="math display">\[\widehat{\varepsilon}_t = X_t - \widehat{X}_t, \quad \widehat{X}_t = \widehat{\mu}_t + \widehat{S}_t\]</span></p>
+<div class="fragment">
+<p>Fíjate que la componente estacional estimada cumple también que <span class="math inline">\(\widehat{S}_t = \widehat{S}_{t + s}\)</span>, es decir, <strong>solo necesitamos <span class="math inline">\(s\)</span> coeficientes estimados</strong> (fíjate en el subíndice del <span class="math inline">\(\hat{S}\)</span>)</p>
+<p><span class="math display">\[\widehat{\varepsilon}_{s*i + j} = X_{s*i + j} - \widehat{X}_{s*i + j}, \quad \widehat{X}_{s*i + j}= \widehat{\mu}_{s*i + j} + \widehat{S}_j, \quad j = 1,\ldots,s\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li><p><span class="math inline">\(\widehat{Y}_t\)</span> representa la <span class="hl-green"><strong>estimación de la serie centrada</strong></span>: lo que falta <span class="hl-yellow"><strong>por modelizar es componente estacional</strong></span></p></li>
+<li><p><span class="math inline">\(X_t - \widehat{S}_t\)</span> representa la <span class="hl-green"><strong>estimación de la serie DESESTACIONALIZADA</strong></span>: lo que falta <span class="hl-yellow"><strong>por modelizar es tendencia sin tener en cuenta el efecto estacional</strong></span> (ejemplo: tasa de paro sin el efecto que tienen periodos como verano o navidad)</p></li>
+</ul>
+</div>
+</section>
+<section id="algunas-observaciones" class="slide level2">
+<h2>Algunas observaciones</h2>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Cuidado</strong></p>
+</div>
+<div class="callout-content">
+<p>El método descrito se conoce <span class="hl-yellow"><strong>método clásico de descomposición</strong></span> (o STL si se usa una regresión local para estimar la tendencia en lugar de medias móviles) pero la componente estacional podría ser también estimada por <span class="hl-yellow"><strong>cualquier función periódica o armónica de periodo <span class="math inline">\(s\)</span></strong></span>, por ejemplo, <span class="math inline">\(sin(\frac{2 \pi t}{s})\)</span>, se repite cada <span class="math inline">\(s\)</span> valores).</p>
+</div>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Cuidado</strong></p>
+</div>
+<div class="callout-content">
+<p>Todo lo anterior también está diseñado bajo la <span class="hl-yellow"><strong>hipótesis de que solo tenemos una periodicidad <span class="math inline">\(s\)</span></strong></span>: nuestra serie podría tener distintas periodicidades superpuestas (Fourier: toda función periódica puede representarse como suma de funciones seno de distinta frecuencia y amplitud). De momento supondremos siempre un <strong>único ciclo</strong>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="tu-turno-7-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-1-6"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
+</section></section>
+<section>
+<section id="clase-8" class="title-slide slide level1 center">
+<h1>Clase 8: <span class="flow">métricas de error</span></h1>
+<p><span style="color:#444442;"><strong>Calibrando nuestra estimación: train/validación y errores</strong></span></p>
+<ul>
+<li><a href="#/tu-turno-8-1">💻 Ejercicios</a></li>
+<li><a href="#/planificacion">📆 Planificación</a></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<ul>
-<li>¿estacional?</li>
-</ul>
+</section></section>
+<section>
+<section id="clase-9" class="title-slide slide level1 center">
+<h1>Clase 9: <span class="flow">métodos de alisado</span></h1>
+
 </section>
 <section class="slide level2">
 
-<p>siguiente clase: STL y multiplicativo</p>
-<p>24/09/2024</p>
+</section></section>
+<section>
+<section id="clase-9" class="title-slide slide level1 center">
+<h1>Clase 10: <span class="flow">métodos de alisado</span></h1>
+
 </section>
 <section class="slide level2">
 
-<p>27/09/2024: alisado</p>
+</section></section>
+<section>
+<section id="clase-10" class="title-slide slide level1 center">
+<h1>Clase 11: <span class="flow">teoría procesos</span></h1>
+
 </section>
 <section class="slide level2">
 
-<p>1/10/2024: repaso todo en R</p>
-</section>
-<section class="slide level2">
-
-<p>4/10: ¿a mano? ejercicios</p>
-</section>
-<section class="slide level2">
-
-<p>8/10: entrega</p>
-</section>
-<section class="slide level2">
-
-<p>11/10: teoría procesos estocásticos 15/10</p>
-</section>
-<section class="slide level2">
-
-<p>5-6 clases de box-jenkins</p>
-</section>
-<section class="slide level2">
-
-<p>2 predicci´</p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Estadística Aplicada (UCM)</p>
 </div>

@@ -4724,11 +4724,11 @@ ggplot(retiro_estim |>
 
 
 
-# Clase 6: [...]{.flow} {#clase-6}
+# Clase 6: [medias móviles]{.flow} {#clase-6}
 
-[**Introducción al análisis descriptivo de series temporales**]{style="color:#444442;"}
+[**Suavizado por medias móviles**]{style="color:#444442;"}
 
-* [💻 Ejercicios de simulación](#tu-turno-5-1)
+* [💻 Ejercicios](#tu-turno-6-1)
 * [📆 Planificación](#planificacion)
 
 
@@ -5000,7 +5000,7 @@ ggplot(retiro_predict_tidy |>
 
 ---
 
-## Estacionalidad
+## Tendencia «dinámica»
 
 El problema del ajuste anterior es que, amén de la parte puramente estocástica y la tendencia (más o menos compleja que pueda tener), [**existe una parte ESTACIONAL**]{.hl-yellow}
 
@@ -5173,9 +5173,9 @@ Fíjate cómo ahora la curva queda [**suavizada pero de manera dinámica**]{.hl-
 ## Medias móviles
 
 ```{r}
-datos$x_smooth_5ma <- stats::filter(x, filter = rep(1/5, 5))
-datos$x_smooth_7ma <- stats::filter(x, filter = rep(1/7, 7))
-datos$x_smooth_9ma <- stats::filter(x, filter = rep(1/9, 9))
+datos$x_smooth_5ma <- stats::filter(datos$x, filter = rep(1/5, 5))
+datos$x_smooth_7ma <- stats::filter(datos$x, filter = rep(1/7, 7))
+datos$x_smooth_9ma <- stats::filter(datos$x, filter = rep(1/9, 9))
 ```
 
 :::: columns
@@ -5203,54 +5203,11 @@ ggplot(datos |>
 
 ---
 
-## Caso real: AEMET
+## 💻 Tu turno {#tu-turno-6-1}
 
-💻 Diseña una función `estim_ts_smooth_ma()` que, imitando la función `estim_ts_trend_error()`, nos devuelva la estimación de una serie aplicando el suavizado de medias móviles con parámetro $k$. Importante: la serie que le pases a `stats::filter()` no puede tener ausentes.
+### [**Ejercicio 1**]{.hl-yellow}
 
-. . .
-
-```{r}
-estim_ts_smooth_ma <-
-  function(datos, k = 3, tag_estim = paste0("estim_ma_", k),
-           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
-    
-    # R base normal
-    datos <- datos[, c(col_t, col_X_t)]
-    names(datos)[names(datos) == col_t] <- "t"
-    names(datos)[names(datos) == col_X_t] <- "X_t"
-    datos <- datos[order(datos$t), ] # ordenamos por t
-
-    # eliminamos ausentes
-    datos <- datos[!is.na(datos$X_t), ]
-    
-    # Estimamos
-    datos[, tag_estim] <- stats::filter(datos$X_t, filter = rep(1/k, k))
-
-    # Predecimos
-    if (!is.null(nuevos_valores)) {
-      datos <- rbind(datos, nuevos_datos)
-    }
-    return(datos)
-}
-```
-
-
----
-
-## Caso real: AEMET
-
-💻 Diseña una función general `estim_ts()` donde con un argumento `tipo_estim` dentro llame a `estim_ts_trend_error()` o a `estim_ts_smooth_ma()` en función de lo que queramos. Piensa que esta función grande la opción de dar los mismos argumentos que las funciones a las que va a llamar dentro.
-
-. . .
-
-```{r}
-
-```
-
-el suavizado de medias móviles con $k=7, 14, 28, 365$ a los datos AEMET para incluir 4 nuevas columnas con los 4 métodos de estimación 
-
-. . .
-
+💻 Realiza una estimación de la serie aplicando el suavizado de medias móviles con parámetro $k=7, 14, 28, 365$ a los datos AEMET e incluye las 4 nuevas columnas con los 4 nuevos métodos de estimación al conjunto `retiro_estim` que teníamos de clases anteriores. Importante: la serie que le pases a `stats::filter()` no puede tener ausentes.
 
 
 ```{r}
@@ -5278,91 +5235,185 @@ ggplot(retiro_estim |>
 
 
 
-# CLASE 7
+
+# Clase 7: [estacionalidad]{.flow} {#clase-7}
+
+[**Introduciendo y estimando la componente estacional**]{style="color:#444442;"}
+
+* [💻 Ejercicios](#tu-turno-7-1)
+* [📆 Planificación](#planificacion)
 
 ---
 
+## Componente estacional
 
-## Regresión local
+El problema todos los ajuste anteriores es que [**existe una parte ESTACIONAL**]{.hl-yellow} que estamos ignorandome deliberadamente. Diremos que una serie tiene una [**componente estacional $S_t$**]{.hl-yellow} siempre que presente un [**patrón que se repite en periodos (aprox.) fijos en el tiempo**]{.hl-yellow} tal que 
 
-Dado que la mayoría de veces la serie temporal [**no se va a poder definir mediante una tendencia fija**]{.hl-red} (aunque dependa de $t$, los coeficientes de los que dependen no varian en el tiempo), una de las alternativas es lo que se conoce como [**regresión local LOESS o LOWESS**]{.hl-yellow}.
+$$X_t = f \left(\mu_t, S_t, \varepsilon_t\right) =^{adit} \mu_t + S_t + \varepsilon_t, \quad X_t =^{mult} \mu_t * S_t * \varepsilon_t$$
 
 . . .
 
-La idea de un ajuste local es [**ajustar a los datos una regresión polinómica (ponderada en el caso de LOWESS)**]{.hl-yellow}, de manera en cada punto el ajuste se hace  utilizando una metodología de [**mínimos cuadrados ponderado**]{.hl-yellow} dando **más peso a los puntos cercanos al punto cuya respuesta está siendo estimando y menos peso a los puntos más lejanos**.
+Trataremos de **manera general con los modelos aditivos** ya que, en caso de ser multiplicativo, $\log \left(X_t\right) =\log \left( \mu_t \right) + \log \left(S_t \right) + \log \left( \varepsilon_t \right)$
 
-```{r}
-estim_ts_trend_error <- function(datos, degree = 1, span = NULL) {
-  
-  if (is.null(span)) {
-    if (degree == 0) {
-      modelo <- datos |> lm(formula = X_t ~ 1)
-    } else {
-      modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
-    }
-  } else {
-    
-    modelo <- datos |> loess(formula = X_t ~ t, degree = degree, span = span)
-    
-  }
+. . .
 
-  datos <-
-    datos |> 
-    mutate(X_hat = predict(modelo, tibble("t" = t)))
-  
-  return(datos)
-}
-```
+Fíjate que ahora ${\rm E} \left[X_t \right] = \mu_t + S_t$ y por tanto nuestra [**estimación muestral**]{.hl-yellow} vendrá definida como
+
+$$\widehat{X}_t = \widehat{\mu}_t + \widehat{S}_t$$
+
+. . .
+
+[**¿Qué significa que $S_t$ estacional (o periódico)?**]{.hl-purple}
+
+---
+
+## Componente estacional
+
+En general, diremos que una función [**$S_t := S(t)$ es estacional (o periódica) de periodo $s$**]{.hl-yellow} siempre que $S_t = S_{t + s} = S_{t + 2s}$: si es estacional de **periodo $s$** significa que, cada $s$ valores, la función se repite.
+
+. . .
+
+Fíjate que si $S_t = S_{t + s}$ también entonces sucede que $S_t = S_{t - s}$.
+
+. . .
+
+::: callout-important
+## Importante
+
+Es importante entender que determinar el **periodo** no es solo determinar si es «anual» o «mensual»: el valor $s$ es el [**número de valores de la componente $S_t$ que pasan hasta que se repita**]{.hl-yellow}. Por ejemplo, una serie puede tener una periodicidad anual pero si los datos son recogidos de manera trimestral, $s = 4$; la misma periodicidad para unos datos recogidos de manera diaria será $s = 365$.
+
+En el caso de los datos del AEMET, $s = 365$, no solo porque la temperatura tengan una periodicidad anual obviamente, sino porque los **datos son diarios** (la misma variable, recogida de manera mensual, tendría $s = 12$).
+
+:::
+
+---
+
+## Componente estacional
+
+¿Cómo [**estimar dicha componente estacional**]{.hl-yellow}? Los [**métodos de descomposición clásica**]{.hl-yellow} tienen la siguiente estructura:
+
+1. [**Estimación de la tendencia**]{.hl-purple}. Dada la serie original $X_t$ se realiza una estimación de su nivel o tendencia $\mu_t$. Como hemos visto tenemos distintas alternativas:
+
+- **medias móviles** (será clave **determinar la ventana $k$**)
+- tendencia polinómica
+- regresión local (conocida como [**regresión LOESS o LOWESS**]{.hl-yellow}: ajusta a los datos una **regresión polinómica pero de manera LOCAL**, en cada punto solo se utiliza un % de los datos). Ver <https://www.statology.org/lowess-smoothing-r/>
+
+. . .
+
+Tras estimar la tendencia se construye la [**serie centrada**]{.hl-yellow}
+
+$$Y_t = X_t - \mu_t = S_t + \varepsilon_t, \quad \hat{Y}_t = X_t - \hat{\mu}_t$$
+
+---
+
+## Componente estacional
+
+$$Y_t = X_t - \mu_t = S_t + \varepsilon_t, \quad \hat{Y}_t = X_t - \hat{\mu}_t$$
+
+Fíjate que $\hat{Y}_t$ es ya una serie sin tendencia, y cuyos [**valores ya no representan la serie original sino la anomalía**]{.hl-yellow} que tendría cada $t$ respecto al nivel global (en el caso de las temperaturas, por ejemplo la anomalía promedio de temperatura entre los distintos días del año y el nivel general de la serie).
+
+. . .
+
+2. [**Estimar los coeficientes estacionales**]{.hl-purple}. El objetivo será obtener un conjunto de $s$ coeficientes $\left(S_1, S_2, \ldots, S_{s-2}, S_{s-1}, S_s \right)$ que cumplirán por definición dos condiciones:
+
+* Se repiten cada $s$ valores (por solo necesitamos estimar un tramo).
+
+* Su suma es cero (ya que representan las anomalías respecto al nivel general, por lo que si hay valores por encima tienen que existir por debajo)
+
+---
+
+## Componente estacional
+
+
+2. [**Estimar los coeficientes estacionales**]{.hl-purple}. El objetivo será obtener un conjunto de $s$ coeficientes $\left(S_1, S_2, \ldots, S_{s-2}, S_{s-1}, S_s \right)$.
+
+Para su estimación lo que haremos será calcular, con la serie centrada, la [**diferencia entre la media de cada periodo estacional**]{.hl-yellow} y la **media general**
+
+$$\widehat{S}_j = \overline{Y}_j - \overline{Y}, \quad \overline{Y}_j = \frac{1}{n} \sum_{i=1}^{n} Y_{s*i + j}, \quad \overline{Y} = \frac{1}{T} \sum_{i=0}^{n-1} \sum_{j=1}^{s} Y_{s*i + j}, \quad j = 1, \ldots, s$$
+
+::: callout-tip
+
+## Datos AEMET
+
+En el **caso del AEMET**: $\widehat{Y}_j$ representa la media (de la serie centrada) de todos los días $j=1, \ldots, 365$, es decir, la media de los 1-enero, sin importar el año; de los 2-enero, ..., de los 31-diciembre (la anomalía de temperatura que en promedio hace el 1-enero respecto a la tendencia general, y así para cada día del año). En este caso $n = 45$ ya que tenemos datos de 45 años (salvo el final de 2024).
+
+:::
+
+---
+
+## Componente estacional
+
+3. [**Estimar las innovaciones**]{.hl-purple}. Una vez estimada la tendencia y estacionalidad
+
+$$\widehat{\varepsilon}_t = X_t - \widehat{X}_t, \quad \widehat{X}_t = \widehat{\mu}_t + \widehat{S}_t$$
+
+. . .
+
+Fíjate que la componente estacional estimada cumple también que $\widehat{S}_t = \widehat{S}_{t + s}$, es decir, **solo necesitamos $s$ coeficientes estimados** (fíjate en el subíndice del $\hat{S}$)
+
+$$\widehat{\varepsilon}_{s*i + j} = X_{s*i + j} - \widehat{X}_{s*i + j}, \quad \widehat{X}_{s*i + j}= \widehat{\mu}_{s*i + j} + \widehat{S}_j, \quad j = 1,\ldots,s$$
+
+. . .
+
+* $\widehat{Y}_t$ representa la [**estimación de la serie centrada**]{.hl-green}: lo que falta [**por modelizar es componente estacional**]{.hl-yellow} 
+
+* $X_t - \widehat{S}_t$ representa la [**estimación de la serie DESESTACIONALIZADA**]{.hl-green}: lo que falta [**por modelizar es tendencia sin tener en cuenta el efecto estacional**]{.hl-yellow} (ejemplo: tasa de paro sin el efecto que tienen periodos como verano o navidad)
+
+
+---
+
+## Algunas observaciones
+
+
+::: callout-warning
+
+El método descrito se conoce [**método clásico de descomposición**]{.hl-yellow} (o STL si se usa una regresión local para estimar la tendencia en lugar de medias móviles) pero la componente estacional podría ser también estimada por [**cualquier función periódica o armónica de periodo $s$**]{.hl-yellow}, por ejemplo, $sin(\frac{2 \pi t}{s})$, se repite cada $s$ valores).
+:::
+
+&nbsp;
+
+::: callout-warning
+
+Todo lo anterior también está diseñado bajo la [**hipótesis de que solo tenemos una periodicidad $s$**]{.hl-yellow}: nuestra serie podría tener distintas periodicidades superpuestas (Fourier: toda función periódica puede representarse como suma de funciones seno de distinta frecuencia y amplitud). De momento supondremos siempre un **único ciclo**.
+:::
+
+
+---
+
+## 💻 Tu turno {#tu-turno-7-1}
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+
+# Clase 8: [métricas de error]{.flow} {#clase-8}
+
+[**Calibrando nuestra estimación: train/validación y errores**]{style="color:#444442;"}
+
+* [💻 Ejercicios](#tu-turno-8-1)
+* [📆 Planificación](#planificacion)
 
 
 
 ---
 
 
-- medias móviles
 
----
-
-- ¿estacional?
-
+# Clase 9: [métodos de alisado]{.flow} {#clase-9}
 
 
 ---
 
-siguiente clase: STL y multiplicativo
+# Clase 10: [métodos de alisado]{.flow} {#clase-9}
 
-24/09/2024
+
+---
+
+# Clase 11: [teoría procesos]{.flow} {#clase-10}
 
 
 ---
 
 
-27/09/2024: alisado
-
----
-
-1/10/2024: repaso todo en R
-
----
-
-4/10: ¿a mano? ejercicios
-
----
-
-8/10: entrega
-
----
-
-11/10: teoría procesos estocásticos
-15/10
-
----
-
-5-6 clases de box-jenkins
-
----
-
-2 predicci´
 
 
 
