@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-06 12:08:05 CEST"</code></pre>
+<pre><code>[1] "2024-10-06 14:41:54 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -2677,12 +2677,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr    min       lq      mean median
-                                y &lt;- x^2    984   1148.0   1223.85   1189
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 800525 813296.5 864545.35 823403
-     uq     max neval
-   1230    6355   500
- 836646 3276228   500</code></pre>
+                                    expr    min     lq     mean median     uq
+                                y &lt;- x^2    984   1107   1221.8   1148   1271
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 802124 816023 874912.2 829758 854440
+     max neval
+    5207   500
+ 3377744   500</code></pre>
 </div>
 </div>
 </section>
@@ -4753,18 +4753,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t     X_t sd    
-   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.256  sd_0.5
- 2     2  0.298  sd_0.5
- 3     3  1.03   sd_0.5
- 4     4 -0.175  sd_0.5
- 5     5 -0.0290 sd_0.5
- 6     6 -0.654  sd_0.5
- 7     7  0.818  sd_0.5
- 8     8  0.208  sd_0.5
- 9     9 -0.0611 sd_0.5
-10    10  0.419  sd_0.5
+       t      X_t sd    
+   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; 
+ 1     1  0.134   sd_0.5
+ 2     2 -0.871   sd_0.5
+ 3     3 -0.161   sd_0.5
+ 4     4 -0.828   sd_0.5
+ 5     5  0.460   sd_0.5
+ 6     6  0.280   sd_0.5
+ 7     7  0.00455 sd_0.5
+ 8     8  0.124   sd_0.5
+ 9     9 -0.132   sd_0.5
+10    10  1.04    sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5146,18 +5146,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd         X_t
-   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.529 
- 2     2 sd_0.5 -0.107 
- 3     3 sd_0.5  0.101 
- 4     4 sd_0.5 -0.287 
- 5     5 sd_0.5 -0.0568
- 6     6 sd_0.5 -0.0853
- 7     7 sd_0.5  0.397 
- 8     8 sd_0.5 -0.0361
- 9     9 sd_0.5 -0.397 
-10    10 sd_0.5  1.08  
+       t sd        X_t
+   &lt;int&gt; &lt;glue&gt;  &lt;dbl&gt;
+ 1     1 sd_0.5 -0.347
+ 2     2 sd_0.5  0.406
+ 3     3 sd_0.5  0.132
+ 4     4 sd_0.5 -0.131
+ 5     5 sd_0.5  0.643
+ 6     6 sd_0.5  0.820
+ 7     7 sd_0.5 -0.648
+ 8     8 sd_0.5 -0.278
+ 9     9 sd_0.5  0.309
+10    10 sd_0.5  1.65 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -5543,22 +5543,21 @@ No todavía, vamos por el ciclo 4</code></pre>
 <summary>Código</summary>
 <div class="sourceCode cell-code" id="cb340"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb340-1"><a href="#cb340-1"></a><span class="co"># versión tidyverse (en R base tabla$variable_nueva &lt;- valor)</span></span>
 <span id="cb340-2"><a href="#cb340-2"></a>retiro_estim <span class="ot">&lt;-</span></span>
-<span id="cb340-3"><a href="#cb340-3"></a>  retiro_estim <span class="sc">|&gt;</span> </span>
-<span id="cb340-4"><a href="#cb340-4"></a>  <span class="fu">drop_na</span>(X_t) <span class="sc">|&gt;</span> </span>
-<span id="cb340-5"><a href="#cb340-5"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
-<span id="cb340-6"><a href="#cb340-6"></a>         <span class="at">x_smooth_14ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">14</span>, <span class="dv">14</span>)),</span>
-<span id="cb340-7"><a href="#cb340-7"></a>         <span class="at">x_smooth_28ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">28</span>, <span class="dv">28</span>)),</span>
-<span id="cb340-8"><a href="#cb340-8"></a>         <span class="at">x_smooth_365ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">365</span>, <span class="dv">365</span>)))</span>
-<span id="cb340-9"><a href="#cb340-9"></a></span>
-<span id="cb340-10"><a href="#cb340-10"></a><span class="fu">ggplot</span>(retiro_estim <span class="sc">|&gt;</span></span>
-<span id="cb340-11"><a href="#cb340-11"></a>         <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(fecha, t), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb340-12"><a href="#cb340-12"></a>         <span class="fu">filter</span>(<span class="fu">between</span>(fecha, <span class="fu">as_date</span>(<span class="st">"2016-01-01"</span>), <span class="fu">as_date</span>(<span class="st">"2022-01-01"</span>)))) <span class="sc">+</span></span>
-<span id="cb340-13"><a href="#cb340-13"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> pred, <span class="at">color =</span> type),</span>
-<span id="cb340-14"><a href="#cb340-14"></a>            <span class="at">linewidth =</span> <span class="fl">0.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb340-15"><a href="#cb340-15"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb340-16"><a href="#cb340-16"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb340-17"><a href="#cb340-17"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Temperatura media como SERIE TEMPORAL"</span>,</span>
-<span id="cb340-18"><a href="#cb340-18"></a>       <span class="at">x =</span> <span class="st">"t (fecha)"</span>, <span class="at">y =</span> <span class="st">"ºC (media)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb340-3"><a href="#cb340-3"></a>  retiro_estim <span class="sc">|&gt;</span>  <span class="fu">drop_na</span>(X_t) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(t) <span class="sc">|&gt;</span> </span>
+<span id="cb340-4"><a href="#cb340-4"></a>  <span class="fu">mutate</span>(<span class="at">x_smooth_7ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">7</span>, <span class="dv">7</span>)),</span>
+<span id="cb340-5"><a href="#cb340-5"></a>         <span class="at">x_smooth_14ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">14</span>, <span class="dv">14</span>)),</span>
+<span id="cb340-6"><a href="#cb340-6"></a>         <span class="at">x_smooth_28ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">28</span>, <span class="dv">28</span>)),</span>
+<span id="cb340-7"><a href="#cb340-7"></a>         <span class="at">x_smooth_365ma =</span> stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">365</span>, <span class="dv">365</span>)))</span>
+<span id="cb340-8"><a href="#cb340-8"></a></span>
+<span id="cb340-9"><a href="#cb340-9"></a><span class="fu">ggplot</span>(retiro_estim <span class="sc">|&gt;</span></span>
+<span id="cb340-10"><a href="#cb340-10"></a>         <span class="fu">pivot_longer</span>(<span class="sc">-</span><span class="fu">c</span>(fecha, t), <span class="at">names_to =</span> <span class="st">"type"</span>, <span class="at">values_to =</span> <span class="st">"pred"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb340-11"><a href="#cb340-11"></a>         <span class="fu">filter</span>(<span class="fu">between</span>(fecha, <span class="fu">as_date</span>(<span class="st">"2016-01-01"</span>), <span class="fu">as_date</span>(<span class="st">"2022-01-01"</span>)))) <span class="sc">+</span></span>
+<span id="cb340-12"><a href="#cb340-12"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> pred, <span class="at">color =</span> type),</span>
+<span id="cb340-13"><a href="#cb340-13"></a>            <span class="at">linewidth =</span> <span class="fl">0.7</span>, <span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb340-14"><a href="#cb340-14"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb340-15"><a href="#cb340-15"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb340-16"><a href="#cb340-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Temperatura media como SERIE TEMPORAL"</span>,</span>
+<span id="cb340-17"><a href="#cb340-17"></a>       <span class="at">x =</span> <span class="st">"t (fecha)"</span>, <span class="at">y =</span> <span class="st">"ºC (media)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section></section>
@@ -5710,10 +5709,230 @@ No todavía, vamos por el ciclo 4</code></pre>
 <section id="tu-turno-7-1" class="slide level2">
 <h2>💻 Tu turno</h2>
 <h3 id="ejercicio-1-6"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
+<p>💻 Renombra la función de estimación de la tendencia polinómica que ya tenemos hecha como <code>estim_ts_trend_poly()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb341"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1"></a>estim_ts_trend_poly <span class="ot">&lt;-</span></span>
+<span id="cb341-2"><a href="#cb341-2"></a>  <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">tag_estim =</span> <span class="fu">paste0</span>(<span class="st">"estim_poly_"</span>, degree),</span>
+<span id="cb341-3"><a href="#cb341-3"></a>           <span class="at">col_t =</span> <span class="st">"t"</span>, <span class="at">col_X_t =</span> <span class="st">"X_t"</span>, <span class="at">nuevos_valores =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb341-4"><a href="#cb341-4"></a>    </span>
+<span id="cb341-5"><a href="#cb341-5"></a>    <span class="co"># R base normal</span></span>
+<span id="cb341-6"><a href="#cb341-6"></a>    datos <span class="ot">&lt;-</span> datos[, <span class="fu">c</span>(col_t, col_X_t)]</span>
+<span id="cb341-7"><a href="#cb341-7"></a>    <span class="fu">names</span>(datos)[<span class="fu">names</span>(datos) <span class="sc">==</span> col_t] <span class="ot">&lt;-</span> <span class="st">"t"</span></span>
+<span id="cb341-8"><a href="#cb341-8"></a>    <span class="fu">names</span>(datos)[<span class="fu">names</span>(datos) <span class="sc">==</span> col_X_t] <span class="ot">&lt;-</span> <span class="st">"X_t"</span></span>
+<span id="cb341-9"><a href="#cb341-9"></a></span>
+<span id="cb341-10"><a href="#cb341-10"></a>    <span class="cf">if</span> (degree <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb341-11"><a href="#cb341-11"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb341-12"><a href="#cb341-12"></a>    } <span class="cf">else</span> {</span>
+<span id="cb341-13"><a href="#cb341-13"></a>      modelo <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">lm</span>(<span class="at">formula =</span> X_t <span class="sc">~</span> <span class="fu">poly</span>(t, degree, <span class="at">raw =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb341-14"><a href="#cb341-14"></a>    }</span>
+<span id="cb341-15"><a href="#cb341-15"></a>    datos[, tag_estim] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> datos<span class="sc">$</span>t))</span>
+<span id="cb341-16"><a href="#cb341-16"></a>    </span>
+<span id="cb341-17"><a href="#cb341-17"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(nuevos_valores)) {</span>
+<span id="cb341-18"><a href="#cb341-18"></a>      nuevos_datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> nuevos_valores, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="cn">NA</span>)</span>
+<span id="cb341-19"><a href="#cb341-19"></a>      nuevos_datos[, tag_estim] <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo, <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> nuevos_datos<span class="sc">$</span>t))</span>
+<span id="cb341-20"><a href="#cb341-20"></a>      datos <span class="ot">&lt;-</span> <span class="fu">rbind</span>(datos, nuevos_datos)</span>
+<span id="cb341-21"><a href="#cb341-21"></a>    }</span>
+<span id="cb341-22"><a href="#cb341-22"></a>    <span class="fu">return</span>(datos)</span>
+<span id="cb341-23"><a href="#cb341-23"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tu-turno-3" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-2-5"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></h3>
+<p>💻 Diseña una función general <code>estim_ts_trend()</code> que use <code>estim_ts_trend_poly()</code> que ya tenemos hecha. Dicha función debe tener los mismos parámetros que teníamos en esa función con dos argumentos extras: <code>tipo_trend_estim</code> (que haga la polinómica si <code>"poly"</code> y medias móviles si <code>"MA"</code>) y <code>k</code> (la anchura de la ventana; la haremos siempre simétrica y con pesos uniformes de momento).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb342"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb342-1"><a href="#cb342-1"></a>estim_ts_trend <span class="ot">&lt;-</span> </span>
+<span id="cb342-2"><a href="#cb342-2"></a>  <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="cn">NA</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"poly"</span>,</span>
+<span id="cb342-3"><a href="#cb342-3"></a>           <span class="at">tag_estim =</span></span>
+<span id="cb342-4"><a href="#cb342-4"></a>             <span class="fu">paste0</span>(<span class="st">"estim_"</span>, tipo_trend_estim, <span class="fu">if_else</span>(<span class="fu">is.na</span>(k), degree, k)),</span>
+<span id="cb342-5"><a href="#cb342-5"></a>           <span class="at">col_t =</span> <span class="st">"t"</span>, <span class="at">col_X_t =</span> <span class="st">"X_t"</span>, <span class="at">nuevos_valores =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb342-6"><a href="#cb342-6"></a>    </span>
+<span id="cb342-7"><a href="#cb342-7"></a>    <span class="cf">if</span> (tipo_trend_estim <span class="sc">==</span> <span class="st">"poly"</span>) {</span>
+<span id="cb342-8"><a href="#cb342-8"></a>      </span>
+<span id="cb342-9"><a href="#cb342-9"></a>      estim <span class="ot">&lt;-</span> <span class="fu">estim_ts_trend_poly</span>(datos, degree, tag_estim,</span>
+<span id="cb342-10"><a href="#cb342-10"></a>                                   col_t, col_X_t, nuevos_valores)</span>
+<span id="cb342-11"><a href="#cb342-11"></a>    } <span class="cf">else</span> <span class="cf">if</span> (tipo_trend_estim <span class="sc">==</span> <span class="st">"MA"</span>) {</span>
+<span id="cb342-12"><a href="#cb342-12"></a>      </span>
+<span id="cb342-13"><a href="#cb342-13"></a>      estim <span class="ot">&lt;-</span></span>
+<span id="cb342-14"><a href="#cb342-14"></a>        datos <span class="sc">|&gt;</span> </span>
+<span id="cb342-15"><a href="#cb342-15"></a>        <span class="fu">select</span>(<span class="fu">all_of</span>(col_t), <span class="fu">all_of</span>(col_X_t)) <span class="sc">|&gt;</span> </span>
+<span id="cb342-16"><a href="#cb342-16"></a>        <span class="fu">rename</span>(<span class="at">t =</span> col_t, <span class="at">X_t =</span> col_X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb342-17"><a href="#cb342-17"></a>        <span class="co"># hay que ordenar!</span></span>
+<span id="cb342-18"><a href="#cb342-18"></a>        <span class="fu">arrange</span>(t) <span class="sc">|&gt;</span> </span>
+<span id="cb342-19"><a href="#cb342-19"></a>        <span class="co"># con !! + := le indicamos que el nombre sale de una variable</span></span>
+<span id="cb342-20"><a href="#cb342-20"></a>        <span class="co"># (es una técnica llamada lazyeval)</span></span>
+<span id="cb342-21"><a href="#cb342-21"></a>        <span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">tag_estim :=</span> </span>
+<span id="cb342-22"><a href="#cb342-22"></a>                 stats<span class="sc">::</span><span class="fu">filter</span>(X_t, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>k, k), <span class="at">sides =</span> <span class="dv">2</span>))</span>
+<span id="cb342-23"><a href="#cb342-23"></a></span>
+<span id="cb342-24"><a href="#cb342-24"></a>    }</span>
+<span id="cb342-25"><a href="#cb342-25"></a>    <span class="fu">return</span>(estim)</span>
+<span id="cb342-26"><a href="#cb342-26"></a>  }</span>
+<span id="cb342-27"><a href="#cb342-27"></a>temp_retiro <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/retiro_temp.csv"</span>)</span>
+<span id="cb342-28"><a href="#cb342-28"></a>ejemplo1 <span class="ot">&lt;-</span></span>
+<span id="cb342-29"><a href="#cb342-29"></a>  temp_retiro <span class="sc">|&gt;</span> <span class="fu">estim_ts_trend</span>(<span class="at">degree =</span> <span class="dv">1</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"poly"</span>, <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)</span>
+<span id="cb342-30"><a href="#cb342-30"></a>ejemplo2 <span class="ot">&lt;-</span></span>
+<span id="cb342-31"><a href="#cb342-31"></a>  temp_retiro <span class="sc">|&gt;</span> <span class="fu">estim_ts_trend</span>(<span class="at">k =</span> <span class="dv">7</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"MA"</span>, <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="tu-turno-4" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-3-5"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></h3>
+<p>💻 Diseña una función <code>ts_detrend()</code> que use <code>estim_ts_trend()</code> que ya tenemos hecha (por lo que tendrá que tener, mínimo, los mismos parámetros que teníamos en esa función), de manera que dado un conjunto de datos, devuelva una nueva columna con la tendencia estimada (según el método que decidamos) y una nueva columna con la serie centrada</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb343"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb343-1"><a href="#cb343-1"></a>ts_detrend <span class="ot">&lt;-</span> </span>
+<span id="cb343-2"><a href="#cb343-2"></a>  <span class="cf">function</span>(datos, <span class="at">degree =</span> <span class="dv">1</span>, <span class="at">k =</span> <span class="cn">NA</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"poly"</span>,</span>
+<span id="cb343-3"><a href="#cb343-3"></a>           <span class="at">tag_estim =</span> <span class="fu">paste0</span>(<span class="st">"estim_"</span>, tipo_trend_estim, <span class="fu">if_else</span>(<span class="fu">is.na</span>(k), degree, k)),</span>
+<span id="cb343-4"><a href="#cb343-4"></a>           <span class="at">col_t =</span> <span class="st">"t"</span>, <span class="at">col_X_t =</span> <span class="st">"X_t"</span>, <span class="at">nuevos_valores =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb343-5"><a href="#cb343-5"></a>    </span>
+<span id="cb343-6"><a href="#cb343-6"></a>    estim <span class="ot">&lt;-</span></span>
+<span id="cb343-7"><a href="#cb343-7"></a>      <span class="co"># estimamos tendencia</span></span>
+<span id="cb343-8"><a href="#cb343-8"></a>      <span class="fu">estim_ts_trend</span>(datos, degree, k, tipo_trend_estim, tag_estim,</span>
+<span id="cb343-9"><a href="#cb343-9"></a>                     col_t, col_X_t, nuevos_valores) <span class="sc">|&gt;</span> </span>
+<span id="cb343-10"><a href="#cb343-10"></a>      <span class="co"># la llamamos siempre estim_trend</span></span>
+<span id="cb343-11"><a href="#cb343-11"></a>      <span class="fu">rename</span>(<span class="at">estim_trend =</span> tag_estim) <span class="sc">|&gt;</span> </span>
+<span id="cb343-12"><a href="#cb343-12"></a>      <span class="co"># el tipo de estimación lo guardamos en otra variable aparte</span></span>
+<span id="cb343-13"><a href="#cb343-13"></a>      <span class="fu">mutate</span>(<span class="st">"tipo_trend_estim"</span> <span class="ot">=</span> tag_estim,</span>
+<span id="cb343-14"><a href="#cb343-14"></a>             <span class="co"># calculamos serie centrada</span></span>
+<span id="cb343-15"><a href="#cb343-15"></a>             <span class="co"># si es NA, ponemos la media global en la estimación de la tendencia</span></span>
+<span id="cb343-16"><a href="#cb343-16"></a>             <span class="st">"estim_trend"</span> <span class="ot">=</span></span>
+<span id="cb343-17"><a href="#cb343-17"></a>               <span class="fu">if_else</span>(<span class="fu">is.na</span>(estim_trend), <span class="fu">mean</span>(X_t, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), estim_trend),</span>
+<span id="cb343-18"><a href="#cb343-18"></a>             <span class="st">"detrend"</span> <span class="ot">=</span> X_t <span class="sc">-</span> estim_trend)</span>
+<span id="cb343-19"><a href="#cb343-19"></a>    <span class="fu">return</span>(estim)</span>
+<span id="cb343-20"><a href="#cb343-20"></a>  }</span>
+<span id="cb343-21"><a href="#cb343-21"></a>ejemplo1 <span class="ot">&lt;-</span> temp_retiro <span class="sc">|&gt;</span> <span class="fu">ts_detrend</span>(<span class="at">degree =</span> <span class="dv">1</span>, <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)</span>
+<span id="cb343-22"><a href="#cb343-22"></a>ejemplo2 <span class="ot">&lt;-</span> temp_retiro <span class="sc">|&gt;</span> <span class="fu">ts_detrend</span>(<span class="at">k =</span> <span class="dv">365</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"MA"</span>, <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section></section>
 <section>
 <section id="clase-8" class="title-slide slide level1 center">
-<h1>Clase 8: <span class="flow">métricas de error</span></h1>
+<h1>Clase 8: <span class="flow">practicar con funciones</span></h1>
+<p><span style="color:#444442;"><strong>Diseño de funciones para nuestra descomposición</strong></span></p>
+<ul>
+<li><a href="#/tu-turno-8-1">💻 Ejercicios</a></li>
+<li><a href="#/planificacion">📆 Planificación</a></li>
+</ul>
+</section>
+<section id="tu-turno-8-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-1-7"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
+<p>💻 Diseña una función <code>ts_deseason()</code> que, dada una serie cualquiera y un periodo <span class="math inline">\(s\)</span>, nos devuelva una nueva columna con los coeficientes estacionales estimados (con el método visto anteriormente) y una nueva columna con la serie desestacionalizada. Vas a necesitar darle como argumento no solo el nombre de las columnas donde esté <span class="math inline">\(t\)</span> y <span class="math inline">\(Y_t\)</span> sino como se llamará la variable de grupo que debes crear dentro usando <span class="math inline">\(s\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb344"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb344-1"><a href="#cb344-1"></a>ts_deseason <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, s, col_group, <span class="at">col_t =</span> <span class="st">"t"</span>, <span class="at">col_Y_t =</span> <span class="st">"Y_t"</span>) {</span>
+<span id="cb344-2"><a href="#cb344-2"></a>  </span>
+<span id="cb344-3"><a href="#cb344-3"></a>  <span class="co"># primero renombramos como siempre y ordenamos</span></span>
+<span id="cb344-4"><a href="#cb344-4"></a>  estim <span class="ot">&lt;-</span></span>
+<span id="cb344-5"><a href="#cb344-5"></a>    datos <span class="sc">|&gt;</span></span>
+<span id="cb344-6"><a href="#cb344-6"></a>    <span class="fu">rename</span>(<span class="at">t =</span> col_t, <span class="at">Y_t =</span> col_Y_t) <span class="sc">|&gt;</span> </span>
+<span id="cb344-7"><a href="#cb344-7"></a>    <span class="fu">arrange</span>(t)</span>
+<span id="cb344-8"><a href="#cb344-8"></a>  </span>
+<span id="cb344-9"><a href="#cb344-9"></a>  <span class="co"># Contruimos variable de grupo</span></span>
+<span id="cb344-10"><a href="#cb344-10"></a>  estim <span class="ot">&lt;-</span> </span>
+<span id="cb344-11"><a href="#cb344-11"></a>    estim <span class="sc">|&gt;</span></span>
+<span id="cb344-12"><a href="#cb344-12"></a>    <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb344-13"><a href="#cb344-13"></a>    <span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">col_group :=</span> ((id <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%%</span> s) <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb344-14"><a href="#cb344-14"></a>    <span class="fu">select</span>(<span class="sc">-</span>id)</span>
+<span id="cb344-15"><a href="#cb344-15"></a></span>
+<span id="cb344-16"><a href="#cb344-16"></a>  <span class="co"># Estimamos la estacionacionalidad</span></span>
+<span id="cb344-17"><a href="#cb344-17"></a>  estim_season <span class="ot">&lt;-</span></span>
+<span id="cb344-18"><a href="#cb344-18"></a>    estim <span class="sc">|&gt;</span></span>
+<span id="cb344-19"><a href="#cb344-19"></a>    <span class="fu">summarise</span>(<span class="st">"season_coef"</span> <span class="ot">=</span> <span class="fu">mean</span>(Y_t, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> col_group) <span class="sc">|&gt;</span></span>
+<span id="cb344-20"><a href="#cb344-20"></a>    <span class="fu">mutate</span>(<span class="st">"estim_season"</span> <span class="ot">=</span> season_coef <span class="sc">-</span> <span class="fu">mean</span>(season_coef, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb344-21"><a href="#cb344-21"></a>  </span>
+<span id="cb344-22"><a href="#cb344-22"></a>  <span class="co"># Lo únimos a los datos</span></span>
+<span id="cb344-23"><a href="#cb344-23"></a>  estim <span class="ot">&lt;-</span> </span>
+<span id="cb344-24"><a href="#cb344-24"></a>    estim <span class="sc">|&gt;</span> </span>
+<span id="cb344-25"><a href="#cb344-25"></a>    <span class="fu">left_join</span>(estim_season, <span class="at">by =</span> col_group) <span class="sc">|&gt;</span> </span>
+<span id="cb344-26"><a href="#cb344-26"></a>    <span class="fu">mutate</span>(<span class="st">"tipo_estim_season"</span> <span class="ot">=</span> <span class="st">"clasica"</span>,</span>
+<span id="cb344-27"><a href="#cb344-27"></a>           <span class="st">"deseason"</span> <span class="ot">=</span> Y_t <span class="sc">-</span> estim_season) </span>
+<span id="cb344-28"><a href="#cb344-28"></a>  </span>
+<span id="cb344-29"><a href="#cb344-29"></a>  <span class="fu">return</span>(estim)</span>
+<span id="cb344-30"><a href="#cb344-30"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tu-turno-5" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-2-6"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></h3>
+<p>💻 Tomando los datos de retiro: a) aplica la función <code>ts_detrend()</code> de manera que la tendencia sea estimada con <span class="math inline">\(MA(k = 365)\)</span>; b) a esa tabla aplícale <code>ts_deseason()</code> para estimar <span class="math inline">\(S_t\)</span>, donde la variable de grupo se llama <code>"mes_dia"</code>; c) tras acabar renombra <code>Y_t</code> como <code>detrend</code></p>
+</section>
+<section id="tu-turno-6" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-2-7"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></h3>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb345"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb345-1"><a href="#cb345-1"></a>estim_retiro <span class="ot">&lt;-</span></span>
+<span id="cb345-2"><a href="#cb345-2"></a>  temp_retiro <span class="sc">|&gt;</span></span>
+<span id="cb345-3"><a href="#cb345-3"></a>  <span class="fu">ts_detrend</span>(<span class="at">k =</span> <span class="dv">365</span>, <span class="at">tipo_trend_estim =</span> <span class="st">"MA"</span>, <span class="at">col_t =</span> <span class="st">"fecha"</span>, <span class="at">col_X_t =</span> <span class="st">"tmed"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb345-4"><a href="#cb345-4"></a>  <span class="fu">mutate</span>(<span class="st">"mes_dia"</span> <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">day</span>(t), <span class="st">"-"</span>, <span class="fu">month</span>(t))) <span class="sc">|&gt;</span></span>
+<span id="cb345-5"><a href="#cb345-5"></a>  <span class="fu">ts_deseason</span>(<span class="at">s =</span> <span class="dv">365</span>, <span class="at">col_group =</span> <span class="st">"mes_dia"</span>, <span class="at">col_Y_t =</span> <span class="st">"detrend"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb345-6"><a href="#cb345-6"></a>  <span class="fu">rename</span>(<span class="at">detrend =</span> Y_t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="tu-turno-7" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-3-6"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></h3>
+<p>💻 Con <code>estim_retiro</code> del ejercicio anterior, calcula una última columna que sea la estimación total de la serie <code>estim_X_t</code> (estimación de la tendencia + estimación de la estacionalidad). Tras ello pivota como consideres para poder dibujar en la misma gráfica la serie real y la estimación</p>
+</section>
+<section id="tu-turno-8" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-3-7"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb346"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb346-1"><a href="#cb346-1"></a>estim_retiro <span class="sc">|&gt;</span> </span>
+<span id="cb346-2"><a href="#cb346-2"></a>  <span class="fu">mutate</span>(<span class="st">"estim_X_t"</span> <span class="ot">=</span> estim_trend <span class="sc">+</span> estim_season) <span class="sc">|&gt;</span> </span>
+<span id="cb346-3"><a href="#cb346-3"></a>  <span class="co"># solo queremos dos de las curvas</span></span>
+<span id="cb346-4"><a href="#cb346-4"></a>  <span class="fu">select</span>(t, X_t, estim_X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb346-5"><a href="#cb346-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"serie"</span>, <span class="at">values_to =</span> <span class="st">"X_t"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb346-6"><a href="#cb346-6"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb346-7"><a href="#cb346-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> serie, <span class="at">alpha =</span> serie)) <span class="sc">+</span></span>
+<span id="cb346-8"><a href="#cb346-8"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb346-9"><a href="#cb346-9"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.9</span>, <span class="fl">0.35</span>)) <span class="sc">+</span></span>
+<span id="cb346-10"><a href="#cb346-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb346-11"><a href="#cb346-11"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"fecha"</span>, <span class="at">y =</span> <span class="st">"Temperatura (ºC)"</span>,</span>
+<span id="cb346-12"><a href="#cb346-12"></a>       <span class="at">title =</span> <span class="st">"Estimación decomposición clásica"</span>,</span>
+<span id="cb346-13"><a href="#cb346-13"></a>       <span class="at">subtitle =</span> <span class="st">"Tendencia estimada con MA(k = 365)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-227-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-9" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-4-5"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></h3>
+<p>💻 Con <code>estim_retiro</code> del ejercicio 2, calcula una última columna que sea la estimación total de la serie <code>estim_X_t</code> (estimación de la tendencia + estimación de la estacionalidad) pero ahora selecciona y pivota como consideres para poder hacer luego una visualización de 6 gráficas (por separado pero en el mismo plot): i) la serie real, ii) la estimación de la tendencia, iii) la estimación de la estacionalidad, iv) la serie sin tendencia, v) la serie sin tendencia ni estacionalidad, vi) la estimación</p>
+</section>
+<section id="tu-turno-10" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-4-6"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb347"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb347-1"><a href="#cb347-1"></a>estim_retiro <span class="sc">|&gt;</span> </span>
+<span id="cb347-2"><a href="#cb347-2"></a>  <span class="fu">mutate</span>(<span class="st">"estim_X_t"</span> <span class="ot">=</span> estim_trend <span class="sc">+</span> estim_season) <span class="sc">|&gt;</span> </span>
+<span id="cb347-3"><a href="#cb347-3"></a>  <span class="co"># solo queremos dos de las curvas</span></span>
+<span id="cb347-4"><a href="#cb347-4"></a>  <span class="fu">select</span>(t, X_t, estim_trend, detrend, estim_season, deseason, estim_X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb347-5"><a href="#cb347-5"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">"serie"</span>, <span class="at">values_to =</span> <span class="st">"X_t"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb347-6"><a href="#cb347-6"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb347-7"><a href="#cb347-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> serie)) <span class="sc">+</span></span>
+<span id="cb347-8"><a href="#cb347-8"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb347-9"><a href="#cb347-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>serie, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb347-10"><a href="#cb347-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb347-11"><a href="#cb347-11"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"fecha"</span>, <span class="at">y =</span> <span class="st">"Temperatura (ºC)"</span>,</span>
+<span id="cb347-12"><a href="#cb347-12"></a>       <span class="at">title =</span> <span class="st">"Estimación decomposición clásica"</span>,</span>
+<span id="cb347-13"><a href="#cb347-13"></a>       <span class="at">subtitle =</span> <span class="st">"Tendencia estimada con MA(k = 365)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-228-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-11" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-6-3"><span class="hl-yellow"><strong>Ejercicio 6</strong></span></h3>
+<p>💻 Repite los ejercicios anteriores pero haciendo una pequeña modificación en la función que estima la estacionalidad, permitiendo que pueda estimarla de manera clásica o de manera sinuosoidal <span class="math inline">\(\widehat{S}_t = \sin(2 \pi t/s)\)</span>.</p>
+</section></section>
+<section>
+<section id="clase-9" class="title-slide slide level1 center">
+<h1>Clase 9: <span class="flow">métricas de error</span></h1>
 <p><span style="color:#444442;"><strong>Calibrando nuestra estimación: train/validación y errores</strong></span></p>
 <ul>
 <li><a href="#/tu-turno-8-1">💻 Ejercicios</a></li>

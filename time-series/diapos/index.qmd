@@ -5215,8 +5215,7 @@ ggplot(datos |>
 #| eval: false
 # versión tidyverse (en R base tabla$variable_nueva <- valor)
 retiro_estim <-
-  retiro_estim |> 
-  drop_na(X_t) |> 
+  retiro_estim |>  drop_na(X_t) |> arrange(t) |> 
   mutate(x_smooth_7ma = stats::filter(X_t, filter = rep(1/7, 7)),
          x_smooth_14ma = stats::filter(X_t, filter = rep(1/14, 14)),
          x_smooth_28ma = stats::filter(X_t, filter = rep(1/28, 28)),
@@ -5384,8 +5383,263 @@ Todo lo anterior también está diseñado bajo la [**hipótesis de que solo tene
 
 ### [**Ejercicio 1**]{.hl-yellow}
 
+💻 Renombra la función de estimación de la tendencia polinómica que ya tenemos hecha como `estim_ts_trend_poly()`
 
-# Clase 8: [métricas de error]{.flow} {#clase-8}
+
+
+```{r}
+estim_ts_trend_poly <-
+  function(datos, degree = 1, tag_estim = paste0("estim_poly_", degree),
+           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
+    
+    # R base normal
+    datos <- datos[, c(col_t, col_X_t)]
+    names(datos)[names(datos) == col_t] <- "t"
+    names(datos)[names(datos) == col_X_t] <- "X_t"
+
+    if (degree == 0) {
+      modelo <- datos |> lm(formula = X_t ~ 1)
+    } else {
+      modelo <- datos |> lm(formula = X_t ~ poly(t, degree, raw = TRUE))
+    }
+    datos[, tag_estim] <- predict(modelo, tibble("t" = datos$t))
+    
+    if (!is.null(nuevos_valores)) {
+      nuevos_datos <- tibble("t" = nuevos_valores, "X_t" = NA)
+      nuevos_datos[, tag_estim] <- predict(modelo, tibble("t" = nuevos_datos$t))
+      datos <- rbind(datos, nuevos_datos)
+    }
+    return(datos)
+}
+```
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+💻 Diseña una función general `estim_ts_trend()` que use `estim_ts_trend_poly()` que ya tenemos hecha. Dicha función debe tener los mismos parámetros que teníamos en esa función con dos argumentos extras: `tipo_trend_estim` (que haga la polinómica si `"poly"` y medias móviles si `"MA"`) y `k` (la anchura de la ventana; la haremos siempre simétrica y con pesos uniformes de momento).
+
+```{r}
+#| code-fold: true
+estim_ts_trend <- 
+  function(datos, degree = 1, k = NA, tipo_trend_estim = "poly",
+           tag_estim =
+             paste0("estim_", tipo_trend_estim, if_else(is.na(k), degree, k)),
+           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
+    
+    if (tipo_trend_estim == "poly") {
+      
+      estim <- estim_ts_trend_poly(datos, degree, tag_estim,
+                                   col_t, col_X_t, nuevos_valores)
+    } else if (tipo_trend_estim == "MA") {
+      
+      estim <-
+        datos |> 
+        select(all_of(col_t), all_of(col_X_t)) |> 
+        rename(t = col_t, X_t = col_X_t) |> 
+        # hay que ordenar!
+        arrange(t) |> 
+        # con !! + := le indicamos que el nombre sale de una variable
+        # (es una técnica llamada lazyeval)
+        mutate(!!tag_estim := 
+                 stats::filter(X_t, filter = rep(1/k, k), sides = 2))
+
+    }
+    return(estim)
+  }
+temp_retiro <- read_csv(file = "./datos/retiro_temp.csv")
+ejemplo1 <-
+  temp_retiro |> estim_ts_trend(degree = 1, tipo_trend_estim = "poly", col_t = "fecha", col_X_t = "tmed")
+ejemplo2 <-
+  temp_retiro |> estim_ts_trend(k = 7, tipo_trend_estim = "MA", col_t = "fecha", col_X_t = "tmed")
+```
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+💻 Diseña una función `ts_detrend()` que use `estim_ts_trend()` que ya tenemos hecha (por lo que tendrá que tener, mínimo, los mismos parámetros que teníamos en esa función), de manera que dado un conjunto de datos, devuelva una nueva columna con la tendencia estimada (según el método que decidamos) y una nueva columna con la serie centrada
+
+```{r}
+#| code-fold: true
+ts_detrend <- 
+  function(datos, degree = 1, k = NA, tipo_trend_estim = "poly",
+           tag_estim = paste0("estim_", tipo_trend_estim, if_else(is.na(k), degree, k)),
+           col_t = "t", col_X_t = "X_t", nuevos_valores = NULL) {
+    
+    estim <-
+      # estimamos tendencia
+      estim_ts_trend(datos, degree, k, tipo_trend_estim, tag_estim,
+                     col_t, col_X_t, nuevos_valores) |> 
+      # la llamamos siempre estim_trend
+      rename(estim_trend = tag_estim) |> 
+      # el tipo de estimación lo guardamos en otra variable aparte
+      mutate("tipo_trend_estim" = tag_estim,
+             # calculamos serie centrada
+             # si es NA, ponemos la media global en la estimación de la tendencia
+             "estim_trend" =
+               if_else(is.na(estim_trend), mean(X_t, na.rm = TRUE), estim_trend),
+             "detrend" = X_t - estim_trend)
+    return(estim)
+  }
+ejemplo1 <- temp_retiro |> ts_detrend(degree = 1, col_t = "fecha", col_X_t = "tmed")
+ejemplo2 <- temp_retiro |> ts_detrend(k = 365, tipo_trend_estim = "MA", col_t = "fecha", col_X_t = "tmed")
+```
+
+
+
+# Clase 8: [practicar con funciones]{.flow} {#clase-8}
+
+[**Diseño de funciones para nuestra descomposición**]{style="color:#444442;"}
+
+* [💻 Ejercicios](#tu-turno-8-1)
+* [📆 Planificación](#planificacion)
+
+
+---
+
+## 💻 Tu turno {#tu-turno-8-1}
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+💻 Diseña una función `ts_deseason()` que, dada una serie cualquiera y un periodo $s$, nos devuelva una nueva columna con los coeficientes estacionales estimados (con el método visto anteriormente) y una nueva columna con la serie desestacionalizada. Vas a necesitar darle
+como argumento no solo el nombre de las columnas donde esté $t$ y $Y_t$ sino como se llamará la variable de grupo que debes crear dentro usando $s$.
+
+```{r}
+ts_deseason <- function(datos, s, col_group, col_t = "t", col_Y_t = "Y_t") {
+  
+  # primero renombramos como siempre y ordenamos
+  estim <-
+    datos |>
+    rename(t = col_t, Y_t = col_Y_t) |> 
+    arrange(t)
+  
+  # Contruimos variable de grupo
+  estim <- 
+    estim |>
+    rowid_to_column(var = "id") |>
+    mutate(!!col_group := ((id - 1) %% s) + 1) |> 
+    select(-id)
+
+  # Estimamos la estacionacionalidad
+  estim_season <-
+    estim |>
+    summarise("season_coef" = mean(Y_t, na.rm = TRUE), .by = col_group) |>
+    mutate("estim_season" = season_coef - mean(season_coef, na.rm = TRUE))
+  
+  # Lo únimos a los datos
+  estim <- 
+    estim |> 
+    left_join(estim_season, by = col_group) |> 
+    mutate("tipo_estim_season" = "clasica",
+           "deseason" = Y_t - estim_season) 
+  
+  return(estim)
+}
+```
+
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+💻 Tomando los datos de retiro: a) aplica la función `ts_detrend()` de manera que la tendencia sea estimada con $MA(k = 365)$; b) a esa tabla aplícale `ts_deseason()` para estimar $S_t$, donde la variable de grupo se llama `"mes_dia"`; c) tras acabar renombra `Y_t` como `detrend`
+
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+
+```{r}
+#| code-fold: true
+estim_retiro <-
+  temp_retiro |>
+  ts_detrend(k = 365, tipo_trend_estim = "MA", col_t = "fecha", col_X_t = "tmed") |> 
+  mutate("mes_dia" = paste0(day(t), "-", month(t))) |>
+  ts_deseason(s = 365, col_group = "mes_dia", col_Y_t = "detrend") |> 
+  rename(detrend = Y_t)
+```
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+💻 Con `estim_retiro` del ejercicio anterior, calcula una última columna que sea la estimación total de la serie `estim_X_t` (estimación de la tendencia + estimación de la estacionalidad). Tras ello pivota como consideres para poder dibujar en la misma gráfica la serie real y la estimación
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+```{r}
+estim_retiro |> 
+  mutate("estim_X_t" = estim_trend + estim_season) |> 
+  # solo queremos dos de las curvas
+  select(t, X_t, estim_X_t) |> 
+  pivot_longer(cols = -t, names_to = "serie", values_to = "X_t") |>
+  ggplot() +
+  geom_line(aes(x = t, y = X_t, color = serie, alpha = serie)) +
+  ggthemes::scale_color_colorblind() +
+  scale_alpha_manual(values = c(0.9, 0.35)) +
+  theme_minimal() + 
+  labs(x = "fecha", y = "Temperatura (ºC)",
+       title = "Estimación decomposición clásica",
+       subtitle = "Tendencia estimada con MA(k = 365)")
+```
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+💻 Con `estim_retiro` del ejercicio 2, calcula una última columna que sea la estimación total de la serie `estim_X_t` (estimación de la tendencia + estimación de la estacionalidad) pero ahora selecciona y pivota como consideres para poder hacer luego una visualización de 6 gráficas (por separado pero en el mismo plot): i) la serie real, ii) la estimación de la tendencia, iii) la estimación de la estacionalidad, iv) la serie sin tendencia, v) la serie sin tendencia ni estacionalidad, vi) la estimación
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+
+```{r}
+estim_retiro |> 
+  mutate("estim_X_t" = estim_trend + estim_season) |> 
+  # solo queremos dos de las curvas
+  select(t, X_t, estim_trend, detrend, estim_season, deseason, estim_X_t) |> 
+  pivot_longer(cols = -t, names_to = "serie", values_to = "X_t") |>
+  ggplot() +
+  geom_line(aes(x = t, y = X_t, color = serie)) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~serie, scales = "free_y") +
+  theme_minimal() + 
+  labs(x = "fecha", y = "Temperatura (ºC)",
+       title = "Estimación decomposición clásica",
+       subtitle = "Tendencia estimada con MA(k = 365)")
+```
+
+---
+
+## 💻 Tu turno 
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+💻 Repite los ejercicios anteriores pero haciendo una pequeña modificación en la función que estima la estacionalidad, permitiendo que pueda estimarla de manera clásica o de manera sinuosoidal $\widehat{S}_t = \sin(2 \pi t/s)$.
+
+
+# Clase 9: [métricas de error]{.flow} {#clase-9}
 
 [**Calibrando nuestra estimación: train/validación y errores**]{style="color:#444442;"}
 
