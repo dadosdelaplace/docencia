@@ -1218,10 +1218,113 @@ starwars |>
 
 ## 🐣 Case study I: CIS survey (feminism)
 
+pending to submit
 
 ## 🐣 Caso study II: Taylor Swift
 
-pendiente de añadir: repetir entrega previa con tidyverse
+Let's go back to the analysis of Taylor Swift songs we did in the previous installment.
+
+
+```{r}
+library(taylor)
+taylor_album_songs
+```
+
+The difference is that now we will try to do everything from a **tidyverse view instead of R base** (it is interesting that you try to translate from one to the other to know how to master both views)
+
+### Question 1
+
+> How many songs are stored? How many features are stored for each song?
+
+```{r}
+#| code-fold: true
+#| eval: false
+taylor_album_songs |> nrow()
+taylor_album_songs |> ncol()
+```
+
+Note that now we separate data vs action: data + pipe + action.
+
+### Question 2
+
+> Get the name of the (unique) albums contained in the dataset. How many are there (do not count them “by hand”)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+taylor_album_songs |> distinct(album_name)
+taylor_album_songs |>
+  distinct(album_name) |>
+  nrow()
+```
+
+### Question 3
+
+> In how many songs is there a collaboration with another artist (if there is a collaboration, its name is stored in `featuring`)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# number of unique collaborations
+taylor_album_songs |>
+  drop_na(featuring) |>
+  nrow()
+
+# number of unique collaborators
+taylor_album_songs |>
+  drop_na(featuring) |> 
+  summarise(n_collabs = n_distinct(featuring))
+```
+
+### Question 4
+
+> Create a new `tibble` with only the variables `album_name`, `album_release`, `track_name`, `featuring` and `duration_ms`. After that it sorts by date from newest to oldest.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Write the code you consider
+nuevo_tb <-
+  taylor_album_songs |>
+  select(album_name, album_release, track_name, featuring, duration_ms)
+nuevo_tb |> 
+  arrange(desc(album_release))
+```
+
+
+### Question 5
+
+> Add to the previous dataset two new variables with the month and year of release (use the `album_release` variable). Think about how you could determine in which month it has released more albums
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Write the code you consider
+library(lubridate)
+nuevo_tb <-
+  nuevo_tb |> 
+  mutate(month = month(album_release),
+         year = year(album_release)) 
+nuevo_tb |> 
+  count(month, sort = TRUE)
+```
+
+### Question 6
+
+> Get the average duration of the songs in minutes (variable `duration_ms` in milliseconds).
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+nuevo_tb |>
+  drop_na(duration_ms) |> 
+  summarise(avg_dur = mean(duration_ms/60000))
+```
+
 
 
 ## 🐣 Caso study III: The Lord of the Rings
@@ -1977,3 +2080,376 @@ datos |>
 
 
 ## 🐣 Case study III: speechs
+
+Although we cannot do arithmetic operations with them, some [**operations we can do with the text strings**]{.hl-yellow} will be important. For that we will use the `{stringr}` package (within the same `{lubridate}` “universe of packages”).
+
+```{r}
+library(stringr)
+```
+
+
+### Basic utilities
+
+#### Length
+
+The most obvious is a function that, given a string, gives us the [**length**]{.hl-yellow}. For this we can use the function `str_length()`.
+
+```{r}
+str_length("abc")
+```
+
+It is important to note that it counts both [**numbers and spaces**]{.hl-yellow}, as well as **non-alphanumeric** characters. 
+
+```{r}
+str_length("abc 123 *")
+```
+
+Also if the text is absent it returns absent (remember: `NA` is absent, `“NA”` is a string of text more) 
+
+```{r}
+str_length(NA)
+```
+
+&nbsp;
+
+The [**package functions are prepared to be vectorized**]{.hl-yellow} which means that if we apply a function to a vector of two strings it applies it to both in the same way.
+
+```{r}
+str_length(c("abc", "defghi"))
+```
+
+#### Order
+
+Another very common is [**order text strings (in alphabetical order)**]{.hl-yellow}. For this we can use the `str_order()` function, distinguishing `..._sort()` and `..._order()` as with numbers.
+
+```{r}
+x <- c("y", "i", "k")
+str_order(x)
+str_sort(x)
+```
+
+
+### Handling
+
+#### Extract sub strings
+
+* [**Extract sub strings**]{.hl-yellow}: given a text string, `str_sub(text, start = ..., end = ...)` extracts the substring from the `start` position to `end` (if negative it starts counting down).
+
+```{r}
+str_sub("abcd efg", start = 4, end = 6)
+str_sub("abcd efg", start = 5)
+str_sub("abcd efg", start = 4, end = -2)
+```
+
+
+
+* [**Extraer subcadenas**]{.hl-yellow}: the `str_sub()` function allows you to apply it vectorially to multiple strings, and even use it to assign values.
+
+```{r}
+x <- c("abcdef", "ghifjk")
+str_sub(x, start = 3, end = -2)
+str_sub(x, start = -1, end = -1)
+
+str_sub(x, start = 2, end = 2) <- "*"
+```
+
+#### Duplicate strings
+
+* [**Duplicate strings**]{.hl-yellow}: with `str_dup(..., times = ...)`, given a string (or several strings), we can repeat a string `times` times.
+
+```{r}
+str_dup("abc", times = 3)
+
+x <- c("abcdef", "ghifjk")
+str_dup(x, times = c(2, 5))
+```
+
+#### Concatenate strings
+
+* [**Concatenate strings**]{.hl-yellow}: with `str_c` we can concatenate different text strings (with `sep = ...` we indicate the character that will be used as separator)
+
+```{r}
+str_c("Morning", "My name is Javier")
+str_c("Morning", "My name is Javier", sep = ". ")
+```
+
+
+#### Lower/upper case
+
+* [**Lower/upper case**]{.hl-yellow}: with `str_to_...()` we can convert texts to uppercase (`..._upper`), to lowercase (`..._lower`) and to title (`..._title`, first letter of each word in uppercase).
+
+```{r}
+str_to_upper("My name is Javi")
+str_to_lower("My name is Javi")
+str_to_title("My name is Javi")
+```
+
+#### Replace
+
+* [**Replace**]{.hl-yellow}: `str_replace()` searches for a given pattern in a text string and, if found, replaces it with a replacement string.
+
+```{r}
+str_replace(c("javi", "sandra", "carlos"), pattern = "i", replacement = "*")
+```
+
+. . .
+
+With `str_replace_all()` we replace all matches (by default only the first one is replaced).
+
+```{r}
+str_replace(c("javi", "sandra", "carlos"), pattern = "a", replacement = "*")
+str_replace_all(c("javi", "sandra", "carlos"), pattern = "a", replacement = "*")
+```
+
+
+### Blank spaces
+
+#### Filling spaces
+
+* [**Filling**]{.hl-yellow}: the `str_pad()` function fills a string with spaces (at the beginning by default) so that it has the specified width. With `side = “both”` as an extra argument it adds them on both sides. With `side = “right”` it adds them at the end. With `pad = ...` we can decide if we want to fill with another type of character (space by default).
+
+```{r}
+str_pad("abc", width = 6)
+str_pad("abc", 12, side = "both")
+str_pad("abc", 6, side = "right", pad = "*")
+```
+
+. . .
+
+If `width` is less than the length of the string, it does nothing.
+
+```{r}
+str_pad("abc",  width = 2)
+```
+
+#### Remove/trim blank spaces
+
+* [**Remove blank spaces**]{.hl-yellow}: with `str_trim()` we can remove whitespace at the beginning and at the end of the string. If we add `side = ...` we can change whether we want to remove them only at the end or at the beginning (by default, both). With `str_squish()` we change any succession of whitespace in the middle of the text to just one (and remove at the beginning and end).
+
+```{r}
+str_trim(" abcde   fghi ")
+str_trim(" abcde   ")
+str_trim(" abcde   ", side = "left")
+str_squish(" abcde   fghi ")
+```
+
+
+
+### Patterns
+
+#### Detect. Regular expr.
+
+* [**Detect**]{.hl-yellow}: with `str_detect()` we can detect whether or not a text string contains a sequence of characters
+
+```{r}
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "javi")
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "reyes")
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "carlos")
+```
+
+
+
+* [**Regular expr**]{.hl-yellow}: not only will we be able to detect simple patterns, but we can also make use of what are known as **regular expressions**, indicating for example that we want to locate any pattern that is at least a letter
+
+```{r}
+str_detect(c("a", "ab", "abc", "abcd"), pattern = "[a-z]")
+```
+
+. . .
+
+If we indicate `{n}` after the square brackets, we can detect those strings with n consecutive letters.
+
+```{r}
+str_detect(c("a", "ab", "abc", "abcd"), pattern = "[a-z]{3}")
+```
+
+
+
+* [**Regular expr**]{.hl-yellow}: a good command of these expressions can be very useful, for example, to detect correct formats in ID cards or telephone numbers (from Madrid, for example).
+
+We will consider that a correct DNI format is one followed by 8 numbers (`[0-9]{8}`) followed directly by a capital letter (`[A-Z]`).
+
+```{r}
+str_detect(c("5055A198-W", "50508040W", "5050505W", "50508040-W"),
+           pattern = "[0-9]{8}[A-Z]")
+```
+
+. . .
+
+We can search for different patterns at the same time by concatenating them with a `|`.
+
+```{r}
+str_detect(c("5055A198-W", "50508040W", "5050505W", "50508040-W"),
+           pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+```
+
+
+#### Count
+
+* [**Count**]{.hl-yellow}: with `str_count()` we can count how many times the same pattern appears
+
+```{r}
+str_count(c("abcd defg", "ab defg", "ab cd"), pattern = "[a-z]{4}")
+```
+
+#### Locate positions
+
+* [**Locate positions**]{.hl-yellow}: `str_locate()` allows us to locate the first position where a pattern occurs. With `str_locate_all()` we get all of them.
+
+```{r}
+str_locate(c("abcde abcd", "cba", "*a*"), pattern = "a")
+str_locate_all(c("abcde abcd", "cba", "*a*"), pattern = "a")
+```
+
+
+#### Extract patterns
+
+* [**Extract patterns**]{.hl-yellow}: with `str_extract()` we can extract patterns (with `str_extract_all()` all of them) from a text string.
+
+```{r}
+str_extract(c("DNI: 5050W", "DNI: 50558040W, DNI: 50558080-W", "DNI: 50558080-W"),
+            pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+str_extract_all(c("DNI: 5050W", "DNI: 50558040W, DNI: 50558080-W", "DNI: 50558080-W"),
+            pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+```
+
+#### Split strings
+
+* [**Split**]{.hl-yellow}: with `str_split()` we can locate a pattern and split the text string whenever it appears (with `str_split_fixed()` we can split it into a specific number of pieces).
+
+```{r}
+str_split(c("a-b-c", "ab-c-d-e"), pattern = "-")
+str_split_fixed(c("a-b-c", "ab-c-d-e"), pattern = "-", n = 2)
+```
+. . .
+
+If we use `boundary()` as a pattern we can split based on characters, phrases, words, etc.
+
+```{r}
+x <- "Esto es una frase. Y esto otra."
+str_split(x, boundary("word"))
+str_split(x, boundary("sentence"))
+```
+
+
+
+### 💻 Case study III: speechs
+
+[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+The dataset will be `discursos` (speeches, extracted from <https://github.com/lirondos/discursos-de-navidad>) where are stored the christmas speeches of the heads of state of Spain from 1946 to 2021 (in dictatorship and in democracy)
+
+```{r}
+load(file = "./datos/discursos.RData")
+# discursos = speeches in spanish
+```
+
+All solutions are designed in R base. Try yourself to "translate" to tidyverse.
+
+#### Question 1
+
+> Converts all speech to lowercase.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Convert to lowercase
+discursos$texto <- str_to_lower(discursos$texto)
+```
+
+
+#### Question 2
+
+>  Remove punctuation marks such as “:”, “,”, “.”, “;”, “¡”, “!”, “¿” and “?”. Then remove leading, trailing and middle spaces if they exist, leaving only one of them.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Remove punctuation marks
+discursos$texto <-
+  str_remove_all(discursos$texto, pattern = "\\:|\\,|\\.|\\;|\\¡|\\!|\\¿|\\?")
+
+# Then we eliminate spaces at the front, at the back and in the middle, leaving just one space
+discursos$texto <- str_squish(discursos$texto)
+```
+
+#### Question 3
+
+>  Create a new variable `long` with the length of each speech.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# new variable
+discursos$long <- str_length(discursos$texto)
+```
+
+#### Question 4
+
+>  Add a new variable `n_words` with the number of words of each speech. Hint: if after dividing each speech into words you use `length()` it will surely return 76 since it has stored it in a data type called list. To calculate the length of each of the 76 elements of the list we will use `lengths()`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+list_object <- list("a" = 1:2, "b" = 1:3, "c" = 1:4)
+length(list_object)
+lengths(list_object)
+
+# We divide and apply lengths
+discursos$n_words <- lengths(str_split(discursos$texto, boundary("word")))
+```
+
+#### Question 5
+
+>  Determine the 5 years with the greatest length, and the 5 years with the least number of words.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# 5 years with the longest length (we use order to obtain indexes)
+discursos$year[order(discursos$long, decreasing = TRUE)[1:5]]
+
+# 5 years with fewer words
+discursos$year[order(discursos$n_words)[1:5]]
+```
+
+#### Question 6
+
+>  It incorporates a new variable called `spain` that calculates the number of times that “españoles”, “españolas” or “españa” is said in the speech. Determine the 5 years where these words are least mentioned.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+discursos$spain <- str_count(discursos$texto, pattern = "españoles|españolas|españa")
+discursos$year[order(discursos$spain)[1:5]]
+```
+
+#### Question 7
+
+>  Of the 76 years calculate the number of speeches in which the words “woman” or “women” are mentioned more than the words “man” or “men”.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+sum(str_count(discursos$texto, pattern = "mujer|mujeres") >
+      str_count(discursos$texto, pattern = "hombre|hombres"))
+```
+
+#### Question 8
+
+>  Detect the speeches where “Catalonia”, “Catalans”, “Catalan” or “Catalonian” appear and keep from the database only those that comply with it
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+discursos[str_detect(discursos$texto, pattern = "cataluña|catalanes|catalán|catalanas"), ]
+```
+
+

@@ -3078,7 +3078,7 @@ vertical-align: -.125em;
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Estructuras de control: bucles y estructuras condicionales</h1>
-<p class="subtitle lead">Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)</p>
+<p class="subtitle lead">Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)</p>
 </div>
 
 
@@ -3547,12 +3547,12 @@ nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.886    2.313958    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1212.124 1223.522 1296.141692 1230.246
-        uq      max neval
-    2.0705   28.659   500
- 1240.4755 5246.688   500</code></pre>
+                                    expr      min       lq       mean   median
+                                y &lt;- x^2    1.681    1.886    2.01351    1.927
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1211.099 1223.194 1299.42095 1230.758
+       uq      max neval
+    2.050    9.307   500
+ 1244.842 5295.642   500</code></pre>
 </div>
 </div>
 </section>
@@ -3681,14 +3681,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]       [,2]        [,3]
-[1,] -0.9713541  0.9045215  0.57244317
-[2,] -0.8854062  1.3412778  0.10011051
-[3,] -0.4808853 -0.9005527  0.48856824
-[4,] -1.3105712 -0.5672936 -0.28955007
-[5,]  1.2362543 -0.9853841 -0.09472397
-[6,]  0.6538977 -0.4637292 -0.26060214
-[7,] -0.3484754 -0.9135939 -0.97684248</code></pre>
+<pre><code>            [,1]       [,2]       [,3]
+[1,] -0.26373776  0.1599125 -0.5156391
+[2,] -2.28921509  0.9363799 -0.2805221
+[3,] -0.27959798 -0.2047103 -0.1111351
+[4,] -0.03947779  0.1532976 -0.1525760
+[5,]  0.82417967 -0.6353651 -1.7025843
+[6,]  0.33035682  1.1016968  2.1577762
+[7,]  2.22307856  0.9371033 -1.2765699</code></pre>
 </div>
 </div>
 </section>
@@ -3949,14 +3949,14 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 6 3</code></pre>
+<pre><code>[1] 1 4 5</code></pre>
 </div>
 </div>
 <p>Al ser aleatorio, cada vez que lo ejecutas saldrá algo distinto</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6 1 3</code></pre>
+<pre><code>[1] 3 6 5</code></pre>
 </div>
 </div>
 <p>¿Y si queremos tirar 10 veces?</p>
@@ -3970,7 +3970,7 @@ Cuidado
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5 6 3 6 1 4 6 5 1 3</code></pre>
+<pre><code> [1] 6 4 1 6 5 6 3 3 1 4</code></pre>
 </div>
 </div>
 <section id="pregunta-4.1" class="level4" data-number="3.4.1">

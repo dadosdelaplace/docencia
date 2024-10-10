@@ -1,0 +1,592 @@
+---
+title: "Tidydata"
+subtitle: "Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+
+## Tidydata
+
+### R base vs tidyverse
+
+Hasta ahora todo lo que hemos hecho en `R` lo hemos realizado en el paradigma de programación conocido como [**R base**]{.hl-yellow}. Y es que cuando `R` nació como lenguaje, muchos de los que programaban en él imitaron formas y metodologías heredadas de otros lenguajes, basado en el uso de
+
+-   Bucles [**for**]{.hl-yellow}
+
+-   Bucles [**while**]{.hl-yellow}
+
+-   Estructuras [**if-else**]{.hl-yellow}
+
+
+Y aunque conocer dichas estructuras puede sernos en algunos casos interesantes, en la [**mayoría de ocasiones han quedado caducas y vamos a poder evitarlas**]{.hl-red} (en especial los bucles) ya que `R` está especialmente [**diseñado para trabajar de manera funcional**]{.hl-yellow} (en lugar de elemento a elemento).
+
+Profundizaremos en las diferencias más adelante cuando tengamos algo más de conocimiento.
+
+
+### ¿Qué es tidyverse?
+
+::: columns
+::: {.column width="50%"}
+![](img/tidyverrse_universe.jpg)
+:::
+
+::: {.column width="50%"}
+![](img/flow_tidyverse.jpg)
+:::
+:::
+
+En ese contexto de programación funcional, hace una década nacía `{tidyverse}`, un [**«universo» de paquetes**]{.hl-yellow} para garantizar un flujo de trabajo eficiente, coherente y lexicográficamente sencillo de entender, basado en la idea de que [**nuestros datos están limpios y ordenados (tidy)**]{.hl-purple}
+
+-   `{tibble}`: optimizando data.frame
+-   `{tidyr}`: limpieza de datos
+-   `{readr}`: carga datos rectangulares (.csv), `{readxl}` para importar archivos .xls y .xlsx
+-   `{dplyr}`: gramática para depurar
+-   `{stringr}`: manejo de textos
+-   `{purrr}`: manejo de listas
+-   `{forcats}`: manejo de cualitativas
+-   `{ggplot2}`: visualización de datos
+-   `{lubridate}` manejo de fechas
+-   `{rvest}`: web scraping
+-   `{tidymodels}`: modelización/predicción
+
+
+Todos estos paquetes descansan sobre una idea: hay **muchas formas de trabajar de manera sucia y desordenada** pero solo una de trabajar de manera estandarizada.
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way (Hadley Wickham, Chief Scientist en RStudio)
+
+
+
+::: {style="font-size:120px; text-align: center; color:#F8DF58;"}
+<b>TIDY</b><b>[VERSE</b>]{style="color:#CAB0EE;"}
+:::
+
+El [**universo**]{.hl-purple} de paquetes `{tidyverse}` se basa en la idea introducida por **Hadley Wickham** (el Dios al que rezamos) de [**estandarizar**]{.hl-yellow} el formato de los datos para
+
+::: incremental
+-   [**sistematizar**]{.hl-green} la depuración
+-   hacer más [**sencillo**]{.hl-green} su manipulación.
+-   código [**legible**]{.hl-green}
+:::
+
+
+### Mandamientos del tidy data
+
+Lo primero por tanto será entender qué son los [**conjuntos tidydata**]{.hl-yellow} ya que todo `{tidyverse}` se basa en que los datos están estandarizados.
+
+1.  Cada [**variable**]{.hl-yellow} en una [**única columna**]{.hl-purple}
+
+2.  Cada [**individuo**]{.hl-yellow} en una [**fila diferente**]{.hl-purple}
+
+3.  Cada [**celda**]{.hl-yellow} con un [**único valor**]{.hl-purple}
+
+4.  Cada [**dataset**]{.hl-yellow} en un [**tibble**]{.hl-purple}
+
+5.  Si queremos cruzar [**múltiples tablas**]{.hl-yellow} debemos tener una [**columna común**]{.hl-purple}
+
+![](img/tidy_def.jpg){width="160%"}
+
+
+En `{tidyverse}` será clave el [**operador pipe (tubería)**]{.hl-yellow} definido como `|>` ([**ctrl+shift+M**]{.hl-purple}): será una [**tubería que recorre los datos**]{.hl-yellow} y los transforma.
+
+¿Para qué sirve? En R base (hasta ahora) si queríamos aplicar tres funciones `first()`, `second()` y `third()` en orden, sería (lo hemos visto un poco en el caso práctico de funciones si lo has hecho 0_0)
+
+```{r}
+#| eval: false
+third(second(first(datos)))
+```
+
+En `{tidyverse}` podremos [**leer de izquierda a derecha**]{.hl-yellow} y separar los datos de las acciones
+
+```{r}
+#| eval: false
+datos |> first() |> second() |> third()
+```
+
+
+::: callout-caution
+## Apunte importante
+
+Desde la versión 4.1.0 de `R` disponemos de `|>`, un pipe **nativo** disponible [**fuera de tidyverse**]{.hl-purple}, sustituyendo al [**antiguo pipe**]{.hl-red} `%>%` que dependía del paquete `{magrittr}` (bastante problemático).
+:::
+
+
+La principal ventaja es que el [**código sea muy legible (casi literal)**]{.hl-yellow} pudiendo hacer grandes operaciones con los datos con apenas código.
+
+
+```{r}
+#| eval: false
+datos |>
+  limpio(...) |>
+  filtro(...) |>
+  selecciono(...) |>
+  ordeno(...) |>
+  modifico(...) |>
+  renombro(...) |>
+  agrupo(...) |>
+  cuento(...) |>
+  resumo(...) |>
+  pinto(...)
+```
+
+
+### Datos SUCIOS: messy data
+
+¿Pero qué aspecto tienen los [**datos no tidy**]{.hl-yellow}? Vamos a cargar la tabla `table4a` del paquete `{tidyr}` (ya lo tenemos cargado del entorno tidyverse).
+
+
+```{r}
+library(tidyr)
+table4a
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+
+#### Pivotar: pivot_longer()
+
+
+```{r}
+table4a
+```
+
+❎ Cada [**fila representa dos observaciones**]{.hl-red} (1999 y 2000) → las columnas `1999` y `2000` en realidad deberían ser en sí [**valores de una variable**]{.hl-yellow} y no nombres de columnas.
+
+&nbsp;
+
+Incluiremos una [**nueva columna**]{.hl-yellow} que nos guarde el año y otra que guarde el valor de la variable de interés en cada uno de esos años. Y lo haremos con la función `pivot_longer()`: [**pivotaremos la tabla**]{.hl-yellow} a formato long:
+
+```{r}
+table4a |> 
+  pivot_longer(cols = c("1999", "2000"), names_to = "year", values_to = "cases")
+```
+
+![](img/table4a.jpg)
+
+-   `cols`: [**nombre de las variables a pivotar**]{.hl-yellow}
+-   `names_to`: nombre de la nueva variable a la quemandamos la [**cabecera**]{.hl-yellow} de la tabla (los nombres).
+-   `values_to`: nombre de la nueva variable a la que vamos a mandar los [**datos**]{.hl-yellow}.
+
+#### Pivotar: pivot_wider()
+
+Veamos otro ejemplo con la tabla `table2`
+
+
+```{r}
+table2
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+❎ Cada [**observación está dividido en dos filas**]{.hl-red} → los [**registros con el mismo año deberían ser el mismo**]{.hl-yellow}
+
+
+Lo que haremos será lo opuesto: con `pivot_wider()` [**ensancharemos la tabla**]{.hl-yellow}
+
+```{r}
+table2 |>  pivot_wider(names_from = type, values_from = count)
+```
+
+#### Separar: separate()
+
+Veamos otro ejemplo con la tabla `table3`
+
+
+```{r}
+table3
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+❎ Cada [**celda contiene varios valores**]{.hl-red}
+
+Lo que haremos será hacer uso de la función `separate()` para mandar [**separar cada valor**]{.hl-yellow} a una columna diferente.
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"))
+```
+
+
+
+Fíjate que los datos, aunque los ha separado, [**los ha mantenido como texto**]{.hl-red} cuando en realidad deberían ser variables numéricas. Para ello podemos añadir el argumento opcional `convert = TRUE`
+
+```{r}
+table3 |> separate(rate, into = c("cases", "pop"), convert = TRUE)
+```
+
+#### Unir: unite()
+
+Veamos el último ejemplo con la tabla `table5`
+
+
+```{r}
+table5
+```
+
+
+[**¿Qué puede estar fallando?**]{.hl-red}
+
+
+❎ Tenemos [**mismos valores divididos en dos columnas**]{.hl-red}
+
+Usaremos `unite()` para [**unir los valores**]{.hl-yellow} de siglo y año en una misma columna
+
+```{r}
+table5 |> unite(col = year_completo, century, year, sep = "")
+```
+
+### Ejemplo real: relig_income
+
+Vamos a realizar un ejemplo juntos con la tabla `relig_income` del paquete `{tidyr}`. Como se indica en la ayuda `? relig_income`, la tabla representa la cantidad de personas que hay en cada tramo de ingresos anuales (20k = 20 000$) y en cada religión.
+
+```{r}
+relig_income
+```
+
+[**¿Es tidydata?**]{.hl-yellow} 
+
+&nbsp;
+
+No lo es ya que en realidad [**solo deberíamos tener una variable de ingresos**]{.hl-red} y la tenemos dividida en 11: todas ellas es la misma variable solo que adopta un valor diferente.  [**¿Cómo convertirla a tidy data?**]{.hl-green}. La idea es [**pivotar todas las columnas de ingresos**]{.hl-yellow} para que acaben en una sola columna llamada `income`, y los valores (el número de personas) en otra llamada `people` (por ejemplo). La tabla la haremos más larga y menos ancha así que...
+
+```{r}
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people")
+relig_tidy 
+```
+
+&nbsp;
+
+Vamos a hilar más fino: ahora mismo en la variable `income` en realidad tenemos dos valores, el límite inferior y el superior de la renta. Vamos a [**separar dicha variable e ingresos**]{.hl-yellow} en dos, llamadas `income_inf` y `income_sup`
+
+
+```{r}
+relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-")
+```
+
+
+¿Está ya bien? Fíjate bien...
+
+&nbsp;
+
+Si te fijas la primera columna el `"$10k"` debería ser una cota superior, no inferior. ¿Cómo indicarle que separe bien ese caso? Le indicaremos que separe si encuentra `"-"` o `"<"` (usamos `|` para separar ambas opciones)
+
+```{r}
+relig_tidy <-
+  relig_tidy |>
+  # Separamos por -
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+```
+
+
+Piensa ahora como podemos [**convertir los límites de ingresos a numéricas (eliminando símbolos, letras, etc)**]{.hl-yellow}. Para ello usaremos el paquete `{stringr}` que hemos visto antes, en concreto la función `str_remove_all()` a la que le podemos pasar los caracteres que queremos eliminar (fíjate que `$` al ser un caracter reservado en `R` hay que indicárselo con `\\$`)
+
+```{r}
+library(stringr)
+relig_tidy$income_inf <-
+  str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <-
+  str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy
+```
+
+Fíjate que a veces tenemos `"Don't now/refused"`. ¿Qué deberíamos tener?
+
+&nbsp;
+
+Debería ser un [**dato ausente**]{.hl-yellow} así que usaremos `if_else()`: si contiene dicha frase, `NA`, en caso contrario su valor (consejo: `str_detect()` para detectar patrones en textos, y evitar tener que escribir toda la palabra sin errores)
+
+```{r}
+library(dplyr)
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused"), NA, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused"), NA, relig_tidy$income_sup)
+relig_tidy
+```
+
+En la primera línea, ese `""` también debería ser `NA``
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(relig_tidy$income_inf == "", NA, relig_tidy$income_inf)
+relig_tidy$income_suop <-
+  if_else(relig_tidy$income_sup == "", NA, relig_tidy$income_sup)
+```
+
+
+Además si te fijas los números son en realidad caracteres, así que vamos a [**convertirlos a números**]{.hl-yellow}
+
+```{r}
+relig_tidy$income_inf <- as.numeric(relig_tidy$income_inf)
+relig_tidy$income_sup <- as.numeric(relig_tidy$income_sup)
+relig_tidy
+```
+
+
+¿Se te ocurre alguna forma de **«cuantificar numéricamente»** los valores ausentes que tenemos en este caso? Si te fijas en realidad cuando hay ausente en el límite inferior en realidad podríamos poner un 0 (nadie puede ganar menos de eso) y cuando lo tenemos en el límite superior sería `Inf`
+
+```{r}
+relig_tidy$income_inf <-
+  if_else(is.na(relig_tidy$income_inf), 0, relig_tidy$income_inf)
+relig_tidy$income_sup <-
+  if_else(is.na(relig_tidy$income_sup), Inf, relig_tidy$income_sup)
+relig_tidy
+```
+
+
+Aunque nos haya llevado un rato este es el **código completo resumido**
+
+```{r}
+#| eval: false
+relig_tidy <-
+  relig_income |>
+  pivot_longer(cols = "<$10k":"Don't know/refused", names_to = "income",
+               values_to = "people") |>
+  separate(income, into = c("income_inf", "income_sup"), sep = "-|<")
+
+relig_tidy$income_inf <- str_remove_all(relig_tidy$income_inf, "\\$|>|k")
+relig_tidy$income_sup <- str_remove_all(relig_tidy$income_sup, "\\$|>|k")
+
+relig_tidy$income_inf <-
+  if_else(str_detect(relig_tidy$income_inf, "refused") |
+            relig_tidy$income_inf == "", 0, as.numeric(relig_tidy$income_inf))
+relig_tidy$income_sup <-
+  if_else(str_detect(relig_tidy$income_sup, "refused") |
+            relig_tidy$income_sup == "", Inf, as.numeric(relig_tidy$income_sup))
+```
+
+
+¿Por qué era [**importante tenerlo en tidydata**]{.hl-yellow}? Lo veremos más adelante al visualizar los datos pero esto ya nos permite realizar filtros muy rápidos con muy poco código.
+
+Por ejemplo: ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos?
+
+```{r}
+# una línea de código
+sum(relig_tidy$people[relig_tidy$religion == "Agnostic" & relig_tidy$income_inf >= 30])
+```
+
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Usa el dataset original `relig_income` y trata de responder a la última pregunta:  ¿cuántas personas agnósticas con ingresos superiores (o iguales) a 30 tenemos? Compara el código a realizar cuando tenemos tidydata a cuando no. ¿Cuál es más legible si no supieses `R`? ¿Cuál tiene mayor probabilidad de error?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+sum(relig_income[relig_income$religion == "Agnostic",
+             c("$30-40k", "$40-50k", "$50-75k", "$75-100k", "$100-150k", ">150k")])
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Usando `relig_tidy` determina quién tiene más ingresos medios, ¿católicos (`Catholic`) o agnósticos (`Agnostic`)? Crea antes una variable `avg_income` (ingresos medios por intervalo): si hay 5 personas entre 20 y 30, y 3 personas entre 30 y 50, la media sería $(25*5 + 40*3)/8$ (si es `Inf` por arriba, `NA`)
+
+```{r}
+#| code-fold: true
+#| eval: false
+relig_tidy$avg_income <- 
+  if_else(is.infinite(relig_tidy$income_sup), NA, (relig_tidy$income_sup + relig_tidy$income_inf)/2)
+
+# Agnosticos vs catolicos
+sum((relig_tidy$avg_income[relig_tidy$religion == "Agnostic"] * relig_tidy$people[relig_tidy$religion == "Agnostic"]), na.rm = TRUE) /
+  sum(relig_tidy$people[relig_tidy$religion == "Agnostic"], na.rm = TRUE)
+
+sum((relig_tidy$avg_income[relig_tidy$religion == "Catholic"] * relig_tidy$people[relig_tidy$religion == "Catholic"]), na.rm = TRUE) /
+  sum(relig_tidy$people[relig_tidy$religion == "Catholic"], na.rm = TRUE)
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Si debemos elegir budismo (`Buddhist`) e hinduismo (`Hindu`), ¿cuál de las dos es la religión mayoritaria entre los que ganan más de 50 000$ anuales?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+greatest_income <-
+  relig_tidy[relig_tidy$income_inf >= 50 & relig_tidy$religion %in% c("Buddhist", "Hindu"), ]
+
+sum(greatest_income$people[greatest_income$religion == "Buddhist"], na.rm = TRUE)
+sum(greatest_income$people[greatest_income$religion == "Hindu"], na.rm = TRUE)
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Echa un vistazo a la tabla `table4b` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table4b |>
+  pivot_longer(cols = "1999":"2000", names_to = "year",
+               values_to = "cases")
+```
+
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Echa un vistazo a la tabla `billboard` del paquete `{tidyr}`. ¿Es tidydata? En caso negativo, ¿qué falla? ¿Cómo convertirla a tidy data en caso de que no lo sea ya?
+
+```{r}
+#| code-fold: true
+#| eval: false
+billboard |>
+  pivot_longer(cols = "wk1":"wk76",
+               names_to = "week",
+               names_prefix = "wk",
+               values_to = "position",
+               values_drop_na = TRUE)
+```
+
+:::
+
+
+## 🐣 Caso práctico: análisis de datos de la OMS
+
+En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud - OMS)
+
+```{r}
+library(tidyr)
+who2
+```
+
+Échale un vistazo y piensa qué cosas te podría pedir para convertirlo a tidydata.
+
+### Pregunta 1
+
+> ¿Qué significan los datos? ¿Cuántas variables y observaciones tenemos?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+library(tidyr)
+? who2
+```
+
+
+### Pregunta 2
+
+> ¿Es tidy data? ¿Por qué
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# No es tidy data porque en realidad todas las variable
+# a partir de year es lo mismo: casos de tuberculosis
+# Son todo casos, solo que en distintas edades o sexo o tipos
+# de diagnosis, pero la variable es "cases"
+```
+
+
+### Pregunta 3
+
+> Primer paso para tidy data: pivota la tabla (consejo: usa papel y boli para bocetar como debería quedar la base de datos) tal que exista una columna llamada `cases`
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_tidy <-
+  who2 |> 
+  # fíjate que en lugar de elegir las 56 columnas
+  # le decimos las que NO queremos pivotar
+  # los nombres de columnas los mandamos a "type" (tipo de caso)
+  pivot_longer(cols = -(country:year),
+               names_to = "type",
+               values_to = "cases")
+who_tidy 
+```
+
+
+### Pregunta 4
+
+> Si te fijas hay muchísimas filas que no tiene sentido mantener ya que ¡no tenemos casos! Investiga las opciones de `pivot_longer()` para ver como podemos directamente eliminarlas en el pivotaje
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_tidy <-
+  who2 |> 
+  # con values_drop_na = TRUE eliminamos los NA
+  pivot_longer(cols = -(country:year),
+               names_to = "type",
+               values_to = "cases",
+               values_drop_na = TRUE)
+who_tidy 
+```
+
+### Pregunta 5
+
+> Si te fijas ahora en type tenemos codificada la información como diagnosis_sexo_edad. ¿Cómo separarlo en 3 columnas? Investiga tanto `separate()` como las opciones de `pivot_longer()`
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# con separate
+who_tidy <-
+  who_tidy |> 
+  separate(col = "type", into = c("diagnosis", "sex", "age"))
+
+# con pivot_longer
+who_tidy <-
+  who2 |> 
+  pivot_longer(cols = -(country:year),
+               names_to = c("diagnosis", "sex", "age"),
+               values_to = "cases",
+               values_drop_na = TRUE,
+               names_sep = "_")
+who_tidy 
+```
+
+### Pregunta 6
+
+> Por último, separa en dos (age_inf, age_sup) el tramo etario (que sean números). Piensa cómo hacerlo ya que no siempre son 4 números
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Usamos separate y le indicamos las posiciones, pero desde atrás 
+# ya que siempre el límite superior es un número de 2 cifras
+# y usamos convert = TRUE para convertir a números
+who_tidy <-
+  who_tidy |> 
+  separate(col = "age", into = c("age_inf", "age_sup"),
+           sep = -2, convert = TRUE)
+```
+

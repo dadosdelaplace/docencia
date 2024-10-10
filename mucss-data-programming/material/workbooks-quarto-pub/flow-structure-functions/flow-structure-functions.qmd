@@ -616,7 +616,7 @@ while (count < 6) {
 
 
 
-## 🐣 Case study I: ...
+## 🐣 Case study I: simulation study
 
 
 To practice control structures we are going to perform a [**simulation exercise**]{.hl-yellow}
@@ -1448,3 +1448,113 @@ converter_temp_total(converter_temp_total(z, units_input = "fahr",
                      units_input = "kelvin",
                      units_output = "celsius")
 ```
+
+## 🐣 Case study III: Monty Hall problem 
+
+In `R` the function `sample(x = ..., size = ...)` will be very useful: from a collection of `x` elements, it selects a random `size` number of them. For example, if we want to simulate 3 times the throw of a die we have 6 possible elements (`x = 1:6`) and we select it 3 times (`size = 3`).
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+Since it is random, each time you run it, something different will come out.
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+What if we want to throw it 10 times?
+
+```{r}
+#| error: true
+sample(x = 1:6, size = 10)
+```
+
+Having only 6 possible elements and choosing 10, it cannot, so we have to indicate that we want a sample with replacement (as with the die, each face can be repeated when re-rolled).
+
+```{r}
+sample(x = 1:6, size = 10, replace = TRUE)
+```
+
+### Question 1
+
+> With the above, imagine that you are in a TV contest where you are given a choice of 3 doors: in one there is a millionaire prize and in the other 2 an oreo cookie. Design the simulation study with for loops to approximate the probability that you get the prize (obviously it has to give you approx 0.333333333). Perform the experiment for 10, 50 trials, 100 trials, 500 trials, 1000 trials, 10 000 trials and 25 000 trials (hint: you need a loop within a loop). What do you observe?
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(dplyr)
+
+# Possible doors
+doors <- c(1, 2, 3)
+
+# Possible trials
+trials <- c(10, 50, 100, 500, 1000, 10000, 25000)
+
+# For scenario, we define the number of times in which we win prize
+n_prizes <- rep(0, length(trials))
+
+# first loop: scenarios
+for (i in 1:length(trials)) {
+  
+  # second loop: for scenario, the number of trials
+  for (j in 1:trials[i]) {
+    
+    prize <- sample(x = doors, size = 1)
+    choice <- sample(x = doors, size = 1)
+
+    n_prizes[i] <- if_else(choice == prize, n_prizes[i] + 1, n_prizes[i])
+    
+  }
+  # in proportion
+  n_prizes[i] <- n_prizes[i] / trials[i]
+}
+n_prizes
+```
+
+### Question 2
+
+> What if, in each round, one of the non-winning doors that you have not chosen was opened for you, would you change doors or would you stay? Simulate both cases and find out which is the correct strategy (this problem is known as the Monty Hall problem and even appears in movies such as 21 Black Jack).
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+doors <- c(1, 2, 3)
+trials <- c(10, 50, 100, 500, 1000, 10000, 25000)
+n_prizes_nochange <- n_prizes_change <- rep(0, length(trials))
+
+for (i in 1:length(trials)) {
+  for (j in 1:trials[i]) {
+    
+    init_choice <- sample(x = doors, size = 1)
+    
+    prize <- sample(x = doors, size = 1)
+    
+    open_door <-
+      doors[doors != init_choice & doors != prize]
+    
+    if (length(open_door) > 1) {
+      
+      open_door <- sample(x = open_door, size = 1)
+    }
+      
+    n_prizes_nochange[i] <-
+      if_else(init_choice == prize, n_prizes_nochange[i] + 1,
+              n_prizes_nochange[i])
+
+    changed_door <- doors[doors != init_choice & doors != open_door]
+    n_prizes_change[i] <-
+      if_else(changed_door == prize, n_prizes_change[i] + 1,
+              n_prizes_change[i])
+    
+  }
+  n_prizes_nochange[i] <- n_prizes_nochange[i] / trials[i]
+  n_prizes_change[i] <- n_prizes_change[i] / trials[i]
+}
+n_prizes_nochange
+n_prizes_change
+```
+
+

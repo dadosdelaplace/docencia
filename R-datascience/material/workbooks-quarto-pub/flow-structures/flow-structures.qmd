@@ -1,6 +1,6 @@
 ---
 title: "Estructuras de control: bucles y estructuras condicionales"
-subtitle: "Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)"
+subtitle: "Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)"
 author: "Javier Álvarez Liébana"
 format:
   html:

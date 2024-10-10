@@ -3057,7 +3057,7 @@ vertical-align: -.125em;
   </ul></li>
   <li><a href="#its-your-turn-1" id="toc-its-your-turn-1" class="nav-link" data-scroll-target="#its-your-turn-1"><span class="header-section-number">1.4</span> 💻 It’s your turn</a></li>
   </ul></li>
-  <li><a href="#case-study-i" id="toc-case-study-i" class="nav-link" data-scroll-target="#case-study-i"><span class="header-section-number">2</span> 🐣 Case study I: …</a>
+  <li><a href="#case-study-i-simulation-study" id="toc-case-study-i-simulation-study" class="nav-link" data-scroll-target="#case-study-i-simulation-study"><span class="header-section-number">2</span> 🐣 Case study I: simulation study</a>
   <ul>
   <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1"><span class="header-section-number">2.1</span> Question 1</a></li>
   <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2"><span class="header-section-number">2.2</span> Question 2</a></li>
@@ -3080,6 +3080,11 @@ vertical-align: -.125em;
   <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4"><span class="header-section-number">4.4</span> Question 4</a></li>
   <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5"><span class="header-section-number">4.5</span> Question 5</a></li>
   <li><a href="#question-6" id="toc-question-6" class="nav-link" data-scroll-target="#question-6"><span class="header-section-number">4.6</span> Question 6</a></li>
+  </ul></li>
+  <li><a href="#case-study-iii-monty-hall-problem" id="toc-case-study-iii-monty-hall-problem" class="nav-link" data-scroll-target="#case-study-iii-monty-hall-problem"><span class="header-section-number">5</span> 🐣 Case study III: Monty Hall problem</a>
+  <ul>
+  <li><a href="#question-1-2" id="toc-question-1-2" class="nav-link" data-scroll-target="#question-1-2"><span class="header-section-number">5.1</span> Question 1</a></li>
+  <li><a href="#question-2-2" id="toc-question-2-2" class="nav-link" data-scroll-target="#question-2-2"><span class="header-section-number">5.2</span> Question 2</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3684,8 +3689,8 @@ Warning
 </div>
 </section>
 </section>
-<section id="case-study-i" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="case-study-i"><span class="header-section-number">2</span> 🐣 Case study I: …</h2>
+<section id="case-study-i-simulation-study" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="case-study-i-simulation-study"><span class="header-section-number">2</span> 🐣 Case study I: simulation study</h2>
 <p>To practice control structures we are going to perform a <span class="hl-yellow"><strong>simulation exercise</strong></span></p>
 <section id="question-1" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="question-1"><span class="header-section-number">2.1</span> Question 1</h3>
@@ -4527,6 +4532,120 @@ Tip
 <span id="cb130-70"><a href="#cb130-70" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">units_output =</span> <span class="st">&quot;kelvin&quot;</span>),</span>
 <span id="cb130-71"><a href="#cb130-71" aria-hidden="true" tabindex="-1"></a>                     <span class="at">units_input =</span> <span class="st">&quot;kelvin&quot;</span>,</span>
 <span id="cb130-72"><a href="#cb130-72" aria-hidden="true" tabindex="-1"></a>                     <span class="at">units_output =</span> <span class="st">&quot;celsius&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="case-study-iii-monty-hall-problem" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="case-study-iii-monty-hall-problem"><span class="header-section-number">5</span> 🐣 Case study III: Monty Hall problem</h2>
+<p>In <code>R</code> the function <code>sample(x = ..., size = ...)</code> will be very useful: from a collection of <code>x</code> elements, it selects a random <code>size</code> number of them. For example, if we want to simulate 3 times the throw of a die we have 6 possible elements (<code>x = 1:6</code>) and we select it 3 times (<code>size = 3</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 4 5</code></pre>
+</div>
+</div>
+<p>Since it is random, each time you run it, something different will come out.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6 5 2</code></pre>
+</div>
+</div>
+<p>What if we want to throw it 10 times?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in sample.int(length(x), size, replace, prob): cannot take a sample larger than the population when &#39;replace = FALSE&#39;</code></pre>
+</div>
+</div>
+<p>Having only 6 possible elements and choosing 10, it cannot, so we have to indicate that we want a sample with replacement (as with the die, each face can be repeated when re-rolled).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2 1 1 1 6 2 6 5 6 3</code></pre>
+</div>
+</div>
+<section id="question-1-2" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="question-1-2"><span class="header-section-number">5.1</span> Question 1</h3>
+<blockquote class="blockquote">
+<p>With the above, imagine that you are in a TV contest where you are given a choice of 3 doors: in one there is a millionaire prize and in the other 2 an oreo cookie. Design the simulation study with for loops to approximate the probability that you get the prize (obviously it has to give you approx 0.333333333). Perform the experiment for 10, 50 trials, 100 trials, 500 trials, 1000 trials, 10 000 trials and 25 000 trials (hint: you need a loop within a loop). What do you observe?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-3"><a href="#cb139-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Possible doors</span></span>
+<span id="cb139-4"><a href="#cb139-4" aria-hidden="true" tabindex="-1"></a>doors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb139-5"><a href="#cb139-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-6"><a href="#cb139-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Possible trials</span></span>
+<span id="cb139-7"><a href="#cb139-7" aria-hidden="true" tabindex="-1"></a>trials <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">25000</span>)</span>
+<span id="cb139-8"><a href="#cb139-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-9"><a href="#cb139-9" aria-hidden="true" tabindex="-1"></a><span class="co"># For scenario, we define the number of times in which we win prize</span></span>
+<span id="cb139-10"><a href="#cb139-10" aria-hidden="true" tabindex="-1"></a>n_prizes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(trials))</span>
+<span id="cb139-11"><a href="#cb139-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-12"><a href="#cb139-12" aria-hidden="true" tabindex="-1"></a><span class="co"># first loop: scenarios</span></span>
+<span id="cb139-13"><a href="#cb139-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(trials)) {</span>
+<span id="cb139-14"><a href="#cb139-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb139-15"><a href="#cb139-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># second loop: for scenario, the number of trials</span></span>
+<span id="cb139-16"><a href="#cb139-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>trials[i]) {</span>
+<span id="cb139-17"><a href="#cb139-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb139-18"><a href="#cb139-18" aria-hidden="true" tabindex="-1"></a>    prize <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> doors, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb139-19"><a href="#cb139-19" aria-hidden="true" tabindex="-1"></a>    choice <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> doors, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb139-20"><a href="#cb139-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-21"><a href="#cb139-21" aria-hidden="true" tabindex="-1"></a>    n_prizes[i] <span class="ot">&lt;-</span> <span class="fu">if_else</span>(choice <span class="sc">==</span> prize, n_prizes[i] <span class="sc">+</span> <span class="dv">1</span>, n_prizes[i])</span>
+<span id="cb139-22"><a href="#cb139-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb139-23"><a href="#cb139-23" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb139-24"><a href="#cb139-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in proportion</span></span>
+<span id="cb139-25"><a href="#cb139-25" aria-hidden="true" tabindex="-1"></a>  n_prizes[i] <span class="ot">&lt;-</span> n_prizes[i] <span class="sc">/</span> trials[i]</span>
+<span id="cb139-26"><a href="#cb139-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb139-27"><a href="#cb139-27" aria-hidden="true" tabindex="-1"></a>n_prizes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="question-2-2" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="question-2-2"><span class="header-section-number">5.2</span> Question 2</h3>
+<blockquote class="blockquote">
+<p>What if, in each round, one of the non-winning doors that you have not chosen was opened for you, would you change doors or would you stay? Simulate both cases and find out which is the correct strategy (this problem is known as the Monty Hall problem and even appears in movies such as 21 Black Jack).</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>doors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb140-2"><a href="#cb140-2" aria-hidden="true" tabindex="-1"></a>trials <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">25000</span>)</span>
+<span id="cb140-3"><a href="#cb140-3" aria-hidden="true" tabindex="-1"></a>n_prizes_nochange <span class="ot">&lt;-</span> n_prizes_change <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">length</span>(trials))</span>
+<span id="cb140-4"><a href="#cb140-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="#cb140-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(trials)) {</span>
+<span id="cb140-6"><a href="#cb140-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>trials[i]) {</span>
+<span id="cb140-7"><a href="#cb140-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb140-8"><a href="#cb140-8" aria-hidden="true" tabindex="-1"></a>    init_choice <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> doors, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb140-9"><a href="#cb140-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb140-10"><a href="#cb140-10" aria-hidden="true" tabindex="-1"></a>    prize <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> doors, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb140-11"><a href="#cb140-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb140-12"><a href="#cb140-12" aria-hidden="true" tabindex="-1"></a>    open_door <span class="ot">&lt;-</span></span>
+<span id="cb140-13"><a href="#cb140-13" aria-hidden="true" tabindex="-1"></a>      doors[doors <span class="sc">!=</span> init_choice <span class="sc">&amp;</span> doors <span class="sc">!=</span> prize]</span>
+<span id="cb140-14"><a href="#cb140-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb140-15"><a href="#cb140-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(open_door) <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb140-16"><a href="#cb140-16" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb140-17"><a href="#cb140-17" aria-hidden="true" tabindex="-1"></a>      open_door <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> open_door, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb140-18"><a href="#cb140-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb140-19"><a href="#cb140-19" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb140-20"><a href="#cb140-20" aria-hidden="true" tabindex="-1"></a>    n_prizes_nochange[i] <span class="ot">&lt;-</span></span>
+<span id="cb140-21"><a href="#cb140-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(init_choice <span class="sc">==</span> prize, n_prizes_nochange[i] <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb140-22"><a href="#cb140-22" aria-hidden="true" tabindex="-1"></a>              n_prizes_nochange[i])</span>
+<span id="cb140-23"><a href="#cb140-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb140-24"><a href="#cb140-24" aria-hidden="true" tabindex="-1"></a>    changed_door <span class="ot">&lt;-</span> doors[doors <span class="sc">!=</span> init_choice <span class="sc">&amp;</span> doors <span class="sc">!=</span> open_door]</span>
+<span id="cb140-25"><a href="#cb140-25" aria-hidden="true" tabindex="-1"></a>    n_prizes_change[i] <span class="ot">&lt;-</span></span>
+<span id="cb140-26"><a href="#cb140-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">if_else</span>(changed_door <span class="sc">==</span> prize, n_prizes_change[i] <span class="sc">+</span> <span class="dv">1</span>,</span>
+<span id="cb140-27"><a href="#cb140-27" aria-hidden="true" tabindex="-1"></a>              n_prizes_change[i])</span>
+<span id="cb140-28"><a href="#cb140-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb140-29"><a href="#cb140-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb140-30"><a href="#cb140-30" aria-hidden="true" tabindex="-1"></a>  n_prizes_nochange[i] <span class="ot">&lt;-</span> n_prizes_nochange[i] <span class="sc">/</span> trials[i]</span>
+<span id="cb140-31"><a href="#cb140-31" aria-hidden="true" tabindex="-1"></a>  n_prizes_change[i] <span class="ot">&lt;-</span> n_prizes_change[i] <span class="sc">/</span> trials[i]</span>
+<span id="cb140-32"><a href="#cb140-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb140-33"><a href="#cb140-33" aria-hidden="true" tabindex="-1"></a>n_prizes_nochange</span>
+<span id="cb140-34"><a href="#cb140-34" aria-hidden="true" tabindex="-1"></a>n_prizes_change</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>

@@ -166,6 +166,11 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [2](#clase-2) | S3 | 19 sep | Tidyverse: by rows | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2)  | [🐣](#caso-practico-2) |  | 
 | [3](#clase-3) | S4 | 26 sep | Tidyverse: by columns | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) [🐣](#caso-practico-3-3)|  | 
 | [4](#clase-4) | S5 | 3 oct | Tidyverse: summary | [💻](#tu-turno-4-1)  | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2) |  | 
+| [5](#clase-5) | S6 | 10 oct | Loops and functions | [💻](#tu-turno-5-1) [💻](#tu-turno-5-2)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) [🐣](#caso-practico-5-3) [🐣](#caso-practico-5-4)|  |
+| [6](#clase-6) | S7 | 17 oct | Import/export and joins |   |  |  |
+| [7](#clase-7) | S7 | 24 oct | R base vs tidyverse |   |  |  |
+| [8](#clase-8) | S7 | 6 nov | Purrr and forcats packages  |   |  |  |
+| [9](#clase-9) | S7 | 13 nov | SQL connection |   |  |  |
 :::
 :::
 
@@ -3896,6 +3901,7 @@ In addition `{reticulate}` allows us to create `python` chunks inside a Quarto i
 
 ```{r}
 #| echo: false
+#| eval: false
 library(reticulate)
 ```
 
@@ -3911,8 +3917,7 @@ reticulate::py_install("numpy")
 reticulate::py_install("matplotlib")
 ```
 
-:::: columns
-::: {.column width="60%"}
+
 
 ```{python}
 #| eval: false
@@ -3927,25 +3932,6 @@ ax.plot(theta, r)
 plt.show()
 ```
 
-:::
-
-::: {.column width="40%"}
-
-```{python}
-#| echo: false
-import numpy as np
-import matplotlib.pyplot as plt
-r = np.arange(0, 2, 0.05)
-theta = 2 * np.pi * r
-fig, ax = plt.subplots(
-  subplot_kw = {'projection': 'polar'} 
-)
-ax.plot(theta, r)
-plt.show()
-```
-
-:::
-::::
 
 ---
 
@@ -3956,7 +3942,7 @@ To practice control structures we are going to perform a [**simulation exercise*
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structure)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structure-functions)
 
 ---
 
@@ -6702,7 +6688,7 @@ starwars |>
 ## 🐣 Case study I: CIS feminismos {#caso-practico-3-1}
 
 
-
+pending to submit
 
 &nbsp;
 
@@ -6712,13 +6698,24 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 
 --- 
 
-## 🐣 Caso study II: Taylor Swift {#caso-practico-3-2}
+## 🐣 Case study II: Taylor Swift {#caso-practico-3-2}
 
-pendiente de añadir: repetir entrega previa con tidyverse
+Let's go back to the analysis of Taylor Swift songs we did in the previous installment.
+
+
+```{r}
+library(taylor)
+taylor_album_songs
+```
+
+The difference is that now we will try to do everything from a **tidyverse view instead of R base** (it is interesting that you try to translate from one to the other to know how to master both views)
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
+
 
 ---
 
-## 🐣 Caso study III: The Lord of the Rings {#caso-practico-3-3}
+## 🐣 Case study III: The Lord of the Rings {#caso-practico-3-3}
 
 
 To practice some `{dplyr}` functions we are going to use data from the [**Lord of the Rings trilogy**]{.hl-yellow} movies. We will load the data directly from the web (Github in this case), without going through the computer before, simply **indicating as path the web where the file is**
@@ -7285,8 +7282,42 @@ data
 
 Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
+---
 
-# Extras
+## 🐣 Case study III: speechs
+
+
+Although we cannot do arithmetic operations with them, some [**operations we can do with the text strings**]{.hl-yellow} will be important. For that we will use the `{stringr}` package (within the same `{lubridate}` “universe of packages”).
+
+```{r}
+library(stringr)
+```
+
+The dataset will be `discursos` (speeches, extracted from <https://github.com/lirondos/discursos-de-navidad>) where are stored the christmas speeches of the heads of state of Spain from 1946 to 2021 (in dictatorship and in democracy)
+
+```{r}
+load(file = "./data/discursos.RData")
+# discursos = speeches in spanish
+```
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
+
+
+# L5: [loops and functions]{.flow} {#clase-5}
+
+[**Coming back to R base: loops and functions**]{style="color:#444442;"}
+
+
+* [💻 Solved exercises](#tu-turno-5-1) 
+
+* [🐣 Workbook/case study I-II](#caso-practico-5-1)
+
+* [🐣 Workbook/case study III](#caso-practico-5-3)
+
+* [🐣 Workbook/case study IV](#caso-practico-5-4)
+
+* [📆 Planning](#planificacion-curso)
+
 
 
 ---
@@ -7578,7 +7609,7 @@ for(i in 1:5) {
 ---
 
 
-## 💻 It's your turn {#tu-turno-0-3-2}
+## 💻 It's your turn {#tu-turno-5-1}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -7910,7 +7941,7 @@ compute_area(side_2 = 3, side_1 = 5) # area of 5 x 3 rectangle
 
 ## Default arguments
 
-magine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
+Imagine now that we realize that 90% of the time we use such a function to [**default calculate the area of a square**]{.hl-yellow} (i.e., we only need one side). To do this, we can define [**default arguments**]{.hl-yellow} in the function: they will take that value unless we assign another one.
 
 Why not assign `side_2 = side_1` **default**, to save lines of code and time?
 
@@ -8100,7 +8131,7 @@ y # global value
 ---
 
 
-## 💻 It's your turn {#tu-turno-0-3-3}
+## 💻 It's your turn {#tu-turno-5-2}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -8174,9 +8205,16 @@ equal_names("Javi", "javi")
 equal_names("Javi", "Lucía")
 
 # Case-insensitive
+library(stringr)
 equal_names <- function(person_1, person_2) {
   
-  return(toupper(person_1) == toupper(person_2))
+  return(str_equal(person_1, person_2, ignore_case = TRUE))
+  
+  # other option
+  # return(str_to_lower(person_1) == str_to_lower(person_2))
+  
+  # other option
+  # return(str_to_upper(person_1) == str_to_upper(person_2))
   
 }
 equal_names("Javi", "javi")
@@ -8206,9 +8244,13 @@ compute_BMI <- function(name, weight, height) {
 #| eval: false
 compute_BMI <- function(name, weight, height, units = "meters") {
   
-  return(list("name" = name,
-              "BMI" = weight / (if_else(units == "meters", height, height/100)^2)))
-  
+  if (units == "meters") {
+    
+    return(list("name" = name, "BMI" = weight / (height^2)))
+  } else if (units == "centimeters") {
+    
+    return(list("name" = name, "BMI" = weight / ((height/100)^2)))
+  }
 }
 ```
 
@@ -8260,3 +8302,39 @@ shortcut <- function(x, y) {
 
 
 :::
+
+---
+
+## 🐣 Case study I: simulations {#caso-practico-5-1}
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
+
+
+---
+
+## 🐣 Case study II: simulations {#caso-practico-5-2}
+
+To practice with functions we are going to create a complete **temperature converter** that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others.
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
+
+
+---
+
+## 🐣 Case study III: Monty Hall problem {#caso-practico-5-3}
+
+Imagine you are in a TV contest where you are given a choice of 3 doors: in one there is a millionaire prize and in the other 2 there is an oreo cookie.
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
+
+## 🐣 Case study IV: covid data {#caso-practico-5-4}
+
+
+Pending to submit
+
+
+
