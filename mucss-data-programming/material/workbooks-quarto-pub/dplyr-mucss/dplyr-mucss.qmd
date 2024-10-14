@@ -2337,7 +2337,7 @@ str_split(x, boundary("sentence"))
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
-The dataset will be `discursos` (speeches, extracted from <https://github.com/lirondos/discursos-de-navidad>) where are stored the christmas speeches of the heads of state of Spain from 1946 to 2021 (in dictatorship and in democracy)
+The dataset will be `discursos` (speeches, extracted from <https://github.com/lirondos/discursos-de-navidad>) where are stored the christmas speeches of the heads of state of Spain from 1946 to 2021 (in dictatorship and in democracy).
 
 ```{r}
 load(file = "./datos/discursos.RData")

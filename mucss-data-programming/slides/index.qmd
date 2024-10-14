@@ -166,11 +166,11 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [2](#clase-2) | S3 | 19 sep | Tidyverse: by rows | [💻](#tu-turno-2-1) [💻](#tu-turno-2-2)  | [🐣](#caso-practico-2) |  | 
 | [3](#clase-3) | S4 | 26 sep | Tidyverse: by columns | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) [🐣](#caso-practico-3-3)|  | 
 | [4](#clase-4) | S5 | 3 oct | Tidyverse: summary | [💻](#tu-turno-4-1)  | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2) |  | 
-| [5](#clase-5) | S6 | 10 oct | Loops and functions | [💻](#tu-turno-5-1) [💻](#tu-turno-5-2)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) [🐣](#caso-practico-5-3) [🐣](#caso-practico-5-4)|  |
-| [6](#clase-6) | S7 | 17 oct | Import/export and joins |   |  |  |
-| [7](#clase-7) | S7 | 24 oct | R base vs tidyverse |   |  |  |
-| [8](#clase-8) | S7 | 6 nov | Purrr and forcats packages  |   |  |  |
-| [9](#clase-9) | S7 | 13 nov | SQL connection |   |  |  |
+| [5](#clase-5) | S6 | 10 oct | Loops | [💻](#tu-turno-5-1)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) |  |
+| [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2)  |  |
+| [7](#clase-7) | S8 | 24 oct | Import/export files. R base vs tidyverse |   |  |  |
+| [8](#clase-8) | S10 | 6 nov | Purrr and forcats packages  |   |  |  |
+| [9](#clase-9) | S11 | 13 nov | Github and SQL connection |   |  |  |
 :::
 :::
 
@@ -7303,21 +7303,16 @@ load(file = "./data/discursos.RData")
 Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/tidyverse-mucss/).
 
 
-# L5: [loops and functions]{.flow} {#clase-5}
+# L5: [loops]{.flow} {#clase-5}
 
-[**Coming back to R base: loops and functions**]{style="color:#444442;"}
+[**Coming back to R base: loops**]{style="color:#444442;"}
 
 
 * [💻 Solved exercises](#tu-turno-5-1) 
 
-* [🐣 Workbook/case study I-II](#caso-practico-5-1)
+* [🐣 Workbook/case study I](#caso-practico-5-1)
 
-* [🐣 Workbook/case study III](#caso-practico-5-3)
-
-* [🐣 Workbook/case study IV](#caso-practico-5-4)
-
-* [📆 Planning](#planificacion-curso)
-
+* [🐣 Workbook/case study II](#caso-practico-5-2)
 
 
 ---
@@ -7720,8 +7715,36 @@ while (count < 6) {
 
 :::
 
+---
+
+## 🐣 Case study I: simulations {#caso-practico-5-1}
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
 
 ---
+
+## 🐣 Case study II: Monty Hall problem {#caso-practico-5-2}
+
+Imagine you are in a TV contest where you are given a choice of 3 doors: in one there is a millionaire prize and in the other 2 there is an oreo cookie.
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
+
+# L6: [functions and joins]{.flow} {#clase-6}
+
+[**Coming back to R base: functions. Joins**]{style="color:#444442;"}
+
+* [💻 Solved exercises](#tu-turno-6-1) 
+
+* [💻 Solved exercises](#tu-turno-6-2) 
+
+* [🐣 Workbook/case study I](#caso-practico-6-1)
+
+* [🐣 Workbook/case study II](#caso-practico-6-2)
+
+* [📆 Planning](#planificacion-curso)
+
 
 ## Own functions {auto-animate="true"}
 
@@ -8131,7 +8154,7 @@ y # global value
 ---
 
 
-## 💻 It's your turn {#tu-turno-5-2}
+## 💻 It's your turn {#tu-turno-6-1}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -8303,16 +8326,11 @@ shortcut <- function(x, y) {
 
 :::
 
----
-
-## 🐣 Case study I: simulations {#caso-practico-5-1}
-
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
 
 
 ---
 
-## 🐣 Case study II: simulations {#caso-practico-5-2}
+## 🐣 Case study I: simulations {#caso-practico-6-1}
 
 To practice with functions we are going to create a complete **temperature converter** that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others.
 
@@ -8323,18 +8341,484 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 
 ---
 
-## 🐣 Case study III: Monty Hall problem {#caso-practico-5-3}
-
-Imagine you are in a TV contest where you are given a choice of 3 doors: in one there is a millionaire prize and in the other 2 there is an oreo cookie.
-
-&nbsp;
-
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/). On it you will have to design some simulation studies using **conditional loops and structures**.
-
-## 🐣 Case study IV: covid data {#caso-practico-5-4}
+## 🐣 Case study II: covid data {#caso-practico-6-2}
 
 
 Pending to submit
+
+---
+
+## Joins
+
+When working with data we will not always have the information in a single table, and sometimes, we will be interested in [**cross-referencing**]{.hl-yellow} information from different sources.
+
+. . .
+
+For this we will use a classic of every language that handles data: the famous [**join**]{.hl-yellow}, a tool that will allow us to [**cross one or several tables**]{.hl-yellow}, making use of a [**identifying column**]{.hl-yellow} of each one of them.
+
+```{r}
+#| eval: false
+table_1 |>
+  xxx_join(table_2, by = id)
+```
+
+---
+
+## Joins
+
+* `inner_join()`: only [**records with id in both**]{.hl-yellow} tables survive.
+
+* `full_join()`: keeps [**all records in both**]{.hl-yellow} tables.
+
+* `left_join()`: keeps [**all the records of the first table**]{.hl-yellow}, and looks for which ones have id also in the second one (in case of [**not having it, it fills with NA**]{.hl-yellow} the fields of the 2nd table).
+
+* `right_join()`: keeps [**all records in the second table**]{.hl-yellow}, and searches which ones have id also in the first one.
+
+![](img/sql-joins.jpg)    
+
+
+
+---
+
+## Joins
+
+Let's test the various joins with a simple example
+
+```{r}
+tb_1 <- tibble("key" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+tb_1
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+tb_2
+```
+
+:::
+::::
+
+---
+
+
+## left_join()
+
+Imagine that we want to [**incorporate**]{.hl-yellow} to `tb_1` the [**information from table_2**]{.hl-yellow}, identifying the records by the key column (`by = "key"`, the column it has to cross): we want to keep all the records of the first table and look for which ones have the same value in `key` also in the second one.
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+tb_1 |> 
+  left_join(tb_2, by = "key")
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/left_join.jpg)
+
+:::
+::::
+
+
+
+---
+
+## left_join()
+
+
+```{r}
+tb_1 |>
+  left_join(tb_2, by = "key")
+```
+
+Notice that the [**records in the first one whose key was not found in the second one**]{.hl-yellow} has given them the value of [**absent**]{.hl-yellow}.
+
+---
+
+## right_join()
+
+The `right_join()` will perform the opposite operation: we will now [**incorporate**]{.hl-yellow} to `tb_2` the [**information from table_2**]{.hl-yellow}, identifying the records by the `key` column: we want to keep all the records of the second one and look for which ones have id (same value in `key`) also in the first table.
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+![](img/right_join.jpg)
+
+:::
+::::
+
+
+---
+
+## right_join()
+
+
+```{r}
+tb_1 |>
+  right_join(tb_2, by = "key")
+```
+
+Notice that now the [**records of the second one whose key was not found in the first one**]{.hl-yellow} are the ones given the value of [**absent**]{.hl-yellow}.
+
+---
+
+## keys and suffixes
+
+The key columns we will use for the crossover [**will not always be named the same**]{.hl-yellow}.
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+* `by = c("key_2" = "key_2")`: we will indicate in which column of each table are the keys that we are going to cross.
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+# Left
+tb_1  |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+# Right
+tb_1 |> 
+  right_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+::::
+
+
+---
+
+## keys and suffixes
+
+We can also [**cross over several columns at the same time**]{.hl-yellow} (it will interpret as equal record the one that has the same set of keys), with `by = c("var1_t1" = "var1_t2", "var2_t1" = "var2_t2", ...)`. Let's modify the previous example
+
+```{r}
+tb_1 <- tibble("k_11" = 1:3, "k_12" = c("a", "b", "c"),  "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("k_21" = c(1, 2, 4), "k_22" = c("a", "b", "e"), "val_y" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2,
+            by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+# Right
+tb_1 |> 
+  right_join(tb_2,
+             by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+:::
+::::
+
+---
+
+## keys and suffixes
+
+It could also happen that when crossing two tables, there are [**columns of values named the same**]{.hl-yellow}
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+Notice that [**default adds the suffixes**]{.hl-yellow} `.x` and `.y` to tell us which table they come from.
+
+---
+
+## keys and suffixes
+
+
+This [**suffix can be specified**]{.hl-yellow} in the optional argument `suffix = ...`, which allows us to [**distinguish the variables**]{.hl-yellow} of one table from another.
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"),
+            suffix = c("_table1", "_table2"))
+```
+
+---
+
+## full_join()
+
+The two previous cases form what is known as [**outer joins**]{.hl-yellow}: crosses where observations are kept that appear in at least one table. The third outer join is known as `full_join()` which will [**keep observations from both**]{.hl-yellow} tables, [**adding rows**]{.hl-yellow} that do not match the other table.
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+tb_1  |> 
+  full_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/full_join.jpg)
+
+:::
+::::
+
+---
+
+## inner_join()
+
+Opposite the outer join is what is known as [**inner join**]{.hl-yellow}, with `inner_join()`: a join in which only the [**observations that appear in both tables**]{.hl-yellow} are kept, only those records that are patched are kept.
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2,  by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/inner_join.png)
+
+:::
+::::
+
+
+
+---
+
+## inner_join()
+
+Note that in terms of records, `inner_join` if it is commutative, **we don't care about the order of the tables**: the only thing that changes is the order of the columns it adds.
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+tb_2 |> inner_join(tb_1, by = c("key_2" = "key_1"))
+```
+
+:::
+::::
+
+---
+
+## semi/anti_join()
+
+Finally we have two interesting tools to [**filter (not cross) records**]{.hl-yellow}: `semi_join()` and `anti_join()`. The [**semi join**]{.hl-yellow} leaves us in the [**first table the records whose key is also in the second table**]{.hl-yellow} (like an inner join but without adding the info from the second table). And the second one, the anti join, does just the opposite (those that are not).
+
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{r}
+# semijoin
+tb_1 |> 
+  semi_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+# antijoin
+tb_1 |> 
+  anti_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+::::
+
+---
+
+## 💻 It's your turn {#tu-turno-6-2}
+
+For the exercises we will use the tables available in the package `{nycflights13}`.
+
+```{r}
+library(nycflights13)
+```
+
+* **airlines**: name of airlines (with their abbreviation).
+* **airports**: airport data (names, longitude, latitude, altitude, etc).
+* **flights**, **planes**: flight and aircraft data.
+* **weather**: hourly weather data.
+
+---
+
+## 💻 It's your turn
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 From package `{nycflights13}` incorporates into the `flights` table the airline data in `airlines`. We want to maintain all flight records, adding the airline information to the airlines table.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+flights_airlines <-
+  flights |> 
+  left_join(airlines, by = "carrier")
+flights_airlines
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 To the table obtained from the crossing of the previous section, include the data of the aircraft in `planes`, but including only those flights for which we have information on their aircraft (and vice versa). 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum")
+flights_airlines_planes
+```
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Repeat the previous exercise but keeping both `year` variables (in one is the year of flight, in the other is the year of construction of the aircraft), and distinguishing them from each other
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes <- 
+  flights_airlines |>
+  inner_join(planes, by = "tailnum",
+             suffix = c("_flight", "_build_aircraft"))
+flights_airlines_planes
+```
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 To the table obtained from the previous exercise includes the longitude and latitude of the airports in `airports`, distinguishing between the latitude/longitude of the airport at destination and at origin.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes |> 
+  left_join(airports |> select(faa, lat, lon),
+            by = c("origin" = "faa")) |> 
+  rename(lat_origin = lat, lon_origin = lon) |> 
+  left_join(airports |> select(faa, lat, lon),
+            by = c("dest" = "faa")) |> 
+  rename(lat_dest = lat, lon_dest = lon)
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Filter from `airports` only those airports from which flights depart. Repeat the process filtering only those airports where flights arrive.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+airports |> 
+  semi_join(flights, by = c("faa" = "origin"))
+airports |> 
+  semi_join(flights, by = c("faa" = "dest"))
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 How many flights do we not have information about the aircraft? Eliminate flights that do not have an aircraft ID (other than NA) beforehand.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights |>
+  drop_na(tailnum) |>
+  anti_join(planes, by = "tailnum") |>
+  count(tailnum, sort = TRUE) 
+```
+
+:::
 
 
 

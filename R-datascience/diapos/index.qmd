@@ -6435,6 +6435,187 @@ El día de la entrega tendrás subido una [**plantilla de entrega**]{.hl-yellow}
 
 ---
 
+## Resolución de entrega II
+
+El nombre de las columnas codifica el sexo (H hombre, M mujer, NC no consta) y el grupo etario (0-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, ≥80 años y NC no consta).
+
+
+```{r}
+library(readr)
+datos <- read_csv(file = "./datos/messy_covid_data.csv")
+datos
+```
+
+---
+
+## Resolución de entrega II
+
+Diseña un bucle que recorra todas las filas y, salvo en las dos primeras columnas, convierta cada 0 casos que encuentre en la fila por un `NA`
+
+```{r}
+#| echo: false
+datos <- datos[1:5000, ]
+```
+
+Necesitamos 2 bucles: uno que **recorra filas** (desde la primera hasta la última) y otro que **recorra columnas** (desde la tercera hasta la última), y dentro del bucle: si el elemento (i, j) es 0 (o ausente), lo pasamos a ausente; en caso contrario, lo que había guardado.
+
+```{r}
+library(dplyr)
+for (i in 1:nrow(datos)) {
+  for (j in 3:ncol(datos)) {
+  
+    datos[i, j] <- if_else(datos[i, j] == 0, NA, datos[i, j], missing = NA)
+    
+  }
+}
+```
+
+---
+
+## Resolución de entrega II
+
+Razona por qué no es tidydata y conviérte a tidy data. Si te fijas hay muchísimas filas que nos sobran (ausentes) así que haz que al pivotar las elimine.
+
+&nbsp;
+
+Es un `pivot_longer()` sin más: le indicamos que **columnas no queremos pivotar**, la **variable a donde irán los nombres** y cómo se llamará la variable de casos; le incluimos `values_drop_na = TRUE` para que elimine los ausentes (de ahí que hayamos convertido los 0 para hacerlo más sencillo aquí)
+
+```{r}
+tidy_covid <-
+  datos |> 
+  pivot_longer(cols = -c("provincia_iso", "fecha"), names_to = "grupo", values_to = "casos",
+               values_drop_na = TRUE)
+tidy_covid
+```
+
+---
+
+## Resolución de entrega II
+
+Una de las columnas la tenemos codificada a veces como `cosa-cosa_cosa`, otras como `80-Inf_cosa`, otras como `NC-NC_cosa`. Intenta separar dicha columna para generar tres columnas nuevas `edad_inf`, `edad_sup` y `sexo` de manera adecuada. Recuerda que `NC` es un ausente. 
+
+&nbsp;
+
+Si lo intentamos hacer sin procesar nada antes, vemos que los `Inf` y los `NC` figuran como tal, como cadena texto, lo que nos impide convertir a numérica el resto de la columna.
+
+```{r}
+tidy_covid2 <-
+  tidy_covid |> 
+  separate(col = "grupo", into = c("edad_inf", "edad_sup", "sexo"), convert = TRUE)
+tidy_covid2
+```
+
+---
+
+## Resolución de entrega II
+
+Por eso antes vamos a reemplazar los `"Inf"` y `"NC"` por `"NA"`, para que luego al convertirlos pueda pasarlos a `NA` numéricos
+
+```{r}
+tidy_covid$grupo <- str_replace_all(tidy_covid$grupo, "Inf|NC", "NA")
+tidy_covid2 <-
+  tidy_covid |>
+  separate(col = "grupo", into = c("edad_inf", "edad_sup", "sexo"), convert = TRUE)
+tidy_covid2
+```
+
+---
+
+
+## Resolución de entrega II
+
+Incorpora una nueva variable a la tabla que codifice el mes y el año (por ejemplo, cualquier día de enero de 2020 será algo similar a "1-2020" y cualquier día de febrero del 2021 será "2-2021").
+
+```{r}
+library(glue)
+tidy_covid2$mes_year <- glue("{month(tidy_covid2$fecha)}-{year(tidy_covid2$fecha)}")
+tidy_covid2
+```
+
+
+----
+
+
+## Resolución de entrega II
+
+Haciendo uso de esa variable de grupo `mes_year` y del vector de provincias permitidas que aparece debajo (busca en <https://es.wikipedia.org/wiki/ISO_3166-2:ES#Provincias>) obtén un resumen que nos devuelva en un tibble, por cada provincia permitida y cada mes-año, la media de casos (sin importar edad ni sexo)
+
+&nbsp;
+
+Solo necesitamos **recorrer cada provincia permitida** y **cada valor `mes_year` distinto**, así que creamos ambos vectores. También creamos un dataset vacío `resumen_mes_provincia` donde, en cada iteración, pegaremos una fila con su resumen.
+
+```{r}
+provincias_permitidas <- c("M", "B", "SE", "V", "Z")
+for_values <- unique(tidy_covid2$mes_year)
+resumen_mes_provincia <- tibble()
+```
+
+---
+
+## Resolución de entrega II
+
+Una vez creados esos objetos, el **bucle simplemente deberá recorrer cada valor de provincia y de mes-año**: para el mes-año i y la provincia j, filtramos solo los casos para esos valores concretos (de todo el vector de casos nos quedamos con aquellos que cumplan dicha condición, eliminando también provincias ausentes). Tras filtrar guardamos la media ese filtro de casos
+
+```{r}
+for (i in 1:length(for_values)) {
+  for (j in 1:length(provincias_permitidas)) {
+    
+    casos_mes_provincia <-
+      tidy_covid2$casos[!is.na(tidy_covid2$provincia_iso) &
+                          tidy_covid2$provincia_iso == provincias_permitidas[j] &
+                          tidy_covid2$mes_year == for_values[i]]
+    
+    resumen_mes_provincia <-
+      rbind(resumen_mes_provincia, 
+            tibble("mes_year" = for_values[i], "provincia_iso" = provincias_permitidas[j],
+                   "casos" = mean(casos_mes_provincia, na.rm = TRUE)))
+  }
+}
+```
+
+---
+
+## Resolución de entrega II
+
+Diseña una función `resumen_por_fecha_provincia()` que dada un vector de códigos ISO de provincias permitidas, y un tabla, nos devuelva la media de casos diarios que hubo cada mes-año (sin importar sexo ni edad) en las provincias permitidas. Es decir: debes "adaptar" el código anterior a una función.
+
+&nbsp;
+
+Simplemente debes **copiar y pegar el código de los dos anteriores** (salvo el vector de provincias que ahora será un argumento), y adaptarlo a que las provincias están en `prov_iso` y la tabla en `datos`.
+
+---
+
+## Resolución de entrega II
+
+
+```{r}
+resumen_por_fecha_provincia <- function(prov_iso, datos) {
+  
+  datos$mes_year <- glue("{month(datos$fecha)}-{year(datos$fecha)}")
+  for_values <- unique(datos$mes_year)
+  resumen_mes_provincia <- tibble()
+  
+  for (i in 1:length(for_values)) {
+    for (j in 1:length(prov_iso)) {
+      
+      casos_mes_provincia <-
+        datos$casos[!is.na(datos$provincia_iso) &
+                            datos$provincia_iso == prov_iso[j] &
+                            datos$mes_year == for_values[i]]
+      
+      resumen_mes_provincia <-
+        rbind(resumen_mes_provincia, 
+              tibble("mes_year" = for_values[i], "provincia_iso" = prov_iso[j],
+                     "casos" = mean(casos_mes_provincia, na.rm = TRUE)))
+    }
+  }
+
+    return(resumen_mes_provincia)
+}
+resumen_por_fecha_provincia(c("M", "B", "SE", "V", "Z"), tidy_covid2)
+```
+
+---
 
 ## ¿Qué es tidyverse?
 
@@ -7708,7 +7889,7 @@ starwars |>
 
 ## 🐣 Caso práctico {#caso-practico-10}
 
-Vamos a volver aun viejon conocido: en el paquete `{datasets}` (ya instalado por defecto) teníamos diversos conjuntos de datos y uno de ellos era `airquality` con el que ya trabajamos. Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973.
+Vamos a volver aun viejo conocido: en el paquete `{datasets}` (ya instalado por defecto) teníamos diversos conjuntos de datos y uno de ellos era `airquality` con el que ya trabajamos. Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973.
 
 En ese momento lo trabajamos desde la perspectiva de R base y extrayendo algunas variables del mismo. El objetivo ahora será trabajarlo desde la perspectiva de `{tidyverse}` fijándonos en las diferencias de una y otra forma.
 
@@ -8478,7 +8659,7 @@ Puedes ver la solución en el [**workbook**](https://javieralvarezliebana.quarto
 
 --- 
 
-## 🐣 Caso práctico II: surprise {#caso-practico-11-2}
+## 🐣 Caso práctico II: Taylor Swift {#caso-practico-11-2}
 
 pendiente de añadir: repetir entrega previa con tidyverse
 

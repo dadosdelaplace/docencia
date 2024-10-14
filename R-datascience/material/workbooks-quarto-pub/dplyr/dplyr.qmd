@@ -1102,18 +1102,23 @@ starwars |>
 
 Haciendo uso de todo lo aprendido, vamos a proceder a [**crear una tabla con datos de bebés**]{.hl-yellow} de tamaño `n = 20` en donde [**simulemos el sexo de los bebés y su peso**]{.hl-yellow}
 
+### Pregunta 1
 
-1. Crea un `tibble` con dos columnas, una llamada `id_bebe` y otra llamada `sexo`. En el primer caso debe ir de 1 a 20. En el segundo caso, simula su sexo de manera que haya un 0.5 de probabilidad de `chico` y 0.5 de `chica`.
-
-2. Conocido el sexo, crea una tercera columna llamada `peso` en la que simules dicho valor. Supondremos que para los chicos el peso sigue una distribución $N(\mu = 3.266kg, \sigma = 0.514)$ y que para las chicas sigue una distribución $N(\mu = 3.155kg, \sigma = 0.495)$.
+> Crea un `tibble` con dos columnas, una llamada `id_bebe` y otra llamada `sexo`. En el primer caso debe ir de 1 a 20. En el segundo caso, simula su sexo de manera que haya un 0.5 de probabilidad de `chico` y 0.5 de `chica`.
 
 ```{r}
 #| code-fold: true
-
 n <- 20
 datos <- tibble("id_bebe" = 1:n,
                 "sexo" = sample(x = c("chico", "chica"), size = n, replace = TRUE))
+```
 
+### Pregunta 2
+
+> Conocido el sexo, crea una tercera columna llamada `peso` en la que simules dicho valor. Supondremos que para los chicos el peso sigue una distribución $N(\mu = 3.266kg, \sigma = 0.514)$ y que para las chicas sigue una distribución $N(\mu = 3.155kg, \sigma = 0.495)$.
+
+```{r}
+#| code-fold: true
 datos <-
   datos |> 
   mutate(peso = rnorm(n, mean = if_else(sexo == "chico", 3.266, 3.155),
@@ -1121,9 +1126,112 @@ datos <-
 ```
 
 
-## 🐣 Caso práctico II: pendiente
+## 🐣 Caso práctico II: Taylor Swift
 
-pendiente de añadir: repetir entrega previa con tidyverse
+Vamos a volver al [**análisis de Taylor Swift**]{.hl-yellow} pero esta vez desde una perspectiva [**tidyverse**]{.hl-yellow}
+
+
+```{r}
+library(taylor)
+taylor_album_songs
+```
+
+### Pregunta 1
+
+> ¿Cuántas canciones hay guardadas? ¿Cuántas características de cada una?
+
+```{r}
+#| code-fold: true
+#| eval: false
+taylor_album_songs |> nrow()
+taylor_album_songs |> ncol()
+```
+
+Fíjate que ahora [**separamos el dato de la acción**]{.hl-yellow} con `datos` + tubería + acción
+
+### Pregunta 2
+
+> Obtén los álbumes únicos del dataset. ¿Cuántos hay?
+
+```{r}
+#| code-fold: true
+#| eval: false
+taylor_album_songs |> distinct(album_name)
+taylor_album_songs |>
+  distinct(album_name, keep) |>
+  nrow()
+```
+
+Fíjate que `distinct()` tiene 2 usos:
+
+* sin nada (`.keep_all = FALSE`): devuelve en una tabla los valores únicos de las variables que le digamos
+
+* con `.keep_all = TRUE`: devuelve TODAS las variables, y sirve para eliminar filas duplicadas de una tabla.
+
+### Pregunta 3
+
+> ¿En cuántas canciones tuvo colaboración con otro artista? ¿Cuántos artistas (únicos) han colaborado con ella?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# nº canciones con colaboración
+taylor_album_songs |>
+  drop_na(featuring) |>
+  nrow()
+
+# nº de colaboradores únicos
+taylor_album_songs |>
+  drop_na(featuring) |> 
+  summarise(n_collabs = n_distinct(featuring))
+```
+
+### Pregunta 4
+
+> Crea un nuevo `tibble` solo con las variables `album_name`, `album_release`, `track_name`, `featuring` y `duration_ms`. Después ordena dicho tibble de más reciente a más antiguo
+
+```{r}
+#| code-fold: true
+#| eval: false
+nuevo_tb <-
+  taylor_album_songs |>
+  select(album_name, album_release, track_name, featuring, duration_ms)
+nuevo_tb |> 
+  arrange(desc(album_release))
+```
+
+
+### Pregunta 5
+
+> Añade al dataset anterior 2 variables con el mes y año de la variable de fecha `album_release`. Piensa cómo determinar el mes con más canciones
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(lubridate)
+nuevo_tb <-
+  nuevo_tb |> 
+  mutate(month = month(album_release), year = year(album_release)) 
+nuevo_tb |> 
+  count(month, sort = TRUE)
+```
+
+### Pregunta 6
+
+> Obtén la duración media de las canciones en minutos (variable `duration_ms` en milisegundos). Extrae la info de la canción que más dura
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+nuevo_tb |>
+  drop_na(duration_ms) |> 
+  summarise(avg_dur = mean(duration_ms/60000))
+
+nuevo_tb |> 
+  slice_max(duration_ms)
+```
 
 
 ## 🐣 Caso práctico III: el señor de los anillos
@@ -1954,8 +2062,128 @@ datos |>
 ```
 
 
-## 🐣 Caso práctico III: repaso con discursos
+## 🐣 Caso práctico III: discursos
+
+Volvamos al dataset `discursos` donde teníamos guardados los discursos navideños de los «jefes» de Estado desde 1946 hasta 2021.
+
+```{r}
+load(file = "./datos/discursos.RData")
+```
+
+Piensa como responder a las mismas preguntas que hicimos en R base pero **en modo tidyverse**.
+
+### Pregunta 1
+
+> Convierte todos los discursos a minúscula.
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(stringr)
+discursos <-
+  discursos |> 
+  mutate("texto" = str_to_lower(texto))
+```
+
+
+### Pregunta 2
+
+> Elimina signos de puntuación tales como “:”, “,”, “.”, “;”, “¡”, “!”, “¿” and “?”. Elimina después espacios al inicio o final, y si hay en medio deja solo uno.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+discursos <-
+  discursos |> 
+  mutate("texto" =
+           str_remove_all(texto, pattern = "\\:|\\,|\\.|\\;|\\¡|\\!|\\¿|\\?"),
+         "texto" = str_squish(texto))
+```
+
+### Pregunta 3
+
+> Crea una nueva variable `long` con la longitud de cada discurso.
+
+```{r}
+#| code-fold: true
+#| eval: false
+discursos <- 
+  discursos |> 
+  mutate("long" = str_length(texto))
+```
+
+### Pregunta 4
+
+> Añade una nueva variable `n_words` con el número de palabras de cada discurso.
+
+```{r}
+#| code-fold: true
+#| eval: false
+discursos <-
+  discursos |> 
+  # ojo: length para vectores, lengths para listas
+  # haz un ejemplo sencillo para ver como funciona str_split
+  mutate("n_words" = lengths(str_split(texto, boundary("word"))))
+```
+
+### Pregunta 5
+
+> Determina los 5 años con discursos más largos y los 5 con menos palabras
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+discursos |> 
+  slice_max(long, n = 5)
+
+discursos |> 
+  slice_min(n_words, n = 5)
+```
+
+### Pregunta 6
+
+> Añade una nueva variable llamada `spain` que calcule el número de veces que se dice “españoles”, “españolas” o “españa”. Determina los 5 años que menos se mencione dichas palabras.
+
+```{r}
+#| code-fold: true
+#| eval: false
+discursos |> 
+  mutate("spain" = str_count(texto, pattern = "españoles|españolas|españa")) |> 
+  slice_min(spain, n = 5)
+```
+
+### Pregunta 7
+
+> De los 76 años de discursos, calcula el número de discursos en los que las palabras "mujer" o "mujeres" son más mencionadas que "hombre" u "hombres"
+
+```{r}
+#| code-fold: true
+#| eval: false
+discursos |> 
+  reframe("year" = year,
+          "n_mujer" = str_count(texto, pattern = "mujer|mujeres"),
+          "n_hombre" = str_count(texto, pattern = "hombre|hombres")) |> 
+  count(n_mujer > n_hombre)
+```
+
+### Pregunta 8
+
+> Detecta los discursos donde se mencione “cataluña”, “catalanes”, “catalanas” o “catalán” y guarda solo esos discursos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+discursos_cat <-
+  discursos |> 
+  filter(str_detect(texto, pattern = "cataluña|catalanes|catalán|catalanas"))
+```
+
+
 
 ## 🐣 Caso práctico IV: R base vs tidyverse
+
+dataset de covid
 
  
