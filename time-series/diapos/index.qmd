@@ -2025,6 +2025,7 @@ Además `{reticulate}` nos permite crear chunks de `python` dentro de un Quarto 
 
 ```{r}
 #| echo: false
+#| eval: false
 library(reticulate)
 ```
 
@@ -2062,6 +2063,7 @@ plt.show()
 
 ```{python}
 #| echo: false
+#| eval: false
 import numpy as np
 import matplotlib.pyplot as plt
 r = np.arange(0, 2, 0.05)
@@ -5639,7 +5641,7 @@ estim_retiro |>
 💻 Repite los ejercicios anteriores pero haciendo una pequeña modificación en la función que estima la estacionalidad, permitiendo que pueda estimarla de manera clásica o de manera sinuosoidal $\widehat{S}_t = \sin(2 \pi t/s)$.
 
 
-# Clase 9: [métricas de error]{.flow} {#clase-9}
+# Clase 9: [métricas de error]{.flow} {#clase-9a}
 
 [**Calibrando nuestra estimación: train/validación y errores**]{style="color:#444442;"}
 
@@ -5656,6 +5658,169 @@ estim_retiro |>
 
 
 ---
+
+## Limitaciones
+
+Hasta ahora todo lo que hemos hecho ha sido suponer que el comportamiento de nuestra  [**serie temporal se podía explicar en términos de subpatrones o conductas**]{.hl-yellow}, que en su forma aditiva, pueden tener la siguiente estructura
+
+$$X_t = T_t + S_t + \varepsilon_t, \quad \widehat{X}_t = \widehat{T}_t + \widehat{S}_t$$
+
+* $\widehat{T}_t$ la hemos estimado mediante un polinomio o medias móviles
+
+* $\widehat{S}_t$ la hemos estimado asumiendo que **solo hay un periodo**
+
+. . .
+
+Siempre hemos [**ponderado las observaciones por igual**]{.hl-red} pero...¿no tendríamos que dar [**más importancia a los datos más recientes**]{.hl-green}?
+
+---
+
+## Clasificación de Pegel
+
+![](img/pegel.jpg)
+
+Imagen extraída de González Velasco, M., & Puerto García, I. M. del. (2009). Series temporales. Universidad de Extremadura.
+
+**Estacionalidad multiplicativa = serie heterocedástica (varianza no constante)**
+
+---
+
+## Alisado exponencial
+
+Para superar esas limitaciones, en los años 50 y 60 se propusieron una serie de métodos que, más allá de asumir una estructura en los datos, su objetivo era [**describir la serie en términos de sus propios cambios**]{.hl-yellow}.
+
+&nbsp;
+
+El objetivo de los distintos métodos de alisado/suavizado será [**intuir la inercia de la serie, eliminando sus posibles fluctuaciones aleatorias**]{.hl-yellow}, asumiendo que si la tendencia de la serie es ascendente, probablemente la serie siga subiendo, teniendo en consideración la pendiente con la que crece o decrece.
+
+. . .
+
+El nombre de [**alisado/suavizado EXPONENCIAL**]{.hl-yellow} se debe a que vamos a ponderar el pasado de la serie con un conjunto de pesos que, normalmente, decrecerán de manera exponencial (ejemplo: si la observación inmediatamente anterior tiene un peso de $0.5$, la siguiente tendrá un peso de $0.5^2 = 0.25$)
+
+---
+
+
+## Alisado simple
+
+Imagina que tenemos el valor de la serie en $X_t$ y su estimación $\widehat{X}_t$... ¿cómo poder [**predecir $\widehat{X}_{t+1}$ solo usando ambos valores**]{.hl-yellow}?
+
+. . .
+
+La idea que tuvo **Holt (1956)** fue la de hacer una [**media ponderada**]{.hl-yellow} del valor real $X_t$ y su estimación $\widehat{X}_t$
+
+$$\widehat{X}_{t+1} = \theta \widehat{X}_t + \left( 1 - \theta \right)X_t = X_t + \theta \left(\widehat{X}_t - X_t \right), \quad 0 < \theta < 1$$
+
+. . .
+
+* Si $\theta \to 1$, entonces $\widehat{X}_{t+1} \to \widehat{X}_t$ el [**modelo de alisado produce predicciones casi constantes**]{.hl-yellow} sin muchas variaciones
+
+* Si $\theta \to 0$, entonces $\widehat{X}_{t+1} \to X_t$ el [**modelo de alisado produce predicciones muy variables dependientes del último valor observado**]{.hl-yellow} (con mucha fluctuación causada por la propia aleatoriedad de la serie)
+
+---
+
+## Alisado simple
+
+Si hacemos lo mismo para la estimación en $X_t$ tenemos
+
+$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta \left( \theta \widehat{X}_{t-1} + \left( 1 - \theta \right)X_{t-1} \right) + \left( 1 - \theta \right)X_t \nonumber \\ &=& \theta^2 \widehat{X}_{t-1} +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right)\end{eqnarray}$$
+
+. . .
+
+Si repetimos el [**proceso iterativo**]{.hl-yellow} con $\widehat{X}_{t-1}$, $\widehat{X}_{t-2}$...
+
+$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta^2 \left(\theta \widehat{X}_{t-2} + \left( 1 - \theta \right)X_{t-2} \right) +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right) \nonumber \\ &=& \theta^3 \widehat{X}_{t-2} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2}\right) \nonumber \\ &=& \theta^4 \widehat{X}_{t-3} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3}\right) \nonumber \\ &=& ... \nonumber \\ &=& \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3} + \ldots + \theta^{t-1} X_{1}\right)  \end{eqnarray}$$
+
+---
+
+## Alisado simple
+
+$$\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)$$
+
+¿Qué sucede cuando $t \to \infty$? 
+
+. . . 
+
+Dado que $\theta < 1$, entonces $\lim_{t \to \infty} \widehat{X}_{t+1} = \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}$. 
+
+Fíjate en la **serie geométrica** $\sum_{j=0}^{\infty} \theta^j$. ¿Recuerdas cuál era la [**suma de una serie geométrica cuya razón es menor que 1**]{.hl-yellow}?
+
+. . .
+
+Dado que $\theta < 1$, tenemos que
+
+$$\sum_{j=0}^{\infty} \theta^j = \frac{1}{1 - \theta} \rightarrow \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j = 1$$
+
+así que en realidad $\left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}$ representa una [**media ponderada del pasado (con pesos decrecientes geométricamente)**]{.hl-yellow} donde los pesos suman uno.
+
+---
+
+## Alisado simple
+
+$$\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)$$
+
+Si te fijas además [**todas las observaciones son influyentes**]{.hl-yellow} (en particular la primera) pero su influencia va decreciendo. 
+
+```{r}
+#| echo: false
+theta <- tibble("x" = rep(1:30, 3),
+                "theta" = c(0.9^(1:30), 0.6^(1:30), 0.3^(1:30)),
+                "pesos" = c(rep("theta = 0.9", 30), rep("theta = 0.6", 30),
+                            rep("theta = 0.3", 30)))
+ggplot(theta) +
+  geom_line(aes(x = x, y = theta, color = pesos), linewidth = 1.2) +
+  ggthemes::scale_color_colorblind() +
+  theme_minimal() +
+  labs(title = "Decrecimiento exponencial de pesos")
+```
+
+
+---
+
+## Alisado simple
+
+El modelo de alisado simple anterior en realidad equivale a asumir que la [**estructura de nuestra serie es localmente constante**]{.hl-yellow}
+
+
+$$X_t = T_t + \varepsilon_t, \quad {\rm E} \left[ T_t \right] \neq cte~ \forall t, \quad {\rm E} \left[ T_{t_i} \right] = cte ~\forall t \in t_i$$
+
+
+una tendencia que va variando [**lentamente con el tiempo**]{.hl-yellow} (ya que el futuro se parece más a los valores pasados inmediatos que a los valores más lejanos).
+
+. . .
+
+Para el método de alisado simple [**necesitamos conocer el valor inicial y encontrar el mejor $\theta$**]{.hl-yellow} (por ejemplo, mediante mínimos cuadrados de los errores observados para distintos valores).
+
+&nbsp;
+
+Supondremos $\theta$ constante pero existen métodos (ver [aquí](https://robjhyndman.com/forecasting/)) para considerar que $\theta$ se adapta a su vez a lo largo del tiempo
+
+---
+
+## Datos sin estacionalidad ni tendencia
+
+
+---
+
+## Alisado doble (lineal) de Holt
+
+Como hemos visto el método anterior de alisado es bajo la hipótesis de que nuestros datos son localmente constantes, para datos sin tendencia
+
+. . .
+
+
+
+---
+
+## Alisado triple de Holt-Winters
+
+con estacionalidad aditiva + multipicativa
+
+
+---
+
+## tablita
+
+
 
 # Clase 10: [métodos de alisado]{.flow} {#clase-9}
 

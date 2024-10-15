@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.3.294">
 
   <meta name="author" content="Grado en Estadística Aplicada • Javier Álvarez Liébana">
   <title>Series temporales</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg"></p>
+<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -1100,7 +1100,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1128,7 +1128,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-06"</code></pre>
+<pre><code>[1] "2024-10-14"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-06 14:41:54 CEST"</code></pre>
+<pre><code>[1] "2024-10-14 15:53:48 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -1466,7 +1466,7 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 </div>
@@ -1513,7 +1513,7 @@ pesos       63   70   85   95</code></pre>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb84-2"><a href="#cb84-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -2366,11 +2366,7 @@ pesos       63   70   85   95</code></pre>
 <span id="cb122-9"><a href="#cb122-9"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:40%;">
-<div class="cell">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-67-1.png" width="614"></p>
-</div>
-</div>
+
 </div>
 </div>
 </section>
@@ -2677,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr    min     lq     mean median     uq
-                                y &lt;- x^2    984   1107   1221.8   1148   1271
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 802124 816023 874912.2 829758 854440
-     max neval
-    5207   500
- 3377744   500</code></pre>
+                                    expr     min      lq        mean  median
+                                y &lt;- x^2     801     902    1557.422    1401
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1114801 1157552 1482937.632 1179901
+      uq       max neval cld
+    1801     31801   500  a 
+ 1247801 109812501   500   b</code></pre>
 </div>
 </div>
 </section>
@@ -4753,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t      X_t sd    
-   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.134   sd_0.5
- 2     2 -0.871   sd_0.5
- 3     3 -0.161   sd_0.5
- 4     4 -0.828   sd_0.5
- 5     5  0.460   sd_0.5
- 6     6  0.280   sd_0.5
- 7     7  0.00455 sd_0.5
- 8     8  0.124   sd_0.5
- 9     9 -0.132   sd_0.5
-10    10  1.04    sd_0.5
+       t     X_t sd    
+   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
+ 1     1 -0.754  sd_0.5
+ 2     2  0.0361 sd_0.5
+ 3     3  0.579  sd_0.5
+ 4     4 -0.213  sd_0.5
+ 5     5  0.497  sd_0.5
+ 6     6 -0.0938 sd_0.5
+ 7     7  0.124  sd_0.5
+ 8     8  0.480  sd_0.5
+ 9     9  0.604  sd_0.5
+10    10 -0.316  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5148,16 +5144,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd        X_t
    &lt;int&gt; &lt;glue&gt;  &lt;dbl&gt;
- 1     1 sd_0.5 -0.347
- 2     2 sd_0.5  0.406
- 3     3 sd_0.5  0.132
- 4     4 sd_0.5 -0.131
- 5     5 sd_0.5  0.643
- 6     6 sd_0.5  0.820
- 7     7 sd_0.5 -0.648
- 8     8 sd_0.5 -0.278
- 9     9 sd_0.5  0.309
-10    10 sd_0.5  1.65 
+ 1     1 sd_0.5  0.694
+ 2     2 sd_0.5 -0.875
+ 3     3 sd_0.5  0.529
+ 4     4 sd_0.5  0.501
+ 5     5 sd_0.5  0.897
+ 6     6 sd_0.5 -0.478
+ 7     7 sd_0.5 -0.268
+ 8     8 sd_0.5 -0.383
+ 9     9 sd_0.5 -0.522
+10    10 sd_0.5  0.357
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -5931,7 +5927,7 @@ No todavía, vamos por el ciclo 4</code></pre>
 <p>💻 Repite los ejercicios anteriores pero haciendo una pequeña modificación en la función que estima la estacionalidad, permitiendo que pueda estimarla de manera clásica o de manera sinuosoidal <span class="math inline">\(\widehat{S}_t = \sin(2 \pi t/s)\)</span>.</p>
 </section></section>
 <section>
-<section id="clase-9" class="title-slide slide level1 center">
+<section id="clase-9a" class="title-slide slide level1 center">
 <h1>Clase 9: <span class="flow">métricas de error</span></h1>
 <p><span style="color:#444442;"><strong>Calibrando nuestra estimación: train/validación y errores</strong></span></p>
 <ul>
@@ -5947,8 +5943,103 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h1>Clase 9: <span class="flow">métodos de alisado</span></h1>
 
 </section>
-<section class="slide level2">
+<section id="limitaciones" class="slide level2">
+<h2>Limitaciones</h2>
+<p>Hasta ahora todo lo que hemos hecho ha sido suponer que el comportamiento de nuestra <span class="hl-yellow"><strong>serie temporal se podía explicar en términos de subpatrones o conductas</strong></span>, que en su forma aditiva, pueden tener la siguiente estructura</p>
+<p><span class="math display">\[X_t = T_t + S_t + \varepsilon_t, \quad \widehat{X}_t = \widehat{T}_t + \widehat{S}_t\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\widehat{T}_t\)</span> la hemos estimado mediante un polinomio o medias móviles</p></li>
+<li><p><span class="math inline">\(\widehat{S}_t\)</span> la hemos estimado asumiendo que <strong>solo hay un periodo</strong></p></li>
+</ul>
+<div class="fragment">
+<p>Siempre hemos <span class="hl-red"><strong>ponderado las observaciones por igual</strong></span> pero…¿no tendríamos que dar <span class="hl-green"><strong>más importancia a los datos más recientes</strong></span>?</p>
+</div>
+</section>
+<section id="clasificación-de-pegel" class="slide level2">
+<h2>Clasificación de Pegel</h2>
 
+<img data-src="img/pegel.jpg" class="r-stretch"><p>Imagen extraída de González Velasco, M., &amp; Puerto García, I. M. del. (2009). Series temporales. Universidad de Extremadura.</p>
+<p><strong>Estacionalidad multiplicativa = serie heterocedástica (varianza no constante)</strong></p>
+</section>
+<section id="alisado-exponencial" class="slide level2">
+<h2>Alisado exponencial</h2>
+<p>Para superar esas limitaciones, en los años 50 y 60 se propusieron una serie de métodos que, más allá de asumir una estructura en los datos, su objetivo era <span class="hl-yellow"><strong>describir la serie en términos de sus propios cambios</strong></span>.</p>
+<p>&nbsp;</p>
+<p>El objetivo de los distintos métodos de alisado/suavizado será <span class="hl-yellow"><strong>intuir la inercia de la serie, eliminando sus posibles fluctuaciones aleatorias</strong></span>, asumiendo que si la tendencia de la serie es ascendente, probablemente la serie siga subiendo, teniendo en consideración la pendiente con la que crece o decrece.</p>
+<div class="fragment">
+<p>El nombre de <span class="hl-yellow"><strong>alisado/suavizado EXPONENCIAL</strong></span> se debe a que vamos a ponderar el pasado de la serie con un conjunto de pesos que, normalmente, decrecerán de manera exponencial (ejemplo: si la observación inmediatamente anterior tiene un peso de <span class="math inline">\(0.5\)</span>, la siguiente tendrá un peso de <span class="math inline">\(0.5^2 = 0.25\)</span>)</p>
+</div>
+</section>
+<section id="alisado-simple" class="slide level2">
+<h2>Alisado simple</h2>
+<p>Imagina que tenemos el valor de la serie en <span class="math inline">\(X_t\)</span> y su estimación <span class="math inline">\(\widehat{X}_t\)</span>… ¿cómo poder <span class="hl-yellow"><strong>predecir <span class="math inline">\(\widehat{X}_{t+1}\)</span> solo usando ambos valores</strong></span>?</p>
+<div class="fragment">
+<p>La idea que tuvo <strong>Holt (1956)</strong> fue la de hacer una <span class="hl-yellow"><strong>media ponderada</strong></span> del valor real <span class="math inline">\(X_t\)</span> y su estimación <span class="math inline">\(\widehat{X}_t\)</span></p>
+<p><span class="math display">\[\widehat{X}_{t+1} = \theta \widehat{X}_t + \left( 1 - \theta \right)X_t = X_t + \theta \left(\widehat{X}_t - X_t \right), \quad 0 &lt; \theta &lt; 1\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li><p>Si <span class="math inline">\(\theta \to 1\)</span>, entonces <span class="math inline">\(\widehat{X}_{t+1} \to \widehat{X}_t\)</span> el <span class="hl-yellow"><strong>modelo de alisado produce predicciones casi constantes</strong></span> sin muchas variaciones</p></li>
+<li><p>Si <span class="math inline">\(\theta \to 0\)</span>, entonces <span class="math inline">\(\widehat{X}_{t+1} \to X_t\)</span> el <span class="hl-yellow"><strong>modelo de alisado produce predicciones muy variables dependientes del último valor observado</strong></span> (con mucha fluctuación causada por la propia aleatoriedad de la serie)</p></li>
+</ul>
+</div>
+</section>
+<section id="alisado-simple-1" class="slide level2">
+<h2>Alisado simple</h2>
+<p>Si hacemos lo mismo para la estimación en <span class="math inline">\(X_t\)</span> tenemos</p>
+<p><span class="math display">\[\begin{eqnarray}\widehat{X}_{t+1} &amp;=&amp; \theta \left( \theta \widehat{X}_{t-1} + \left( 1 - \theta \right)X_{t-1} \right) + \left( 1 - \theta \right)X_t \nonumber \\ &amp;=&amp; \theta^2 \widehat{X}_{t-1} +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right)\end{eqnarray}\]</span></p>
+<div class="fragment">
+<p>Si repetimos el <span class="hl-yellow"><strong>proceso iterativo</strong></span> con <span class="math inline">\(\widehat{X}_{t-1}\)</span>, <span class="math inline">\(\widehat{X}_{t-2}\)</span>…</p>
+<p><span class="math display">\[\begin{eqnarray}\widehat{X}_{t+1} &amp;=&amp; \theta^2 \left(\theta \widehat{X}_{t-2} + \left( 1 - \theta \right)X_{t-2} \right) +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right) \nonumber \\ &amp;=&amp; \theta^3 \widehat{X}_{t-2} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2}\right) \nonumber \\ &amp;=&amp; \theta^4 \widehat{X}_{t-3} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3}\right) \nonumber \\ &amp;=&amp; ... \nonumber \\ &amp;=&amp; \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3} + \ldots + \theta^{t-1} X_{1}\right)  \end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="alisado-simple-2" class="slide level2">
+<h2>Alisado simple</h2>
+<p><span class="math display">\[\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)\]</span></p>
+<p>¿Qué sucede cuando <span class="math inline">\(t \to \infty\)</span>?</p>
+<div class="fragment">
+<p>Dado que <span class="math inline">\(\theta &lt; 1\)</span>, entonces <span class="math inline">\(\lim_{t \to \infty} \widehat{X}_{t+1} = \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}\)</span>.</p>
+<p>Fíjate en la <strong>serie geométrica</strong> <span class="math inline">\(\sum_{j=0}^{\infty} \theta^j\)</span>. ¿Recuerdas cuál era la <span class="hl-yellow"><strong>suma de una serie geométrica cuya razón es menor que 1</strong></span>?</p>
+</div>
+<div class="fragment">
+<p>Dado que <span class="math inline">\(\theta &lt; 1\)</span>, tenemos que</p>
+<p><span class="math display">\[\sum_{j=0}^{\infty} \theta^j = \frac{1}{1 - \theta} \rightarrow \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j = 1\]</span></p>
+<p>así que en realidad <span class="math inline">\(\left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}\)</span> representa una <span class="hl-yellow"><strong>media ponderada del pasado (con pesos decrecientes geométricamente)</strong></span> donde los pesos suman uno.</p>
+</div>
+</section>
+<section id="alisado-simple-3" class="slide level2">
+<h2>Alisado simple</h2>
+<p><span class="math display">\[\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)\]</span></p>
+<p>Si te fijas además <span class="hl-yellow"><strong>todas las observaciones son influyentes</strong></span> (en particular la primera) pero su influencia va decreciendo.</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-229-1.png" width="960" class="r-stretch"></section>
+<section id="alisado-simple-4" class="slide level2">
+<h2>Alisado simple</h2>
+<p>El modelo de alisado simple anterior en realidad equivale a asumir que la <span class="hl-yellow"><strong>estructura de nuestra serie es localmente constante</strong></span></p>
+<p><span class="math display">\[X_t = T_t + \varepsilon_t, \quad {\rm E} \left[ T_t \right] \neq cte~ \forall t, \quad {\rm E} \left[ T_{t_i} \right] = cte ~\forall t \in t_i\]</span></p>
+<p>una tendencia que va variando <span class="hl-yellow"><strong>lentamente con el tiempo</strong></span> (ya que el futuro se parece más a los valores pasados inmediatos que a los valores más lejanos).</p>
+<div class="fragment">
+<p>Para el método de alisado simple <span class="hl-yellow"><strong>necesitamos conocer el valor inicial y encontrar el mejor <span class="math inline">\(\theta\)</span></strong></span> (por ejemplo, mediante mínimos cuadrados de los errores observados para distintos valores).</p>
+<p>&nbsp;</p>
+<p>Supondremos <span class="math inline">\(\theta\)</span> constante pero existen métodos (ver <a href="https://robjhyndman.com/forecasting/">aquí</a>) para considerar que <span class="math inline">\(\theta\)</span> se adapta a su vez a lo largo del tiempo</p>
+</div>
+</section>
+<section id="aemet" class="slide level2">
+<h2>AEMET</h2>
+</section>
+<section id="air-passengers" class="slide level2">
+<h2>Air Passengers</h2>
+</section>
+<section id="alisado-doble-lineal-de-holt" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p>con tendencia</p>
+</section>
+<section id="alisado-triple-de-holt-winters" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>con estacionalidad aditiva + multipicativa</p>
+</section>
+<section id="tablita" class="slide level2">
+<h2>tablita</h2>
 </section></section>
 <section>
 <section id="clase-9" class="title-slide slide level1 center">
