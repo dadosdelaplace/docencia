@@ -5706,15 +5706,17 @@ Imagina que tenemos el valor de la serie en $X_t$ y su estimación $\widehat{X}_
 
 . . .
 
-La idea que tuvo **Holt (1956)** fue la de hacer una [**media ponderada**]{.hl-yellow} del valor real $X_t$ y su estimación $\widehat{X}_t$
+La idea que tuvo **Holt (1956)** fue la de hacer una [**media ponderada del valor real $X_t$ y su estimación $\widehat{X}_t$**]{.hl-yellow} 
 
-$$\widehat{X}_{t+1} = \theta \widehat{X}_t + \left( 1 - \theta \right)X_t = X_t + \theta \left(\widehat{X}_t - X_t \right), \quad 0 < \theta < 1$$
+$$\widehat{X}_{t+1} = \theta \widehat{X}_t + \left( 1 - \theta \right)X_t = X_t + \theta \left(\widehat{X}_t - X_t \right) = X_t + \theta \widehat{\varepsilon}_t , \quad 0 < \theta < 1$$
 
 . . .
 
-* Si $\theta \to 1$, entonces $\widehat{X}_{t+1} \to \widehat{X}_t$ el [**modelo de alisado produce predicciones casi constantes**]{.hl-yellow} sin muchas variaciones
+* Si [**$\theta \to 1$**]{.hl-purple}, entonces $\widehat{X}_{t+1} \to \widehat{X}_t$ el [**modelo de alisado produce predicciones casi constantes**]{.hl-yellow} sin muchas variaciones
 
-* Si $\theta \to 0$, entonces $\widehat{X}_{t+1} \to X_t$ el [**modelo de alisado produce predicciones muy variables dependientes del último valor observado**]{.hl-yellow} (con mucha fluctuación causada por la propia aleatoriedad de la serie)
+. . .
+
+* Si [**$\theta \to 0$**]{.hl-purple}, entonces $\widehat{X}_{t+1} \to X_t$ el [**modelo de alisado produce predicciones muy variables dependientes del último valor observado**]{.hl-yellow} (con mucha fluctuación causada por la propia aleatoriedad de la serie)
 
 ---
 
@@ -5722,43 +5724,53 @@ $$\widehat{X}_{t+1} = \theta \widehat{X}_t + \left( 1 - \theta \right)X_t = X_t 
 
 Si hacemos lo mismo para la estimación en $X_t$ tenemos
 
-$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta \left( \theta \widehat{X}_{t-1} + \left( 1 - \theta \right)X_{t-1} \right) + \left( 1 - \theta \right)X_t \nonumber \\ &=& \theta^2 \widehat{X}_{t-1} +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right)\end{eqnarray}$$
+$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta \left( \theta \widehat{X}_{t-1} + \left( 1 - \theta \right)X_{t-1} \right) + \left( 1 - \theta \right)X_t \nonumber \\ &=& \theta^2 \widehat{X}_{t-1} + \theta   \left( 1 - \theta \right) X_{t-1}  + \left( 1 - \theta \right) X_t \end{eqnarray}$$
 
 . . .
+
+Si hacemos lo mismo para la estimación en $X_{t-1}$
+
+$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta^2 \left(\theta \widehat{X}_{t-2} + \left( 1 - \theta \right)X_{t-2} \right) +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right) \nonumber \\ &=&
+\theta^3 \widehat{X}_{t-2} + \theta^2 \left( 1 - \theta \right)X_{t-2} +  \theta \left( 1 - \theta \right)X_{t-1} + \left( 1 - \theta \right) X_t \nonumber \\ &=&
+\theta^3 \widehat{X}_{t-2} + \left( 1 - \theta \right) \left(\theta^2 X_{t-2} +  \theta X_{t-1} +  X_t \right) \end{eqnarray}$$
+
+---
+
+## Alisado simple
+
 
 Si repetimos el [**proceso iterativo**]{.hl-yellow} con $\widehat{X}_{t-1}$, $\widehat{X}_{t-2}$...
 
-$$\begin{eqnarray}\widehat{X}_{t+1} &=& \theta^2 \left(\theta \widehat{X}_{t-2} + \left( 1 - \theta \right)X_{t-2} \right) +  \left( 1 - \theta \right) \left(X_t + \theta X_{t-1} \right) \nonumber \\ &=& \theta^3 \widehat{X}_{t-2} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2}\right) \nonumber \\ &=& \theta^4 \widehat{X}_{t-3} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3}\right) \nonumber \\ &=& ... \nonumber \\ &=& \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} + \theta^3 X_{t-3} + \ldots + \theta^{t-1} X_{1}\right)  \end{eqnarray}$$
+$$\widehat{X}_{t+1} =  \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  +   \ldots + \theta^{t-1} X_{1}\right) = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j}$$
 
----
+[**¿Qué sucede cuando $t \to \infty$?**]{.hl-yellow}
 
-## Alisado simple
-
-$$\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)$$
-
-¿Qué sucede cuando $t \to \infty$? 
 
 . . . 
 
-Dado que $\theta < 1$, entonces $\lim_{t \to \infty} \widehat{X}_{t+1} = \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}$. 
+Dado que $\theta < 1$, entonces
+
+$$\lim_{t \to \infty} \widehat{X}_{t+1} = \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}$$
 
 Fíjate en la **serie geométrica** $\sum_{j=0}^{\infty} \theta^j$. ¿Recuerdas cuál era la [**suma de una serie geométrica cuya razón es menor que 1**]{.hl-yellow}?
-
-. . .
-
-Dado que $\theta < 1$, tenemos que
-
-$$\sum_{j=0}^{\infty} \theta^j = \frac{1}{1 - \theta} \rightarrow \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j = 1$$
-
-así que en realidad $\left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j X_{t-j}$ representa una [**media ponderada del pasado (con pesos decrecientes geométricamente)**]{.hl-yellow} donde los pesos suman uno.
 
 ---
 
 ## Alisado simple
 
-$$\widehat{X}_{t+1} = \theta^t \widehat{X}_{1} + \left( 1 - \theta \right) \left(X_t + \theta X_{t-1}  + \theta^2 X_{t-2} +  \ldots + \theta^{t-1} X_{1}\right)$$
 
-Si te fijas además [**todas las observaciones son influyentes**]{.hl-yellow} (en particular la primera) pero su influencia va decreciendo. 
+Dado que $\theta < 1$, tenemos que $\sum_{j=0}^{\infty} \theta^j = \frac{1}{1 - \theta} \rightarrow \left( 1 - \theta \right) \sum_{j=0}^{\infty} \theta^j = 1$, así que $\left( 1 - \theta \right) \sum_{j=0}^{t-1} \theta^j X_{t-j}$ representa una [**media ponderada del pasado (pesos decrecientes geométricamente con suma 1 en el infinito)**]{.hl-yellow}.
+
+. . .
+
+:::: columns
+::: {.column width="35%"}
+
+Si te fijas además [**todas las observaciones son influyentes**]{.hl-yellow} pero su influencia va decreciendo. 
+
+:::
+
+::: {.column width="65%"}
 
 ```{r}
 #| echo: false
@@ -5773,6 +5785,8 @@ ggplot(theta) +
   labs(title = "Decrecimiento exponencial de pesos")
 ```
 
+:::
+::::
 
 ---
 
@@ -5781,10 +5795,10 @@ ggplot(theta) +
 El modelo de alisado simple anterior en realidad equivale a asumir que la [**estructura de nuestra serie es localmente constante**]{.hl-yellow}
 
 
-$$X_t = T_t + \varepsilon_t, \quad {\rm E} \left[ T_t \right] \neq cte~ \forall t, \quad {\rm E} \left[ T_{t_i} \right] = cte ~\forall t \in t_i$$
+$$X_t = T_t + \varepsilon_t, \quad T_t - T_{t-1} \simeq cte$$
 
 
-una tendencia que va variando [**lentamente con el tiempo**]{.hl-yellow} (ya que el futuro se parece más a los valores pasados inmediatos que a los valores más lejanos).
+una tendencia que va variando [**muy lentamente con el tiempo**]{.hl-yellow} (ya que el futuro se parece más a los valores pasados inmediatos que a los valores más lejanos).
 
 . . .
 
@@ -5792,12 +5806,235 @@ Para el método de alisado simple [**necesitamos conocer el valor inicial y enco
 
 &nbsp;
 
-Supondremos $\theta$ constante pero existen métodos (ver [aquí](https://robjhyndman.com/forecasting/)) para considerar que $\theta$ se adapta a su vez a lo largo del tiempo
+Supondremos [**$\theta$ constante**]{.hl-yellow} pero existen métodos (ver [aquí](https://robjhyndman.com/forecasting/)) para considerar que $\theta$ se adapta a su vez a lo largo del tiempo
 
 ---
 
-## Datos sin estacionalidad ni tendencia
+## Ejemplo en R
 
+Vamos a trabajar con el paquete `{tsibbledata}` que nos permite usar varios [**ejemplos de series temporales**]{.hl-yellow}. En concreto vamos a usar el dataset `global_economy` que contiene distintas estadísticas económicas para distintos años países, y nos vamos a centrar solo en **datos de exportaciones de Algeria**
+
+
+```{r}
+library(tsibbledata)
+algeria_economy <-
+  global_economy |>
+  filter(Country == "Algeria") |>
+  # solo hay un país, eliminamos key
+  tsibble::update_tsibble(key = NULL)
+algeria_economy
+```
+
+---
+
+
+## Ejemplo en R
+
+Si observamos la serie [**no se aprecia una tendencia clara ni una estacionalidad evidente**]{.hl-yellow}, perfecto para nuestro método de alisado simple.
+
+```{r}
+#| code-fold: true
+ggplot(algeria_economy) +
+  geom_line(aes(x = Year, y = Exports)) +
+  scale_x_continuous(n.breaks = 20) +
+  theme_minimal()
+```
+
+---
+
+## Ejemplo en R
+
+[**¿Cómo realizar la estimación de alisado simple?**]{.hl-yellow}
+
+. . .
+
+Vamos a usar el universo de paquetes `{tidyverts}` (una forma de trabajar en modo tidyverse con series temporales), de los cuales ya conocemos `{tsibbledata}` y `{tsibble}`. Vamos a instalar también el paquete [`{fable}`](https://fable.tidyverts.org/) que nos [**proporciona herramientas para la predicción de series temporales**]{.hl-yellow}
+
+```{r}
+library(fable)
+```
+
+---
+
+## Ejemplo en R
+
+Dentro de este paquete existe una función llamada `model()` que nos permite [**ajustar distintos modelos a los datos**]{.hl-yellow}.
+
+* `ETS(var_objetivo ~ componentes del modelo)`: para ajustar los [**métodos de alisado/suavizado exponencial**]{.hl-yellow} necesitamos especificarle dentro de `model()` que nuestro modelo es de tipo `ETS()` (exponential time-series smoothing model)
+
+```{r}
+#| eval: false
+#| code-line-numbers: "4"
+# NO EJECUTES QUE ESTÁ AÚN SIN COMPLETAR
+fit_algeria <-
+  algeria_economy |>
+  model(ETS(Exports ~ ...))
+```
+
+---
+
+## Ejemplo en R
+
+
+Una vez que hemos determinado nuestra variable objetivo, las [**componentes del modelo se pueden incorporar**]{.hl-yellow} con las [**funciones `error()`, `trend()` y `season()`**]{.hl-purple}
+
+```{r}
+#| eval: false
+#| code-line-numbers: "4"
+fit_algeria <-
+  algeria_economy |>
+  model(ETS(Exports ~
+              error(tipo) + trend(tipo) + season(tipo)))
+```
+
+. . .
+
+Cada una de las funciones admite dentro los siguientes tipos:
+
+* `"A"`: [**aditivo**]{.hl-yellow} 
+* `"M"`: [**multiplicativo**]{.hl-yellow} 
+* `"N"`: [**ninguno**]{.hl-yellow} (sin esa componente)
+
+---
+
+
+## Ejemplo en R
+
+
+En nuestro caso hemos visto que el alisado simple es para predecir una serie asumiendo que **no hay tendencia ni estacionalidad** (`"N"` en ambos)
+
+```{r}
+fit_algeria <-
+  algeria_economy |> # fíjate que le podemos poner nombre al modelo
+  model(alisado_simple = ETS(Exports ~ error("A") + trend("N") + season("N")))
+fit_algeria
+```
+
+---
+
+## Ejemplo en R
+
+Se [**guarda en un objeto de tipo modelo**]{.hl-yellow} (`mdl_df` o `mable`): para poder ver la info en un **formato tabulado basta hacer `augment()`**: `.fitted` guarda las estimaciones, `.resid` residuales estimados (en este caso coincide con `.innov`)
+
+```{r}
+#| code-line-numbers: "2"
+fit_algeria |>
+  augment()
+```
+
+
+---
+
+## Ejemplo en R
+
+
+Tras modelizar la serie podemos predecir el futuro con `forecast(h = n_instantes_futuros)` indicándole los **valores futuros** (para convertirlo a un **formato tabla**, dado que ya no es un modelo como antes, debemos convertirlo con `as_tibble()` o `as_tsibble()`)
+
+Fíjate que en el [**caso de alisado simple todas las predicciones son la misma**]{.hl-yellow} (ya que asume que es localmente constante)
+
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+predict_algeria <-
+  fit_algeria |>
+  forecast(h = 7) # 7 instantes futuros
+predict_algeria |> as_tsibble()
+```
+
+```{r}
+#| echo: false
+predict_algeria <-
+  fit_algeria |>
+  forecast(h = 7) # 7 instantes futuros
+predict_algeria |> select(.model, Year, .mean, Exports)
+```
+
+
+---
+
+## Ejemplo en R
+
+Podemos [**visualizar el ajuste (del pasado)**]{.hl-yellow} haciendo `augment() + pivot_longer()` (seleccionándole antes las columnas a pivotar)
+
+```{r}
+#| code-fold: true
+fit_algeria |>
+  augment() |>
+  as_tibble() |> 
+  select(Year, Exports, .fitted) |> 
+  rename(export_real = Exports, export_fit = .fitted) |> 
+  pivot_longer(cols = -Year, names_to = "serie", values_to = "X_t") |> 
+  ggplot() +
+  geom_line(aes(x = Year, y = X_t, color = serie)) +
+  ggthemes::scale_color_colorblind() +
+  scale_x_continuous(n.breaks = 20) +
+  theme_minimal() +
+  labs(y = "% del PIB", title = "Exports: Algeria")
+```
+
+. . .
+
+Fíjate como el [**alisado simple "llega tarde" a los cambios**]{.hl-red} ya que lo que hace es asumir que todo va a seguir igual
+
+
+---
+
+## Ejemplo en R
+
+Podemos [**unir las predicciones futuras a los valores ajustados del pasado**]{.hl-yellow} con un `full_join()` (conviertiendo lsa tablas a tibble, seleccionando las columnas que nos interesa y renombrándolas)
+
+```{r}
+#| code-line-numbers: "5-6"
+fit_predict_algeria <-
+  fit_algeria |>
+  augment() |>
+  as_tibble() |> 
+  full_join(predict_algeria |> as_tibble() |> select(Year, .mean),
+            by = "Year") |> 
+  select(Year, Exports, .fitted, .mean) |> 
+  rename(export_real = Exports, export_fit = .fitted, export_predict = .mean)
+fit_predict_algeria
+```
+
+---
+
+## Ejemplo en R
+
+Tras ello podemos visualizar (haciendo un `pivot_longer()` previo as usual)
+
+```{r}
+#| code-fold: true
+fit_predict_algeria |>
+  pivot_longer(cols = -Year, names_to = "serie", values_to = "X_t") |> 
+  ggplot() +
+  geom_line(aes(x = Year, y = X_t, color = serie)) +
+  ggthemes::scale_color_colorblind() +
+  scale_x_continuous(n.breaks = 20) +
+  theme_minimal() +
+  labs(y = "% del PIB", title = "Exports: Algeria")
+```
+
+
+---
+
+## Ejemplo en R
+
+También podemos simplificar el código de la visualización haciendo [**uso de autoplot()**]{.hl-yellow}, que te incluye además unos **intervalos de confianza**. 
+
+```{r}
+#| code-fold: true
+predict_algeria |>
+  autoplot(algeria_economy) +
+  geom_line(data = fit_algeria |> augment(),
+            aes(y = .fitted), col = "#D55E00") +
+  scale_x_continuous(n.breaks = 20) +
+  theme_minimal() +
+  labs(y = "% del PIB", title = "Exports: Algeria")
+```
+
+---
+
+## Modelos con fable
 
 ---
 

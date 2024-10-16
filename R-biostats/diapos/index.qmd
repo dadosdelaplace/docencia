@@ -7154,7 +7154,7 @@ datos |> bind_rows(tibble("nombre" = c("carlos", NA), "cp" = c(28045, 28019)))
 #| eval: false
 starwars |>
   filter(eye_color == "brown" & species == "Human") |> 
-  arrange(height, desc(mass))
+  arrange(desc(height), mass)
 ```
 
 ### [**Ejercicio 2**]{.hl-yellow}
@@ -7447,12 +7447,9 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 * [💻 Ejercicios resueltos: select](#tu-turno-10-1) 
 
 * [💻 Ejercicios resueltos: mutate, if_else, case_when](#tu-turno-10-2) 
-
 * [🐣 Workbook/caso práctico I: simulación](#caso-practico-10-1)
 
-* [🐣 Workbook/caso práctico II](#caso-practico-10-2)
-
-* [🐣 Workbook/caso práctico III: El Señor de los Anillos](#caso-practico-11-3)
+* [🐣 Workbook/caso prácticos II-III](#caso-practico-10-2)
 
 * [📆 Planificación](#planificacion)
 
@@ -7883,6 +7880,7 @@ heights <-
   pull(height)
   
 starwars |> 
+  drop_na(height) |> 
   slice_sample(prop = 0.5, weight_by = 1/heights)
 ```
 
@@ -8094,50 +8092,9 @@ starwars |>
   drop_na(height)
 ```
 
+
+
 ### [**Ejercicio 2**]{.hl-yellow}
-
-📝 Con los datos obtenidos del ejercicio anterior, traduce el nombre de las columnas a castellano.
-
-```{r}
-#| code-fold: true
-#| eval: false
-starwars |> 
-  select(name, height, contains("color")) |> 
-  drop_na(height) |> 
-  rename(nombre = name, altura = height,
-         color_pelo = eye_color, color_piel = skin_color,
-         color_pelo = hair_color)
-```
-
-### [**Ejercicio 3**]{.hl-yellow}
-
-📝 Con los datos obtenidos del ejercicio anterior, coloca la variable de color de pelo justo detrás de la variable de nombres.
-
-```{r}
-#| code-fold: true
-#| eval: false
-starwars |>
-  select(name, height, contains("color")) |> 
-  drop_na(height) |> 
-  rename(nombre = name, altura = height,
-         color_pelo = eye_color, color_piel = skin_color,
-         color_pelo = hair_color) |> 
-  relocate(color_pelo, .after = nombre)
-```
-
-### [**Ejercicio 4**]{.hl-yellow}
-
-📝 Con los datos originales, comprueba cuántas modalidades únicas hay en la variable de color de pelo.
-
-```{r}
-#| code-fold: true
-#| eval: false
-starwars |> 
-  distinct(hair_color) |> 
-  nrow()
-```
-
-### [**Ejercicio 5**]{.hl-yellow}
 
 📝 Del dataset original, selecciona solo las variables numéricas y de tipo texto. Tras ello define una nueva variable llamada `under_18` que nos recategorice la variable de edad: `TRUE` si es menor de edad y `FALSE` en caso contrario
 
@@ -8149,7 +8106,7 @@ starwars |>
   mutate(under_18 = birth_year < 18)
 ```
 
-### [**Ejercicio 6**]{.hl-yellow}
+### [**Ejercicio 3**]{.hl-yellow}
 
 📝 Del dataset original, crea una nueva columna llamada `auburn` (cobrizo/caoba) que nos diga TRUE si el color de pelo contiene dicha palabra y FALSE en caso contrario (reminder `str_detect()`).
 
@@ -8160,7 +8117,7 @@ starwars |>
   mutate(auburn = str_detect(hair_color, "auburn"))
 ```
 
-### [**Ejercicio 7**]{.hl-yellow}
+### [**Ejercicio 4**]{.hl-yellow}
 
 📝 Del dataset original, incluye una columna que calcule el IMC. Tras ello, crea una nueva variable que valga `NA` si no es humano, `delgadez` por debajo de 18, `normal` entre 18 y 30, `sobrepeso` por encima de 30.
 
@@ -8199,7 +8156,13 @@ Puedes ver la solución en el [**workbook**](https://javieralvarezliebana.quarto
 
 ## 🐣 Caso práctico II: Taylor Swift {#caso-practico-10-2}
 
-pendiente de añadir: repetir entrega previa con tidyverse
+
+¿Te acuerdas de la entrega de Taylor Swift? Vamos a repetir exactamente las mismas cuestiones pero ahora en modo tidyverse: prohibidos `[]`, `$` y demás.
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-ii-taylor-swift)
+
 
 ---
 
@@ -8226,12 +8189,16 @@ lotr_3 <-
 ```
 
 
+---
+
+## 🐣 Caso práctico III: señor de los anillos
+
 
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-el-se%C3%B1or-de-los-anillos)
 
 # Clase 11: [tidyverse (resúmenes)]{.flow} {#clase-11}
 
-[**Summarise y group_by(). Contar y resumir: estadísticas desagregadas por factores/grupos.**]{style="color:#444442;"}
+[**Summarise y group_by(): estadísticas desagregadas.**]{style="color:#444442;"}
 
 
 * [💻 Ejercicios resueltos](#tu-turno-11-1) 
