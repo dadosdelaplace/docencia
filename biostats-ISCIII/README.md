@@ -28,7 +28,7 @@
 
 
 <div align="left">
-<a href="https://javieralvarezliebana.es/docencia/biostats-ISCIII/diapos/#/title-slide"><img width="600" alt="image" src="https://github.com/user-attachments/assets/66cf71b5-13c8-4f5c-90ea-6537e6109f34">
+<a href="https://javieralvarezliebana.es/docencia/biostats-ISCIII/diapos/#/title-slide"><img width="600" alt="image" src="https://github.com/user-attachments/assets/6c82bae6-aca6-47be-9ea6-adbe38325ca8">
 </a>
 </div>
             
