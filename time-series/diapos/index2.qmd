@@ -1,0 +1,77 @@
+---
+title: "Series temporales"
+subtitle: "Análisis de series temporales en R"
+title-slide-attributes:
+  data-background-image: img/time-series.jpg
+  data-background-size: cover
+  data-background-opacity: "0.35"
+author: "Grado en Estadística Aplicada • Javier Álvarez Liébana"
+affiliation: Facultad de Estudios Estadísticos (UCM)
+format: 
+  revealjs:
+    menu:
+      side: left
+      width: normal
+    footer: "[<strong>Javier Álvarez Liébana</strong>](...) • Grado en Estadística Aplicada (UCM)"
+    slide-number: c/t
+---
+
+
+## Ejemplo en R
+
+Vamos a trabajar con el paquete `{tsibbledata}` que nos permite usar varios [**ejemplos de series temporales**]{.hl-yellow}. En concreto vamos a usar el dataset `global_economy` que contiene distintas estadísticas económicas para distintos años países, y nos vamos a centrar solo en **datos de exportaciones de Algeria**
+
+
+```{r}
+library(dplyr)
+library(tsibbledata)
+algeria_economy <-
+  global_economy |>
+  filter(Country == "Algeria")
+algeria_economy
+```
+
+
+---
+
+## Ejemplo en R
+
+[**¿Cómo realizar la estimación de alisado simple?**]{.hl-yellow}
+
+. . .
+
+Vamos a usar el universo de paquetes `{tidyverts}` (una forma de trabajar en modo tidyverse con series temporales), de los cuales ya conocemos `{tsibbledata}` y `{tsibble}`. Vamos a instalar también el paquete [`{fable}`](https://fable.tidyverts.org/) que nos [**proporciona herramientas para la predicción de series temporales**]{.hl-yellow}
+
+```{r}
+library(fable)
+library(tsibbledata)
+library(tsibble)
+library(dplyr)
+library(tidyr)
+```
+
+---
+
+
+## Ejemplo en R
+
+
+En nuestro caso hemos visto que el alisado simple es para predecir una serie asumiendo que **no hay tendencia ni estacionalidad**.
+
+```{r}
+aus_production |>
+  model(ets = ETS(log(Beer) ~ error("A") + trend("N") + season("N"))) |> 
+  augment()
+```
+
+```{r}
+algeria_economy |>
+  tibble::as_tibble() |>
+  tsibble::as_tsibble(index = Year) |>
+  model(ets = ETS(Exports ~ error("A") + trend("N") + season("N"))) |> 
+  augment()
+```
+
+
+
+
