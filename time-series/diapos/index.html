@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-17"</code></pre>
+<pre><code>[1] "2024-10-19"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-17 10:10:16 CEST"</code></pre>
+<pre><code>[1] "2024-10-19 14:54:25 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -2672,13 +2672,13 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-4"><a href="#cb147-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr    min     lq       mean   median
-                                y &lt;- x^2    984   1189   1327.744   1230.0
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 813030 830660 889591.514 848843.5
-       uq     max neval
-   1353.0    6355   500
- 869179.5 3382582   500</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean  median
+                                y &lt;- x^2    1.722    1.968    2.146678    2.05
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1363.701 1378.461 1481.385104 1393.18
+       uq       max neval
+    2.214     5.699   500
+ 1405.008 10721.623   500</code></pre>
 </div>
 </div>
 </section>
@@ -4749,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t    X_t sd    
-   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.487 sd_0.5
- 2     2  0.961 sd_0.5
- 3     3 -0.487 sd_0.5
- 4     4 -0.336 sd_0.5
- 5     5 -0.614 sd_0.5
- 6     6  0.170 sd_0.5
- 7     7  0.104 sd_0.5
- 8     8 -0.410 sd_0.5
- 9     9  0.232 sd_0.5
-10    10 -0.372 sd_0.5
+       t     X_t sd    
+   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
+ 1     1 -0.244  sd_0.5
+ 2     2  0.716  sd_0.5
+ 3     3  0.0767 sd_0.5
+ 4     4  0.328  sd_0.5
+ 5     5  0.131  sd_0.5
+ 6     6  0.196  sd_0.5
+ 7     7 -0.168  sd_0.5
+ 8     8  0.289  sd_0.5
+ 9     9 -0.820  sd_0.5
+10    10 -0.221  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd          X_t
-   &lt;int&gt; &lt;glue&gt;    &lt;dbl&gt;
- 1     1 sd_0.5 -0.339  
- 2     2 sd_0.5 -0.569  
- 3     3 sd_0.5 -0.0808 
- 4     4 sd_0.5 -0.00345
- 5     5 sd_0.5 -0.999  
- 6     6 sd_0.5  0.456  
- 7     7 sd_0.5  0.345  
- 8     8 sd_0.5 -0.257  
- 9     9 sd_0.5 -0.0320 
-10    10 sd_0.5  0.514  
+       t sd         X_t
+   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
+ 1     1 sd_0.5  0.0394
+ 2     2 sd_0.5  1.31  
+ 3     3 sd_0.5 -0.291 
+ 4     4 sd_0.5 -0.312 
+ 5     5 sd_0.5 -0.633 
+ 6     6 sd_0.5 -0.387 
+ 7     7 sd_0.5 -0.0315
+ 8     8 sd_0.5  0.606 
+ 9     9 sd_0.5  0.147 
+10    10 sd_0.5  0.984 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -5926,7 +5926,6 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h3 id="ejercicio-6-3"><span class="hl-yellow"><strong>Ejercicio 6</strong></span></h3>
 <p>💻 Repite los ejercicios anteriores pero haciendo una pequeña modificación en la función que estima la estacionalidad, permitiendo que pueda estimarla de manera clásica o de manera sinuosoidal <span class="math inline">\(\widehat{S}_t = \sin(2 \pi t/s)\)</span>.</p>
 </section></section>
-<section>
 <section id="clase-9a" class="title-slide slide level1 center">
 <h1>Clase 9: <span class="flow">métricas de error</span></h1>
 <p><span style="color:#444442;"><strong>Calibrando nuestra estimación: train/validación y errores</strong></span></p>
@@ -5935,12 +5934,10 @@ No todavía, vamos por el ciclo 4</code></pre>
 <li><a href="#/planificacion">📆 Planificación</a></li>
 </ul>
 </section>
-<section class="slide level2">
 
-</section></section>
 <section>
-<section id="clase-9" class="title-slide slide level1 center">
-<h1>Clase 9: <span class="flow">métodos de alisado</span></h1>
+<section id="clase-10" class="title-slide slide level1 center">
+<h1>Clase 10: <span class="flow">métodos de alisado</span></h1>
 
 </section>
 <section id="limitaciones" class="slide level2">
@@ -6029,6 +6026,33 @@ No todavía, vamos por el ciclo 4</code></pre>
 </section>
 <section id="alisado-simple-4" class="slide level2">
 <h2>Alisado simple</h2>
+<p>Fíjate que la fórmula anterior se puede <span class="hl-yellow"><strong>generalizar</strong></span> para <span class="hl-yellow"><strong>predicción a horizonte <span class="math inline">\(h\)</span></strong></span>: si solo disponemos de información hasta el instante <span class="math inline">\(t\)</span>, tenemos que</p>
+<p><span class="math display">\[\begin{eqnarray}\widehat{X}_{t+1|t} &amp;=&amp;  \theta \widehat{X}_{t|t-1} + \left( 1 - \theta \right)X_t = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j}, \nonumber \\ \widehat{X}_{t+2|t} &amp;=&amp;  \theta \widehat{X}_{t+1|t} + \left( 1 - \theta \right)X_{t+1} \simeq \theta \widehat{X}_{t+1|t} + \left( 1 - \theta \right)\widehat{X}_{t+1|t} = \widehat{X}_{t+1|t}, \nonumber \\ ...  \nonumber \\ \widehat{X}_{t+h|t} &amp;=&amp;\widehat{X}_{t+1|t} \quad \text{para todo h}
+\end{eqnarray}\]</span></p>
+<div class="fragment">
+<p>El <span class="hl-yellow"><strong>método de alisado simple produce «flat predictions»</strong></span>: siempre devuelve a horizonte <span class="math inline">\(h\)</span> el último valor predicho <span class="math inline">\(\widehat{X}_{t+1|t}\)</span> (asume que la tendencia es localmente constante).</p>
+</div>
+</section>
+<section id="alisado-simple-5" class="slide level2">
+<h2>Alisado simple</h2>
+<p>Fíjate que el método de alisado simple es una simple media ponderada, de una forma muy particular, pero que podríamos considerar <span class="hl-yellow"><strong>otro tipo de métodos basados en promedios</strong></span>:</p>
+<ul>
+<li>Si consideramos el conocido como <span class="hl-yellow"><strong>método naive o trivial</strong></span>, tenemos que la <span class="hl-yellow"><strong>predicción a horizonte <span class="math inline">\(h\)</span></strong></span> (con la información disponible hasta <span class="math inline">\(t\)</span>) es</li>
+</ul>
+<p><span class="math display">\[\widehat{X}_{t+h|t} = X_t\]</span></p>
+<p>la <strong>única observación importante es la última</strong>. Esto es <span class="hl-yellow"><strong>equivalente a un alisado simple con <span class="math inline">\(\theta = 0\)</span></strong></span></p>
+</section>
+<section id="alisado-simple-6" class="slide level2">
+<h2>Alisado simple</h2>
+<p>Fíjate que el método de alisado simple es una simple media ponderada, de una forma muy particular, pero que podríamos considerar <span class="hl-yellow"><strong>otro tipo de métodos basados en promedios</strong></span>:</p>
+<ul>
+<li>Si consideramos el conocido como <span class="hl-yellow"><strong>mean method</strong></span>, lo que hemos llamado <code>poly0</code> (hace simplemente la media cte de todos los valores), la <span class="hl-yellow"><strong>predicción a horizonte <span class="math inline">\(h\)</span></strong></span> (con la información disponible hasta <span class="math inline">\(t\)</span>) es</li>
+</ul>
+<p><span class="math display">\[\widehat{X}_{t+h|t} = \frac{1}{t} \sum_{j=1}^{t}X_j\]</span></p>
+<p>todas las observaciones pasadas son <strong>igual de importantes</strong>.</p>
+</section>
+<section id="alisado-simple-7" class="slide level2">
+<h2>Alisado simple</h2>
 <p>El modelo de alisado simple anterior en realidad equivale a asumir que la <span class="hl-yellow"><strong>estructura de nuestra serie es localmente constante</strong></span></p>
 <p><span class="math display">\[X_t = T_t + \varepsilon_t, \quad T_t - T_{t-1} \simeq cte\]</span></p>
 <p>una tendencia que va variando <span class="hl-yellow"><strong>muy lentamente con el tiempo</strong></span> (ya que el futuro se parece más a los valores pasados inmediatos que a los valores más lejanos).</p>
@@ -6043,12 +6067,13 @@ No todavía, vamos por el ciclo 4</code></pre>
 <p>Vamos a trabajar con el paquete <code>{tsibbledata}</code> que nos permite usar varios <span class="hl-yellow"><strong>ejemplos de series temporales</strong></span>. En concreto vamos a usar el dataset <code>global_economy</code> que contiene distintas estadísticas económicas para distintos años países, y nos vamos a centrar solo en <strong>datos de exportaciones de Algeria</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb348"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb348-1"><a href="#cb348-1"></a><span class="fu">library</span>(tsibbledata)</span>
-<span id="cb348-2"><a href="#cb348-2"></a>algeria_economy <span class="ot">&lt;-</span></span>
-<span id="cb348-3"><a href="#cb348-3"></a>  global_economy <span class="sc">|&gt;</span></span>
-<span id="cb348-4"><a href="#cb348-4"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Algeria"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb348-5"><a href="#cb348-5"></a>  <span class="co"># solo hay un país, eliminamos key</span></span>
-<span id="cb348-6"><a href="#cb348-6"></a>  tsibble<span class="sc">::</span><span class="fu">update_tsibble</span>(<span class="at">key =</span> <span class="cn">NULL</span>)</span>
-<span id="cb348-7"><a href="#cb348-7"></a>algeria_economy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb348-2"><a href="#cb348-2"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb348-3"><a href="#cb348-3"></a>algeria_economy <span class="ot">&lt;-</span></span>
+<span id="cb348-4"><a href="#cb348-4"></a>  global_economy <span class="sc">|&gt;</span></span>
+<span id="cb348-5"><a href="#cb348-5"></a>  <span class="fu">filter</span>(Country <span class="sc">==</span> <span class="st">"Algeria"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb348-6"><a href="#cb348-6"></a>  <span class="co"># solo hay un país, eliminamos key</span></span>
+<span id="cb348-7"><a href="#cb348-7"></a>  <span class="fu">update_tsibble</span>(<span class="at">key =</span> <span class="cn">NULL</span>)</span>
+<span id="cb348-8"><a href="#cb348-8"></a>algeria_economy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 58 x 9 [1Y]
    Country Code   Year         GDP Growth   CPI Imports Exports Population
@@ -6280,9 +6305,362 @@ No todavía, vamos por el ciclo 4</code></pre>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-242-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-242-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="clase-11" class="title-slide slide level1 center">
+<h1>Clase 11: <span class="flow">modelos con fable</span></h1>
+
+</section>
+<section id="modelos-con-fable-mean" class="slide level2">
+<h2>Modelos con fable: MEAN()</h2>
+<p>No solo vamos a poder aplicar el alisado en esta nueva lógica de programación, sino que vamos a poder <span class="hl-yellow"><strong>programar de manera sencilla los modelos que hemos investigado hasta ahora</strong></span></p>
+<div class="fragment">
+<ul>
+<li><code>MEAN(var_objetivo)</code>: la predicción a horizonte <span class="math inline">\(h\)</span> se define como la <span class="hl-yellow"><strong>media de todos los valores</strong></span> conocidos de la serie <span class="math inline">\(\widehat{X}_{t+h|t} = \frac{1}{t} \sum_{j=1}^{t} X_t\)</span> hasta el instante <span class="math inline">\(t\)</span> (predicción constante, la que antes llamábamos <code>poly0</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb365" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb365-1"><a href="#cb365-1"></a>airpass <span class="ot">&lt;-</span> AirPassengers <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb365-2"><a href="#cb365-2"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb365-3"><a href="#cb365-3"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb365-4"><a href="#cb365-4"></a>  <span class="fu">model</span>(<span class="at">alisado_simple =</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb365-5"><a href="#cb365-5"></a>        <span class="at">mean_cte =</span> <span class="fu">MEAN</span>(value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="modelos-con-fable-tslm" class="slide level2">
+<h2>Modelos con fable: TSLM()</h2>
+<ul>
+<li><code>TSLM(var_objetivo ~ formula)</code>: la predicción a horizonte <span class="math inline">\(h\)</span> se define como una <span class="hl-yellow"><strong>regresión polinómica</strong></span> tal que <span class="math inline">\(\widehat{X}_{t+h|t} = \beta_0 + \sum_{j=1}^{p} \beta_j (t+h)^p\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb366" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb366-1"><a href="#cb366-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb366-2"><a href="#cb366-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb366-3"><a href="#cb366-3"></a>  <span class="fu">model</span>(<span class="at">alisado_simple =</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb366-4"><a href="#cb366-4"></a>        <span class="at">mean_cte =</span> <span class="fu">MEAN</span>(value),</span>
+<span id="cb366-5"><a href="#cb366-5"></a>        <span class="at">reg_poly =</span> <span class="fu">TSLM</span>(value <span class="sc">~</span> index))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modelos-con-fable-rw" class="slide level2">
+<h2>Modelos con fable: RW()</h2>
+<ul>
+<li><code>RW(var_objetivo ~ drift())</code>: modelo conocido como <span class="hl-yellow"><strong>random walk</strong></span> o paseo aleatorio con <span class="hl-yellow"><strong>drift o tendencia</strong></span> tal que <span class="math inline">\(X_{t+1} = c + X_{t} + \varepsilon_t\)</span>. La predicción a horizonte <span class="math inline">\(h\)</span> se define entonces como</li>
+</ul>
+<p><span class="math display">\[\widehat{X}_{t+h|t} = c + X_{(t+h-1)|t} \simeq c + \widehat{X}_{(t+h-1)|t} \simeq 2*c +  \widehat{X}_{(t+h-2)|t} \simeq ... \simeq c*h + X_{t}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb367" data-code-line-numbers="6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb367-1"><a href="#cb367-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb367-2"><a href="#cb367-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb367-3"><a href="#cb367-3"></a>  <span class="fu">model</span>(<span class="at">alisado_simple =</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb367-4"><a href="#cb367-4"></a>        <span class="at">mean_cte =</span> <span class="fu">MEAN</span>(value),</span>
+<span id="cb367-5"><a href="#cb367-5"></a>        <span class="at">reg_poly =</span> <span class="fu">TSLM</span>(value <span class="sc">~</span> index),</span>
+<span id="cb367-6"><a href="#cb367-6"></a>        <span class="at">rw_drift =</span> <span class="fu">RW</span>(value <span class="sc">~</span> <span class="fu">drift</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modelos-con-fable-naive" class="slide level2">
+<h2>Modelos con fable: NAIVE()</h2>
+<ul>
+<li><code>NAIVE(var_objetivo)</code>: el <span class="hl-yellow"><strong>modelo naive o trivial</strong></span> es una simplificación del random walk con <span class="math inline">\(c=0\)</span> (sin tendencia, de hecho <code>NAIVE()</code> y <code>RW()</code> sin drift hacen lo mismo. La predicción a horizonte <span class="math inline">\(h\)</span> se define entonces como simplemente el último valor conocido en tiempo <span class="math inline">\(t\)</span>.</li>
+</ul>
+<p><span class="math display">\[\widehat{X}_{t+h|t} =  X_{t}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb368" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb368-1"><a href="#cb368-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb368-2"><a href="#cb368-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb368-3"><a href="#cb368-3"></a>  <span class="fu">model</span>(<span class="at">alisado_simple =</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb368-4"><a href="#cb368-4"></a>        <span class="at">mean_cte =</span> <span class="fu">MEAN</span>(value),</span>
+<span id="cb368-5"><a href="#cb368-5"></a>        <span class="at">reg_poly =</span> <span class="fu">TSLM</span>(value <span class="sc">~</span> index),</span>
+<span id="cb368-6"><a href="#cb368-6"></a>        <span class="at">rw_drift =</span> <span class="fu">RW</span>(value <span class="sc">~</span> <span class="fu">drift</span>()),</span>
+<span id="cb368-7"><a href="#cb368-7"></a>        <span class="at">naive =</span> <span class="fu">NAIVE</span>(value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modelos-con-fable-snaive" class="slide level2">
+<h2>Modelos con fable: SNAIVE()</h2>
+<ul>
+<li><code>SNAIVE(var_objetivo ~ lag())</code>: similar al modelo anterior solo que en lugar de repetir el último valor <span class="hl-yellow"><strong>repite los últimos valores estacionales</strong></span> (por ejemplo, el último mes, el último año, etc).</li>
+</ul>
+<p>La predicción a horizonte <span class="math inline">\(h\)</span> se define entonces como</p>
+<p><span class="math display">\[\widehat{X}_{t+h|t} =  X_{\left(t+h \right) - s*(k+1)}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(s\)</span> es el periodo</p></li>
+<li><p><span class="math inline">\(k\)</span> es la parte entera de <span class="math inline">\((h-1)/s\)</span> (el número de periodos completos que han pasado hasta <span class="math inline">\(t+h\)</span>). Por ejemplo, si <span class="math inline">\(h = 26\)</span> y <span class="math inline">\(s = 12\)</span>, <span class="math inline">\((h-1)/s = 25/12 = 2.08333\)</span>, cuya parte entera es <span class="math inline">\(k = 2\)</span> (han pasado 2 años completos hasta <span class="math inline">\(h = 26\)</span>). Si <span class="math inline">\(s = 12\)</span>, la predicción de cualquier de los enero futuros será igual a la predicción del último enero conocido.</p></li>
+</ul>
+</section>
+<section id="modelos-con-fable-snaive-1" class="slide level2">
+<h2>Modelos con fable: SNAIVE()</h2>
+<ul>
+<li><code>SNAIVE(var_objetivo ~ lag())</code>: similar al modelo anterior solo que en lugar de repetir el último valor <span class="hl-yellow"><strong>repite los últimos valores estacionales</strong></span> (por ejemplo, el último mes, el último año, etc).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb369" data-code-line-numbers="8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb369-1"><a href="#cb369-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb369-2"><a href="#cb369-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb369-3"><a href="#cb369-3"></a>  <span class="fu">model</span>(<span class="at">alisado_simple =</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb369-4"><a href="#cb369-4"></a>        <span class="at">mean_cte =</span> <span class="fu">MEAN</span>(value),</span>
+<span id="cb369-5"><a href="#cb369-5"></a>        <span class="at">reg_poly =</span> <span class="fu">TSLM</span>(value <span class="sc">~</span> index),</span>
+<span id="cb369-6"><a href="#cb369-6"></a>        <span class="at">rw_drift =</span> <span class="fu">RW</span>(value <span class="sc">~</span> <span class="fu">drift</span>()),</span>
+<span id="cb369-7"><a href="#cb369-7"></a>        <span class="at">naive =</span> <span class="fu">NAIVE</span>(value),</span>
+<span id="cb369-8"><a href="#cb369-8"></a>        <span class="at">season_naive =</span> <span class="fu">SNAIVE</span>(value <span class="sc">~</span> <span class="fu">lag</span>(<span class="dv">12</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="modelos-con-fable" class="slide level2">
 <h2>Modelos con fable</h2>
+<p>Así de toda la colección anterior de modelos podemos <span class="hl-yellow"><strong>obtener las estimaciones</strong></span> de manera sencilla con <code>augment()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb370"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb370-1"><a href="#cb370-1"></a>estimaciones <span class="ot">&lt;-</span> fit_airpass <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb370-2"><a href="#cb370-2"></a></span>
+<span id="cb370-3"><a href="#cb370-3"></a><span class="co"># Tenemos 144 estimaciones para cada uno de esos modelos</span></span>
+<span id="cb370-4"><a href="#cb370-4"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb370-5"><a href="#cb370-5"></a>  <span class="fu">count</span>(.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  .model             n
+  &lt;chr&gt;          &lt;int&gt;
+1 alisado_simple   144
+2 mean_cte         144
+3 naive            144
+4 reg_poly         144
+5 rw_drift         144
+6 season_naive     144</code></pre>
+</div>
+</div>
+</section>
+<section id="modelos-con-fable-1" class="slide level2">
+<h2>Modelos con fable</h2>
+<p>Así de toda la colección anterior de modelos podemos <span class="hl-yellow"><strong>obtener las estimaciones</strong></span> de manera sencilla con <code>augment()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb372"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb372-1"><a href="#cb372-1"></a>estimaciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 864 x 6 [1M]
+# Key:       .model [6]
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+# ℹ 854 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="visualización-estimaciones" class="slide level2">
+<h2>Visualización estimaciones</h2>
+<p>Podemos <span class="hl-yellow"><strong>visualizar el ajuste (del pasado)</strong></span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb374"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb374-1"><a href="#cb374-1"></a>estimaciones <span class="sc">|&gt;</span></span>
+<span id="cb374-2"><a href="#cb374-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb374-3"><a href="#cb374-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> value), <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb374-4"><a href="#cb374-4"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb374-5"><a href="#cb374-5"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .fitted, <span class="at">color =</span> .model),</span>
+<span id="cb374-6"><a href="#cb374-6"></a>            <span class="at">linewidth =</span> <span class="fl">0.75</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb374-7"><a href="#cb374-7"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">7</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb374-8"><a href="#cb374-8"></a>  <span class="fu">scale_x_yearquarter</span>(<span class="at">date_breaks =</span> <span class="st">"24 months"</span>) <span class="sc">+</span></span>
+<span id="cb374-9"><a href="#cb374-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-250-1.png" width="960" class="r-stretch"></section>
+<section id="visualización-predicciones" class="slide level2">
+<h2>Visualización predicciones</h2>
+<p>Podemos <span class="hl-yellow"><strong>visualizar las predicciones futuras</strong></span> con <code>forecast() + autoplot()</code> (con <code>level = NULL</code> anulamos los intervalos de confianza).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb375"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb375-1"><a href="#cb375-1"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb375-2"><a href="#cb375-2"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb375-3"><a href="#cb375-3"></a>  <span class="fu">autoplot</span>(airpass, <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb375-4"><a href="#cb375-4"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">7</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb375-5"><a href="#cb375-5"></a>  <span class="fu">scale_x_yearquarter</span>(<span class="at">date_breaks =</span> <span class="st">"24 months"</span>) <span class="sc">+</span></span>
+<span id="cb375-6"><a href="#cb375-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-251-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>También podemos con el paquete <code>{feasts}</code> hacer uso de las <span class="hl-yellow"><strong>decomposiciones que hemos aprendido</strong></span></p>
+<ul>
+<li><code>classical_decomposition(var_objetivo ~ season(s),  type = ...)</code>: <span class="hl-yellow"><strong>descomposición clásica</strong></span> aprendida de tipo multiplicativa o aditiva. La predicción a horizonte <span class="math inline">\(h\)</span> se define tal que</li>
+</ul>
+<p><span class="math display">\[\widehat{X}_{t+h|t} = \widehat{T}_{t+h|t} + \widehat{S}_{t+h|t} \quad \text{type = "additive"}\]</span></p>
+<p><span class="math display">\[\widehat{X}_{t+h|t} = \widehat{T}_{t+h|t} * \widehat{S}_{t+h|t} \quad \text{type = "mult"}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb376" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb376-1"><a href="#cb376-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb376-2"><a href="#cb376-2"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb376-3"><a href="#cb376-3"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb376-4"><a href="#cb376-4"></a>  <span class="fu">model</span>(<span class="at">cts =</span> <span class="fu">classical_decomposition</span>(value <span class="sc">~</span> <span class="fu">season</span>(<span class="dv">12</span>), <span class="at">type =</span> <span class="st">"additive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="métodos-de-decomposición-1" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Para este tipo particular de métodos (<strong>métodos de decomposición</strong>) existe una función <code>components()</code> que automáticamente nos devuelve la tendencia estimada (<code>trend</code>), la estacionalidad (<code>seasonal</code>), el residuo estimado (<code>random</code>) y la serie desestacionalizada (<code>season_adjust</code>, serie - seasonal)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb377" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb377-1"><a href="#cb377-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb377-2"><a href="#cb377-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb377-3"><a href="#cb377-3"></a>  <span class="fu">model</span>(<span class="at">cts =</span> <span class="fu">classical_decomposition</span>(value <span class="sc">~</span> <span class="fu">season</span>(<span class="dv">12</span>), <span class="at">type =</span> <span class="st">"additive"</span>))</span>
+<span id="cb377-4"><a href="#cb377-4"></a>fit_airpass <span class="sc">|&gt;</span> <span class="fu">components</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A dable: 144 x 7 [1M]
+# Key:     .model [1]
+# :        value = trend + seasonal + random
+   .model    index value trend seasonal random season_adjust
+   &lt;chr&gt;     &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+ 1 cts    1949 Jan   112   NA    -24.7   NA            137. 
+ 2 cts    1949 Feb   118   NA    -36.2   NA            154. 
+ 3 cts    1949 Mar   132   NA     -2.24  NA            134. 
+ 4 cts    1949 Apr   129   NA     -8.04  NA            137. 
+ 5 cts    1949 May   121   NA     -4.51  NA            126. 
+ 6 cts    1949 Jun   135   NA     35.4   NA             99.6
+ 7 cts    1949 Jul   148  127.    63.8  -42.6           84.2
+ 8 cts    1949 Aug   148  127.    62.8  -42.1           85.2
+ 9 cts    1949 Sep   136  128.    16.5   -8.48         119. 
+10 cts    1949 Oct   119  129.   -20.6   11.1          140. 
+# ℹ 134 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="métodos-de-decomposición-2" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Con <code>autoplot()</code> nos <span class="hl-yellow"><strong>visualiza cada componente</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb379" data-code-line-numbers="5-6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb379-1"><a href="#cb379-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb379-2"><a href="#cb379-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb379-3"><a href="#cb379-3"></a>  <span class="fu">model</span>(<span class="at">cts =</span> <span class="fu">classical_decomposition</span>(value  <span class="sc">~</span> <span class="fu">season</span>(<span class="dv">12</span>), <span class="at">type =</span> <span class="st">"additive"</span>))</span>
+<span id="cb379-4"><a href="#cb379-4"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb379-5"><a href="#cb379-5"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb379-6"><a href="#cb379-6"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-254-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición-3" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Así quedaría en <span class="hl-yellow"><strong>modo multiplicativo</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb380" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb380-1"><a href="#cb380-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb380-2"><a href="#cb380-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb380-3"><a href="#cb380-3"></a>  <span class="fu">model</span>(<span class="at">cts =</span> <span class="fu">classical_decomposition</span>(value <span class="sc">~</span> <span class="fu">season</span>(<span class="dv">12</span>), <span class="at">type =</span> <span class="st">"mult"</span>))</span>
+<span id="cb380-4"><a href="#cb380-4"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb380-5"><a href="#cb380-5"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb380-6"><a href="#cb380-6"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-255-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición-4" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Fíjate que el <span class="hl-yellow"><strong>modo multiplicativo es equivalente a tomar el logaritmo del valor objetivo</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb381" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb381-1"><a href="#cb381-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb381-2"><a href="#cb381-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb381-3"><a href="#cb381-3"></a>  <span class="fu">model</span>(<span class="at">cts =</span> <span class="fu">classical_decomposition</span>(<span class="fu">log</span>(value) <span class="sc">~</span> <span class="fu">season</span>(<span class="dv">12</span>), <span class="at">type =</span> <span class="st">"additive"</span>))</span>
+<span id="cb381-4"><a href="#cb381-4"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb381-5"><a href="#cb381-5"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb381-6"><a href="#cb381-6"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-256-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición-5" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<ul>
+<li><code>STL(var_objetivo ~ trend(window = ..., degre = ...) + season(period = ..., window = "periodic"))</code>: la predicción a horizonte <span class="math inline">\(h\)</span> se define también como una <span class="hl-yellow"><strong>descomposición clásica en tendencia y estacionalidad</strong></span> pero ahora la <span class="hl-yellow"><strong>tendencia es estimada mediante una regresión local</strong></span> conocida como <strong>regresión LOESS o LOWESS</strong>. Dicha regresión ajusta a los datos una <strong>regresión polinómica (degree) pero de manera LOCAL</strong>, en cada punto solo se utiliza un número <code>window</code> de observaciones).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb382" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb382-1"><a href="#cb382-1"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb382-2"><a href="#cb382-2"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb382-3"><a href="#cb382-3"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb382-4"><a href="#cb382-4"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(value <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">7</span>, <span class="at">degree =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">period =</span> <span class="dv">12</span>, <span class="at">window =</span> <span class="st">"periodic"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="métodos-de-decomposición-6" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Para este tipo particular de métodos (<strong>métodos de decomposición STL</strong>) <code>components()</code> nos devuelve la tendencia estimada (<code>trend</code>), la estacionalidad (<code>season_s</code>), el residuo estimado (<code>remainder</code>) y la serie desestacionalizada (<code>season_adjust</code>, serie - season_s)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb383" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb383-1"><a href="#cb383-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb383-2"><a href="#cb383-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb383-3"><a href="#cb383-3"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(<span class="fu">log</span>(value) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">7</span>, <span class="at">degree =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">period =</span> <span class="dv">12</span>, <span class="at">window =</span> <span class="st">"periodic"</span>)))</span>
+<span id="cb383-4"><a href="#cb383-4"></a>fit_airpass <span class="sc">|&gt;</span> <span class="fu">components</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A dable: 144 x 7 [1M]
+# Key:     .model [1]
+# :        log(value) = trend + season_12 + remainder
+   .model    index `log(value)` trend season_12 remainder season_adjust
+   &lt;chr&gt;     &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 stl    1949 Jan         4.72  4.87   -0.105   -0.0448           4.82
+ 2 stl    1949 Feb         4.77  4.87   -0.142    0.0408           4.91
+ 3 stl    1949 Mar         4.88  4.87   -0.0118   0.0213           4.89
+ 4 stl    1949 Apr         4.86  4.87   -0.0337   0.0256           4.89
+ 5 stl    1949 May         4.80  4.84   -0.0261  -0.0154           4.82
+ 6 stl    1949 Jun         4.91  4.81    0.106   -0.00733          4.80
+ 7 stl    1949 Jul         5.00  4.79    0.220   -0.0149           4.78
+ 8 stl    1949 Aug         5.00  4.80    0.221   -0.0198           4.78
+ 9 stl    1949 Sep         4.91  4.81    0.0864   0.0188           4.83
+10 stl    1949 Oct         4.78  4.82   -0.0417  -0.00306          4.82
+# ℹ 134 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="métodos-de-decomposición-7" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb385" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb385-1"><a href="#cb385-1"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb385-2"><a href="#cb385-2"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb385-3"><a href="#cb385-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-259-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición-8" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>Fíjate que a menor valor en <code>window = ...</code> más errática es la tendencia…</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb386" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb386-1"><a href="#cb386-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb386-2"><a href="#cb386-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb386-3"><a href="#cb386-3"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(<span class="fu">log</span>(value) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">3</span>, <span class="at">degree =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">period =</span> <span class="dv">12</span>, <span class="at">window =</span> <span class="st">"periodic"</span>)))</span>
+<span id="cb386-4"><a href="#cb386-4"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb386-5"><a href="#cb386-5"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb386-6"><a href="#cb386-6"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-260-1.png" width="960" class="r-stretch"></section>
+<section id="métodos-de-decomposición-9" class="slide level2">
+<h2>Métodos de decomposición</h2>
+<p>… y a mayor valor en <code>window = ...</code> más “recta” se convierte.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb387" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb387-1"><a href="#cb387-1"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb387-2"><a href="#cb387-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb387-3"><a href="#cb387-3"></a>  <span class="fu">model</span>(<span class="at">stl =</span> <span class="fu">STL</span>(<span class="fu">log</span>(value) <span class="sc">~</span> <span class="fu">trend</span>(<span class="at">window =</span> <span class="dv">30</span>, <span class="at">degree =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="at">period =</span> <span class="dv">12</span>, <span class="at">window =</span> <span class="st">"periodic"</span>)))</span>
+<span id="cb387-4"><a href="#cb387-4"></a>fit_airpass <span class="sc">|&gt;</span></span>
+<span id="cb387-5"><a href="#cb387-5"></a>  <span class="fu">components</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb387-6"><a href="#cb387-6"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-261-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-12" class="slide level2">
+<h2>💻 Tu turno</h2>
+<h3 id="ejercicio-1-8"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
+<p>💻 Repite el proceso de creación de modelos (los fable y los feast) para los conjuntos de datos</p>
+<ul>
+<li><code>retiro</code></li>
+<li><code>global_economy</code> (solo para España) del paquete <code>{tsibbledata}</code></li>
+<li><code>beer_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
+<li><code>bricksq_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
+<li><code>elec_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
+<li><code>pedestrian</code> (variable <code>count</code>) del paquete <code>{timeSeriesDataSets}</code></li>
+</ul>
+<p>Determina a cual de los 9 tipos de series de Pegel pertenece cada una.</p>
+</section></section>
+<section>
+<section id="clase-12" class="title-slide slide level1 center">
+<h1>Clase 12: <span class="flow">métodos de alisado</span></h1>
+
+</section>
+<section id="pendiente" class="slide level2">
+<h2>pendiente</h2>
+<ul>
+<li>train/test</li>
+<li>scenarios</li>
+<li>acf feasts</li>
+<li>evaluación</li>
+</ul>
 </section>
 <section id="alisado-doble-lineal-de-holt" class="slide level2">
 <h2>Alisado doble (lineal) de Holt</h2>
@@ -6291,25 +6669,22 @@ No todavía, vamos por el ciclo 4</code></pre>
 <section id="alisado-triple-de-holt-winters" class="slide level2">
 <h2>Alisado triple de Holt-Winters</h2>
 <p>con estacionalidad aditiva + multipicativa</p>
-</section>
-<section id="tablita" class="slide level2">
-<h2>tablita</h2>
 </section></section>
 <section>
-<section id="clase-9" class="title-slide slide level1 center">
-<h1>Clase 10: <span class="flow">métodos de alisado</span></h1>
+<section id="clase-13" class="title-slide slide level1 center">
+<h1>Clase 13: <span class="flow">evaluación y diagnosis</span></h1>
 
 </section>
-<section class="slide level2">
-
+<section id="dasda" class="slide level2">
+<h2>dasda</h2>
 </section></section>
 <section>
-<section id="clase-10" class="title-slide slide level1 center">
-<h1>Clase 11: <span class="flow">teoría procesos</span></h1>
+<section id="clase-14" class="title-slide slide level1 center">
+<h1>Clases 14-15-16-17: <span class="flow">procesos estocásticos y arima</span></h1>
 
 </section>
-<section class="slide level2">
-
+<section id="dasda-1" class="slide level2">
+<h2>dasda</h2>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Estadística Aplicada (UCM)</p>
 </div>

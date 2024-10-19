@@ -5650,11 +5650,9 @@ estim_retiro |>
 
 
 
----
 
 
-
-# Clase 9: [métodos de alisado]{.flow} {#clase-9}
+# Clase 10: [métodos de alisado]{.flow} {#clase-10}
 
 
 ---
@@ -5792,6 +5790,48 @@ ggplot(theta) +
 
 ## Alisado simple
 
+
+Fíjate que la fórmula anterior se puede [**generalizar**]{.hl-yellow} para [**predicción a horizonte $h$**]{.hl-yellow}: si solo disponemos de información hasta el instante $t$, tenemos que
+
+$$\begin{eqnarray}\widehat{X}_{t+1|t} &=&  \theta \widehat{X}_{t|t-1} + \left( 1 - \theta \right)X_t = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j}, \nonumber \\ \widehat{X}_{t+2|t} &=&  \theta \widehat{X}_{t+1|t} + \left( 1 - \theta \right)X_{t+1} \simeq \theta \widehat{X}_{t+1|t} + \left( 1 - \theta \right)\widehat{X}_{t+1|t} = \widehat{X}_{t+1|t}, \nonumber \\ ...  \nonumber \\ \widehat{X}_{t+h|t} &=&\widehat{X}_{t+1|t} \quad \text{para todo h}
+\end{eqnarray}$$
+
+. . .
+
+El [**método de alisado simple produce «flat predictions»**]{.hl-yellow}: siempre devuelve a horizonte $h$ el último valor  predicho $\widehat{X}_{t+1|t}$ (asume que la tendencia es localmente constante).
+
+---
+
+## Alisado simple
+
+Fíjate que el método de alisado simple es una simple media ponderada, de una forma muy particular, pero que podríamos considerar [**otro tipo de métodos basados en promedios**]{.hl-yellow}:
+
+
+* Si consideramos el conocido como [**método naive o trivial**]{.hl-yellow}, tenemos que la [**predicción a horizonte $h$**]{.hl-yellow} (con la información disponible hasta $t$) es  
+
+$$\widehat{X}_{t+h|t} = X_t$$
+
+la **única observación importante es la última**. Esto es [**equivalente a un alisado simple con $\theta = 0$**]{.hl-yellow}
+
+---
+
+## Alisado simple
+
+Fíjate que el método de alisado simple es una simple media ponderada, de una forma muy particular, pero que podríamos considerar [**otro tipo de métodos basados en promedios**]{.hl-yellow}:
+
+
+* Si consideramos el conocido como [**mean method**]{.hl-yellow}, lo que hemos llamado `poly0` (hace simplemente la media cte de todos los valores), la [**predicción a horizonte $h$**]{.hl-yellow} (con la información disponible hasta $t$) es 
+
+$$\widehat{X}_{t+h|t} = \frac{1}{t} \sum_{j=1}^{t}X_j$$
+
+todas las observaciones pasadas son **igual de importantes**.
+
+
+
+---
+
+## Alisado simple
+
 El modelo de alisado simple anterior en realidad equivale a asumir que la [**estructura de nuestra serie es localmente constante**]{.hl-yellow}
 
 
@@ -5817,11 +5857,12 @@ Vamos a trabajar con el paquete `{tsibbledata}` que nos permite usar varios [**e
 
 ```{r}
 library(tsibbledata)
+library(tsibble)
 algeria_economy <-
   global_economy |>
   filter(Country == "Algeria") |>
   # solo hay un país, eliminamos key
-  tsibble::update_tsibble(key = NULL)
+  update_tsibble(key = NULL)
 algeria_economy
 ```
 
@@ -6032,9 +6073,362 @@ predict_algeria |>
   labs(y = "% del PIB", title = "Exports: Algeria")
 ```
 
+# Clase 11: [modelos con fable]{.flow} {#clase-11}
+
+---
+
+
+## Modelos con fable: MEAN()
+
+No solo vamos a poder aplicar el alisado en esta nueva lógica de programación, sino que vamos a poder [**programar de manera sencilla los modelos que hemos investigado hasta ahora**]{.hl-yellow}
+
+. . .
+
+* `MEAN(var_objetivo)`: la predicción a horizonte $h$ se define como la [**media de todos los valores**]{.hl-yellow} conocidos de la serie $\widehat{X}_{t+h|t} = \frac{1}{t} \sum_{j=1}^{t} X_t$ hasta el instante $t$ (predicción constante, la que antes llamábamos `poly0`)
+
+```{r}
+#| code-line-numbers: "5"
+airpass <- AirPassengers |> as_tsibble()
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        mean_cte = MEAN(value))
+```
+
+---
+
+## Modelos con fable: TSLM()
+
+
+* `TSLM(var_objetivo ~ formula)`: la predicción a horizonte $h$ se define como una [**regresión polinómica**]{.hl-yellow} tal que $\widehat{X}_{t+h|t} = \beta_0 + \sum_{j=1}^{p} \beta_j (t+h)^p$
+
+```{r}
+#| code-line-numbers: "5"
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        mean_cte = MEAN(value),
+        reg_poly = TSLM(value ~ index))
+```
+
+
+---
+
+## Modelos con fable: RW()
+
+
+* `RW(var_objetivo ~ drift())`: modelo conocido como [**random walk**]{.hl-yellow} o paseo aleatorio con [**drift o tendencia**]{.hl-yellow} tal que  $X_{t+1} = c +  X_{t} + \varepsilon_t$. La predicción a horizonte $h$ se define entonces como
+
+$$\widehat{X}_{t+h|t} = c + X_{(t+h-1)|t} \simeq c + \widehat{X}_{(t+h-1)|t} \simeq 2*c +  \widehat{X}_{(t+h-2)|t} \simeq ... \simeq c*h + X_{t}$$
+
+```{r}
+#| code-line-numbers: "6"
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        mean_cte = MEAN(value),
+        reg_poly = TSLM(value ~ index),
+        rw_drift = RW(value ~ drift()))
+```
+
+---
+
+## Modelos con fable: NAIVE()
+
+
+* `NAIVE(var_objetivo)`: el [**modelo naive o trivial**]{.hl-yellow} es una simplificación del random walk con $c=0$ (sin tendencia, de hecho `NAIVE()` y `RW()` sin drift hacen lo mismo. La predicción a horizonte $h$ se define entonces como simplemente el último valor conocido en tiempo $t$.
+
+$$\widehat{X}_{t+h|t} =  X_{t}$$
+
+```{r}
+#| code-line-numbers: "7"
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        mean_cte = MEAN(value),
+        reg_poly = TSLM(value ~ index),
+        rw_drift = RW(value ~ drift()),
+        naive = NAIVE(value))
+```
+
+---
+
+## Modelos con fable: SNAIVE()
+
+* `SNAIVE(var_objetivo ~ lag())`: similar al modelo anterior solo que en lugar de repetir el último valor [**repite los últimos valores estacionales**]{.hl-yellow} (por ejemplo, el último mes, el último año, etc).
+
+La predicción a horizonte $h$ se define entonces como
+
+$$\widehat{X}_{t+h|t} =  X_{\left(t+h \right) - s*(k+1)}$$
+
+* $s$ es el periodo
+
+* $k$ es la parte entera de $(h-1)/s$ (el número de periodos completos que han pasado hasta $t+h$). Por ejemplo, si $h = 26$ y $s = 12$, $(h-1)/s = 25/12 = 2.08333$, cuya parte entera es $k = 2$ (han pasado 2 años completos hasta $h = 26$). Si $s = 12$, la predicción de cualquier de los enero futuros será igual a la predicción del último enero conocido.
+
+---
+
+## Modelos con fable: SNAIVE()
+
+* `SNAIVE(var_objetivo ~ lag())`: similar al modelo anterior solo que en lugar de repetir el último valor [**repite los últimos valores estacionales**]{.hl-yellow} (por ejemplo, el último mes, el último año, etc).
+
+```{r}
+#| code-line-numbers: "8"
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        mean_cte = MEAN(value),
+        reg_poly = TSLM(value ~ index),
+        rw_drift = RW(value ~ drift()),
+        naive = NAIVE(value),
+        season_naive = SNAIVE(value ~ lag(12)))
+```
+
+
 ---
 
 ## Modelos con fable
+
+Así de toda la colección anterior de modelos podemos [**obtener las estimaciones**]{.hl-yellow} de manera sencilla con `augment()`
+
+```{r}
+estimaciones <- fit_airpass |> augment()
+
+# Tenemos 144 estimaciones para cada uno de esos modelos
+estimaciones |> 
+  count(.model)
+```
+
+---
+
+## Modelos con fable
+
+Así de toda la colección anterior de modelos podemos [**obtener las estimaciones**]{.hl-yellow} de manera sencilla con `augment()`
+
+```{r}
+estimaciones
+```
+
+
+---
+
+## Visualización estimaciones
+
+Podemos [**visualizar el ajuste (del pasado)**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+estimaciones |>
+  ggplot() +
+  geom_line(aes(x = index, y = value), color = "black",
+            linewidth = 1.2, alpha = 0.7) +
+  geom_line(aes(x = index, y = .fitted, color = .model),
+            linewidth = 0.75, alpha = 0.8, linetype = 2) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(7)[-1]) +
+  scale_x_yearquarter(date_breaks = "24 months") +
+  theme_minimal()
+```
+
+---
+
+## Visualización predicciones
+
+Podemos [**visualizar las predicciones futuras**]{.hl-yellow} con `forecast() + autoplot()` (con `level = NULL` anulamos los intervalos de confianza).
+
+```{r}
+fit_airpass |>
+  forecast(h = 24) |> 
+  autoplot(airpass, level = NULL) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(7)[-1]) +
+  scale_x_yearquarter(date_breaks = "24 months") +
+  theme_minimal()
+```
+
+---
+
+## Métodos de decomposición
+
+También podemos con el paquete `{feasts}` hacer uso de las [**decomposiciones que hemos aprendido**]{.hl-yellow}
+
+* `classical_decomposition(var_objetivo ~ season(s),  type = ...)`: [**descomposición clásica**]{.hl-yellow} aprendida de tipo multiplicativa o aditiva. La predicción a horizonte $h$ se define tal que
+
+$$\widehat{X}_{t+h|t} = \widehat{T}_{t+h|t} + \widehat{S}_{t+h|t} \quad \text{type = "additive"}$$
+
+$$\widehat{X}_{t+h|t} = \widehat{T}_{t+h|t} * \widehat{S}_{t+h|t} \quad \text{type = "mult"}$$
+
+```{r}
+#| code-line-numbers: "4"
+library(feasts)
+fit_airpass <-
+  airpass |>
+  model(cts = classical_decomposition(value ~ season(12), type = "additive"))
+```
+
+---
+
+## Métodos de decomposición
+
+Para este tipo particular de métodos (**métodos de decomposición**) existe una función `components()` que automáticamente nos devuelve la tendencia estimada (`trend`), la estacionalidad (`seasonal`), el residuo estimado (`random`) y la serie desestacionalizada (`season_adjust`, serie - seasonal)
+
+```{r}
+#| code-line-numbers: "4"
+fit_airpass <-
+  airpass |>
+  model(cts = classical_decomposition(value ~ season(12), type = "additive"))
+fit_airpass |> components()
+```
+
+---
+
+## Métodos de decomposición
+
+Con `autoplot()` nos [**visualiza cada componente**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: "5-6"
+fit_airpass <-
+  airpass |>
+  model(cts = classical_decomposition(value  ~ season(12), type = "additive"))
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## Métodos de decomposición
+
+Así quedaría en [**modo multiplicativo**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: "3"
+fit_airpass <-
+  airpass |>
+  model(cts = classical_decomposition(value ~ season(12), type = "mult"))
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## Métodos de decomposición
+
+Fíjate que el [**modo multiplicativo es equivalente a tomar el logaritmo del valor objetivo**]{.hl-yellow}
+
+```{r}
+#| code-line-numbers: "3"
+fit_airpass <-
+  airpass |>
+  model(cts = classical_decomposition(log(value) ~ season(12), type = "additive"))
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## Métodos de decomposición
+
+* `STL(var_objetivo ~ trend(window = ..., degre = ...) + season(period = ..., window = "periodic"))`:  la predicción a horizonte $h$ se define también como una [**descomposición clásica en tendencia y estacionalidad**]{.hl-yellow} pero ahora la [**tendencia es estimada mediante una regresión local**]{.hl-yellow} conocida como **regresión LOESS o LOWESS**. Dicha regresión ajusta a los datos una **regresión polinómica (degree) pero de manera LOCAL**, en cada punto solo se utiliza un número `window` de observaciones).
+
+
+```{r}
+#| code-line-numbers: "4"
+library(feasts)
+fit_airpass <-
+  airpass |>
+  model(stl = STL(value ~ trend(window = 7, degree = 1) + season(period = 12, window = "periodic")))
+```
+
+---
+
+## Métodos de decomposición
+
+Para este tipo particular de métodos (**métodos de decomposición STL**) `components()` nos devuelve la tendencia estimada (`trend`), la estacionalidad (`season_s`), el residuo estimado (`remainder`) y la serie desestacionalizada (`season_adjust`, serie - season_s)
+
+```{r}
+#| code-line-numbers: "4"
+fit_airpass <-
+  airpass |>
+  model(stl = STL(log(value) ~ trend(window = 7, degree = 1) + season(period = 12, window = "periodic")))
+fit_airpass |> components()
+```
+
+---
+
+## Métodos de decomposición
+
+```{r}
+#| code-line-numbers: "3"
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## Métodos de decomposición
+
+
+Fíjate que a menor valor en `window = ...` más errática es la tendencia...
+
+```{r}
+#| code-line-numbers: "3"
+fit_airpass <-
+  airpass |>
+  model(stl = STL(log(value) ~ trend(window = 3, degree = 1) + season(period = 12, window = "periodic")))
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## Métodos de decomposición
+
+
+... y a mayor valor en `window = ...` más "recta" se convierte.
+
+```{r}
+#| code-line-numbers: "3"
+fit_airpass <-
+  airpass |>
+  model(stl = STL(log(value) ~ trend(window = 30, degree = 1) + season(period = 12, window = "periodic")))
+fit_airpass |>
+  components() |> 
+  autoplot()
+```
+
+---
+
+## 💻 Tu turno
+
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+💻 Repite el proceso de creación de modelos (los fable y los feast) para los conjuntos de datos
+
+* `retiro`
+* `global_economy` (solo para España) del paquete  `{tsibbledata}`
+* `beer_ts` del paquete `{timeSeriesDataSets}`
+* `bricksq_ts` del paquete `{timeSeriesDataSets}`
+* `elec_ts` del paquete `{timeSeriesDataSets}`
+* `pedestrian` (variable `count`) del paquete `{timeSeriesDataSets}`
+
+Determina a cual de los 9 tipos de series de Pegel pertenece cada una.
+
+
+# Clase 12: [métodos de alisado]{.flow} {#clase-12}
+
+
+---
+
+## pendiente
+
+* train/test
+* scenarios
+* acf feasts
+* evaluación
 
 ---
 
@@ -6053,25 +6447,22 @@ Como hemos visto el método anterior de alisado es bajo la hipótesis de que nue
 con estacionalidad aditiva + multipicativa
 
 
----
-
-## tablita
 
 
 
-# Clase 10: [métodos de alisado]{.flow} {#clase-9}
+# Clase 13: [evaluación y diagnosis]{.flow} {#clase-13}
 
 
 ---
 
-# Clase 11: [teoría procesos]{.flow} {#clase-10}
+## dasda
 
+
+# Clases 14-15-16-17: [procesos estocásticos y arima]{.flow} {#clase-14}
 
 ---
 
-
-
-
+## dasda
 
 
 
