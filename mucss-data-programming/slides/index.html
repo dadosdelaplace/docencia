@@ -1854,7 +1854,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-12"</code></pre>
+<pre><code>[1] "2024-10-20"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1864,7 +1864,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-12 13:15:34 CEST"</code></pre>
+<pre><code>[1] "2024-10-20 18:04:37 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -6106,10 +6106,10 @@ multiple of the number of rows [4]</code></pre>
 <div class="sourceCode cell-code" id="cb530"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb530-1"><a href="#cb530-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 14
-  name      height  mass hair_color skin_color eye_color birth_year sex   gender
-  &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Ben Quad…    163    65 none       grey, gre… orange            NA male  mascu…
-2 R2-D2         96    32 &lt;NA&gt;       white, bl… red               33 none  mascu…
+  name    height  mass hair_color skin_color eye_color birth_year sex   gender  
+  &lt;chr&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+1 Lama Su    229    88 none       grey       black             NA male  masculi…
+2 BB8         NA    NA none       none       black             NA none  masculi…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6154,10 +6154,10 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Han Solo     180    80 brown      fair       brown             29 male  mascu…
-2 Taun We      213    NA none       grey       black             NA fema… femin…
-3 Ackbar       180    83 none       brown mot… orange            41 male  mascu…
-4 Quarsh P…    183    NA black      dark       brown             62 male  mascu…
+1 Palpatine    170    75 grey       pale       yellow            82 male  mascu…
+2 Mas Amed…    196    NA none       blue       blue              NA male  mascu…
+3 Kit Fisto    196    87 none       green      black             NA male  mascu…
+4 Greedo       173    74 &lt;NA&gt;       green      black             44 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6200,8 +6200,8 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
-2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6221,7 +6221,7 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb542"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb542-1"><a href="#cb542-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5 5 4 1 4 4 5 2 5 2</code></pre>
+<pre><code> [1] 5 4 3 6 5 3 5 2 4 3</code></pre>
 </div>
 </div>
 </div>
@@ -6233,8 +6233,8 @@ multiple of the number of rows [4]</code></pre>
 <div class="sourceCode cell-code" id="cb544"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb544-1"><a href="#cb544-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb544-2"><a href="#cb544-2"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 2 3 3 1 3 1 1 1 1 1 6 4 2 2 1 5 1 2 6 1 6 4 6 1 1 3 1 1 6 2 4 4 2 1 1 1
-[39] 3 1 1 3 1 1 2 2 2 2 3 1</code></pre>
+<pre><code> [1] 1 1 2 2 2 1 3 3 1 1 1 3 2 1 6 2 2 1 1 5 1 1 4 1 1 3 1 2 1 1 1 1 3 1 1 2 4 2
+[39] 1 2 4 5 1 4 1 5 1 1 2 1</code></pre>
 </div>
 </div>
 </section>
@@ -8154,13 +8154,13 @@ dplyr 1.1.0.
 <span id="cb734-4"><a href="#cb734-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb734-5"><a href="#cb734-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.927    2.001866    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1397.157 1409.498 1490.037252 1416.304
-       uq       max neval
-    2.009     4.551   500
- 1432.068 14354.346   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr    min       lq     mean   median
+                                y &lt;- x^2    984   1107.0   1221.8   1189.0
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 814219 821414.5 867094.2 826867.5
+     uq     max neval
+   1230    2788   500
+ 841484 3653469   500</code></pre>
 </div>
 </div>
 </section>
@@ -8986,7 +8986,7 @@ Not yet, we are in the 3-th iteration</code></pre>
 </div>
 </section>
 <section id="caso-practico-6-1" class="slide level2">
-<h2>🐣 Case study I: simulations</h2>
+<h2>🐣 Case study I: converter</h2>
 <p>To practice with functions we are going to create a complete <strong>temperature converter</strong> that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others.</p>
 <p>&nbsp;</p>
 <p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/flow-structures-functions/"><strong>workbook</strong></a></p>
@@ -9460,6 +9460,1834 @@ Not yet, we are in the 3-th iteration</code></pre>
 </details>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section id="caso-practico-6-3" class="slide level2">
+<h2>🐣 Case study III: pending</h2>
+<p>pending to submit about joins + import/export</p>
+</section></section>
+<section>
+<section id="clase-7" class="title-slide slide level1 center">
+<h1>L7: <span class="flow">import/exports</span></h1>
+<p><span style="color:#444442;"><strong>Import and export data</strong></span></p>
+<ul>
+<li><p><a href="#/tu-turno-7-1">💻 Solved exercises</a></p></li>
+<li><p><a href="#/caso-practico-7-1">🐣 Workbook/case study I</a></p></li>
+<li><p><a href="#/planificacion-curso">📆 Planning</a></p></li>
+</ul>
+</section>
+<section id="importexport" class="slide level2">
+<h2>Import/export</h2>
+<p>So far we have only used data already loaded in packages but many times <span class="hl-yellow"><strong>we will need to import data externally</strong></span>. One of the main <span class="hl-yellow"><strong>strengths</strong></span> of <code>R</code> is that we can import data very easily in different formats:</p>
+<ul>
+<li><p><span class="hl-yellow"><strong>R native formats</strong></span>: <code>.rda</code>, <code>.RData</code> and <code>.rds</code> formats.</p></li>
+<li><p><span class="hl-yellow"><strong>Rectangular (tabular) data</strong></span>: <code>.csv</code> and <code>.tsv</code> formats</p></li>
+<li><p><span class="hl-yellow"><strong>Untabulated data</strong></span>: <code>.txt</code> format.</p></li>
+<li><p><span class="hl-yellow"><strong>Data in excel</strong></span>: <code>.xls</code> and <code>.xlsx</code> formats</p></li>
+<li><p><span class="hl-yellow"><strong>Data from SAS/Stata/SPSS</strong></span>: <code>.sas7bdat</code>, <code>.sav</code> and <code>.dat</code> formats</p></li>
+<li><p><span class="hl-yellow"><strong>Data from Google Drive</strong></span></p></li>
+<li><p><span class="hl-yellow"><strong>Data from API’s</strong></span>: aemet, catastro, twitter, spotify, etc.</p></li>
+</ul>
+</section>
+<section id="r-native-formats" class="slide level2">
+<h2>R native formats</h2>
+<p>The <span class="hl-yellow"><strong>simplest</strong></span> files to import into <code>R</code> (and which usually take up less disk space) are its own <span class="hl-yellow"><strong>native extensions</strong></span>: files in <code>.RData</code>, <code>.rda</code> and <code>.rds</code> formats. To load the former we simply need to <span class="hl-yellow"><strong>use the native</strong></span> function <code>load()</code> by providing it the file path.</p>
+<ul>
+<li><code>RData</code> file: we are going to import the file <code>world_bank_pop.RData</code>, which includes the dataset <code>world_bank_pop</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb858"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb858-1"><a href="#cb858-1"></a><span class="fu">load</span>(<span class="st">"./data/world_bank_pop.RData"</span>)</span>
+<span id="cb858-2"><a href="#cb858-2"></a>world_bank_pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,064 × 20
+   country indicator      `2000`  `2001`  `2002`  `2003`  `2004`  `2005`  `2006`
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 ABW     SP.URB.TOTL    4.16e4 4.20e+4 4.22e+4 4.23e+4 4.23e+4 4.24e+4 4.26e+4
+ 2 ABW     SP.URB.GROW    1.66e0 9.56e-1 4.01e-1 1.97e-1 9.46e-2 1.94e-1 3.67e-1
+ 3 ABW     SP.POP.TOTL    8.91e4 9.07e+4 9.18e+4 9.27e+4 9.35e+4 9.45e+4 9.56e+4
+ 4 ABW     SP.POP.GROW    2.54e0 1.77e+0 1.19e+0 9.97e-1 9.01e-1 1.00e+0 1.18e+0
+ 5 AFE     SP.URB.TOTL    1.16e8 1.20e+8 1.24e+8 1.29e+8 1.34e+8 1.39e+8 1.44e+8
+ 6 AFE     SP.URB.GROW    3.60e0 3.66e+0 3.72e+0 3.71e+0 3.74e+0 3.81e+0 3.81e+0
+ 7 AFE     SP.POP.TOTL    4.02e8 4.12e+8 4.23e+8 4.34e+8 4.45e+8 4.57e+8 4.70e+8
+ 8 AFE     SP.POP.GROW    2.58e0 2.59e+0 2.61e+0 2.62e+0 2.64e+0 2.67e+0 2.70e+0
+ 9 AFG     SP.URB.TOTL    4.31e6 4.36e+6 4.67e+6 5.06e+6 5.30e+6 5.54e+6 5.83e+6
+10 AFG     SP.URB.GROW    1.86e0 1.15e+0 6.86e+0 7.95e+0 4.59e+0 4.47e+0 5.03e+0
+# ℹ 1,054 more rows
+# ℹ 11 more variables: `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;,
+#   `2011` &lt;dbl&gt;, `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;,
+#   `2016` &lt;dbl&gt;, `2017` &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="r-native-formats-1" class="slide level2">
+<h2>R native formats</h2>
+<ul>
+<li><code>.rda</code> file: we will import the airquality dataset from <code>airquality.rda</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb860"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb860-1"><a href="#cb860-1"></a><span class="fu">load</span>(<span class="st">"./data/airquality.rda"</span>)</span>
+<span id="cb860-2"><a href="#cb860-2"></a>airquality <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 153 × 6
+   Ozone Solar.R  Wind  Temp Month   Day
+   &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+ 1    41     190   7.4    67     5     1
+ 2    36     118   8      72     5     2
+ 3    12     149  12.6    74     5     3
+ 4    18     313  11.5    62     5     4
+ 5    NA      NA  14.3    56     5     5
+ 6    28      NA  14.9    66     5     6
+ 7    23     299   8.6    65     5     7
+ 8    19      99  13.8    59     5     8
+ 9     8      19  20.1    61     5     9
+10    NA     194   8.6    69     5    10
+# ℹ 143 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="r-native-formats-2" class="slide level2">
+<h2>R native formats</h2>
+<p>Note that files loaded with <code>load()</code> are <span class="hl-yellow"><strong>automatically loaded into the environment</strong></span> (with the originally saved name), and not only datasets can be loaded: <code>load()</code> allows us to load multiple objetcs (not only a tabular data)</p>
+<p>Native <code>.rda</code> and <code>.RData</code> files are a properly way to save your environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb862"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb862-1"><a href="#cb862-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./data/multiple_objects.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="r-native-formats-3" class="slide level2">
+<h2>R native formats</h2>
+<ul>
+<li><code>.rds</code> files: for this type we must use <code>readRDS()</code>, and we need to incorporate a <span class="hl-yellow"><strong>argument <code>file</code></strong></span> with the path. In this case we are going to import <span class="hl-purple"><strong>lung cancer data</strong></span> from the North Central Cancer Treatment Group. Note that now <span class="hl-yellow"><strong>.rds import files are a unique database</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb863"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb863-1"><a href="#cb863-1"></a>lung_cancer <span class="ot">&lt;-</span></span>
+<span id="cb863-2"><a href="#cb863-2"></a>  <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"./data/NCCTG_lung_cancer.rds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb863-3"><a href="#cb863-3"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The <span class="hl-yellow"><strong>paths</strong></span> must always be <span class="hl-yellow"><strong>without spaces, ñ, or accents</strong></span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="tabular-data-readr" class="slide level2">
+<h2>Tabular data: readr</h2>
+<p>The <code>{readr}</code> package within the <code>{tidyverse}</code> environment contains several useful functions for <span class="hl-yellow"><strong>loading rectangular data (without formatting)</strong></span>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>read_csv()</code>: <code>.csv</code> files whose <span class="hl-purple"><strong>separator is comma</strong></span></li>
+<li><code>read_csv2()</code>: <span class="hl-purple"><strong>semicolon</strong></span></li>
+<li><code>read_tsv()</code>: <span class="hl-purple"><strong>tabulator</strong></span>.</li>
+<li><code>read_table()</code>: <span class="hl-purple"><strong>space</strong></span>.</li>
+<li><code>read_delim()</code>: generic function for <span class="hl-purple"><strong>character delimited files</strong></span>.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/data-import-readr.png"></p>
+</div>
+</div>
+<p>All of them need as <strong>argument the file path</strong> plus <strong>other optional</strong> (skip header or not, decimals, etc). See more at <a href="https://readr.tidyverse.org/" class="uri">https://readr.tidyverse.org/</a></p>
+</section>
+<section id="tabular-data-.csv-.tsv" class="slide level2">
+<h2>Tabular data (.csv, .tsv)</h2>
+<p>The main advantage of <code>{readr}</code> is that it <span class="hl-yellow"><strong>automates formatting</strong></span> to go from a flat (unformatted) file to a tibble (in rows and columns, with formatting).</p>
+<div class="fragment">
+<ul>
+<li>File <code>.csv</code>: with <code>read_csv()</code> we will load <span class="hl-purple"><strong>comma separated</strong></span> files, passing as <span class="hl-yellow"><strong>argument the path</strong></span> in <code>file = ...</code>. Let’s import the <code>chickens.csv</code> dataset (about cartoon chickens, why not). If you look at the output it gives us the type of variables.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb864"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb864-1"><a href="#cb864-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb864-2"><a href="#cb864-2"></a>chickens <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/chickens.csv"</span>)</span>
+<span id="cb864-3"><a href="#cb864-3"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  chicken                 sex     eggs_laid motto                               
+  &lt;chr&gt;                   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;                               
+1 Foghorn Leghorn         rooster         0 That's a joke, ah say, that's a jok…
+2 Chicken Little          hen             3 The sky is falling!                 
+3 Ginger                  hen            12 Listen. We'll either die free chick…
+4 Camilla the Chicken     hen             7 Bawk, buck, ba-gawk.                
+5 Ernie The Giant Chicken rooster         0 Put Captain Solo in the cargo hold. </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="tabular-data-.csv-.tsv-1" class="slide level2">
+<h2>Tabular data (.csv, .tsv)</h2>
+<p>The <span class="hl-yellow"><strong>variable format</strong></span> will normally be done <span class="hl-yellow"><strong>automatically</strong></span> by <code>read_csv()</code>, and we can query it with <code>spec()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb866"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb866-1"><a href="#cb866-1"></a><span class="fu">spec</span>(chickens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cols(
+  chicken = col_character(),
+  sex = col_character(),
+  eggs_laid = col_double(),
+  motto = col_character()
+)</code></pre>
+</div>
+</div>
+</section>
+<section id="tabular-data-.csv-.tsv-2" class="slide level2">
+<h2>Tabular data (.csv, .tsv)</h2>
+<p>Although it usually does it well automatically we can <span class="hl-yellow"><strong>specify the format explicitly</strong></span> in <code>col_types = list()</code> (in list format, with <code>col_xxx()</code> for each type of variable, for example <code>eggs_laid</code> will be imported as character).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb868"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb868-1"><a href="#cb868-1"></a>chickens <span class="ot">&lt;-</span></span>
+<span id="cb868-2"><a href="#cb868-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/chickens.csv"</span>,</span>
+<span id="cb868-3"><a href="#cb868-3"></a>           <span class="at">col_types =</span> <span class="fu">list</span>(<span class="fu">col_character</span>(), <span class="fu">col_character</span>(),</span>
+<span id="cb868-4"><a href="#cb868-4"></a>                            <span class="fu">col_character</span>(), <span class="fu">col_character</span>()))</span>
+<span id="cb868-5"><a href="#cb868-5"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  chicken                 sex     eggs_laid motto                               
+  &lt;chr&gt;                   &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;                               
+1 Foghorn Leghorn         rooster 0         That's a joke, ah say, that's a jok…
+2 Chicken Little          hen     3         The sky is falling!                 
+3 Ginger                  hen     12        Listen. We'll either die free chick…
+4 Camilla the Chicken     hen     7         Bawk, buck, ba-gawk.                
+5 Ernie The Giant Chicken rooster 0         Put Captain Solo in the cargo hold. </code></pre>
+</div>
+</div>
+</section>
+<section id="tabular-data-.csv-.tsv-3" class="slide level2">
+<h2>Tabular data (.csv, .tsv)</h2>
+<p>We can even indicate that <span class="hl-yellow"><strong>variables we want to select</strong></span> (without occupying memory), by indicating it in <code>col_select = ...</code> (in list format, with <code>col_select = ...</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb870"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb870-1"><a href="#cb870-1"></a>chickens <span class="ot">&lt;-</span></span>
+<span id="cb870-2"><a href="#cb870-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/chickens.csv"</span>,</span>
+<span id="cb870-3"><a href="#cb870-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(chicken, sex, eggs_laid))</span>
+<span id="cb870-4"><a href="#cb870-4"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  chicken                 sex     eggs_laid
+  &lt;chr&gt;                   &lt;chr&gt;       &lt;dbl&gt;
+1 Foghorn Leghorn         rooster         0
+2 Chicken Little          hen             3
+3 Ginger                  hen            12
+4 Camilla the Chicken     hen             7
+5 Ernie The Giant Chicken rooster         0</code></pre>
+</div>
+</div>
+</section>
+<section id="untabulated-data-.txt" class="slide level2">
+<h2>Untabulated data (.txt)</h2>
+<p>What happens when the <span class="hl-red"><strong>separator is not correct</strong></span>?</p>
+<div class="fragment">
+<p>If we use <code>read_csv()</code> it expects the separator between columns to be a comma but, as you can see with the following <code>.txt</code>, it interprets everything as a single column: <span class="hl-yellow"><strong>has no comma and does not know where to separate</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb872"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb872-1"><a href="#cb872-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/massey-rating.txt"</span>)</span>
+<span id="cb872-2"><a href="#cb872-2"></a><span class="fu">dim</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10  1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb874"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb874-1"><a href="#cb874-1"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 1
+   `UCC PAY LAZ KPK  RT   COF BIH DII ENG ACU Rank Team            Conf`
+   &lt;chr&gt;                                                                
+ 1 1   1   1   1   1     1   1   1   1   1    1 Ohio St          B10    
+ 2 2   2   2   2   2     2   2   2   4   2    2 Oregon           P12    
+ 3 3   4   3   4   3     4   3   4   2   3    3 Alabama          SEC    
+ 4 4   3   4   3   4     3   5   3   3   4    4 TCU              B12    
+ 5 6   6   6   5   5     7   6   5   6  11    5 Michigan St      B10    
+ 6 7   7   7   6   7     6  11   8   7   8    6 Georgia          SEC    
+ 7 5   5   5   7   6     8   4   6   5   5    7 Florida St       ACC    
+ 8 8   8   9   9  10     5   7   7  10   7    8 Baylor           B12    
+ 9 9  11   8  13  11    11  12   9  14   9    9 Georgia Tech     ACC    
+10 13  10  13  11   8     9  10  11   9  10   10 Mississippi      SEC   </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="untabulated-data-.txt-1" class="slide level2">
+<h2>Untabulated data (.txt)</h2>
+<p>To do this we have.</p>
+<ul>
+<li><p><code>read_csv2()</code> when the <span class="hl-yellow"><strong>separator is semicolon</strong></span>, <code>read_tsv()</code> when the <span class="hl-yellow"><strong>is a tab</strong></span> and <code>read_table()</code> when the <span class="hl-yellow"><strong>is a space</strong></span>.</p></li>
+<li><p><code>read_delim()</code> in general.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb876"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb876-1"><a href="#cb876-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="at">file =</span> <span class="st">"./data/massey-rating.txt"</span>)</span>
+<span id="cb876-2"><a href="#cb876-2"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 13
+     UCC   PAY   LAZ   KPK    RT   COF   BIH   DII   ENG   ACU  Rank Team  Conf 
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+ 1     1     1     1     1     1     1     1     1     1     1     1 Ohio  St   
+ 2     2     2     2     2     2     2     2     2     4     2     2 Oreg… P12  
+ 3     3     4     3     4     3     4     3     4     2     3     3 Alab… SEC  
+ 4     4     3     4     3     4     3     5     3     3     4     4 TCU   B12  
+ 5     6     6     6     5     5     7     6     5     6    11     5 Mich… St   
+ 6     7     7     7     6     7     6    11     8     7     8     6 Geor… SEC  
+ 7     5     5     5     7     6     8     4     6     5     5     7 Flor… St   
+ 8     8     8     9     9    10     5     7     7    10     7     8 Bayl… B12  
+ 9     9    11     8    13    11    11    12     9    14     9     9 Geor… Tech 
+10    13    10    13    11     8     9    10    11     9    10    10 Miss… SEC  </code></pre>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>Another key import package will be the <code>{readxl}</code> package for <span class="hl-yellow"><strong>importing data from Excel</strong></span>. Three functions will be key:</p>
+<ul>
+<li><code>read_xls()</code> specific to <code>.xls</code>, <code>read_xlsx()</code> specific to <code>.xlsx</code>.</li>
+<li><code>read_excel()</code>: for both <code>.xls</code> and <code>.xlsx</code>.</li>
+</ul>
+<div class="fragment">
+<p>We are going to import <code>deaths.xlsx</code> with celebrity death records.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb878"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb878-1"><a href="#cb878-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb878-2"><a href="#cb878-2"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/deaths.xlsx"</span>)</span>
+<span id="cb878-3"><a href="#cb878-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 6
+   `Lots of people`             ...2                     ...3  ...4  ...5  ...6 
+   &lt;chr&gt;                        &lt;chr&gt;                    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 simply cannot resist writing &lt;NA&gt;                     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  some…
+ 2 at                           the                      top   &lt;NA&gt;  of    thei…
+ 3 or                           merging                  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  cells
+ 4 Name                         Profession               Age   Has … Date… Date…
+ 5 David Bowie                  musician                 69    TRUE  17175 42379
+ 6 Carrie Fisher                actor                    60    TRUE  20749 42731
+ 7 Chuck Berry                  musician                 90    TRUE  9788  42812
+ 8 Bill Paxton                  actor                    61    TRUE  20226 42791
+ 9 Prince                       musician                 57    TRUE  21343 42481
+10 Alan Rickman                 actor                    69    FALSE 16854 42383
+11 Florence Henderson           actor                    82    TRUE  12464 42698
+12 Harper Lee                   author                   89    FALSE 9615  42419
+13 Zsa Zsa Gábor                actor                    99    TRUE  6247  42722
+14 George Michael               musician                 53    FALSE 23187 42729
+15 Some                         &lt;NA&gt;                     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+16 &lt;NA&gt;                         also like to write stuff &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+17 &lt;NA&gt;                         &lt;NA&gt;                     at t… bott… &lt;NA&gt;  &lt;NA&gt; 
+18 &lt;NA&gt;                         &lt;NA&gt;                     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  too! </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx-1" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb880"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb880-1"><a href="#cb880-1"></a>deaths <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  `Lots of people`             ...2       ...3  ...4     ...5          ...6     
+  &lt;chr&gt;                        &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;    
+1 simply cannot resist writing &lt;NA&gt;       &lt;NA&gt;  &lt;NA&gt;     &lt;NA&gt;          some not…
+2 at                           the        top   &lt;NA&gt;     of            their sp…
+3 or                           merging    &lt;NA&gt;  &lt;NA&gt;     &lt;NA&gt;          cells    
+4 Name                         Profession Age   Has kids Date of birth Date of …
+5 David Bowie                  musician   69    TRUE     17175         42379    
+6 Carrie Fisher                actor      60    TRUE     20749         42731    </code></pre>
+</div>
+</div>
+<p>One thing that is <span class="hl-yellow"><strong>very common misfortune</strong></span> is that there is some kind of comment or text at the beginning of the file, having to <span class="hl-yellow"><strong>skip those rows</strong></span>.</p>
+</section>
+<section id="excel-data-.xls-.xlsx-2" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>We can <span class="hl-yellow"><strong>skip these rows</strong></span> directly in the load with <code>skip = ...</code> (indicating the number of rows to skip).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb882"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb882-1"><a href="#cb882-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb882-2"><a href="#cb882-2"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 6
+   Name          Profession Age   `Has kids` `Date of birth`     `Date of death`
+   &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;      &lt;dttm&gt;              &lt;chr&gt;          
+ 1 David Bowie   musician   69    TRUE       1947-01-08 00:00:00 42379          
+ 2 Carrie Fisher actor      60    TRUE       1956-10-21 00:00:00 42731          
+ 3 Chuck Berry   musician   90    TRUE       1926-10-18 00:00:00 42812          
+ 4 Bill Paxton   actor      61    TRUE       1955-05-17 00:00:00 42791          
+ 5 Prince        musician   57    TRUE       1958-06-07 00:00:00 42481          
+ 6 Alan Rickman  actor      69    FALSE      1946-02-21 00:00:00 42383          
+ 7 Florence Hen… actor      82    TRUE       1934-02-14 00:00:00 42698          
+ 8 Harper Lee    author     89    FALSE      1926-04-28 00:00:00 42419          
+ 9 Zsa Zsa Gábor actor      99    TRUE       1917-02-06 00:00:00 42722          
+10 George Micha… musician   53    FALSE      1963-06-25 00:00:00 42729          
+11 Some          &lt;NA&gt;       &lt;NA&gt;  &lt;NA&gt;       NA                  &lt;NA&gt;           
+12 &lt;NA&gt;          also like… &lt;NA&gt;  &lt;NA&gt;       NA                  &lt;NA&gt;           
+13 &lt;NA&gt;          &lt;NA&gt;       at t… bottom,    NA                  &lt;NA&gt;           
+14 &lt;NA&gt;          &lt;NA&gt;       &lt;NA&gt;  &lt;NA&gt;       NA                  too!           </code></pre>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx-3" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>In addition with <code>col_names = ...</code> we can already rename the columns in the import (if <span class="hl-yellow"><strong>provide names assumes 1st line already as a data</strong></span>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb884" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb884-1"><a href="#cb884-1"></a>deaths <span class="ot">&lt;-</span></span>
+<span id="cb884-2"><a href="#cb884-2"></a>  <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">5</span>,</span>
+<span id="cb884-3"><a href="#cb884-3"></a>            <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"profession"</span>, <span class="st">"age"</span>, <span class="st">"kids"</span>, <span class="st">"birth"</span>, <span class="st">"death"</span>))</span>
+<span id="cb884-4"><a href="#cb884-4"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 6
+   name               profession           age   kids  birth               death
+   &lt;chr&gt;              &lt;chr&gt;                &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;chr&gt;
+ 1 David Bowie        musician             69    TRUE  1947-01-08 00:00:00 42379
+ 2 Carrie Fisher      actor                60    TRUE  1956-10-21 00:00:00 42731
+ 3 Chuck Berry        musician             90    TRUE  1926-10-18 00:00:00 42812
+ 4 Bill Paxton        actor                61    TRUE  1955-05-17 00:00:00 42791
+ 5 Prince             musician             57    TRUE  1958-06-07 00:00:00 42481
+ 6 Alan Rickman       actor                69    FALSE 1946-02-21 00:00:00 42383
+ 7 Florence Henderson actor                82    TRUE  1934-02-14 00:00:00 42698
+ 8 Harper Lee         author               89    FALSE 1926-04-28 00:00:00 42419
+ 9 Zsa Zsa Gábor      actor                99    TRUE  1917-02-06 00:00:00 42722
+10 George Michael     musician             53    FALSE 1963-06-25 00:00:00 42729
+11 Some               &lt;NA&gt;                 &lt;NA&gt;  &lt;NA&gt;  NA                  &lt;NA&gt; 
+12 &lt;NA&gt;               also like to write … &lt;NA&gt;  &lt;NA&gt;  NA                  &lt;NA&gt; 
+13 &lt;NA&gt;               &lt;NA&gt;                 at t… bott… NA                  &lt;NA&gt; 
+14 &lt;NA&gt;               &lt;NA&gt;                 &lt;NA&gt;  &lt;NA&gt;  NA                  too! </code></pre>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx-4" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>Sometimes <span class="hl-red"><strong>Excel dates are incorrectly formatted</strong></span> (surprise): we can use <code>convertToDate()</code> from the <code>{openxlsx}</code> package to convert it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb886"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb886-1"><a href="#cb886-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb886-2"><a href="#cb886-2"></a>deaths<span class="sc">$</span>death <span class="ot">&lt;-</span> <span class="fu">convertToDate</span>(deaths<span class="sc">$</span>death)</span>
+<span id="cb886-3"><a href="#cb886-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 14 × 6
+   name               profession      age   kids  birth               death     
+   &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;              &lt;date&gt;    
+ 1 David Bowie        musician        69    TRUE  1947-01-08 00:00:00 2016-01-10
+ 2 Carrie Fisher      actor           60    TRUE  1956-10-21 00:00:00 2016-12-27
+ 3 Chuck Berry        musician        90    TRUE  1926-10-18 00:00:00 2017-03-18
+ 4 Bill Paxton        actor           61    TRUE  1955-05-17 00:00:00 2017-02-25
+ 5 Prince             musician        57    TRUE  1958-06-07 00:00:00 2016-04-21
+ 6 Alan Rickman       actor           69    FALSE 1946-02-21 00:00:00 2016-01-14
+ 7 Florence Henderson actor           82    TRUE  1934-02-14 00:00:00 2016-11-24
+ 8 Harper Lee         author          89    FALSE 1926-04-28 00:00:00 2016-02-19
+ 9 Zsa Zsa Gábor      actor           99    TRUE  1917-02-06 00:00:00 2016-12-18
+10 George Michael     musician        53    FALSE 1963-06-25 00:00:00 2016-12-25
+11 Some               &lt;NA&gt;            &lt;NA&gt;  &lt;NA&gt;  NA                  NA        
+12 &lt;NA&gt;               also like to w… &lt;NA&gt;  &lt;NA&gt;  NA                  NA        
+13 &lt;NA&gt;               &lt;NA&gt;            at t… bott… NA                  NA        
+14 &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;  &lt;NA&gt;  NA                  NA        </code></pre>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx-5" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>We can also <span class="hl-yellow"><strong>load an Excel with several sheets</strong></span>: to <span class="hl-yellow"><strong>indicate the sheet</strong></span> (either by its name or by its number) we will use the argument <code>sheet = ...</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb888"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb888-1"><a href="#cb888-1"></a>mtcars <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mtcars"</span>)</span>
+<span id="cb888-2"><a href="#cb888-2"></a>mtcars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 32 × 11
+     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
+ 2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+ 3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+ 4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+ 5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+ 6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+ 7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+ 8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+ 9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+# ℹ 22 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="excel-data-.xls-.xlsx-6" class="slide level2">
+<h2>Excel data (.xls, .xlsx)</h2>
+<p>We can even indicate the <span class="hl-yellow"><strong>range of cells</strong></span> to load with <code>range = ...</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb890"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb890-1"><a href="#cb890-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"iris"</span>, <span class="at">range =</span> <span class="st">"C1:E4"</span>)</span>
+<span id="cb890-2"><a href="#cb890-2"></a>iris</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Petal.Length Petal.Width Species
+         &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
+1          1.4         0.2 setosa 
+2          1.4         0.2 setosa 
+3          1.3         0.2 setosa </code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-sasstataspss" class="slide level2">
+<h2>Import from SAS/STATA/SPSS</h2>
+<p>The <code>{haven}</code> package within the tidyverse orbit will allow us to <span class="hl-yellow"><strong>import files from the 3 most important payment software</strong></span>: SAS, SPSS and Stata.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb892"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb892-1"><a href="#cb892-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb892-2"><a href="#cb892-2"></a></span>
+<span id="cb892-3"><a href="#cb892-3"></a><span class="co"># SAS</span></span>
+<span id="cb892-4"><a href="#cb892-4"></a>iris_sas <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="at">data_file =</span> <span class="st">"./data/iris.sas7bdat"</span>)</span>
+<span id="cb892-5"><a href="#cb892-5"></a></span>
+<span id="cb892-6"><a href="#cb892-6"></a><span class="co"># SPSS</span></span>
+<span id="cb892-7"><a href="#cb892-7"></a>iris_spss <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="at">file =</span> <span class="st">"./data/iris.sav"</span>)</span>
+<span id="cb892-8"><a href="#cb892-8"></a></span>
+<span id="cb892-9"><a href="#cb892-9"></a><span class="co"># Stata</span></span>
+<span id="cb892-10"><a href="#cb892-10"></a>iris_stata <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">file =</span> <span class="st">"./data/iris.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="import-from-spss" class="slide level2">
+<h2>Import from SPSS</h2>
+</section>
+<section id="export" class="slide level2">
+<h2>Export</h2>
+<p>In the same way that we can import we can also <span class="hl-yellow"><strong>export</strong></span></p>
+<ul>
+<li>exported in <code>.RData</code> (recommended option for variables stored in <code>R</code>). Remember that this extension <span class="hl-yellow"><strong>can only be used in <code>R</code></strong></span>. To do so, just use <code>save(object, file = path)</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb893"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb893-1"><a href="#cb893-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb893-2"><a href="#cb893-2"></a><span class="fu">save</span>(table, <span class="at">file =</span> <span class="st">"./data/table.RData"</span>)</span>
+<span id="cb893-3"><a href="#cb893-3"></a><span class="fu">rm</span>(table) <span class="co"># eliminar</span></span>
+<span id="cb893-4"><a href="#cb893-4"></a><span class="fu">load</span>(<span class="st">"./data/table.RData"</span>)</span>
+<span id="cb893-5"><a href="#cb893-5"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+      a     b
+  &lt;int&gt; &lt;int&gt;
+1     1     1
+2     2     2
+3     3     3
+4     4     4</code></pre>
+</div>
+</div>
+</section>
+<section id="export-1" class="slide level2">
+<h2>Export</h2>
+<p>In the same way that we can import we can also <span class="hl-yellow"><strong>export</strong></span></p>
+<ul>
+<li>exported in <code>.RData</code> multiple objects</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb895"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb895-1"><a href="#cb895-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb895-2"><a href="#cb895-2"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb895-3"><a href="#cb895-3"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"javi"</span>, <span class="st">"sandra"</span>)</span>
+<span id="cb895-4"><a href="#cb895-4"></a><span class="fu">save</span>(table, a, b, <span class="at">file =</span> <span class="st">"./data/mult_obj.RData"</span>)</span>
+<span id="cb895-5"><a href="#cb895-5"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"table"</span>))</span>
+<span id="cb895-6"><a href="#cb895-6"></a><span class="fu">load</span>(<span class="st">"./data/mult_obj.RData"</span>)</span>
+<span id="cb895-7"><a href="#cb895-7"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+      a     b
+  &lt;int&gt; &lt;int&gt;
+1     1     1
+2     2     2
+3     3     3
+4     4     4</code></pre>
+</div>
+</div>
+</section>
+<section id="export-2" class="slide level2">
+<h2>Export</h2>
+<p>In the same way that we can import we can also <span class="hl-yellow"><strong>export</strong></span></p>
+<ul>
+<li>exported in <code>.csv</code>. To do this we simply use <code>write_csv(object, file = path)</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb897"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb897-1"><a href="#cb897-1"></a><span class="fu">write_csv</span>(table, <span class="at">file =</span> <span class="st">"./data/table.csv"</span>)</span>
+<span id="cb897-2"><a href="#cb897-2"></a><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/table.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+      a     b
+  &lt;dbl&gt; &lt;dbl&gt;
+1     1     1
+2     2     2
+3     3     3
+4     4     4</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-website" class="slide level2">
+<h2>Import from website</h2>
+<p>One of the main advantages of <code>R</code> is that we can make use of all the previous functions of <span class="hl-yellow"><strong>import but directly from a web</strong></span>, without the need to perform the manual download: instead of passing it the local path we will indicate the <span class="hl-yellow"><strong>link</strong></span>. For example, we are going to download the covid data from ISCIII (<a href="https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos" class="uri">https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos</a>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb899"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb899-1"><a href="#cb899-1"></a>covid_data <span class="ot">&lt;-</span></span>
+<span id="cb899-2"><a href="#cb899-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"</span>)</span>
+<span id="cb899-3"><a href="#cb899-3"></a>covid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 500 × 8
+   provincia_iso sexo  grupo_edad fecha      num_casos num_hosp num_uci num_def
+   &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;      &lt;date&gt;         &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 A             H     0-9        2020-01-01         0        0       0       0
+ 2 A             H     10-19      2020-01-01         0        0       0       0
+ 3 A             H     20-29      2020-01-01         0        0       0       0
+ 4 A             H     30-39      2020-01-01         0        0       0       0
+ 5 A             H     40-49      2020-01-01         0        0       0       0
+ 6 A             H     50-59      2020-01-01         0        0       0       0
+ 7 A             H     60-69      2020-01-01         0        0       0       0
+ 8 A             H     70-79      2020-01-01         0        0       0       0
+ 9 A             H     80+        2020-01-01         0        0       0       0
+10 A             H     NC         2020-01-01         0        0       0       0
+# ℹ 490 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-wikipedia" class="slide level2">
+<h2>Import from wikipedia</h2>
+<p>The <code>{rvest}</code> package, one of the most useful of <code>{tidyverse}</code> allows us to import directly from an <code>html</code>. For example, to export wikipedia tables just <code>read_html()</code> to import the html, <code>html_element("table")</code> to extract the table objects, and <code>html_table()</code> to convert the html table to <code>tibble</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb901"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb901-1"><a href="#cb901-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb901-2"><a href="#cb901-2"></a>wiki_jump <span class="ot">&lt;-</span> <span class="st">'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'</span></span>
+<span id="cb901-3"><a href="#cb901-3"></a>wiki_jump <span class="sc">|&gt;</span> <span class="fu">read_html</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb901-4"><a href="#cb901-4"></a>  <span class="fu">html_element</span>(<span class="st">"table"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb901-5"><a href="#cb901-5"></a>  <span class="fu">html_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 19 × 5
+   Mark                       Wind   Athlete                  Place        Date 
+   &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;                    &lt;chr&gt;        &lt;chr&gt;
+ 1 7.61&nbsp;m (24&nbsp;ft 11+1⁄2&nbsp;in)   ""     Peter O'Connor&nbsp;(IRE)     Dublin, Ire… 5 Au…
+ 2 7.69&nbsp;m (25&nbsp;ft 2+3⁄4&nbsp;in)    ""     Edward Gourdin&nbsp;(USA)     Cambridge, … 23 J…
+ 3 7.76&nbsp;m (25&nbsp;ft 5+1⁄2&nbsp;in)    ""     Robert LeGendre&nbsp;(USA)    Paris, Fran… 7 Ju…
+ 4 7.89&nbsp;m (25&nbsp;ft 10+1⁄2&nbsp;in)   ""     DeHart Hubbard&nbsp;(USA)     Chicago, Un… 13 J…
+ 5 7.90&nbsp;m (25&nbsp;ft 11&nbsp;in)       ""     Edward Hamm&nbsp;(USA)        Cambridge, … 7 Ju…
+ 6 7.93&nbsp;m (26&nbsp;ft 0&nbsp;in)        "0.0"  Sylvio Cator&nbsp;(HAI)       Paris, Fran… 9 Se…
+ 7 7.98&nbsp;m (26&nbsp;ft 2&nbsp;in)        "0.5"  Chuhei Nambu&nbsp;(JPN)       Tokyo, Japan 27 O…
+ 8 8.13&nbsp;m (26&nbsp;ft 8&nbsp;in)        "1.5"  Jesse Owens&nbsp;(USA)        Ann Arbor, … 25 M…
+ 9 8.21&nbsp;m (26&nbsp;ft 11&nbsp;in)       "0.0"  Ralph Boston&nbsp;(USA)       Walnut, Uni… 12 A…
+10 8.24&nbsp;m (27&nbsp;ft 1⁄4&nbsp;in)      "1.8"  Ralph Boston&nbsp;(USA)       Modesto, Un… 27 M…
+11 8.28&nbsp;m (27&nbsp;ft 1+3⁄4&nbsp;in)    "1.2"  Ralph Boston&nbsp;(USA)       Moscow, Sov… 16 J…
+12 8.31&nbsp;m (27&nbsp;ft 3&nbsp;in)&nbsp;A      "−0.1" Igor Ter-Ovanesyan&nbsp;(URS) Yerevan, So… 10 J…
+13 8.33&nbsp;m (27&nbsp;ft 3+3⁄4&nbsp;in)[2] ""     Phil Shinnick&nbsp;(USA)      Modesto, Un… 25 M…
+14 8.31&nbsp;m (27&nbsp;ft 3&nbsp;in)        "0.0"  Ralph Boston&nbsp;(USA)       Kingston, J… 15 A…
+15 8.34&nbsp;m (27&nbsp;ft 4+1⁄4&nbsp;in)    "1.0"  Ralph Boston&nbsp;(USA)       Los Angeles… 12 S…
+16 8.35&nbsp;m (27&nbsp;ft 4+1⁄2&nbsp;in)[5] "0.0"  Ralph Boston&nbsp;(USA)       Modesto, Un… 29 M…
+17 8.35&nbsp;m (27&nbsp;ft 4+1⁄2&nbsp;in)&nbsp;A  "0.0"  Igor Ter-Ovanesyan&nbsp;(URS) Mexico City… 19 O…
+18 8.90&nbsp;m (29&nbsp;ft 2+1⁄4&nbsp;in)&nbsp;A  "2.0"  Bob Beamon&nbsp;(USA)         Mexico City… 18 O…
+19 8.95&nbsp;m (29&nbsp;ft 4+1⁄4&nbsp;in)    "0.3"  Mike Powell&nbsp;(USA)        Tokyo, Japan 30 A…</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-google-drive" class="slide level2">
+<h2>Import from google drive</h2>
+<p>Another option available (especially if we work with other people working) is to <span class="hl-yellow"><strong>import from a Google Drive spreadsheet</strong></span>, making use of <code>read_sheet()</code> from the <code>{googlesheets4}</code> package.</p>
+<p>The first time you will be asked for a tidyverse permission to interact with your drive</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb903"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb903-1"><a href="#cb903-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb903-2"><a href="#cb903-2"></a>google_sheet <span class="ot">&lt;-</span></span>
+<span id="cb903-3"><a href="#cb903-3"></a>  <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing"</span>)</span>
+<span id="cb903-4"><a href="#cb903-4"></a>google_sheet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  a         b     c d     
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+1 d1      0.5     1 hombre
+2 d2     -0.3     2 hombre
+3 d3      1.1     3 mujer </code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-api-owid" class="slide level2">
+<h2>Import from API (owid)</h2>
+<p>Another interesting option is the <span class="hl-yellow"><strong>data download from an API</strong></span>: an intermediary between an app or data provider and our <code>R</code>. For example, let’s load the <code>{owidR}</code> library, which allows us to download data from the web <a href="https://ourworldindata.org/" class="uri">https://ourworldindata.org/</a>. For example, the <code>owid_covid()</code> function loads without realizing it more than 400 000 records with more than 60 variables from 238 countries.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb905"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb905-1"><a href="#cb905-1"></a><span class="fu">library</span>(owidR)</span>
+<span id="cb905-2"><a href="#cb905-2"></a><span class="fu">owid_covid</span>() <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 67
+  iso_code continent location    date       total_cases new_cases
+  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;IDate&gt;          &lt;int&gt;     &lt;int&gt;
+1 AFG      Asia      Afghanistan 2020-01-05           0         0
+2 AFG      Asia      Afghanistan 2020-01-06           0         0
+3 AFG      Asia      Afghanistan 2020-01-07           0         0
+4 AFG      Asia      Afghanistan 2020-01-08           0         0
+5 AFG      Asia      Afghanistan 2020-01-09           0         0
+6 AFG      Asia      Afghanistan 2020-01-10           0         0
+7 AFG      Asia      Afghanistan 2020-01-11           0         0
+# ℹ 61 more variables: new_cases_smoothed &lt;dbl&gt;, total_deaths &lt;int&gt;,
+#   new_deaths &lt;int&gt;, new_deaths_smoothed &lt;dbl&gt;, total_cases_per_million &lt;dbl&gt;,
+#   new_cases_per_million &lt;dbl&gt;, new_cases_smoothed_per_million &lt;dbl&gt;,
+#   total_deaths_per_million &lt;dbl&gt;, new_deaths_per_million &lt;dbl&gt;,
+#   new_deaths_smoothed_per_million &lt;dbl&gt;, reproduction_rate &lt;dbl&gt;,
+#   icu_patients &lt;int&gt;, icu_patients_per_million &lt;dbl&gt;, hosp_patients &lt;int&gt;,
+#   hosp_patients_per_million &lt;dbl&gt;, weekly_icu_admissions &lt;int&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-api-aemet" class="slide level2">
+<h2>Import from API (aemet)</h2>
+<p>In many occasions to connect to the API we will first have to <span class="hl-yellow"><strong>register and obtain a key</strong></span>, this is the case of the <code>{climaemet}</code> package to access <span class="hl-yellow"><strong>Spanish meteorological data</strong></span> (<a href="https://opendata.aemet.es/centrodedescargas/inicio" class="uri">https://opendata.aemet.es/centrodedescargas/inicio</a>).</p>
+<p>Once we have the API key we register it in our RStudio to be able to use it in the future.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb907"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb907-1"><a href="#cb907-1"></a><span class="fu">library</span>(climaemet)</span>
+<span id="cb907-2"><a href="#cb907-2"></a></span>
+<span id="cb907-3"><a href="#cb907-3"></a><span class="co"># Api key</span></span>
+<span id="cb907-4"><a href="#cb907-4"></a>apikey <span class="ot">&lt;-</span> <span class="st">"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"</span></span>
+<span id="cb907-5"><a href="#cb907-5"></a></span>
+<span id="cb907-6"><a href="#cb907-6"></a><span class="fu">aemet_api_key</span>(apikey, <span class="at">install =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="import-from-api-aemet-1" class="slide level2">
+<h2>Import from API (aemet)</h2>
+<p>With this package we can do a <span class="hl-yellow"><strong>search for stations</strong></span> to know both its postal code and its identifier code within the AEMET network</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb908"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb908-1"><a href="#cb908-1"></a>stations <span class="ot">&lt;-</span> <span class="fu">aemet_stations</span>()</span>
+<span id="cb908-2"><a href="#cb908-2"></a>stations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 947 × 7
+   indicativo indsinop nombre                 provincia altitud longitud latitud
+   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;                  &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 B013X      "08304"  ESCORCA, LLUC          ILLES BA…     490     2.89    39.8
+ 2 B051A      "08316"  SÓLLER, PUERTO         ILLES BA…       5     2.69    39.8
+ 3 B087X      ""       BANYALBUFAR            ILLES BA…      60     2.51    39.7
+ 4 B103B      "99103"  ANDRATX - SANT ELM     ILLES BA…      52     2.37    39.6
+ 5 B158X      ""       CALVIÀ, ES CAPDELLÀ    ILLES BA…      50     2.47    39.6
+ 6 B228       "08301"  PALMA, PUERTO          ILLES BA…       3     2.63    39.6
+ 7 B236C      ""       PALMA, UNIVERSIDAD     ILLES BA…      95     2.64    39.6
+ 8 B248       "08303"  SIERRA DE ALFABIA, BU… ILLES BA…    1030     2.71    39.7
+ 9 B275E      "08302"  SON BONET, AEROPUERTO  BALEARES       49     2.71    39.6
+10 B278       "08306"  PALMA DE MALLORCA, AE… ILLES BA…       8     2.74    39.6
+# ℹ 937 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-api-aemet-2" class="slide level2">
+<h2>Import from API (aemet)</h2>
+<p>For example, to get data from the station of the airport of El Prat, Barcelona, the code to provide is <code>"0076"</code>, obtaining <strong>hourly data</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb910"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb910-1"><a href="#cb910-1"></a><span class="fu">aemet_last_obs</span>(<span class="st">"0076"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 23
+   idema   lon fint                 prec   alt  vmax    vv    dv   lat  dmax
+   &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 0076   2.07 2024-10-20 04:00:00     0     4   7.7   5.6   360  41.3   360
+ 2 0076   2.07 2024-10-20 05:00:00     0     4   7.7   5.8   360  41.3   360
+ 3 0076   2.07 2024-10-20 06:00:00     0     4   8.2   5.6   360  41.3    10
+ 4 0076   2.07 2024-10-20 07:00:00     0     4   7.7   4.3    10  41.3   350
+ 5 0076   2.07 2024-10-20 08:00:00     0     4   6.7   4.6    10  41.3   350
+ 6 0076   2.07 2024-10-20 09:00:00     0     4   6.7   4      10  41.3   360
+ 7 0076   2.07 2024-10-20 10:00:00     0     4   8.2   4      10  41.3    10
+ 8 0076   2.07 2024-10-20 11:00:00     0     4   6.7   1.8   110  41.3    30
+ 9 0076   2.07 2024-10-20 12:00:00     0     4   5.1   2.2   210  41.3   150
+10 0076   2.07 2024-10-20 13:00:00     0     4   4.1   2.2   200  41.3   190
+11 0076   2.07 2024-10-20 14:00:00     0     4   4.1   2.7   220  41.3   230
+12 0076   2.07 2024-10-20 15:00:00     0     4   4.1   2.2   190  41.3   190
+# ℹ 13 more variables: ubi &lt;chr&gt;, pres &lt;dbl&gt;, hr &lt;dbl&gt;, stdvv &lt;dbl&gt;, ts &lt;dbl&gt;,
+#   pres_nmar &lt;dbl&gt;, tamin &lt;dbl&gt;, ta &lt;dbl&gt;, tamax &lt;dbl&gt;, tpr &lt;dbl&gt;, vis &lt;dbl&gt;,
+#   stddv &lt;dbl&gt;, inso &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="import-from-api-us-census" class="slide level2">
+<h2>Import from API (US census)</h2>
+</section>
+<section id="import-from-api" class="slide level2">
+<h2>Import from API</h2>
+<p>Other options:</p>
+<ul>
+<li><p><code>{chessR}</code>: data from chess matches. See <a href="https://github.com/JaseZiv/chessR" class="uri">https://github.com/JaseZiv/chessR</a></p></li>
+<li><p><code>{spotifyr}</code>: data from Spotify. See <a href="https://www.rcharlie.com/spotifyr/" class="uri">https://www.rcharlie.com/spotifyr/</a></p></li>
+<li><p><code>{gtrendsR}</code>: data from Google Trends. See <a href="https://github.com/PMassicotte/gtrendsR" class="uri">https://github.com/PMassicotte/gtrendsR</a></p></li>
+<li><p><code>{scholar}</code>: data from <a href="https://github.com/jkeirstead/scholar" class="uri">https://github.com/jkeirstead/scholar</a></p></li>
+</ul>
+</section>
+<section id="tu-turno-7-1" class="slide level2">
+<h2>💻 Your turn</h2>
+<p><span style="color:#444442;"><strong>Try to solve the following exercises without looking at the solutions</strong></span></p>
+<div class="panel-tabset">
+<ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1"><span class="hl-yellow"><strong>Exercise 1</strong></span></a></li><li><a href="#tabset-17-2"><span class="hl-yellow"><strong>Exercise 2</strong></span></a></li><li><a href="#tabset-17-3"><span class="hl-yellow"><strong>Exercise 3</strong></span></a></li><li><a href="#tabset-17-4"><span class="hl-yellow"><strong>Exercise 4</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-17-1">
+<p>📝 The <code>who</code> dataset we have used in previous exercises, export it to a native <code>R</code> format in the <code>data</code> folder of the project</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb912"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb912-1"><a href="#cb912-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb912-2"><a href="#cb912-2"></a><span class="fu">save</span>(who, <span class="at">file =</span> <span class="st">"./data/who.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-17-2">
+<p>📝 Loads the <code>who</code> dataset but from the data folder (import the file created in the previous exercise)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb913"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb913-1"><a href="#cb913-1"></a><span class="fu">load</span>(<span class="st">"./data/who.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-17-3">
+<p>📝 Repeats the same (export and import) in 4 formats: <code>.csv</code>, <code>.xlsx</code>, <code>.sav</code> (spss) and <code>.dta</code> (stata)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb914"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb914-1"><a href="#cb914-1"></a><span class="co"># csv</span></span>
+<span id="cb914-2"><a href="#cb914-2"></a><span class="fu">library</span>(readr)</span>
+<span id="cb914-3"><a href="#cb914-3"></a><span class="fu">write_csv</span>(who, <span class="at">file =</span> <span class="st">"./data/who.csv"</span>)</span>
+<span id="cb914-4"><a href="#cb914-4"></a>who_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/who.csv"</span>)</span>
+<span id="cb914-5"><a href="#cb914-5"></a></span>
+<span id="cb914-6"><a href="#cb914-6"></a><span class="co"># excel</span></span>
+<span id="cb914-7"><a href="#cb914-7"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb914-8"><a href="#cb914-8"></a><span class="fu">write.xlsx</span>(who, <span class="at">file =</span> <span class="st">"./data/who.xlsx"</span>)</span>
+<span id="cb914-9"><a href="#cb914-9"></a>who_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./data/who.xlsx"</span>)</span>
+<span id="cb914-10"><a href="#cb914-10"></a></span>
+<span id="cb914-11"><a href="#cb914-11"></a><span class="co"># sas y stata</span></span>
+<span id="cb914-12"><a href="#cb914-12"></a><span class="fu">library</span>(haven)</span>
+<span id="cb914-13"><a href="#cb914-13"></a><span class="fu">write_sav</span>(who, <span class="at">path =</span> <span class="st">"./data/who.sav"</span>)</span>
+<span id="cb914-14"><a href="#cb914-14"></a>who_data <span class="ot">&lt;-</span> <span class="fu">read_spss</span>(<span class="at">path =</span> <span class="st">"./data/who.sav"</span>)</span>
+<span id="cb914-15"><a href="#cb914-15"></a></span>
+<span id="cb914-16"><a href="#cb914-16"></a><span class="fu">write_dta</span>(who, <span class="at">path =</span> <span class="st">"./data/who.dta"</span>)</span>
+<span id="cb914-17"><a href="#cb914-17"></a>who_data <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">path =</span> <span class="st">"./data/who.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-17-4">
+<p>📝 Repeat the loading of <code>who.csv</code> but only select the first 4 columns already in the load.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb915"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb915-1"><a href="#cb915-1"></a>who_select <span class="ot">&lt;-</span></span>
+<span id="cb915-2"><a href="#cb915-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./data/who.csv"</span>,</span>
+<span id="cb915-3"><a href="#cb915-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"iso2"</span>, <span class="st">"iso3"</span>, <span class="st">"year"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="clase-8" class="title-slide slide level1 center">
+<h1>L8: <span class="flow">factors and lists</span></h1>
+<p><span style="color:#444442;"><strong>Handling with factors and lists</strong></span></p>
+<ul>
+<li><p><a href="#/tu-turno-8-1">💻 Solved exercises: lists</a></p></li>
+<li><p><a href="#/tu-turno-8-2">💻 Solved exercises: factors</a></p></li>
+<li><p><a href="#/caso-practico-8-1">🐣 Workbook/case study I</a></p></li>
+<li><p><a href="#/caso-practico-8-2">🐣 Workbook/case study II</a></p></li>
+<li><p><a href="#/planificacion-curso">📆 Planning</a></p></li>
+</ul>
+</section>
+<section id="lists" class="slide level2">
+<h2>Lists</h2>
+<p>We have already seen that lists are an object in R that allows us to store <span class="hl-yellow"><strong>collections of variables of different type</strong></span> (as with <code>data.frame</code> and <code>tibble</code>) but also <span class="hl-purple"><strong>different lengths</strong></span>, with totally heterogeneous structures (even a list can have inside it another list).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb916"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb916-1"><a href="#cb916-1"></a>name <span class="ot">&lt;-</span> <span class="st">"Javi"</span></span>
+<span id="cb916-2"><a href="#cb916-2"></a>age <span class="ot">&lt;-</span> <span class="dv">34</span></span>
+<span id="cb916-3"><a href="#cb916-3"></a>marks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">9</span>)</span>
+<span id="cb916-4"><a href="#cb916-4"></a>parents <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Paloma"</span>, <span class="st">"Goyo"</span>)</span>
+<span id="cb916-5"><a href="#cb916-5"></a></span>
+<span id="cb916-6"><a href="#cb916-6"></a>list_var <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"name"</span> <span class="ot">=</span> name, <span class="st">"age"</span> <span class="ot">=</span> age, <span class="st">"marks"</span> <span class="ot">=</span> marks, <span class="st">"parents"</span> <span class="ot">=</span> parents)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb917"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb917-1"><a href="#cb917-1"></a>list_var<span class="sc">$</span>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Javi"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb919"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb919-1"><a href="#cb919-1"></a>list_var<span class="sc">$</span>marks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  7  8  5  3 10  9</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-1" class="slide level2">
+<h2>Lists</h2>
+<p>We can also make <span class="hl-yellow"><strong>lists with other lists inside</strong></span>, so that to access each level we must use the <code>[[]]</code> operator.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb921"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb921-1"><a href="#cb921-1"></a>list_of_lists <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"list_1"</span> <span class="ot">=</span> list_var[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="st">"list_2"</span> <span class="ot">=</span> list_var[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb921-2"><a href="#cb921-2"></a><span class="fu">names</span>(list_of_lists)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list_1" "list_2"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb923"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb923-1"><a href="#cb923-1"></a><span class="fu">names</span>(list_of_lists[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "name" "age" </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb925"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb925-1"><a href="#cb925-1"></a>list_of_lists[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Javi"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>We are allowed to store <span class="hl-yellow"><strong>n-dimensional data</strong></span>!</p>
+</div>
+</section>
+<section id="lists-2" class="slide level2">
+<h2>Lists</h2>
+<p>One of the disadvantages is that a list <span class="hl-yellow"><strong>cannot be vectorized</strong></span> immediately, so any arithmetic operation applied to a list will give <span class="hl-red"><strong>error</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb927"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb927-1"><a href="#cb927-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb927-2"><a href="#cb927-2"></a>data <span class="sc">/</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in data/2: non-numeric argument to binary operator</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>For this purpose, one of the common (but outdated) options is to make use of the <code>lapply()</code> family.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb929"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb929-1"><a href="#cb929-1"></a><span class="fu">lapply</span>(data, <span class="at">FUN =</span> <span class="cf">function</span>(x) { x <span class="sc">/</span> <span class="dv">2</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 0.5 1.0 1.5 2.0 2.5
+
+$b
+ [1]  5.0  5.5  6.0  6.5  7.0  7.5  8.0  8.5  9.0  9.5 10.0</code></pre>
+</div>
+</div>
+<p>By default, the output of <code>lapply()</code>is always a <span class="hl-yellow"><strong>list of equal length</strong></span>.</p>
+</div>
+</section>
+<section id="lists-3" class="slide level2">
+<h2>Lists</h2>
+<p>A more flexible and versatile option is to make use of the <code>{purrr}</code> package of the <code>{tidyverse}</code> environment.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb931"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb931-1"><a href="#cb931-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This package is intended to mimic the <span class="hl-yellow"><strong>functional programming</strong></span> of other languages such as Scala or Hadoop’s <span class="hl-yellow"><strong>map-reduce strategy</strong></span> (from Google).</p>
+
+<img data-src="img/purrr.png" class="r-stretch"></section>
+<section id="lists-4" class="slide level2">
+<h2>Lists</h2>
+<p>The simplest function of the <code>{purrr}</code> package is the <code>map()</code> function, which <span class="hl-yellow"><strong>applies a vectorized function</strong></span> to each of the elements of a list. Let’s see a first example applied to vectors</p>
+<div class="fragment">
+<p><code>map()</code> allows us to <span class="hl-yellow"><strong>“map” each list</strong></span> and apply the function element by element (if applicable).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb932"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb932-1"><a href="#cb932-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"x1"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"x2"</span> <span class="ot">=</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb932-2"><a href="#cb932-2"></a><span class="fu">map</span>(x, sqrt) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$x1
+[1] 1.000000 1.414214 1.732051 2.000000
+
+$x2
+ [1] 3.316625 3.464102 3.605551 3.741657 3.872983 4.000000 4.123106 4.242641
+ [9] 4.358899 4.472136</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Be careful</strong></p>
+</div>
+<div class="callout-content">
+<p>With vectors we have a default vectorization because <code>R</code> performs element-by-element operations. Note that, by default, the <span class="hl-yellow"><strong>output of <code>map</code> is a list</strong></span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="lists-5" class="slide level2">
+<h2>Lists</h2>
+<p>Let’s look at another example. Define in a list two samples from 2 normal distributions, of different sample size and different mean. Compute the mean of each one.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb934"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb934-1"><a href="#cb934-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.7</span>),</span>
+<span id="cb934-2"><a href="#cb934-2"></a>          <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">2800</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="fl">1.5</span>))</span>
+<span id="cb934-3"><a href="#cb934-3"></a><span class="fu">map</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.01416045
+
+[[2]]
+[1] 1.988931</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-6" class="slide level2">
+<h2>Lists</h2>
+<p>What if we want to calculate the mean of their squared values?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb936"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb936-1"><a href="#cb936-1"></a><span class="fu">map</span>(x, <span class="cf">function</span>(x) { <span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.5157736
+
+[[2]]
+[1] 6.213856</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-7" class="slide level2">
+<h2>Lists</h2>
+<p>In addition to being <span class="hl-yellow"><strong>more readable and efficient</strong></span>, with <code>{purrr}</code> we can <span class="hl-yellow"><strong>decide the output format</strong></span> after the operation</p>
+<ul>
+<li>output as <span class="hl-purple"><strong>numeric (double) vector</strong></span> with <code>map_dbl()</code></li>
+<li>output as <span class="hl-purple"><strong>numeric (int) vector</strong></span> with <code>map_int()</code></li>
+<li>output as <span class="hl-purple"><strong>character vector</strong></span> with <code>map_chr()</code></li>
+<li>output as <span class="hl-purple"><strong>logical vector</strong></span> with <code>map_lgl()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb938"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb938-1"><a href="#cb938-1"></a><span class="fu">map_dbl</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01416045 1.98893058</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb940"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb940-1"><a href="#cb940-1"></a><span class="fu">map_chr</span>(x, <span class="cf">function</span>(x) { <span class="fu">glue</span>(<span class="st">"Mean is {round(mean(x), 5)}"</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mean is 0.01416" "Mean is 1.98893"</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-8" class="slide level2">
+<h2>Lists</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb942"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb942-1"><a href="#cb942-1"></a><span class="fu">c</span>(x[[<span class="dv">1</span>]][<span class="dv">3</span>], x[[<span class="dv">2</span>]][<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.1821836 -0.9706831</code></pre>
+</div>
+</div>
+<p>Also, if you pass it a <span class="hl-yellow"><strong>number</strong></span> instead of a function, it will return the <span class="hl-yellow"><strong>ith element of each list</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb944"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb944-1"><a href="#cb944-1"></a><span class="fu">map_dbl</span>(x, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.1821836 -0.9706831</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-9" class="slide level2">
+<h2>Lists</h2>
+<p>We also have the option of generalizing it to be able to use functions that <span class="hl-yellow"><strong>need two arguments in the form of a list</strong></span> (binary operations), with <code>map2()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb946"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb946-1"><a href="#cb946-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb946-2"><a href="#cb946-2"></a>y <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"c"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">0</span>), <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb946-3"><a href="#cb946-3"></a><span class="fu">map2</span>(x, y, <span class="cf">function</span>(x, y) { x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> y<span class="sc">^</span><span class="dv">2</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1]  2 20  9
+
+$b
+[1] 41 41 37</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-10" class="slide level2">
+<h2>Lists</h2>
+<p>We can obtain the output in the form of <code>data.frame</code> by adding <code>list_rbind()</code> or <code>list_cbind()</code>, which <span class="hl-yellow"><strong>converts a list into a table</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb948"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb948-1"><a href="#cb948-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>)</span>
+<span id="cb948-2"><a href="#cb948-2"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb948-3"><a href="#cb948-3"></a><span class="fu">map2</span>(x, y, <span class="cf">function</span>(x, y) { <span class="fu">tibble</span>(x, y) }) <span class="sc">|&gt;</span> <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  x         y
+  &lt;chr&gt; &lt;int&gt;
+1 a         1
+2 b         2
+3 c         3</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-11" class="slide level2">
+<h2>Lists</h2>
+<p>We can generalize it further with <code>pmap_xxx()</code> which allows us to use <span class="hl-yellow"><strong>multiple arguments (multiple lists)</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb950"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb950-1"><a href="#cb950-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb950-2"><a href="#cb950-2"></a>y <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb950-3"><a href="#cb950-3"></a>z <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)</span>
+<span id="cb950-4"><a href="#cb950-4"></a><span class="fu">pmap_dbl</span>(<span class="fu">list</span>(x, y, z), sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 111 221 331</code></pre>
+</div>
+</div>
+</section>
+<section id="lists-12" class="slide level2">
+<h2>Lists</h2>
+<p>We have other types of iterators that, although they assume inputs, do not return anything, as <code>walk()</code> (just one input argument), <code>walk2()</code> (two arguments) and <code>pwalk()</code> (multiple arguments), all <span class="hl-yellow"><strong>invisibly return</strong></span>, just call a function for its <span class="hl-yellow"><strong>side effects</strong></span> rather than its return value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb952"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb952-1"><a href="#cb952-1"></a><span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb952-2"><a href="#cb952-2"></a>  <span class="fu">map2</span>(<span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">13</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">14</span><span class="sc">:</span><span class="dv">16</span>),</span>
+<span id="cb952-3"><a href="#cb952-3"></a>       <span class="cf">function</span>(x, y) { x <span class="sc">+</span> y }) <span class="sc">|&gt;</span> </span>
+<span id="cb952-4"><a href="#cb952-4"></a>  <span class="fu">walk</span>(print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12 14 16
+[1] 18 20 22</code></pre>
+</div>
+</div>
+</section>
+<section id="tu-turno-8-1" class="slide level2">
+<h2>💻 It’s your turn</h2>
+<div class="panel-tabset">
+<ul id="tabset-18" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-18-1"><span class="hl-yellow"><strong>Exercise 1</strong></span></a></li><li><a href="#tabset-18-2"><span class="hl-yellow"><strong>Exercise 2</strong></span></a></li><li><a href="#tabset-18-3"><span class="hl-yellow"><strong>Exercise 3</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-18-1">
+<p>📝 Define a list of 4 elements of different types and access the second of them (I will include one that is a tibble so that you can see that in a list there is room for everything).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb954"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb954-1"><a href="#cb954-1"></a>list_example <span class="ot">&lt;-</span></span>
+<span id="cb954-2"><a href="#cb954-2"></a>  <span class="fu">list</span>(<span class="st">"name"</span> <span class="ot">=</span> <span class="st">"Javier"</span>, <span class="st">"cp"</span> <span class="ot">=</span> <span class="dv">28019</span>,</span>
+<span id="cb954-3"><a href="#cb954-3"></a>       <span class="st">"siblings"</span> <span class="ot">=</span> <span class="cn">TRUE</span>,</span>
+<span id="cb954-4"><a href="#cb954-4"></a>       <span class="st">"marks"</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="st">"maths"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb954-5"><a href="#cb954-5"></a>                        <span class="st">"lang"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">6</span>)))</span>
+<span id="cb954-6"><a href="#cb954-6"></a>list_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-18-2">
+<p>📝 From the list above, access the elements that occupy places 1 and 4 of the list defined above.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb955"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb955-1"><a href="#cb955-1"></a>list_example[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb955-2"><a href="#cb955-2"></a></span>
+<span id="cb955-3"><a href="#cb955-3"></a>list_example<span class="sc">$</span>name</span>
+<span id="cb955-4"><a href="#cb955-4"></a>list_example<span class="sc">$</span>marks</span>
+<span id="cb955-5"><a href="#cb955-5"></a></span>
+<span id="cb955-6"><a href="#cb955-6"></a>list_example[<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"marks"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-18-3">
+<p>📝 Load the <code>starwars</code> dataset from the <code>{dplyr}</code> package and access the second movie that appears in <code>starwars$films</code> (for each character). Determine which ones do not appear in more than one movie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb956"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb956-1"><a href="#cb956-1"></a>second_film <span class="ot">&lt;-</span> <span class="fu">map</span>(starwars<span class="sc">$</span>films, <span class="dv">2</span>)</span>
+<span id="cb956-2"><a href="#cb956-2"></a><span class="fu">map_lgl</span>(second_film, is.null)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
+[13] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[25]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[37]  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+[49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+[61]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[73]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[85]  TRUE  TRUE  TRUE</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="quali-factors" class="slide level2">
+<h2>Quali: factors</h2>
+<p>In statistics, when we talk about <span class="hl-yellow"><strong>qualitative variables</strong></span>, we will call <strong>levels or modalities</strong> the <strong>different values</strong> that these data can take. For example, in the case of the <code>sex</code> variable of the <code>starwars</code> set, we have 4 allowed levels: <code>female</code>, <code>hermaphroditic</code>, <code>male</code> and <code>none</code> (in addition to missing data).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb958"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb958-1"><a href="#cb958-1"></a>starwars <span class="sc">|&gt;</span> <span class="fu">count</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  sex                n
+  &lt;chr&gt;          &lt;int&gt;
+1 female            16
+2 hermaphroditic     1
+3 male              60
+4 none               6
+5 &lt;NA&gt;               4</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-1" class="slide level2">
+<h2>Quali: factors</h2>
+<p>These kinds of variables are known in <code>R</code> as <span class="hl-yellow"><strong>factors</strong></span>, and the fundamental package to deal with them is <code>{forcats}</code> (from the <code>{tidyverse}</code> environment).</p>
+
+<img data-src="img/factors.jpg" class="r-stretch"></section>
+<section id="quali-factors-2" class="slide level2">
+<h2>Quali: factors</h2>
+<p>This package allows us to set the <span class="hl-yellow"><strong>levels</strong></span> (stored internally as <code>levels</code>) that a given categorical variable takes so that no mistakes, errors in data collection and generation can be generated. It also makes their analysis less computationally expensive when doing searches and comparisons, giving them a <span class="hl-yellow"><strong>different treatment than normal text strings</strong></span>.</p>
+<div class="fragment">
+<p>Let’s see a simple example simulating a <code>party</code> variable taking the values <code>"PP"</code>, <code>"PSOE"</code> and <code>"SUMAR"</code> (of size 15)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb960"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb960-1"><a href="#cb960-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb960-2"><a href="#cb960-2"></a>party <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"PP"</span>, <span class="st">"PSOE"</span>, <span class="st">"SUMAR"</span>), <span class="at">size =</span> <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb960-3"><a href="#cb960-3"></a>party</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "PP"    "PSOE"  "SUMAR" "PP"    "PP"    "SUMAR" "PSOE"  "SUMAR" "SUMAR"
+[10] "SUMAR" "PP"    "PSOE"  "PP"    "PSOE"  "SUMAR"</code></pre>
+</div>
+</div>
+<p>The <code>party</code> variable is currently of <span class="hl-yellow"><strong>type text</strong></span>, of type <code>chr</code>, something we can check with <code>class(state)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb962"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb962-1"><a href="#cb962-1"></a><span class="fu">class</span>(party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="quali-factors-3" class="slide level2">
+<h2>Quali: factors</h2>
+<p>From a statistical and computational point of view, for <code>R</code> this variable right now would be equivalent to a named variable. But statistically <span class="hl-yellow"><strong>a variable as a string</strong></span> is not the same as a categorical variable that <span class="hl-yellow"><strong>can only take those 3 levels</strong></span>. How to <span class="hl-yellow"><strong>convert to factor</strong></span>?</p>
+<div class="fragment">
+<p>By making use of the <code>as_factor()</code> function from the <code>{forcats}</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb964"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb964-1"><a href="#cb964-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb964-2"><a href="#cb964-2"></a>party_fct <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(party),</span>
+<span id="cb964-3"><a href="#cb964-3"></a>                    <span class="st">"party"</span> <span class="ot">=</span> <span class="fu">as_factor</span>(party))</span>
+<span id="cb964-4"><a href="#cb964-4"></a>party_fct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 2
+      id party
+   &lt;int&gt; &lt;fct&gt;
+ 1     1 PP   
+ 2     2 PSOE 
+ 3     3 SUMAR
+ 4     4 PP   
+ 5     5 PP   
+ 6     6 SUMAR
+ 7     7 PSOE 
+ 8     8 SUMAR
+ 9     9 SUMAR
+10    10 SUMAR
+11    11 PP   
+12    12 PSOE 
+13    13 PP   
+14    14 PSOE 
+15    15 SUMAR</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="quali-factors-4" class="slide level2">
+<h2>Quali: factors</h2>
+<p>Not only the class of the variable has changed, but now, below the saved value, the sentence <code>Levels: ...</code> appears: these are the <span class="hl-yellow"><strong>modalities or levels</strong></span> of our qualitative.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb966"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb966-1"><a href="#cb966-1"></a>party_fct <span class="sc">|&gt;</span> <span class="fu">pull</span>(party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] PP    PSOE  SUMAR PP    PP    SUMAR PSOE  SUMAR SUMAR SUMAR PP    PSOE 
+[13] PP    PSOE  SUMAR
+Levels: PP PSOE SUMAR</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-5" class="slide level2">
+<h2>Quali: factors</h2>
+<p>Imagine that we are defining the database of deputies of the Congress and that the deputies of the PP did not attend that day to the plenary session: although our variable does not take that value THAT DAY, the state <code>PSOE</code> is a <span class="hl-yellow"><strong>allowed level in the database</strong></span> (so even if we eliminate it, because it is a factor, the level remains, we do not have it now but it is an allowed level).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb968"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb968-1"><a href="#cb968-1"></a>party_fct <span class="sc">|&gt;</span> </span>
+<span id="cb968-2"><a href="#cb968-2"></a>  <span class="fu">filter</span>(party <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PP"</span>, <span class="st">"SUMAR"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb968-3"><a href="#cb968-3"></a>  <span class="fu">pull</span>(party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] PP    SUMAR PP    PP    SUMAR SUMAR SUMAR SUMAR PP    PP    SUMAR
+Levels: PP PSOE SUMAR</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-6" class="slide level2">
+<h2>Quali: factors</h2>
+<p>With <code>factor()</code> function we can <span class="hl-yellow"><strong>explicitly specify</strong></span> the names of the modalities and using <code>levels = ...</code> we can explicitly tell it the <span class="hl-yellow"><strong>“order” of the modalities</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb970"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb970-1"><a href="#cb970-1"></a>party_fct <span class="ot">&lt;-</span></span>
+<span id="cb970-2"><a href="#cb970-2"></a>  <span class="fu">tibble</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(party),</span>
+<span id="cb970-3"><a href="#cb970-3"></a>         <span class="at">party =</span> <span class="fu">factor</span>(party, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"SUMAR"</span>, <span class="st">"PP"</span>, <span class="st">"PSOE"</span>)))</span>
+<span id="cb970-4"><a href="#cb970-4"></a>party_fct <span class="sc">|&gt;</span> <span class="fu">pull</span>(party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] PP    PSOE  SUMAR PP    PP    SUMAR PSOE  SUMAR SUMAR SUMAR PP    PSOE 
+[13] PP    PSOE  SUMAR
+Levels: SUMAR PP PSOE</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-7" class="slide level2">
+<h2>Quali: factors</h2>
+<p>The previous “order” is just in the sense which it will be counted/plotted first) but <span class="hl-purple"><strong>we don’t have (yet) an ordinal variable</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb972"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb972-1"><a href="#cb972-1"></a>party_fct<span class="sc">$</span>party <span class="sc">&lt;</span> <span class="st">"SUMAR"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>What if we want to <span class="hl-yellow"><strong>define a qualitative variable ORDINAL</strong></span>? Inside <code>factor()</code> we must indicate that <code>ordered = TRUE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb974"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb974-1"><a href="#cb974-1"></a>marks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"B"</span>, <span class="st">"A+"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"D"</span>, <span class="st">"A+"</span>)</span>
+<span id="cb974-2"><a href="#cb974-2"></a>marks_database <span class="ot">&lt;-</span></span>
+<span id="cb974-3"><a href="#cb974-3"></a>  <span class="fu">tibble</span>(<span class="st">"student"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(marks),</span>
+<span id="cb974-4"><a href="#cb974-4"></a>         <span class="st">"marks"</span> <span class="ot">=</span></span>
+<span id="cb974-5"><a href="#cb974-5"></a>           <span class="fu">factor</span>(marks, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"E"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A+"</span>),</span>
+<span id="cb974-6"><a href="#cb974-6"></a>                  <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb974-7"><a href="#cb974-7"></a>marks_database <span class="sc">|&gt;</span> <span class="fu">pull</span>(marks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A  E  F  B  A+ A  C  C  D  B  A  C  C  E  F  D  A+
+Levels: F &lt; E &lt; D &lt; C &lt; B &lt; A &lt; A+</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="quali-factors-8" class="slide level2">
+<h2>Quali: factors</h2>
+<p>What changes? If you notice now, although the variable is still qualitative, we can <span class="hl-yellow"><strong>make comparisons and order the records</strong></span> because there is a <span class="hl-purple"><strong>hierarchy</strong></span> between the modalities.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb976"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb976-1"><a href="#cb976-1"></a>marks_database <span class="sc">|&gt;</span> <span class="fu">filter</span>(marks <span class="sc">&gt;=</span> <span class="st">"B"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  student marks
+    &lt;int&gt; &lt;ord&gt;
+1       1 A    
+2       4 B    
+3       5 A+   
+4       6 A    
+5      10 B    
+6      11 A    
+7      17 A+   </code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-9" class="slide level2">
+<h2>Quali: factors</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>If we want to tell it to <span class="hl-yellow"><strong>drop an unused level</strong></span> at that moment (and that we want to <span class="hl-purple"><strong>exclude from the definition</strong></span>) we can do it with <code>fct_drop()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb978"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb978-1"><a href="#cb978-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb978-2"><a href="#cb978-2"></a>  <span class="fu">filter</span>(marks <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"E"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb978-3"><a href="#cb978-3"></a>  <span class="fu">pull</span>(marks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A E F B A C C D B A C C E F D
+Levels: F &lt; E &lt; D &lt; C &lt; B &lt; A &lt; A+</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="./img/drop_factor.jpg" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb980"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb980-1"><a href="#cb980-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb980-2"><a href="#cb980-2"></a>  <span class="fu">filter</span>(marks <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"E"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb980-3"><a href="#cb980-3"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_drop</span>(marks)) <span class="sc">|&gt;</span>  </span>
+<span id="cb980-4"><a href="#cb980-4"></a>  <span class="fu">pull</span>(marks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A E F B A C C D B A C C E F D
+Levels: F &lt; E &lt; D &lt; C &lt; B &lt; A</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-10" class="slide level2">
+<h2>Quali: factors</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Just as we can delete levels we can <span class="hl-yellow"><strong>expand existing levels</strong></span> (even if there is no data for that level at that time) with <code>fct_expand()</code>.</p>
+</div><div class="column" style="width:55%;">
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="./img/factor_expand.jpg" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb982"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb982-1"><a href="#cb982-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb982-2"><a href="#cb982-2"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_expand</span>(marks, <span class="fu">c</span>(<span class="st">"F-"</span>, <span class="st">"A+"</span>, <span class="st">"A++"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb982-3"><a href="#cb982-3"></a>  <span class="fu">pull</span>(marks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A  E  F  B  A+ A  C  C  D  B  A  C  C  E  F  D  A+
+Levels: F &lt; E &lt; D &lt; C &lt; B &lt; A &lt; A+ &lt; F- &lt; A++</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-11" class="slide level2">
+<h2>Quali: factors</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>In addition with <code>fct_explicit_na()</code> we can <span class="hl-yellow"><strong>assign a level to the missing values</strong></span> to be included in the analysis and visualizations.</p>
+</div><div class="column" style="width:55%;">
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="./img/factor_explicit.jpg" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb984"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb984-1"><a href="#cb984-1"></a><span class="fu">fct_explicit_na</span>(<span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="cn">NA</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] a         b         (Missing)
+Levels: a b (Missing)</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-12" class="slide level2">
+<h2>Quali: factors</h2>
+<p>Even once defined we can <span class="hl-yellow"><strong>reorder the levels</strong></span> with <code>fct_relevel()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb986"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb986-1"><a href="#cb986-1"></a>marks_database_expand <span class="ot">&lt;-</span> </span>
+<span id="cb986-2"><a href="#cb986-2"></a>  marks_database <span class="sc">|&gt;</span>  </span>
+<span id="cb986-3"><a href="#cb986-3"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_expand</span>(marks, <span class="fu">c</span>(<span class="st">"F-"</span>, <span class="st">"A+"</span>, <span class="st">"A++"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb986-4"><a href="#cb986-4"></a>  <span class="fu">pull</span>(marks)</span>
+<span id="cb986-5"><a href="#cb986-5"></a></span>
+<span id="cb986-6"><a href="#cb986-6"></a>marks_database_expand <span class="sc">|&gt;</span> </span>
+<span id="cb986-7"><a href="#cb986-7"></a>  <span class="fu">fct_relevel</span>(<span class="fu">c</span>(<span class="st">"F-"</span>, <span class="st">"F"</span>, <span class="st">"E"</span>, <span class="st">"D"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A+"</span>, <span class="st">"A++"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A  E  F  B  A+ A  C  C  D  B  A  C  C  E  F  D  A+
+Levels: F- &lt; F &lt; E &lt; D &lt; C &lt; B &lt; A &lt; A+ &lt; A++</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-13" class="slide level2">
+<h2>Quali: factors</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>This way of working with qualitative variables allows us to give a <span class="hl-yellow"><strong>theoretical definition</strong></span> of our database, and we can even count values that do not yet exist (but could), making use of <code>fct_count()</code>.</p>
+</div><div class="column" style="width:45%;">
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="./img/fct_count.jpg" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb988"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb988-1"><a href="#cb988-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb988-2"><a href="#cb988-2"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_expand</span>(marks, <span class="fu">c</span>(<span class="st">"F-"</span>, <span class="st">"A+"</span>, <span class="st">"A++"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb988-3"><a href="#cb988-3"></a>  <span class="fu">pull</span>(marks) <span class="sc">|&gt;</span> </span>
+<span id="cb988-4"><a href="#cb988-4"></a>  <span class="fu">fct_count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  f         n
+  &lt;ord&gt; &lt;int&gt;
+1 F         2
+2 E         2
+3 D         2
+4 C         4
+5 B         2
+6 A         3
+7 A+        2
+8 F-        0
+9 A++       0</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-14" class="slide level2">
+<h2>Quali: factors</h2>
+<p>The levels can also be <span class="hl-yellow"><strong>sorted by frequency</strong></span> with <code>fct_infreq()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb990"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb990-1"><a href="#cb990-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb990-2"><a href="#cb990-2"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_infreq</span>(marks)) <span class="sc">|&gt;</span> </span>
+<span id="cb990-3"><a href="#cb990-3"></a>  <span class="fu">pull</span>(marks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A  E  F  B  A+ A  C  C  D  B  A  C  C  E  F  D  A+
+Levels: C &lt; A &lt; F &lt; E &lt; D &lt; B &lt; A+</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb992"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb992-1"><a href="#cb992-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb992-2"><a href="#cb992-2"></a>  <span class="fu">mutate</span>(<span class="at">marks =</span> <span class="fu">fct_infreq</span>(marks)) <span class="sc">|&gt;</span> </span>
+<span id="cb992-3"><a href="#cb992-3"></a>  <span class="fu">pull</span>(marks) <span class="sc">|&gt;</span> </span>
+<span id="cb992-4"><a href="#cb992-4"></a>  <span class="fu">fct_count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  f         n
+  &lt;ord&gt; &lt;int&gt;
+1 C         4
+2 A         3
+3 F         2
+4 E         2
+5 D         2
+6 B         2
+7 A+        2</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-15" class="slide level2">
+<h2>Quali: factors</h2>
+<p>Sometimes we will want to <span class="hl-yellow"><strong>group levels</strong></span>, for example, not allowing levels that <span class="hl-yellow"><strong>do not happen a minimum number of times</strong></span> with <code>fct_lump_min(..., min = ..)</code> (observations that do not meet this will go to a <strong>generic level</strong> called <code>Other</code>, although this can be changed with the <code>other_level</code> argument).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb994"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb994-1"><a href="#cb994-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb994-2"><a href="#cb994-2"></a>  <span class="fu">pull</span>(marks) <span class="sc">%&gt;%</span> </span>
+<span id="cb994-3"><a href="#cb994-3"></a>  <span class="fu">fct_lump_min</span>(<span class="at">min =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A     Other Other Other Other A     C     C     Other Other A     C    
+[13] C     Other Other Other Other
+Levels: C &lt; A &lt; Other</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb996"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb996-1"><a href="#cb996-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb996-2"><a href="#cb996-2"></a>  <span class="fu">pull</span>(marks) <span class="sc">|&gt;</span></span>
+<span id="cb996-3"><a href="#cb996-3"></a>  <span class="fu">fct_lump_min</span>(<span class="at">min =</span> <span class="dv">3</span>,</span>
+<span id="cb996-4"><a href="#cb996-4"></a>               <span class="at">other_level =</span> <span class="st">"Less frequent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A             Less frequent Less frequent Less frequent Less frequent
+ [6] A             C             C             Less frequent Less frequent
+[11] A             C             C             Less frequent Less frequent
+[16] Less frequent Less frequent
+Levels: C &lt; A &lt; Less frequent</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="quali-factors-16" class="slide level2">
+<h2>Quali: factors</h2>
+<p>We can do something equivalent but based on its <span class="hl-yellow"><strong>relative frequency</strong></span> with <code>fct_lump_prop()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb998"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb998-1"><a href="#cb998-1"></a>marks_database <span class="sc">|&gt;</span> </span>
+<span id="cb998-2"><a href="#cb998-2"></a>  <span class="fu">pull</span>(marks) <span class="sc">|&gt;</span> </span>
+<span id="cb998-3"><a href="#cb998-3"></a>  <span class="fu">fct_lump_prop</span>(<span class="at">prop =</span> <span class="fl">0.15</span>,</span>
+<span id="cb998-4"><a href="#cb998-4"></a>                <span class="at">other_level =</span> <span class="st">"less frequent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] A             less frequent less frequent less frequent less frequent
+ [6] A             C             C             less frequent less frequent
+[11] A             C             C             less frequent less frequent
+[16] less frequent less frequent
+Levels: C &lt; A &lt; less frequent</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-17" class="slide level2">
+<h2>Quali: factors</h2>
+<p>We can apply this to our datasets to <span class="hl-yellow"><strong>recategorize variables</strong></span> very quickly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1000"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1000-1"><a href="#cb1000-1"></a>starwars <span class="sc">|&gt;</span>  </span>
+<span id="cb1000-2"><a href="#cb1000-2"></a>  <span class="fu">drop_na</span>(species) <span class="sc">|&gt;</span> </span>
+<span id="cb1000-3"><a href="#cb1000-3"></a>  <span class="fu">mutate</span>(<span class="at">species =</span></span>
+<span id="cb1000-4"><a href="#cb1000-4"></a>           <span class="fu">fct_lump_min</span>(species, <span class="at">min =</span> <span class="dv">3</span>,</span>
+<span id="cb1000-5"><a href="#cb1000-5"></a>                        <span class="at">other_level =</span> <span class="st">"Others"</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb1000-6"><a href="#cb1000-6"></a>  <span class="fu">count</span>(species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  species     n
+  &lt;fct&gt;   &lt;int&gt;
+1 Droid       6
+2 Gungan      3
+3 Human      35
+4 Others     39</code></pre>
+</div>
+</div>
+</section>
+<section id="quali-factors-18" class="slide level2">
+<h2>Quali: factors</h2>
+<p>With <code>fct_reorder()</code> we can also indicate that we want to <span class="hl-yellow"><strong>order the factors</strong></span> according to a function applied to another variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1002"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1002-1"><a href="#cb1002-1"></a>starwars_factor <span class="ot">&lt;-</span> </span>
+<span id="cb1002-2"><a href="#cb1002-2"></a>  starwars <span class="sc">|&gt;</span>  </span>
+<span id="cb1002-3"><a href="#cb1002-3"></a>  <span class="fu">drop_na</span>(height, species) <span class="sc">|&gt;</span> </span>
+<span id="cb1002-4"><a href="#cb1002-4"></a>  <span class="fu">mutate</span>(<span class="at">species =</span></span>
+<span id="cb1002-5"><a href="#cb1002-5"></a>           <span class="fu">fct_lump_min</span>(species, <span class="at">min =</span> <span class="dv">3</span>,</span>
+<span id="cb1002-6"><a href="#cb1002-6"></a>                        <span class="at">other_level =</span> <span class="st">"Others"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1003"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1003-1"><a href="#cb1003-1"></a>starwars_factor <span class="sc">|&gt;</span>  <span class="fu">pull</span>(species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Human  Droid  Droid  Human  Human  Human  Human  Droid  Human  Human 
+[11] Human  Human  Others Human  Others Others Human  Others Human  Human 
+[21] Droid  Others Human  Human  Others Human  Others Others Human  Others
+[31] Human  Human  Gungan Gungan Gungan Human  Others Others Human  Human 
+[41] Others Others Others Others Others Others Others Human  Others Others
+[51] Others Others Others Others Others Others Human  Others Others Others
+[61] Human  Human  Human  Human  Others Others Others Others Human  Droid 
+[71] Others Others Others Others Others Human  Others
+Levels: Droid Gungan Human Others</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1005"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1005-1"><a href="#cb1005-1"></a>starwars_factor <span class="sc">|&gt;</span> </span>
+<span id="cb1005-2"><a href="#cb1005-2"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">fct_reorder</span>(species, height, mean)) <span class="sc">|&gt;</span> </span>
+<span id="cb1005-3"><a href="#cb1005-3"></a>  <span class="fu">pull</span>(species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Human  Droid  Droid  Human  Human  Human  Human  Droid  Human  Human 
+[11] Human  Human  Others Human  Others Others Human  Others Human  Human 
+[21] Droid  Others Human  Human  Others Human  Others Others Human  Others
+[31] Human  Human  Gungan Gungan Gungan Human  Others Others Human  Human 
+[41] Others Others Others Others Others Others Others Human  Others Others
+[51] Others Others Others Others Others Others Human  Others Others Others
+[61] Human  Human  Human  Human  Others Others Others Others Human  Droid 
+[71] Others Others Others Others Others Human  Others
+Levels: Droid Others Human Gungan</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tu-turno-8-2" class="slide level2">
+<h2>💻 It’s your turn</h2>
+<div class="panel-tabset">
+<ul id="tabset-19" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-19-1"><span class="hl-yellow"><strong>Exercise 1</strong></span></a></li><li><a href="#tabset-19-2"><span class="hl-yellow"><strong>Exercise 2</strong></span></a></li><li><a href="#tabset-19-3"><span class="hl-yellow"><strong>Exercise 3</strong></span></a></li><li><a href="#tabset-19-4"><span class="hl-yellow"><strong>Exercise 4</strong></span></a></li><li><a href="#tabset-19-5"><span class="hl-yellow"><strong>Exercise 5</strong></span></a></li><li><a href="#tabset-19-6"><span class="hl-yellow"><strong>Exercise 6</strong></span></a></li><li><a href="#tabset-19-7"><span class="hl-yellow"><strong>Exercise 7</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-19-1">
+<p>📝 Given the variable <code>months</code> defined below (defined as a character vector), convert this variable to factor (just that)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1007"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1007-1"><a href="#cb1007-1"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1008"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1008-1"><a href="#cb1008-1"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>)</span>
+<span id="cb1008-2"><a href="#cb1008-2"></a>months_fct <span class="ot">&lt;-</span> <span class="fu">as_factor</span>(months)</span>
+<span id="cb1008-3"><a href="#cb1008-3"></a>months_fct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-2">
+<p>📝 Given the variable <code>months</code> defined below converts this variable to a factor but indicating the levels correctly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1009"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1009-1"><a href="#cb1009-1"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Oct"</span>, <span class="st">"Jul"</span>, <span class="st">"Jan"</span>, <span class="st">"Sep"</span>, <span class="cn">NA</span>, <span class="st">"Feb"</span>, <span class="st">"Dic"</span>,</span>
+<span id="cb1009-2"><a href="#cb1009-2"></a>           <span class="st">"Jul"</span>, <span class="st">"Mar"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span>, <span class="st">"Feb"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Oct"</span>, <span class="st">"Sep"</span>,  <span class="cn">NA</span>,</span>
+<span id="cb1009-3"><a href="#cb1009-3"></a>           <span class="st">"Dic"</span>, <span class="st">"Jul"</span>, <span class="st">"Nov"</span>, <span class="st">"Feb"</span>, <span class="st">"Oct"</span>, <span class="st">"Jun"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Oct"</span>, <span class="st">"Sep"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1010"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1010-1"><a href="#cb1010-1"></a>months_fct <span class="ot">&lt;-</span></span>
+<span id="cb1010-2"><a href="#cb1010-2"></a>  <span class="fu">factor</span>(months,</span>
+<span id="cb1010-3"><a href="#cb1010-3"></a>         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dic"</span>))</span>
+<span id="cb1010-4"><a href="#cb1010-4"></a>months_fct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-3">
+<p>📝 Count how many values there are for each month but keep in mind that they are factors (maybe there are unused levels and you should get a 0 for them).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1011"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1011-1"><a href="#cb1011-1"></a>meses_fct <span class="sc">|&gt;</span>  <span class="fu">fct_count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-4">
+<p>📝 Since there are missing values, it indicates that the absentee is a thirteenth level labeled <code>"missing"</code>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1012"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1012-1"><a href="#cb1012-1"></a>months_fct <span class="ot">&lt;-</span> </span>
+<span id="cb1012-2"><a href="#cb1012-2"></a>  months_fct <span class="sc">|&gt;</span> </span>
+<span id="cb1012-3"><a href="#cb1012-3"></a>  <span class="fu">fct_explicit_na</span>(<span class="at">na_level =</span> <span class="st">"missing"</span>)</span>
+<span id="cb1012-4"><a href="#cb1012-4"></a>months_fct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-5">
+<p>📝 Removes unused levels.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1013"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1013-1"><a href="#cb1013-1"></a>months_fct <span class="ot">&lt;-</span> </span>
+<span id="cb1013-2"><a href="#cb1013-2"></a>  months_fct <span class="sc">%&gt;%</span></span>
+<span id="cb1013-3"><a href="#cb1013-3"></a>  <span class="fu">fct_drop</span>()</span>
+<span id="cb1013-4"><a href="#cb1013-4"></a>months_fct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-6">
+<p>📝 Sort the levels by frequency of occurrence.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1014"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1014-1"><a href="#cb1014-1"></a>months_fct <span class="sc">|&gt;</span> </span>
+<span id="cb1014-2"><a href="#cb1014-2"></a>  <span class="fu">fct_infreq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-19-7">
+<p>📝 Group levels so that any level that does not appear at least 7% of the time is grouped in a level called <code>"other months"</code>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1015"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1015-1"><a href="#cb1015-1"></a>months_fct <span class="ot">&lt;-</span></span>
+<span id="cb1015-2"><a href="#cb1015-2"></a>  months_fct <span class="sc">|&gt;</span> </span>
+<span id="cb1015-3"><a href="#cb1015-3"></a>  <span class="fu">fct_lump_prop</span>(<span class="at">prop =</span> <span class="fl">0.07</span>, <span class="at">other_level =</span> <span class="st">"other months"</span>)</span>
+<span id="cb1015-4"><a href="#cb1015-4"></a>months_fct </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="clase-9" class="title-slide slide level1 center">
+<h1>L9: <span class="flow">dbplyr and github</span></h1>
+
+</section>
+<section id="dbplyr-sql-connection" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>We are going to introduce the <code>{dbplyr}</code> package, which will allow us to combine <code>SQL</code> code into <code>R</code> to perform <span class="hl-yellow"><strong>database queries</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1016"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1016-1"><a href="#cb1016-1"></a><span class="fu">install.packages</span>(<span class="st">"dbplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;</p>
+<p>If you are using R to do data analysis, most of the data you need probably already lives in a database. We will learn how to <span class="hl-yellow"><strong>load data in to a local database</strong></span>.</p>
+</section>
+<section id="dbplyr-sql-connection-1" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1017"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1017-1"><a href="#cb1017-1"></a><span class="fu">install.packages</span>(<span class="st">"RSQLite"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We will also need to install a <span class="hl-yellow"><strong>DBI backend package</strong></span> (an interface that allows <code>{dplyr}</code> to work with many different databases using the same code). Five commonly used backends are:</p>
+<ul>
+<li><p><code>RMariaDB</code> connects to MySQL and MariaDB</p></li>
+<li><p><code>RPostgres</code> connects to Postgres and Redshift.</p></li>
+<li><p><code>RSQLite</code> embeds a SQLite database.</p></li>
+<li><p><code>odbc</code> connects to many commercial databases via the open database connectivity protocol.</p></li>
+<li><p><code>bigrquery</code> connects to Google’s BigQuery.</p></li>
+</ul>
+<div class="fragment">
+<p>In the following, we are going to use the <span class="hl-yellow"><strong>RSQLite backend</strong></span> (automatically installed when you install <code>{dbplyr}</code>).</p>
+</div>
+</section>
+<section id="dbplyr-sql-connection-2" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>If we want to <span class="hl-yellow"><strong>work with a database adopting dplyr grammar</strong></span>, we must first connect to it. The connection will be done by using <code>DBI::dbConnect()</code>. The arguments to <code>DBI::dbConnect()</code> vary from database to database, but the first argument is always the database backend. SQLite only needs a path to the database.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1018"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1018-1"><a href="#cb1018-1"></a>connection <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="at">dbname =</span> <span class="st">":memory:"</span>)</span>
+<span id="cb1018-2"><a href="#cb1018-2"></a>connection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQLiteConnection&gt;
+  Path: :memory:
+  Extensions: TRUE</code></pre>
+</div>
+</div>
+<p>Here, the string <code>":memory:"</code> is a special path that creates <span class="hl-yellow"><strong>a temporary in-memory database</strong></span>.</p>
+</section>
+<section id="dbplyr-sql-connection-3" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>The temporary database previously created has no yet data in it. We will <span class="hl-yellow"><strong>copy an existing database</strong></span> (for example, <code>gapminder</code> from <code>{gapminder}</code> package) using <code>copy_to()</code>. Using <code>tbl()</code> we “obtain” the database (called as named in <code>copy_to()</code>).</p>
+<p>The main difference is that not it is a <span class="hl-yellow"><strong>remote source in a SQLite database</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1020"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1020-1"><a href="#cb1020-1"></a><span class="fu">copy_to</span>(connection, gapminder<span class="sc">::</span>gapminder, <span class="at">overwrite =</span> <span class="cn">TRUE</span>, <span class="at">name =</span> <span class="st">"gapminder_database"</span>)</span>
+<span id="cb1020-2"><a href="#cb1020-2"></a>gapminder_db <span class="ot">&lt;-</span> <span class="fu">tbl</span>(connection, <span class="st">"gapminder_database"</span>)</span>
+<span id="cb1020-3"><a href="#cb1020-3"></a>gapminder_db</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   table&lt;`gapminder_database`&gt; [?? x 6]
+# Database: sqlite 3.43.2 [:memory:]
+   country     continent  year lifeExp      pop gdpPercap
+   &lt;chr&gt;       &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 Afghanistan Asia       1952    28.8  8425333      779.
+ 2 Afghanistan Asia       1957    30.3  9240934      821.
+ 3 Afghanistan Asia       1962    32.0 10267083      853.
+ 4 Afghanistan Asia       1967    34.0 11537966      836.
+ 5 Afghanistan Asia       1972    36.1 13079460      740.
+ 6 Afghanistan Asia       1977    38.4 14880372      786.
+ 7 Afghanistan Asia       1982    39.9 12881816      978.
+ 8 Afghanistan Asia       1987    40.8 13867957      852.
+ 9 Afghanistan Asia       1992    41.7 16317921      649.
+10 Afghanistan Asia       1997    41.8 22227415      635.
+# ℹ more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="dbplyr-sql-connection-4" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>The main goal of <code>{dbplyr}</code> is to <span class="hl-yellow"><strong>automatically generate SQL from <code>dplyr</code> grammar</strong></span> that we are already familiar with.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1022"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1022-1"><a href="#cb1022-1"></a>gapminder_db <span class="sc">|&gt;</span></span>
+<span id="cb1022-2"><a href="#cb1022-2"></a>  <span class="fu">select</span>(country, year, lifeExp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [?? x 3]
+# Database: sqlite 3.43.2 [:memory:]
+   country      year lifeExp
+   &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1952    28.8
+ 2 Afghanistan  1957    30.3
+ 3 Afghanistan  1962    32.0
+ 4 Afghanistan  1967    34.0
+ 5 Afghanistan  1972    36.1
+ 6 Afghanistan  1977    38.4
+ 7 Afghanistan  1982    39.9
+ 8 Afghanistan  1987    40.8
+ 9 Afghanistan  1992    41.7
+10 Afghanistan  1997    41.8
+# ℹ more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="dbplyr-sql-connection-5" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>The most important difference between ordinary tibbles and remote database queries is that now <span class="hl-yellow"><strong>our <code>R</code> code is translated into SQL and executed in the database on the remote server</strong></span>, not in R on your local machine: it never pulls data into R unless you explicitly ask for it, <span class="hl-purple"><strong>delaying doing any work until the last possible moment</strong></span> (sends it to the database in one step).</p>
+<div class="fragment">
+<p>It is not <span class="hl-yellow"><strong>until we ask for the data</strong></span> (writing <code>gapminder_query</code> in console, for example), <code>dplyr</code> verbs generates the SQL and requests the results from the database.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1024"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1024-1"><a href="#cb1024-1"></a>gapminder_query <span class="ot">&lt;-</span> </span>
+<span id="cb1024-2"><a href="#cb1024-2"></a>  gapminder_db <span class="sc">|&gt;</span></span>
+<span id="cb1024-3"><a href="#cb1024-3"></a>  <span class="fu">select</span>(country, year, lifeExp)</span>
+<span id="cb1024-4"><a href="#cb1024-4"></a>gapminder_query</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Source:   SQL [?? x 3]
+# Database: sqlite 3.43.2 [:memory:]
+   country      year lifeExp
+   &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1952    28.8
+ 2 Afghanistan  1957    30.3
+ 3 Afghanistan  1962    32.0
+ 4 Afghanistan  1967    34.0
+ 5 Afghanistan  1972    36.1
+ 6 Afghanistan  1977    38.4
+ 7 Afghanistan  1982    39.9
+ 8 Afghanistan  1987    40.8
+ 9 Afghanistan  1992    41.7
+10 Afghanistan  1997    41.8
+# ℹ more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="dbplyr-sql-connection-6" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p><strong>What is happening behind the scenes?</strong></p>
+<div class="fragment">
+<p><code>{dplyr}</code> is <span class="hl-yellow"><strong>translating our R code into SQL verbs</strong></span>, that we can check (without doing) by using <code>show_query()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1026"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1026-1"><a href="#cb1026-1"></a>gapminder_query <span class="sc">|&gt;</span> </span>
+<span id="cb1026-2"><a href="#cb1026-2"></a>  <span class="fu">show_query</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt;
+SELECT `country`, `year`, `lifeExp`
+FROM `gapminder_database`</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="dbplyr-sql-connection-7" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>As commented, our remote database queries is not in R on your local machine: it never pulls data into R unless you explicitly ask for it. To do it, you can iterate a few times before you figure out what data you need, and then we use <code>collect()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1028"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1028-1"><a href="#cb1028-1"></a>gapminder_tibble <span class="ot">&lt;-</span></span>
+<span id="cb1028-2"><a href="#cb1028-2"></a>  gapminder_query <span class="sc">|&gt;</span> </span>
+<span id="cb1028-3"><a href="#cb1028-3"></a>  <span class="fu">collect</span>()</span>
+<span id="cb1028-4"><a href="#cb1028-4"></a>gapminder_tibble</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 3
+   country      year lifeExp
+   &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 Afghanistan  1952    28.8
+ 2 Afghanistan  1957    30.3
+ 3 Afghanistan  1962    32.0
+ 4 Afghanistan  1967    34.0
+ 5 Afghanistan  1972    36.1
+ 6 Afghanistan  1977    38.4
+ 7 Afghanistan  1982    39.9
+ 8 Afghanistan  1987    40.8
+ 9 Afghanistan  1992    41.7
+10 Afghanistan  1997    41.8
+# ℹ 1,694 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="dbplyr-sql-connection-8" class="slide level2">
+<h2>dbplyr: SQL connection</h2>
+<p>You can also use <code>translate_sql()</code> to translate individual expressions from <code>dplyr</code> to SQL</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1030"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1030-1"><a href="#cb1030-1"></a>dbplyr<span class="sc">::</span><span class="fu">translate_sql</span>((x <span class="sc">+</span> y) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">con =</span> connection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;SQL&gt; (`x` + `y`) / 2.0</code></pre>
 </div>
 </div>
 <div class="footer footer-default">

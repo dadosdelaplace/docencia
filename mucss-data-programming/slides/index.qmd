@@ -8330,7 +8330,7 @@ shortcut <- function(x, y) {
 
 ---
 
-## 🐣 Case study I: simulations {#caso-practico-6-1}
+## 🐣 Case study I: converter {#caso-practico-6-1}
 
 To practice with functions we are going to create a complete **temperature converter** that, given a temperature in Fahrenheit, Celsius or Kelvin, converts it to any of the others.
 
@@ -8820,5 +8820,1527 @@ flights |>
 
 :::
 
+---
 
+## 🐣 Case study III: pending {#caso-practico-6-3}
+
+pending to submit about joins + import/export
+
+# L7: [import/exports]{.flow} {#clase-7}
+
+[**Import and export data**]{style="color:#444442;"}
+
+* [💻 Solved exercises](#tu-turno-7-1) 
+
+* [🐣 Workbook/case study I](#caso-practico-7-1)
+
+* [📆 Planning](#planificacion-curso)
+
+---
+
+
+## Import/export
+
+So far we have only used data already loaded in packages but many times [**we will need to import data externally**]{.hl-yellow}. One of the main [**strengths**]{.hl-yellow} of `R` is that we can import data very easily in different formats:
+
+
+* [**R native formats**]{.hl-yellow}: `.rda`, `.RData` and `.rds` formats.
+
+* [**Rectangular (tabular) data**]{.hl-yellow}: `.csv` and `.tsv` formats
+
+* [**Untabulated data**]{.hl-yellow}: `.txt` format.
+
+* [**Data in excel**]{.hl-yellow}: `.xls` and `.xlsx` formats
+
+* [**Data from SAS/Stata/SPSS**]{.hl-yellow}: `.sas7bdat`, `.sav` and `.dat` formats
+
+* [**Data from Google Drive**]{.hl-yellow}
+
+* [**Data from API's**]{.hl-yellow}: aemet, catastro, twitter, spotify, etc.
+
+---
+
+## R native formats
+
+The [**simplest**]{.hl-yellow} files to import into `R` (and which usually take up less disk space) are its own [**native extensions**]{.hl-yellow}: files in `.RData`, `.rda` and `.rds` formats. To load the former we simply need to [**use the native**]{.hl-yellow} function `load()` by providing it the file path.
+
+* `RData` file: we are going to import the file `world_bank_pop.RData`, which includes the dataset `world_bank_pop`
+
+
+```{r}
+load("./data/world_bank_pop.RData")
+world_bank_pop
+```
+
+
+---
+
+## R native formats
+
+* `.rda` file: we will import the airquality dataset from `airquality.rda`
+
+```{r}
+load("./data/airquality.rda")
+airquality |> as_tibble()
+```
+
+---
+
+## R native formats
+
+Note that files loaded with `load()` are [**automatically loaded into the environment**]{.hl-yellow} (with the originally saved name), and not only datasets can be loaded: `load()` allows us to load multiple objetcs (not only a tabular data)
+
+Native `.rda` and `.RData` files are a properly way to save your environment.
+
+```{r}
+load(file = "./data/multiple_objects.rda")
+```
+
+
+---
+
+## R native formats
+
+* `.rds` files: for this type we must use `readRDS()`, and we need to incorporate a [**argument `file`**]{.hl-yellow} with the path. In this case we are going to import [**lung cancer data**]{.hl-purple} from the North Central Cancer Treatment Group. Note that now [**.rds import files are a unique database**]{.hl-yellow}
+
+```{r}
+#| eval: false
+lung_cancer <-
+  readRDS(file = "./data/NCCTG_lung_cancer.rds") |>
+  as_tibble()
+```
+
+
+::: callout-important
+
+## Important
+
+The [**paths**]{.hl-yellow} must always be [**without spaces, ñ, or accents**]{.hl-yellow}. 
+
+:::
+
+---
+
+## Tabular data: readr
+
+The `{readr}` package within the `{tidyverse}` environment contains several useful functions for [**loading rectangular data (without formatting)**]{.hl-yellow}.
+
+:::: columns
+::: {.column width="50%"}
+
+* `read_csv()`: `.csv` files whose [**separator is comma**]{.hl-purple}
+* `read_csv2()`: [**semicolon**]{.hl-purple}
+* `read_tsv()`: [**tabulator**]{.hl-purple}.
+* `read_table()`: [**space**]{.hl-purple}.
+* `read_delim()`: generic function for [**character delimited files**]{.hl-purple}.
+
+
+:::
+
+::: {.column width="50%"}
+
+![](img/data-import-readr.png)
+:::
+::::
+
+All of them need as **argument the file path** plus **other optional** (skip header or not, decimals, etc). See more at <https://readr.tidyverse.org/>
+
+---
+
+## Tabular data (.csv, .tsv)
+
+The main advantage of `{readr}` is that it [**automates formatting**]{.hl-yellow} to go from a flat (unformatted) file to a tibble (in rows and columns, with formatting).
+
+. . .
+
+* File `.csv`: with `read_csv()` we will load [**comma separated**]{.hl-purple} files, passing as [**argument the path**]{.hl-yellow} in `file = ...`. Let's import the `chickens.csv` dataset (about cartoon chickens, why not). If you look at the output it gives us the type of variables.
+
+```{r}
+library(readr)
+chickens <- read_csv(file = "./data/chickens.csv")
+chickens
+```
+
+---
+
+## Tabular data (.csv, .tsv)
+
+
+The [**variable format**]{.hl-yellow} will normally be done [**automatically**]{.hl-yellow} by `read_csv()`, and we can query it with `spec()`.
+
+```{r}
+spec(chickens)
+```
+
+---
+
+## Tabular data (.csv, .tsv)
+
+Although it usually does it well automatically we can [**specify the format explicitly**]{.hl-yellow} in `col_types = list()` (in list format, with `col_xxx()` for each type of variable, for example `eggs_laid` will be imported as character). 
+
+
+```{r}
+chickens <-
+  read_csv(file = "./data/chickens.csv",
+           col_types = list(col_character(), col_character(),
+                            col_character(), col_character()))
+chickens
+```
+
+---
+
+## Tabular data (.csv, .tsv)
+
+We can even indicate that [**variables we want to select**]{.hl-yellow} (without occupying memory), by indicating it in `col_select = ...` (in list format, with `col_select = ...`).
+
+
+```{r}
+chickens <-
+  read_csv(file = "./data/chickens.csv",
+           col_select = c(chicken, sex, eggs_laid))
+chickens
+```
+
+---
+
+## Untabulated data (.txt)
+
+What happens when the [**separator is not correct**]{.hl-red}?
+
+. . .
+
+If we use `read_csv()` it expects the separator between columns to be a comma but, as you can see with the following `.txt`, it interprets everything as a single column: [**has no comma and does not know where to separate**]{.hl-yellow}
+
+```{r}
+datos_txt <- read_csv(file = "./data/massey-rating.txt")
+dim(datos_txt)
+as_tibble(datos_txt)
+```
+
+
+---
+
+## Untabulated data (.txt)
+
+To do this we have.
+
+* `read_csv2()` when the [**separator is semicolon**]{.hl-yellow}, `read_tsv()` when the [**is a tab**]{.hl-yellow} and `read_table()` when the [**is a space**]{.hl-yellow}.
+
+* `read_delim()` in general.
+
+```{r}
+datos_txt <- read_table(file = "./data/massey-rating.txt")
+as_tibble(datos_txt)
+```
+
+
+---
+
+## Excel data (.xls, .xlsx)
+
+Another key import package will be the `{readxl}` package for [**importing data from Excel**]{.hl-yellow}. Three functions will be key:
+
+* `read_xls()` specific to `.xls`, `read_xlsx()` specific to `.xlsx`.
+* `read_excel()`: for both `.xls` and `.xlsx`.
+
+. . .
+
+We are going to import `deaths.xlsx` with celebrity death records.
+
+```{r}
+library(readxl)
+deaths <- read_xlsx(path = "./data/deaths.xlsx")
+deaths
+```
+
+---
+
+## Excel data (.xls, .xlsx)
+
+
+```{r}
+deaths |> slice(1:6)
+```
+
+One thing that is [**very common misfortune**]{.hl-yellow} is that there is some kind of comment or text at the beginning of the file, having to [**skip those rows**]{.hl-yellow}.
+
+---
+
+## Excel data (.xls, .xlsx)
+
+We can [**skip these rows**]{.hl-yellow} directly in the load with `skip = ...` (indicating the number of rows to skip).
+
+```{r}
+deaths <- read_xlsx(path = "./data/deaths.xlsx", skip = 4)
+deaths
+```
+
+
+---
+
+## Excel data (.xls, .xlsx)
+
+In addition with `col_names = ...` we can already rename the columns in the import (if [**provide names assumes 1st line already as a data**]{.hl-yellow})
+
+```{r}
+#| code-line-numbers: "2-3"
+deaths <-
+  read_xlsx(path = "./data/deaths.xlsx", skip = 5,
+            col_names = c("name", "profession", "age", "kids", "birth", "death"))
+deaths
+```
+
+---
+
+## Excel data (.xls, .xlsx)
+
+Sometimes [**Excel dates are incorrectly formatted**]{.hl-red} (surprise): we can use `convertToDate()` from the `{openxlsx}` package to convert it.
+
+
+```{r}
+library(openxlsx)
+deaths$death <- convertToDate(deaths$death)
+deaths
+```
+   
+
+---
+
+## Excel data (.xls, .xlsx)
+
+We can also [**load an Excel with several sheets**]{.hl-yellow}: to [**indicate the sheet**]{.hl-yellow} (either by its name or by its number) we will use the argument `sheet = ...`.
+
+```{r}
+mtcars <- read_xlsx(path = "./data/datasets.xlsx", sheet = "mtcars")
+mtcars
+```
+
+---
+
+## Excel data (.xls, .xlsx)
+
+ 
+We can even indicate the [**range of cells**]{.hl-yellow} to load with `range = ...`.
+
+```{r}
+iris <- read_xlsx(path = "./data/datasets.xlsx", sheet = "iris", range = "C1:E4")
+iris
+```
+
+---
+
+## Import from SAS/STATA/SPSS
+
+The `{haven}` package within the tidyverse orbit will allow us to [**import files from the 3 most important payment software**]{.hl-yellow}: SAS, SPSS and Stata.
+
+```{r}
+library(haven)
+
+# SAS
+iris_sas <- read_sas(data_file = "./data/iris.sas7bdat")
+
+# SPSS
+iris_spss <- read_sav(file = "./data/iris.sav")
+
+# Stata
+iris_stata <- read_dta(file = "./data/iris.dta")
+```
+
+---
+
+## Import from SPSS
+
+---
+
+
+## Export
+
+In the same way that we can import we can also [**export**]{.hl-yellow}
+
+* exported in `.RData` (recommended option for variables stored in `R`). Remember that this extension [**can only be used in `R`**]{.hl-yellow}. To do so, just use `save(object, file = path)`.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+save(table, file = "./data/table.RData")
+rm(table) # eliminar
+load("./data/table.RData")
+table
+```
+
+---
+
+## Export
+
+In the same way that we can import we can also [**export**]{.hl-yellow}
+
+* exported in `.RData` multiple objects
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+a <- 1
+b <- c("javi", "sandra")
+save(table, a, b, file = "./data/mult_obj.RData")
+rm(list = c("a", "b", "table"))
+load("./data/mult_obj.RData")
+table
+```
+
+---
+
+## Export
+
+In the same way that we can import we can also [**export**]{.hl-yellow}
+
+* exported in `.csv`. To do this we simply use `write_csv(object, file = path)`.
+
+```{r}
+write_csv(table, file = "./data/table.csv")
+read_csv(file = "./data/table.csv")
+```
+
+---
+
+## Import from website
+
+One of the main advantages of `R` is that we can make use of all the previous functions of [**import but directly from a web**]{.hl-yellow}, without the need to perform the manual download: instead of passing it the local path we will indicate the [**link**]{.hl-yellow}. For example, we are going to download the covid data from ISCIII (<https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos>)
+
+```{r}
+#| eval: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+covid_data
+```
+
+```{r}
+#| echo: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv", n_max = 500)
+covid_data
+```
+
+---
+
+## Import from wikipedia
+
+The `{rvest}` package, one of the most useful of `{tidyverse}` allows us to import directly from an `html`. For example, to export wikipedia tables just `read_html()` to import the html, `html_element("table")` to extract the table objects, and `html_table()` to convert the html table to `tibble`.
+
+```{r}
+library(rvest)
+wiki_jump <- 'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'
+wiki_jump |> read_html() |> 
+  html_element("table") |> 
+  html_table()
+```
+
+---
+
+
+## Import from google drive
+
+Another option available (especially if we work with other people working) is to [**import from a Google Drive spreadsheet**]{.hl-yellow}, making use of `read_sheet()` from the `{googlesheets4}` package.
+
+The first time you will be asked for a tidyverse permission to interact with your drive
+
+```{r}
+library(googlesheets4)
+google_sheet <-
+  read_sheet("https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing")
+google_sheet
+```
+
+---
+
+## Import from API (owid)
+
+Another interesting option is the [**data download from an API**]{.hl-yellow}: an intermediary between an app or data provider and our `R`. For example, let's load the `{owidR}` library, which allows us to download data from the web <https://ourworldindata.org/>. For example, the `owid_covid()` function loads without realizing it more than 400 000 records with more than 60 variables from 238 countries.
+
+```{r}
+#| eval: false
+library(owidR)
+owid_covid() |> as_tibble()
+```
+
+```{r}
+#| echo: false
+library(owidR)
+owid_covid() |> as_tibble() |> slice(1:7)
+```
+
+---
+
+## Import from API (aemet)
+
+In many occasions to connect to the API we will first have to [**register and obtain a key**]{.hl-yellow}, this is the case of the `{climaemet}` package to access [**Spanish meteorological data**]{.hl-yellow} (<https://opendata.aemet.es/centrodedescargas/inicio>).
+
+
+Once we have the API key we register it in our RStudio to be able to use it in the future.
+
+```{r}
+#| eval: false
+library(climaemet)
+
+# Api key
+apikey <- "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"
+
+aemet_api_key(apikey, install = TRUE)
+```
+
+
+```{r}
+#| echo: false
+library(climaemet)
+```
+
+--- 
+
+## Import from API (aemet)
+
+
+With this package we can do a [**search for stations**]{.hl-yellow} to know both its postal code and its identifier code within the AEMET network
+
+```{r}
+stations <- aemet_stations()
+stations
+```
+
+---
+
+## Import from API (aemet)
+
+For example, to get data from the station of the airport of El Prat, Barcelona, the code to provide is `"0076"`, obtaining **hourly data**
+
+```{r}
+aemet_last_obs("0076")
+```
+
+
+---
+
+## Import from API (US census)
+
+```{r}
+
+```
+
+
+---
+
+## Import from API 
+
+Other options:
+
+* `{chessR}`: data from chess matches. See <https://github.com/JaseZiv/chessR>
+
+* `{spotifyr}`: data from Spotify. See <https://www.rcharlie.com/spotifyr/>
+
+* `{gtrendsR}`: data from Google Trends. See <https://github.com/PMassicotte/gtrendsR>
+
+* `{scholar}`: data from <https://github.com/jkeirstead/scholar>
+
+---
+
+## 💻 Your turn {#tu-turno-7-1}
+
+[**Try to solve the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Exercise 1**]{.hl-yellow}
+
+📝 The `who` dataset we have used in previous exercises, export it to a native `R` format in the `data` folder of the project
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tidyr)
+save(who, file = "./data/who.RData")
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Loads the `who` dataset but from the data folder (import the file created in the previous exercise)
+
+```{r}
+#| code-fold: true
+#| eval: false
+load("./data/who.RData")
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Repeats the same (export and import) in 4 formats: `.csv`, `.xlsx`, `.sav` (spss) and `.dta` (stata)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# csv
+library(readr)
+write_csv(who, file = "./data/who.csv")
+who_data <- read_csv(file = "./data/who.csv")
+
+# excel
+library(openxlsx)
+write.xlsx(who, file = "./data/who.xlsx")
+who_data <- read_xlsx(path = "./data/who.xlsx")
+
+# sas y stata
+library(haven)
+write_sav(who, path = "./data/who.sav")
+who_data <- read_spss(path = "./data/who.sav")
+
+write_dta(who, path = "./data/who.dta")
+who_data <- read_dta(path = "./data/who.dta")
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Repeat the loading of `who.csv` but only select the first 4 columns already in the load.
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_select <-
+  read_csv(file = "./data/who.csv",
+           col_select = c("country", "iso2", "iso3", "year"))
+```
+
+
+:::
+
+
+# L8: [factors and lists]{.flow} {#clase-8}
+
+[**Handling with factors and lists**]{style="color:#444442;"}
+
+* [💻 Solved exercises: lists](#tu-turno-8-1) 
+
+* [💻 Solved exercises: factors](#tu-turno-8-2) 
+
+* [🐣 Workbook/case study I](#caso-practico-8-1)
+
+* [🐣 Workbook/case study II](#caso-practico-8-2)
+
+* [📆 Planning](#planificacion-curso)
+
+---
+
+## Lists
+
+We have already seen that lists are an object in R that allows us to store [**collections of variables of different type**]{.hl-yellow} (as with `data.frame` and `tibble`) but also [**different lengths**]{.hl-purple}, with totally heterogeneous structures (even a list can have inside it another list).
+
+```{r}
+name <- "Javi"
+age <- 34
+marks <- c(7, 8, 5, 3, 10, 9)
+parents <- c("Paloma", "Goyo")
+
+list_var <- list("name" = name, "age" = age, "marks" = marks, "parents" = parents)
+```
+
+
+```{r}
+list_var$name
+list_var$marks
+```
+
+
+
+---
+
+## Lists
+
+
+We can also make [**lists with other lists inside**]{.hl-yellow}, so that to access each level we must use the `[[]]` operator.
+
+```{r}
+list_of_lists <- list("list_1" = list_var[1:2], "list_2" = list_var[3:4])
+names(list_of_lists)
+```
+
+```{r}
+names(list_of_lists[[1]])
+```
+
+```{r}
+list_of_lists[[1]][[1]]
+```
+
+. . .
+
+We are allowed to store [**n-dimensional data**]{.hl-yellow}!
+
+---
+
+## Lists
+
+One of the disadvantages is that a list [**cannot be vectorized**]{.hl-yellow} immediately, so any arithmetic operation applied to a list will give [**error**]{.hl-red}.
+
+```{r}
+#| error: true
+data <- list("a" = 1:5, "b" = 10:20)
+data / 2
+```
+
+. . .
+
+For this purpose, one of the common (but outdated) options is to make use of the `lapply()` family.
+
+```{r}
+lapply(data, FUN = function(x) { x / 2})
+```
+
+By default, the output of `lapply()`is always a [**list of equal length**]{.hl-yellow}.
+
+---
+
+## Lists
+
+
+A more flexible and versatile option is to make use of the `{purrr}` package of the `{tidyverse}` environment.
+
+```{r}
+library(purrr)
+```
+
+This package is intended to mimic the [**functional programming**]{.hl-yellow} of other languages such as Scala or Hadoop's [**map-reduce strategy**]{.hl-yellow} (from Google).
+
+![](img/purrr.png)
+
+---
+
+## Lists
+
+The simplest function of the `{purrr}` package is the `map()` function, which [**applies a vectorized function**]{.hl-yellow} to each of the elements of a list. Let's see a first example applied to vectors
+
+. . .
+
+`map()` allows us to [**"map" each list**]{.hl-yellow} and apply the function element by element (if applicable).
+
+```{r}
+x <- list("x1" = 1:4, "x2" = 11:20)
+map(x, sqrt) 
+```
+
+. . .
+
+
+::: callout-warning
+## Be careful
+
+With vectors we have a default vectorization because `R` performs element-by-element operations. Note that, by default, the [**output of `map` is a list**]{.hl-yellow}.
+:::
+
+
+---
+
+## Lists
+
+Let's look at another example. Define in a list two samples from 2 normal distributions, of different sample size and different mean. Compute the mean of each one.
+
+```{r}
+#| code-fold: true
+x <- list(rnorm(n = 1500, mean = 0, sd = 0.7),
+          rnorm(n = 2800, mean = 2, sd = 1.5))
+map(x, mean)
+```
+
+---
+
+## Lists
+
+What if we want to calculate the mean of their squared values?
+
+```{r}
+#| code-fold: true
+map(x, function(x) { mean(x^2) })
+```
+
+
+---
+
+## Lists
+
+In addition to being [**more readable and efficient**]{.hl-yellow}, with `{purrr}` we can [**decide the output format**]{.hl-yellow} after the operation
+
+* output as [**numeric (double) vector**]{.hl-purple} with `map_dbl()`
+* output as [**numeric (int) vector**]{.hl-purple} with `map_int()`
+* output as [**character vector**]{.hl-purple} with `map_chr()`
+* output as [**logical vector**]{.hl-purple} with `map_lgl()`
+
+```{r}
+map_dbl(x, mean)
+map_chr(x, function(x) { glue("Mean is {round(mean(x), 5)}") })
+```
+
+---
+
+## Lists
+
+```{r}
+c(x[[1]][3], x[[2]][3])
+```
+
+
+Also, if you pass it a [**number**]{.hl-yellow} instead of a function, it will return the [**ith element of each list**]{.hl-yellow}.
+
+```{r}
+map_dbl(x, 3)
+```
+
+
+---
+
+
+## Lists
+
+We also have the option of generalizing it to be able to use functions that [**need two arguments in the form of a list**]{.hl-yellow} (binary operations), with `map2()`
+
+
+```{r}
+x <- list("a" = 1:3, "b" = 4:6)
+y <- list("c" = c(-1, 4, 0), "b" = c(5, -4, -1))
+map2(x, y, function(x, y) { x^2 + y^2})
+```
+
+---
+
+## Lists
+
+We can obtain the output in the form of `data.frame` by adding `list_rbind()` or `list_cbind()`, which [**converts a list into a table**]{.hl-yellow}.
+
+
+```{r}
+x <- c("a", "b", "c")
+y <- 1:3
+map2(x, y, function(x, y) { tibble(x, y) }) |> list_rbind()
+```
+
+---
+
+## Lists
+
+We can generalize it further with `pmap_xxx()` which allows us to use [**multiple arguments (multiple lists)**]{.hl-yellow}.
+
+
+```{r}
+x <- list(1, 1, 1)
+y <- list(10, 20, 30)
+z <- list(100, 200, 300)
+pmap_dbl(list(x, y, z), sum)
+```
+
+---
+
+## Lists
+
+We have other types of iterators that, although they assume inputs, do not return anything, as `walk()` (just one input argument), `walk2()` (two arguments) and `pwalk()` (multiple arguments), all [**invisibly return**]{.hl-yellow}, just call a function for its [**side effects**]{.hl-yellow} rather than its return value.
+
+```{r}
+list("a" = 1:3, "b" = 4:6) |>
+  map2(list("a" = 11:13, "b" = 14:16),
+       function(x, y) { x + y }) |> 
+  walk(print)
+```
+
+---
+
+## 💻 It's your turn {#tu-turno-8-1}
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Define a list of 4 elements of different types and access the second of them (I will include one that is a tibble so that you can see that in a list there is room for everything).
+
+```{r}
+#| code-fold: true
+#| eval: false
+list_example <-
+  list("name" = "Javier", "cp" = 28019,
+       "siblings" = TRUE,
+       "marks" = tibble("maths" = c(7.5, 8, 9),
+                        "lang" = c(10, 5, 6)))
+list_example
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 From the list above, access the elements that occupy places 1 and 4 of the list defined above.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+list_example[c(1, 4)]
+
+list_example$name
+list_example$marks
+
+list_example[c("name", "marks")]
+```
+
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝  Load the `starwars` dataset from the `{dplyr}` package and access the second movie that appears in `starwars$films` (for each character). Determine which ones do not appear in more than one movie.
+
+```{r}
+second_film <- map(starwars$films, 2)
+map_lgl(second_film, is.null)
+```
+
+:::
+
+
+---
+
+
+## Quali: factors
+
+In statistics, when we talk about [**qualitative variables**]{.hl-yellow}, we will call **levels or modalities** the **different values** that these data can take. For example, in the case of the `sex` variable of the `starwars` set, we have 4 allowed levels: `female`, `hermaphroditic`, `male` and `none` (in addition to missing data).
+
+```{r}
+starwars |> count(sex)
+```
+
+
+
+---
+
+## Quali: factors
+
+These kinds of variables are known in `R` as [**factors**]{.hl-yellow}, and the fundamental package to deal with them is `{forcats}` (from the `{tidyverse}` environment). 
+
+
+![](img/factors.jpg)
+
+
+---
+
+## Quali: factors
+
+This package allows us to set the [**levels**]{.hl-yellow} (stored internally as `levels`) that a given categorical variable takes so that no mistakes, errors in data collection and generation can be generated. It also makes their analysis less computationally expensive when doing searches and comparisons, giving them a [**different treatment than normal text strings**]{.hl-yellow}.
+
+. . .
+
+Let's see a simple example simulating a `party` variable taking the values `"PP"`, `"PSOE"` and `"SUMAR"` (of size 15)
+
+```{r}
+set.seed(1234567)
+party <- sample(x = c("PP", "PSOE", "SUMAR"), size = 15, replace = TRUE)
+party
+```
+
+The `party` variable is currently of [**type text**]{.hl-yellow}, of type `chr`, something we can check with `class(state)`.
+
+```{r}
+class(party)
+```
+
+---
+
+## Quali: factors
+
+From a statistical and computational point of view, for `R` this variable right now would be equivalent to a named variable. But statistically [**a variable as a string**]{.hl-yellow} is not the same as a categorical variable that [**can only take those 3 levels**]{.hl-yellow}. How to [**convert to factor**]{.hl-yellow}? 
+
+. . .
+
+By making use of the `as_factor()` function from the `{forcats}` package.
+
+```{r}
+library(tidyverse)
+party_fct <- tibble("id" = 1:length(party),
+                    "party" = as_factor(party))
+party_fct
+```
+
+---
+
+## Quali: factors
+
+Not only the class of the variable  has  changed, but now, below the saved value, the sentence `Levels: ...` appears: these are the [**modalities or levels**]{.hl-yellow} of our qualitative. 
+
+```{r}
+party_fct |> pull(party)
+```
+
+---
+
+
+## Quali: factors
+
+Imagine that we are defining the database of deputies of the Congress and that the deputies of the PP did not attend that day to the plenary session: although our variable does not take that value THAT DAY, the state `PSOE` is a [**allowed level in the database**]{.hl-yellow} (so even if we eliminate it, because it is a factor, the level remains, we do not have it now but it is an allowed level).
+
+
+```{r}
+party_fct |> 
+  filter(party %in% c("PP", "SUMAR")) |> 
+  pull(party)
+```
+
+---
+
+## Quali: factors
+
+With `factor()` function we can [**explicitly specify**]{.hl-yellow} the names of the modalities and using `levels = ...` we can explicitly tell it the [**"order" of the modalities**]{.hl-yellow} 
+
+
+```{r}
+party_fct <-
+  tibble(id = 1:length(party),
+         party = factor(party, levels = c("SUMAR", "PP", "PSOE")))
+party_fct |> pull(party)
+```
+
+
+---
+
+
+## Quali: factors
+
+The previous "order" is just in the sense which it will be counted/plotted first) but [**we don't have (yet) an ordinal variable**]{.hl-purple}
+
+
+```{r}
+party_fct$party < "SUMAR"
+```
+
+. . .
+
+What if we want to [**define a qualitative variable ORDINAL**]{.hl-yellow}? Inside `factor()` we must indicate that `ordered = TRUE`.
+
+```{r}
+marks <- c("A", "E", "F", "B", "A+", "A", "C", "C", "D", "B", "A", "C", "C", "E", "F", "D", "A+")
+marks_database <-
+  tibble("student" = 1:length(marks),
+         "marks" =
+           factor(marks, levels = c("F", "E", "D", "C", "B", "A", "A+"),
+                  ordered = TRUE))
+marks_database |> pull(marks)
+```
+
+---
+
+## Quali: factors
+
+What changes? If you notice now, although the variable is still qualitative, we can [**make comparisons and order the records**]{.hl-yellow} because there is a [**hierarchy**]{.hl-purple} between the modalities.
+
+```{r}
+marks_database |> filter(marks >= "B")
+```
+
+---
+
+## Quali: factors
+
+
+:::: columns
+::: {.column width="45%"}
+
+If we want to tell it to [**drop an unused level**]{.hl-yellow} at that moment (and that we want to [**exclude from the definition**]{.hl-purple}) we can do it with `fct_drop()`.
+
+```{r}
+marks_database |> 
+  filter(marks %in% c("F", "E", "D", "C", "B", "A")) |> 
+  pull(marks)
+```
+
+:::
+
+::: {.column width="55%"}
+
+
+```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
+knitr::include_graphics("./img/drop_factor.jpg")
+``` 
+
+:::
+
+::::
+
+```{r}
+marks_database |> 
+  filter(marks %in% c("F", "E", "D", "C", "B", "A")) |> 
+  mutate(marks = fct_drop(marks)) |>  
+  pull(marks)
+```
+
+---
+
+## Quali: factors
+
+
+:::: columns
+::: {.column width="45%"}
+
+
+Just as we can delete levels we can [**expand existing levels**]{.hl-yellow} (even if there is no data for that level at that time) with `fct_expand()`.
+
+:::
+
+::: {.column width="55%"}
+
+
+```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
+knitr::include_graphics("./img/factor_expand.jpg")
+``` 
+
+:::
+::::
+
+```{r}
+marks_database |> 
+  mutate(marks = fct_expand(marks, c("F-", "A+", "A++"))) %>% 
+  pull(marks)
+```
+
+---
+
+## Quali: factors
+
+:::: columns
+::: {.column width="45%"}
+
+In addition with `fct_explicit_na()` we can [**assign a level to the missing values**]{.hl-yellow} to be included in the analysis and visualizations.
+
+:::
+
+::: {.column width="55%"}
+
+
+```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
+knitr::include_graphics("./img/factor_explicit.jpg")
+``` 
+
+:::
+::::
+
+```{r}
+fct_explicit_na(factor(c("a", "b", NA)))
+```
+
+---
+
+## Quali: factors
+
+Even once defined we can [**reorder the levels**]{.hl-yellow} with `fct_relevel()`.
+
+
+```{r}
+marks_database_expand <- 
+  marks_database |>  
+  mutate(marks = fct_expand(marks, c("F-", "A+", "A++"))) |> 
+  pull(marks)
+
+marks_database_expand |> 
+  fct_relevel(c("F-", "F", "E", "D", "C", "B", "A", "A+", "A++"))
+  
+```
+
+
+---
+
+## Quali: factors
+
+:::: columns
+::: {.column width="55%"}
+
+This way of working with qualitative variables allows us to give a [**theoretical definition**]{.hl-yellow} of our database, and we can even count values that do not yet exist (but could), making use of `fct_count()`.
+
+:::
+
+::: {.column width="45%"}
+
+
+```{r echo = FALSE,  out.width = "70%", fig.align = "left"}
+knitr::include_graphics("./img/fct_count.jpg")
+``` 
+
+:::
+::::
+
+```{r}
+marks_database |> 
+  mutate(marks = fct_expand(marks, c("F-", "A+", "A++"))) |> 
+  pull(marks) |> 
+  fct_count()
+```
+
+
+---
+
+## Quali: factors
+
+The levels can also be [**sorted by frequency**]{.hl-yellow} with `fct_infreq()`.
+
+```{r}
+marks_database |> 
+  mutate(marks = fct_infreq(marks)) |> 
+  pull(marks)
+
+marks_database |> 
+  mutate(marks = fct_infreq(marks)) |> 
+  pull(marks) |> 
+  fct_count()
+```
+
+---
+
+## Quali: factors
+
+
+Sometimes we will want to [**group levels**]{.hl-yellow}, for example, not allowing levels that [**do not happen a minimum number of times**]{.hl-yellow} with `fct_lump_min(..., min = ..)` (observations that do not meet this will go to a **generic level** called `Other`, although this can be changed with the `other_level` argument). 
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+marks_database |> 
+  pull(marks) %>% 
+  fct_lump_min(min = 3)
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+marks_database |> 
+  pull(marks) |>
+  fct_lump_min(min = 3,
+               other_level = "Less frequent")
+```
+
+:::
+::::
+
+---
+
+## Quali: factors
+
+
+We can do something equivalent but based on its [**relative frequency**]{.hl-yellow} with `fct_lump_prop()`.
+
+
+```{r}
+marks_database |> 
+  pull(marks) |> 
+  fct_lump_prop(prop = 0.15,
+                other_level = "less frequent")
+```
+
+---
+
+
+## Quali: factors
+
+We can apply this to our datasets to [**recategorize variables**]{.hl-yellow} very quickly.
+
+```{r}
+starwars |>  
+  drop_na(species) |> 
+  mutate(species =
+           fct_lump_min(species, min = 3,
+                        other_level = "Others")) |>  
+  count(species)
+```
+
+---
+
+## Quali: factors
+
+
+
+With `fct_reorder()` we can also indicate that we want to [**order the factors**]{.hl-yellow} according to a function applied to another variable.
+
+
+```{r}
+starwars_factor <- 
+  starwars |>  
+  drop_na(height, species) |> 
+  mutate(species =
+           fct_lump_min(species, min = 3,
+                        other_level = "Others"))
+```
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+starwars_factor |>  pull(species)
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+starwars_factor |> 
+  mutate(species = fct_reorder(species, height, mean)) |> 
+  pull(species)
+```
+
+:::
+::::
+
+
+---
+
+## 💻 It's your turn {#tu-turno-8-2}
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Given the variable `months` defined below (defined as a character vector), convert this variable to factor (just that)
+
+```{r}
+months <- c("Jan", "Feb", "Mar", "Apr")
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+months <- c("Jan", "Feb", "Mar", "Apr")
+months_fct <- as_factor(months)
+months_fct
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Given the variable `months` defined below converts this variable to a factor but indicating the levels correctly.
+
+```{r}
+months <- c(NA, "Apr", "Jan", "Oct", "Jul", "Jan", "Sep", NA, "Feb", "Dic",
+           "Jul", "Mar", "Jan", "Mar", "Feb", "Apr", "May", "Oct", "Sep",  NA,
+           "Dic", "Jul", "Nov", "Feb", "Oct", "Jun", "Sep", "Oct", "Oct", "Sep")
+```
+
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+months_fct <-
+  factor(months,
+         levels = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dic"))
+months_fct
+```
+
+  
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Count how many values there are for each month but keep in mind that they are factors (maybe there are unused levels and you should get a 0 for them).
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+meses_fct |>  fct_count()
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Since there are missing values, it indicates that the absentee is a thirteenth level labeled `"missing"`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+months_fct <- 
+  months_fct |> 
+  fct_explicit_na(na_level = "missing")
+months_fct
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Removes unused levels.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+months_fct <- 
+  months_fct %>%
+  fct_drop()
+months_fct
+```
+
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Sort the levels by frequency of occurrence.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+months_fct |> 
+  fct_infreq()
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Group levels so that any level that does not appear at least 7% of the time is grouped in a level called `"other months"`.
+  
+```{r}
+#| code-fold: true
+#| eval: false
+months_fct <-
+  months_fct |> 
+  fct_lump_prop(prop = 0.07, other_level = "other months")
+months_fct 
+```
+
+:::
+
+
+# L9: [dbplyr and github]{.flow} {#clase-9}
+
+---
+
+## dbplyr: SQL connection
+
+
+We are going to introduce the `{dbplyr}` package, which will allow us to combine `SQL` code into `R` to perform [**database queries**]{.hl-yellow}
+
+```{r}
+#| eval: false
+install.packages("dbplyr")
+```
+
+&nbsp;
+
+If you are using R to do data analysis, most of the data you need probably already lives in a database. We will learn how to [**load data in to a local database**]{.hl-yellow}.
+
+
+---
+
+## dbplyr: SQL connection
+
+```{r}
+#| eval: false
+install.packages("RSQLite")
+```
+
+
+We will also need to install a [**DBI backend package**]{.hl-yellow} (an interface that allows `{dplyr}` to work with many different databases using the same code). Five commonly used backends are:
+
+* `RMariaDB` connects to MySQL and MariaDB
+
+* `RPostgres` connects to Postgres and Redshift.
+
+* `RSQLite` embeds a SQLite database.
+
+* `odbc` connects to many commercial databases via the open database connectivity protocol.
+
+* `bigrquery` connects to Google’s BigQuery.
+
+. . .
+
+In the following, we are going to use the [**RSQLite backend**]{.hl-yellow} (automatically installed when you install `{dbplyr}`).
+
+---
+
+## dbplyr: SQL connection
+
+If we want to [**work with a database adopting dplyr grammar**]{.hl-yellow}, we must first connect to it. The connection will be done by using `DBI::dbConnect()`. The arguments to `DBI::dbConnect()` vary from database to database, but the first argument is always the database backend. SQLite only needs a path to the database. 
+
+
+```{r}
+connection <- DBI::dbConnect(RSQLite::SQLite(), dbname = ":memory:")
+connection
+```
+
+Here, the string `":memory:"` is a special path that creates [**a temporary in-memory database**]{.hl-yellow}.
+
+---
+
+## dbplyr: SQL connection
+
+The temporary database previously created has no yet data in it. We will [**copy an existing database**]{.hl-yellow} (for example, `gapminder` from `{gapminder}` package) using `copy_to()`. Using `tbl()` we "obtain" the database (called as named in `copy_to()`).
+
+The main difference is that not it is a [**remote source in a SQLite database**]{.hl-yellow}.
+
+```{r}
+copy_to(connection, gapminder::gapminder, overwrite = TRUE, name = "gapminder_database")
+gapminder_db <- tbl(connection, "gapminder_database")
+gapminder_db
+```
+
+---
+
+## dbplyr: SQL connection
+
+
+The main goal of `{dbplyr}` is to [**automatically generate SQL from `dplyr` grammar**]{.hl-yellow} that we are already familiar with.
+
+```{r}
+gapminder_db |>
+  select(country, year, lifeExp)
+```
+
+---
+
+## dbplyr: SQL connection
+
+
+
+The most important difference between ordinary tibbles and remote database queries is that now [**our `R` code is translated into SQL and executed in the database on the remote server**]{.hl-yellow}, not in R on your local machine: it never pulls data into R unless you explicitly ask for it, [**delaying doing any work until the last possible moment**]{.hl-purple} (sends it to the database in one step).
+
+. . .
+
+It is not [**until we ask for the data**]{.hl-yellow} (writing `gapminder_query` in console, for example), `dplyr` verbs generates the SQL and requests the results from the database. 
+
+```{r}
+gapminder_query <- 
+  gapminder_db |>
+  select(country, year, lifeExp)
+gapminder_query
+```
+
+---
+
+## dbplyr: SQL connection
+
+**What is happening behind the scenes?**
+
+. . . 
+
+`{dplyr} ` is [**translating our R code into SQL verbs**]{.hl-yellow}, that we can check (without doing) by using `show_query()`
+
+```{r}
+gapminder_query |> 
+  show_query()
+```
+
+---
+
+## dbplyr: SQL connection
+
+As commented, our remote database queries is not in R on your local machine: it never pulls data into R unless you explicitly ask for it. To do it, you can iterate a few times before you figure out what data you need, and then we use `collect()`.
+
+```{r}
+gapminder_tibble <-
+  gapminder_query |> 
+  collect()
+gapminder_tibble
+```
+
+---
+
+## dbplyr: SQL connection
+
+You can also use `translate_sql()` to translate individual expressions from `dplyr` to SQL
+
+```{r}
+dbplyr::translate_sql((x + y) / 2, con = connection)
+```
 
