@@ -1,6 +1,6 @@
 ---
-title: "Estructuras de control: bucles y estructuras condicionales"
-subtitle: "Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)"
+title: "Estructuras de control, bucles y funciones"
+subtitle: "Cuadernos prácticos del Máster de Bioinformática (curso 2024-2025)"
 author: "Javier Álvarez Liébana"
 format:
   html:
@@ -714,7 +714,7 @@ while (count < 6) {
 :::
 
 
-## 🐣 Caso práctico: bucles y estructuras condicionales
+## 🐣 Caso práctico I: bucles y estructuras condicionales
 
 Para practicar estructuras de control vamos a realizar un [**ejercicio de simulación**]{.hl-yellow}
 
@@ -976,3 +976,798 @@ exitos_cambio
 ```
 
 > ¿Qué sucede?
+
+
+## Funciones en R
+
+Cuando programamos no solo podemos usar **funciones predeterminadas** que vienen ya cargadas en paquetes, además podemos [**crear nuestras propias funciones**]{.hl-yellow} para **automatizar tareas** o poder incluso exportarlo para que otras personas las usen.
+
+### Estructura básica
+
+¿Cómo [**crear nuestra propia función**]{.hl-purple}? Veamos su **esquema básico**:
+
+* [**Nombre**]{.hl-yellow}: por ejemplo `name_fun` (sin espacios ni caracteres extraños). Al nombre le [**asignamos la palabra reservada**]{.hl-yellow} `function()`.
+
+* Definir [**argumentos de entrada**]{.hl-yellow} (dentro de `function()`).
+
+* [**Cuerpo**]{.hl-yellow} de la función dentro de `{ }`.
+
+* Finalizamos la función con los [**argumentos de salida**]{.hl-yellow} con `return()`.
+
+
+```{r}
+#| eval: false
+name_fun <- function(arg1, arg2, ...) {
+  
+  código a ejecutar
+  
+  return(var_salida)
+  
+}
+```
+
+Si te fijas en el código anterior, `arg1, arg2, ...` serán los [**argumentos de entrada**]{.hl-yellow}, los argumentos que toma la función para ejecutar el código que tiene dentro.
+
+Además hay otra parte que normalemnte siempre aparecerá en la función (no es necesario pero suele ser habitual que esté): `return(var_salida)`, de manera que dentro de `return()` se introducirán los [**argumentos de salida**]{.hl-yellow}, lo que queremos que devuelva la función
+
+::: callout-important
+## Importante
+
+Todas las variables que definamos dentro de la función son [**variables LOCALES: solo existirán dentro de la función**]{.hl-yellow} salvo que especifiquemos lo contrario.
+
+:::
+
+#### Ejemplo: cálcular área
+
+Veamos un ejemplo muy simple de función para [**calcular el área de un rectángulo**]{.hl-yellow}.
+
+Dado que el área de un rectángulo se calcula como el **producto de sus lados**, necesitaremos precisamente eso, sus lados: esos serán los [**argumentos de entrada**]{.hl-yellow} y el [**valor a devolver**]{.hl-purple} será justo su **área** ($lado_1 * lado_2$).
+
+
+
+```{r}
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2) {
+  
+  area <- lado_1 * lado_2
+  return(area)
+  
+}
+```
+
+
+También podemos hacer una definición directa de las variables **sin almacenar por el camino**.
+
+```{r}
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2) {
+  
+  return(lado_1 * lado_2)
+  
+}
+```
+
+[**¿Cómo aplicar la función?**]{.hl-yellow} Simplemente usando el nombre que le hemos dado y dentro de los paréntesis, separados por comas, los argumentos de entrada.
+
+```{r}
+calcular_area(5, 3) # área de un rectángulo 5 x 3 
+calcular_area(1, 5) # área de un rectángulo 1 x 5
+```
+
+::: callout-tip
+
+
+Aunque no sea necesario, es [**recomendable hacer explícita la llamada de los argumentos**]{.hl-green}, especificando en el código qué valor es para cada argumento para que no dependa de su orden, haciendo el código más legible
+:::
+
+
+```{r}
+calcular_area(lado_1 = 5, lado_2 = 3) # área de un rectángulo 5 x 3 
+calcular_area(lado_2 = 3, lado_1 = 5) # área de un rectángulo 5 x 3 
+```
+
+### Argumentos por defecto
+
+Imagina ahora que nos damos cuenta que el 90% de las veces usamos dicha función para [**calcular por defecto el área de un cuadrado**]{.hl-yellow} (es decir, solo necesitamos un lado). Para ello, podemos definir [**argumentos por defecto**]{.hl-yellow} en la función: tomarán dicho valor salvo que le asignemos otro.
+
+¿Por qué no asignar `lado_2 = lado_1` **por defecto**, para ahorrar líneas de código y tiempo?
+
+
+```{r}
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado que devolvemos
+  return(area)
+  
+}
+```
+
+
+Ahora [**por defecto**]{.hl-yellow} el segundo lado será igual al primero (si se lo añadimos usará ambos).
+
+
+```{r}
+calcular_area(lado_1 = 5) # cuadrado
+calcular_area(lado_1 = 5, lado_2 = 7) # rectángulo
+```
+
+### Salida múltiple
+
+Compliquemos un poco la función y añadamos en la salida los valores de cada lado, etiquetados como `lado_1` y `lado_2`, [**empaquetando la salida en una vector**]{.hl-yellow}.
+
+```{r}
+#| code-line-numbers: "7-8"
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado
+  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2))
+  
+}
+```
+
+Podemos complicar un poco más la salida añadiendo una cuarta variable que nos diga, en función de los argumentos, [**si rectángulo o cuadrado**]{.hl-yellow}, teniendo que añadir en la salida una variable que de tipo caracter (o lógica).
+
+```{r}
+#| code-line-numbers: "7-9"
+# Definición del nombre de función y argumentos de entrada
+library(dplyr)
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado
+  return(c("area" = area, "lado_1" = lado_1, "lado_2" = lado_2,
+           "tipo" = if_else(lado_1 == lado_2, "cuadrado", "rectángulo")))
+  
+}
+calcular_area(5, 3)
+```
+
+Pero fíjate que tenemos un [**problema**]{.hl-red}: al intentar juntar números y texto, lo convierte todo a números. Podríamos guardarlo todo en un `tibble()` como hemos aprendido o en un objeto conocido en `R` como [**listas**]{.hl-yellow}
+
+### Breve introducción a listas
+
+Veamos un pequeño resumen de los datos que ya conocemos:
+
+* [**vectores**]{.hl-yellow}: colección de elementos de igual tipo. Pueden ser números, caracteres o valores lógicos, entre otros.
+
+* [**matrices**]{.hl-yellow}: colección BIDIMENSIONAL de elementos de igual tipo e igual longitud.
+
+* [**data.frame / tibble**]{.hl-yellow}: colección BIDIMENSIONAL de elementos de igual longitud pero de cualquier tipo.
+
+&nbsp;
+
+Las [**listas**]{.hl-yellow} serán [**colecciones de variables de diferente tipo y diferente longitud**]{.hl-purple}, con estructuras totalmente heterógeneas (incluso una lista puede tener dentro a su vez otra lista).
+
+&nbsp;
+
+Vamos a crear [**nuestra primera lista**]{.hl-yellow} con `list()` con tres elementos: el nombre de nuestros padres/madres, nuestro lugar de nacimiento y edades de nuestros hermanos.
+
+```{r}
+var_1 <- c("Paloma", "Gregorio")
+var_2 <- "Madrid"
+var_3 <- c(25, 30, 26)
+
+lista <- list("progenitores" = var_1, "lugar_nac" = var_2, "edad_hermanos" = var_3)
+lista
+```
+
+
+
+Si observas el objeto que hemos definido como lista, su [**longitud**]{.hl-yellow} del es de 3 ya que tenemos **guardados tres elementos**: un vector de caracteres (de longitud 2), un caracter (vector de longitud 1), y un vector de números (de longitud 3)
+
+```{r}
+length(lista)
+```
+
+
+En una lista solemos tener guardados elementos de [**distinto tipo**]{.hl-yellow} (algo que ya podíamos hacer) pero, además, de **longitudes dispares**.
+
+```{r}
+dim(lista) # devolverá NULL al no tener dos dimensiones
+class(lista) # de tipo lista
+```
+
+
+Si los juntásemos con un `tibble()`, al tener distinta longitud, obtendríamos un [**error**]{.hl-red}.
+
+```{r}
+#| error: true
+library(tibble)
+tibble("progenitores" = var_1, "lugar_nac" = va_2, "edad_hermanos" = var_3)
+```
+
+#### Operaciones básicas
+
+La más básica es poder [**acceder por índice**]{.hl-yellow} a sus elementos, con el operador `[[i]]`, accediendo al **elemento i-ésimo** de la lista.
+
+```{r}
+lista[[1]]
+```
+
+También podemos [**acceder por nombre**]{.hl-yellow} con `$nombre_elemento`.
+
+```{r}
+lista$progenitores
+```
+
+En contraposición, el [**corchete simple**]{.hl-yellow} nos permite acceder a [**varios elementos**]{.hl-yellow} a la vez
+
+```{r}
+# Varios elementos
+lista[1:2]
+```
+
+
+#### Salida múltiple: listas
+
+Así haciendo uso de listas podemos hacer que la función [**devuelva de manera conjunta**]{.hl-yellow} múltiples argumentos (sin importar su tipo ni longitud)
+
+```{r}
+#| code-line-numbers: "7-9"
+# Definición del nombre de función y argumentos de entrada
+calcular_area <- function(lado_1, lado_2 = lado_1) {
+  
+  # Cuerpo de la función
+  area <- lado_1 * lado_2
+  
+  # Resultado
+  return(list("area" = area, "lado_1" = lado_1, "lado_2" = lado_2,
+           "tipo" = if_else(lado_1 == lado_2, "cuadrado", "rectángulo")))
+  
+}
+calcular_area(5, 3)
+```
+
+Antes nos daba igual el orden de los argumentos pero ahora el [**orden de los argumentos de entrada importa**]{.hl-yellow}, ya que en la salida incluimos `lado_1` y `lado_2`. 
+
+
+::: callout-note
+## Recomendación
+
+Como se comentaba, altamente recomendable hacer la llamada a la función [**indicando explícitamente los argumentos**]{.hl-yellow} para mejorar **legibilidad e interpretabilidad**.
+
+```{r}
+# Equivalente a calcular_area(5, 3)
+calcular_area(lado_1 = 5, lado_2 = 3)
+```
+
+:::
+
+
+### Variables locales vs globales
+
+Un aspecto importante sobre el que reflexionar con las funciones: ¿qué sucede si [**nombramos a una variable dentro**]{.hl-yellow} de una función a la que se nos ha **olvidado asignar** un valor dentro de la misma?
+
+&nbsp;
+
+Debemos ser cautos al usar funciones en `R`, ya que debido a la [**«regla lexicográfica»**]{.hl-yellow}, si una variable no se define dentro de la función, `R` [**buscará dicha variable en el entorno**]{.hl-purple} de variables.
+
+```{r}
+x <- 1
+funcion_ejemplo <- function() {
+    
+  print(x) # No devuelve nada, solo realiza la acción 
+}
+funcion_ejemplo()
+```
+
+
+Si una variable  [**ya está definida fuera de la función (entorno global)**]{.hl-yellow}, y además es usada dentro de cambiando su valor, el valor [**solo cambia dentro**]{.hl-yellow} pero [**no en el entorno global**]{.hl-red}.
+
+```{r}
+x <- 1
+funcion_ejemplo <- function() {
+    
+  x <- 2
+  print(x) # lo que vale dentro
+}
+```
+
+```{r}
+# lo que vale dentro
+funcion_ejemplo() #<<
+# lo que vale fuera
+print(x) #<<
+```
+
+
+Si queremos que además de cambiar localmente lo haga [**globalmente**]{.hl-yellow} deberemos usar la [**doble asignación**]{.hl-yellow} (`<<-`).
+
+```{r}
+x <- 1
+y <- 2
+funcion_ejemplo <- function() {
+  
+  # no cambia globalmente, solo localmente
+  x <- 3 
+  # cambia globalmente
+  y <<- 0 #<<
+  
+  print(x)
+  print(y)
+}
+
+funcion_ejemplo() # lo que vale dentro
+x # lo que vale fuera
+y # lo que vale fuera
+```
+
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ej 1**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir una función llamada `funcion_suma`, de forma que dados dos elementos, devuelve su suma.
+
+```{r}
+#| eval: false
+nombre <- function(x, y) {
+  suma <- # código a ejecutar
+  return()
+}
+# Aplicamos la función
+suma(3, 7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+funcion_suma <- function(x, y) {
+  suma <- x + y
+  return(suma)
+}
+funcion_suma(3, 7)
+```
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir una función llamada `funcion_producto`, de forma que dados dos elementos, devuelve su producto, pero que por defecto calcule el cuadrado
+
+```{r}
+#| eval: false
+nombre <- function(x, y) {
+  producto <- # código de la multiplicación
+  return()
+}
+producto(3)
+producto(3, -7)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+funcion_producto <- function(x, y = x) {
+  producto <- x * y
+  return(producto)
+}
+funcion_producto(3)
+funcion_producto(3, -7)
+```
+
+### [**Ej 3**]{.hl-yellow}
+
+📝 Define una función llamada `igualdad_nombres` que, dados dos nombres, nos diga si son iguales o no. Hazlo considerando importantes las mayúsculas, y sin que importen las mayúsculas. Usa el paquete `{stringr}`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Distinguiendo mayúsculas
+igualdad_nombres <- function(persona_1, persona_2) {
+  return(persona_1 == persona_2)
+}
+igualdad_nombres("Javi", "javi")
+igualdad_nombres("Javi", "Lucía")
+
+# Sin importar mayúsculas
+igualdad_nombres <- function(persona_1, persona_2) {
+  return(toupper(persona_1) == toupper(persona_2))
+}
+igualdad_nombres("Javi", "javi")
+igualdad_nombres("Javi", "Lucía")
+```
+
+### [**Ej 4**]{.hl-yellow}
+
+📝 Crea una función llamada `calculo_IMC` que, dados dos argumentos (peso y estatura en metros) y un nombre, devuelva una lista con el IMC ($peso/(estatura_m^2)$) y el nombre.
+
+```{r}
+#| code-fold: true
+#| eval: false
+calculo_IMC <- function(nombre, peso, estatura) {
+  
+  return(list("nombre" = nombre, "IMC" = peso/(estatura^2)))
+}
+```
+
+### [**Ej 5**]{.hl-yellow}
+
+📝 Repite el ejercicio anterior pero con otro argumento opcional que se llame unidades (por defecto, `unidades = "metros"`). Desarrolla la función de forma que haga lo correcto si `unidades = "metros"` y si `unidades = "centímetros"`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
+  
+  return(list("nombre" = nombre,
+              "IMC" = peso/(if_else(unidades == "metros", estatura, estatura/100)^2)))
+}
+```
+
+ 
+### [**Ej 6**]{.hl-yellow}
+
+📝 Crea un tibble ficticio de 7 personas, con tres variables (inventa nombre, y simula peso, estatura en centímetros), y aplica la función definida de forma que obtengamos una cuarta columna con su IMC.
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos <-
+  tibble("nombres" = c("javi", "sandra", "laura", "ana", "carlos", "leo", NA),
+         "peso" = rnorm(n = 7, mean = 70, sd = 1),
+         "estatura" = rnorm(n = 7, mean = 168, sd = 5))
+
+# IMPORTANTE: if_else trabaja de manera vectorial, elemento a elemento
+# esto significa que la longitud de la condición (en este caso unidades == "metros"
+# solo es uno, no un vector lógico) debe ser igual que lo que le decimos que haga 
+# cuando es TRUE y cuando es FALSE (en este caso la condicion tiene longitud 1
+# pero al aplicarla luego - dentro de un mutate a toda una variable de peso y estatura
+# lo que devuelve es un vector de tamaño 7, por eso hay que usar ifelse (sin _))
+calculo_IMC <- function(nombre, peso, estatura, unidades = "metros") {
+  
+  return(list("nombre" = nombre,
+              "IMC" = peso/(ifelse(unidades == "metros", estatura, estatura/100)^2)))
+}
+datos |> 
+  mutate(IMC = calculo_IMC(nombres, peso, estatura, unidades = "centímetros")$IMC)
+```
+
+
+### [**Ej 7**]{.hl-yellow}
+
+📝 Crea una función llamada `atajo` que tenga dos argumentos numéricos `x` e `y`. Si ambos son iguales, debes devolver `"iguales"` y hacer que la función acaba automáticamente (piensa cuándo una función sale). OJO: `x` e `y` podrían ser vectores. Si son distintos (de igual de longitud) calcula la proporción de elementos  diferentes. Si son distintos (por ser distinta longitud), devuelve los elementos que no sean comunes.
+
+```{r}
+#| code-fold: true
+#| eval: false
+atajo <- function(x, y) {
+  
+  if (all(x == y) & length(x) == length(y)) { return("iguales") }
+  else {
+   
+    if (length(x) == length(y)) {
+      
+      n_diff <- sum(x != y) / length(x)
+      return(n_diff)
+      
+    } else {
+      
+      diff_elem <- unique(c(setdiff(x, y), setdiff(y, x)))
+      return(diff_elem)
+    }
+    
+  }
+}
+```
+
+
+:::
+
+
+## 🐣 Caso práctico II: conversor de temperaturas
+
+Para practicar con el uso de funciones vamos a crear un conversor de temperaturas. Empecemos por lo sencillo. Intenta conceptuar la idea antes en un papel.
+
+### Pregunta 1
+
+> Define una función llamada `celsius_to_kelvin` que, dada una temperatura en Celsius (por ejemplo, `temp` como argumento) la convierta a Kelvin según la fórmula de conversión inferior. Tras definir la función aplícala a un vector de temperaturas.
+
+$$K = °C + 273.15$$
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# definimos nombre de la función y argumentos
+celsius_to_kelvin <- function(temp) {
+  
+  # convertimos
+  kelvin <- temp + 273.15
+  
+  # devolvemos
+  return(kelvin)
+  
+}
+
+x <- c(-15, -3, 0, 15, 27.5)
+celsius_to_kelvin(x)
+```
+
+### Pregunta 2
+
+> Crea la función contraria `kelvin_to_celsius` y aplícala a otro vector de temperaturas. Tendrás que asegurarte que la temperatura en Kelvin no toma valores negativos (ya que es una escala absoluta). En caso de que no se cumpla, devolver `NA`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# definimos nombre de la función y argumentos
+kelvin_to_celsius <- function(temp) {
+  
+  # si es negativa en Kelvin, paramos y devolvemos ausente
+  # en caso contrario, convertimos
+  celsius <- if_else(temp < 0, NA, temp - 273.15)
+  
+  # Piensa porque no lo hemos hecho con un if (...) else (...)
+
+  # devolvemos
+  return(celsius)
+  
+}
+
+y <- c(0, 250, 300, 350)
+kelvin_to_celsius(y)
+```
+
+### Pregunta 3
+
+> Crea una función conjunta `conversor_temp` que tenga dos argumentos: temperatura y un argumento de texto que nos diga si es kelvin o celsius (y que por defecta la temperatura de entrada sea Celsius). La función debe usar ese string para decidir en que dirección convierte (controla que en el argumento de texto no haya una opción distinta a las dos permitidas; en caso contrario, devolver error usando el comando stop("mensaje de error...")). Aplícala a los vectores anteriores y chequea que da lo mismo.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# definimos nombre de la función y argumentos
+# por defecto, unidades en celsius
+conversor_temp <- function(temp, unidades = "celsius") {
+  
+  # chequeamos que unidades es correcto
+  # dentro de los valroes permitidos
+  if (unidades %in% c("celsius", "kelvin")) {
+    
+    if (unidades == "celsius") {
+      
+      temp_out <- celsius_to_kelvin(temp) 
+      
+    } else {
+      
+      temp_out <- kelvin_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    # en caso contrario paramos la función con un mensaje de error
+    stop("Error: solo se permiten como unidades 'celsius' o 'kelvin'")
+  }
+  
+  # devolvemos
+  return(temp_out)
+  
+}
+
+# Fíjate que no hemos usado `if_else()` porque el número de elementos
+# a evaluar en la condición debe ser igual al número de elementos que # devuelve, al hacerlo de manera vectorial.
+conversor_temp(x)
+conversor_temp(y, unidades = "kelvin")
+```
+
+
+### Pregunta 4
+
+> Repite la función anterior pero sin que importe si unidades está en mayúscula o minúscula
+
+
+```{r}
+#| error: true
+conversor_temp(y, unidades = "Kelvin")
+```
+```{r}
+#| code-fold: true
+#| eval: false
+
+# definimos nombre de la función y argumentos
+# por defecto, unidades en celsius
+library(stringr)
+conversor_temp <- function(temp, unidades = "celsius") {
+  
+  # usamos str_to_lower para pasarlo todo a minúscula
+  if (str_to_lower(unidades) %in% c("celsius", "kelvin")) {
+    
+    if (unidades == "celsius") {
+      
+      temp_out <- celsius_to_kelvin(temp) 
+      
+    } else {
+      
+      temp_out <- kelvin_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    # en caso contrario paramos la función con un mensaje de error
+    stop("Error: solo se permiten como unidades 'celsius' o 'kelvin'")
+  }
+  
+  # devolvemos
+  return(temp_out)
+  
+}
+
+conversor_temp(y, unidades = "Kelvin")
+```
+
+### Pregunta 5
+
+
+> Repite todo el proceso anterior creando `conversor_temp2` pero para convertir entre Celsius y Fahrenheit siguiendo la fórmula inferior
+
+$$ºC = (ºF − 32) * \frac{5}{9}, \quad ºF = 32 + ºC * \frac{9}{5}$$
+```{r}
+#| code-fold: true
+#| eval: false
+
+# definimos las funciones de celsius a fahr y viceversa
+celsius_to_fahr <- function(temp) {
+  
+  # convertimos
+  fahr <- 32 + temp * (9/5)
+  
+  # devolvemos
+  return(fahr)
+  
+}
+celsius_to_fahr(x)
+
+fahr_to_celsius <- function(temp) {
+  
+  # convertimos
+  celsius <- (temp - 32) * (5/9)
+  
+  # devolvemos
+  return(celsius)
+  
+}
+
+z <- c(40, 60, 80, 100)
+fahr_to_celsius(z)
+
+# definimos nombre de la función y argumentos
+# por defecto, unidades en celsius
+conversor_temp2 <- function(temp, unidades = "celsius") {
+  
+  # usamos str_to_lower para pasarlo todo a minúscula
+  if (str_to_lower(unidades) %in% c("celsius", "fahr")) {
+    
+    if (unidades == "celsius") {
+      
+      temp_out <- celsius_to_fahr(temp) 
+      
+    } else {
+      
+      temp_out <- fahr_to_celsius(temp)
+      
+    }
+    
+  } else {
+    
+    # en caso contrario paramos la función con un mensaje de error
+    stop("Error: solo se permiten como unidades 'celsius' o 'fahr'")
+  }
+  
+  # devolvemos
+  return(temp_out)
+  
+}
+
+conversor_temp2(x)
+conversor_temp2(z, unidades = "fahr")
+```
+
+### Pregunta 6
+
+> Para acabar, crea la superfunción `conversor_temp_total` que permita como argumento de entrada una temperatura en alguna de las 3 unidades, un texto que indique en qué unidades viene y otro que indique en qué unidades se quiere sacar.  Por defecto que convierta de celsius a kelvin.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+conversor_temp_total <-
+  function(temp, unidades_entrada = "celsius",
+           unidades_salida = "kelvin") {
+  
+  if (str_to_lower(unidades_entrada) %in% c("celsius", "fahr", "kelvin") &
+      str_to_lower(unidades_salida) %in% c("celsius", "fahr", "kelvin")) {
+    
+    # Si las de salida son iguales que las de entrada, no hacemos nada
+    if (unidades_entrada == unidades_salida) {
+      
+      return(temp)
+      
+    }
+    
+    else if (unidades_entrada == "celsius") {
+      
+      if (unidades_salida == "kelvin") {
+        
+        temp_out <- celsius_to_kelvin(temp) 
+        
+      # si no es kelvin (ni celsius porque entrada es distinto a salida)
+      # solo queda una funcion (que sea fahr)
+      } else { 
+        
+        temp_out <- celsius_to_fahr(temp) 
+      }
+      
+    } else if (unidades_entrada == "kelvin") {
+      
+      if (unidades_salida == "celsius") {
+        
+        temp_out <- kelvin_to_celsius(temp) 
+    
+      } else { 
+        
+        temp_out <- celsius_to_fahr(kelvin_to_celsius(temp))
+      }
+      
+    } else {
+      
+      if (unidades_salida == "celsius") {
+        
+        temp_out <- fahr_to_celsius(temp) 
+    
+      } else { 
+        
+        temp_out <- celsius_to_kelvin(fahr_to_celsius(temp))
+      }
+      
+    }
+    
+  } else {
+    
+    # en caso contrario paramos la función con un mensaje de error
+    stop("Error: solo se permiten como unidades de entrada/salida 'celsius', 'kelvin' o 'fahr'")
+  }
+  
+  # devolvemos
+  return(temp_out)
+  
+}
+
+conversor_temp_total(x, unidades_entrada = "celsius",
+                     unidades_salida = "celsius")
+conversor_temp_total(y, unidades_entrada = "kelvin",
+                     unidades_salida = "kelvin")
+conversor_temp_total(z, unidades_entrada = "fahr",
+                     unidades_salida = "fahr")
+
+conversor_temp_total(x, unidades_entrada = "celsius",
+                     unidades_salida = "kelvin")
+conversor_temp_total(y, unidades_entrada = "kelvin",
+                     unidades_salida = "celsius")
+conversor_temp_total(x, unidades_entrada = "celsius",
+                     unidades_salida = "fahr")
+conversor_temp_total(z, unidades_entrada = "fahr",
+                     unidades_salida = "celsius")
+
+conversor_temp_total(z, unidades_entrada = "fahr",
+                     unidades_salida = "celsius")
+conversor_temp_total(conversor_temp_total(z, unidades_entrada = "fahr",
+                                          unidades_salida = "kelvin"),
+                     unidades_entrad = "kelvin",
+                     unidades_salida = "celsius")
+```
+

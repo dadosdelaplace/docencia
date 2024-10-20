@@ -10,3 +10,7 @@
   quarto-pub:
     - id: 9d6fb94b-256c-4ff2-b9fd-4933a72ed637
       url: 'https://javieralvarezliebana.quarto.pub/control-bucles-if-else-biostats'
+- source: flow-structures-funciones-ISCIII.qmd
+  quarto-pub:
+    - id: 56973c75-6a6a-4ec5-9d69-987992116e24
+      url: 'https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii'

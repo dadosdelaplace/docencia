@@ -92,7 +92,7 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 17 oct | Primeros pasos. Tipos de datos y vectores | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) | [🐣](#caso-practico-1-1)  |  | 
-| [2](#clase-2) | S2 | 22 oct | Primeras bases de datos |  [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |   [🐣](#caso-practico-2-1)  [🐣](#caso-practico-2-2)  |  |
+| [2](#clase-2) | S2 | 22 oct | Primeras bases de datos |  [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |   [🐣](#caso-practico-2-1)  [🐣](#caso-practico-2-2) [🐣](#caso-practico-2-3)  |  |
 | [3](#clase-3) | S2 | 24 oct | Estructuras de control. Funciones | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) | |
 :::
 :::
@@ -2029,7 +2029,7 @@ month <- airquality$Month
 day <- airquality$Day
 ```
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-vectores-tibble-biostats/)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-vectores-isciii/)
 
 
 # Clase 2: [primeras bases de datos]{.flow} {#clase-2}
@@ -2601,7 +2601,7 @@ names(airquality_tb) <- c("ozono", "rad_solar", "viento", "temp", "mes", "dia")
 
 ## 🐣 Caso práctico I: tibble {#caso-practico-2-1}
 
-Del paquete `{Biostatistics}` usaremos el conunto de datos `pinniped`, que guarda los **datos de peso de cuerpo y cerebro** (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.
+Del paquete `{Biostatistics}` usaremos el conjunto de datos `pinniped`, que guarda los **datos de peso de cuerpo y cerebro** (desagregado por sexo y mono/poligamia) de 33 especies de mamíferos marinos.
 
 
 ```{r}
@@ -2609,7 +2609,20 @@ Biostatistics::pinniped
 ```
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/intro-r-vectores-tibble-biostats/)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/matrices-tibble-isciii)
+
+---
+
+## 🐣 Caso práctico II: Taylor Swift {#caso-practico-2-2}
+
+Del paquete `{taylor}` vamos a usar el conjunto de datos `taylor_album_songs` para poner en práctico lo aprendido sobre bases de datos y manejo de variables. Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/matrices-tibble-isciii)
+
+
+```{r}
+library(taylor)
+taylor_album_songs
+```
+
 
 
 ---
@@ -3407,7 +3420,7 @@ Haz la suma del vector anterior
 
 ---
 
-## 🐣 Caso práctico: simulacro  {#caso-practico-2-2}
+## 🐣 Caso práctico: simulacro  {#caso-practico-2-3}
 
 1. Crea un documento `.qmd` en el que al menos la cabecera contenga
   - Título, autor y formato (html)
@@ -4212,10 +4225,10 @@ while (count < 6) {
 
 ---
 
-## 🐣 Caso práctico {#caso-practico-3-1}
+## 🐣 Caso práctico I {#caso-practico-3-1}
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/control-bucles-if-else-biostats/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
 
 
 ---
@@ -4903,11 +4916,11 @@ atajo <- function(x, y) {
 
 ---
 
-## 🐣 Caso práctico {#caso-practico-3-2}
+## 🐣 Caso práctico II: conversor {#caso-practico-3-2}
 
 Para practicar con funciones vamos a crear un completo **conversor de temperaturas** que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/funciones-en-r-biostats/) hasta construirlo.
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/) hasta construirlo.
 
 
 
