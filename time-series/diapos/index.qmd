@@ -6406,12 +6406,11 @@ fit_airpass |>
 
 ### [**Ejercicio 1**]{.hl-yellow}
 
-💻 Repite el proceso de creación de modelos (los fable y los feast) para los conjuntos de datos
+💻 Repite el proceso de creación de modelos (los fable y los feast) y predicción (y su visualización) para los conjuntos de datos
 
 * `retiro`
 * `global_economy` (solo para España) del paquete  `{tsibbledata}`
 * `beer_ts` del paquete `{timeSeriesDataSets}`
-* `bricksq_ts` del paquete `{timeSeriesDataSets}`
 * `elec_ts` del paquete `{timeSeriesDataSets}`
 * `pedestrian` (variable `count`) del paquete `{timeSeriesDataSets}`
 
@@ -6419,6 +6418,130 @@ Determina a cual de los 9 tipos de series de Pegel pertenece cada una.
 
 
 # Clase 12: [métodos de alisado]{.flow} {#clase-12}
+
+---
+
+## Alisado doble (lineal) de Holt
+
+Como hemos visto el método anterior de alisado solo ajusta bien la [**hipótesis de que nuestros datos son localmente constantes**]{.hl-yellow} tal que
+
+$$\widehat{X}_{t+1|t} = \theta \widehat{X}_{t|t-1} + \left( 1 - \theta \right)X_t = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j}$$
+
+. . .
+
+A ese **primer valor** disponible se le conoce como [**nivel de la serie**]{.hl-yellow} y lo denotaremos como $\ell_0$
+
+$$\widehat{X}_{t+1|t} = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j} = \theta^{t}\ell_0 +  \sum_{j=0}^{t-1} \left(1 - \theta \right) \theta^{j} X_{t-j}$$
+
+---
+
+
+## Alisado doble (lineal) de Holt
+
+$$\widehat{X}_{t+1|t} = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j} = \theta^{t}\ell_0 +  \sum_{j=0}^{t-1} \left(1 - \theta \right) \theta^{j} X_{t-j}$$
+
+La ecuación anterior la podemos [**expresar de manera iterativa**]{.hl-yellow} como
+ 
+$$\begin{eqnarray}\widehat{X}_{t+h|t} &=& \ell_t \quad \text{predicción en base a componentes} \nonumber \\ \ell_t &=& \theta \ell_{t-1}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}$$
+
+
+---
+
+## Alisado doble (lineal) de Holt
+
+$$\begin{eqnarray}\widehat{X}_{t+h|t} &=& \ell_t \quad \text{predicción (en base a componentes)} \nonumber \\ \ell_t &=& \theta \ell_{t-1}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}$$
+
+En 1957 Holt propuso extender este método a [**datos con tendencia**]{.hl-yellow}, incluyendo ahora dos componentes: nivel $\ell_t$ y tendencia $\mu_t$ (realizando un [**doble suavizado iterativo**]{.hl-yellow})
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{red}{\ell_t + h*\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &=& \color{purple}{\theta_1 \widehat{X}_{t|t-1} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \ell_{t-1}+ \mu_{t-1} \right) + \left( 1 - \theta_1 \right)X_t} \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &=& \color{green}{\theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right)\widehat{\mu}_{t} = \theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right) \left( \ell_t - \ell_{t-1} \right)} \quad \text{suavizado tendencia} \end{eqnarray}$$
+
+---
+
+## Alisado doble (lineal) de Holt
+
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{red}{\ell_t + h*\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &=& \color{purple}{\theta_1 \widehat{X}_{t|t-1} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \ell_{t-1}+ \mu_{t-1} \right) + \left( 1 - \theta_1 \right)X_t} \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &=& \color{green}{\theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right)\widehat{\mu}_{t} = \theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right) \left( \ell_t - \ell_{t-1} \right)} \quad \text{suavizado tendencia} \end{eqnarray}$$
+
+. . .
+
+* [**Predicción a horizonte $h$**]{.hl-red}: último nivel conocido más $h$ veces la última tendencia conocida (en $h$ instantes avanza $h$ veces la tendencia)
+
+. . .
+
+* [**Estimación nivel**]{.hl-purple}: media ponderada entre el último valor de la serie y $\widehat{X}_{t|t-1}$ (predicción a horizonte $h = 1$ en tiempo $t$)
+
+. . .
+
+* [**Estimación tendencia**]{.hl-green}: media ponderada entre el último valor de la tendencia y la estimación de la tendencia a tiempo $t$ (diferencia de nivel $\ell_t$ y $\ell_{t-1}$)
+
+
+---
+
+## Alisado doble (lineal) de Holt
+
+modelo y forecast en fable
+
+---
+
+
+## Alisado doble de Gardner-McKenzie
+
+---
+
+## Alisado triple
+
+
+---
+
+## Escenarios
+
+```{r}
+#| eval: false
+#| echo: false
+fit_airpass <-
+  airpass |>
+  model(reg_poly = TSLM(value ~ index),
+        rw_drift = RW(value ~ drift()),
+        naive = NAIVE(value),
+        season_naive = SNAIVE(value ~ lag(12)))
+
+ultimo_year <- 
+  airpass |>
+  slice_max(index, n = 12) |> 
+  mutate(incremento = 1.25*value,
+         descenso = 0.75*value)
+
+future_scenarios <-
+  scenarios(incremento =
+              new_data(airpass, 12) |>
+              mutate("value" =
+                       ultimo_year |> pull(incremento)),
+            descenso =
+              new_data(airpass, 12) |>
+              mutate("value" =
+                       ultimo_year |> pull(descenso)))
+
+predicciones <-
+  fit_airpass |> 
+  forecast(new_data = future_scenarios)
+
+airpass |> 
+  autoplot(.vars = value) +
+  autolayer(predicciones) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "US consumption", y = "% change")
+
+predicciones |> 
+  autoplot(value, level = NULL) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(7)[-1]) +
+  scale_x_yearquarter(date_breaks = "24 months") +
+  theme_minimal()
+us_change |>
+  autoplot(Consumption) +
+  autolayer(fc) +
+  labs(title = "US consumption", y = "% change")
+
+```
 
 
 ---
@@ -6432,11 +6555,6 @@ Determina a cual de los 9 tipos de series de Pegel pertenece cada una.
 
 ---
 
-## Alisado doble (lineal) de Holt
-
-Como hemos visto el método anterior de alisado es bajo la hipótesis de que nuestros datos son localmente constantes, para datos sin tendencia
-
-. . .
 
 
 

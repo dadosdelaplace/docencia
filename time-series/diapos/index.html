@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-19"</code></pre>
+<pre><code>[1] "2024-10-20"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-19 14:54:25 CEST"</code></pre>
+<pre><code>[1] "2024-10-20 13:38:52 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -2673,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean  median
-                                y &lt;- x^2    1.722    1.968    2.146678    2.05
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1363.701 1378.461 1481.385104 1393.18
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.927    2.421378    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1362.471 1388.198 1669.973624 1409.026
        uq       max neval
-    2.214     5.699   500
- 1405.008 10721.623   500</code></pre>
+    2.337    11.275   500
+ 1467.718 17970.136   500</code></pre>
 </div>
 </div>
 </section>
@@ -4751,16 +4751,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.244  sd_0.5
- 2     2  0.716  sd_0.5
- 3     3  0.0767 sd_0.5
- 4     4  0.328  sd_0.5
- 5     5  0.131  sd_0.5
- 6     6  0.196  sd_0.5
- 7     7 -0.168  sd_0.5
- 8     8  0.289  sd_0.5
- 9     9 -0.820  sd_0.5
-10    10 -0.221  sd_0.5
+ 1     1  0.364  sd_0.5
+ 2     2 -0.425  sd_0.5
+ 3     3 -0.212  sd_0.5
+ 4     4  0.108  sd_0.5
+ 5     5  0.0574 sd_0.5
+ 6     6 -0.464  sd_0.5
+ 7     7 -0.323  sd_0.5
+ 8     8  0.717  sd_0.5
+ 9     9  0.389  sd_0.5
+10    10  0.121  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5144,16 +5144,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd         X_t
    &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.0394
- 2     2 sd_0.5  1.31  
- 3     3 sd_0.5 -0.291 
- 4     4 sd_0.5 -0.312 
- 5     5 sd_0.5 -0.633 
- 6     6 sd_0.5 -0.387 
- 7     7 sd_0.5 -0.0315
- 8     8 sd_0.5  0.606 
- 9     9 sd_0.5  0.147 
-10    10 sd_0.5  0.984 
+ 1     1 sd_0.5 -0.950 
+ 2     2 sd_0.5 -0.0830
+ 3     3 sd_0.5  1.04  
+ 4     4 sd_0.5  0.464 
+ 5     5 sd_0.5 -0.0827
+ 6     6 sd_0.5 -0.169 
+ 7     7 sd_0.5  0.257 
+ 8     8 sd_0.5  0.676 
+ 9     9 sd_0.5 -0.576 
+10    10 sd_0.5  0.605 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -6637,12 +6637,11 @@ No todavía, vamos por el ciclo 4</code></pre>
 <section id="tu-turno-12" class="slide level2">
 <h2>💻 Tu turno</h2>
 <h3 id="ejercicio-1-8"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></h3>
-<p>💻 Repite el proceso de creación de modelos (los fable y los feast) para los conjuntos de datos</p>
+<p>💻 Repite el proceso de creación de modelos (los fable y los feast) y predicción (y su visualización) para los conjuntos de datos</p>
 <ul>
 <li><code>retiro</code></li>
 <li><code>global_economy</code> (solo para España) del paquete <code>{tsibbledata}</code></li>
 <li><code>beer_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
-<li><code>bricksq_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
 <li><code>elec_ts</code> del paquete <code>{timeSeriesDataSets}</code></li>
 <li><code>pedestrian</code> (variable <code>count</code>) del paquete <code>{timeSeriesDataSets}</code></li>
 </ul>
@@ -6653,6 +6652,59 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h1>Clase 12: <span class="flow">métodos de alisado</span></h1>
 
 </section>
+<section id="alisado-doble-lineal-de-holt" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p>Como hemos visto el método anterior de alisado solo ajusta bien la <span class="hl-yellow"><strong>hipótesis de que nuestros datos son localmente constantes</strong></span> tal que</p>
+<p><span class="math display">\[\widehat{X}_{t+1|t} = \theta \widehat{X}_{t|t-1} + \left( 1 - \theta \right)X_t = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j}\]</span></p>
+<div class="fragment">
+<p>A ese <strong>primer valor</strong> disponible se le conoce como <span class="hl-yellow"><strong>nivel de la serie</strong></span> y lo denotaremos como <span class="math inline">\(\ell_0\)</span></p>
+<p><span class="math display">\[\widehat{X}_{t+1|t} = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j} = \theta^{t}\ell_0 +  \sum_{j=0}^{t-1} \left(1 - \theta \right) \theta^{j} X_{t-j}\]</span></p>
+</div>
+</section>
+<section id="alisado-doble-lineal-de-holt-1" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p><span class="math display">\[\widehat{X}_{t+1|t} = \theta^{t}\widehat{X}_{1} + \left(1 - \theta \right) \sum_{j=0}^{t-1} \theta^{j} X_{t-j} = \theta^{t}\ell_0 +  \sum_{j=0}^{t-1} \left(1 - \theta \right) \theta^{j} X_{t-j}\]</span></p>
+<p>La ecuación anterior la podemos <span class="hl-yellow"><strong>expresar de manera iterativa</strong></span> como</p>
+<p><span class="math display">\[\begin{eqnarray}\widehat{X}_{t+h|t} &amp;=&amp; \ell_t \quad \text{predicción en base a componentes} \nonumber \\ \ell_t &amp;=&amp; \theta \ell_{t-1}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}\]</span></p>
+</section>
+<section id="alisado-doble-lineal-de-holt-2" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p><span class="math display">\[\begin{eqnarray}\widehat{X}_{t+h|t} &amp;=&amp; \ell_t \quad \text{predicción (en base a componentes)} \nonumber \\ \ell_t &amp;=&amp; \theta \ell_{t-1}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}\]</span></p>
+<p>En 1957 Holt propuso extender este método a <span class="hl-yellow"><strong>datos con tendencia</strong></span>, incluyendo ahora dos componentes: nivel <span class="math inline">\(\ell_t\)</span> y tendencia <span class="math inline">\(\mu_t\)</span> (realizando un <span class="hl-yellow"><strong>doble suavizado iterativo</strong></span>)</p>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{red}{\ell_t + h*\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \color{purple}{\theta_1 \widehat{X}_{t|t-1} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \ell_{t-1}+ \mu_{t-1} \right) + \left( 1 - \theta_1 \right)X_t} \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \color{green}{\theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right)\widehat{\mu}_{t} = \theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right) \left( \ell_t - \ell_{t-1} \right)} \quad \text{suavizado tendencia} \end{eqnarray}\]</span></p>
+</section>
+<section id="alisado-doble-lineal-de-holt-3" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{red}{\ell_t + h*\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \color{purple}{\theta_1 \widehat{X}_{t|t-1} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \ell_{t-1}+ \mu_{t-1} \right) + \left( 1 - \theta_1 \right)X_t} \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \color{green}{\theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right)\widehat{\mu}_{t} = \theta_2 \mu_{t-1}  + \left( 1 - \theta_2 \right) \left( \ell_t - \ell_{t-1} \right)} \quad \text{suavizado tendencia} \end{eqnarray}\]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-red"><strong>Predicción a horizonte <span class="math inline">\(h\)</span></strong></span>: último nivel conocido más <span class="math inline">\(h\)</span> veces la última tendencia conocida (en <span class="math inline">\(h\)</span> instantes avanza <span class="math inline">\(h\)</span> veces la tendencia)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-purple"><strong>Estimación nivel</strong></span>: media ponderada entre el último valor de la serie y <span class="math inline">\(\widehat{X}_{t|t-1}\)</span> (predicción a horizonte <span class="math inline">\(h = 1\)</span> en tiempo <span class="math inline">\(t\)</span>)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-green"><strong>Estimación tendencia</strong></span>: media ponderada entre el último valor de la tendencia y la estimación de la tendencia a tiempo <span class="math inline">\(t\)</span> (diferencia de nivel <span class="math inline">\(\ell_t\)</span> y <span class="math inline">\(\ell_{t-1}\)</span>)</li>
+</ul>
+</div>
+</section>
+<section id="alisado-doble-lineal-de-holt-4" class="slide level2">
+<h2>Alisado doble (lineal) de Holt</h2>
+<p>modelo y forecast en fable</p>
+</section>
+<section id="alisado-doble-de-gardner-mckenzie" class="slide level2">
+<h2>Alisado doble de Gardner-McKenzie</h2>
+</section>
+<section id="alisado-triple" class="slide level2">
+<h2>Alisado triple</h2>
+</section>
+<section id="escenarios" class="slide level2">
+<h2>Escenarios</h2>
+</section>
 <section id="pendiente" class="slide level2">
 <h2>pendiente</h2>
 <ul>
@@ -6662,9 +6714,8 @@ No todavía, vamos por el ciclo 4</code></pre>
 <li>evaluación</li>
 </ul>
 </section>
-<section id="alisado-doble-lineal-de-holt" class="slide level2">
-<h2>Alisado doble (lineal) de Holt</h2>
-<p>Como hemos visto el método anterior de alisado es bajo la hipótesis de que nuestros datos son localmente constantes, para datos sin tendencia</p>
+<section class="slide level2">
+
 </section>
 <section id="alisado-triple-de-holt-winters" class="slide level2">
 <h2>Alisado triple de Holt-Winters</h2>
