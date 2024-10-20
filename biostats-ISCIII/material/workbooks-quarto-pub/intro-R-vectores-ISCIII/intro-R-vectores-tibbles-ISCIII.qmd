@@ -1,0 +1,2069 @@
+---
+title: "Introducción a R base: de la celda a la tabla"
+subtitle: "Cuadernos prácticos del Máster de Bioinformática (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+## Introducción a R (base)
+
+### Requisitos iniciales
+
+#### R
+
+Si es la primera vez que usas `R` (¡bienvenido/a!) antes vas a necesitar, con [**conexión a internet**]{.hl-yellow} (también lo necesitarás para la descarga de algunos datos y paquetes), [**instalar R**]{.hl-yellow}
+
+![](img/cranR.jpg){width="420"}
+
+Como sucede cuando escribimos un idioma (castellano, por ejemplo), `R` será nuestro [**lenguaje**]{.hl-yellow} y nuestra [**gramática**]{.hl-yellow}, en definitiva, nuestras reglas de juego.
+
+Para su instalación necesitarás seguir los siguientes pasos:
+
+- [**Paso 1**]{.hl-yellow}: entra en <https://cran.r-project.org/> y selecciona tu sistema operativo.
+
+-   [**Paso 2**]{.hl-yellow}: para Mac basta con que hacer click en el **archivo .pkg**, y abrirlo una vez descargado. Para sistemas Windows, debemos clickar en **install R for the first time** y después en **Download R for Windows**. Una vez descargado, abrirlo como cualquier archivo de instalación.
+
+-   [**Paso 3**]{.hl-yellow}: abrir el ejecutable de instalación.
+
+::: callout-warning
+
+Siempre que tengas que descargar algo de CRAN (ya sea el propio R o un paquete), [**asegúrate de tener conexión a internet**]{.hl-orange}.
+
+:::
+
+
+Para comprobar que se ha instalado correctamente, tras abrir `R`, deberías ver el `R GUI`(Graphical User Interface), y en él, una **pantalla blanca** similar a esta: se llama [**consola**]{.hl-yellow} y podemos hacer un primer uso de ella como una **calculadora**.
+
+![](img/consola.jpg){width="260"}
+
+Para empezar vamos a generar nuestro [**primer código**]{.hl-yellow}: a una variable llamada `a` le **asignaremos** el valor `1` (escribiremos el código de abajo en la consola y daremos «enter»)
+
+```{r}
+#| code-line-numbers: "1"
+a <- 1
+```
+
+Tras ello definiremos otra variable llamada `b` y le **asignaremos** el valor `2`
+
+```{r}
+#| code-line-numbers: "2"
+a <- 1
+b <- 2
+```
+
+Tras definir ambas variables haremos la suma `a + b` y nos devolverá su resultado
+
+```{r}
+#| code-line-numbers: "3"
+a <- 1
+b <- 2
+a + b
+```
+
+
+::: callout-note
+
+## Fíjate que...
+
+En `R` [**asignaremos valores**]{.hl-yellow} con `<-` como una flecha: la variable a la izquierda de dicha flecha le asignamos el valor que hay a la derecha (por ejemplo, `a <- 1`)
+
+:::
+
+::: callout-note
+
+## Fíjate que...
+
+En la consola aparece un número `[1]`: simplemente es un contador de elementos (como contar filas en un Word)
+
+:::
+
+
+#### RStudio
+
+No es obligatorio pero si recomendable trabajar en un IDE (entorno de desarrollo), algo parecido a un [**Word**]{.hl-yellow} para escribir castellano, y ese será el `RStudio`. Para [**instalar RStudio**]{.hl-yellow} debes seguir los siguientes pasos
+
+-   [**Paso 1**]{.hl-yellow}: entra la [web oficial de RStudio](https://posit.co/download/rstudio-desktop/) (ahora llamado Posit) y selecciona la descarga gratuita.
+
+-   [**Paso 2**]{.hl-yellow}: selecciona el ejecutable que te aparezca acorde a tu sistema operativo.
+
+-   [**Paso 3**]{.hl-yellow}: tras descargar el ejecutable, hay que abrirlo como otro cualquier otro y dejar que termine la instalación.
+
+
+![](img/rstudio.jpg){width="420"}
+
+
+Al abrir `RStudio` seguramente tengas tres ventanas:
+
+-   [**Consola**]{.hl-yellow}: es el nombre para llamar a la ventana grande que te ocupa buena parte de tu pantalla. Prueba a escribir el mismo código que antes (la suma de las variables) en ella. La consola será donde **ejecutaremos órdenes y mostraremos resultados**.
+
+![](img/consola_rstudio.jpg){width="420"}
+
+
+-   [**Environment**]{.hl-yellow}: la pantalla pequeña (puedes ajustar los márgenes con el ratón a tu gusto) que tenemos en la parte superior derecha. Nos mostrará las **variables que tenemos definidas**.
+
+![](img/environment.jpg){width="420"}
+
+-   [**Panel multiusos**]{.hl-yellow}: la ventana que tenemos en la parte inferior derecha no servirá para buscar **ayuda de funciones**, además de para **visualizar gráficos**.
+
+![](img/multiusos.jpg){width="420"}
+
+
+### Idea fundamental: paquetes
+
+Una de las ideas claves de `R` es el [**uso de paquetes**]{.hl-yellow}: códigos que otras personas han implementado para **resolver un problema**
+
+
+![](img/paquetes.png)
+
+Con los paquetes podemos hacer dos cosas: instalarlos o usarlos.
+
+-   [**Instalación**]{.hl-yellow}: descargamos los códigos de la web (necesitamos internet) → [**comprar un libro**]{.hl-purple}, solo una vez (por ordenador)
+
+```{r}
+#| eval: false
+install.packages("ggplot2")
+```
+
+-   [**Carga**]{.hl-yellow}: con el paquete descargado, indicamos qué paquetes queremos usar cada vez que abramos `RStudio` → [**traer el libro de la estantería**]{.hl-purple} (usando el nombre del paquete sin comillas)
+
+```{r}
+#| eval: false
+library(ggplot2)
+```
+
+También podemos hacer uso solo de [**funciones concretas**]{.hl-yellow}: usando `paquete::funcion` le índicamos que solo queremos una [**página concreta de ese libro**]{.hl-purple}
+
+```{r}
+#| eval: false
+ggplot2::geom_point()
+```
+
+### Mensajes de error
+
+
+Durante tu aprendizaje va a ser muy habitual que las cosas no salgan a la primera → [**te vas equivocar**]{.hl-yellow}. No solo será importante asumirlo sino que es [**importante leer los mensajes de error**]{.hl-yellow} para aprender de ellos.
+
+-   [**Mensajes de error**]{.hl-red}: precedidos de **«Error in...»** y serán aquellos fallos que [**impidan la ejecución**]{.hl-red}
+
+```{r}
+#| error: true
+"a" + 1 
+```
+
+-   [**Mensajes de warning**]{.hl-orange}: precedidos de **«Warning in...»** son los (posibles) fallos más delicados ya que son incoherencias que [**no impiden la ejecución**]{.hl-orange}
+
+```{r}
+#| warning: true
+# Ejecuta la orden pero el resultado es NaN, **Not A Number**, un valor que no existe
+sqrt(-1)
+```
+
+
+### Scripts y proyectos
+
+
+![](img/abrir_script.jpg){width="350"}
+
+Por último, vamos a mencionar el concepto de [**script**]{.hl-yellow}: el documento en el que programamos, nuestro archivo `.doc` (aquí con extensión `.R`) donde escribiremos las órdenes. Para **abrir nuestro primero script**, haz click en el menú en `File < New File < R Script`.
+
+::: callout-warning
+
+## Cuidado
+
+Es importante **no abusar de la consola**: todo lo que no escribas en un script, cuando cierres, [**lo habrás perdido**]{.hl-orange}.
+
+:::
+
+
+::: callout-warning
+## Cuidado
+
+`R` es [**case-sensitive**]{.hl-orange}: es sensible a mayúsculas y minúsculas por lo que `x` y `X` representa variables distintas.
+
+:::
+
+
+
+Una vez creado el script tenemos una **cuarta ventana** en `RStudio`: la ventana donde [**escribiremos nuestros códigos**]{.hl-yellow}. ¿Cómo ejecutarlo?
+
+
+1.  **Escribimos** el código a ejecutar.
+
+2.  **Guardamos** el archivo .R haciendo click en `Save current document`.
+
+3.  El código no se ejecuta salvo que se lo indiquemos. Tenemos **tres opciones de ejecutar un script**:
+
+-   [**Copiar y pegar**]{.hl-yellow} en consola.
+-   [**Seleccionar líneas**]{.hl-yellow} y `Ctrl+Enter`
+-   [**Activar Source on save**]{.hl-yellow} a la derecha de guardar: no solo guarda sino que ejecuta el código **completo**.
+
+#### Proyectos
+
+De la misma manera que en el ordenador solemos trabajar de manera [**ordenada por carpetas**]{.hl-yellow}, en `RStudio` podemos hacer lo mismo para trabajar de [**manera eficaz creando proyectos**]{.hl-yellow}.
+
+
+Un [**proyecto será una «carpeta»**]{.hl-yellow} dentro de `RStudio`, de manera que nuestro directorio raíz automáticamente será la propia carpeta de proyecto (pudiendo pasar de un proyecto a otro con el menu superior derecho). Podemos crear uno en una carpeta nueva o en una carpeta ya existente.
+
+![](img/rstudio_proyectos.png){width="370"}
+
+
+### 💻 Ejercicios
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Crea en tu ordenador una carpeta de la asignatura y crea dentro de ella el proyecto de `RStudio`: es ahí donde vas a guardar todo lo que hagamos a lo largo de este curso.Tras crear el proyecto tendrás un archivo `R Project`. A continuación crea en dicha carpeta dos subcarpetas: `datos` (es ahí donde irás guardando los distintos datasets que usaremos) y `scripts` (es ahí donde irás guardando los archivos `.R` de cada clase)
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Dentro del proyecto crea un script `ejercicios-clase1.R` (dentro de la carpeta `scripts`). Una vez creado define en él una variable de nombre `a` y cuyo valor sea -1. Ejecuta el código de las 3 maneras explicadas.
+
+```{r}
+#| code-fold: true
+a <- -1
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Añade debajo otra línea para definir una variable `b` con el valor 5. Tras ello guarda la multiplicación de ambas variables. Ejecuta el código como consideres.
+
+```{r}
+#| code-fold: true
+#| eval: false
+b <- 5
+a * b # sin guardar
+multiplicacion <- a * b # guardado
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Modifica el código inferior para definir dos variables c y d, con valores 3 y -1. Tras ello divide las variables y guarda el resultado.
+
+```{r}
+#| eval: false
+c <- # deberías asignarle el valor 3
+d <- # deberías asignarle el valor -1
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+c <- 3
+d <- -1
+c / d # sin guardar
+division <- c / d # guardado
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Asigna un valor positivo a `x` y calcula su raíz cuadrada; asigna otro negativo `y` y calcula su valor absoluto con la función `abs()`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- 5
+sqrt(x)
+
+y <- -2
+abs(y)
+```
+
+::: callout-note
+## Toma nota
+
+Comandos como `sqrt()`, `abs()` o `max()` son lo que llamamos [**funciones**]{.hl-purple}: líneas de código que hemos «encapsulado» bajo un nombre, y dado unos argumentos de entrada, ejecuta las órdenes (una especie de atajo). En las funciones los [**argumentos irán SIEMPRE entre paréntesis**]{.hl-yellow}
+:::
+
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Usando la variable `x` ya definida, completa/modifica el código inferior para guardar en una nueva variable `z` el resultado guardado en `x` menos 5.
+
+```{r}
+#| eval: false
+z <- ? - ? # completa el código
+z
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- x - 5
+z
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Define una variable `x` y asígnale el valor `-1`. Define otra `y` y asígnale el valor `0`. Tras ello realiza las operaciones a) `x` entre `y`; b) raíz cuadrada de `x`. ¿Qué obtienes?
+
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- -1
+y <- 0
+
+x / y
+sqrt(x)
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Escribe el código inferior en tu script. ¿Por qué crees que no funciona?
+
+
+```{r}
+#| error: true
+x <- -1
+y <- 0
+
+X + y
+```
+
+:::
+
+## Primeros tipos de datos
+
+Dado que es un curso de `R` orientado a ciencia de datos (normalmente con datos tabulados en tablas), la primera pregunta que quizás nos hagamos es
+
+> Dada una tabla, ¿qué [**tipo de dato**]{.hl-yellow} podemos tener en cada celda?
+
+![](img/celdas.jpg)
+
+La idea del curso es ir de lo concreto (celda individual) a lo general (tablas y listas)
+
+-   [**Celda**]{.hl-yellow}: dato individual de un tipo concreto.
+-   [**Variable**]{.hl-yellow}: **concatenación** de valores del mismo tipo ([**vectores en R**]{.hl-purple}).
+-   [**Matriz**]{.hl-yellow}: concatenación de variables del **mismo tipo y longitud**.
+-   [**Tabla**]{.hl-yellow}: concatenación de variables de [**distinto tipo pero igual longitud**]{.hl-purple}
+-   [**Lista**]{.hl-yellow}: concatenación de variables de [**distinto tipo y distinta longitud**]{.hl-purple}
+:::
+
+### Tipos de datos individuales
+
+Y aunque la mayoría de veces tendemos a pensar que solo guardamos y trabajamos con números, ¿existen [**variables más allá de los números en la ciencia de datos**]{.hl-yellow}?
+
+Piensa por ejemplo en los datos que podrías guardar de una persona:
+
+-   La edad o el peso será un [**número**]{.hl-yellow}.
+
+```{r}
+edad <- 33
+```
+
+-   Su nombre será una cadena de [**texto (conocida como string o char)**]{.hl-yellow}.
+
+```{r}
+nombre <- "javi"
+```
+
+-   A la pregunta «¿estás matriculado en la Facultad?» la respuesta será lo que llamamos una [**variable lógica**]{.hl-yellow} (`TRUE` si está matriculado o `FALSE` en otro caso).
+
+```{r}
+matriculado <- TRUE
+```
+ 
+-   Su fecha de nacimiento será precisamente eso, una [**fecha**]{.hl-yellow} (veremos como definirlas un poco más adelante).
+
+
+#### Variables numéricas
+
+El dato más sencillo (ya lo hemos usado) serán las [**variables numéricas**]{.hl-yellow}
+
+
+```{r}
+a <- 5
+b <- 2
+a + b
+```
+
+Para saber la [**clase de dato en R**]{.hl-yellow}  de una variable tenemos la función `class()`
+
+```{r}
+class(a)
+```
+
+Para saber su [**tipología (naturaleza o formato)**]{.hl-yellow} variable tenemos `typeof()`
+
+```{r}
+typeof(1) # 1 pero almacenado como un valor real (double, con decimales)
+typeof(as.integer(1)) # 1 pero almacenado como un entero.
+```
+
+::: callout-note
+## Fíjate que...
+
+En `R` tenemos una colección de funciones que empiezan por `as.x()` y que sirven como [**funciones de conversión**]{.hl-yellow}: un dato que era de un tipo, lo convertimos a tipo `x`.
+
+:::
+
+
+Además de los números «normales» tendremos el [**valor más/menos infinito**]{.hl-yellow} codificado como `Inf` o `-Inf`
+
+```{r}
+1/0
+```
+
+```{r}
+-1/0
+```
+
+
+Y también aparecerán a menudo valores que [**no son números reales**]{.hl-yellow}, definidos como _not a number_ (indeterminaciones, complejos, etc), y codificados como `NaN`
+
+```{r}
+0/0
+```
+
+```{r}
+#| warning: true
+sqrt(-2)
+```
+
+
+&nbsp;
+
+Con las variables numéricas podemos realizar las [**operaciones aritméticas**]{.hl-yellow} de una calculadora: sumar (`+`)...
+
+```{r}
+a + b
+```
+
+...raíz cuadrada (`sqrt()`)...
+
+```{r}
+sqrt(a)
+```
+
+
+... potencias (`^2`, `^3`)...
+
+```{r}
+a^2
+```
+
+
+...valor absoluto (`abs()`), etc.
+
+```{r}
+abs(a)
+```
+
+
+#### Variables de texto
+
+Imagina que además de la edad de una persona queremos guardar su nombre: ahora la variable será de tipo `character`
+
+```{r}
+nombre <- "Javier"
+class(nombre)
+```
+
+Las [**cadenas de texto**]{.hl-yellow} son un tipo con el que obviamente [**no podremos hacer operaciones aritméticas**]{.hl-red} (sí otras operaciones como pegar o localizar patrones).
+
+```{r}
+#| error: true
+nombre + 1 # error al sumar número a texto
+```
+
+::: callout-warning
+## Recuerda que...
+
+Las variables de tipo texto (character o string) van [**SIEMPRE entre comillas**]{.hl-orange}: no es lo mismo `TRUE` (valor lógico, binario) que `"TRUE"` (texto).
+:::
+
+Y aunque no podamos aplicar a las cadenas de texto operaciones aritméticas habituales si podremos aplicar otras operaciones, como por ejemplo, la función `paste()`. Como hemos comentado `R` llamaremos [**función**]{.hl-yellow} a un trozo de [**código encapsulado**]{.hl-yellow} bajo un nombre, y que depende de unos [**argumentos**]{.hl-yellow} de entrada.
+
+Nuestra primera función `paste()` toma dos cadenas de texto y nos permite pegarlas.
+
+```{r}
+paste("Javier", "Álvarez")
+```
+
+
+Fíjate que [**por defecto**]{.hl-yellow} nos pega las cadenas con un espacio, pero podemos añadir un [**argumento opcional**]{.hl-yellow} para indicarle el separador (en `sep = ...`). 
+
+```{r}
+paste("Javier", "Álvarez", sep = "*")
+```
+
+
+¿Cómo saber [**qué argumentos necesita una función**]{.hl-yellow}? Escribiendo en consola `? paste` te aparecerá una [**ayuda**]{.hl-yellow} en el panel multiusos.
+
+
+![](img/paste_help.jpg)
+
+En dicha ayuda podrás ver en su cabecera que argumentos ya tiene [**asignados por defecto**]{.hl-yellow} la función. Los argumentos (y su detalle) también pueden ser consultado **tabulando (detrás de una coma)**.
+
+![](img/tab-functions.png)
+
+
+&nbsp;
+
+Existe una función similar llamada `paste0()` que pega por defecto con `sep = ""` (sin nada).
+
+```{r}
+paste0("Javier", "Álvarez")
+```
+
+
+Es muy importante entender el concepto de [**argumento por defecto de una función**]{.hl-yellow} en `R`: es un valor que la función usa pero a veces podemos no ver porque [**ya tiene un valor asignado**]{.hl-yellow}. 
+
+```{r}
+# Hacen lo mismo
+paste("Javier", "Álvarez")
+paste("Javier", "Álvarez", sep = " ")
+```
+
+
+::: callout-note
+## Toma nota
+
+El operador `=` lo [**reservaremos para asignar argumentos**]{.hl-yellow} dentro de funciones. Para todas las demás asignaciones usaremos `<-`
+:::
+
+Otra forma de concatenar cadenas de texto (más intuitiva) es usar el paquete `{glue}`: lo primero que haremos será «comprar el libro» (si nunca lo hemos hecho). Tras ello [**cargamos el paquete**]{.hl-yellow}
+
+```{r}
+#| eval: false
+install.packages("glue") # solo la primra vez
+library(glue)
+```
+
+```{r}
+#| echo: false
+library(glue)
+```
+
+
+Con la función `glue()` de dicho paquete podemos usar [**variables dentro de cadenas de texto**]{.hl-yellow}. Por ejemplo, «la edad es de ... años», donde la edad está guardada en una variable.
+
+```{r}
+edad <- 33
+glue("La edad es de {edad} años")
+```
+
+Dentro de las llaves también podemos [**ejecutar operaciones**]{.hl-yellow}
+
+```{r}
+unidades <- "días"
+glue("La edad es de {edad * 365} {unidades}")
+```
+
+#### Variables lógicas
+
+Otro tipo fundamental serán las [**variables lógicas o binarias**]{.hl-yellow} (**dos valores**):
+
+-   `TRUE`: [**verdadero**]{.hl-yellow} guardado internamente como un 1.
+-   `FALSE`: [**falso**]{.hl-yellow} guardado internamente como un 0.
+
+```{r}
+soltero <- TRUE # ¿Es soltero? --> SÍ
+class(soltero)
+```
+
+
+Dado que internamente están guardados como variables binarias, podemos [**realizar operaciones aritméticas**]{.hl-yellow} con ellas
+
+```{r}
+2 * TRUE
+FALSE - 1
+```
+
+
+Como veremos en breve, las variables lógicas en realidad puede tomar un tercer valor: `NA` o [**dato ausente**]{.hl-yellow}, representando las siglas de *not available*, y será muy habitual encontrarlo dentro de una base de datos.
+
+```{r}
+ausente <- NA
+ausente + 1
+```
+
+::: callout-important
+## Importante
+
+Las variables lógicas [**NO son variables de texto**]{.hl-red}: `"TRUE"` es un texto, `TRUE` es un valor lógico.
+
+```{r}
+#| error: true
+TRUE + 1
+"TRUE" + 1
+```
+:::
+
+
+Los valores lógicos suelen ser resultado de [**evaluar condiciones lógicas**]{.hl-yellow}. Por ejemplo, imaginemos que queremos [**comprobar**]{.hl-yellow} si una persona se llama Javi.
+
+```{r}
+nombre <- "María"
+```
+
+
+Con el [**operador lógico**]{.hl-yellow} `==` preguntamos sí lo que tenemos guardado a la izquierda es [**igual que**]{.hl-purple} lo que tenemos a la derecha: es una [**pregunta**]{.hl-yellow}
+
+```{r}
+nombre == "Javi"
+```
+
+Con su opuesto `!=` preguntamos [**si es distinto**]{.hl-purple}.
+
+```{r}
+nombre != "Javi"
+```
+
+
+::: callout-note
+## Fíjate que...
+
+No es lo mismo `<-` ([**asignación**]{.hl-yellow}) que `==` (estamos [**preguntando**]{.hl-yellow}, es una comparación lógica).
+:::
+
+
+Además de las comparaciones «igual a» frente «distinto», también comparaciones de orden como [**menor que**]{.hl-purple} `<`, [**mayor que**]{.hl-purple} `>`,  `<=` o `>=`.
+
+**¿Tiene la persona menos de 32 años?**
+
+```{r}
+edad <- 34
+edad < 32 # ¿Es la edad menor de 32 años?
+```
+
+
+**¿La edad es mayor o igual que 38 años?**
+
+```{r}
+edad >= 38
+```
+
+**¿El nombre guardado es Javi?**
+
+```{r}
+nombre <- "Javi"
+nombre == "Javi"
+```
+
+#### Variables de fecha
+
+Un tipo de datos muy especial: los [**datos de tipo fecha**]{.hl-yellow}.
+
+```{r}
+fecha_char <- "2021-04-21"
+```
+
+Parece una simple cadena de texto pero [**debería representar un instante en el tiempo**]{.hl-yellow}. ¿Qué debería suceder si [**sumamos un 1 a una fecha**]{.hl-purple}?
+
+
+```{r}
+#| error: true
+fecha_char + 1
+```
+
+
+Las fechas [**NO pueden ser texto**]{.hl-red}: debemos convertir la cadena de texto a fecha.
+
+
+&nbsp;
+
+Para trabajar con fechas usaremos el paquete `{lubridate}`, que deberemos instalar antes de poder usarlo.
+
+```{r}
+#| eval: false
+install.packages("lubridate")
+```
+
+
+
+Una vez instalado, de todos los paquetes (libros) que tenemos, le indicaremos que nos cargue ese concretamente.
+
+```{r}
+library(lubridate) # instala si no lo has hecho
+
+```
+
+
+Para [**convertir a tipo fecha**]{.hl-yellow} usaremos la función `as_date()` del paquete `{lubridate}` (por defecto en formato `yyyy-mm-dd`)
+
+&nbsp;
+
+```{r}
+#| error: true
+# ¡no es una fecha, es un texto!
+fecha_char + 1
+class(fecha_char)
+```
+
+```{r}
+fecha <- as_date("2023-03-28") # si es una fecha
+fecha + 1
+class(fecha)
+```
+
+
+En `as_date()` el formato de fecha por defecto es `yyyy-mm-dd` así que si la cadena de texto no se introduce de manera adecuada...
+
+```{r}
+as_date("28-03-2023")
+```
+
+... devuelve un ausnete.
+
+Para [**cualquier otro formato debemos especificarlo**]{.hl-yellow} en el argumento opcional `format = ...` tal que `%d` representa días, `%m` meses, `%Y` en formato de 4 años y `%y` en formato de 2 años.
+
+```{r}
+as_date("28-03-2023", format = "%d-%m-%Y")
+as_date("28-03-23", format = "%d-%m-%y")
+as_date("03-28-2023", format = "%m-%d-%Y")
+as_date("28/03/2023", format = "%d/%m/%Y")
+```
+
+
+En dicho paquete tenemos además funciones muy útiles para [**manejar fechas**]{.hl-yellow}:
+
+-   Con `today()` podemos obtener directamente la [**fecha actual**]{.hl-purple}.
+
+```{r}
+today()
+```
+
+
+-   Con `now()` podemos obtener la [**fecha y hora actual**]{.hl-purple}
+
+```{r}
+now()
+```
+
+-   Con `year()`, `month()` o `day()` podemos [**extraer el año, mes y día**]{.hl-purple}
+
+```{r}
+fecha <- today()
+year(fecha)
+month(fecha)
+```
+
+
+![](img/lubridate.png)
+
+::: callout-note
+## Amplia contenido
+
+Tienes un resumen en pdf de los paquetes más importantes en la [**carpeta correspondiente en el campus**]{.hl-green}
+:::
+
+
+
+### Vectores: concatenar
+
+Cuando trabajamos con datos normalmente tendremos [**columnas que representan variables**]{.hl-yellow}: llamaremos [**vectores**]{.hl-yellow} a una [**concatenación**]{.hl-purple} de celdas (valores) del [**mismo tipo**]{.hl-purple} (lo que sería una columna de una tabla).
+
+La forma más sencilla es con el comando `c()` (c de **concatenar**), y basta con introducir sus **elementos entre paréntesis y separados por comas**
+
+```{r}
+edades <- c(32, 27, 60, 61)
+edades
+```
+
+
+::: callout-tip
+Un número individual `x <- 1` (o bien `x <- c(1)`) es en realidad un **vector de longitud uno** --> todo lo que sepamos [**hacer con un número podemos hacerlo con un vector de ellos**]{.hl-green}.
+:::
+
+
+![](img/edades_environment.jpg)
+
+Como ves ahora en el `environment` tenemos una **colección de elementos** guardada
+
+```{r}
+edades
+```
+
+
+De aquí en adelante calcularemos la [**longitud de un vector**]{.hl-yellow} con la función `length()`
+
+```{r}
+length(edades)
+```
+
+También podemos [**concatenar vectores**]{.hl-yellow} entre sí (los repite uno tras otro)
+
+```{r}
+c(edades, edades, 8)
+```
+
+
+#### Secuencias numéricas
+
+El vector más famoso será el de tipo numérico, y en concreto, las conocidas como [**secuencias numéricas**]{.hl-yellow} (por ejemplo, los días del mes), usadas para, entre otras cosas, indexar bucles.
+
+El comando `seq(inicio, fin)` nos permite crear una [**secuencia numérica**]{.hl-yellow} desde un elemento inicial hasta uno final, [**avanzando de uno en uno**]{.hl-purple}.
+
+```{r}
+seq(1, 31)
+```
+
+Fíjate que si hacemos eso con [**caracteres no podremos hacerlo**]{.hl-red} ya que no hay un orden a priori entre textos.
+
+```{r}
+#| error: true
+"a":"z"
+```
+
+Un atajo es el comando `1:n`, que nos devuelve lo mismo que `seq(1, n)`
+
+```{r}
+1:7
+```
+
+Si el elemento inicial es mayor que el final, entenderá que la secuencia es [**en orden decreciente**]{.hl-purple}.
+
+```{r}
+7:-3
+```
+
+
+También podemos definir [**otro tipo de distancia**]{.hl-yellow} (paso) entre consecutivos con el argumento `by = ...`
+
+```{r}
+seq(1, 7, by = 0.5) # secuencia desde 1 a 7 de 0.5 en 0.5
+```
+
+
+Otras veces nos interesará definir una [**secuencia con una longitud concreta**]{.hl-yellow}
+
+```{r}
+seq(1, 50, l = 7) # secuencia desde 1 a 50 de longitud 7
+```
+
+
+Incluso puede nos interese generar un vector de [**n elementos repetidos**]{.hl-yellow}
+
+```{r}
+rep(0, 7) # vector de 7 ceros
+```
+
+Dado que internamente son guardados como números también podremos hacer esto con [**fechas**]{.hl-yellow}.
+
+```{r}
+seq(as_date("2023-09-01"), as_date("2023-09-10"), by = 1)
+```
+
+
+#### Vectores de caracteres
+
+Un vector es una **concatenación** de elementos del [**mismo tipo**]{.hl-yellow}, pero no tienen porque ser necesariamente números. Vamos a crear una frase de ejemplo.
+
+```{r}
+frase <- "Me llamo Javi"
+frase
+length(frase)
+```
+
+En el caso anterior no era un vector, era un solo elemento de texto. Para crear un vector debemos usar de nuevo `c()` y separar elementos entre comas
+
+```{r}
+vector <- c("Me", "llamo", "Javi")
+vector
+length(vector)
+```
+
+
+¿Qué sucederá si [**concatenamos elementos de diferente tipo**]{.hl-yellow}?
+
+
+```{r}
+c(1, 2, "javi", "3", TRUE)
+```
+
+Fíjate que como todos tienen que ser del mismo tipo, lo que hace `R` es [**convertir**]{.hl-yellow} todo a texto, violando la [**integridad del dato**]{.hl-red}
+
+
+```{r}
+c(3, 4, TRUE, FALSE)
+```
+
+Es importante entender que los valores lógicos en realidad están [**almacenados internamente como 0/1**]{.hl-yellow}
+
+
+#### Operaciones con vectores
+
+Con los vectores numéricos podemos hacer las mismas [**operaciones aritméticas**]{.hl-yellow} que con los números → un [**número es un vector**]{.hl-purple} (de longitud uno)
+
+
+¿Qué sucederá si [**sumamos o restamos un valor**]{.hl-yellow} a un vector?
+
+```{r}
+x <- c(1, 3, 5, 7)
+x + 1
+x * 2
+```
+
+::: callout-warning
+## Cuidado
+
+Salvo que indiquemos lo contrario, en `R` las operaciones con vectores son siempre [**elemento a elemento**]{.hl-orange}
+:::
+
+Los vectores también pueden interactuar entre ellos, así que podemos definir, por ejemplo, [**sumas de vectores**]{.hl-yellow} (elemento a elemento)
+
+```{r}
+x <- c(2, 4, 6)
+y <- c(1, 3, 5)
+x + y
+```
+
+
+
+Dado que la operación (por ejemplo, una suma) se realiza elemento a elemento, ¿qué sucederá si [**sumamos dos vectores de distinta longitud**]{.hl-yellow}?
+
+
+
+```{r}
+z <- c(1, 3, 5, 7)
+x + z
+```
+
+Lo que hace es [**reciclar elementos**]{.hl-yellow}: si tiene un vector de 4 elementos y sumamos otro de 3 elementos, lo que hará será reciclar del vector con menor longitud.
+
+
+
+Una operación muy habitual es [**preguntar a los datos**]{.hl-yellow} mediante el uso de [**condiciones lógicas**]{.hl-purple}. Por ejemplo, si definimos un vector de temperaturas...
+
+[**¿Qué días hizo menos de 22 grados?**]{.hl-yellow}
+
+```{r}
+x <- c(15, 20, 31, 27, 15, 29)
+```
+
+
+
+```{r}
+x < 22
+```
+
+Nos devolverá un [**vector lógico**]{.hl-yellow}, en función de si **cada elemento** cumple o no la condición pedida (de **igual longitud** que el vector preguntado)
+
+
+Si tuviéramos un [**dato ausente**]{.hl-yellow} (por error del aparato ese día), la condición evaluada también sería `NA`
+
+```{r}
+y <- c(15, 20, NA, 31, 27, 7, 29, 10)
+y < 22
+```
+
+
+Las [**condiciones lógicas pueden ser combinadas**]{.hl-yellow} de dos maneras:
+
+-   [**Intersección**]{.hl-yellow}: [**todas**]{.hl-purple} las condiciones concatenadas se deben cumplir ([**conjunción y**]{.hl-purple} con `&`) para devolver un `TRUE`
+
+```{r}
+x < 30 & x > 15
+```
+
+-   [**Unión**]{.hl-yellow}: basta con que [**al menos una**]{.hl-purple} se cumpla ([**conjunción o**]{.hl-purple} con `|`)
+
+```{r}
+x < 30 | x > 15
+```
+
+
+Además con `any()` y `all()` podemos comprobar que [**todos los elementos**]{.hl-yellow} cumplen
+
+```{r}
+any(x < 30)
+all(x < 30)
+```
+
+##### Acceder a elementos
+
+Otra operación muy habitual es la de [**acceder a elementos**]{.hl-yellow}. La forma más sencilla es usar el operador `[i]` (acceder al elemento i-ésimo)
+
+```{r}
+edades <- c(20, 30, 33, NA, 61) 
+edades[3] # accedemos a la edad de la tercera persona 
+```
+
+
+Dado que un número no es más que un vector de longitud uno, esta operación también la podemos aplicar usando un [**vector de índices a seleccionar**]{.hl-yellow}
+
+```{r}
+y <- c("hola", "qué", "tal", "estás", "?")
+y[c(1:2, 4)] # primer, segundo y cuarto elemento
+```
+
+
+::: callout-tip
+Para acceder al último, sin preocuparnos de cuál es, podemos pasarle como índice la propia longitud `x[length(x)]`
+:::
+
+Otras veces no querremos seleccionar sino [**eliminar algunos elementos**]{.hl-yellow}. Deberemos repetir la misma operación pero con el signo - delante: el operador `[-i]` no selecciona el elemento i-ésimo del vector sino que lo «des-selecciona»
+
+```{r}
+y
+y[-2]
+```
+
+
+En muchas ocasiones los queremos [**seleccionar o eliminar en base a condiciones lógicas**]{.hl-yellow}, en función de los valores, así que pasaremos como índice la propia condición (recuerda, `x < 2` nos devuelve un vector lógico)
+
+```{r}
+edades <- c(15, 21, 30, 17, 45)
+nombres <- c("javi", "maría", "laura", "carla", "luis")
+nombres[edades < 18] # nombres de los menores de edad
+```
+
+##### Operaciones estadísticas
+
+También podemos hacer uso de [**operaciones estadísticas**]{.hl-yellow} como por ejemplo `sum()` que, dado un vector, nos devuelve la suma de todos sus elementos.
+
+```{r}
+x <- c(1, -2, 3, -1)
+sum(x)
+```
+
+[**¿Qué sucede cuando falta un dato (ausente)?**]{.hl-yellow}
+
+
+```{r}
+x <- c(1, -2, 3, NA, -1)
+sum(x)
+```
+
+Por defecto, si tenemos un dato ausente, la [**operación también será ausente**]{.hl-yellow}. Para poder [**obviar ese dato**]{.hl-purple}, usamos un argumento opcional `na.rm = TRUE`
+
+```{r}
+sum(x, na.rm = TRUE)
+```
+
+
+Como hemos comentado que los valores lógicos son guardados internamente como 0 y 1, podremos usarlos en operaciones aritméticas. Por ejemplo, si queremos [**averiguar el número de elementos que cumplen una condición**]{.hl-yellow} (por ejemplo, menores que 3), los que lo hagan tendrán asignado un 1 (`TRUE`) y los que no un 0 (`FALSE`) , por lo que basta con sumar dicho vector lógico para obtener el número de elementos que cumplen
+
+```{r}
+x <- c(2, 4, 6)
+sum(x < 3)
+```
+
+
+Otra operación habitual que puede sernos útil es la [**suma acumulada**]{.hl-yellow} con `cumsum()` que, dado un vector, nos devuelve un vector a su vez con el primero, el primero más el segundo, el primero más el segundo más el tercero...y así sucesivamente.
+
+```{r}
+x <- c(1, 5, 2, -1, 8)
+cumsum(x)
+```
+
+[**¿Qué sucede cuando falta un dato (ausente)?**]{.hl-yellow}
+
+
+```{r}
+x <- c(1, -2, 3, NA, -1)
+cumsum(x)
+```
+
+En el caso de la suma acumulada lo que sucede es que [**a partir de ese valor, todo lo acumulado posterior será ausente**]{.hl-yellow}.
+
+
+Otra operación habitual que puede sernos útil es la [**diferencia (con retardo)**]{.hl-yellow} con `diff()` que, dado un vector, nos devuelve un vector con el segundo menos el primero, el tercero menos el segundo, el cuarto menos el tercero...y así sucesivamente.
+
+
+```{r}
+x <- c(1, 8, 5, 3, 9, 0, -1, 5)
+diff(x)
+```
+
+
+
+Con el argumento `lag = ` podemos indicar el [**retardo**]{.hl-yellow} de dicha diferencia (por ejemplo, `lag = 3` implica que se resta el cuarto menos el primero, el quinto menos el segundo, etc)
+
+
+```{r}
+x <- c(1, 8, 5, 3, 9, 0, -1, 5)
+diff(x, lag = 3)
+```
+
+&nbsp;
+
+Otras operaciones habituales son la [**media**]{.hl-yellow}, [**mediana**]{.hl-yellow}, [**percentiles**]{.hl-yellow}, etc.
+
+-   [**Media**]{.hl-yellow}: medida de centralidad que consiste en sumar todos los elementos y dividirlos entre la cantidad de elementos sumados. La más conocida pero la [**menos robusta**]{.hl-red}: dado un conjunto, si se introducen valores atípicos o outliers (valores muy grandes o muy pequeños), la media se perturba con mucha facilidad.
+
+```{r}
+x <- c(165, 170, 181, 191, 150, 155, 167, NA, 173, 177)
+mean(x, na.rm = TRUE)
+```
+
+
+-   [**Mediana**]{.hl-yellow}: medida de centralidad que consiste en ordenar los elementos y quedarse con el que ocupa la mitad.
+
+```{r}
+x <- c(165, 170, 181, 191, 150, 155, 167, 173, 177)
+median(x)
+```
+
+
+-   [**Percentiles**]{.hl-yellow}: medidas de posición (nos dividen en partes iguales los datos).
+
+```{r}
+quantile(x) # por defecto percentiles 0-25-50-75-100
+quantile(x, probs = c(0.1, 0.4, 0.9))
+```
+
+##### Ordenar vectores
+
+Por último, una acción habitual es saber [**ordenar valores**]{.hl-yellow}:
+
+-   `sort()`: devuelve el [**vector ordenado**]{.hl-yellow}. Por defecto de menor a mayor pero con `decreasing = TRUE` podemos cambiarlo
+
+```{r}
+edades <- c(81, 7, 25, 41, 65, 20, 33, 23, 77)
+sort(edades)
+sort(edades, decreasing = TRUE)
+```
+
+
+-   `order()`: devuelve el [**vector de índices**]{.hl-yellow} que tendríamos que usar para tener el vector ordenado
+
+```{r}
+order(x)
+x[order(x)]
+```
+
+
+### 💻 Ejercicios
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Define una variable que guarde tu edad (llamada `edad`) y otra con tu nombre (llamada `nombre`)
+
+```{r}
+#| code-fold: true
+edad <- 33
+nombre <- "Javi"
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Comprueba con dicha variable `edad` si NO tiene 60 años o si se llama `"Ornitorrinco"` (debes obtener variables lógicas como resultado)
+
+```{r}
+#| code-fold: true
+#| eval: false
+edad != 60 # distinto de
+nombre == "Ornitorrinco" # igual a
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 ¿Por qué el código inferior da error?
+
+```{r}
+#| error: true
+edad + nombre
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Define otra variable llamada `hermanos` que responda la pregunta «¿tienes hermanos?» y otra variable que almacene tu fecha de nacimiento (llamada `fecha_nacimiento`).
+
+```{r}
+#| code-fold: true
+hermanos <- TRUE
+
+library(lubridate) # sino lo tenías ya cargado
+fecha_nacimiento <- as_date("1989-09-10")
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Define otra variable con tus apellidos (llamada `apellidos`) y usa `glue()` para tener, en una sola variable  llamada `nombre_completo`, tu nombre y apellidos separando nombre y apellido por una coma
+
+```{r}
+#| code-fold: true
+#| eval: false
+apellidos <- "Álvarez Liébana"
+glue("{nombre}, {apellidos}")
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 De `fecha_nacimiento` extrae el mes.
+
+```{r}
+#| code-fold: true
+#| eval: false
+month(fecha_nacimiento)
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Calcula los días que han pasado desde la fecha de tu nacimiento hasta hoy (con la fecha de nacimiento definida en el ejercicio 4).
+
+```{r}
+#| code-fold: true
+#| eval: false
+today() - fecha_nacimiento
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Define el vector `x` como la concatenación de los 5 primeros números impares. Calcula la longitud del vector
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Dos formas
+x <- c(1, 3, 5, 7, 9)
+x <- seq(1, 9, by = 2)
+
+length(x)
+```
+
+### [**Ejercicio 9**]{.hl-yellow}
+
+📝 Accede al tercer elemento de `x`. Accede al último elemento (sin importar la longitud, un código que pueda ejecutarse siempre). Elimina el primer elemento.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[3]
+x[length(x)]
+x[-1]
+```
+
+### [**Ejercicio 10**]{.hl-yellow}
+
+📝 Obtén los elementos de `x` mayores que 4. Calcula el vector `1/x` y guárdalo en una variable.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 4]
+z <- 1/x
+z
+```
+
+### [**Ejercicio 11**]{.hl-yellow}
+
+📝 Crea un vector que represente los nombres de 5 personas, de los cuales uno es desconocido.
+
+```{r}
+#| code-fold: true
+#| eval: false
+nombres <- c("Javi", "Sandra", NA, "Laura", "Carlos")
+nombres
+```
+
+### [**Ejercicio 12**]{.hl-yellow}
+
+📝 Encuentra del vector `x` de ejercicios anteriores los elementos mayores (estrictos) que 1 Y ADEMÁS menores (estrictos) que 7. Encuentra una forma de averiguar si todos los elementos son o no positivos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+### [**Ejercicio 13**]{.hl-yellow}
+
+📝 Dado el vector `x <- c(1, -5, 8, NA, 10, -3, 9)`,  ¿por qué su media no devuelve un número sino lo que se muestra en el código inferior?
+
+```{r}
+x <- c(1, -5, 8, NA, 10, -3, 9)
+mean(x)
+```
+
+### [**Ejercicio 14**]{.hl-yellow}
+
+📝 Dado el vector `x <- c(1, -5, 8, NA, 10, -3, 9)`, extrae los elementos que ocupan los lugares 1, 2, 5, 6. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- c(1, -5, 8, NA, 10, -3, 9)
+x[c(1, 2, 5, 6)]
+x[-2]
+```
+
+### [**Ejercicio 15**]{.hl-yellow}
+
+📝 Dado el vector `x` del ejercicio anterior, ¿cuales tienen un dato ausente? Pista: las funciones `is.algo()` comprueban si el elemento es tipo `algo` (tabula)
+
+```{r}
+#| code-fold: true
+#| eval: false
+is.na(x)
+```
+
+
+### [**Ejercicio 16**]{.hl-yellow}
+
+📝 Define el vector `x` como la concatenación de los 4 primeros números pares. Calcula el número de elementos de `x` menores estrictamente que 5.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x < 5] 
+sum(x < 5)
+```
+
+
+### [**Ejercicio 17**]{.hl-yellow}
+
+📝 Calcula el vector `1/x` y obtén la versión ordenada (de menor a mayor) de las dos formas posibles
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- 1/x
+sort(z)
+z[order(z)]
+```
+
+### [**Ejercicio 18**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+#| eval: false
+min(x)
+max(x)
+```
+
+### [**Ejercicio 19**]{.hl-yellow}
+
+📝 Encuentra del vector `x` los elementos mayores (estrictos) que 1 y menores (estrictos) que 6. Encuentra una forma de averiguar si todos los elementos son o no negativos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x[x > 1 & x < 7]
+all(x > 0)
+```
+
+:::
+
+
+
+## Profundizando en textos
+
+Aunque no podamos hacer operaciones aritméticas con ellos si serán importante algunas [**operaciones que podamos realizar con las cadenas de texto**]{.hl-yellow}. Para eso usaremos el paquete `{stringr}` (dentro del mismo «universo de paquetes» de `{lubridate}`)
+
+```{r}
+library(stringr)
+```
+
+Con dicho paquete vamos a trabajar particularmente con [**cuatro familias de funciones**]{.hl-yellow}
+
+- [**Manipulación**]{.hl-purple}
+
+- [**Tratamiento de espacios**]{.hl-purple}
+
+- [**Búsqueda de patrones**]{.hl-purple}
+
+### Utilidades básicas
+
+#### Longitud
+
+La más obvia es una función que, dada una cadena de texto (un string) nos proporcione la [**longitud**]{.hl-yellow}. Para ello podemos usar la función `str_length()`
+
+```{r}
+str_length("abc")
+```
+
+Es importante advertir que cuenta tanto [**números como espacios**]{.hl-yellow}, así como caracteres que **no sean alfanuméricos**. 
+```{r}
+str_length("abc 123 *")
+```
+
+Además si el texto es ausente devuelve ausente (recuerda: `NA` es ausente, `"NA"` es una cadena de texto más) 
+
+```{r}
+str_length(NA)
+```
+
+&nbsp;
+
+Las [**funciones del paquete están preparadas para ser vectorizadas**]{.hl-yellow} lo que significa que si aplicamos una función a un vector de dos cadenas de texto la aplica a ambos de la misma forma.
+
+```{r}
+str_length(c("abc", "defghi"))
+```
+
+#### Ordenar
+
+Otra muy habitual es [**ordenar cadenas de texto (por orden alfabético)**]{.hl-yellow}. Para ello podemos usar la función `str_order()`, distinguiendo `..._sort()` y `..._order()` como con los números
+
+```{r}
+x <- c("y", "i", "k")
+str_order(x)
+str_sort(x)
+```
+
+
+### Manipulación
+
+#### Extraer subcadenas
+
+* [**Extraer subcadenas**]{.hl-yellow}: dada una cadena de texto, `str_sub(texto, star = ..., end = ...)` nos extrae la subcadena desde la posición `star` hasta `end` (si es negativo empieza a contar por detrás).
+
+```{r}
+str_sub("abcd efg", star = 4, end = 6)
+str_sub("abcd efg", star = 5)
+str_sub("abcd efg", star = 4, end = -2)
+```
+
+
+
+* [**Extraer subcadenas**]{.hl-yellow}: la función `str_sub()` permite aplicarlo a de manera vectorial a múltiples cadenas de texto, e incluso usarla para asignar valores.
+
+```{r}
+x <- c("abcdef", "ghifjk")
+str_sub(x, star = 3, end = -2)
+str_sub(x, star = -1, end = -1)
+
+# En ambas cadenas, sustituimos por * en la posición 2
+str_sub(x, star = 2, end = 2) <- "*"
+```
+
+#### Duplicar cadenas
+
+* [**Duplicar cadenas**]{.hl-yellow}: con `str_dup(..., times = ...)`, dada una cadena de texto (o varias), podemos repetir una cadena `times` veces.
+
+```{r}
+str_dup("abc", times = 3)
+
+x <- c("abcdef", "ghifjk")
+str_dup(x, times = c(2, 5))
+```
+
+#### Concatenar cadenas
+
+* [**Concatenar cadenas**]{.hl-yellow}: con `str_c` podemos concatenar distintas cadenas de texto (con `sep = ...` indicamos el caracter que hará de separador)
+
+```{r}
+str_c("Buenos días", "Mi nombre es Javier")
+str_c("Buenos días", "Mi nombre es Javier", sep = ". ")
+```
+
+
+#### Mayúsculas y minúsculas
+
+* [**Mayúsculas/minúsculas**]{.hl-yellow}: con `str_to_...()` podemos convertir textos a mayúsculas (`..._upper`), a minúsculas (`..._lower`) y a título (`..._title`, primera letra de cada palabra en mayúscula)
+
+```{r}
+str_to_upper("me llamo Javi")
+str_to_lower("me llamo Javi")
+str_to_title("me llamo Javi")
+```
+
+#### Reemplazar
+
+* [**Reemplazar**]{.hl-yellow}: `str_replace()` busca un patrón dado en una cadena de texto y, si la encuentra, la sustituye pro otra de reemplazo
+
+```{r}
+str_replace(c("javi", "sandra", "carlos"), pattern = "i", replacement = "*")
+```
+
+. . .
+
+Con `str_replace_all()` reemplazamos todas las coincidencias (por defecto sino solo se reemplaza la primera)
+
+```{r}
+str_replace(c("javi", "sandra", "carlos"), pattern = "a", replacement = "*")
+str_replace_all(c("javi", "sandra", "carlos"), pattern = "a", replacement = "*")
+```
+
+
+### Espacios en blanco
+
+#### Rellenar espacios
+
+* [**Rellenar**]{.hl-yellow}: la función `str_pad()` rellena una cadena con espacios (al inicio por defecto) para que tenga anchura indicada. Con `side = "both"` como argumento extra nos añade en ambos lados. Con `side = "right"` los añade al final. Con `pad = ...` podemos decidir si queremos rellenar con otro tipo de caracter (espacio por defecto).
+
+```{r}
+str_pad("abc", width = 6)
+str_pad("abc", 12, side = "both")
+str_pad("abc", 6, side = "right", pad = "*")
+```
+
+. . .
+
+Si `width` es menor que la longitud de la cadena, no hace nada.
+
+```{r}
+str_pad("abc",  width = 2)
+```
+
+#### Eliminar espacios
+
+* [**Eliminar espacios**]{.hl-yellow}: con `str_trim()` podemos eliminar espacios en blanco al inicio y al final de la cadena. Si añadimos `side = ...` podemos cambiar si queremos que solo los elimine al final o al inicio (por defecto, en ambos). Con `str_squish()` cambiamos cualquier sucesión de espacios en blanco en medio del texto por uno solo (y elimina al inicio y final)
+
+```{r}
+str_trim(" abcde   fghi ")
+str_trim(" abcde   ")
+str_trim(" abcde   ", side = "left")
+str_squish(" abcde   fghi ")
+```
+
+
+
+### Patrones
+
+#### Detectar. Expresiones regulares.
+
+* [**Detectar**]{.hl-yellow}: con `str_detect()` podemos detectar si una cadena de texto contiene o no una secuencia de caracteres
+
+```{r}
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "javi")
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "reyes")
+str_detect(c("javi álvarez", "javi reyes", "sandra reyes"), pattern = "carlos")
+```
+
+
+
+* [**Expresiones regulares**]{.hl-yellow}: no solo vamos a poder detectar patrones simples sino que podemos hacer uso de las conocidas como **expresiones regulares**, indicándole por ejemplo que queremos localizar todo patrón que sea, al menos una letra
+
+```{r}
+str_detect(c("a", "ab", "abc", "abcd"), pattern = "[a-z]")
+```
+
+. . .
+
+Si tras los corchetes indicamos `{n}` podemos detectar aquellas cadenas con n letras consecutivas
+
+```{r}
+str_detect(c("a", "ab", "abc", "abcd"), pattern = "[a-z]{3}")
+```
+
+
+
+* [**Expresiones regulares**]{.hl-yellow}: un buen manejo de estas expresiones puede sernos muy útil para, por ejemplo, detectar formatos correctos en DNI o números de teléfono (de Madrid, por ejemplo).
+
+Vamos a considerar que un formato correcto de DNI es aquel seguido por 8 números (`[0-9]{8}`) seguido directamente de una letra mayúscula (`[A-Z]`).
+
+```{r}
+str_detect(c("5055A198-W", "50508040W", "5050505W", "50508040-W"),
+           pattern = "[0-9]{8}[A-Z]")
+```
+
+. . .
+
+Podemos buscar distintos patrones a la vez concatenándolos con una `|`
+
+```{r}
+str_detect(c("5055A198-W", "50508040W", "5050505W", "50508040-W"),
+           pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+```
+
+
+#### Contar
+
+* [**Contar patrones**]{.hl-yellow}: con `str_count()` podemos contar cuantas veces aparece un mismo patrón
+
+```{r}
+str_count(c("abcd defg", "ab defg", "ab cd"), pattern = "[a-z]{4}")
+```
+
+#### Localizar posiciones
+
+* [**Localizar posiciones**]{.hl-yellow}: `str_locate()` nos permite localizar la primera posición en la que se produce un patrón. Con `str_locate_all()` obtenemos todos
+
+```{r}
+str_locate(c("abcde abcd", "cba", "*a*"), pattern = "a")
+str_locate_all(c("abcde abcd", "cba", "*a*"), pattern = "a")
+```
+
+
+#### Extraer patrones
+
+* [**Extraer patrones**]{.hl-yellow}: con `str_extract()` podemos extraer patrones (con `str_extract_all()` todos ellos) de una cadena de texto.
+
+```{r}
+str_extract(c("DNI: 5050W", "DNI: 50558040W, DNI: 50558080-W", "DNI: 50558080-W"),
+            pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+str_extract_all(c("DNI: 5050W", "DNI: 50558040W, DNI: 50558080-W", "DNI: 50558080-W"),
+            pattern = "[0-9]{8}[A-Z]|[0-9]{8}[-][A-Z]")
+```
+
+#### Dividir cadenas
+
+* [**Dividir**]{.hl-yellow}: con `str_split()` podemos localizar un patrón y dividir la cadena de texto siempre que aparezca (con `str_split_fixed()` podemos dividir en un número concreto de trozos)
+
+```{r}
+str_split(c("a-b-c", "ab-c-d-e"), pattern = "-")
+str_split_fixed(c("a-b-c", "ab-c-d-e"), pattern = "-", n = 2)
+```
+. . .
+
+Si usamos `boundary()` como patrón podemos dividir en base a caracteres, frases, palabras, etc.
+
+```{r}
+x <- "Esto es una frase. Y esto otra."
+str_split(x, boundary("word"))
+str_split(x, boundary("sentence"))
+```
+
+
+
+
+### 💻 Tu turno (textos) 
+
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+El dataset será `discursos` (extraído de <https://github.com/lirondos/discursos-de-navidad>) donde están guardados los discursos navidad de los jefes de Estado de España desde 1946 hasta 2021 (en dictadura y en democracia).
+
+```{r}
+load(file = "./datos/discursos.RData")
+```
+
+::: panel-tabset
+
+### [**Ej 1**]{.hl-yellow}
+
+📝 Convierte todos los discurso a minúscula.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Convertimos a minúscula
+discursos$texto <- str_to_lower(discursos$texto)
+```
+
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Elimina signos de puntuación tales como ":", ",", ".", ";", "¡", "!", "¿" y "?". Tras ello elimina espacios adelante, atrás y en medio si existen solo deja uno de ellos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Eliminamos los signos de puntuación
+discursos$texto <-
+  str_remove_all(discursos$texto, pattern = "\\:|\\,|\\.|\\;|\\¡|\\!|\\¿|\\?")
+
+# Tras ello eliminamos espacios adelante, atrás y en medio solo dejamos uno
+discursos$texto <- str_squish(discursos$texto)
+```
+
+### [**Ej 3**]{.hl-yellow}
+
+📝 Crea una nueva variable `long` con la longitud de cada discurso
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# nueva variable
+discursos$long <- str_length(discursos$texto)
+```
+
+### [**Ej 4**]{.hl-yellow}
+
+📝 Añade una nueva variable `n_words` con el nº palabras de cada discurso. Pista: si tras dividir cada discurso en palabras usas `length()` te devolverá seguro 76 ya que lo ha guardado en un tipo de dato llamado lista. Para calcular la longitud de cada uno de los 76 elementos de la lista usaremos `lengths()`
+
+```{r}
+#| code-fold: true
+#| eval: false
+lista <- list("a" = 1:2, "b" = 1:3, "c" = 1:4) # Explicación length
+length(lista)
+lengths(lista)
+# Dividimos y aplicamos lengths
+discursos$n_words <- lengths(str_split(discursos$texto, boundary("word")))
+```
+
+### [**Ej 5**]{.hl-yellow}
+
+📝 Determina los 5 años con mayor longitud, y los 5 años con menor número de palabras
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# 5 años con mayor longitud (usamos order para obtener índices)
+discursos$year[order(discursos$long, decreasing = TRUE)[1:5]]
+
+# 5 años con menor cantidad de palabras
+discursos$year[order(discursos$n_words)[1:5]]
+```
+
+### [**Ej 6**]{.hl-yellow}
+
+📝 Incorpora una nueva variable llamada `spain` que calcule el número de veces que se dice "españoles", "españolas" o "españa" en el discurso. Determina los 5 años dónde menos se menten dichas palabras
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Contamos
+discursos$spain <- str_count(discursos$texto, pattern = "españoles|españolas|españa")
+
+# Años con más menciones
+discursos$year[order(discursos$spain, decreasing = TRUE)[1:5]]
+```
+
+### [**Ej 7**]{.hl-yellow}
+
+📝 De los 76 años calcula el número de discursos en los que las palabras "mujer" o "mujeres" se nombren más que las palabras "hombre" u "hombres"
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+sum(str_count(discursos$texto, pattern = "mujer|mujeres") >
+      str_count(discursos$texto, pattern = "hombre|hombres"))
+```
+
+### [**Ej 8**]{.hl-yellow}
+
+📝 Detecta los discursos donde aparece "cataluña", "catalanes", "catalán" o "catalanas" y quédate de la base de datos solo con aquellos que lo cumpla
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+discursos[str_detect(discursos$texto, pattern = "cataluña|catalanes|catalán|catalanas"), ]
+```
+
+:::
+
+
+
+## 🐣 Caso práctico I: airquality (vectores)
+
+En el paquete `{datasets}` (ya instalado por defecto) tenemos diversos conjuntos de datos y uno de ellos es `airquality`. Debajo te he extraído 3 variables de dicho dataset (fíjate que se hace con `datos$variable`, ese dolar será importante).
+
+Los datos capturan [**medidas diarias (n = 153 observaciones) de la calidad del aire**]{.hl-yellow} en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: niveles de ozono, radiación solar, viento, temperatura, mes y día.
+
+```{r}
+library(datasets)
+temperature <- airquality$Temp
+month <- airquality$Month
+day <- airquality$Day
+```
+
+### Pregunta 1
+
+> ¿Cómo averiguar qué [**representan los datos**]{.hl-yellow}? Piensa algún comando que nos dé información sobre objetos en R, sabiendo que el nombre del dataset es `airquality`
+
+```{r}
+#| code-fold: true
+#| eval: false
+? airquality
+```
+
+Haciendo uso de `? ...` podemos consultar en el panel de ayuda lo que significa el objeto.
+
+### Pregunta 2
+
+
+> Accede solo a los 5 primeros registros de temperaturas. Después accede al primero, segundo, quinto y décimo
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# secuencia de 1 a 5
+temperature[1:5] 
+
+# otra forma
+temperature[c(1, 2, 3, 4, 5)]
+
+# primero, segundo, quinto y décimo
+temperature[c(1, 2, 5, 10)]
+```
+
+
+
+### Pregunta 3
+
+> Accede solo a los registros de temperaturas de mayo (tienes las temperaturas guardadas, piensa como acceder a ellos pero ahora usando una condición en lugar de índices concretos). Después accede a los elementos de mayo, abril y junio
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+temperature[month == 5]
+
+# abril, mayo y junio
+temperature[month == 4 | month == 5 | month == 6]
+
+# otra forma más legible: %in% nos comprueba si 
+# los valores están dentro de una lista permitida
+temperature[month %in% c(4, 5, 6)]
+```
+
+### Pregunta 4
+
+> ¿Cuántos [**registros tenemos de mayo**]{.hl-yellow}? ¿Y de abril? 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Una forma para registros de mayo
+sum(month == 5)
+
+# Otra forma: la longitud de un vector
+length(temperature[month == 5])
+
+# ídem en abril
+sum(month == 4)
+```
+
+### Pregunta 5
+
+> Construye una nueva variable `date` con la fecha de cada registro (combinando año, mes y día), sabiendo que todos los datos son de 1973. Pista: para construir una fecha antes debes tener un vector de textos (por ejemplo, "1973-01-01")
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# variable de tipo date
+library(lubridate)
+dates <- as_date(glue("{1973}-{month}-{day}"))
+```
+
+### Pregunta 6
+
+> Crea una nueva variable `temp_celsius` con la temperatura en ºC (sabiendo que se calcula como $celsius = (fahr - 32) * (5/9)$). Tras ello calcula cuántos días de junio superaron los 30 grados ºC.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Temperatura en celsius
+temp_celsius <- (temperature - 32) * (5/9)
+temp_celsius 
+
+# una forma
+sum(temp_celsius[month == 6] > 30)
+
+# otra forma
+length(temp_celsius[month == 6 & temp_celsius > 30])
+```
+
+### Pregunta 7
+
+> ¿Cuál fue la media de temperatura del mes de agosto? 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# media en agosto
+mean(temperature[month == 8], na.rm = TRUE)
+mean(temp_celsius[month == 8], na.rm = TRUE)
+```
+
+### Pregunta 8
+
+>  Dado el vector de temperaturas de agosto, ordena las temperaturas (los más fríos primero, los más cálidos después). Hazlo de las dos maneras aprendidas. Usa después el paquete `{microbenchmark}` (instálalo, cárgalo y busca en la ayuda la función `microbenchmark` de dicho paquete) para comparar cuál de las dos opciones es más rápida.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# con sort
+temp_sort <- sort(temp_celsius[month == 8])
+temp_sort
+
+# con order
+temp_ord <- temp_celsius[month == 8][order(temp_celsius[month == 8])]
+temp_ord
+
+# microbenchmark
+# install.packages("microbenchmark")
+microbenchmark::microbenchmark(sort(temp_celsius[month == 8]),
+                               temp_celsius[month == 8][order(temp_celsius[month == 8])],
+                               times = 1000)
+
+# ¡Es más eficiente datos[order(datos)] que sort(datos!
+```
+
+
+
+```{r}
+load(file = "./datos/salto_longitud.RData")
+```
+
+Aunque más adelante veremos como extraerlo, puedes ver debajo si quieres el código que se ha usado para extraer la tabla
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(rvest)
+library(tidyverse)
+wiki_jump <- 'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'
+long_jump <- read_html(wiki_jump)
+salto_longitud <- html_table(html_node(long_jump, 'table'))
+```
+
+
+
+### Pregunta 1
+
+> ¿Cuántos registros hay? ¿Cuántas variables? ¿De qué tipo es cada una? ¿Cuáles son sus nombres? ¿Qué crees que significan?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+nrow(salto_longitud)
+ncol(salto_longitud)
+names(salto_longitud)
+
+# tenemos 19 récords y 5 variables: la marca (en metros, pies y pulgadas), el viento que hacía, la persona que batió el record, el lugar y la fecha.
+```
+
+
+
+### Pregunta 2
+
+> Crea una nueva variable llamada `Mark` (sustituye a la anterior) en la que hayas extraído la marca en metros (y convertida a número). Práctica antes con un valor de juguete, por ejemplo, si tuviésemos `x <- "7.61 m (24 ft 11+1/2 in)", ¿cómo podríamos quedarnos solo con la marca en metros?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Sabemos que el patrón es 1 número, un ., y dos decimales, así que
+# usamos str_extract para extraer ese patrón que le indicamos
+# con una expresión regular.
+salto_longitud$Mark <-
+  str_extract(salto_longitud$Mark, pattern = "[0-9][.][0-9]{2}")
+
+# Tras ello convertimos a número
+salto_longitud$Mark <- as.numeric(salto_longitud$Mark)
+
+# importante: ahora en la cabecera debajo de mark pone <dbl>, es un número
+salto_longitud 
+```
+
+### Pregunta 3
+
+> Crea una nueva variable llamada `Wind` (sustituye la original) en la que tengas el viento convertido a número. 
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+salto_longitud$Wind <- as.numeric(salto_longitud$Wind)
+salto_longitud
+```
+
+> ¿En cuántos récords no había viento? ¿En cuántos no tenemos registros de dicha medida?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Con viento 0
+sum(salto_longitud$Wind == 0, na.rm = TRUE)
+
+# Sin registros
+sum(is.na(salto_longitud$Wind))
+
+# importante: ausente y 0 no es lo mismo
+```
+
+### Pregunta 4
+
+> Crea una nueva variable llamada `country` que extraiga las siglas de los países de la variable `Athlete`
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Primero extraemos con los paréntesis (es más fácil detectarlo)
+salto_longitud$country <-
+  str_extract(salto_longitud$Athlete, pattern = "[(][A-Z]{3}[)]")
+
+# Luego los eliminamos los ( y los ) (de ahí la barra vertical en medio)
+# Fíjate que para que entienda que es un caracter especial (paréntesis)
+# se lo pasamos como \\( y como \\). Ppasaría lo mismo si queremos detectar,
+# por ejemplo, un punto, con \\.
+salto_longitud$country <- str_remove_all(salto_longitud$country, "\\(|\\)")
+```
+
+
+
+### Pregunta 5
+
+> Ordena la tabla por orden alfabético de las siglas
+
+```{r}
+#| code-fold: true
+#| eval: false
+salto_longitud <- salto_longitud[order(salto_longitud$country), ]
+```
+
+### Pregunta 6
+
+> Reemplaza la variable `Date` por la fecha correcta en formato fecha
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# primero eliminamos todos los [?]
+salto_longitud$Date <-
+  str_remove_all(salto_longitud$Date, pattern = "\\[[0-9]{1}\\]")
+
+# luego atendemos el caso particualr de [note 1]
+salto_longitud$Date <-
+  str_remove_all(salto_longitud$Date, pattern = "\\[note 1\\]")
+
+# tras depurar convertimos a fecha
+salto_longitud$Date <- dmy(salto_longitud$Date)
+salto_longitud
+```
+
+### Pregunta 7
+
+> ¿Cuántos récords no son de Estados Unidos? ¿Qué porcentaje representa respecto al total?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# total absoluto
+sum(salto_longitud$country != "USA")
+
+# porcentaje relativo
+100*sum(salto_longitud$country != "USA") / length(salto_longitud$country)
+```
+
+
+### Pregunta 8
+
+> Para cada récord, calcula los metros de mejora respecto al anterior, y guárdalo en la base de datos. Pista: prueba bien la función `diff()` y chequea la longitud de lo que te devuelve.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Usamos la función diff que, dado un vector, calcula las diferencias
+# fíjate que el primero no conocemos la mejora (ya que no hay registro previo)
+salto_longitud$mejora <- c(NA, diff(salto_longitud$Mark))
+```
+

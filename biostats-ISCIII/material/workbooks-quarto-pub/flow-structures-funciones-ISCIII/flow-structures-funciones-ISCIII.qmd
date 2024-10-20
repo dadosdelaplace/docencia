@@ -1,0 +1,978 @@
+---
+title: "Estructuras de control: bucles y estructuras condicionales"
+subtitle: "Cuadernos prácticos de Software para la gestión de bases de datos del Máster de Bioestadística (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+execute: 
+  echo: true
+---
+
+
+Una [**estructura de control**]{.hl-yellow} se compone de una serie de comandos orientados a  [**decidir el camino**]{.hl-yellow} que tu código debe recorrer
+
+* Si se cumple la condición A, ¿qué sucede?
+
+* ¿Y si sucede B?
+
+* ¿Cómo puedo repetir una misma expresión (dependiendo de una variable)?
+
+&nbsp;
+
+Si has programado antes, quizás te sea familiar las conocidas como [**estructuras condicionales**]{.hl-yellow} tales como `if (blabla) {...} else {...}`  o [**bucles**]{.hl-yellow} `for/while` (a evitar siempre que podamos).
+
+
+## Estructuras condicionales
+
+Una de las estructuras de control más famosas son las conocidas como [**estructuras condicionales**]{.hl-yellow}: si pasase algo... entonces...
+
+
+### If
+
+La más simple es la conocida como `if`.
+
+> SI (IF) un conjunto de condiciones se cumple (TRUE), entonces ejecuta lo que haya dentro de las llaves
+
+Por ejemplo, la estructura
+
+`if (x == 1) { código A }`
+
+lo que hará será [**ejecutar el código A entre llaves**]{.hl-yellow} pero [**SOLO SI**]{.hl-purple} la [**condición entre paréntesis es cierta**]{.hl-purple} (solo si `x` es 1). En cualquier otro caso, no hará nada.
+
+Para ilustrarlo definamos un vector de edades de 8 personas
+
+```{r}
+edad <- c(14, 17, 24, 56, 31, 20, 87, 73)
+edad < 18
+```
+
+Nuestra estructura condicional hará lo siguiente: [**si existe algún menor de edad, imprimirá**]{.hl-yellow} por pantalla un mensaje.
+
+```{r}
+if (any(edad < 18)) { 
+  
+  print("Existe alguna persona menor de edad")
+  
+}
+```
+
+
+
+En caso de que las [**condiciones no sean ciertas**]{.hl-yellow} dentro de `if()` (`FALSE`), no sucede nada
+
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+}
+```
+
+**No obtenemos ningún mensaje** porque la condición `all(edad >= 18)` no es `TRUE`, así que no ejecuta nada.
+
+### If-else
+
+La estructura `if (condicion) { código A }` puede combinarse con un
+
+`if (condicion) { código A } else { código B }`
+
+cuando la condición se verifica se hará A, pero cuando la [**condición no se cumpla**]{.hl-yellow}, se [**ejecutará el código alternativo B**]{.hl-yellow} dentro de `else { }`, permitiéndonos decidir que sucede cuando se cumple y cuando no.
+
+Por ejemplo, `if (x == 1) { código A } else { código B }` ejecutará A si `x` es igual a 1 y B en cualquier otro caso. Piensa cuánto valdrá `y` en el código inferior:
+
+```{r}
+x <- 3
+
+if (x == 1) {
+  
+  y <- 2
+  
+} else {
+  
+  y <- -1
+  
+}
+```
+
+En el ejemplo anterior `y` valdrá -1 ya que la condición no se cumple y el código tomará el camino del `else { ... }`. En el ejemplo anterior de las edades, vamos a imprimir por pantalla una frase si todos son mayores de edad y otra si no.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else {
+  
+  print("Existe alguna persona menor de edad")
+}
+```
+
+&nbsp;
+
+Esta estructura `if - else` puede ser [**anidada**]{.hl-yellow}: imagina que queremos ejecutar un código si todos son menores; si no sucede, pero todos son mayores de 16, hacer otra cosa; en cualquier otra cosa, otra acción.
+
+```{r}
+if (all(edad >= 18)) { 
+  
+  print("Todos son mayores de edad")
+  
+} else if (all(edad >= 16)) {
+  
+  print("Hay algún menor de edad pero todos con 16 años o más")
+  
+} else { print("Hay alguna persona con menos de 16 años") }
+```
+
+::: callout-note
+## Truco
+
+Puedes **colapsar las estructuras** haciendo click en la flecha a la izquierda que aparece en tu script.
+
+:::
+
+
+### If-else vectorizado
+
+
+Esta estructura condicional se puede [**vectorizar**]{.hl-yellow} (en una sola línea) con `if_else()` (del paquete `{dplyr}` que veremos en profundidad más adelante), cuyos argumentos son
+
+* la condición a evaluar
+* lo que sucede cuando se cumple y cuando no
+* un argumento opcional para cuando la condición a evaluar es `NA`
+
+Vamos a etiquetar sin son mayores/menores y un "desconocido" cuando no conocemos
+
+```{r}
+library(dplyr)
+edad <- c(NA, edad)
+if_else(edad >= 18, "mayor", "menor", missing = "desconocido")
+```
+
+En `R` base existe `ifelse()`: no deja especificar que hacer con los ausentes pero permite especificar distintos tipos de datos en `TRUE` y en `FALSE`.
+
+### 💻 Tu turno
+
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 ¿Cuál es la salida del siguiente código?
+
+```{r}
+#| eval: false
+if_else(sqrt(9) < 2, sqrt(9), 0)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+La salida es 0 ya que sqrt(9) es igual 3, y dado que no es menor que 2, devuelve el segundo argumento que es 0
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 ¿Cuál es la salida del siguiente código?
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+La salida es el vector c(0, NA, NA, 1) ya que sqrt(1) sí es menor que 2, sqrt(9) no lo es, y tanto en el caso de sqrt(NA) (raíz de ausente) como sqrt(-1) (devuelve NaN, not a number), su raíz cuadrada no puede verificarse si es menor que 2 o no, así que la salida es NA.
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Modifica el código inferior para que, cuando no se pueda verificar si la raíz cuadrada de un número es menor que 2, devuelva -1
+
+```{r}
+#| eval: false
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+x <- c(1, NA, -1, 9)
+if_else(sqrt(x) < 2, 0, 1, missing = -1)
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 ¿Cuál es son los valores de `x` e `y` del código inferior para `z <- 1`, `z <- -1` y `z <- -5`?
+
+```{r}
+#| eval: false
+z <- -1
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+En primero caso x = 1 e y = -1. En el segundo caso x = 1 e y = 1. En el tercer caso -2.5 y 5
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 ¿Qué pasaría si ejecutamos el siguiente código? Spoiler: da error. ¿Por qué? ¿Cómo solucionarlo?
+
+```{r}
+#| eval: false
+z <- c(-1, 1, 5)
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+Da error ya que en los `if (condición) { } else { }` "clásicos" necesitamos que
+la condición tenga longitud uno (un solo valor TRU/FALSE)
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+# para arreglarlo podemos hacer un if_else vectorial
+z <- c(-1, 1, -5)
+library(dplyr)
+x <- if_else(z > 0, z^3, if_else(abs(z) < 2, z^4, z/2))
+y <- if_else(z > 0, -sqrt(z), if_else(abs(z) < 2, sqrt(-z), abs(z)))
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 ¿Qué sucederá si ejecutamos el código inferior?
+
+```{r}
+#| eval: false
+z <- "a"
+if (z > 0) {
+  
+  x <- z^3
+  y <- -sqrt(z)
+  
+} else if (abs(z) < 2) {
+  
+  x <- z^4
+  y <- sqrt(-z)
+  
+} else {
+  
+  x <- z/2
+  y <- abs(z)
+  
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# dará error ya que no es un argumento numérico
+Error in z^3 : non-numeric argument to binary operator
+```
+
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Del paquete `{lubridate}`, la función `hour()` nos devuelve la hora de una fecha dada, y la función `now()` nos devuelve fecha y hora del momento actual. Con ambas funciones haz que se imprima por pantalla (`cat()`) "buenas noches" solo a partir de las 21 horas.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Cargamos librería
+library(lubridate)
+
+# Fecha-hora actual
+fecha_actual <- now()
+
+# Estructura if
+if (hour(fecha_actual) > 21) {
+  
+  cat("Buenas noches") # print/cat dos formas de imprimir por pantalla
+}
+```
+
+
+:::
+
+
+## Bucles
+
+Aunque en la mayoría de ocasiones se pueden reemplazar por otras estructuras más eficientes y legibles, es importante conocer una de las expresiones de control más famosas: los [**bucles**]{.hl-yellow}.
+
+* `for { }`: permite [**repetir el mismo código**]{.hl-yellow} en un [**número prefijado y conocido**]{.hl-purple} de veces.
+
+* `while { }`: permite [**repetir el mismo código**]{.hl-yellow} pero en un [**número indeterminado de veces**]{.hl-purple} (hasta que una **condición** deje de cumplirse).
+
+
+### Bucles for
+
+Un bucle [**for**]{.hl-yellow} es una estructura que permite [**repetir**]{.hl-yellow} un conjunto de órdenes un número [**finito, prefijado y conocido de veces**]{.hl-purple} dado un conjunto de índices.
+
+&nbsp;
+
+Vamos a definir un vector `x <- c(0, -7, 1, 4)` y otra variable vacía `y`. Tras ello definiremos un bucle for con `for () { }`: dentro de los paréntesis indicaremos un índice y unos valores a recorrer, dentro de las llaves el código a ejecutar en cada iteración (en este caso, rellenar `y` como `x + 1`)
+
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  
+  y[i] <- x[i] + 1
+  
+}
+```
+
+Fíjate que debido a que `R` funciona de manera [**vectorial por defecto**]{.hl-yellow}, el bucle es lo mismo que hacer `x + 1` directamente.
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:4) {
+  
+  y[i] <- x[i] + 1
+  
+}
+y
+
+y2 <- x + 1 # hacen lo mismo
+y2
+```
+
+
+Otra opción habitual es indicar los índices de manera «automática»: desde el primero `1` hasta el último (que corresponde con la longitud de x `length(x)`)
+
+```{r}
+x <- c(0, -7, 1, 4)
+y <- c()
+
+for (i in 1:length(x)) {
+  
+  y[i] <- x[i] + 1
+  
+}
+y
+```
+
+
+Así la [**estructura general de un bucle for**]{.hl-yellow} será siempre la siguiente
+
+```{r}
+#| eval: false
+for (índice in conjunto) { 
+  código (dependiente de i)
+}
+```
+
+[**SIEMPRE**]{.hl-green} sabemos cuántas iteraciones tenemos (tantas como elementos haya en el conjunto a indexar).
+
+&nbsp;
+
+Podemos ver otro ejemplo de bucle  [**combinando números y textos**]{.hl-yellow}: definimos un vector de edades y de nombres, e imprimimos el nombre y edad i-ésima.
+
+```{r}
+nombres <- c("Javi", "Sandra", "Carlos", "Marcos", "Marta")
+edades <- c(33, 27, 18, 43, 29)
+library(glue)
+
+for (i in 1:5) { 
+  
+  print(glue("{nombres[i]} tiene {edades[i]} años")) 
+  
+}
+```
+
+
+
+Aunque normalmente se suelen indexar con vectors numéricos, los bucles pueden ser [**indexados sobre cualquier estructura vectorial**]{.hl-yellow}, da igual de que tipo sea el conjunto
+
+```{r}
+library(stringr)
+week_days <- c("monday", "tuesday", "wednesday", "thursday",
+               "friday", "saturday", "sunday")
+
+for (days in week_days) {
+  
+  print(str_to_upper(days))
+}
+```
+
+#### Bucles + condicionales
+
+Vamos a **combinar las estructuras condicionales y los bucles**: usando el conjunto `swiss` del paquete `{datasets}`, vamos a asignar `NA`  si los valores de fertilidad son mayores de 80.
+
+```{r}
+for (i in 1:nrow(swiss)) {
+  
+  if (swiss$Fertility[i] > 80) { 
+    
+    swiss$Fertility[i] <- NA
+    
+  }
+}
+```
+
+
+Esto es exactamente igual a un `if_else()` vectorizado
+
+```{r}
+data("swiss")
+swiss$Fertility <- if_else(swiss$Fertility > 80, NA, swiss$Fertility)
+```
+
+
+#### Evitando bucles
+
+
+Como ya hemos aprendido con el paquete`{microbenchmark}` podemos chequear como [**los bucles suelen ser muy ineficientes**]{.hl-yellow} (de ahí que debamos evitarlos en la mayoría de ocasiones
+
+```{r}
+library(microbenchmark)
+x <- 1:1000
+microbenchmark(y <- x^2, 
+               for (i in 1:100) { y[i] <- x[i]^2 },
+               times = 500)
+```
+
+
+### Bucles while
+
+Otra forma de crear un bucle es con la estructura `while { }`, que nos ejecutará un bucle [**un número desconocido de veces**]{.hl-yellow}, hasta que una condición [**deje de cumplirse**]{.hl-yellow} (de hecho puede que nunca termine). Por ejemplo, vamos a inializar una variable `ciclos <- 1`, que incrementaremos en cada paso, y no saldremos del bucle hasta que `ciclos > 4`.
+
+```{r}
+ciclos <- 1
+while(ciclos <= 4) {
+  
+  print(glue("No todavía, vamos por el ciclo {ciclos}")) 
+  ciclos <- ciclos + 1
+  
+}
+```
+
+Un bucle `while` será siempre como sigue
+
+```{r}
+#| eval: false
+while(condición) {
+  
+  código a hacer mientras la condición sea TRUE
+  # normalmente aquí se actualiza alguna variable
+  
+}
+```
+
+
+¿Qué sucede cuando la [**condición nunca es FALSE**]{.hl-yellow}? Pruébalo tu mismo
+
+```{r}
+#| eval: false
+while (1 > 0) {
+  
+  print("Presiona ESC para salir del bucle")
+  
+}
+```
+
+&nbsp;
+
+::: callout-warning
+## Cuidado
+
+Un bucle `while { }` puede ser bastante «peligroso» sino controlamos bien cómo pararlo.
+
+:::
+
+#### parada del while
+
+Debido a que puede ser problemático no saber el número predeterminado de veces que un `while` va a ejecutarse, contamos con dos palabras reservadas para [**abortar un bucle o forzar su avance**]{.hl-yellow}:
+
+* `break`: permite [**abortar un bucle**]{.hl-yellow} incluso si no se ha llegado a su final
+
+```{r}
+for(i in 1:10) {
+  if (i == 3) {
+    
+    break # si i = 3, abortamos bucle
+    
+  }
+  print(i)
+}
+```
+
+
+* `next`: [**fuerza un bucle a avanzar a la siguiente iteración**]{.hl-yellow} 
+
+```{r}
+for(i in 1:5) {
+  if (i == 3) {
+    
+    next # si i = 3, la obvia y continua al siguiente
+    
+  }
+  print(i)
+}
+```
+
+
+### Bucles repeat
+
+Aunque no es tan usado como las opciones anteriores, también contamos con `repeat { }` que ejecuta un [**bucle de manera infinita hasta que se indique abortar**]{.hl-yellow} con un break
+
+```{r}
+count <- 0
+repeat { 
+  
+  count <- count + 1
+  if (count >= 100) { break }
+  
+}
+count
+```
+
+
+### Replicate
+
+Aunque no es formalmente un bucle, otra forma de [**repetir código un número de veces**]{.hl-yellow} es hacer uso de `replicate()`: simplemente permite repetir lo mismo [**n veces**]{.hl-yellow}
+
+```{r}
+x <- 1:3
+replicate(n = 3, x^2)
+```
+
+
+La función `replicate()` se suele usar para [**generar distintas repeticiones de elementos aleatorios**]{.hl-yellow}. Por ejemplo, imaginemos que queremos generar 3 muestras de distribuciones normales, en la que cada muestra tendrá 7 elementos. Para generar una se usa `rnorm(n = 7)` (r de resample, norm de normal, y si no se dice nada es media 0 y desv 1).
+
+```{r}
+replicate(n = 3, rnorm(n = 7))
+```
+
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Modifica el código inferior para que se imprima un mensaje por pantalla si y solo si todos los datos de `airquality` son con mes distinto a enero
+
+```{r}
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (months == 2) {
+  print("No hay datos de enero")
+}
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasets)
+months <- airquality$Month
+
+if (all(months != 1)) {
+  print("No hay datos de enero")
+}
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Modifica el código inferior para guardar en una variable llamada `temp_alta` un `TRUE` si alguno de los registros tiene una temperatura superior a 90 grados Farenheit y `FALSE` en cualquier otro caso
+ 
+```{r}
+#| eval: false
+temp <- airquality$Temp
+
+if (temp == 100) {
+  print("Algunos de los registros tienen temperaturas superiores a 90 grados Farenheit")
+}
+```
+
+ 
+```{r}
+#| eval: false
+#| code-fold: true
+# Option 1
+temp <- airquality$Temp
+temp_alta <- FALSE
+if (any(temp > 90)) {
+   temp_alta <- TRUE
+}
+
+# Option 2
+temp_alta <- any(airquality$Temp > 90)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `for` de 5 iteraciones que solo recorra los primeros 5 impares (y en cada paso del bucle los imprima)
+
+```{r}
+#| eval: false
+for (i in 1:5) {
+  
+  print(i)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+for (i in c(1, 3, 5, 7, 9)) {
+  
+  print(i)
+}
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Modifica el código inferior para diseñar un bucle `while` que empiece con un contador `count <- 1` y pare cuando llegue a 6
+
+```{r}
+#| eval: false
+count <- 1
+while (count == 2) {
+  
+  print(count)
+}
+```
+
+```{r}
+#| eval: false
+#| code-fold: true
+count <- 1
+while (count < 6) {
+  
+  print(count)
+  count <- count + 1
+  
+}
+```
+
+
+:::
+
+
+## 🐣 Caso práctico: bucles y estructuras condicionales
+
+Para practicar estructuras de control vamos a realizar un [**ejercicio de simulación**]{.hl-yellow}
+
+
+
+### Pregunta 1
+
+> Define una varible llamada `importe` que empiece en 100. Diseña un bucle de 20 iteraciones donde en cada iteración, importe se reduzca a la mitad de su valor. Piensa que tipo de estructura de bucle deberías usar. El valor final de `importe` deberia ser `0.000095367` (aprox)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Usamos un for ya que sabemos el número de iteraciones 
+# de manera prefijada (y no depende de nada)
+
+# definimos inicialmente importe en 100
+importe <- 100 
+
+# para el bucle usamos por ejemplo i como índice, que va de 1 a 20
+for (i in 1:20) {
+  
+  # el código fíjate que es el mismo y no depende de i
+  importe <- importe/2
+}
+importe
+```
+
+
+### Pregunta 2
+
+> Diseña una estructura de bucle de manera que encuentres la iteración en la que `importe` es menor que 0.001 por primera vez. Una vez encontrado guárdalo en `iter` y para el bucle.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# dos formas de hacerlo: for y while
+
+# con for
+importe <- 100 
+
+# ya sabemos que en 20 es menor que 0.001 así que podemos poner
+# dicha cantidad como tope sabiendo que no llegará
+for (i in 1:20) {
+  
+  # si todavía no es menor, seguimos dividiendo
+  if (importe >= 0.001) {
+    
+    importe <- importe/2
+    
+  } else {
+    
+    # si ya es menor, guardamos la iteración (piensa por qué i - 1)
+    iter <- i - 1 
+    
+    # y paramos
+    break
+  }
+  
+}
+
+# con while
+importe <- 100 
+
+iter <- 0 # debemos inicializar las iteraciones
+
+# no sabemos cuantas iteraciones, solo que debe parar cuando
+# importe esté por debajo de dicha cantidad
+while (importe >= 0.001) {
+  
+  importe <- importe/2
+    
+  # estructura clásica de while: si se corre iteración
+  # actualizamos un valor (en este caso que cuente una iteración)
+  iter <- iter + 1
+}
+
+iter
+```
+
+
+### Pregunta 3
+
+> En `R` tenemos la función `%%`: si ponemos `a %% b` nos devuelve el resto que daría la división $a/b$. Por ejemplo, `4 %% 2` da 0 ya que 4 es un número par (es decir, su resto al dividir entre 2 es 0). Si ponemos `13 %% 5` nos devuelve 3, ya que el resto de dividir 13 entre 5 es 3.
+
+```{r}
+# Resto al dividir entre 2
+3 %% 2
+4 %% 2
+5 %% 2
+6 %% 2
+
+# Resto al dividir entre 3
+9 %% 3
+10 %% 3
+11 %% 3
+12 %% 3
+```
+
+> Empezando en un importe inicial `importe_inicial` de 100 (euros), diseña un bucle que te sume 3€ más la iteración por la que estés si el importe actual es par y te reste 5€ menos la iteración por la que estés si es impar, SALVO que el importe ya esté igual o por debajo de 0 (en ese caso no debe sumar ni retar). Ejemplo: si importe tiene 50 euros y estás en la iteración 13, sumará 3 + 13 (66 en total); si importe tiene 51 euros y estás en la iteración 13, restará 5 + 13 (33 en total); si importe tiene -2 euros y estás en la iteración 13, sumará 3 + 13 (14 en total); si importe tiene -1 euros y estás en la iteración 13, no hará nada. Guarda los importes resultantes de cada iteración (máximo de 150 iteraciones). Empieza a partir de la iteración 2
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+importe_inicial <- 100
+importe <- c(importe_inicial, rep(NA, 149))
+for (i in 2:150) {
+  
+  if (importe[i - 1] %% 2 == 0) {
+    
+    importe[i] <- importe[i - 1] + 3 + i
+    
+  } else if (importe[i - 1] > 0) {
+    
+    importe[i] <- importe[i - 1] - (5 + i)
+    
+  } else {
+    
+    importe[i] <- importe[i - 1]
+    
+  }
+}
+```
+
+> ¿Qué ha pasado?
+
+
+### Pregunta 4
+
+> En `R` la función `sample(x = ..., size = ...)` va sernos muy útil: de una colección de elementos `x`, selecciona un número `size` al azar de ellos.
+
+Por ejemplo, si queremos simular 3 veces el lanzamiento de un dado tenemos 6 elementos posibles (`x = 1:6`) y lo seleccionamos 3 veces (`size = 3`)
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+Al ser aleatorio, cada vez que lo ejecutas saldrá algo distinto
+
+```{r}
+sample(x = 1:6, size = 3)
+```
+
+¿Y si queremos tirar 10 veces?
+
+```{r}
+#| error: true
+sample(x = 1:6, size = 10)
+```
+
+Al tener solo 6 elementos posibles y elegir 10, no puede, así que le tenemos que indicar que queremos un sample (muestreo) con reemplazamiento (como sucede en el dado, cada cara puede repetirse al volver a tirarlo)
+
+
+```{r}
+sample(x = 1:6, size = 10, replace = TRUE)
+```
+
+#### Pregunta 4.1
+
+> Con lo anterior, imagina que estás en un concurso de televisión donde te dan a elegir 3 puertas: en una hay un premio millonarios y en las otras 2 una galleta oreo. Diseña el estudio de simulación con bucles for para aproximar la probabilidad de que te toque el premio (obviamente tiene que darte aprox 0.3333). Realiza el experimento para 10, 50 intentos, 100 intentos, 500 intentos, 1000 intentos, 10 000 intentos, 20 000 intentos y 30 000 intentos (pista: necesitas un bucle dentro de otro). ¿Qué observas?
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(dplyr)
+
+# Definimos las posibilidades
+puertas <- c(1, 2, 3)
+
+# Definimos los intentos
+intentos <- c(10, 50, 100, 500, 1000, 10000, 20000, 30000)
+
+# Para cada escenario de intentos, definimos las veces que hemos ganado
+# (al inicio empieza en 0 claro)
+exitos <- rep(0, length(intentos))
+
+# primer bucle: cantidad de intentos permitidos
+for (i in 1:length(intentos)) {
+  
+  # segundo bucle: para cada intento, simulaciones una eleccion de 
+  # puerta y un premio
+  for (j in 1:intentos[i]) {
+    
+    # premio: de 3 puertas, solo está en una
+    premio <- sample(x = puertas, size = 1)
+    
+    # puerta que seleccionas como concursante: de 3 puertas, te quedas con una
+    eleccion <- sample(x = puertas, size = 1)
+    
+    # si la puerta seleccionada coincide con la que tiene el premio
+    # sumas un éxito, sino te quedas como estás
+    exitos[i] <- if_else(eleccion == premio, exitos[i] + 1, exitos[i])
+    
+  }
+  # Tras jugar, lo dividimos entre el número de veces que has jugado
+  # para tener una proporción
+  exitos[i] <- exitos[i] / intentos[i]
+}
+exitos
+```
+
+#### Pregunta 4.2
+
+> ¿Y si en cada ronda, te abriesen una de las puertas no premiadas que no has elegido, cambiarías de puerta o te mantendrías? Simula ambos casos y descubre cuál es la estrategia correcta (este problema se conoce como problema de Monty Hall y aparece incluso en películas como 21 Black Jack)
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+puertas <- c(1, 2, 3)
+intentos <- c(10, 50, 100, 500, 1000, 10000, 20000, 30000)
+exitos_mantengo <- exitos_cambio <- rep(0, length(intentos))
+
+for (i in 1:length(intentos)) {
+  for (j in 1:intentos[i]) {
+    
+    # puerta que seleccionas como concursante: de 3 puertas, te quedas con una
+    eleccion_inicial <- sample(x = puertas, size = 1)
+    
+    # premio: de 3 puertas, solo está en una
+    premio <- sample(x = puertas, size = 1)
+    
+    # De la no elegida, el presentador te abre una no premiada
+    puerta_abierta <-
+      puertas[puertas != eleccion_inicial & puertas != premio]
+    
+    # si solo hay una opción (es decir que tu eleccion inicial
+    # y el premio son puertas distintas) no haces nada
+    
+    # Si hubiese 2 opciones (si tu eleccion y el premio coinciden)
+    # te abrirá una al azar
+    if (length(puerta_abierta) > 1) {
+      
+      puerta_abierta <- sample(x = puerta_abierta, size = 1)
+    }
+      
+    
+    # si mantienes es como antes
+    exitos_mantengo[i] <-
+      if_else(eleccion_inicial == premio, exitos_mantengo[i] + 1, exitos_mantengo[i])
+    
+    # si cambias es a una puerta distinta de la inicial y de la abierta, la que quede
+    cambio <- puertas[puertas != eleccion_inicial & puertas != puerta_abierta]
+    exitos_cambio[i] <-
+      if_else(cambio == premio, exitos_cambio[i] + 1, exitos_cambio[i])
+    
+  }
+  # Tras jugar, lo dividimos entre el número de veces que has jugado
+  # para tener una proporción
+  exitos_mantengo[i] <- exitos_mantengo[i] / intentos[i]
+  exitos_cambio[i] <- exitos_cambio[i] / intentos[i]
+}
+exitos_mantengo
+exitos_cambio
+```
+
+> ¿Qué sucede?
