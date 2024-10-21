@@ -2184,6 +2184,132 @@ discursos_cat <-
 
 ## 🐣 Caso práctico IV: R base vs tidyverse
 
-dataset de covid
+Vamos a volver al [**dataset de covid**]{.hl-yellow} de la entrega II pero esta vez desde una **perspectiva tidyverse**
+
+```{r}
+library(readr)
+datos <- read_csv(file = "./datos/messy_covid_data.csv")
+datos
+```
+
+### Pregunta 1
+
+> El nombre de las columnas codifica el sexo (H hombre, M mujer, NC no consta) y el grupo etario (0-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69, 70-79, ≥80 años y NC no consta). Salvo en las dos primeras columnas, convierte cada 0 casos que encuentres en la fila por un `NA`
+
+La ventaja de tidyverse es que podemos evitar bucles por filas (por naturaleza del propio tidyverse) y por columnas (piensa que selectores hemos aprendido para poder aplicar la misma acción a varias columnas)
+
+```{r}
+#| code-fold: true
+datos <- 
+  datos |> 
+  mutate(across(where(is.numeric),
+                function(x) { if_else(x == 0, NA, x) }))
+```
+
+
+### Pregunta 2
+
+> Razona por qué no es tidydata y conviértelo a tidy data. Si te fijas hay muchísimas filas que nos sobran (por tener ausentes) así que haz que al pivotar las elimine.
+
+```{r}
+#| code-fold: true
+tidy_covid <-
+  datos |> 
+  pivot_longer(cols = -c(provincia_iso, fecha),
+               names_to = "grupo", values_to = "casos", 
+               values_drop_na = TRUE)
+```
 
  
+ 
+### Pregunta 3
+
+> Una de las columnas la tenemos codificada a veces como `cosa-cosa_cosa`, otras como `80-Inf_cosa`, otras como `NC-NC_cosa`. Intenta separar dicha columna para generar tres columnas nuevas `edad_inf`, `edad_sup` y `sexo` de manera adecuada. Recuerda que `NC` es un ausente. Por ejemplo, si `10-19_H` tendré que mandar el 10 a una columna, el 19 a otra y H a otra; si tengo `80-Inf_H` deberá mandar 80 a una, NA a otra (no existe la cota superior) y H a otra; si tengo `NC-NC_H` deberás tener NA, NA y H. A lo mejor debes preprocesar los datos antes para luego los NC o los Inf los entienda como un ausente al convertirlo a número. Prueba si quieres a hacer primero la separación sin hacer nada antes y observa que te queda para ver que tienes que hacer antes
+
+```{r}
+#| code-fold: true
+library(stringr)
+tidy_covid <-
+  tidy_covid |> 
+  mutate(grupo = str_replace_all(grupo, "Inf|NC", "NA")) |> 
+  separate(col = "grupo", into = c("edad_inf", "edad_sup", "sexo"),
+           convert = TRUE)
+```
+
+ 
+ 
+### Pregunta 4
+
+
+> Incorpora una nueva variable a la tabla que codifice el mes y el año (por ejemplo, cualquier día de enero de 2020 será algo similar a "1-2020" y cualquier día de febrero del 2021 será "2-2021").
+
+```{r}
+#| code-fold: true
+library(lubridate)
+library(glue)
+tidy_covid <-
+  tidy_covid |>
+  mutate(mes = month(fecha),
+         year = year(fecha),
+         mes_year = glue("{mes}-{year}"))
+```
+
+ 
+### Pregunta 5
+
+> Haciendo uso de esa variable de grupo `mes_year` y del vector de provincias permitidas que aparece debajo (busca en <https://es.wikipedia.org/wiki/ISO_3166-2:ES#Provincias> cómo están codificados los códigos ISO en la tabla) obtén un resumen que nos devuelva en un tibble, por cada provincia permitida y cada mes-año, la media de casos (sin importar edad ni sexo)
+
+```{r}
+#| code-fold: true
+provincias_permitidas <- c("M", "B", "SE", "V", "Z")
+
+resumen_mes_provincia <-
+  tidy_covid |> 
+  filter(provincia_iso %in% provincias_permitidas) |> 
+  summarise("mean_casos" = mean(casos), .by = c(provincia_iso, mes_year))
+```
+
+### Pregunta 6
+
+> Diseña una función `resumen_por_fecha_provincia()` que dada un vector de códigos ISO de provincias permitidas, y un tabla con una columna id de provincia, otra de fecha (nos da igual la de mes-año porque la vamos a crear dentro de la función) y otra de casos, nos devuelva la media de casos diarios que hubo cada mes-año (sin importar sexo ni edad) en las provincias permitidas. Es decir: debes "adaptar" el código anterior a una función para que podamos aplicarlo cada vez que queramos sin necesidad de programarlo de nuevo. Aplica después de la función a los códigos ISO del vector `provincias_permitidas` del ejercicio anterior y comprueba que te da lo mismo que antes (debería...)
+
+```{r}
+#| code-fold: true
+
+provincias_permitidas <- c("M", "B", "SE", "V", "Z")
+
+resumen_por_fecha_provincia <- function(prov_iso, datos) {
+  
+  datos <-
+    datos |>
+    mutate(mes = month(fecha), year = year(fecha),
+           mes_year = glue("{mes}-{year}"))
+  
+  resumen_mes_provincia <-
+    datos |> 
+    filter(provincia_iso %in% prov_iso) |> 
+    summarise("mean_casos" = mean(casos), .by = c(provincia_iso, mes_year))
+  
+  return(resumen_mes_provincia)
+}
+resumen <- resumen_por_fecha_provincia(datos = tidy_covid, prov_iso = provincias_permitidas)
+```
+
+### Pregunta 7
+
+> ¿Cuántos casos diarios hubo de media en abril de 2020 en Madrid? ¿Y en Barcelona? ¿Cuál fue la provincia española (de las permitidas) con menos caos de media en dicha fecha?
+
+```{r}
+#| code-fold: true
+#| eval: false
+resumen |>
+  filter(provincia_iso == "M" & mes_year == "4-2020")
+
+resumen |>
+  filter(provincia_iso == "B" & mes_year == "4-2020")
+
+resumen |>
+  filter(mes_year == "4-2020") |> 
+  slice_min(mean_casos)
+```
+

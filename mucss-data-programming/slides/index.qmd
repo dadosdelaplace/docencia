@@ -8904,10 +8904,10 @@ load(file = "./data/multiple_objects.rda")
 * `.rds` files: for this type we must use `readRDS()`, and we need to incorporate a [**argument `file`**]{.hl-yellow} with the path. In this case we are going to import [**lung cancer data**]{.hl-purple} from the North Central Cancer Treatment Group. Note that now [**.rds import files are a unique database**]{.hl-yellow}
 
 ```{r}
-#| eval: false
 lung_cancer <-
   readRDS(file = "./data/NCCTG_lung_cancer.rds") |>
   as_tibble()
+lung_cancer
 ```
 
 
