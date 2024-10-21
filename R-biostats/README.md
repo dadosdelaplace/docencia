@@ -40,4 +40,7 @@
 * [📦 Material](https://github.com/dadosdelaplace/docencia/tree/main/R-biostats/material)
 * [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-biostats/material/datos)
 * 🛠 Workbooks:
-  - [Introducción a R base (intro R base)](...)
+  - [Introducción a R base y bases de datos (intro to R base, data.frame and tibble)](https://javieralvarezliebana.quarto.pub/intro-r-vectores-tibble-biostats/)
+  - [Estructuras de control y bucles (flow structures and loops)](https://javieralvarezliebana.quarto.pub/control-bucles-if-else-biostats/)
+  - [Funciones (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r-biostats/)
+  - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata-biostats/)
