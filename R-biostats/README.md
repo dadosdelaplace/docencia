@@ -37,7 +37,7 @@
 <h2 align="left">Teaching materials</h2>
 
 * [👨🏻‍🏫 Slides - diapositivas](https://javieralvarezliebana.es/docencia/R-biostats/diapos)
-* [📦 Material](https://javieralvarezliebana.es/docencia/R-biostats/material)
+* [📦 Material](https://github.com/dadosdelaplace/docencia/tree/main/R-biostats/material)
 * [📊 Data](https://github.com/dadosdelaplace/docencia/tree/main/R-biostats/material/datos)
 * 🛠 Workbooks:
   - [Introducción a R base (intro R base)](...)
