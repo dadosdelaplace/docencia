@@ -3,7 +3,7 @@
 </em></p>
 
 
-<h2 align="left">Teaching materials for R in biostatistics/h2>
+<h2 align="left">Teaching materials for R in biostatistics</h2>
 
 <h3 align="left">📊 Data</h3>
 
