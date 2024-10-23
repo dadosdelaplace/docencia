@@ -107,7 +107,7 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 
 * [**Entrega II (15%)**]{.hl-yellow}: 9 de octubre (120 minutos).
 
-* [**Entrega III (25%)**]{.hl-yellow}: 28 o 30 de octubre (120 minutos).
+* [**Entrega III (25%)**]{.hl-yellow}: 30 de octubre (120 minutos).
 
 * [**Entrega IV (30%)**]{.hl-yellow}: 16 de diciembre (120 minutos).
 
@@ -137,9 +137,14 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [6](#clase-6) | S4 | 2 oct | Funciones | [💻](#tu-turno-6) | [🐣](#caso-practico-6) | |
 | [7](#clase-7) | S5 | 7 oct | Tidy data | [💻](#tu-turno-7) | [🐣](#caso-practico-7) | |
 | [8](#clase-8) | S5 | 9 oct | Entrega II |  |  | [🎯 15%](#entrega-II)  |
-| [9](#clase-9) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-9-1) [💻](#tu-turno-9-2) | [🐣](#caso-practico-19) |  |
+| [9](#clase-9) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-9-1) [💻](#tu-turno-9-2) | [🐣](#caso-practico-9) |  |
 | [10](#clase-10) | S6 | 15 oct | Tidyverse: columnas | [💻](#tu-turno-10-1) [💻](#tu-turno-10-2) | [🐣](#caso-practico-10-1) [🐣](#caso-practico-10-2)  [🐣](#caso-practico-10-3) |  |
 | [11](#clase-11) | S6 | 16 oct | Tidyverse: resúmenes | [💻](#tu-turno-11-1) |  [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  |  |
+| [12](#clase-12) | S7 | 21 oct | Repaso | | [🐣](#caso-practico-9) [🐣](#caso-practico-10-1) [🐣](#caso-practico-10-2)  [🐣](#caso-practico-10-3)  [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  |  |
+| [13](#clase-13) | S7 | 23 oct | Joins e importar | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2)  |  |
+| [14](#clase-14) | S7 | 28 oct | Listas | ... |  ... | |
+| [15](#clase-15) | S7 | 30 oct | Entrega III |  |  | [🎯 25%](#entrega-III)  |
+
 :::
 :::
 
@@ -161,7 +166,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 
 ## Datasets
 
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-biostats/material>**
 
 &nbsp;
 
@@ -8733,3 +8738,1144 @@ datos
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-ii-messi-vs-ronaldo)
 
 
+---
+
+## Caso práctico III: discursos
+
+Vamos a hacer un ejercicio con textos. En el [workbook](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-discursos) tienes no solo un caso práctico sino un mini tutorial de cómo trabajar con textos en R haciendo uso del paquete `{stringr}`. En concreto vamos a [**analizar los discursos de Navidad de los jefes de Estado españoles**]{.hl-yellow}
+
+```{r}
+load(file = "./datos/discursos.RData")
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-discursos)
+
+
+---
+
+## Caso práctico IV: covid
+
+Vamos a volver al dataset de covid de la entrega II pero **esta vez desde una perspectiva tidyverse**
+
+```{r}
+library(readr)
+datos <- read_csv(file = "./datos/messy_covid_data.csv")
+```
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iv-r-base-vs-tidyverse)
+
+
+
+# Clase 12: [repaso]{.flow} {#clase-12}
+
+[**En dicha clase se hicieron algunos de los casos prácticos del workbook sin avanzar temario**]{style="color:#444442;"}
+
+---
+
+# Clase 13: [importar y joins]{.flow} {#clase-13}
+
+[**¿Cómo cruzar dos tablas? ¿Cómo importar y exportar archivos?**]{style="color:#444442;"}
+
+
+* [💻 Ejercicios resueltos: joins](#tu-turno-13-1) 
+
+* [💻 Ejercicios resueltos: import/export](#tu-turno-13-2) 
+
+* [🐣 Workbook/caso práctico I: datos de renta](#caso-practico-13-1)
+
+* [🐣 Workbook/caso práctico II: tabla SPSS](#caso-practico-13-2)
+
+* [📆 Planificación](#planificacion)
+
+---
+
+
+## Relacionando datos
+
+Al trabajar con datos [**no siempre tendremos la información en una sola tabla**]{.hl-yellow} y a veces nos interesará cruzar la información de distintas fuentes.
+
+. . .
+
+Para ello usaremos un clásico de todo lenguaje que maneja datos: los famosos [**join**]{.hl-yellow}, que nos permitirán [**cruzar una o varias tablas**]{.hl-yellow}, haciendo uso de una [**columna identificadora**]{.hl-yellow} de cada una de ellas (por ejemplo, imagina que cruzamos datos de hacienda y de antecedentes penales, haciendo `join` por la columna `DNI`).
+
+---
+
+## Relacionando datos
+
+La estructura básica es la siguiente:
+
+```{r}
+#| eval: false
+tabla_1 |>
+  xxx_join(tabla_2, by = id)
+```
+
+![](img/sql-joins.jpg)
+
+. . .
+
+
+Vamos a probar los distintos joins con un ejemplo sencillo
+
+```{r}
+tb_1 <- tibble("key" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+tb_1
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+tb_2
+```
+
+:::
+::::
+
+---
+
+## Left join
+
+
+* `left_join()`: mantiene [**todos los registros de la primera tabla**]{.hl-yellow}, y busca cuales tienen id también en la segunda (en caso de [**no tenerlo se rellena con NA**]{.hl-yellow} los campos de la 2ª tabla).
+
+En nuestra caso queremos incorporar a `tb_1` la información de `tb_2`, identificando los registros por la columna key (`by = "key"`, la columna por la que tiene que cruzar)
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1  |> 
+  left_join(tb_2, by = "key")
+```
+
+:::
+::: {.column width="50%"}
+
+
+![](img/left_join.jpg)
+
+
+:::
+::::
+
+---
+
+## Left join
+
+```{r}
+tb_1 |> 
+  left_join(tb_2, by = "key")
+```
+
+Fíjate que los [**registros de la primera cuya key no ha encontrado en la segunda**]{.hl-yellow} les ha dado el valor de [**ausente**]{.hl-yellow}.
+
+---
+
+
+
+## Right join
+
+
+* `right_join()`: mantiene [**todos los registros de la segunda tabla**]{.hl-yellow}, y busca cuales tienen id también en la primera.
+
+
+Vamos ahora a incorporar a `tb_2` la información de `tb_1`, identificando los registros por la columna key (`by = "key"`)
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/right_join.jpg)
+
+:::
+::::
+
+---
+
+## Right join
+
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+Fíjate que ahora los [**registros de la segunda cuya key no ha encontrado en la primera**]{.hl-yellow} son los que les ha dado el valor de [**ausente**]{.hl-yellow}.
+
+---
+
+
+## Claves y sufijos
+
+Las columnas clave que usaremos para el cruce [**no siempre se llamarán igual**]{.hl-yellow}.
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+* `by = c("key_2" = "key_2")`: le indicaremos en qué columna de cada tabla están las claves por las que vamos a cruzar.
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r}
+# Right
+tb_1  |> 
+  right_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+::::
+
+
+---
+
+## Claves y sufijos
+
+Además podemos [**cruzar por varias columnas a la vez**]{.hl-yellow} (interpretará como igual registro aquel que tenga el conjunto de claves igual), con `by = c("var1_t1" = "var1_t2", "var2_t1" = "var2_t2", ...)`. Modifiquemos el ejemplo anterior
+
+```{r}
+tb_1 <- tibble("k_11" = 1:3, "k_12" = c("a", "b", "c"),  "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("k_21" = c(1, 2, 4), "k_22" = c("a", "b", "e"), "val_y" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2,
+            by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+
+---
+
+## Claves y sufijos
+
+También podría suceder que al cruzar dos tablas, haya [**columnas de valores que se llamen igual**]{.hl-yellow}
+
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val" = c("y1", "y2", "y3"))
+```
+
+. . .
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+Fíjate que [**por defecto nos añade los sufijos**]{.hl-yellow} `.x` y `.y` para indicarnos de que tabla vienen.
+
+---
+
+## Claves y sufijos
+
+
+Dicho [**sufijo podemos especificárselo**]{.hl-yellow} en el argumento opcional `suffix = ...`, que nos permita [**distinguir las variables**]{.hl-yellow} de una tabla y de otra.
+
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"), suffix = c("_tabla1", "_tabla2"))
+```
+
+
+---
+
+
+## Full join
+
+
+* `full_join()`: mantiene [**todos los registros de ambas**]{.hl-yellow} tablas.
+
+Los dos anteriores casos forman lo que se conoce como [**outer joins**]{.hl-yellow}: cruces donde se mantienen observaciones que salgan en al menos una tabla. El tercer outer join es el conocido como `full_join()` que nos [**mantendrá las observaciones de ambas**]{.hl-yellow} tablas, [**añadiendo las filas**]{.hl-yellow} que no casen con la otra tabla.
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  full_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+![](img/full_join.jpg)
+
+:::
+::::
+
+
+---
+
+## Inner join
+
+* `inner_join()`: solo sobreviven los [**registros cuyo id esté en ambas**]{.hl-yellow} tablas.
+
+Frente a los outer join está lo que se conoce como [**inner join**]{.hl-yellow}, con `inner_join()`: un cruce en el que solo se mantienen las [**observaciones que salgan en ambas tablas**]{.hl-yellow}, solo mantiene aquellos registros matcheados.
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+![](img/inner_join.png)
+
+
+:::
+::::
+
+---
+
+## Inner join
+
+Fíjate que en términos de registros, `inner_join` si es conmutativa, **nos da igual el orden de las tablas**: lo único que cambia es el orden de las columnas que añade.
+
+:::: columns
+::: {.column width="50%"}
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+tb_2 |> 
+  inner_join(tb_1, by = c("key_2" = "key_1"))
+```
+
+:::
+::::
+
+---
+
+## Anti/semi join
+
+Por último tenemos dos herramientas interesantes para [**filtrar (no cruzar) registros**]{.hl-yellow}: `semi_join()` y `anti_join()`. El [**semi join**]{.hl-yellow} nos deja en la [**primera tabla los registros que cuya clave está también en la segunda**]{.hl-yellow} (como un inner join pero sin añadir la info de la segunda tabla). Y el segundo, los anti join, hace justo lo contrario (aquellos que no están).
+
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+# semijoin
+tb_1 |> 
+  semi_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+# antijoin
+tb_1 |> 
+  anti_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+:::
+::::
+
+
+---
+
+
+## 💻 Tu turno {#tu-turno-13-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+Para los ejercicios usaremos las tablas disponibles en el paquete `{nycflights13}` (echa un vistazo antes)
+
+```{r}
+library(nycflights13)
+```
+
+* [**airlines**]{.hl-yellow}: nombre de aerolíneas (con su abreviatura).
+* [**airports**]{.hl-yellow}: datos de aeropuertos (nombres, longitud, latitud, altitud, etc).
+* [**flights**]{.hl-yellow}: datos de vuelos.
+* [**planes**]{.hl-yellow}: datos de los aviones.
+* [**weather**]{.hl-yellow}: datos meteorológicos horarios de las estaciones LGA, JFK y EWR.
+
+---
+
+## 💻 Tu turno {#tu-turno-16}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Del paquete `{nycflights13}` cruza la tabla `flights` con `airlines`. Queremos mantener todos los registros de vuelos, añadiendo la información de las aerolíneas a la tabla de aviones.
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines <-
+  flights |> 
+  left_join(airlines, by = "carrier")
+flights_airlines
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 A la tabla obtenida del cruce del apartado anterior, cruza después con los datos de los aviones en `planes`, pero incluyendo solo aquellos vuelos de los que tengamos información de sus aviones (y viceversa). 
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum")
+flights_airlines_planes
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Repite el ejercicio anterior pero conservando ambas variables `year` (en una es el año del vuelo, en la otra es el año de construcción del avión), y distinguiéndolas entre sí
+
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum",
+             suffix = c("_flight", "_build_aircraft"))
+flights_airlines_planes
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Al cruce obtenido del ejercicio anterior incluye la longitud y latitud de los aeropuertos en `airports`, distinguiendo entre la latitud/longitud del aeropuerto en destino y en origen.
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes %>%
+  left_join(airports %>% select(faa, lat, lon),
+            by = c("origin" = "faa")) |> 
+  rename(lat_origin = lat, lon_origin = lon) |> 
+  left_join(airports %>% select(faa, lat, lon),
+            by = c("dest" = "faa")) |> 
+  rename(lat_dest = lat, lon_dest = lon)
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Filtra de `airports` solo aquellos aeropuertos de los que salgan vuelos. Repite el proceso filtrado solo aquellos a los que lleguen vuelos
+
+```{r}
+#| eval: false
+#| code-fold: true
+airports |> 
+  semi_join(flights, by = c("faa" = "origin"))
+airports |> 
+  semi_join(flights, by = c("faa" = "dest"))
+```
+
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 ¿De cuántos vuelos no disponemos información del avión? Elimina antes los vuelos que no tengan identificar (diferente a NA) del avión
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  drop_na(tailnum) |>
+  anti_join(planes, by = "tailnum") |>
+  count(tailnum, sort = TRUE) # de mayor a menor ya de paso
+```
+
+:::
+
+---
+
+## 🐣 Caso práctico I: renta municipios {#caso-practico-13-1}
+
+pendiente de subir
+
+Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
+
+---
+
+
+## Importar/exportar
+
+Hasta ahora sólo hemos utilizado datos ya cargados en paquetes, pero muchas veces [**necesitaremos importar datos externamente**]{.hl-yellow}. Una de las principales [**fortalezas**]{.hl-yellow} de `R` es que podemos importar datos muy fácilmente en diferentes formatos:
+
+
+* [**Formatos nativos de R**]{.hl-yellow}: archivos `.rda`, `.RData` y `.rds`
+
+* [**Rectangular data (datos tabulados)**]{.hl-yellow}: archivos `.csv` y `.tsv`
+
+* [**Datos sin tabular**]{.hl-yellow}: archivos `.txt`.
+
+* [**Datos en excel**]{.hl-yellow}: archivos `.xls` y`.xlsx`.
+
+* [**Datos desde SAS/Stata/SPSS**]{.hl-yellow}: archivos `.sas7bdat`, `.sav` y `.dat`.
+
+* [**Datos desde Google Drive**]{.hl-yellow}
+
+* [**Datos desde API's**]{.hl-yellow}: aemet, catastro, censo, spotify, etc.
+
+---
+
+## Formatos nativos
+
+Los ficheros [**más sencillos**]{.hl-yellow} para importar a `R` (y que suelen ocupar menos espacio en disco) son sus propias [**extensiones nativas**]{.hl-yellow}: ficheros en formatos `.RData`, `.rda` y `.rds`. Para cargar los primeros basta con [**utilizar la función**]{.hl-yellow} `load()` proporcionándole la ruta del fichero.
+
+* Archivos `RData`: vamos a importar el archivo `world_bank_pop.RData` que incluye la tabla `world_bank_pop`
+
+
+```{r}
+load("./datos/world_bank_pop.RData")
+world_bank_pop
+```
+
+
+---
+
+## Formatos nativos
+
+* Archivos `.rda`: vamos a importar el dataset airquality desde `airquality.rda`
+
+```{r}
+load("./datos/airquality.rda")
+airquality |> as_tibble()
+```
+
+---
+
+## Formatos nativos
+
+Tenga en cuenta que los archivos cargados con `load()` se cargan [**automáticamente en el entorno**]{.hl-yellow} (con el nombre guardado originalmente), y no sólo se pueden cargar conjuntos de datos: `load()` nos permite cargar múltiples objetos (no sólo datos tabulares).
+
+Los archivos nativos `.rda` y `.RData` son una forma adecuada de guardar el entorno.
+
+```{r}
+load(file = "./datos/multiple_objects.rda")
+```
+
+
+---
+
+## Formatos nativos
+
+* Archivos `.rds`: para este tipo debemos utilizar `readRDS()`, y necesitamos incorporar un [**argumento `file`**]{.hl-yellow} con la ruta. En este caso vamos a importar [**datos de cáncer de pulmón**]{.hl-purple} del North Central Cancer Treatment Group. Observe que ahora [**los archivos .rds incorporar solo una tabla, no un objeto en general**]{.hl-red}
+
+
+```{r}
+lung_cancer <-
+  readRDS(file = "./datos/NCCTG_lung_cancer.rds") |>
+  as_tibble()
+lung_cancer
+```
+
+
+::: callout-important
+
+## Importante
+
+Las [**rutas**]{.hl-yellow deben ser siempre [**sin espacios, ñ, ni acentos**]{.hl-yellow}. 
+
+
+:::
+
+---
+
+## Datos tabulados: readr
+
+El paquete `{readr}` dentro del entorno `{tidyverse}` contiene varias funciones útiles para [**cargar datos rectangulares (sin formatear pero tabulados)**]{.hl-yellow}.
+
+
+:::: columns
+::: {.column width="50%"}
+
+* `read_csv()`: archivos `.csv` [**variables separadas por comas**]{.hl-purple}
+* `read_csv2()`: variables separadas por [**punto y coma**]{.hl-purple}
+* `read_tsv()`: variables separadas por [**tabuladores**]{.hl-purple}.
+* `read_table()`: variables separadas por [**espacios**]{.hl-purple}.
+* `read_delim()`: función generar con opción de [**especificar el delimitador**]{.hl-purple}.
+
+
+:::
+
+::: {.column width="50%"}
+
+![](img/data-import-readr.png)
+:::
+::::
+
+Todos ellos necesitan como **argumento la ruta del fichero** más **otros opcionales** (saltar cabecera o no, decimales, etc). Ver más en <https://readr.tidyverse.org/>
+
+---
+
+## Datos tabulados (.csv, .tsv)
+
+La principal ventaja de `{readr}` es que [**automatiza el formato**]{.hl-yellow} para pasar de un fichero plano (sin formato) a un tibble (en filas y columnas, con formato).
+
+
+. . .
+
+* Archivo `.csv`: con `read_csv()` cargaremos archivos [**separados por comas**]{.hl-purple}, pasando como [**argumento la ruta**]{.hl-yellow} en `file = ...`. Vamos a importar el conjunto de datos `chickens.csv` (sobre pollos de dibujos animados, por qué no). Si nos fijamos en la salida nos da el tipo de variables.
+
+```{r}
+library(readr)
+chickens <- read_csv(file = "./datos/chickens.csv")
+chickens
+```
+
+---
+
+## Datos tabulados (.csv, .tsv)
+
+
+El [**formato de la variable**]{.hl-yellow} se hará normalmente [**automáticamente**]{.hl-yellow} por `read_csv()`, y podemos consultarlo con `spec()`.
+
+
+```{r}
+spec(chickens)
+```
+
+---
+
+## Datos tabulados (.csv, .tsv)
+
+Aunque normalmente lo hace bien automáticamente podemos [**especificar el formato explícitamente**]{.hl-yellow} en `col_types = lista()` (en formato lista, con `col_xxx()` para cada tipo de variable, por ejemplo `eggs_laid` se importará como carácter). 
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_types = list(col_character(), col_character(),
+                            col_character(), col_character()))
+chickens
+```
+
+---
+
+## Datos tabulados (.csv, .tsv)
+
+Incluso podemos indicar que [**variables queremos seleccionar**]{.hl-yellow} (sin ocupar memoria), indicándolo en `col_select = ...` (en formato lista, con `col_select = ...`).
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_select = c(chicken, sex, eggs_laid))
+chickens
+```
+
+---
+
+## Datos tabulados (.txt)
+
+¿Qué ocurre cuando el [**separador no es correcto**]{.hl-red}?
+
+
+. . .
+
+Si usamos `read_csv()` espera que el separador entre columnas sea una coma pero, como puedes ver con el siguiente `.txt`, lo interpreta todo como una sola columna: [**no tiene coma y no sabe dónde separar**]{.hl-yellow}
+
+
+```{r}
+datos_txt <- read_csv(file = "./datos/massey-rating.txt")
+dim(datos_txt)
+as_tibble(datos_txt)
+```
+
+
+---
+
+## Datos tabulados (.txt)
+
+Para ello tenemos.
+
+* `read_csv2()` cuando el [**separador es punto y coma**]{.hl-yellow}, `read_tsv()` cuando es un [**tabulador**]{.hl-yellow} y `read_table()` cuando es un  [**espacio**]{.hl-yellow}.
+
+* `read_delim()` en general.
+
+```{r}
+datos_txt <- read_table(file = "./datos/massey-rating.txt")
+as_tibble(datos_txt)
+```
+
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+Otro paquete de importación clave será el paquete `{readxl}` para [**importar datos desde Excel**]{.hl-yellow}. Tres funciones serán clave:
+
+* `read_xls()` específica para `.xls`, `read_xlsx()` específica para `.xlsx`.
+* `read_excel()`: tanto para `.xls` como para `.xlsx`.
+
+
+. . .
+
+Vamos a importar `deaths.xlsx` con los registros de defunciones de famosos.
+
+```{r}
+library(readxl)
+deaths <- read_xlsx(path = "./datos/deaths.xlsx")
+deaths
+```
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+
+```{r}
+deaths |> slice(1:6)
+```
+
+[**Una desgracia muy común**]{.hl-red} es que haya algún tipo de comentario o texto al principio del fichero, teniendo que [**saltar esas filas**]{.hl-yellow}.
+
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+Podemos [**saltar estas filas**]{.hl-yellow} directamente en la carga con `skip = ...` (indicando el número de filas a saltar).
+
+
+```{r}
+deaths <- read_xlsx(path = "./datos/deaths.xlsx", skip = 4)
+deaths
+```
+
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+Además con `col_names = ...` ya podemos renombrar las columnas en la importación ([**proporcionar nombres supone 1ª línea ya como dato**]{.hl-yellow})
+
+
+```{r}
+#| code-line-numbers: "2-3"
+deaths <-
+  read_xlsx(path = "./datos/deaths.xlsx", skip = 5,
+            col_names = c("nombre", "profesion", "edad", "hijos", "nacimiento", "muerte"))
+deaths
+```
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+A veces las  [**fechas de Excel tienen un formato incorrecto**]{.hl-red} (sorpresa): podemos utilizar `convertToDate()` del paquete `{openxlsx}` para convertirlo.
+
+
+
+```{r}
+library(openxlsx)
+deaths$muerte <- convertToDate(deaths$muerte)
+deaths
+```
+   
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+También podemos [**cargar un Excel con varias hojas**]{.hl-yellow}: para [**indicar la hoja**]{.hl-yellow} (ya sea por su nombre o por su número) utilizaremos el argumento `sheet = ...`.
+
+
+```{r}
+mtcars <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "mtcars")
+mtcars
+```
+
+---
+
+## Datos Excel (.xls, .xlsx)
+
+ 
+Incluso podemos indicar el [**rango de celdas**]{.hl-yellow} a cargar con `range = ...`.
+
+```{r}
+iris <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "iris", range = "C1:E4")
+iris
+```
+
+---
+
+## Importar desde SAS/STATA/SPSS
+
+El paquete `{haven}` dentro del universo tidyverse nos permitirá [**importar ficheros de los 3 software de pago más importantes**]{.hl-yellow}: SAS, SPSS y Stata.
+
+
+```{r}
+library(haven)
+
+# SAS
+iris_sas <- read_sas(data_file = "./datos/iris.sas7bdat")
+
+# SPSS
+iris_spss <- read_sav(file = "./datos/iris.sav")
+
+# Stata
+iris_stata <- read_dta(file = "./datos/iris.dta")
+```
+
+---
+
+
+## Exportar
+
+De la misma forma que podemos importar también podemos [**exportar**]{.hl-yellow}
+
+* exportar en `.RData` (opción recomendada para variables almacenadas en `R`). Recuerda que esta extensión [**sólo se puede utilizar en `R`**]{.hl-yellow}. Para ello, basta con utilizar `save(object, file = path)`.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+save(table, file = "./datos/table.RData")
+rm(table) # eliminar
+load("./datos/table.RData")
+table
+```
+
+---
+
+## Exportar
+
+La ventaja de `.RData` es que podemos [**exportar múltiples variables de nuestro environment**]{.hl-yellow}, no solo un único dataset.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+a <- 1
+b <- c("javi", "sandra")
+save(table, a, b, file = "./datos/mult_obj.RData")
+rm(list = c("a", "b", "table"))
+load("./datos/mult_obj.RData")
+table
+```
+
+---
+
+## Exportar
+
+* [**exportado en `.csv`**]{.hl-yellow}. Para ello simplemente utilizamos `write_csv(object, file = path)`, y es el más recomendable para exportar bases de datos de tamaño pequeño o mediano. Ver <https://arrow.apache.org/docs/r/> para bases de datos masivas.
+
+```{r}
+write_csv(table, file = "./datos/table.csv")
+read_csv(file = "./datos/table.csv")
+```
+
+---
+
+## Importar desde web
+
+Una de las principales ventajas de `R` es que podemos hacer uso de todas las funciones anteriores de [**importar pero directamente desde una web**]{.hl-yellow}, sin necesidad de realizar la descarga manual: en lugar de pasarle la ruta local le indicaremos el [**enlace**]{.hl-yellow}. Por ejemplo, vamos a descargar los datos covid del ISCIII (<https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos>)
+
+```{r}
+#| eval: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+covid_data
+```
+
+```{r}
+#| echo: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv", n_max = 500)
+covid_data
+```
+
+---
+
+## Importar desde wikipedia
+
+El paquete `{rvest}`, uno de los más útiles de `{tidyverse}` nos permite [**importar (scrappear) directamente desde un `html`**]{.hl-yellow}. Por ejemplo, para exportar tablas de wikipedia basta con `read_html()` para importar el html, `html_element(«table»)` para extraer los objetos tabla, y `html_table()` para convertir la tabla html a `tibble`.
+
+
+```{r}
+library(rvest)
+wiki_jump <- 'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'
+wiki_jump |> read_html() |> 
+  html_element("table") |> 
+  html_table()
+```
+
+---
+
+## Importar desde google drive
+
+Otra opción disponible (especialmente si trabajamos con otras personas trabajando) es [**importar desde una hoja de cálculo de Google Drive**]{.hl-yellow}, haciendo uso de `read_sheet()` del paquete `{googlesheets4}`.
+
+La primera vez se te pedirá un permiso tidyverse para interactuar con tu drive
+
+
+```{r}
+library(googlesheets4)
+google_sheet <-
+  read_sheet("https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing")
+google_sheet
+```
+
+---
+
+## Importar desde API (owid)
+
+Otra opción interesante es la [**descarga de datos desde una API**]{.hl-yellow}: un intermediario entre una app o proveedor de datos y nuestro `R`. Por ejemplo, carguemos la librería `{owidR}`, que nos permite descargar datos de la web <https://ourworldindata.org/>. Por ejemplo, la función `owid_covid()` carga sin darnos cuenta más de 400 000 registros con más de 60 variables de 238 países.
+
+
+```{r}
+#| eval: false
+library(owidR)
+owid_covid() |> as_tibble()
+```
+
+```{r}
+#| echo: false
+library(owidR)
+owid_covid() |> as_tibble() |> slice(1:7)
+```
+
+---
+
+## Importar desde API (aemet)
+
+En muchas ocasiones para conectarnos a la API primero tendremos que [**registrarnos y obtener una clave**]{.hl-yellow}, este es el caso del paquete `{climaemet}` para acceder a [**datos meteorológicos de España**]{.hl-yellow} (<https://opendata.aemet.es/centrodedescargas/inicio>).
+
+
+Una vez tengamos la clave API la registramos en nuestro RStudio para poder utilizarla en el futuro.
+
+```{r}
+#| eval: false
+library(climaemet)
+
+# Api key
+apikey <- "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"
+
+aemet_api_key(apikey, install = TRUE)
+```
+
+
+```{r}
+#| echo: false
+library(climaemet)
+```
+
+--- 
+
+## Importar desde API (aemet)
+
+
+Con este paquete podemos hacer una [**búsqueda de estaciones**]{.hl-yellow} para conocer tanto su código postal como su código identificador dentro de la red AEMET
+
+```{r}
+stations <- aemet_stations()
+stations
+```
+
+---
+
+## Importar desde API (aemet)
+
+Por ejemplo, para obtener datos de la estación del aeropuerto de El Prat, Barcelona, el código a proporcionar es `«0076»`, obteniendo **datos horarios**.
+
+```{r}
+aemet_last_obs("0076")
+```
+
+
+---
+
+## Importar desde API (US census)
+
+Una de las herramientas más útiles de los últimos años es la conocida como `{tidycensus}`: una herramienta para [**facilitar el proceso de descarga de datos censales**]{.hl-yellow} de Estados Unidos desde `R`
+
+```{r}
+library(tidycensus)
+```
+
+* `get_decennial()`: para acceder a los [**datos de censos (US Decennial Census)**]{.hl-yellow}, se hacen cada 10 años (años 2000, 2010 y 2020).
+
+* `get_acs()`: para acceder a los [**datos anuales y quinquenales (5 años)  de la ACS (American Community Survey)**]{.hl-yellow} (censo != encuesta)
+
+* `get_estimates()`: para acceder a las [**estimaciones anuales de población, natalidad y mortalidad**]{.hl-yellow}
+
+* `get_pums()`: para acceder a los [**microdatos (datos sin agregar) de la ACS (anonimizados a nivel individual)**]{.hl-yellow}
+
+* `get_flows()`: para acceder a los datos de [**flujo de migraciones**]{.hl-yellow}
+
+---
+
+## Importar desde API (US census)
+
+Por ejemplo vamos a descargarnos los **datos censales** (`get_decennial()`) a nivel estado (`geography = "state"`) de la población (variable `variables = "P001001"`) para el año 2010 (ver variables en `tidycensus::load_variables()`)
+
+```{r}
+total_population_10 <-
+  get_decennial(geography = "state", 
+  variables = "P001001",
+  year = 2010)
+total_population_10
+```
+
+---
+
+## Importar desde API 
+
+Otras opciones
+
+* `{chessR}`: datos de partidas de ajedrez de las plataformas chess.com y lychess. Ver más en <https://github.com/JaseZiv/chessR>
+
+* `{spotifyr}`: datos de canciones de Spotify. Ver más en <https://www.rcharlie.com/spotifyr/>
+
+* `{gtrendsR}`: datos de Google Trends. Ver más en <https://github.com/PMassicotte/gtrendsR>
+
+* `{scholar}`: datos de Google Scholar. Ver más en <https://github.com/jkeirstead/scholar>
+
+---
+
+## 💻 Tu turno {#tu-turno-13-2}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 El conjunto de datos `who2` del paquete `{tidyr}` que hemos utilizado en ejercicios anteriores, expórtalo a un formato nativo `R` en la carpeta `datos` de tu proyecto de RStudio
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tidyr)
+save(who2, file = "./datos/who2.RData")
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Carga el conjunto de datos `who2` pero desde la carpeta data (importa el fichero creado en el ejercicio anterior)
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+load("./datos/who2.RData")
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Repite lo mismo (exportar e importar) en 4 formatos: `.csv`, `.xlsx`, `.sav` (spss) y `.dta` (stata)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# csv
+library(readr)
+write_csv(who2, file = "./datos/who2.csv")
+who2_data <- read_csv(file = "./datos/who2.csv")
+
+# excel
+library(openxlsx)
+write.xlsx(who2, file = "./datos/who2.xlsx")
+who2_data <- read_xlsx(path = "./datos/who2.xlsx")
+
+# sas y stata
+library(haven)
+write_sav(who2, path = "./datos/who2.sav")
+who2_data <- read_spss(path = "./datos/who2.sav")
+
+write_dta(who2, path = "./datos/who2.dta")
+who2_data <- read_dta(path = "./datos/who2.dta")
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Repita la carga de `who2.csv` pero seleccione sólo las 4 primeras columnas ya cargadas.
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_select <-
+  read_csv(file = "./datos/who2.csv",
+           col_select = c("country", "iso2", "iso3", "year"))
+who_select
+```
+
+
+:::
+
+---
+
+## 🐣 Caso práctico II: tabla en SPSS {#caso-practico-13-2}
+
+pendiente de subir
+
+Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
+
+¿brexit?
