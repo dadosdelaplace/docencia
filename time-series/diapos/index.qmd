@@ -6479,16 +6479,120 @@ $$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{red}{\ell_t + h*\m
 
 ## Alisado doble (lineal) de Holt
 
-modelo y forecast en fable
+Para ello simplemente debemos usar `ETS()` incluyendo ahora tendencia aditiva `trend("A")`
+
+```{r}
+airpass <- AirPassengers |> as_tsibble()
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        alisado_doble = ETS(value ~ error("A") + trend("A") + season("N")))
+
+estimaciones <- fit_airpass |> augment()
+predicciones <- fit_airpass |> forecast(h = 12)
+estimaciones
+```
+
+---
+
+## Alisado doble (lineal) de Holt
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(airpass, level = NULL) +
+  geom_line(data = estimaciones, aes(x = index, y = .fitted, color = .model)) +
+  geom_line(data = predicciones, aes(x = index, y = .mean, color = .model)) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(3)[-1]) +
+  theme_minimal()
+```
+
 
 ---
 
 
 ## Alisado doble de Gardner-McKenzie
 
+Las predicciones generadas por el alisado doble de Holt nos dan una [**tendencia constante (creciente o decreciente) indefinidamente hacia el infinito**]{.hl-yellow}. Sin embargo, la evidencia empírica indica que estos métodos [**tienden a sobrepronosticar a horizontes de previsión más largos**]{.hl-yellow}.
+
+. . .
+
+Para solventar esto Gardner y McKenzie (1985) introdujeron un [**parámetro de amortiguación $\phi$**]{.hl-yellow}: la [**predicción a futuro empieza siendo una línea recta que termina doblándose**]{.hl-yellow} hasta acabar en una recta.
+
 ---
 
-## Alisado triple
+## Alisado doble de Gardner-McKenzie
+
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{red}{\ell_t} + \color{blue}{\left( \phi+\phi^2 + \dots + \phi^{h}\right)*\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &=& \color{purple}{\theta_1 ( \ell_{t-1}+} \color{blue}{\phi}\color{purple}{\mu_{t-1} ) + \left( 1 - \theta_1 \right)X_t} \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &=& \color{green}{\theta_2} \color{blue}{\phi\mu_{t-1}} \color{green}{+ \left( 1 - \theta_2 \right) \left( \ell_t - \ell_{t-1} \right)} \quad \text{suavizado tendencia} \end{eqnarray}$$
+
+con $\color{blue}{0 < \phi < 1}$.
+
+. . .
+
+* [**Predicción a horizonte $h$**]{.hl-red}: último nivel conocido más un amortiguamiento de nivel $h$ de la última tendencia conocida
+
+Así cuando $h \to infty$ tenemos que la predicción acaba siendo una constante.
+
+$$\begin{eqnarray}\lim_{h \to \infty} \widehat{X}_{t+h|t} &=& \ell_t + \lim_{h \to \infty} \left( \phi+\phi^2 + \dots + \phi^{h}\right)*\mu_t \nonumber \\
+&=& \ell_t + \frac{\phi}{1-\phi}\mu_t\end{eqnarray}$$
+
+---
+
+## Alisado doble de Gardner-McKenzie
+
+Para ello simplemente debemos usar `ETS()` incluyendo ahora tendencia aditiva `trend("Ad")` (additive dumped)
+
+```{r}
+airpass <- AirPassengers |> as_tsibble()
+fit_airpass <-
+  airpass |>
+  model(alisado_simple = ETS(value ~ error("A") + trend("N") + season("N")),
+        alisado_doble = ETS(value ~ error("A") + trend("A") + season("N")),
+        alisado_doble_amortiguado = ETS(value ~ error("A") + trend("Ad", phi = 0.4) + season("N")))
+
+estimaciones <- fit_airpass |> augment()
+predicciones <- fit_airpass |> forecast(h = 8)
+estimaciones
+```
+
+---
+
+## Alisado doble de Gardner-McKenzie
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(airpass, level = NULL) +
+  geom_line(data = estimaciones, aes(x = index, y = .fitted, color = .model)) +
+  geom_line(data = predicciones, aes(x = index, y = .mean, color = .model)) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(4)[-1]) +
+  theme_minimal()
+```
+
+
+---
+
+
+## Alisado triple de Holt-Winters
+
+Unos años más tarde, Holt y Winters (1960) ampliaron los métodos anteriores para [**poder capturar la estacionalidad**]{.hl-yellow}. Se conoce como [**alisado triple**]{.hl-yellow} ya que tendremos ahora tres ecuaciones de suavizado: suavizado del nivel, suavizado de la tendencia y suavizado de la componente estacional.
+
+. . .
+
+Ahora tendremos 4 parámetros:
+
+* parámetros de suavizado $\left(\theta_1, \theta_2, \theta_3 \right)$ 
+
+* parámetro de estacionalidad $s$
+
+. . .
+
+Y tendremos [**dos tipos de formas de incluir la estacionalidad**]{.hl-yellow}: aditivo (varianza constante a lo largo del tiempo, la componente estacional se expresa en términos absolutos) y multiplicativo (la componente estacional se expresa en términos relativos, en porcentajes).
+
+---
+
+## Alisado triple de Holt-Winters
 
 
 ---

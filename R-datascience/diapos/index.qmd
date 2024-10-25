@@ -10371,9 +10371,6 @@ who_select
 
 ## 🐣 Caso práctico II: tabla en SPSS {#caso-practico-13-2}
 
-pendiente de subir
-
-Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
 
 ¿brexit?
 

@@ -167,8 +167,8 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [3](#clase-3) | S4 | 26 sep | Tidyverse: by columns | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) [🐣](#caso-practico-3-3)|  | 
 | [4](#clase-4) | S5 | 3 oct | Tidyverse: summary | [💻](#tu-turno-4-1)  | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2) |  | 
 | [5](#clase-5) | S6 | 10 oct | Loops | [💻](#tu-turno-5-1)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) |  |
-| [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2)  |  |
-| [7](#clase-7) | S8 | 24 oct | Import/export files. R base vs tidyverse |   |  |  |
+| [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2) [🐣](#caso-practico-6-3) [🐣](#caso-practico-6-4)  |  |
+| [7](#clase-7) | S8 | 24 oct | Import/export |  [💻](#tu-turno-7-1) | [🐣](#caso-practico-7-1) [🐣](#caso-practico-7-2)  |  |
 | [8](#clase-8) | S10 | 6 nov | Purrr and forcats packages  |   |  |  |
 | [9](#clase-9) | S11 | 13 nov | Github and SQL connection |   |  |  |
 :::
@@ -8822,9 +8822,65 @@ flights |>
 
 ---
 
-## 🐣 Case study III: pending {#caso-practico-6-3}
+## 🐣 Case study III: Beatles and Rolling Stones {#caso-practico-6-3}
 
-pending to submit about joins + import/export
+We will use to practice simple joins the `band_members` and `band_instruments` datasets already included in the `{dplyr}` package.
+
+```{r}
+library(dplyr)
+band_members
+band_instruments
+```
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
+
+---
+
+## 🐣 Case study IV: income by municipalities {#caso-practico-6-4}
+
+In the file `municipios.csv` we have stored the information of the municipalities of Spain as of 2019.
+
+* The variable `LAU_code` represents the code as local administrative unit in the EU (see more at <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
+
+* The variable `codigo_ine` is formed by joining the province code and the community code (each province has a code from 1 to 52, it does not depend on the ccaa).
+
+```{r}
+# 2019 data
+mun_data <- read_csv(file = "./data/municipios.csv")
+mun_data
+```
+
+---
+
+## 🐣 Case study IV: income by municipalities
+
+On the other hand, in the file `renta_mun` we have the average per capita income of each administrative unit (municipalities, districts, provinces, autonomous communities,...) for different years.
+
+```{r}
+renta_mun <- read_csv(file = "./data/renta_mun.csv")
+renta_mun
+```
+
+---
+
+## 🐣 Case study IV: income by municipalities
+
+Before we start let's [**normalize variable names**]{.hl-yellow} using `clean_names()` from the `{janitor}` package.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
 
 # L7: [import/exports]{.flow} {#clase-7}
 
@@ -9146,9 +9202,6 @@ iris_spss <- read_sav(file = "./data/iris.sav")
 iris_stata <- read_dta(file = "./data/iris.dta")
 ```
 
----
-
-## Import from SPSS
 
 ---
 
@@ -9316,11 +9369,40 @@ aemet_last_obs("0076")
 
 ---
 
-## Import from API (US census)
+
+## Importar from API (US census)
+
+One of the most useful tools in recent years is known as `{tidycensus}`: a tool for [**facilitating the process of downloading census data**]{.hl-yellow} for the United States from `R`.
 
 ```{r}
-
+library(tidycensus)
 ```
+
+* `get_decennial()`: to access the [**census data (US Decennial Census)**]{.hl-yellow}, done every 10 years (years 2000, 2010 and 2020).
+
+* `get_acs()`: to access the [**annual and quinquennial (5 years) ACS (American Community Survey)**]{.hl-yellow} (census != survey)
+
+* `get_estimates()`: to access the [**annual population, birth and death estimates**]{.hl-yellow} (census != survey)
+
+* `get_pums()`: to access the [**microdata (unaggregated data) of the ACS (anonymized at the individual level)**]{.hl-yellow}
+
+* `get_flows()`: to access the [**migration flow**]{.hl-yellow} data.
+
+
+---
+
+## Importar from API (US census)
+
+For example, we will download the **census data** (`get_decennial()`) at the state level (`geography = “state”`) for the population (variable `variables = “P001001”`) for the year 2010 (see variables in `tidycensus::load_variables()`).
+
+```{r}
+total_population_10 <-
+  get_decennial(geography = "state", 
+  variables = "P001001",
+  year = 2010)
+total_population_10
+```
+
 
 
 ---
@@ -9406,6 +9488,14 @@ who_select <-
 
 
 :::
+
+---
+
+## 🐣 Case study I: SPSS {#caso-practico-7-1}
+
+---
+
+## 🐣 Case study II: Brexit {#caso-practico-7-2}
 
 
 # L8: [factors and lists]{.flow} {#clase-8}
@@ -9693,6 +9783,9 @@ map_lgl(second_film, is.null)
 
 :::
 
+---
+
+## 🐣 Case study I: ... {#caso-practico-8-1}
 
 ---
 
@@ -10201,6 +10294,9 @@ months_fct
 
 :::
 
+---
+
+## 🐣 Case study II: ... {#caso-practico-8-2}
 
 # L9: [dbplyr and github]{.flow} {#clase-9}
 

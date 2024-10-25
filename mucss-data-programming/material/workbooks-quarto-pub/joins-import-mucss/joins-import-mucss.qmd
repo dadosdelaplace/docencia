@@ -1,0 +1,1059 @@
+---
+title: "Joins and import: how to combine, import and export files in R"
+subtitle: "Practical workbooks of Data Programming in Master in Computational Social Science  (2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+
+## Joins
+
+When working with data we will not always have the information in a single table, and sometimes, we will be interested in [**cross-referencing**]{.hl-yellow} information from different sources.
+
+
+For this we will use a classic of every language that handles data: the famous [**join**]{.hl-yellow}, a tool that will allow us to [**cross one or several tables**]{.hl-yellow}, making use of a [**identifying column**]{.hl-yellow} of each one of them.
+
+```{r}
+#| eval: false
+table_1 |>
+  xxx_join(table_2, by = id)
+```
+
+
+
+* `inner_join()`: only [**records with id in both**]{.hl-yellow} tables survive.
+
+* `full_join()`: keeps [**all records in both**]{.hl-yellow} tables.
+
+* `left_join()`: keeps [**all the records of the first table**]{.hl-yellow}, and looks for which ones have id also in the second one (in case of [**not having it, it fills with NA**]{.hl-yellow} the fields of the 2nd table).
+
+* `right_join()`: keeps [**all records in the second table**]{.hl-yellow}, and searches which ones have id also in the first one.
+
+![](img/sql-joins.jpg)    
+
+
+
+Let's test the various joins with a simple example
+
+```{r}
+library(tidyverse)
+tb_1 <- tibble("key" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+tb_1
+```
+
+
+```{r}
+tb_2
+```
+
+
+
+### left_join()
+
+Imagine that we want to [**incorporate**]{.hl-yellow} to `tb_1` the [**information from table_2**]{.hl-yellow}, identifying the records by the key column (`by = "key"`, the column it has to cross): we want to keep all the records of the first table and look for which ones have the same value in `key` also in the second one.
+
+
+```{r}
+tb_1 |> 
+  left_join(tb_2, by = "key")
+```
+
+
+![](img/left_join.jpg)
+
+
+
+
+```{r}
+tb_1 |>
+  left_join(tb_2, by = "key")
+```
+
+Notice that the [**records in the first one whose key was not found in the second one**]{.hl-yellow} has given them the value of [**absent**]{.hl-yellow}.
+
+### right_join()
+
+The `right_join()` will perform the opposite operation: we will now [**incorporate**]{.hl-yellow} to `tb_2` the [**information from table_2**]{.hl-yellow}, identifying the records by the `key` column: we want to keep all the records of the second one and look for which ones have id (same value in `key`) also in the first table.
+
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+
+
+![](img/right_join.jpg)
+
+
+```{r}
+tb_1 |>
+  right_join(tb_2, by = "key")
+```
+
+Notice that now the [**records of the second one whose key was not found in the first one**]{.hl-yellow} are the ones given the value of [**absent**]{.hl-yellow}.
+
+### keys and suffixes
+
+The key columns we will use for the crossover [**will not always be named the same**]{.hl-yellow}.
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+* `by = c("key_2" = "key_2")`: we will indicate in which column of each table are the keys that we are going to cross.
+
+
+```{r}
+# Left
+tb_1  |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+```{r}
+# Right
+tb_1 |> 
+  right_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+
+
+We can also [**cross over several columns at the same time**]{.hl-yellow} (it will interpret as equal record the one that has the same set of keys), with `by = c("var1_t1" = "var1_t2", "var2_t1" = "var2_t2", ...)`. Let's modify the previous example
+
+```{r}
+tb_1 <- tibble("k_11" = 1:3, "k_12" = c("a", "b", "c"),  "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("k_21" = c(1, 2, 4), "k_22" = c("a", "b", "e"), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2,
+            by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+
+
+```{r}
+# Right
+tb_1 |> 
+  right_join(tb_2,
+             by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+
+
+It could also happen that when crossing two tables, there are [**columns of values named the same**]{.hl-yellow}
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+Notice that [**default adds the suffixes**]{.hl-yellow} `.x` and `.y` to tell us which table they come from. This [**suffix can be specified**]{.hl-yellow} in the optional argument `suffix = ...`, which allows us to [**distinguish the variables**]{.hl-yellow} of one table from another.
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"),
+            suffix = c("_table1", "_table2"))
+```
+
+### full_join()
+
+The two previous cases form what is known as [**outer joins**]{.hl-yellow}: crosses where observations are kept that appear in at least one table. The third outer join is known as `full_join()` which will [**keep observations from both**]{.hl-yellow} tables, [**adding rows**]{.hl-yellow} that do not match the other table.
+
+
+```{r}
+tb_1  |> 
+  full_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+![](img/full_join.jpg)
+
+
+
+### inner_join()
+
+Opposite the outer join is what is known as [**inner join**]{.hl-yellow}, with `inner_join()`: a join in which only the [**observations that appear in both tables**]{.hl-yellow} are kept, only those records that are patched are kept.
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2,  by = c("key_1" = "key_2"))
+```
+
+
+![](img/inner_join.png)
+
+
+
+
+Note that in terms of records, `inner_join` if it is commutative, **we don't care about the order of the tables**: the only thing that changes is the order of the columns it adds.
+
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+```{r}
+tb_2 |> inner_join(tb_1, by = c("key_2" = "key_1"))
+```
+
+### semi/anti_join()
+
+Finally we have two interesting tools to [**filter (not cross) records**]{.hl-yellow}: `semi_join()` and `anti_join()`. The [**semi join**]{.hl-yellow} leaves us in the [**first table the records whose key is also in the second table**]{.hl-yellow} (like an inner join but without adding the info from the second table). And the second one, the anti join, does just the opposite (those that are not).
+
+
+
+
+```{r}
+# semijoin
+tb_1 |> 
+  semi_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+```{r}
+# antijoin
+tb_1 |> 
+  anti_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+
+### 💻 It's your turn
+
+For the exercises we will use the tables available in the package `{nycflights13}`.
+
+```{r}
+library(nycflights13)
+```
+
+* **airlines**: name of airlines (with their abbreviation).
+* **airports**: airport data (names, longitude, latitude, altitude, etc).
+* **flights**, **planes**: flight and aircraft data.
+* **weather**: hourly weather data.
+
+
+
+::: panel-tabset
+
+### [**Exercise 1**]{.hl-yellow}
+
+📝 From package `{nycflights13}` incorporates into the `flights` table the airline data in `airlines`. We want to maintain all flight records, adding the airline information to the airlines table.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+flights_airlines <-
+  flights |> 
+  left_join(airlines, by = "carrier")
+flights_airlines
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 To the table obtained from the crossing of the previous section, include the data of the aircraft in `planes`, but including only those flights for which we have information on their aircraft (and vice versa). 
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum")
+flights_airlines_planes
+```
+
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Repeat the previous exercise but keeping both `year` variables (in one is the year of flight, in the other is the year of construction of the aircraft), and distinguishing them from each other
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes <- 
+  flights_airlines |>
+  inner_join(planes, by = "tailnum",
+             suffix = c("_flight", "_build_aircraft"))
+flights_airlines_planes
+```
+
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 To the table obtained from the previous exercise includes the longitude and latitude of the airports in `airports`, distinguishing between the latitude/longitude of the airport at destination and at origin.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights_airlines_planes |> 
+  left_join(airports |> select(faa, lat, lon),
+            by = c("origin" = "faa")) |> 
+  rename(lat_origin = lat, lon_origin = lon) |> 
+  left_join(airports |> select(faa, lat, lon),
+            by = c("dest" = "faa")) |> 
+  rename(lat_dest = lat, lon_dest = lon)
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Filter from `airports` only those airports from which flights depart. Repeat the process filtering only those airports where flights arrive.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+airports |> 
+  semi_join(flights, by = c("faa" = "origin"))
+airports |> 
+  semi_join(flights, by = c("faa" = "dest"))
+```
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 How many flights do we not have information about the aircraft? Eliminate flights that do not have an aircraft ID (other than NA) beforehand.
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+flights |>
+  drop_na(tailnum) |>
+  anti_join(planes, by = "tailnum") |>
+  count(tailnum, sort = TRUE) 
+```
+
+:::
+
+
+## 🐣 Case study I: Beatles and Rolling Stones
+
+We will use to practice simple joins the `band_members` and `band_instruments` datasets already included in the `{dplyr}` package.
+
+```{r}
+library(dplyr)
+band_members
+band_instruments
+```
+
+In the first one we have a series of artists and the band they belong to; in the second one we have a series of artists and the instrument they play. Beyond performing the requested actions, try to visualize which final table you would have
+
+### Question 1
+
+> Given the table `band_members`, incorporate the information of what instrument each member plays (`band_instruments`) of the ones you have in that table.
+
+
+
+```{r}
+#| code-fold: true
+left_join_band <-
+  band_members |> 
+  left_join(band_instruments, by = "name")
+```
+
+### Question 2
+
+> Given the `band_members` and `band_instruments` tables, what kind of join should you do to have a complete table, with no absentees, where all band members have their instrument information, and every instrument has a member associated with it?
+
+```{r}
+#| code-fold: true
+inner_join_band <-
+  band_members |>
+  inner_join(band_instruments, by = "name")
+```
+
+### Question 3
+
+> Given the `band_instruments` table, how to incorporate the information of who plays each instrument (in case we know it)?
+
+```{r}
+#| code-fold: true
+right_join_band <-
+  band_members |>
+  right_join(band_instruments, by = "name")
+
+# other option
+left_join_instruments <-
+  band_instruments |> 
+  left_join(band_members, by = "name")
+```
+
+### Question 4
+
+> Given the `band_members` and `band_instruments` tables, what kind of join should you do to have a table with all the info, both members and instruments, even if there are members whose instrument you do not know, and instruments whose carrier you do not know?
+
+```{r}
+#| code-fold: true
+full_join_band <-
+  band_members |>
+  full_join(band_instruments, by = "name")
+```
+
+## 🐣 Case study II: income by municipalities
+
+In the file `municipios.csv` we have stored the information of the municipalities of Spain as of 2019.
+
+* The variable `LAU_code` represents the code as local administrative unit in the EU (see more at <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
+
+* The variable `codigo_ine` is formed by joining the province code and the community code (each province has a code from 1 to 52, it does not depend on the ccaa).
+
+```{r}
+# 2019 data
+mun_data <- read_csv(file = "./datos/municipios.csv")
+```
+
+On the other hand, in the file `renta_mun` we have the average per capita income of each administrative unit (municipalities, districts, provinces, autonomous communities,...) for different years.
+
+```{r}
+renta_mun <- read_csv(file = "./datos/renta_mun.csv")
+```
+
+Before we start let's [**normalize variable names**]{.hl-yellow} using `clean_names()` from the `{janitor}` package.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+### Question 1
+
+> Convierte a tidydata `renta_mun` obteniendo una tabla de 4 columnas: `unidad`, `year`, `income` and `codigo_ine` (sin ausentes y cada dato del tipo correcto)
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun |> 
+  pivot_longer(cols = contains("x"), names_to = "year",
+               values_to = "income", names_prefix = "x",
+               names_transform = list(year = as.numeric),
+               values_drop_na = TRUE)
+```
+
+### Question 2
+
+> Si te fijas en la tabla anterior tenemos datos de distintas unidades administrativas que no siempre son municipios. Sabiendo que todos los municipios tiene un código formado por 5 caracteres, filtra solo aquellos registros que corresponden a unidades municipales. 
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun_tidy |>
+  filter(str_detect(codigo_ine, pattern = "[0-9]{5}") & 
+           str_length(codigo_ine) == 5)
+```
+
+### Question 3
+
+> Tras ello separa adecuadamente la variable unidad en dos columnas: una con el código (que ya tienes así que uno de los dos debes eliminar) y el nombre. Elimna espacios sueltes que queden (echa vistazo a las opciones del paquete `{stringr}`)
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun_tidy |>
+  separate(col = "unidad", into = c("cod_rm", "name"), sep = 5) |> 
+  select(-cod_rm) |> 
+  mutate(name = str_trim(name)) 
+```
+
+### Question 4
+
+> ¿En qué año la media de renta fue mayor? ¿Y menor? ¿Cuál fue la renta mediana de los municipios de España en 2019
+
+```{r}
+summary_renta <-
+  renta_mun_tidy |> 
+  summarise("mean_income" = mean(income, na.rm = TRUE),
+            .by = year)
+summary_renta |>
+  slice_min(mean_income, n = 1)
+summary_renta |>
+  slice_max(mean_income, n = 1)
+
+renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  summarise("median_income" = median(income, na.rm = TRUE))
+```
+
+
+### Question 5
+
+> Haz lo que consideres para obtener la provincia con mayor renta media en 2019 y la que menos. Asegúrate de obtener su nombre. 
+
+```{r}
+#| code-fold: true
+summary_by_prov <-
+  renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  left_join(mun_data, by = "codigo_ine", suffix = c("", "_rm")) |> 
+  select(-contains("rm")) |> 
+  summarise("mean_by_prov" = mean(income, na.rm = TRUE),
+            .by = c("cpro", "ine_prov_name"))
+
+summary_by_prov |> 
+  slice_max(mean_by_prov, n = 1)
+
+summary_by_prov |> 
+  slice_min(mean_by_prov, n = 1)
+```
+
+### Question 6
+
+> Obtén de cada ccaa el nombre del municipio con mayor renta en 2019. 
+
+```{r}
+#| code-fold: true
+renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  left_join(mun_data, by = "codigo_ine", suffix = c("", "_rm")) |> 
+  select(-contains("rm")) |> 
+  slice_max(income, by = "codauto")
+```
+
+## Import and export files
+
+
+So far we have only used data already loaded in packages but many times [**we will need to import data externally**]{.hl-yellow}. One of the main [**strengths**]{.hl-yellow} of `R` is that we can import data very easily in different formats:
+
+
+* [**R native formats**]{.hl-yellow}: `.rda`, `.RData` and `.rds` formats.
+
+* [**Rectangular (tabular) data**]{.hl-yellow}: `.csv` and `.tsv` formats
+
+* [**Untabulated data**]{.hl-yellow}: `.txt` format.
+
+* [**Data in excel**]{.hl-yellow}: `.xls` and `.xlsx` formats
+
+* [**Data from SAS/Stata/SPSS**]{.hl-yellow}: `.sas7bdat`, `.sav` and `.dat` formats
+
+* [**Data from Google Drive**]{.hl-yellow}
+
+* [**Data from API's**]{.hl-yellow}: aemet, catastro, twitter, spotify, etc.
+
+
+### R native formats
+
+The [**simplest**]{.hl-yellow} files to import into `R` (and which usually take up less disk space) are its own [**native extensions**]{.hl-yellow}: files in `.RData`, `.rda` and `.rds` formats. To load the former we simply need to [**use the native**]{.hl-yellow} function `load()` by providing it the file path.
+
+* `RData` file: we are going to import the file `world_bank_pop.RData`, which includes the dataset `world_bank_pop`
+
+
+```{r}
+load("./datos/world_bank_pop.RData")
+world_bank_pop
+```
+
+
+* `.rda` file: we will import the airquality dataset from `airquality.rda`
+
+```{r}
+load("./datos/airquality.rda")
+airquality |> as_tibble()
+```
+
+
+Note that files loaded with `load()` are [**automatically loaded into the environment**]{.hl-yellow} (with the originally saved name), and not only datasets can be loaded: `load()` allows us to load multiple objetcs (not only a tabular data)
+
+Native `.rda` and `.RData` files are a properly way to save your environment.
+
+```{r}
+load(file = "./datos/multiple_objects.rda")
+```
+
+
+* `.rds` files: for this type we must use `readRDS()`, and we need to incorporate a [**argument `file`**]{.hl-yellow} with the path. In this case we are going to import [**lung cancer data**]{.hl-purple} from the North Central Cancer Treatment Group. Note that now [**.rds import files are a unique database**]{.hl-yellow}
+
+```{r}
+lung_cancer <-
+  readRDS(file = "./datos/NCCTG_lung_cancer.rds") |>
+  as_tibble()
+lung_cancer
+```
+
+
+::: callout-important
+
+## Important
+
+The [**paths**]{.hl-yellow} must always be [**without spaces, ñ, or accents**]{.hl-yellow}. 
+
+:::
+
+
+
+### Tabular data: readr
+
+The `{readr}` package within the `{tidyverse}` environment contains several useful functions for [**loading rectangular data (without formatting)**]{.hl-yellow}.
+
+
+
+* `read_csv()`: `.csv` files whose [**separator is comma**]{.hl-purple}
+* `read_csv2()`: [**semicolon**]{.hl-purple}
+* `read_tsv()`: [**tabulator**]{.hl-purple}.
+* `read_table()`: [**space**]{.hl-purple}.
+* `read_delim()`: generic function for [**character delimited files**]{.hl-purple}.
+
+
+
+![](img/data-import-readr.png)
+
+
+All of them need as **argument the file path** plus **other optional** (skip header or not, decimals, etc). See more at <https://readr.tidyverse.org/>
+
+
+#### .csv, .tsv
+
+The main advantage of `{readr}` is that it [**automates formatting**]{.hl-yellow} to go from a flat (unformatted) file to a tibble (in rows and columns, with formatting).
+
+
+* File `.csv`: with `read_csv()` we will load [**comma separated**]{.hl-purple} files, passing as [**argument the path**]{.hl-yellow} in `file = ...`. Let's import the `chickens.csv` dataset (about cartoon chickens, why not). If you look at the output it gives us the type of variables.
+
+```{r}
+library(readr)
+chickens <- read_csv(file = "./datos/chickens.csv")
+chickens
+```
+
+
+
+The [**variable format**]{.hl-yellow} will normally be done [**automatically**]{.hl-yellow} by `read_csv()`, and we can query it with `spec()`.
+
+```{r}
+spec(chickens)
+```
+
+
+
+Although it usually does it well automatically we can [**specify the format explicitly**]{.hl-yellow} in `col_types = list()` (in list format, with `col_xxx()` for each type of variable, for example `eggs_laid` will be imported as character). 
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_types = list(col_character(), col_character(),
+                            col_character(), col_character()))
+chickens
+```
+
+
+We can even indicate that [**variables we want to select**]{.hl-yellow} (without occupying memory), by indicating it in `col_select = ...` (in list format, with `col_select = ...`).
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_select = c(chicken, sex, eggs_laid))
+chickens
+```
+
+#### .txt
+
+What happens when the [**separator is not correct**]{.hl-red}?
+
+
+If we use `read_csv()` it expects the separator between columns to be a comma but, as you can see with the following `.txt`, it interprets everything as a single column: [**has no comma and does not know where to separate**]{.hl-yellow}
+
+```{r}
+datos_txt <- read_csv(file = "./datos/massey-rating.txt")
+dim(datos_txt)
+as_tibble(datos_txt)
+```
+
+
+To do this we have.
+
+* `read_csv2()` when the [**separator is semicolon**]{.hl-yellow}, `read_tsv()` when the [**is a tab**]{.hl-yellow} and `read_table()` when the [**is a space**]{.hl-yellow}.
+
+* `read_delim()` in general.
+
+```{r}
+datos_txt <- read_table(file = "./datos/massey-rating.txt")
+as_tibble(datos_txt)
+```
+
+
+### Excel data (.xls, .xlsx)
+
+Another key import package will be the `{readxl}` package for [**importing data from Excel**]{.hl-yellow}. Three functions will be key:
+
+* `read_xls()` specific to `.xls`, `read_xlsx()` specific to `.xlsx`.
+* `read_excel()`: for both `.xls` and `.xlsx`.
+
+
+We are going to import `deaths.xlsx` with celebrity death records.
+
+```{r}
+library(readxl)
+deaths <- read_xlsx(path = "./datos/deaths.xlsx")
+deaths
+```
+
+
+
+```{r}
+deaths |> slice(1:6)
+```
+
+One thing that is [**very common misfortune**]{.hl-yellow} is that there is some kind of comment or text at the beginning of the file, having to [**skip those rows**]{.hl-yellow}.
+
+
+We can [**skip these rows**]{.hl-yellow} directly in the load with `skip = ...` (indicating the number of rows to skip).
+
+```{r}
+deaths <- read_xlsx(path = "./datos/deaths.xlsx", skip = 4)
+deaths
+```
+
+
+In addition with `col_names = ...` we can already rename the columns in the import (if [**provide names assumes 1st line already as a data**]{.hl-yellow})
+
+```{r}
+#| code-line-numbers: "2-3"
+deaths <-
+  read_xlsx(path = "./datos/deaths.xlsx", skip = 5,
+            col_names = c("name", "profession", "age", "kids", "birth", "death"))
+deaths
+```
+
+
+Sometimes [**Excel dates are incorrectly formatted**]{.hl-red} (surprise): we can use `convertToDate()` from the `{openxlsx}` package to convert it.
+
+
+```{r}
+library(openxlsx)
+deaths$death <- convertToDate(deaths$death)
+deaths
+```
+   
+
+We can also [**load an Excel with several sheets**]{.hl-yellow}: to [**indicate the sheet**]{.hl-yellow} (either by its name or by its number) we will use the argument `sheet = ...`.
+
+```{r}
+mtcars <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "mtcars")
+mtcars
+```
+
+We can even indicate the [**range of cells**]{.hl-yellow} to load with `range = ...`.
+
+```{r}
+iris <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "iris", range = "C1:E4")
+iris
+```
+
+### Import from SAS/STATA/SPSS
+
+The `{haven}` package within the tidyverse orbit will allow us to [**import files from the 3 most important payment software**]{.hl-yellow}: SAS, SPSS and Stata.
+
+```{r}
+library(haven)
+
+# SAS
+iris_sas <- read_sas(data_file = "./datos/iris.sas7bdat")
+
+# SPSS
+iris_spss <- read_sav(file = "./datos/iris.sav")
+
+# Stata
+iris_stata <- read_dta(file = "./datos/iris.dta")
+```
+
+
+### Export
+
+In the same way that we can import we can also [**export**]{.hl-yellow}
+
+* exported in `.RData` (recommended option for variables stored in `R`). Remember that this extension [**can only be used in `R`**]{.hl-yellow}. To do so, just use `save(object, file = path)`.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+save(table, file = "./datos/table.RData")
+rm(table) # eliminar
+load("./datos/table.RData")
+table
+```
+
+
+* exported in `.RData` multiple objects
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+a <- 1
+b <- c("javi", "sandra")
+save(table, a, b, file = "./datos/mult_obj.RData")
+rm(list = c("a", "b", "table"))
+load("./datos/mult_obj.RData")
+table
+```
+
+
+
+* exported in `.csv`. To do this we simply use `write_csv(object, file = path)`.
+
+```{r}
+write_csv(table, file = "./datos/table.csv")
+read_csv(file = "./datos/table.csv")
+```
+
+### Import from new sources
+
+#### Website
+
+One of the main advantages of `R` is that we can make use of all the previous functions of [**import but directly from a web**]{.hl-yellow}, without the need to perform the manual download: instead of passing it the local path we will indicate the [**link**]{.hl-yellow}. For example, we are going to download the covid data from ISCIII (<https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos>)
+
+```{r}
+#| eval: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+covid_data
+```
+
+```{r}
+#| echo: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv", n_max = 500)
+covid_data
+```
+
+#### Wikipedia
+
+The `{rvest}` package, one of the most useful of `{tidyverse}` allows us to import directly from an `html`. For example, to export wikipedia tables just `read_html()` to import the html, `html_element("table")` to extract the table objects, and `html_table()` to convert the html table to `tibble`.
+
+```{r}
+library(rvest)
+wiki_jump <- 'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'
+wiki_jump |> read_html() |> 
+  html_element("table") |> 
+  html_table()
+```
+
+#### Google Drive
+
+Another option available (especially if we work with other people working) is to [**import from a Google Drive spreadsheet**]{.hl-yellow}, making use of `read_sheet()` from the `{googlesheets4}` package.
+
+The first time you will be asked for a tidyverse permission to interact with your drive
+
+```{r}
+library(googlesheets4)
+google_sheet <-
+  read_sheet("https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing")
+google_sheet
+```
+
+#### API (owid)
+
+Another interesting option is the [**data download from an API**]{.hl-yellow}: an intermediary between an app or data provider and our `R`. For example, let's load the `{owidR}` library, which allows us to download data from the web <https://ourworldindata.org/>. For example, the `owid_covid()` function loads without realizing it more than 400 000 records with more than 60 variables from 238 countries.
+
+```{r}
+#| eval: false
+library(owidR)
+owid_covid() |> as_tibble()
+```
+
+```{r}
+#| echo: false
+library(owidR)
+owid_covid() |> as_tibble() |> slice(1:7)
+```
+
+#### API (aemet)
+
+In many occasions to connect to the API we will first have to [**register and obtain a key**]{.hl-yellow}, this is the case of the `{climaemet}` package to access [**Spanish meteorological data**]{.hl-yellow} (<https://opendata.aemet.es/centrodedescargas/inicio>).
+
+
+Once we have the API key we register it in our RStudio to be able to use it in the future.
+
+```{r}
+#| eval: false
+library(climaemet)
+
+# Api key
+apikey <- "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"
+
+aemet_api_key(apikey, install = TRUE)
+```
+
+
+```{r}
+#| echo: false
+library(climaemet)
+```
+
+
+With this package we can do a [**search for stations**]{.hl-yellow} to know both its postal code and its identifier code within the AEMET network
+
+```{r}
+stations <- aemet_stations()
+stations
+```
+
+For example, to get data from the station of the airport of El Prat, Barcelona, the code to provide is `"0076"`, obtaining **hourly data**
+
+```{r}
+aemet_last_obs("0076")
+```
+
+
+#### API (US census)
+
+One of the most useful tools in recent years is known as `{tidycensus}`: a tool for [**facilitating the process of downloading census data**]{.hl-yellow} for the United States from `R`.
+
+```{r}
+library(tidycensus)
+```
+
+* `get_decennial()`: to access the [**census data (US Decennial Census)**]{.hl-yellow}, done every 10 years (years 2000, 2010 and 2020).
+
+* `get_acs()`: to access the [**annual and quinquennial (5 years) ACS (American Community Survey)**]{.hl-yellow} (census != survey)
+
+* `get_estimates()`: to access the [**annual population, birth and death estimates**]{.hl-yellow} (census != survey)
+
+* `get_pums()`: to access the [**microdata (unaggregated data) of the ACS (anonymized at the individual level)**]{.hl-yellow}
+
+* `get_flows()`: to access the [**migration flow**]{.hl-yellow} data.
+
+portar from API (US census)
+
+For example, we will download the **census data** (`get_decennial()`) at the state level (`geography = “state”`) for the population (variable `variables = “P001001”`) for the year 2010 (see variables in `tidycensus::load_variables()`).
+
+```{r}
+total_population_10 <-
+  get_decennial(geography = "state", 
+  variables = "P001001",
+  year = 2010)
+total_population_10
+```
+
+
+#### Other options
+
+
+* `{chessR}`: data from chess matches. See <https://github.com/JaseZiv/chessR>
+
+* `{spotifyr}`: data from Spotify. See <https://www.rcharlie.com/spotifyr/>
+
+* `{gtrendsR}`: data from Google Trends. See <https://github.com/PMassicotte/gtrendsR>
+
+* `{scholar}`: data from <https://github.com/jkeirstead/scholar>
+
+### 💻 Your turn 
+
+[**Try to solve the following exercises without looking at the solutions**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Exercise 1**]{.hl-yellow}
+
+📝 The `who` dataset we have used in previous exercises, export it to a native `R` format in the `data` folder of the project
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tidyr)
+save(who, file = "./datos/who.RData")
+```
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Loads the `who` dataset but from the data folder (import the file created in the previous exercise)
+
+```{r}
+#| code-fold: true
+#| eval: false
+load("./datos/who.RData")
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Repeats the same (export and import) in 4 formats: `.csv`, `.xlsx`, `.sav` (spss) and `.dta` (stata)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# csv
+library(readr)
+write_csv(who, file = "./datos/who.csv")
+who_data <- read_csv(file = "./datos/who.csv")
+
+# excel
+library(openxlsx)
+write.xlsx(who, file = "./datos/who.xlsx")
+who_data <- read_xlsx(path = "./datos/who.xlsx")
+
+# sas y stata
+library(haven)
+write_sav(who, path = "./datos/who.sav")
+who_data <- read_spss(path = "./datos/who.sav")
+
+write_dta(who, path = "./datos/who.dta")
+who_data <- read_dta(path = "./datos/who.dta")
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Repeat the loading of `who.csv` but only select the first 4 columns already in the load.
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_select <-
+  read_csv(file = "./datos/who.csv",
+           col_select = c("country", "iso2", "iso3", "year"))
+```
+
+
+:::
+
+
+
+## 🐣 Case study I: SPSS
+
+
+## 🐣 Case study II: Brexit
+
