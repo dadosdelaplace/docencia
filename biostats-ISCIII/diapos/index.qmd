@@ -93,7 +93,8 @@ Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM*
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 17 oct | Primeros pasos. Tipos de datos y vectores | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) | [🐣](#caso-practico-1-1)  |  | 
 | [2](#clase-2) | S2 | 22 oct | Primeras bases de datos |  [💻](#tu-turno-2-1) [💻](#tu-turno-2-2) |   [🐣](#caso-practico-2-1)  [🐣](#caso-practico-2-2) [🐣](#caso-practico-2-3)  |  |
-| [3](#clase-3) | S2 | 24 oct | Estructuras de control. Funciones | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) [💻](#tu-turno-3-3) | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) | |
+| [3](#clase-3) | S2 | 24 oct | Estructuras de control y Quarto | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2) | [🐣](#caso-practico-3-1)  | |
+| [4](#clase-4) | S3 | 29 oct | Funciones y ggplot | [💻](#tu-turno-4-1) [💻](#tu-turno-4-2) | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2)  | |
 :::
 :::
 
@@ -2625,828 +2626,13 @@ taylor_album_songs
 
 
 
----
+# Clase 3: [if-elses, bucles y Quarto]{.flow} {#clase-3}
 
-## Comunicar: rmd y Quarto
-
-Una de las [**principales fortalezas**]{.hl-yellow} de `R` es la [**facilidad para generar informes, libros, webs, apuntes y hasta diapositivas**]{.hl-yellow} (este mismo material por ejemplo). Para ello [**instalaremos**]{.hl-purple} antes
-
-::: columns
-::: {.column width="40%"}
--   el paquete `{rmarkdown}` (para generar archivos `.rmd`)
-
-```{r}
-#| eval: false
-install.packages("rmarkdown")
-```
-
-- instalar [**Quarto**](https://quarto.org/docs/get-started/) (si ya conocías `R`, el «nuevo» `.rmd` ahora como `.qmd`)
-:::
-
-::: {.column width="60%"}
-![](img/quarto.png)
-:::
-:::
-
----
-
-## Comunicar: rmd y Quarto
-
-Hasta ahora solo hemos programado en scripts (archivos `.R`) dentro de proyectos, pero en muchas ocasiones [**no trabajaremos solos**]{.hl-yellow} y necesitaremos [**comunicar los resultados**]{.hl-yellow} en diferentes formatos:
-
-- apuntes (para nosotros mismos)
-- diapositivas
-- web
-- informes
-
-
-Para todo ello usaremos [**Quarto**]{.hl-yellow} (ver más en <https://ivelasq.quarto.pub/intro-to-quarto/>)
-
-
----
-
-## Comunicar: rmd y Quarto
-
-Los archivos de extensión `.qmd` (o `.rmd` antes) nos permitirán fácilmente combinar:
-
--   [**Markdown**]{.hl-yellow}: [**lenguaje tipado**]{.hl-purple} que nos permite crear contenido simple (tipo wordpress, con texto, **negritas**, _cursivas_, etc) con un diseño legible.
-
-. . .
-
--   [**Matemáticas (latex)**]{.hl-yellow}: lenguaje para escribir notación matemática como $x^2$ o $\sqrt{y}$ o $\int_{a}^{b} f(x) dx$
-
-. . .
-
--   [**Código y salidas**]{.hl-yellow}: podremos no solo mostrar el paso final sino el código que has ido realizando (en `R`, `Python`, `C++`, `Julia`, ...), con [**cajitas de código llamadas CHUNKS**]{.hl-purple}.
-
-. . .
-
--   Imágenes, [**gráficas**]{.hl-yellow}, tablas, estilos (css, js), etc.
-
----
-
-## Comunicar: rmd y Quarto
-
-La principal ventaja de realizar este tipo de material en Quarto/Rmarkdown es que, al hacerlo desde `RStudio`, puedes generar un [**informe o una presentación sin salirte del entorno de programación**]{.hl-yellow} en el que estás trabajando
-
-De esta forma podrás analizar los datos, resumirlos y a la vez comunicarlos con la misma herramienta.
-
-. . .
-
-Recientemente el equipo de `RStudio` desarrolló [**Quarto**]{.hl-yellow}, una versión mejorada de Rmarkdown (archivos `.qmd`), con un formato un poco más estético y simple. Tienes toda la documentación y ejemplos en [**https://quarto.org/**](https://quarto.org/)
-
----
-
-## Usos de Quarto
-
-::: panel-tabset
-### Webs
-
-![](./img/website.png){height="350"}
-
-### Libros
-
-![](./img/book.png){height="350"}
-
-### Blogs
-
-![](./img/blog.png){height="350"}
-
-### Presentaciones
-
-![](./img/presentation.png){height="350"}
-
-### Revistas
-
-![](https://user-images.githubusercontent.com/163582/42351114-e5deaa1c-8078-11e8-90de-2aff57bba255.png){height="350"}
-:::
-
-Imágenes obtenidas de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
-
----
-
-## Nuestro primer informe
-
-::: columns
-::: {.column width="55%"}
-![](img/quarto-create.png)
-:::
-
-::: {.column width="45%"}
-Vamos a crear el [**primer fichero rmarkdown con Quarto**]{.hl-yellow} con extensión `.qmd`. Para ello solo necesitaremos hacer click en
-
-`File << New File << Quarto Document`
-:::
-:::
-
----
-
-## Nuestro primer informe
-
-:::: columns
-::: {.column width="45%"}
-![](img/quarto-format.png)
-:::
-
-::: {.column width="55%"}
-Tras hacerlo nos aparecerán varias [**opciones de formatos de salida**]{.hl-yellow}:
-
--   archivo `.pdf`
--   archivo `.html` ([**recomendable**]{.hl-yellow}): documento dinámico, permite la interacción con el usuario, como una «página web».
--   archivo `.doc` (nada recomendable)
-:::
-::::
-
-. . .
-
-De momento dejaremos marcado el [**formato HTML que viene por defecto**]{.hl-yellow}, y escribiremos el [**título**]{.hl-yellow} de nuestro documento. Tras ello tendremos nuestro [**archivo .qmd**]{.hl-yellow} (ya no es un script .R como los que hemos abierto hasta ahora).
-
----
-
-## Nuestro primer informe
-
-:::: columns
-::: {.column width="60%"}
-![](img/quarto-example.png)
-:::
-
-::: {.column width="40%"}
-
-Deberías tener algo similar a la captura de la imagen con [**dos modos de edición**]{.hl-yellow}: `Source` (con código, la opción recomendada hasta que lo domines) y `Visual` (más parecido a un blog)
-
-:::
-::::
-
-Para [**ejecutar TODO el documento**]{.hl-yellow} debes clickar `Render on Save` y darle a guardar.
-
----
-
-## Salida de Quarto
-
-![](img/quarto-prueba-html.png)
-
-Deberías haber obtenido una [**salida en html similar a esta**]{.hl-yellow} (y se te ha generado en tu ordenador un [**archivo html**]{.hl-yellow})
-
----
-
-## Editor: source vs visual
-
-Como se indicaba, tienes dos formas de trabajar: con código puro y algo parecido a un Notion (blog)
-
-![](./img/rstudio-source-visual.png)
-
-Imagen obtenida de <https://ivelasq.quarto.pub/intro-to-quarto/#/working-with-the-rstudio-visual-editor>
-
----
-
-## Nuestro primer informe
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-example.png)
-
-:::
-
-::: {.column width="50%"}
-
-Un fichero `.qmd` se [**divide básicamente en tres partes**]{.hl-yellow}:
-
-* [**Cabecera**]{.hl-yellow}: la parte que tienes al inicio entre `---`.
-
-* [**Texto**]{.hl-yellow}: que podremos formatear y mejorar con negritas (escrito como **negritas**, con doble astérisco al inicio y final), cursivas (_cursivas_, con barra baja al inicio y final) o destacar nombres de funciones o variables de R. Puedes añadir ecuaciones como $x^2$ (he escrito `$x^2$`, entre dólares).
-
-* [**Código R**]{.hl-yellow}
-
-:::
-::::
-
----
-
-## Cabecera de un qmd {auto-animate="true"}
-
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
-
-:::: columns
-::: {.column width="60%"}
-
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
-
-:::
-
-::: {.column width="40%"}
-
-``` yaml
----
-title: "prueba"
-format:
-  html:
-editor: visual
----
-```
-
-:::
-::::
-
----
-
-## Cabecera de un qmd {auto-animate="true"}
-
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
-
-:::: columns
-::: {.column width="60%"}
-
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
-
-:::
-
-::: {.column width="40%"}
-
-``` yaml
----
-title: "prueba"
-author: "javier álvarez liébana"
-format:
-  html:
-editor: visual
----
-```
-
-:::
-::::
-
----
-
-## Cabecera de un qmd {auto-animate="true"}
-
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
-
-:::: columns
-::: {.column width="60%"}
-
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
-
-:::
-
-::: {.column width="40%"}
-
-``` yaml
----
-title: "prueba"
-author: "javier álvarez liébana"
-format:
-  html:
-    style: style.css
-    toc: true
-editor: visual
----
-```
-
-:::
-::::
-
----
-
-## Cabecera de un qmd {auto-animate="true"}
-
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
-
-:::: columns
-::: {.column width="60%"}
-
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
-
-:::
-
-::: {.column width="40%"}
-
-``` yaml
----
-title: "prueba"
-author: "javier álvarez liébana"
-format:
-  html:
-    style: style.css
-    toc: true
-    toc-location: left
-editor: visual
----
-```
-
-:::
-::::
-
----
-
-## Cabecera de un qmd {auto-animate="true"}
-
-La [**cabecera están en formato YAML**]{.hl-yellow} y contiene los [**metadatos**]{.hl-yellow} del documento
-
-:::: columns
-::: {.column width="60%"}
-
-* `title` y `subtitle`: el título/subtítulo del documento
-* `author`: autor del mismo
-* `format`: formato de salida (podremos personalizar)
-  * `theme`: si tienes algún archivo de estilos
-  * `toc`: si quieres índice o no
-  * `toc-location`: posición del índice
-  * `toc-title`: título del índice
-* `editor`: si estás en modo visual o source.
-
-:::
-
-::: {.column width="40%"}
-
-``` yaml
----
-title: "prueba"
-author: "javier álvarez liébana"
-format:
-  html:
-    style: style.css
-    toc: true
-    toc-location: left
-    toc-title: Índice
-editor: visual
----
-```
-
-:::
-::::
-
-
----
-
-## Texto de un qmd
-
-Respecto a la escritura solo hay una [**cosa importante**]{.hl-yellow}: salvo que indiquemos lo contrario, [**TODO lo que vamos a escribir es texto (normal)**]{.hl-yellow}. No código R.
-
-:::: columns
-::: {.column width="35%"}
-![](img/quarto-prueba-qmd2.png){width=350}
-![](img/quarto-prueba-html2.png){width=320}
-:::
-
-::: {.column width="65%"}
-Vamos a empezar escribiendo una sección al inicio (`# Intro` y detrás por ej. la frase
-
-> Este material ha sido diseñado por el profesor Javier Álvarez Liébana, docente en la Universidad Complutense de Madrid
-
-Además al `Running Code` le añadiremos una almohadilla `#`: las [**almohadillas FUERA DE CHUNKS**]{.hl-yellow} nos servirán para crear [**epígrafes (secciones)**]{.hl-yellow} en el documento
-
-
-:::
-::::
-
-
----
-
-## Índice de un qmd
-
-:::: columns
-::: {.column width="40%"}
-![](img/quarto-indice-qmd-2.png){width=370}
-![](img/quarto-indice-html2.png){width=370}
-:::
-
-::: {.column width="60%"}
-Para que el [**índice capture dichas secciones**]{.hl-yellow} modificaremos la cabecera del archivo como se observa en la imagen (puedes cambiar la localización del índice y el título si quieres para probar).
-
-:::
-::::
-
----
-
-## Texto en un qmd
-
-Vamos a [**personalizar un poco el texto**]{.hl-yellow} haciendo lo siguiente:
-
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-texto-mejorado-qmd.png){width=370}
-![](img/quarto-texto-mejorado-html.png){width=370}
-:::
-
-::: {.column width="50%"}
-* Vamos a añadir [**negrita al nombre**]{.hl-yellow} (poniendo ** al inicio y al final).
-
-* Vamos añadir [**cursiva**]{.hl-yellow} a la palabra material (poniendo _ al inicio y al final).
-
-* Vamos añadir un [**enlace**]{.hl-yellow} <https://www.ucm.es>, asociándolo al nombre de la Universidad. Para ello el título lo ponemos entre corchetes y justo detrás el enlace entre paréntesis `[«Universidad Complutense de Madrid»](https://www.ucm.es)`
-
-:::
-::::
-
----
-
-## Código en un qmd
-
-Para [**añadir código R**]{.hl-yellow} debemos crear nuestras [**cajas de código llamadas chunks**]{.hl-yellow}: altos en el camino en nuestro texto markdown donde podremos incluir código de casi cualquier lenguaje (y sus salidas).
-
-&nbsp;
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-chunk-qmd.png){width=470}
-:::
-
-::: {.column width="50%"}
-
-Para incluir uno deberá de ir [**encabezado**]{.hl-yellow} de la siguiente forma tienes un atajo `Command + Option + I` (Mac) o `Ctrl + Shift + I` (Windows)
-:::
-
-::::
-
----
-
-## Código en un qmd
-
-Dentro de dicha cajita (que tiene ahora otro color en el documento) [**escribiremos código R**]{.hl-yellow} como lo veníamos haciendo hasta ahora en los scripts.
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-chunk-1-qmd.png){width=410}
-![](img/quarto-chunk-1-html.png){width=410}
-:::
-
-::: {.column width="50%"}
-
- Vamos por ejemplo a definir dos variables y su suma de la siguiente manera, escribiendo dicho código en nuestro `.qmd` (dentro de ese chunk)
-
-```{r}
-# Código R
-x <- 1
-y <- 2
-x + y
-```
-
-:::
-
-::::
-
-
----
-
-## Etiquetando chunks
-
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-tag-chunks-qmd.png){width=400}
-![](img/quarto-tag-chunks-html.png){width=400}
-:::
-
-::: {.column width="50%"}
-Los chunks pueden tener un [**nombre o etiqueta**]{.hl-yellow}, de forma que podamos referenciarlos de nuevo para no repetir código.
-:::
-::::
-
-
----
-
-## Ejecutando chunks
-
-:::: columns
-::: {.column width="40%"}
-![](img/quarto-inline-qmd.png){width=400}
-![](img/quarto-inline-html.png){width=380}
-:::
-
-::: {.column width="60%"}
-En cada chunk aparecen [**dos botones**]{.hl-yellow}:
-
-* botón de [**play**]{.hl-yellow}: activa la [**ejecución y salida de ese chunk particular**]{.hl-yellow} (lo puedes visualizar dentro de tu propio `RStudio`)
-
-* botón de [**rebobinar**]{.hl-yellow}: activa la [**ejecución y salida de todos los chunk hasta ese**]{.hl-yellow} (sin llegar a él)
-
-&nbsp;
-
-Además podemos [**incluir código R dentro de la línea de texto**]{.hl-yellow} (en lugar de mostrar el texto x ejecuta el código R mostrando la variable).
-:::
-::::
-
-
-
----
-
-## Personalización de chunks
-
-Los [**chunks podemos personalizarlos**]{.hl-yellow} con opciones al inicio del chunk precedido de `#|`:
-
-* `#| echo: false`: [**ejecuta código**]{.hl-green} y se [**muestra resultado**]{.hl-green} pero [**no visualiza código**]{.hl-red} en la salida.
-
-* `#| include: false`: [**ejecuta código**]{.hl-green} pero [**no muestra resultado**]{.hl-red} y [**no visualiza código**]{.hl-red} en la salida.
-
-* `#| eval: false`: [**no ejecuta código**]{.hl-red}, [**no muestra resultado**]{.hl-red} pero [**sí visualiza código**]{.hl-green} en la salida.
-
-* `#| message: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de salida**]{.hl-red}.
-
-* `#| warning: false`: [**ejecuta código**]{.hl-green} pero [**no muestra mensajes de warning**]{.hl-red}.
-
-* `#| error: true`: [**ejecuta código**]{.hl-green} y [**permite que haya errores**]{.hl-green} mostrando el mensaje de error en la salida.
-
-
-![](img/quarto-options-chunk.png){width=380}
-
-Estas opciones podemos aplicarlas chunk a chunk o fijar los parámetros de forma global con `knitr::opts_chunk$set()` al inicio del documento (dentro de un chunk).
-
----
-
-## Personalizando chunks
-
-Si queremos que aplique la **opción a todos los chunks por defecto** debemos incluirlo al final de la cabecera, como [**opciones de ejecución**]{.hl-yellow}
-
-``` yaml
----
-title: "¡Hola!"
-format: html
-editor: visual
-execute:
-  echo: false
----
-```
-
----
-
-## Organizando qmd
-
-Además de texto y código podemos introducir lo siguiente:
-
-* [**Ecuaciones**]{.hl-yellow}: puedes añadir además ecuaciones como $x^2$ (he escrito `$x^2$`, la ecuación entre dólares).
-
-* [**Listas**]{.hl-yellow}: puedes itemizar elementos poniendo `*`
-
-`* Paso 1: ...`
-
-`* Paso 2: ...`
-
-* [**Cross-references**]{.hl-yellow}: puedes etiquetar partes del documento (la etiqueta se construye con `{#nombre-seccion}`) y llamarlas luego con `[Sección](@nombre-seccion)`
-
----
-
-## Gráficas/imágenes en qmd
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-fig-qmd.png){width=340}
-![](img/quarto-fig-html.png){width=390}
-:::
-
-::: {.column width="50%"}
-Por último, también podemos [**añadir pies de gráficas o imágenes**]{.hl-yellow} añadiendo `#| fig-cap: "..."`
-:::
-::::
-
-. . .
-
-:::: columns
-::: {.column width="65%"}
-Fíjate que el [**caption está en el margen**]{.hl-yellow} (por ejemplo). Puedes cambiarlo introduciendo [**ajustes en la cabecera**]{.hl-yellow} (todo lo relativo a figuras empieza por `fig-`, y puedes ver las opciones tabulando). Tienes más información en **<https://quarto.org/>**
-:::
-
-::: {.column width="35%"}
-![](img/quarto-cabecera-desplegable.png){width=400}
-:::
-::::
-
----
-
-## Añadir estilos
-
-:::: columns
-::: {.column width="50%"}
-![](img/quarto-estilos-qmd.png){width=400}
-![](img/quarto-estilos-html.png){width=400}
-:::
-
-::: {.column width="50%"}
-Por último puedes añadir un [**tema personalizado**]{.hl-yellow} incluyendo un [**archivo de estilos**]{.hl-yellow} (archivo en formato `.scss` o `.css`). Te he dejado uno en <https://github.com/dadosdelaplace/docencia-R-master-bio-2324/tree/main/material>.
-
-::: callout-important
-## Importante
-
-El archivo de estilos debe estar en la misma carpeta que el archivo `.qmd`
-:::
-:::
-::::
-
----
-
-## Añadir estilos
-
-También puedes hacerlo de manera sencilla [**añadiendo a los textos un poco de HTML**]{.hl-yellow}. Por ejemplo, para personalizar el color de un texto va entre corchetes y justo tras el texto, entre llaves, las opciones de estilo
-
-``` html
-Esta palabra es [roja]{style="color:red;"} ...
-```
-
-``` html
-... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
-```
-
-. . .
-
-Esta palabra es [roja]{style="color:red;"} ...
-
-... y esta [verde y en negrita]{style="color:green; font-weight: bold;"}
-
----
-
-## Revealjs
-
-Puedes añadir algunas «animaciones» usando lo que se conoce como Revealjs (javascript), especifcándolo en la cabecera y usando [**bloques**]{.hl-yellow} de dicho lenguaje delimitados por `:::` al inicio y final, y la palabra de la «herramienta» a usar. Por ejemplo `{.incremental}` hace una transición de los elementos.
-
-``` yaml
-format:
-  revealjs
-```
-&nbsp;
-
-``` revealjs
-::: {.incremental}
-- Me
-- llamo
-- Javi
-:::
-```
-
-
-::: {.incremental}
-- Me
-- llamo
-- Javi
-:::
-
----
-
-## Bloques de llamada
-
-También puedes usar los [**bloques de llamada**]{.hl-yellow} que por defecto son `note`, `tip`, `warning`, `caution` e `important` (aunque los puedes crear y personalizar). Para ello basta con usar `:::{.callout-tipo}` y el tipo que quieras
-
-``` html
-:::{.callout-tip}
-
-Note that there are five types of callouts, including: 
-`note`, `tip`, `warning`, `caution`, and `important`.
-
-:::
-```
-
-. . .
-
-:::{.callout-tip}
-
-Recuerda que los 5 tipos son `note`, `tip`, `warning`, `caution` e `important`.
-
-:::
-
-. . .
-
-:::{.callout-caution}
-
-Úsalos con cabeza, a veces mucho recursos estético puede marear.
-
-:::
-
----
-
-## Múltiples columnas
-
-Con `:::: columns` podemos definir una disposición de [**múltiples columnas**]{.hl-yellow} donde cada una viene definida por `::: {.column width="65%"} cosa :::`, indicando al lado del porcentaje cuanto quieres que ocupe cada columna (¡cuidado, no dejar espacios!)
-
-``` html
-:::: columns
-::: {.column width="65%"}
-Así se define un vector
-:::
-::: {.column width="35%"}
-x <- c(1, 2, 3)
-x
-:::
-::::
-```
-&nbsp;
-
-. . .
-
-:::: columns
-::: {.column width="65%"}
-Así se define un vector
-:::
-
-::: {.column width="35%"}
-```{r}
-x <- c(1, 2, 3)
-x
-```
-:::
-::::
-
-
----
-
-## Pestañas
-
-Con `::: panel-tabset :::` podemos también definir un panel de pestañas
-
-``` html
-### Ejercicios
-
-Resuelve los siguientes ejercicios
-::: panel-tabset
-
-#### Ejercicio 1
-
-Define un vector x con los primeros 3 números naturales
-
-#### Ejercicio 2
-
-Haz la suma del vector anterior
-:::
-```
-
-. . .
-
-### Ejercicios
-
-Resuelve los siguientes ejercicios
-
-::: panel-tabset
-
-#### Ejercicio 1
-
-Define un vector x con los primeros 3 números naturales
-
-#### Ejercicio 2
-
-Haz la suma del vector anterior
-
-:::
-
-
----
-
-
-
----
-
-## 🐣 Caso práctico: simulacro  {#caso-practico-2-3}
-
-1. Crea un documento `.qmd` en el que al menos la cabecera contenga
-  - Título, autor y formato (html)
-  - Índice con título y situado a la derecha
-  
-2. Tras ello vuelve a ejercicios del tema 2  y estructura un documento donde cada ejercicio sea una subsección. En cada subsección pon el enunciado.
-
-4. Debajo de cada enunciado pon el chunk con el código correspondiente, así como comentarios de texto de la salida (con negritas y cursivas)
-
-5. Añade un último chunk en el que, dado un vector `x <- 1:5`, calcules su media, e incluye con `$ $` la fórmula de la media aritmética e incrusta además una foto de la fórmula que encuentres por google.
-
-6. Renderiza el documento para obtener el html
-
-
----
-
-
-# Clase 3: [bucles y funciones]{.flow} {#clase-3}
-
-[**Estructuras y funciones**]{style="color:#444442;"}
+[**Estructuras condicionales, bucles y Quarto**]{style="color:#444442;"}
 
 * [💻 Ejercicios resueltos: estructuras condicionales](#tu-turno-3-1) 
 * [💻 Ejercicios resueltos: bucles](#tu-turno-3-2) 
-* [💻 Ejercicios resueltos: funciones](#tu-turno-3-3) 
-* [🐣 Workbook/caso práctico: bucles](#caso-practico-3-1)
-* [🐣 Workbook/caso práctico: funciones](#caso-practico-3-2)
+* [🐣 Workbook/caso práctico: bucles y condicionales](#caso-practico-3-1)
 * [📆 Planificación](#planificacion)
 
 ---
@@ -4231,6 +3417,16 @@ while (count < 6) {
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/) donde tendrás que diseñar algunos estudios de simulación haciendo uso de **bucles y estructuras condicionales**
 
 
+# Clase 4: [funciones y ggplot]{.flow} {#clase-4}
+
+[**Funciones y ggplot**]{style="color:#444442;"}
+
+* [💻 Ejercicios resueltos: funciones](#tu-turno-4-1) 
+* [💻 Ejercicios resueltos: ggplot](#tu-turno-4-2) 
+* [🐣 Workbook/caso práctico: funciones](#caso-practico-4-1)
+* [🐣 Workbook/caso práctico: ggplot](#caso-practico-4-2)
+* [📆 Planificación](#planificacion)
+
 ---
 
 ## Creando funciones {auto-animate="true"}
@@ -4916,13 +4112,496 @@ atajo <- function(x, y) {
 
 ---
 
-## 🐣 Caso práctico II: conversor {#caso-practico-3-2}
+## 🐣 Caso práctico I: conversor {#caso-practico-4-1}
 
 Para practicar con funciones vamos a crear un completo **conversor de temperaturas** que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras
 
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/) hasta construirlo.
 
 
+---
+
+## Dataviz: historia
+
+
+La aparición de gráficos estadísticos es [**relativamente reciente en la ciencia**]{.hl-yellow} ya que hasta la Edad Media la única visualización estaba en los [**mapas**]{.hl-yellow}. [^1] Las propias palabras _chart_ y _cartography_ derivan del mismo origen latino, _charta_, aunque el primer uso de coordenadas viene de los egipcios. [^2] [^3]
+
+. . .
+
+:::: columns
+::: {.column width="55%"}
+
+No es hasta la Edad Media, cuando la [**navegación y la astronomía**]{.hl-yellow} empezaban a tomar relevancia, cuando aparece la primera gráfica (no propiamente estadística), del **movimiento cíclico de los planetas** (siglos X y XI)
+
+:::
+
+::: {.column width="45%"}
+![](img/dataviz_historico_1.png){width="370"}
+:::
+::::
+ 
+
+[^1]: [«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla](http://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf)
+
+[^2]: [«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social & Behavioral Sciences](https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf)
+
+[^3]: [«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)](https://www.jstor.org/stable/2683467)]
+
+
+---
+
+## Navegación y astronomía
+
+
+Con una motivación similar, en torno a 1360 el matemático **Nicole Oresme** diseñó el [**primer gráfico de barras**]{.hl-yellow} (pero no estadístico), con la idea de visualizar a la vez dos **magnitudes físicas teóricas**. [^4]
+
+
+![](img/dataviz_historico_2.jpeg){width="300"}
+
+
+[^4]: [«The First (Known) Statistical Graph: Michael Florent van Langren and the 'Secret' of Longitude» de M. Friendly y P. M. Valero-Mora. The American Statistician (2010)](https://www.researchgate.net/publication/227369016_The_First_Known_Statistical_Graph_Michael_Florent_van_Langren_and_the_Secret_of_Longitude)
+
+ 
+---
+
+## Primer gráfico estadístico
+
+La mayoría de expertos, como Tufte [^5] [^6], consideran este gráfico casi longitudinal como la [**primera visualización de datos**]{.hl-yellow} de la historia, hecha por **Van Langren** en 1644, representando la [**distancia entre Toledo y Roma**]{.hl-yellow}.
+
+
+```{r}
+#| echo: false
+knitr::include_graphics("./img/longitud_dataviz.jpg")
+``` 
+
+```{r}
+#| echo: false
+knitr::include_graphics("./img/dataviz_historico_3.jpeg")
+``` 
+
+
+[^5]: [«Visual explanations: images and quantities, evidence and narrative» de E. Tufte](https://archive.org/details/visualexplanatio00tuft)
+
+[^6]: [«PowerPoint is evil» de E. Tufte](https://www.wired.com/2003/09/ppt2/)
+
+
+
+---
+
+## Vizfails
+
+::: columns
+::: {.column width="55%"}
+![](img/persona_dataviz.jpg)
+:::
+
+::: {.column width="45%"}
+* La figura elegida (persona caminando) sin relación con lo visualizado: [**mala metáfora**]{.hl-red}.
+
+* Los [**sectores señalados sin relación con el ítem**]{.hl-red} a representar, lo que dificulta su interpretación.
+
+* Los [**colores sin codificar**]{.hl-red}: no dan información de ningún tipo.
+
+* Las [**formas irregulares impiden la comparación**]{.hl-red} de las áreas (amén de que la suma total supera el 100%).
+
+* **Sin fuente**
+
+:::
+::::
+
+
+---
+
+## Vizfails
+
+![](img/viz_fail_covid.jpg)
+
+---
+
+## Vizfails
+
+![](img/viz_fail_uk.jpg)
+
+---
+
+## La importancia del CONTEXTO
+
+Una **buena idea** puede estar mal ejecutada: la forma de llevarla a cabo es importante
+
+![](img/semaforos.jpg)
+
+---
+
+## Dataviz: historia
+
+En el siglo XVII hubo un boom de la estadística al empezar a aplicarse en [**demografía**]{.hl-yellow}. Uno de los autores más importantes fue [**J. Graunt**]{.hl-purple}, autor de «Natural and Political Observations Made upon the Bills of Mortality» (1662), estimando la población de Londres con las [**primeras tablas de natalidad y mortalidad**]{.hl-yellow}.
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+
+Son precisamente las tablas de Graunt las que usó [**Christiaan Huygens**]{.hl-yellow} para generar la [**primera gráfica de densidad**]{.hl-yellow} de una distribución continua (esperanza de vida vs edad).
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE,  out.width = "100%", fig.align = "center", fig.cap = "Primera función de densidad, extraída de https://omeka.lehigh.edu/exhibits/show/data_visualization/vital_statistics/huygen"}
+knitr::include_graphics("./img/primera_densidad.jpg")
+``` 
+
+:::
+::::
+
+---
+
+## Gráficos de Playfair
+
+La figura que cambió el dataviz fue, sin lugar a dudas, el economista y político [**William Playfair (1759-1823)**]{.hl-yellow}, publicando en 1786 el **«Atlas político y comercial»** [^11] [^12] con 44 gráficas (43 series temporales y el diagrama de barras más famoso de la historia).
+
+::: columns
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Extraídas de Funkhouser y Walker (1935)"}
+knitr::include_graphics("./img/playfair_1.jpg")
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "25%", fig.align = "center", fig.cap = "Extraídas de Funkhouser y Walker (1935)"}
+knitr::include_graphics("./img/playfair_2.jpg")
+``` 
+
+:::
+::::
+
+[^10]: [«Atlas político y comercial» de William Playfair (1786)](https://www.amazon.es/Playfairs-Commercial-Political-Statistical-Breviary/dp/0521855543)
+
+[^11]: [«Playfair and his charts» de H. Gray Funkhouser and  Helen M. Walker (1935)](https://www.jstor.org/stable/45366440)
+
+---
+
+
+
+## Gráficos de Playfair
+
+Playfair es además el autor del [**gráfico de barras más famoso**]{.hl-yellow} (no fue el primero pero sí quien lo hizo _mainstream_).
+
+::: columns
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "90%", fig.align = "center", fig.cap = "Gráficas de Playfair de importaciones (barras grises) y exportaciones (negras) de Escocia en 1781, extraídas de la wikipedia."}
+knitr::include_graphics("./img/playfair_5.jpg")
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "90%", fig.align = "center", fig.cap = "Primer diagrama de barras (P. Buache y G. de L’Isle), visualizando los niveles del Sena (1732 - 1766), extraída de https://friendly.github.io/HistDataVis"}
+knitr::include_graphics("./img/playfair_6.jpg")
+``` 
+:::
+::::
+
+---
+
+## Gráficos de Playfair
+
+
+Playfair además fue el primero en [**combinar gráficos en la misma visualización**]{.hl-yellow} [^12] [^13]
+
+::: columns
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "85%", fig.align = "center", fig.cap = "Visualiza 3 series temporales: precios (barras) del trigo, salarios (línea) y time-line con reinados, extraída de https://friendly.github.io/HistDataVis."}
+knitr::include_graphics("./img/playfair_7.jpg")
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "85%", fig.align = "center", fig.cap = "Time-line histórico, extraída de https://friendly.github.io/HistDataVis."}
+knitr::include_graphics("./img/playfair_8.png")
+``` 
+
+:::
+::::
+
+[^12]: [«A Letter on Our Agricultural Distresses, Their Causes and Remedies» de W. Playfair (1821)](http://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=ha009726110)
+
+[^13]: [«An Inquiry Into the Permanent Causes of the Decline and Fall of Powerful and Wealthy Nations» de William Playfair (1821)](https://www.amazon.com/Permanent-Powerful-Nations-Prosperity-Prolonged/dp/140691830X)
+
+---
+
+## Primer scatter plot
+
+Según J. Sevilla, se considera al astrónomo británico **John Frederick William Herschel** el autor del [**primer diagrama de dispersión o scatterplot**]{.hl-yellow} en 1833, visualizando el movimiento de la estrella doble Virginis (tiempo en el eje horizontal, posición angular en el eje vertical)
+
+
+```{r echo = FALSE, out.width = "35%", fig.align = "center", fig.cap = "Extraído de https://friendly.github.io/HistDataVis."}
+knitr::include_graphics("./img/herschel.jpg")
+``` 
+
+---
+
+## Florence Nigthingale
+
+::: columns
+::: {.column width="65%"}
+
+
+* El 21 de octubre de 1854 [**Florence Nigthingale**]{.hl-yellow} fue enviada para mejorar las **condiciones sanitarias** de los soldados británicos en la guerra de Crimea. 
+
+* A su regreso demostró que los [**soldados fallecían por las condiciones sanitarias**]{.hl-yellow}. Nigthingale es la creadora del famoso [**diagrama de rosa**]{.hl-yellow}, visualizando tres variables a la vez y su estacionalidad.
+
+* El 8 de febrero de 1955, The Times la describió como la **«ángel guardián» de los hospitales**, y acabó siendo conocida como [**«The Lady with the Lamp»**]{.hl-yellow} tras un poema de H. W. Longfellow (1857).
+
+* Años después se convirtió en la [**primera mujer en la Royal Statistical Society**]{.hl-yellow}.
+
+:::
+
+::: {.column width="35%"}
+
+```{r echo = FALSE, out.width = "95%", fig.align = "center"}
+knitr::include_graphics("./img/the_lady_with_the_lamp.png")
+``` 
+
+:::
+::::
+
+---
+
+## Diagrama de rosa
+
+Florence Nigthingale es la creadora del famoso [**diagrama de rosa**]{.hl-yellow}, permitiendo pintar [**tres variables a la vez y su estacionalidad**]{.hl-yellow}: **tiempo** (cada **gajo** es un mes), **nº de muertes** (**área** del gajo) y **causa** de la muerte (**color** del gajo: azules enfermedades infecciosas, rojas por heridas, negras otras causas).
+
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("./img/rosa_nightingale.jpg")
+``` 
+
+---
+
+
+## Recursos de dataviz
+
+
+📚 [«The Functional Art: an introduction to information graphics and visualization» de Alberto Cairo](https://www.amazon.es/Functional-Art-Voices-That-Matter/dp/0321834739)
+
+
+📚 [«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla](https://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf)
+
+
+📚 [«A Brief History of Visualization» de Friendly et al. (2008)](https://www.researchgate.net/publication/226400313_A_Brief_History_of_Data_Visualization)
+
+📚 [«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)](https://www.jstor.org/stable/2683467)]
+
+📚 [«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social & Behavioral Sciences](https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf)
+
+📚 [«The Grammar of Graphics» de Leland Wilkinson](https://www.amazon.es/Grammar-Graphics-Statistics-Computing/dp/0387245448)
+
+
+📚 [«The Minard System: The Graphical Works of Charles-Joseph Minard» de Sandra Rendgen](https://www.amazon.es/gp/product/1616896337/ref=sw_img_1?smid=A1AT7YVPFBWXBL&psc=1)
+
+📚 [«The Visual Display of Quantitative Information» de E. W. Tufte](https://www.amazon.es/Visual-Display-Quantitative-Information/dp/0961392142)
+
+---
+
+## Dataviz en R: ggplot2
+
+:::: columns
+::: {.column width="50%"}
+
+El paquete `{ggplot2}` se basa en la idea de Wilkinson en [**«Grammar of graphics»**]{.hl-yellow}: dotar a los gráficos de una gramática propia. Una de las principales fortalezas de `R` es la [**visualización**]{.hl-yellow} con `{ggplot2}`.
+
+```{r}
+library(ggplot2)
+```
+
+La [**visualización de datos**]{.hl-yellow} debería ser una parte fundamental de todo análisis de datos. No es solo una cuestión estética.
+:::
+
+::: {.column width="50%"}
+![](img/telling_dataviz.jpg){width="400"}
+:::
+::::
+
+---
+
+## Dataviz en R: ggplot2
+
+La filosofía detrás de `{ggplot2}` es entender los [**gráficos como parte del flujo**]{.hl-yellow} de trabajo, dotándoles de una [**gramática**]{.hl-yellow}. El objetivo es empezar con un lienzo en blanco e ir [**añadiendo capas a tu gráfico**]{.hl-yellow}. La ventaja de `{ggplot2}` es poder [**mapear atributos estéticos**]{.hl-purple} (color, forma, tamaño) de objetos geométricos (puntos, barras, líneas) en función de los datos.
+
+&nbsp;
+
+
+La **documentación** del paquete puedes consultarla en <https://ggplot2-book.org/introduction.html> 
+
+![](img/grammar_ggplot2.jpg)
+
+
+---
+
+## Dataviz en R: ggplot2
+
+![](img/tarta_ggplot2.png)
+
+---
+
+## Dataviz en R: ggplot2
+
+:::: columns
+::: {.column width="40%"}
+![](img/tarta_recortada_ggplot2.jpg)
+:::
+
+::: {.column width="60%"}
+Un gráfico se podrá componer de [**capas**]{.hl-yellow}
+
+* [**Datos (data)**]{.hl-purple}
+* [**Mapeado (aesthetics)**]{.hl-purple} de elementos estéticos: ejes, color, forma, etc (en función de los datos)
+* [**Geometría (geom)**]{.hl-purple}: puntos, líneas, barras, polígonos, etc.
+* [**Componer gráficas (facet)**]{.hl-purple}
+* [**Transformaciones (stat)**]{.hl-purple}: ordenar, resumir, etc.
+* [**Coordenadas (coord)**]{.hl-purple}: coordenadas cartesianas, polares, grids, etc.
+* [**Temas (theme)**]{.hl-purple}: fuente, tamaño de letra, subtítulos, captions, leyenda, ejes, etc.
+
+:::
+::::
+
+---
+
+## Primer intento: scatter plot
+
+Veamos un **primer intento** para entender la filosofía ggplot. Imagina que queremos dibujar un [**scatter plot**]{.hl-yellow} (diagrama de dispersión de puntos). Para ello vamos a usar el conjunto de datos `gapminder`, del paquete homónimo: un fichero con **datos de esperanzas de vida, poblaciones y renta per cápita** de distintos países en distintos momentos temporales.
+
+```{r}
+library(gapminder)
+gapminder
+```
+
+
+---
+
+## Primer intento: scatter plot
+
+El fichero consta de 1704 registros y 6 variables: `country`, `continent`, `year`, `lifeExp` (esperanza de vida), `pop` (población)  y `gdpPercap` (renta per cápita).
+
+```{r}
+glimpse(gapminder)
+```
+
+Para empezar con algo sencillo [**filtraremos solo los datos de 1997**]{.hl-yellow}
+
+```{r}
+gapminder_1997 <-
+  gapminder |>
+  filter(year == 1997) |> 
+  drop_na(gdpPercap, lifeExp, pop)
+```
+
+---
+
+## Ingredientes: (x, y)
+
+
+¿Qué [**elementos necesitamos**]{.hl-yellow} para realizar un diagrama de puntos? Para [**iniciar el lienzo**]{.hl-pùrple} necesitamos una base de datos y dos variables a representar.
+
+. . .
+
+:::: columns
+::: {.column width="45%"}
+
+* [**Datos (data)**]{.hl-yellow}: conjunto `gapminder_1997`.
+
+* [**Mapeado**]{.hl-yellow}: indicar dentro de `aes()` (aesthetics) las variables en cada coordenada. Todo [**dentro de aes() será mapeado de los datos**]{.hl-purple}
+
+```{r}
+#| eval: false
+ggplot(data = gapminder_1997,
+       aes(x = gdpPercap, y = pop))
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_1997,
+       aes(x = gdpPercap, y = pop))
+```
+
+:::
+::::
+
+---
+
+
+## Primera geometría: geom_point()
+
+:::: columns
+::: {.column width="45%"}
+
+* [**Geometría (geom)**]{.hl-yellow}: optaremos por **puntos** usando `geom_point()`.
+
+```{r}
+#| eval: false
+ggplot(gapminder_1997,
+       aes(x = gdpPercap, y = pop)) +
+  geom_point()
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_1997, aes(x = gdpPercap, y = pop)) +
+  geom_point()
+```
+
+:::
+::::
+
+---
+
+## Rol de los ejes: (x, y)
+
+
+:::: columns
+::: {.column width="45%"}
+
+Vamos a profundizar en ese mapeado: ¿cómo [**cambiar el rol**]{.hl-yellow} de los ejes (población en el eje X y renta per cápita en el eje Y)? 
+
+* **Eje X**: población (variable `pop`)
+* **Eje Y**: renta per cápita (variable `gdpPercap`)
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_1997,
+       aes(y = gdpPercap, x = pop)) +
+  geom_point() 
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_1997, aes(y = gdpPercap, x = pop)) +
+  geom_point() 
+```
+:::
+::::
 
 
 

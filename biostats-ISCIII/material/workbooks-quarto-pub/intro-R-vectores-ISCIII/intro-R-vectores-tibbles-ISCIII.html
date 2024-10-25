@@ -3112,14 +3112,6 @@ vertical-align: -.125em;
   <li><a href="#pregunta-6" id="toc-pregunta-6" class="nav-link" data-scroll-target="#pregunta-6"><span class="header-section-number">4.6</span> Pregunta 6</a></li>
   <li><a href="#pregunta-7" id="toc-pregunta-7" class="nav-link" data-scroll-target="#pregunta-7"><span class="header-section-number">4.7</span> Pregunta 7</a></li>
   <li><a href="#pregunta-8" id="toc-pregunta-8" class="nav-link" data-scroll-target="#pregunta-8"><span class="header-section-number">4.8</span> Pregunta 8</a></li>
-  <li><a href="#pregunta-1-1" id="toc-pregunta-1-1" class="nav-link" data-scroll-target="#pregunta-1-1"><span class="header-section-number">4.9</span> Pregunta 1</a></li>
-  <li><a href="#pregunta-2-1" id="toc-pregunta-2-1" class="nav-link" data-scroll-target="#pregunta-2-1"><span class="header-section-number">4.10</span> Pregunta 2</a></li>
-  <li><a href="#pregunta-3-1" id="toc-pregunta-3-1" class="nav-link" data-scroll-target="#pregunta-3-1"><span class="header-section-number">4.11</span> Pregunta 3</a></li>
-  <li><a href="#pregunta-4-1" id="toc-pregunta-4-1" class="nav-link" data-scroll-target="#pregunta-4-1"><span class="header-section-number">4.12</span> Pregunta 4</a></li>
-  <li><a href="#pregunta-5-1" id="toc-pregunta-5-1" class="nav-link" data-scroll-target="#pregunta-5-1"><span class="header-section-number">4.13</span> Pregunta 5</a></li>
-  <li><a href="#pregunta-6-1" id="toc-pregunta-6-1" class="nav-link" data-scroll-target="#pregunta-6-1"><span class="header-section-number">4.14</span> Pregunta 6</a></li>
-  <li><a href="#pregunta-7-1" id="toc-pregunta-7-1" class="nav-link" data-scroll-target="#pregunta-7-1"><span class="header-section-number">4.15</span> Pregunta 7</a></li>
-  <li><a href="#pregunta-8-1" id="toc-pregunta-8-1" class="nav-link" data-scroll-target="#pregunta-8-1"><span class="header-section-number">4.16</span> Pregunta 8</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -3910,7 +3902,7 @@ Attaching package: &#39;lubridate&#39;</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;2024-10-20&quot;</code></pre>
+<pre><code>[1] &quot;2024-10-25&quot;</code></pre>
 </div>
 </div>
 <ul>
@@ -3919,7 +3911,7 @@ Attaching package: &#39;lubridate&#39;</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;2024-10-20 19:01:23 CEST&quot;</code></pre>
+<pre><code>[1] &quot;2024-10-25 16:24:27 CEST&quot;</code></pre>
 </div>
 </div>
 <ul>
@@ -5267,156 +5259,6 @@ character(0)
 <span id="cb360-3"><a href="#cb360-3" aria-hidden="true" tabindex="-1"></a>wiki_jump <span class="ot">&lt;-</span> <span class="st">&#39;https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression&#39;</span></span>
 <span id="cb360-4"><a href="#cb360-4" aria-hidden="true" tabindex="-1"></a>long_jump <span class="ot">&lt;-</span> <span class="fu">read_html</span>(wiki_jump)</span>
 <span id="cb360-5"><a href="#cb360-5" aria-hidden="true" tabindex="-1"></a>salto_longitud <span class="ot">&lt;-</span> <span class="fu">html_table</span>(<span class="fu">html_node</span>(long_jump, <span class="st">&#39;table&#39;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-1-1" class="level3" data-number="4.9">
-<h3 data-number="4.9" class="anchored" data-anchor-id="pregunta-1-1"><span class="header-section-number">4.9</span> Pregunta 1</h3>
-<blockquote class="blockquote">
-<p>¿Cuántos registros hay? ¿Cuántas variables? ¿De qué tipo es cada una? ¿Cuáles son sus nombres? ¿Qué crees que significan?</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb361"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb361-1"><a href="#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(salto_longitud)</span>
-<span id="cb361-2"><a href="#cb361-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(salto_longitud)</span>
-<span id="cb361-3"><a href="#cb361-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(salto_longitud)</span>
-<span id="cb361-4"><a href="#cb361-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb361-5"><a href="#cb361-5" aria-hidden="true" tabindex="-1"></a><span class="co"># tenemos 19 récords y 5 variables: la marca (en metros, pies y pulgadas), el viento que hacía, la persona que batió el record, el lugar y la fecha.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-2-1" class="level3" data-number="4.10">
-<h3 data-number="4.10" class="anchored" data-anchor-id="pregunta-2-1"><span class="header-section-number">4.10</span> Pregunta 2</h3>
-<blockquote class="blockquote">
-<p>Crea una nueva variable llamada <code>Mark</code> (sustituye a la anterior) en la que hayas extraído la marca en metros (y convertida a número). Práctica antes con un valor de juguete, por ejemplo, si tuviésemos `x &lt;- “7.61 m (24 ft 11+1/2 in)”, ¿cómo podríamos quedarnos solo con la marca en metros?</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb362"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb362-1"><a href="#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sabemos que el patrón es 1 número, un ., y dos decimales, así que</span></span>
-<span id="cb362-2"><a href="#cb362-2" aria-hidden="true" tabindex="-1"></a><span class="co"># usamos str_extract para extraer ese patrón que le indicamos</span></span>
-<span id="cb362-3"><a href="#cb362-3" aria-hidden="true" tabindex="-1"></a><span class="co"># con una expresión regular.</span></span>
-<span id="cb362-4"><a href="#cb362-4" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Mark <span class="ot">&lt;-</span></span>
-<span id="cb362-5"><a href="#cb362-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(salto_longitud<span class="sc">$</span>Mark, <span class="at">pattern =</span> <span class="st">&quot;[0-9][.][0-9]{2}&quot;</span>)</span>
-<span id="cb362-6"><a href="#cb362-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb362-7"><a href="#cb362-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Tras ello convertimos a número</span></span>
-<span id="cb362-8"><a href="#cb362-8" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Mark <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(salto_longitud<span class="sc">$</span>Mark)</span>
-<span id="cb362-9"><a href="#cb362-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb362-10"><a href="#cb362-10" aria-hidden="true" tabindex="-1"></a><span class="co"># importante: ahora en la cabecera debajo de mark pone &lt;dbl&gt;, es un número</span></span>
-<span id="cb362-11"><a href="#cb362-11" aria-hidden="true" tabindex="-1"></a>salto_longitud </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-3-1" class="level3" data-number="4.11">
-<h3 data-number="4.11" class="anchored" data-anchor-id="pregunta-3-1"><span class="header-section-number">4.11</span> Pregunta 3</h3>
-<blockquote class="blockquote">
-<p>Crea una nueva variable llamada <code>Wind</code> (sustituye la original) en la que tengas el viento convertido a número.</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb363"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb363-1"><a href="#cb363-1" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Wind <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(salto_longitud<span class="sc">$</span>Wind)</span>
-<span id="cb363-2"><a href="#cb363-2" aria-hidden="true" tabindex="-1"></a>salto_longitud</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<blockquote class="blockquote">
-<p>¿En cuántos récords no había viento? ¿En cuántos no tenemos registros de dicha medida?</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb364"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb364-1"><a href="#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con viento 0</span></span>
-<span id="cb364-2"><a href="#cb364-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>Wind <span class="sc">==</span> <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb364-3"><a href="#cb364-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb364-4"><a href="#cb364-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sin registros</span></span>
-<span id="cb364-5"><a href="#cb364-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(salto_longitud<span class="sc">$</span>Wind))</span>
-<span id="cb364-6"><a href="#cb364-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb364-7"><a href="#cb364-7" aria-hidden="true" tabindex="-1"></a><span class="co"># importante: ausente y 0 no es lo mismo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-4-1" class="level3" data-number="4.12">
-<h3 data-number="4.12" class="anchored" data-anchor-id="pregunta-4-1"><span class="header-section-number">4.12</span> Pregunta 4</h3>
-<blockquote class="blockquote">
-<p>Crea una nueva variable llamada <code>country</code> que extraiga las siglas de los países de la variable <code>Athlete</code></p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb365"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb365-1"><a href="#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero extraemos con los paréntesis (es más fácil detectarlo)</span></span>
-<span id="cb365-2"><a href="#cb365-2" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>country <span class="ot">&lt;-</span></span>
-<span id="cb365-3"><a href="#cb365-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_extract</span>(salto_longitud<span class="sc">$</span>Athlete, <span class="at">pattern =</span> <span class="st">&quot;[(][A-Z]{3}[)]&quot;</span>)</span>
-<span id="cb365-4"><a href="#cb365-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb365-5"><a href="#cb365-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Luego los eliminamos los ( y los ) (de ahí la barra vertical en medio)</span></span>
-<span id="cb365-6"><a href="#cb365-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fíjate que para que entienda que es un caracter especial (paréntesis)</span></span>
-<span id="cb365-7"><a href="#cb365-7" aria-hidden="true" tabindex="-1"></a><span class="co"># se lo pasamos como \\( y como \\). Ppasaría lo mismo si queremos detectar,</span></span>
-<span id="cb365-8"><a href="#cb365-8" aria-hidden="true" tabindex="-1"></a><span class="co"># por ejemplo, un punto, con \\.</span></span>
-<span id="cb365-9"><a href="#cb365-9" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">str_remove_all</span>(salto_longitud<span class="sc">$</span>country, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(|</span><span class="sc">\\</span><span class="st">)&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-5-1" class="level3" data-number="4.13">
-<h3 data-number="4.13" class="anchored" data-anchor-id="pregunta-5-1"><span class="header-section-number">4.13</span> Pregunta 5</h3>
-<blockquote class="blockquote">
-<p>Ordena la tabla por orden alfabético de las siglas</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb366"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb366-1"><a href="#cb366-1" aria-hidden="true" tabindex="-1"></a>salto_longitud <span class="ot">&lt;-</span> salto_longitud[<span class="fu">order</span>(salto_longitud<span class="sc">$</span>country), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-6-1" class="level3" data-number="4.14">
-<h3 data-number="4.14" class="anchored" data-anchor-id="pregunta-6-1"><span class="header-section-number">4.14</span> Pregunta 6</h3>
-<blockquote class="blockquote">
-<p>Reemplaza la variable <code>Date</code> por la fecha correcta en formato fecha</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb367"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb367-1"><a href="#cb367-1" aria-hidden="true" tabindex="-1"></a><span class="co"># primero eliminamos todos los [?]</span></span>
-<span id="cb367-2"><a href="#cb367-2" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Date <span class="ot">&lt;-</span></span>
-<span id="cb367-3"><a href="#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(salto_longitud<span class="sc">$</span>Date, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">[[0-9]{1}</span><span class="sc">\\</span><span class="st">]&quot;</span>)</span>
-<span id="cb367-4"><a href="#cb367-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-5"><a href="#cb367-5" aria-hidden="true" tabindex="-1"></a><span class="co"># luego atendemos el caso particualr de [note 1]</span></span>
-<span id="cb367-6"><a href="#cb367-6" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Date <span class="ot">&lt;-</span></span>
-<span id="cb367-7"><a href="#cb367-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(salto_longitud<span class="sc">$</span>Date, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">[note 1</span><span class="sc">\\</span><span class="st">]&quot;</span>)</span>
-<span id="cb367-8"><a href="#cb367-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb367-9"><a href="#cb367-9" aria-hidden="true" tabindex="-1"></a><span class="co"># tras depurar convertimos a fecha</span></span>
-<span id="cb367-10"><a href="#cb367-10" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">dmy</span>(salto_longitud<span class="sc">$</span>Date)</span>
-<span id="cb367-11"><a href="#cb367-11" aria-hidden="true" tabindex="-1"></a>salto_longitud</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-7-1" class="level3" data-number="4.15">
-<h3 data-number="4.15" class="anchored" data-anchor-id="pregunta-7-1"><span class="header-section-number">4.15</span> Pregunta 7</h3>
-<blockquote class="blockquote">
-<p>¿Cuántos récords no son de Estados Unidos? ¿Qué porcentaje representa respecto al total?</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb368"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb368-1"><a href="#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total absoluto</span></span>
-<span id="cb368-2"><a href="#cb368-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">&quot;USA&quot;</span>)</span>
-<span id="cb368-3"><a href="#cb368-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb368-4"><a href="#cb368-4" aria-hidden="true" tabindex="-1"></a><span class="co"># porcentaje relativo</span></span>
-<span id="cb368-5"><a href="#cb368-5" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">sum</span>(salto_longitud<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">&quot;USA&quot;</span>) <span class="sc">/</span> <span class="fu">length</span>(salto_longitud<span class="sc">$</span>country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="pregunta-8-1" class="level3" data-number="4.16">
-<h3 data-number="4.16" class="anchored" data-anchor-id="pregunta-8-1"><span class="header-section-number">4.16</span> Pregunta 8</h3>
-<blockquote class="blockquote">
-<p>Para cada récord, calcula los metros de mejora respecto al anterior, y guárdalo en la base de datos. Pista: prueba bien la función <code>diff()</code> y chequea la longitud de lo que te devuelve.</p>
-</blockquote>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb369"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb369-1"><a href="#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usamos la función diff que, dado un vector, calcula las diferencias</span></span>
-<span id="cb369-2"><a href="#cb369-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fíjate que el primero no conocemos la mejora (ya que no hay registro previo)</span></span>
-<span id="cb369-3"><a href="#cb369-3" aria-hidden="true" tabindex="-1"></a>salto_longitud<span class="sc">$</span>mejora <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">diff</span>(salto_longitud<span class="sc">$</span>Mark))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
