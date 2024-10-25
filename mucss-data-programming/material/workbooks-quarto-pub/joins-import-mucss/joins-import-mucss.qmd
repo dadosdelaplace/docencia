@@ -466,7 +466,7 @@ renta_mun <-
 
 ### Question 1
 
-> Convierte a tidydata `renta_mun` obteniendo una tabla de 4 columnas: `unidad`, `year`, `income` and `codigo_ine` (sin ausentes y cada dato del tipo correcto)
+> Convert to tidydata `renta_mun` obtaining a table of 4 columns: `unit`, `year`, `income` and `codigo_ine` (no absent and each data of the correct type)
 
 ```{r}
 #| code-fold: true
@@ -480,7 +480,7 @@ renta_mun_tidy <-
 
 ### Question 2
 
-> Si te fijas en la tabla anterior tenemos datos de distintas unidades administrativas que no siempre son municipios. Sabiendo que todos los municipios tiene un código formado por 5 caracteres, filtra solo aquellos registros que corresponden a unidades municipales. 
+> If you look at the table above we have data from different administrative units that are not always municipalities. Knowing that all municipalities have a 5-character code, filter only those records that correspond to municipal units.
 
 ```{r}
 #| code-fold: true
@@ -492,7 +492,7 @@ renta_mun_tidy <-
 
 ### Question 3
 
-> Tras ello separa adecuadamente la variable unidad en dos columnas: una con el código (que ya tienes así que uno de los dos debes eliminar) y el nombre. Elimna espacios sueltes que queden (echa vistazo a las opciones del paquete `{stringr}`)
+> Then properly separate the unit variable into two columns: one with the code (which you already have so one of the two should be removed) and the name. Remove any remaining spaces (take a look at the `{stringr}` package options).
 
 ```{r}
 #| code-fold: true
@@ -505,7 +505,7 @@ renta_mun_tidy <-
 
 ### Question 4
 
-> ¿En qué año la media de renta fue mayor? ¿Y menor? ¿Cuál fue la renta mediana de los municipios de España en 2019
+> In which year was the median income higher? And lower? What was the median income of municipalities in Spain in 2019?
 
 ```{r}
 summary_renta <-
@@ -525,7 +525,7 @@ renta_mun_tidy |>
 
 ### Question 5
 
-> Haz lo que consideres para obtener la provincia con mayor renta media en 2019 y la que menos. Asegúrate de obtener su nombre. 
+> Do whatever you consider to obtain the province with the highest average income in 2019 and the one with the lowest. Be sure to get its name.
 
 ```{r}
 #| code-fold: true
@@ -546,7 +546,7 @@ summary_by_prov |>
 
 ### Question 6
 
-> Obtén de cada ccaa el nombre del municipio con mayor renta en 2019. 
+> Obtain from each ccaa the name of the municipality with the highest income in 2019.
 
 ```{r}
 #| code-fold: true

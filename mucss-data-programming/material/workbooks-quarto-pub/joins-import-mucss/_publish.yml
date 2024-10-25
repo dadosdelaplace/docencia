@@ -18,3 +18,7 @@
   quarto-pub:
     - id: f6e6930b-aa3a-462b-bfc5-21b278bb3337
       url: 'https://javieralvarezliebana.quarto.pub/tidyverse-mucss'
+- source: joins-import-mucss.qmd
+  quarto-pub:
+    - id: 35564095-046b-469e-aeed-42976d6d0eab
+      url: 'https://javieralvarezliebana.quarto.pub/joins-import-mucss'

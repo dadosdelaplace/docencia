@@ -167,7 +167,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [3](#clase-3) | S4 | 26 sep | Tidyverse: by columns | [💻](#tu-turno-3-1) [💻](#tu-turno-3-2)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) [🐣](#caso-practico-3-3)|  | 
 | [4](#clase-4) | S5 | 3 oct | Tidyverse: summary | [💻](#tu-turno-4-1)  | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2) |  | 
 | [5](#clase-5) | S6 | 10 oct | Loops | [💻](#tu-turno-5-1)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) |  |
-| [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2) [🐣](#caso-practico-6-3) [🐣](#caso-practico-6-4)  |  |
+| [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2) [🐣](#caso-practico-6-3)  |  |
 | [7](#clase-7) | S8 | 24 oct | Import/export |  [💻](#tu-turno-7-1) | [🐣](#caso-practico-7-1) [🐣](#caso-practico-7-2)  |  |
 | [8](#clase-8) | S10 | 6 nov | Purrr and forcats packages  |   |  |  |
 | [9](#clase-9) | S11 | 13 nov | Github and SQL connection |   |  |  |
@@ -8339,12 +8339,6 @@ To practice with functions we are going to create a complete **temperature conve
 Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
 
 
----
-
-## 🐣 Case study II: covid data {#caso-practico-6-2}
-
-
-Pending to submit
 
 ---
 
@@ -8822,7 +8816,7 @@ flights |>
 
 ---
 
-## 🐣 Case study III: Beatles and Rolling Stones {#caso-practico-6-3}
+## 🐣 Case study II: Beatles {#caso-practico-6-2}
 
 We will use to practice simple joins the `band_members` and `band_instruments` datasets already included in the `{dplyr}` package.
 
@@ -8834,11 +8828,11 @@ band_instruments
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-i-beatles-and-rolling-stones)
 
 ---
 
-## 🐣 Case study IV: income by municipalities {#caso-practico-6-4}
+## 🐣 Case study III: income by municipalities {#caso-practico-6-3}
 
 In the file `municipios.csv` we have stored the information of the municipalities of Spain as of 2019.
 
@@ -8854,7 +8848,7 @@ mun_data
 
 ---
 
-## 🐣 Case study IV: income by municipalities
+## 🐣 Case study III: income by municipalities
 
 On the other hand, in the file `renta_mun` we have the average per capita income of each administrative unit (municipalities, districts, provinces, autonomous communities,...) for different years.
 
@@ -8865,7 +8859,7 @@ renta_mun
 
 ---
 
-## 🐣 Case study IV: income by municipalities
+## 🐣 Case study III: income by municipalities
 
 Before we start let's [**normalize variable names**]{.hl-yellow} using `clean_names()` from the `{janitor}` package.
 
@@ -8880,7 +8874,7 @@ renta_mun <-
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/flow-structures-functions/)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-ii-income-by-municipalities)
 
 # L7: [import/exports]{.flow} {#clase-7}
 

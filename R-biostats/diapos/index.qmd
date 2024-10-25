@@ -8710,7 +8710,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## Caso práctico III: discursos
+## 🐣 Caso práctico III: discursos
 
 Vamos a hacer un ejercicio con textos. En el [workbook](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-discursos) tienes no solo un caso práctico sino un mini tutorial de cómo trabajar con textos en R haciendo uso del paquete `{stringr}`. En concreto vamos a [**analizar los discursos de Navidad de los jefes de Estado españoles**]{.hl-yellow}
 
@@ -8725,7 +8725,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## Caso práctico IV: covid
+## 🐣 Caso práctico IV: covid
 
 Vamos a volver al dataset de covid de la entrega II pero **esta vez desde una perspectiva tidyverse**
 

@@ -1558,8 +1558,4 @@ n_prizes_change
 ```
 
 
-## 🐣 Case study IV: covid data
-
-
-Pending to submit
 
