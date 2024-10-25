@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.294">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Máster de Bioinformática • Javier Álvarez Liébana">
   <title>Bioestadística en R</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta de la Facultad de Estudios Estadísticos de la UCM).</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
+<p><img data-src="img/me.jpeg"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -834,7 +834,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="st">"a"</span> <span class="sc">+</span> <span class="dv">1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "a" + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in "a" + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -846,7 +846,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Ejecuta la orden pero el resultado es NaN, **Not A Number**, un valor que no existe</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in sqrt(-1): Se han producido NaNs</code></pre>
+<pre><code>Warning in sqrt(-1): NaNs produced</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NaN</code></pre>
@@ -1033,7 +1033,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <span id="cb22-3"><a href="#cb22-3"></a></span>
 <span id="cb22-4"><a href="#cb22-4"></a>X <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): objeto 'X' no encontrado</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object 'X' not found</code></pre>
 </div>
 </div>
 </div>
@@ -1283,7 +1283,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>nombre <span class="sc">+</span> <span class="dv">1</span> <span class="co"># error al sumar número a texto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in nombre + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in nombre + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1461,7 +1461,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="st">"TRUE"</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "TRUE" + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in "TRUE" + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1551,7 +1551,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1579,7 +1579,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb99-2"><a href="#cb99-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1652,7 +1652,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-25 15:43:59 CEST"</code></pre>
+<pre><code>[1] "2024-10-25 18:45:24 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -1721,7 +1721,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1"></a>edad <span class="sc">+</span> nombre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in edad + nombre: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in edad + nombre: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1849,7 +1849,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1"></a><span class="st">"a"</span><span class="sc">:</span><span class="st">"z"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "a":"z": Argumento NA/NaN</code></pre>
+<pre><code>Error in "a":"z": NA/NaN argument</code></pre>
 </div>
 </div>
 </div>
@@ -2679,8 +2679,8 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb283"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">nrow =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in matrix(1:15, nrow = 4): la longitud de los datos [15] no es un
-submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
+<pre><code>Warning in matrix(1:15, nrow = 4): data length [15] is not a sub-multiple or
+multiple of the number of rows [4]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4]
@@ -2726,7 +2726,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb290"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -2754,7 +2754,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb294"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -2888,7 +2888,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <div class="sourceCode cell-code" id="cb318"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb318-2"><a href="#cb318-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -3612,13 +3612,13 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <span id="cb380-4"><a href="#cb380-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb380-5"><a href="#cb380-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr     min      lq      mean  median
-                                y &lt;- x^2     800    1000    1851.8    1500
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1029800 1079400 1200446.2 1103200
-      uq     max neval cld
-    1800   48900   500  a 
- 1163300 4554100   500   b</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.968    2.239748    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1267.187 1288.712 1394.975144 1304.682
+       uq      max neval
+    2.214   12.915   500
+ 1343.201 4704.709   500</code></pre>
 </div>
 </div>
 </section>
@@ -3824,14 +3824,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb400"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb400-1"><a href="#cb400-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]         [,2]       [,3]
-[1,]  0.6204506 -0.384527411  0.4648052
-[2,] -1.4530774  0.095637364  0.9358546
-[3,]  0.9181088  0.007291665 -0.5095680
-[4,]  0.1743544 -1.598358788 -1.0311972
-[5,] -0.4198697 -0.667685066  1.3557746
-[6,]  1.9342543  0.713613297 -2.5302825
-[7,] -0.7983855 -0.316974082 -1.4601614</code></pre>
+<pre><code>           [,1]         [,2]        [,3]
+[1,] -0.1644743 -0.668007045  0.03768499
+[2,]  0.4630734  0.550597018  1.70150989
+[3,]  1.4745038 -0.057692479  0.88687909
+[4,]  1.1928774  0.054260031 -0.90081411
+[5,]  1.1361252 -0.501916705  0.32081505
+[6,]  0.2775661 -1.341972653 -1.28988763
+[7,] -0.5642300 -0.001849605 -0.99386202</code></pre>
 </div>
 </div>
 </section>
@@ -4281,7 +4281,7 @@ $edad_hermanos
 <div class="sourceCode cell-code" id="cb444"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb444-1"><a href="#cb444-1"></a><span class="fu">library</span>(tibble)</span>
 <span id="cb444-2"><a href="#cb444-2"></a><span class="fu">tibble</span>(<span class="st">"progenitores"</span> <span class="ot">=</span> var_1, <span class="st">"lugar_nac"</span> <span class="ot">=</span> va_2, <span class="st">"edad_hermanos"</span> <span class="ot">=</span> var_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval_tidy(xs[[j]], mask): objeto 'va_2' no encontrado</code></pre>
+<pre><code>Error in eval_tidy(xs[[j]], mask): object 'va_2' not found</code></pre>
 </div>
 </div>
 </section>
@@ -4614,17 +4614,389 @@ $tipo
 </div>
 </div>
 </section>
-<section id="caso-practico-4-2" class="slide level2">
-<h2>🐣 Caso práctico II: conversor</h2>
+<section id="caso-practico-4-1" class="slide level2">
+<h2>🐣 Caso práctico I: conversor</h2>
 <p>Para practicar con funciones vamos a crear un completo <strong>conversor de temperaturas</strong> que, dada una temperatura en Fahrenheit, Celsius o Kelvin, la convierta a cualquiera de las otras</p>
 <p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/"><strong>workbook</strong></a> hasta construirlo.</p>
 </section>
-<section id="dataviz" class="slide level2">
-<h2>Dataviz</h2>
+<section id="dataviz-historia" class="slide level2">
+<h2>Dataviz: historia</h2>
+<p>La aparición de gráficos estadísticos es <span class="hl-yellow"><strong>relativamente reciente en la ciencia</strong></span> ya que hasta la Edad Media la única visualización estaba en los <span class="hl-yellow"><strong>mapas</strong></span>. <sup>1</sup> Las propias palabras <em>chart</em> y <em>cartography</em> derivan del mismo origen latino, <em>charta</em>, aunque el primer uso de coordenadas viene de los egipcios. <sup>2</sup> <sup>3</sup></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:55%;">
+<p>No es hasta la Edad Media, cuando la <span class="hl-yellow"><strong>navegación y la astronomía</strong></span> empezaban a tomar relevancia, cuando aparece la primera gráfica (no propiamente estadística), del <strong>movimiento cíclico de los planetas</strong> (siglos X y XI)</p>
+</div><div class="column" style="width:45%;">
+<p><img data-src="img/dataviz_historico_1.png" width="370"></p>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p><a href="http://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf">«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla</a></p></li><li id="fn2"><p><a href="https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf">«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social &amp; Behavioral Sciences</a></p></li><li id="fn3"><p><a href="https://www.jstor.org/stable/2683467">«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)</a>]</p></li></ol></aside></section>
+<section id="navegación-y-astronomía" class="slide level2">
+<h2>Navegación y astronomía</h2>
+<p>Con una motivación similar, en torno a 1360 el matemático <strong>Nicole Oresme</strong> diseñó el <span class="hl-yellow"><strong>primer gráfico de barras</strong></span> (pero no estadístico), con la idea de visualizar a la vez dos <strong>magnitudes físicas teóricas</strong>. <sup>1</sup></p>
+<p><img data-src="img/dataviz_historico_2.jpeg" width="300"></p>
+<aside><ol class="aside-footnotes"><li id="fn4"><p><a href="https://www.researchgate.net/publication/227369016_The_First_Known_Statistical_Graph_Michael_Florent_van_Langren_and_the_Secret_of_Longitude">«The First (Known) Statistical Graph: Michael Florent van Langren and the ‘Secret’ of Longitude» de M. Friendly y P. M. Valero-Mora. The American Statistician (2010)</a></p></li></ol></aside></section>
+<section id="primer-gráfico-estadístico" class="slide level2">
+<h2>Primer gráfico estadístico</h2>
+<p>La mayoría de expertos, como Tufte <sup>1</sup> <sup>2</sup>, consideran este gráfico casi longitudinal como la <span class="hl-yellow"><strong>primera visualización de datos</strong></span> de la historia, hecha por <strong>Van Langren</strong> en 1644, representando la <span class="hl-yellow"><strong>distancia entre Toledo y Roma</strong></span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="./img/longitud_dataviz.jpg" width="546"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="./img/dataviz_historico_3.jpeg" width="557"></p>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn5"><p><a href="https://archive.org/details/visualexplanatio00tuft">«Visual explanations: images and quantities, evidence and narrative» de E. Tufte</a></p></li><li id="fn6"><p><a href="https://www.wired.com/2003/09/ppt2/">«PowerPoint is evil» de E. Tufte</a></p></li></ol></aside></section>
+<section id="vizfails" class="slide level2">
+<h2>Vizfails</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<p><img data-src="img/persona_dataviz.jpg"></p>
+</div><div class="column" style="width:45%;">
+<ul>
+<li><p>La figura elegida (persona caminando) sin relación con lo visualizado: <span class="hl-red"><strong>mala metáfora</strong></span>.</p></li>
+<li><p>Los <span class="hl-red"><strong>sectores señalados sin relación con el ítem</strong></span> a representar, lo que dificulta su interpretación.</p></li>
+<li><p>Los <span class="hl-red"><strong>colores sin codificar</strong></span>: no dan información de ningún tipo.</p></li>
+<li><p>Las <span class="hl-red"><strong>formas irregulares impiden la comparación</strong></span> de las áreas (amén de que la suma total supera el 100%).</p></li>
+<li><p><strong>Sin fuente</strong></p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="vizfails-1" class="slide level2">
+<h2>Vizfails</h2>
+
+<img data-src="img/viz_fail_covid.jpg" class="r-stretch"></section>
+<section id="vizfails-2" class="slide level2">
+<h2>Vizfails</h2>
+
+<img data-src="img/viz_fail_uk.jpg" class="r-stretch"></section>
+<section id="la-importancia-del-contexto" class="slide level2">
+<h2>La importancia del CONTEXTO</h2>
+<p>Una <strong>buena idea</strong> puede estar mal ejecutada: la forma de llevarla a cabo es importante</p>
+
+<img data-src="img/semaforos.jpg" class="r-stretch"></section>
+<section id="dataviz-historia-1" class="slide level2">
+<h2>Dataviz: historia</h2>
+<p>En el siglo XVII hubo un boom de la estadística al empezar a aplicarse en <span class="hl-yellow"><strong>demografía</strong></span>. Uno de los autores más importantes fue <span class="hl-purple"><strong>J. Graunt</strong></span>, autor de «Natural and Political Observations Made upon the Bills of Mortality» (1662), estimando la población de Londres con las <span class="hl-yellow"><strong>primeras tablas de natalidad y mortalidad</strong></span>.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Son precisamente las tablas de Graunt las que usó <span class="hl-yellow"><strong>Christiaan Huygens</strong></span> para generar la <span class="hl-yellow"><strong>primera gráfica de densidad</strong></span> de una distribución continua (esperanza de vida vs edad).</p>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/primera_densidad.jpg" style="width:100.0%"></p>
+<figcaption>Primera función de densidad, extraída de https://omeka.lehigh.edu/exhibits/show/data_visualization/vital_statistics/huygen</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos-de-playfair" class="slide level2">
+<h2>Gráficos de Playfair</h2>
+<p>La figura que cambió el dataviz fue, sin lugar a dudas, el economista y político <span class="hl-yellow"><strong>William Playfair (1759-1823)</strong></span>, publicando en 1786 el <strong>«Atlas político y comercial»</strong> <sup>1</sup> <sup>2</sup> con 44 gráficas (43 series temporales y el diagrama de barras más famoso de la historia).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_1.jpg" style="width:70.0%"></p>
+<figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_2.jpg" style="width:25.0%"></p>
+<figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn7"><p><a href="https://www.jstor.org/stable/45366440">«Playfair and his charts» de H. Gray Funkhouser and Helen M. Walker (1935)</a></p></li><li id="fn8"><p><a href="http://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=ha009726110">«A Letter on Our Agricultural Distresses, Their Causes and Remedies» de W. Playfair (1821)</a></p></li></ol></aside></section>
+<section id="gráficos-de-playfair-1" class="slide level2">
+<h2>Gráficos de Playfair</h2>
+<p>Playfair es además el autor del <span class="hl-yellow"><strong>gráfico de barras más famoso</strong></span> (no fue el primero pero sí quien lo hizo <em>mainstream</em>).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_5.jpg" style="width:90.0%"></p>
+<figcaption>Gráficas de Playfair de importaciones (barras grises) y exportaciones (negras) de Escocia en 1781, extraídas de la wikipedia.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_6.jpg" style="width:90.0%"></p>
+<figcaption>Primer diagrama de barras (P. Buache y G. de L’Isle), visualizando los niveles del Sena (1732 - 1766), extraída de https://friendly.github.io/HistDataVis</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos-de-playfair-2" class="slide level2">
+<h2>Gráficos de Playfair</h2>
+<p>Playfair además fue el primero en <span class="hl-yellow"><strong>combinar gráficos en la misma visualización</strong></span> <sup>1</sup> <sup>2</sup></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_7.jpg" style="width:85.0%"></p>
+<figcaption>Visualiza 3 series temporales: precios (barras) del trigo, salarios (línea) y time-line con reinados, extraída de https://friendly.github.io/HistDataVis.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/playfair_8.png" style="width:85.0%"></p>
+<figcaption>Time-line histórico, extraída de https://friendly.github.io/HistDataVis.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn9"><p><a href="http://onlinebooks.library.upenn.edu/webbin/book/lookupid?key=ha009726110">«A Letter on Our Agricultural Distresses, Their Causes and Remedies» de W. Playfair (1821)</a></p></li><li id="fn10"><p><a href="https://www.amazon.com/Permanent-Powerful-Nations-Prosperity-Prolonged/dp/140691830X">«An Inquiry Into the Permanent Causes of the Decline and Fall of Powerful and Wealthy Nations» de William Playfair (1821)</a></p></li></ol></aside></section>
+<section id="primer-scatter-plot" class="slide level2">
+<h2>Primer scatter plot</h2>
+<p>Según J. Sevilla, se considera al astrónomo británico <strong>John Frederick William Herschel</strong> el autor del <span class="hl-yellow"><strong>primer diagrama de dispersión o scatterplot</strong></span> en 1833, visualizando el movimiento de la estrella doble Virginis (tiempo en el eje horizontal, posición angular en el eje vertical)</p>
+
+<img data-src="./img/herschel.jpg" style="width:35.0%" class="r-stretch quarto-figure-center"><p class="caption">Extraído de https://friendly.github.io/HistDataVis.</p></section>
+<section id="florence-nigthingale" class="slide level2">
+<h2>Florence Nigthingale</h2>
+<div class="columns">
+<div class="column" style="width:65%;">
+<ul>
+<li><p>El 21 de octubre de 1854 <span class="hl-yellow"><strong>Florence Nigthingale</strong></span> fue enviada para mejorar las <strong>condiciones sanitarias</strong> de los soldados británicos en la guerra de Crimea.</p></li>
+<li><p>A su regreso demostró que los <span class="hl-yellow"><strong>soldados fallecían por las condiciones sanitarias</strong></span>. Nigthingale es la creadora del famoso <span class="hl-yellow"><strong>diagrama de rosa</strong></span>, visualizando tres variables a la vez y su estacionalidad.</p></li>
+<li><p>El 8 de febrero de 1955, The Times la describió como la <strong>«ángel guardián» de los hospitales</strong>, y acabó siendo conocida como <span class="hl-yellow"><strong>«The Lady with the Lamp»</strong></span> tras un poema de H. W. Longfellow (1857).</p></li>
+<li><p>Años después se convirtió en la <span class="hl-yellow"><strong>primera mujer en la Royal Statistical Society</strong></span>.</p></li>
+</ul>
+</div><div class="column" style="width:35%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./img/the_lady_with_the_lamp.png" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="diagrama-de-rosa" class="slide level2">
+<h2>Diagrama de rosa</h2>
+<p>Florence Nigthingale es la creadora del famoso <span class="hl-yellow"><strong>diagrama de rosa</strong></span>, permitiendo pintar <span class="hl-yellow"><strong>tres variables a la vez y su estacionalidad</strong></span>: <strong>tiempo</strong> (cada <strong>gajo</strong> es un mes), <strong>nº de muertes</strong> (<strong>área</strong> del gajo) y <strong>causa</strong> de la muerte (<strong>color</strong> del gajo: azules enfermedades infecciosas, rojas por heridas, negras otras causas).</p>
+
+<img data-src="./img/rosa_nightingale.jpg" style="width:75.0%" class="r-stretch quarto-figure-center"></section>
+<section id="recursos-de-dataviz" class="slide level2">
+<h2>Recursos de dataviz</h2>
+<p>📚 <a href="https://www.amazon.es/Functional-Art-Voices-That-Matter/dp/0321834739">«The Functional Art: an introduction to information graphics and visualization» de Alberto Cairo</a></p>
+<p>📚 <a href="https://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf">«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla</a></p>
+<p>📚 <a href="https://www.researchgate.net/publication/226400313_A_Brief_History_of_Data_Visualization">«A Brief History of Visualization» de Friendly et al.&nbsp;(2008)</a></p>
+<p>📚 <a href="https://www.jstor.org/stable/2683467">«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)</a>]</p>
+<p>📚 <a href="https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf">«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social &amp; Behavioral Sciences</a></p>
+<p>📚 <a href="https://www.amazon.es/Grammar-Graphics-Statistics-Computing/dp/0387245448">«The Grammar of Graphics» de Leland Wilkinson</a></p>
+<p>📚 <a href="https://www.amazon.es/gp/product/1616896337/ref=sw_img_1?smid=A1AT7YVPFBWXBL&amp;psc=1">«The Minard System: The Graphical Works of Charles-Joseph Minard» de Sandra Rendgen</a></p>
+<p>📚 <a href="https://www.amazon.es/Visual-Display-Quantitative-Information/dp/0961392142">«The Visual Display of Quantitative Information» de E. W. Tufte</a></p>
+</section>
+<section id="dataviz-en-r-ggplot2" class="slide level2">
+<h2>Dataviz en R: ggplot2</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>El paquete <code>{ggplot2}</code> se basa en la idea de Wilkinson en <span class="hl-yellow"><strong>«Grammar of graphics»</strong></span>: dotar a los gráficos de una gramática propia. Una de las principales fortalezas de <code>R</code> es la <span class="hl-yellow"><strong>visualización</strong></span> con <code>{ggplot2}</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb478"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb478-1"><a href="#cb478-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La <span class="hl-yellow"><strong>visualización de datos</strong></span> debería ser una parte fundamental de todo análisis de datos. No es solo una cuestión estética.</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/telling_dataviz.jpg" width="400"></p>
+</div>
+</div>
+</section>
+<section id="dataviz-en-r-ggplot2-1" class="slide level2">
+<h2>Dataviz en R: ggplot2</h2>
+<p>La filosofía detrás de <code>{ggplot2}</code> es entender los <span class="hl-yellow"><strong>gráficos como parte del flujo</strong></span> de trabajo, dotándoles de una <span class="hl-yellow"><strong>gramática</strong></span>. El objetivo es empezar con un lienzo en blanco e ir <span class="hl-yellow"><strong>añadiendo capas a tu gráfico</strong></span>. La ventaja de <code>{ggplot2}</code> es poder <span class="hl-purple"><strong>mapear atributos estéticos</strong></span> (color, forma, tamaño) de objetos geométricos (puntos, barras, líneas) en función de los datos.</p>
+<p>&nbsp;</p>
+<p>La <strong>documentación</strong> del paquete puedes consultarla en <a href="https://ggplot2-book.org/introduction.html" class="uri">https://ggplot2-book.org/introduction.html</a></p>
+
+<img data-src="img/grammar_ggplot2.jpg" class="r-stretch"></section>
+<section id="dataviz-en-r-ggplot2-2" class="slide level2">
+<h2>Dataviz en R: ggplot2</h2>
+
+<img data-src="img/tarta_ggplot2.png" class="r-stretch"></section>
+<section id="dataviz-en-r-ggplot2-3" class="slide level2">
+<h2>Dataviz en R: ggplot2</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="img/tarta_recortada_ggplot2.jpg"></p>
+</div><div class="column" style="width:60%;">
+<p>Un gráfico se podrá componer de <span class="hl-yellow"><strong>capas</strong></span></p>
+<ul>
+<li><span class="hl-purple"><strong>Datos (data)</strong></span></li>
+<li><span class="hl-purple"><strong>Mapeado (aesthetics)</strong></span> de elementos estéticos: ejes, color, forma, etc (en función de los datos)</li>
+<li><span class="hl-purple"><strong>Geometría (geom)</strong></span>: puntos, líneas, barras, polígonos, etc.</li>
+<li><span class="hl-purple"><strong>Componer gráficas (facet)</strong></span></li>
+<li><span class="hl-purple"><strong>Transformaciones (stat)</strong></span>: ordenar, resumir, etc.</li>
+<li><span class="hl-purple"><strong>Coordenadas (coord)</strong></span>: coordenadas cartesianas, polares, grids, etc.</li>
+<li><span class="hl-purple"><strong>Temas (theme)</strong></span>: fuente, tamaño de letra, subtítulos, captions, leyenda, ejes, etc.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="primer-intento-scatter-plot" class="slide level2">
+<h2>Primer intento: scatter plot</h2>
+<p>Veamos un <strong>primer intento</strong> para entender la filosofía ggplot. Imagina que queremos dibujar un <span class="hl-yellow"><strong>scatter plot</strong></span> (diagrama de dispersión de puntos). Para ello vamos a usar el conjunto de datos <code>gapminder</code>, del paquete homónimo: un fichero con <strong>datos de esperanzas de vida, poblaciones y renta per cápita</strong> de distintos países en distintos momentos temporales.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb479"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb479-1"><a href="#cb479-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb479-2"><a href="#cb479-2"></a>gapminder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,704 × 6
+   country     continent  year lifeExp      pop gdpPercap
+   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+ 1 Afghanistan Asia       1952    28.8  8425333      779.
+ 2 Afghanistan Asia       1957    30.3  9240934      821.
+ 3 Afghanistan Asia       1962    32.0 10267083      853.
+ 4 Afghanistan Asia       1967    34.0 11537966      836.
+ 5 Afghanistan Asia       1972    36.1 13079460      740.
+ 6 Afghanistan Asia       1977    38.4 14880372      786.
+ 7 Afghanistan Asia       1982    39.9 12881816      978.
+ 8 Afghanistan Asia       1987    40.8 13867957      852.
+ 9 Afghanistan Asia       1992    41.7 16317921      649.
+10 Afghanistan Asia       1997    41.8 22227415      635.
+# ℹ 1,694 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="primer-intento-scatter-plot-1" class="slide level2">
+<h2>Primer intento: scatter plot</h2>
+<p>El fichero consta de 1704 registros y 6 variables: <code>country</code>, <code>continent</code>, <code>year</code>, <code>lifeExp</code> (esperanza de vida), <code>pop</code> (población) y <code>gdpPercap</code> (renta per cápita).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb481"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb481-1"><a href="#cb481-1"></a><span class="fu">glimpse</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,704
+Columns: 6
+$ country   &lt;fct&gt; "Afghanistan", "Afghanistan", "Afghanistan", "Afghanistan", …
+$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…
+$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …</code></pre>
+</div>
+</div>
+<p>Para empezar con algo sencillo <span class="hl-yellow"><strong>filtraremos solo los datos de 1997</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb483"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb483-1"><a href="#cb483-1"></a>gapminder_1997 <span class="ot">&lt;-</span></span>
+<span id="cb483-2"><a href="#cb483-2"></a>  gapminder <span class="sc">|&gt;</span></span>
+<span id="cb483-3"><a href="#cb483-3"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1997</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb483-4"><a href="#cb483-4"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>(gdpPercap, lifeExp, pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ingredientes-x-y" class="slide level2">
+<h2>Ingredientes: (x, y)</h2>
+<p>¿Qué <span class="hl-yellow"><strong>elementos necesitamos</strong></span> para realizar un diagrama de puntos? Para <span class="hl-pùrple"><strong>iniciar el lienzo</strong></span> necesitamos una base de datos y dos variables a representar.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:45%;">
+<ul>
+<li><p><span class="hl-yellow"><strong>Datos (data)</strong></span>: conjunto <code>gapminder_1997</code>.</p></li>
+<li><p><span class="hl-yellow"><strong>Mapeado</strong></span>: indicar dentro de <code>aes()</code> (aesthetics) las variables en cada coordenada. Todo <span class="hl-purple"><strong>dentro de aes() será mapeado de los datos</strong></span></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb484"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb484-1"><a href="#cb484-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gapminder_1997,</span>
+<span id="cb484-2"><a href="#cb484-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-277-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="primera-geometría-geom_point" class="slide level2">
+<h2>Primera geometría: geom_point()</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<ul>
+<li><span class="hl-yellow"><strong>Geometría (geom)</strong></span>: optaremos por <strong>puntos</strong> usando <code>geom_point()</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb485"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb485-1"><a href="#cb485-1"></a><span class="fu">ggplot</span>(gapminder_1997,</span>
+<span id="cb485-2"><a href="#cb485-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> gdpPercap, <span class="at">y =</span> pop)) <span class="sc">+</span></span>
+<span id="cb485-3"><a href="#cb485-3"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-279-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="rol-de-los-ejes-x-y" class="slide level2">
+<h2>Rol de los ejes: (x, y)</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Vamos a profundizar en ese mapeado: ¿cómo <span class="hl-yellow"><strong>cambiar el rol</strong></span> de los ejes (población en el eje X y renta per cápita en el eje Y)?</p>
+<ul>
+<li><strong>Eje X</strong>: población (variable <code>pop</code>)</li>
+<li><strong>Eje Y</strong>: renta per cápita (variable <code>gdpPercap</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb486"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb486-1"><a href="#cb486-1"></a><span class="fu">ggplot</span>(gapminder_1997,</span>
+<span id="cb486-2"><a href="#cb486-2"></a>       <span class="fu">aes</span>(<span class="at">y =</span> gdpPercap, <span class="at">x =</span> pop)) <span class="sc">+</span></span>
+<span id="cb486-3"><a href="#cb486-3"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:55%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-281-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Máster de Bioinformática (ISCIII)</p>
 </div>
 </section></section>
+
     </div>
   </div>
 

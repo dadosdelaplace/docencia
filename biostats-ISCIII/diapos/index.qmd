@@ -4501,8 +4501,8 @@ Para empezar con algo sencillo [**filtraremos solo los datos de 1997**]{.hl-yell
 ```{r}
 gapminder_1997 <-
   gapminder |>
-  filter(year == 1997) |> 
-  drop_na(gdpPercap, lifeExp, pop)
+  dplyr::filter(year == 1997) |> 
+  tidyr::drop_na(gdpPercap, lifeExp, pop)
 ```
 
 ---
