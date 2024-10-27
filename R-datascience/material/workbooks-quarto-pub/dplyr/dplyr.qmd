@@ -1122,7 +1122,7 @@ datos <- tibble("id_bebe" = 1:n,
 datos <-
   datos |> 
   mutate(peso = rnorm(n, mean = if_else(sexo == "chico", 3.266, 3.155),
-                      sd = if_else(sexo == "chica", 0.514, 0.495)))
+                      sd = if_else(sexo == "chica", 0.495, 0.514)))
 ```
 
 

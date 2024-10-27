@@ -170,7 +170,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 
 * [**Material**]{.hl-yellow}: [**cuadernos de trabajo**](https://javieralvarezliebana.es/docencia/R-datascience/material/) y materiales extras y **resúmenes de paquetes**
 
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
+* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en Github **<https://javieralvarezliebana.es/docencia/R-datascience/material>** y drive <https://drive.google.com/drive/folders/1iG_wzHOavm8PB6pvrXk7jnGJ5lJCpUFK?usp=sharing>
 
 * [📚 **Recursos de apoyo**]{.hl-yellow}: en inglés <https://r4ds.had.co.nz/> y en castellano <https://cdr-book.github.io/>, y <https://ivelasq.quarto.pub/intro-to-quarto/> para Quarto.
 
@@ -10418,7 +10418,7 @@ who_select
 
 ¿brexit?
 
-# clase 14-15: concurso {#clase-14} {#clase-15}
+# clase 14-15: [concurso]{.flow} {#clase-14}
 
 
 [**Concurso: R base vs tidyverse**]{style="color:#444442;"}
@@ -10436,7 +10436,7 @@ solo practicar
 - accidentes de tráfico (accidentes2020_data)
 
 
-# clase 16: listas {#clase-16}
+# clase 16: [listas]{.flow} {#clase-16}
 
 
 [**Manejo de listas con paquete purrr**]{style="color:#444442;"}
@@ -10444,12 +10444,331 @@ solo practicar
 
 ---
 
-## ...
+## Listas
+
+Ya hemos visto que las listas son un objeto en R que nos permite almacenar [**colecciones de variables de distinto tipo**]{.hl-yellow} (como con `data.frame` y `tibble`) pero también [**diferentes longitudes**]{.hl-purple}, con estructuras totalmente heterogéneas (incluso una lista puede tener dentro otra lista).
+
+```{r}
+nombre <- "Javi"
+edad <- 34
+notas <- c(7, 8, 5, 3, 10, 9)
+progenitores <- c("Paloma", "Goyo")
+
+# Podemos no ponerle nombre pero solo podremos acceder por índice
+list_var <- list("nombre" = nombre, "edad" = edad,
+                 "notas" = notas, "parents" = progenitores)
+```
+
+
+```{r}
+list_var$nombre
+list_var$progenitores
+```
+
+
+
+---
+
+## Listas
+
+
+También podemos hacer [**listas con otras listas dentro**]{.hl-yellow}, de forma que para acceder a cada nivel debamos utilizar el operador `[[]]`.
+
+```{r}
+list_of_lists <- list("list_1" = list_var[1:2], "list_2" = list_var[3:4])
+names(list_of_lists)
+```
+
+```{r}
+names(list_of_lists[[1]])
+```
+
+```{r}
+list_of_lists[[1]][[1]]
+```
+
+. . .
+
+¡Se nos permite almacenar [**datos n-dimensionales**]{.hl-yellow}!
+
+---
+
+## Listas
+
+Sin embargo una de las desventajas es [**no puede ser vectorizada**]{.hl-yellow} inmediatamente, por lo que cualquier operación aritmética aplicada a una lista dará [**error**]{.hl-red}. Por ejemplo, en el código anterior, uno esperaría que hiciese la operación en cada elemento de la lista (en `a` y en `b`) pero no funciona.
+
+```{r}
+#| error: true
+data <- list("a" = 1:5, "b" = 10:20)
+data / 2
+```
+
+. . .
+
+Para ello una de las opciones habituales (de `R` base) era hacer uso de la familia `lapply(lista, FUN = ...)`: aplica una función `FUN = ...` a cada elemento de la lista
+
+```{r}
+lapply(data, FUN = function(x) { x / 2})
+```
+
+Pero por defecto la salida de `lapply()` es siempre una [**lista de igual longitud**]{.hl-yellow}.
+
+---
+
+## Paquete purrr
+
+
+Una opción más flexible y versátil es hacer uso del paquete `{purrr}` del entorno `{tidyverse}`.
+
+```{r}
+library(purrr)
+```
+
+Este paquete pretende imitar la [**programación funcional**]{.hl-yellow} de otros lenguajes como Scala o la [**estrategia map-reduce**]{.hl-yellow} de Hadoop (de Google).
+
+![](img/purrr.png)
+
+---
+
+## Paquete purrr
+
+La función más sencilla del paquete `{purrr}` es la función `map()`, que [**aplica una función vectorizada**]{.hl-yellow} a cada uno de los elementos de una lista. Veamos un primer ejemplo aplicado a vectores: imagina que tenemos la siguiente lista y queremos aplicar, a cada uno de sus elementos, la suma.
+
+```{r}
+x <- list("x1" = 1:4, "x2" = 11:20)
+```
+
+. . .
+
+`map(lista, función)` nos permite [**mapear la lista**]{.hl-yellow} y aplicar la función que queramos elemento a elemento
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+map(x, sum) 
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/map_purrr.png)
+:::
+::::
+
+
+::: callout-warning
+## Ten cuidado...
+
+La [**salida por defecto de `map` es a su vez otra lista**]{.hl-yellow}.
+:::
+
+
+---
+
+## Paquete purrr
+
+Veamos otro ejemplo que puedes sernos útil: imagina que tenemos [**dos muestras aleatorias de distinto tamaño**]{.hl-yellow}. La única forma en la que podemos almacenarlas juntas es con una lista pero...¿cómo hacer la media a ambas distribuciones sino podemos vectorizarlas?
+
+
+```{r}
+x <- list(rnorm(n = 1500, mean = 0, sd = 0.7),
+          rnorm(n = 2800, mean = 2, sd = 1.5))
+```
+
+. . .
+
+Con `map()` y la función `mean()` dentro
+
+```{r}
+map(x, mean)
+```
+
+
+---
+
+## Paquete purrr
+
+¿Y si quisiéramos calcular la media de sus valores al cuadrado? En este caso [**no disponemos de una función ya definida**]{.hl-red} así que tenemos dos opciones: definirla antes (con un nombre) o bien [**definir la función dentro del propio map**]{.hl-yellow}
+
+```{r}
+map(x, function(x) { mean(x^2) })
+```
+
+. . .
+
+
+Una forma de [**definir la función más rápido**]{.hl-yellow} es así:
+
+```{r}
+map(x, \(x) mean(x^2))
+```
+
+
+---
+
+## Paquete purrr
+
+Además de ser [**más legible y eficiente**]{.hl-yellow}, con `{purrr}` podemos [**decidir el formato de salida**]{.hl-yellow} tras la operación
+
+* salida como un [**vector numérico (decimales)**]{.hl-purple} con `map_dbl()`
+* salida como un [**vector numérico (enteros)**]{.hl-purple} con `map_int()`
+* salida como un [**vector de caracteres**]{.hl-purple} con  `map_chr()`
+* salida como un [**vector numérico lógico**]{.hl-purple} con  `map_lgl()`
+
+```{r}
+map_dbl(x, mean)
+map_chr(x, function(x) { glue("Mean is {round(mean(x), 3)}") })
+map_lgl(x, function(x) { all(x < 3)})
+```
+
+---
+
+## Paquete purrr
+
+
+También puede sernos útil para [**acceder a un elemento de la lista**]{.hl-yellow} si le pasas un [**número**]{.hl-yellow} en lugar de una función.
+
+```{r}
+c(x[[1]][3], x[[2]][3])
+map_dbl(x, 3)
+```
+
+
+---
+
+
+## Paquete purrr
+
+También tenemos la opción de **generalizarlo** para poder utilizar funciones que [**necesiten dos argumentos**]{.hl-yellow} (operaciones binarias) con `map2()`. Por ejemplo, supongamos que tenemos las siguientes dos listas, y queremos que suma el vector del primer elemento de ambas entre sí, y lo mismo con el segundo
+
+```{r}
+x <- list("a" = 1:3, "b" = 4:6)
+y <- list("a" = c(-1, 4, 0), "b" = c(5, -4, -1))
+x$a + y$a
+x$b + x$b
+```
+
+. . .
+
+En `map2()` introducimos las 2 listas y una **función con 2 argumentos**
+
+```{r}
+map2(x, y, function(x, y) { x + y})
+```
+
+
+---
+
+## Paquete purrr
+
+Podemos también obtener la salida en forma de `data.frame` añadiendo `list_rbind()` o `list_cbind()`, que [**convierte una lista en una tabla**]{.hl-yellow}.
+
+```{r}
+x <- c("a", "b")
+y <- 1:2
+map2(x, y, function(x, y) { tibble(x, y) })
+map2(x, y, function(x, y) { tibble(x, y) }) |> list_rbind()
+```
+
+---
+
+## Paquete purrr
+
+Podemos generalizarlo aún más con `pmap_xxx()` que nos permite utilizar [**múltiples argumentos (múltiples listas para funciónes multivariantes)**]{.hl-amarillo}.
+
+```{r}
+x <- list(1, 1, 1)
+y <- list(10, 20, 30)
+z <- list(100, 200, 300)
+pmap_dbl(list(x, y, z), sum)
+```
+
+---
+
+## Paquete purrr
+
+Tenemos otros tipos de iteradores que, aunque asumen entradas, no devuelven nada, como `walk()` (sólo un argumento de entrada), `walk2()` (dos argumentos) y `pwalk()` (múltiples argumentos), todos [**devuelven algo invisible**]{.hl-yellow}, sólo llaman a una función por sus [**efectos secundarios**]{.hl-yellow} en lugar de por su valor de retorno.
+
+```{r}
+list("a" = 1:3, "b" = 4:6) |>
+  map2(list("a" = 11:13, "b" = 14:16),
+       function(x, y) { x + y }) |> 
+  walk(print)
+```
+
+---
+
+## Falta ...
+
+unirlo con nest
+
+más funciones de purrr
+
+---
+
+## 💻  Tu turno {#tu-turno-16-1}
+
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Define a list of 4 elements of different types and access the second of them (I will include one that is a tibble so that you can see that in a list there is room for everything).
+
+```{r}
+#| code-fold: true
+#| eval: false
+list_example <-
+  list("name" = "Javier", "cp" = 28019,
+       "siblings" = TRUE,
+       "marks" = tibble("maths" = c(7.5, 8, 9),
+                        "lang" = c(10, 5, 6)))
+list_example
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 From the list above, access the elements that occupy places 1 and 4 of the list defined above.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+list_example[c(1, 4)]
+
+list_example$name
+list_example$marks
+
+list_example[c("name", "marks")]
+```
+
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝  Load the `starwars` dataset from the `{dplyr}` package and access the second movie that appears in `starwars$films` (for each character). Determine which ones do not appear in more than one movie.
+
+```{r}
+second_film <- map(starwars$films, 2)
+map_lgl(second_film, is.null)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+:::
 
 # Clase 17: inferencia {#clase-17}
 
 
-[**Distribuciones, inferencia y simulación**]{style="color:#444442;"}
+[**Distribuciones, inferencia y simulación. Paquete inferr**]{style="color:#444442;"}
 
 ---
 

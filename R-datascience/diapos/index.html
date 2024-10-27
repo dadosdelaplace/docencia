@@ -756,7 +756,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <p>&nbsp;</p>
 <ul>
 <li><p><span class="hl-yellow"><strong>Material</strong></span>: <a href="https://javieralvarezliebana.es/docencia/R-datascience/material/"><strong>cuadernos de trabajo</strong></a> y materiales extras y <strong>resúmenes de paquetes</strong></p></li>
-<li><p><span class="hl-yellow">🗃 <strong>Datos</strong></span>: datasets que usaremos a lo largo de la asignatura, disponibles en <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience/material" class="uri">https://javieralvarezliebana.es/docencia/R-datascience/material</a></strong></p></li>
+<li><p><span class="hl-yellow">🗃 <strong>Datos</strong></span>: datasets que usaremos a lo largo de la asignatura, disponibles en Github <strong><a href="https://javieralvarezliebana.es/docencia/R-datascience/material" class="uri">https://javieralvarezliebana.es/docencia/R-datascience/material</a></strong> y drive <a href="https://drive.google.com/drive/folders/1iG_wzHOavm8PB6pvrXk7jnGJ5lJCpUFK?usp=sharing" class="uri">https://drive.google.com/drive/folders/1iG_wzHOavm8PB6pvrXk7jnGJ5lJCpUFK?usp=sharing</a></p></li>
 <li><p><span class="hl-yellow">📚 <strong>Recursos de apoyo</strong></span>: en inglés <a href="https://r4ds.had.co.nz/" class="uri">https://r4ds.had.co.nz/</a> y en castellano <a href="https://cdr-book.github.io/" class="uri">https://cdr-book.github.io/</a>, y <a href="https://ivelasq.quarto.pub/intro-to-quarto/" class="uri">https://ivelasq.quarto.pub/intro-to-quarto/</a> para Quarto.</p></li>
 </ul>
 </section>
@@ -1888,7 +1888,7 @@ Grado en Ciencia de Datos Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-27 17:38:47 CET"</code></pre>
+<pre><code>[1] "2024-10-27 21:36:05 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -5088,12 +5088,12 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb506-5"><a href="#cb506-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.927    2.506002    2.009
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1261.898 1290.003 1528.453432 1311.693
-       uq       max neval
-    2.337    21.771   500
- 1449.801 19878.399   500</code></pre>
+                                    expr      min       lq       mean   median
+                                y &lt;- x^2    1.681    1.927    2.26443    2.009
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1260.176 1281.373 1365.87064 1291.623
+       uq      max neval
+    2.173   19.229   500
+ 1361.200 4540.545   500</code></pre>
 </div>
 </div>
 </section>
@@ -5299,14 +5299,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb526"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb526-1"><a href="#cb526-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]       [,2]        [,3]
-[1,]  0.7264805 -0.6441525  1.07918796
-[2,]  0.6510180 -0.8139259 -0.92319820
-[3,] -0.6452727 -1.2483416  0.21198524
-[4,] -0.5073195  0.5221145 -0.18545556
-[5,]  0.4014391 -0.5134011 -0.37646036
-[6,] -2.3646616 -0.0145648 -0.12766287
-[7,] -0.1709956  0.4879524  0.03883827</code></pre>
+<pre><code>           [,1]        [,2]       [,3]
+[1,] -1.8713095 -0.58923422 -0.7441272
+[2,] -0.6557003  1.60994737 -0.1931135
+[3,] -1.8486586  0.77535367 -1.0995420
+[4,]  0.1471462 -0.75582783  0.6344995
+[5,]  1.1116590 -0.84776455 -1.5490088
+[6,] -1.6073554  0.01447256 -0.2044706
+[7,]  0.2271981  0.78294463  1.3233225</code></pre>
 </div>
 </div>
 </section>
@@ -8200,8 +8200,8 @@ $tipo
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Dud Bolt      94    45 none       blue, grey yellow            NA male  mascu…
-2 Jabba De…    175  1358 &lt;NA&gt;       green-tan… orange           600 herm… mascu…
+1 Shmi Sky…    163    NA black      fair       brown             72 fema… femin…
+2 Bossk        190   113 none       green      red               53 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -8246,10 +8246,10 @@ $tipo
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 BB8           NA    NA none       none       black             NA none  mascu…
-2 Shaak Ti     178    57 none       red, blue… black             NA fema… femin…
-3 Lama Su      229    88 none       grey       black             NA male  mascu…
-4 Obi-Wan …    182    77 auburn, w… fair       blue-gray         57 male  mascu…
+1 Dormé        165    NA brown      light      brown             NA fema… femin…
+2 Dexter J…    198   102 none       brown      yellow            NA male  mascu…
+3 Palpatine    170    75 grey       pale       yellow            82 male  mascu…
+4 Finn          NA    NA black      dark       dark              NA male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -8292,8 +8292,8 @@ $tipo
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
-2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -8313,7 +8313,7 @@ $tipo
 <div class="cell">
 <div class="sourceCode cell-code" id="cb775"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb775-1"><a href="#cb775-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5 3 3 5 6 4 6 6 5 2</code></pre>
+<pre><code> [1] 6 5 4 4 5 6 2 4 5 2</code></pre>
 </div>
 </div>
 </div>
@@ -8325,8 +8325,8 @@ $tipo
 <div class="sourceCode cell-code" id="cb777"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb777-1"><a href="#cb777-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb777-2"><a href="#cb777-2"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 2 1 4 1 1 1 1 1 1 5 2 2 3 2 1 1 2 1 1 6 5 6 1 1 1 1 2 1 1 1 1 4 2 1 1 1
-[39] 6 1 1 1 6 1 3 3 1 4 1 2</code></pre>
+<pre><code> [1] 2 1 1 1 3 2 4 1 1 6 1 1 2 1 5 2 1 1 2 5 3 3 1 1 1 2 1 1 1 1 3 1 1 1 4 1 1 1
+[39] 1 2 1 2 1 2 4 5 3 2 1 1</code></pre>
 </div>
 </div>
 </section>
@@ -11542,19 +11542,19 @@ dplyr 1.1.0.
 <pre><code># A tibble: 13 × 23
    idema   lon fint                 prec   alt  vmax    vv    dv   lat  dmax
    &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 0076   2.07 2024-10-27 04:00:00   0       4   7.7   4.8   360  41.3   360
- 2 0076   2.07 2024-10-27 05:00:00   0       4   7.7   4.9   360  41.3   350
- 3 0076   2.07 2024-10-27 06:00:00   0       4   7.2   5     360  41.3   360
- 4 0076   2.07 2024-10-27 07:00:00   0       4   7.2   5.6   360  41.3   360
- 5 0076   2.07 2024-10-27 08:00:00   0       4   7.2   5.6   360  41.3   350
- 6 0076   2.07 2024-10-27 09:00:00   0       4  11.3   4.8    10  41.3    30
- 7 0076   2.07 2024-10-27 10:00:00   0       4  11.8   4.7    20  41.3    20
- 8 0076   2.07 2024-10-27 11:00:00   0.1     4  10.3   4.7    20  41.3    20
- 9 0076   2.07 2024-10-27 12:00:00   1.6     4   8.8   3.7    30  41.3    10
-10 0076   2.07 2024-10-27 13:00:00   1       4  11.8   8.4    70  41.3    80
-11 0076   2.07 2024-10-27 14:00:00   5.6     4  12.4   9.3    90  41.3    90
-12 0076   2.07 2024-10-27 15:00:00   0       4  14.9  10.2    90  41.3   100
-13 0076   2.07 2024-10-27 16:00:00   0       4  13.9   8.8    90  41.3    80
+ 1 0076   2.07 2024-10-27 08:00:00   0       4   7.2   5.6   360  41.3   350
+ 2 0076   2.07 2024-10-27 09:00:00   0       4  11.3   4.8    10  41.3    30
+ 3 0076   2.07 2024-10-27 10:00:00   0       4  11.8   4.7    20  41.3    20
+ 4 0076   2.07 2024-10-27 11:00:00   0.1     4  10.3   4.7    20  41.3    20
+ 5 0076   2.07 2024-10-27 12:00:00   1.6     4   8.8   3.7    30  41.3    10
+ 6 0076   2.07 2024-10-27 13:00:00   1       4  11.8   8.4    70  41.3    80
+ 7 0076   2.07 2024-10-27 14:00:00   5.6     4  12.4   9.3    90  41.3    90
+ 8 0076   2.07 2024-10-27 15:00:00   0       4  14.9  10.2    90  41.3   100
+ 9 0076   2.07 2024-10-27 16:00:00   0       4  13.9   8.8    90  41.3    80
+10 0076   2.07 2024-10-27 17:00:00   0       4  12.4   8.8    80  41.3    80
+11 0076   2.07 2024-10-27 18:00:00   0       4  12.9   9      80  41.3    70
+12 0076   2.07 2024-10-27 19:00:00   0       4  12.9   9.6    70  41.3    70
+13 0076   2.07 2024-10-27 20:00:00   0       4  12.9   8.7    70  41.3    80
 # ℹ 13 more variables: ubi &lt;chr&gt;, pres &lt;dbl&gt;, hr &lt;dbl&gt;, stdvv &lt;dbl&gt;, ts &lt;dbl&gt;,
 #   pres_nmar &lt;dbl&gt;, tamin &lt;dbl&gt;, ta &lt;dbl&gt;, tamax &lt;dbl&gt;, tpr &lt;dbl&gt;, vis &lt;dbl&gt;,
 #   stddv &lt;dbl&gt;, inso &lt;dbl&gt;</code></pre>
@@ -11682,8 +11682,8 @@ dplyr 1.1.0.
 <p>¿brexit?</p>
 </section></section>
 <section>
-<section id="clase-15" class="title-slide slide level1 center">
-<h1>clase 14-15: concurso {#clase-14}</h1>
+<section id="clase-14" class="title-slide slide level1 center">
+<h1>clase 14-15: <span class="flow">concurso</span></h1>
 <p><span style="color:#444442;"><strong>Concurso: R base vs tidyverse</strong></span></p>
 </section>
 <section class="slide level2">
@@ -11697,18 +11697,377 @@ dplyr 1.1.0.
 </section></section>
 <section>
 <section id="clase-16" class="title-slide slide level1 center">
-<h1>clase 16: listas</h1>
+<h1>clase 16: <span class="flow">listas</span></h1>
 <p><span style="color:#444442;"><strong>Manejo de listas con paquete purrr</strong></span></p>
 </section>
-<section id="section" class="slide level2">
-<h2>…</h2>
+<section id="listas" class="slide level2">
+<h2>Listas</h2>
+<p>Ya hemos visto que las listas son un objeto en R que nos permite almacenar <span class="hl-yellow"><strong>colecciones de variables de distinto tipo</strong></span> (como con <code>data.frame</code> y <code>tibble</code>) pero también <span class="hl-purple"><strong>diferentes longitudes</strong></span>, con estructuras totalmente heterogéneas (incluso una lista puede tener dentro otra lista).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1085"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1085-1"><a href="#cb1085-1"></a>nombre <span class="ot">&lt;-</span> <span class="st">"Javi"</span></span>
+<span id="cb1085-2"><a href="#cb1085-2"></a>edad <span class="ot">&lt;-</span> <span class="dv">34</span></span>
+<span id="cb1085-3"><a href="#cb1085-3"></a>notas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">9</span>)</span>
+<span id="cb1085-4"><a href="#cb1085-4"></a>progenitores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Paloma"</span>, <span class="st">"Goyo"</span>)</span>
+<span id="cb1085-5"><a href="#cb1085-5"></a></span>
+<span id="cb1085-6"><a href="#cb1085-6"></a><span class="co"># Podemos no ponerle nombre pero solo podremos acceder por índice</span></span>
+<span id="cb1085-7"><a href="#cb1085-7"></a>list_var <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"nombre"</span> <span class="ot">=</span> nombre, <span class="st">"edad"</span> <span class="ot">=</span> edad,</span>
+<span id="cb1085-8"><a href="#cb1085-8"></a>                 <span class="st">"notas"</span> <span class="ot">=</span> notas, <span class="st">"parents"</span> <span class="ot">=</span> progenitores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1086"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1086-1"><a href="#cb1086-1"></a>list_var<span class="sc">$</span>nombre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Javi"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1088"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1088-1"><a href="#cb1088-1"></a>list_var<span class="sc">$</span>progenitores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+</section>
+<section id="listas-1" class="slide level2">
+<h2>Listas</h2>
+<p>También podemos hacer <span class="hl-yellow"><strong>listas con otras listas dentro</strong></span>, de forma que para acceder a cada nivel debamos utilizar el operador <code>[[]]</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1090"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1090-1"><a href="#cb1090-1"></a>list_of_lists <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"list_1"</span> <span class="ot">=</span> list_var[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="st">"list_2"</span> <span class="ot">=</span> list_var[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb1090-2"><a href="#cb1090-2"></a><span class="fu">names</span>(list_of_lists)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list_1" "list_2"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1092"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1092-1"><a href="#cb1092-1"></a><span class="fu">names</span>(list_of_lists[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "nombre" "edad"  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1094"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1094-1"><a href="#cb1094-1"></a>list_of_lists[[<span class="dv">1</span>]][[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Javi"</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>¡Se nos permite almacenar <span class="hl-yellow"><strong>datos n-dimensionales</strong></span>!</p>
+</div>
+</section>
+<section id="listas-2" class="slide level2">
+<h2>Listas</h2>
+<p>Sin embargo una de las desventajas es <span class="hl-yellow"><strong>no puede ser vectorizada</strong></span> inmediatamente, por lo que cualquier operación aritmética aplicada a una lista dará <span class="hl-red"><strong>error</strong></span>. Por ejemplo, en el código anterior, uno esperaría que hiciese la operación en cada elemento de la lista (en <code>a</code> y en <code>b</code>) pero no funciona.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1096"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1096-1"><a href="#cb1096-1"></a>data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb1096-2"><a href="#cb1096-2"></a>data <span class="sc">/</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in data/2: non-numeric argument to binary operator</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Para ello una de las opciones habituales (de <code>R</code> base) era hacer uso de la familia <code>lapply(lista, FUN = ...)</code>: aplica una función <code>FUN = ...</code> a cada elemento de la lista</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1098"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1098-1"><a href="#cb1098-1"></a><span class="fu">lapply</span>(data, <span class="at">FUN =</span> <span class="cf">function</span>(x) { x <span class="sc">/</span> <span class="dv">2</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 0.5 1.0 1.5 2.0 2.5
+
+$b
+ [1]  5.0  5.5  6.0  6.5  7.0  7.5  8.0  8.5  9.0  9.5 10.0</code></pre>
+</div>
+</div>
+<p>Pero por defecto la salida de <code>lapply()</code> es siempre una <span class="hl-yellow"><strong>lista de igual longitud</strong></span>.</p>
+</div>
+</section>
+<section id="paquete-purrr" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Una opción más flexible y versátil es hacer uso del paquete <code>{purrr}</code> del entorno <code>{tidyverse}</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1100-1"><a href="#cb1100-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Este paquete pretende imitar la <span class="hl-yellow"><strong>programación funcional</strong></span> de otros lenguajes como Scala o la <span class="hl-yellow"><strong>estrategia map-reduce</strong></span> de Hadoop (de Google).</p>
+
+<img data-src="img/purrr.png" class="r-stretch"></section>
+<section id="paquete-purrr-1" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>La función más sencilla del paquete <code>{purrr}</code> es la función <code>map()</code>, que <span class="hl-yellow"><strong>aplica una función vectorizada</strong></span> a cada uno de los elementos de una lista. Veamos un primer ejemplo aplicado a vectores: imagina que tenemos la siguiente lista y queremos aplicar, a cada uno de sus elementos, la suma.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1101-1"><a href="#cb1101-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"x1"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"x2"</span> <span class="ot">=</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><code>map(lista, función)</code> nos permite <span class="hl-yellow"><strong>mapear la lista</strong></span> y aplicar la función que queramos elemento a elemento</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1102-1"><a href="#cb1102-1"></a><span class="fu">map</span>(x, sum) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$x1
+[1] 10
+
+$x2
+[1] 155</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/map_purrr.png"></p>
+</div>
+</div>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Ten cuidado…</strong></p>
+</div>
+<div class="callout-content">
+<p>La <span class="hl-yellow"><strong>salida por defecto de <code>map</code> es a su vez otra lista</strong></span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-2" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Veamos otro ejemplo que puedes sernos útil: imagina que tenemos <span class="hl-yellow"><strong>dos muestras aleatorias de distinto tamaño</strong></span>. La única forma en la que podemos almacenarlas juntas es con una lista pero…¿cómo hacer la media a ambas distribuciones sino podemos vectorizarlas?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1104-1"><a href="#cb1104-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.7</span>),</span>
+<span id="cb1104-2"><a href="#cb1104-2"></a>          <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">2800</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="fl">1.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Con <code>map()</code> y la función <code>mean()</code> dentro</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1105-1"><a href="#cb1105-1"></a><span class="fu">map</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] -0.05262125
+
+[[2]]
+[1] 2.020461</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-3" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>¿Y si quisiéramos calcular la media de sus valores al cuadrado? En este caso <span class="hl-red"><strong>no disponemos de una función ya definida</strong></span> así que tenemos dos opciones: definirla antes (con un nombre) o bien <span class="hl-yellow"><strong>definir la función dentro del propio map</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1107-1"><a href="#cb1107-1"></a><span class="fu">map</span>(x, <span class="cf">function</span>(x) { <span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.4752263
+
+[[2]]
+[1] 6.318793</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Una forma de <span class="hl-yellow"><strong>definir la función más rápido</strong></span> es así:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1109-1"><a href="#cb1109-1"></a><span class="fu">map</span>(x, \(x) <span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 0.4752263
+
+[[2]]
+[1] 6.318793</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-4" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Además de ser <span class="hl-yellow"><strong>más legible y eficiente</strong></span>, con <code>{purrr}</code> podemos <span class="hl-yellow"><strong>decidir el formato de salida</strong></span> tras la operación</p>
+<ul>
+<li>salida como un <span class="hl-purple"><strong>vector numérico (decimales)</strong></span> con <code>map_dbl()</code></li>
+<li>salida como un <span class="hl-purple"><strong>vector numérico (enteros)</strong></span> con <code>map_int()</code></li>
+<li>salida como un <span class="hl-purple"><strong>vector de caracteres</strong></span> con <code>map_chr()</code></li>
+<li>salida como un <span class="hl-purple"><strong>vector numérico lógico</strong></span> con <code>map_lgl()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1111-1"><a href="#cb1111-1"></a><span class="fu">map_dbl</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.05262125  2.02046141</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1113-1"><a href="#cb1113-1"></a><span class="fu">map_chr</span>(x, <span class="cf">function</span>(x) { <span class="fu">glue</span>(<span class="st">"Mean is {round(mean(x), 3)}"</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mean is -0.053" "Mean is 2.02"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1115-1"><a href="#cb1115-1"></a><span class="fu">map_lgl</span>(x, <span class="cf">function</span>(x) { <span class="fu">all</span>(x <span class="sc">&lt;</span> <span class="dv">3</span>)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-5" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>También puede sernos útil para <span class="hl-yellow"><strong>acceder a un elemento de la lista</strong></span> si le pasas un <span class="hl-yellow"><strong>número</strong></span> en lugar de una función.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1117-1"><a href="#cb1117-1"></a><span class="fu">c</span>(x[[<span class="dv">1</span>]][<span class="dv">3</span>], x[[<span class="dv">2</span>]][<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.2577084  5.0206318</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1119-1"><a href="#cb1119-1"></a><span class="fu">map_dbl</span>(x, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.2577084  5.0206318</code></pre>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-6" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>También tenemos la opción de <strong>generalizarlo</strong> para poder utilizar funciones que <span class="hl-yellow"><strong>necesiten dos argumentos</strong></span> (operaciones binarias) con <code>map2()</code>. Por ejemplo, supongamos que tenemos las siguientes dos listas, y queremos que suma el vector del primer elemento de ambas entre sí, y lo mismo con el segundo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1121-1"><a href="#cb1121-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb1121-2"><a href="#cb1121-2"></a>y <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">0</span>), <span class="st">"b"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb1121-3"><a href="#cb1121-3"></a>x<span class="sc">$</span>a <span class="sc">+</span> y<span class="sc">$</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 6 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1123-1"><a href="#cb1123-1"></a>x<span class="sc">$</span>b <span class="sc">+</span> x<span class="sc">$</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  8 10 12</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>En <code>map2()</code> introducimos las 2 listas y una <strong>función con 2 argumentos</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1125-1"><a href="#cb1125-1"></a><span class="fu">map2</span>(x, y, <span class="cf">function</span>(x, y) { x <span class="sc">+</span> y})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 0 6 3
+
+$b
+[1] 9 1 5</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-7" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Podemos también obtener la salida en forma de <code>data.frame</code> añadiendo <code>list_rbind()</code> o <code>list_cbind()</code>, que <span class="hl-yellow"><strong>convierte una lista en una tabla</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1127-1"><a href="#cb1127-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)</span>
+<span id="cb1127-2"><a href="#cb1127-2"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span></span>
+<span id="cb1127-3"><a href="#cb1127-3"></a><span class="fu">map2</span>(x, y, <span class="cf">function</span>(x, y) { <span class="fu">tibble</span>(x, y) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+# A tibble: 1 × 2
+  x         y
+  &lt;chr&gt; &lt;int&gt;
+1 a         1
+
+[[2]]
+# A tibble: 1 × 2
+  x         y
+  &lt;chr&gt; &lt;int&gt;
+1 b         2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1129-1"><a href="#cb1129-1"></a><span class="fu">map2</span>(x, y, <span class="cf">function</span>(x, y) { <span class="fu">tibble</span>(x, y) }) <span class="sc">|&gt;</span> <span class="fu">list_rbind</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  x         y
+  &lt;chr&gt; &lt;int&gt;
+1 a         1
+2 b         2</code></pre>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-8" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Podemos generalizarlo aún más con <code>pmap_xxx()</code> que nos permite utilizar <span class="hl-amarillo"><strong>múltiples argumentos (múltiples listas para funciónes multivariantes)</strong></span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1131"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1131-1"><a href="#cb1131-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1131-2"><a href="#cb1131-2"></a>y <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
+<span id="cb1131-3"><a href="#cb1131-3"></a>z <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)</span>
+<span id="cb1131-4"><a href="#cb1131-4"></a><span class="fu">pmap_dbl</span>(<span class="fu">list</span>(x, y, z), sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 111 221 331</code></pre>
+</div>
+</div>
+</section>
+<section id="paquete-purrr-9" class="slide level2">
+<h2>Paquete purrr</h2>
+<p>Tenemos otros tipos de iteradores que, aunque asumen entradas, no devuelven nada, como <code>walk()</code> (sólo un argumento de entrada), <code>walk2()</code> (dos argumentos) y <code>pwalk()</code> (múltiples argumentos), todos <span class="hl-yellow"><strong>devuelven algo invisible</strong></span>, sólo llaman a una función por sus <span class="hl-yellow"><strong>efectos secundarios</strong></span> en lugar de por su valor de retorno.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1133"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1133-1"><a href="#cb1133-1"></a><span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1133-2"><a href="#cb1133-2"></a>  <span class="fu">map2</span>(<span class="fu">list</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">13</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">14</span><span class="sc">:</span><span class="dv">16</span>),</span>
+<span id="cb1133-3"><a href="#cb1133-3"></a>       <span class="cf">function</span>(x, y) { x <span class="sc">+</span> y }) <span class="sc">|&gt;</span> </span>
+<span id="cb1133-4"><a href="#cb1133-4"></a>  <span class="fu">walk</span>(print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12 14 16
+[1] 18 20 22</code></pre>
+</div>
+</div>
+</section>
+<section id="falta" class="slide level2">
+<h2>Falta …</h2>
+<p>unirlo con nest</p>
+<p>más funciones de purrr</p>
+</section>
+<section id="tu-turno-16-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<div class="panel-tabset">
+<ul id="tabset-20" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-20-1"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li><a href="#tabset-20-2"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li><a href="#tabset-20-3"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li><a href="#tabset-20-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li><a href="#tabset-20-5"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li><li><a href="#tabset-20-6"><span class="hl-yellow"><strong>Ejercicio 6</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-20-1">
+<p>📝 Define a list of 4 elements of different types and access the second of them (I will include one that is a tibble so that you can see that in a list there is room for everything).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1135-1"><a href="#cb1135-1"></a>list_example <span class="ot">&lt;-</span></span>
+<span id="cb1135-2"><a href="#cb1135-2"></a>  <span class="fu">list</span>(<span class="st">"name"</span> <span class="ot">=</span> <span class="st">"Javier"</span>, <span class="st">"cp"</span> <span class="ot">=</span> <span class="dv">28019</span>,</span>
+<span id="cb1135-3"><a href="#cb1135-3"></a>       <span class="st">"siblings"</span> <span class="ot">=</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1135-4"><a href="#cb1135-4"></a>       <span class="st">"marks"</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="st">"maths"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">9</span>),</span>
+<span id="cb1135-5"><a href="#cb1135-5"></a>                        <span class="st">"lang"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">6</span>)))</span>
+<span id="cb1135-6"><a href="#cb1135-6"></a>list_example</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-20-2">
+<p>📝 From the list above, access the elements that occupy places 1 and 4 of the list defined above.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1136"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1136-1"><a href="#cb1136-1"></a>list_example[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb1136-2"><a href="#cb1136-2"></a></span>
+<span id="cb1136-3"><a href="#cb1136-3"></a>list_example<span class="sc">$</span>name</span>
+<span id="cb1136-4"><a href="#cb1136-4"></a>list_example<span class="sc">$</span>marks</span>
+<span id="cb1136-5"><a href="#cb1136-5"></a></span>
+<span id="cb1136-6"><a href="#cb1136-6"></a>list_example[<span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"marks"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-20-3">
+<p>📝 Load the <code>starwars</code> dataset from the <code>{dplyr}</code> package and access the second movie that appears in <code>starwars$films</code> (for each character). Determine which ones do not appear in more than one movie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1137-1"><a href="#cb1137-1"></a>second_film <span class="ot">&lt;-</span> <span class="fu">map</span>(starwars<span class="sc">$</span>films, <span class="dv">2</span>)</span>
+<span id="cb1137-2"><a href="#cb1137-2"></a><span class="fu">map_lgl</span>(second_film, is.null)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
+[13] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[25]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[37]  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+[49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+[61]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[73]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[85]  TRUE  TRUE  TRUE</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-20-4">
+
+</div>
+<div id="tabset-20-5">
+
+</div>
+<div id="tabset-20-6">
+
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="clase-17" class="title-slide slide level1 center">
 <h1>Clase 17: inferencia</h1>
-<p><span style="color:#444442;"><strong>Distribuciones, inferencia y simulación</strong></span></p>
+<p><span style="color:#444442;"><strong>Distribuciones, inferencia y simulación. Paquete inferr</strong></span></p>
 </section>
-<section id="section-1" class="slide level2">
+<section id="section" class="slide level2">
 <h2>…</h2>
 </section></section>
 <section>
@@ -11716,7 +12075,7 @@ dplyr 1.1.0.
 <h1>Clase 18: repaso</h1>
 <p><span style="color:#444442;"><strong>Repaso con casos reales</strong></span></p>
 </section>
-<section id="section-2" class="slide level2">
+<section id="section-1" class="slide level2">
 <h2>…</h2>
 </section></section>
 <section>
@@ -11740,7 +12099,7 @@ dplyr 1.1.0.
 <h1>Clase 20: intro a dataviz</h1>
 <p><span style="color:#444442;"><strong>Empieza la fantasía: visualización de datos</strong></span></p>
 </section>
-<section id="section-3" class="slide level2">
+<section id="section-2" class="slide level2">
 <h2>…</h2>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM)</p>
