@@ -1,0 +1,534 @@
+---
+title: "Joins e importación: como combinar, exportar e importar en R"
+subtitle: "Cuadernos prácticos de Software II del Grado en Ciencia de Datos Aplicada (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+execute: 
+  echo: true
+---
+
+## Relacionando datos: joins
+
+Al trabajar con datos [**no siempre tendremos la información en una sola tabla**]{.hl-yellow} y a veces nos interesará cruzar la información de distintas fuentes.
+
+
+Para ello usaremos un clásico de todo lenguaje que maneja datos: los famosos [**join**]{.hl-yellow}, que nos permitirán [**cruzar una o varias tablas**]{.hl-yellow}, haciendo uso de una [**columna identificadora**]{.hl-yellow} de cada una de ellas (por ejemplo, imagina que cruzamos datos de hacienda y de antecedentes penales, haciendo `join` por la columna `DNI`).
+
+&nbsp;
+
+La estructura básica es la siguiente:
+
+```{r}
+#| eval: false
+tabla_1 |>
+  xxx_join(tabla_2, by = id)
+```
+
+![](img/sql-joins.jpg)
+
+
+Vamos a probar los distintos joins con un ejemplo sencillo
+
+```{r}
+library(tidyverse)
+tb_1 <- tibble("key" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+tb_1
+```
+
+```{r}
+tb_2
+```
+
+### Left join
+
+
+* `left_join()`: mantiene [**todos los registros de la primera tabla**]{.hl-yellow}, y busca cuales tienen id también en la segunda (en caso de [**no tenerlo se rellena con NA**]{.hl-yellow} los campos de la 2ª tabla).
+
+En nuestra caso queremos incorporar a `tb_1` la información de `tb_2`, identificando los registros por la columna key (`by = "key"`, la columna por la que tiene que cruzar)
+
+
+
+```{r}
+tb_1  |> 
+  left_join(tb_2, by = "key")
+```
+
+
+![](img/left_join.jpg)
+
+
+```{r}
+tb_1 |> 
+  left_join(tb_2, by = "key")
+```
+
+Fíjate que los [**registros de la primera cuya key no ha encontrado en la segunda**]{.hl-yellow} les ha dado el valor de [**ausente**]{.hl-yellow}.
+
+### Right join
+
+
+* `right_join()`: mantiene [**todos los registros de la segunda tabla**]{.hl-yellow}, y busca cuales tienen id también en la primera.
+
+
+Vamos ahora a incorporar a `tb_2` la información de `tb_1`, identificando los registros por la columna key (`by = "key"`)
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+
+![](img/right_join.jpg)
+
+
+
+```{r}
+tb_1 |> 
+  right_join(tb_2, by = "key")
+```
+
+Fíjate que ahora los [**registros de la segunda cuya key no ha encontrado en la primera**]{.hl-yellow} son los que les ha dado el valor de [**ausente**]{.hl-yellow}.
+
+### Claves y sufijos
+
+Las columnas clave que usaremos para el cruce [**no siempre se llamarán igual**]{.hl-yellow}.
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+* `by = c("key_2" = "key_2")`: le indicaremos en qué columna de cada tabla están las claves por las que vamos a cruzar.
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+```{r}
+# Right
+tb_1  |> 
+  right_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+Además podemos [**cruzar por varias columnas a la vez**]{.hl-yellow} (interpretará como igual registro aquel que tenga el conjunto de claves igual), con `by = c("var1_t1" = "var1_t2", "var2_t1" = "var2_t2", ...)`. Modifiquemos el ejemplo anterior
+
+```{r}
+tb_1 <- tibble("k_11" = 1:3, "k_12" = c("a", "b", "c"),  "val_x" = c("x1", "x2", "x3"))
+tb_2 <- tibble("k_21" = c(1, 2, 4), "k_22" = c("a", "b", "e"), "val_y" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2,
+            by = c("k_11" = "k_21", "k_12" = "k_22"))
+```
+
+
+También podría suceder que al cruzar dos tablas, haya [**columnas de valores que se llamen igual**]{.hl-yellow}
+
+
+```{r}
+tb_1 <- tibble("key_1" = 1:3, "val" = c("x1", "x2", "x3"))
+tb_2 <- tibble("key_2" = c(1, 2, 4), "val" = c("y1", "y2", "y3"))
+```
+
+
+```{r}
+# Left
+tb_1 |> 
+  left_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+Fíjate que [**por defecto nos añade los sufijos**]{.hl-yellow} `.x` y `.y` para indicarnos de que tabla vienen. Dicho [**sufijo podemos especificárselo**]{.hl-yellow} en el argumento opcional `suffix = ...`, que nos permita [**distinguir las variables**]{.hl-yellow} de una tabla y de otra.
+
+
+```{r}
+# Left
+tb_1 |>
+  left_join(tb_2, by = c("key_1" = "key_2"), suffix = c("_tabla1", "_tabla2"))
+```
+
+### Full join
+
+
+* `full_join()`: mantiene [**todos los registros de ambas**]{.hl-yellow} tablas.
+
+Los dos anteriores casos forman lo que se conoce como [**outer joins**]{.hl-yellow}: cruces donde se mantienen observaciones que salgan en al menos una tabla. El tercer outer join es el conocido como `full_join()` que nos [**mantendrá las observaciones de ambas**]{.hl-yellow} tablas, [**añadiendo las filas**]{.hl-yellow} que no casen con la otra tabla.
+
+
+
+```{r}
+tb_1 |> 
+  full_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+![](img/full_join.jpg)
+
+### Inner join
+
+* `inner_join()`: solo sobreviven los [**registros cuyo id esté en ambas**]{.hl-yellow} tablas.
+
+Frente a los outer join está lo que se conoce como [**inner join**]{.hl-yellow}, con `inner_join()`: un cruce en el que solo se mantienen las [**observaciones que salgan en ambas tablas**]{.hl-yellow}, solo mantiene aquellos registros matcheados.
+
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+![](img/inner_join.png)
+
+
+Fíjate que en términos de registros, `inner_join` si es conmutativa, **nos da igual el orden de las tablas**: lo único que cambia es el orden de las columnas que añade.
+
+
+```{r}
+tb_1 |> 
+  inner_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+
+```{r}
+tb_2 |> 
+  inner_join(tb_1, by = c("key_2" = "key_1"))
+```
+
+### Anti/semi join
+
+Por último tenemos dos herramientas interesantes para [**filtrar (no cruzar) registros**]{.hl-yellow}: `semi_join()` y `anti_join()`. El [**semi join**]{.hl-yellow} nos deja en la [**primera tabla los registros que cuya clave está también en la segunda**]{.hl-yellow} (como un inner join pero sin añadir la info de la segunda tabla). Y el segundo, los anti join, hace justo lo contrario (aquellos que no están).
+
+
+```{r}
+# semijoin
+tb_1 |> 
+  semi_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+```{r}
+# antijoin
+tb_1 |> 
+  anti_join(tb_2, by = c("key_1" = "key_2"))
+```
+
+
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+Para los ejercicios usaremos las tablas disponibles en el paquete `{nycflights13}` (echa un vistazo antes)
+
+```{r}
+library(nycflights13)
+```
+
+* [**airlines**]{.hl-yellow}: nombre de aerolíneas (con su abreviatura).
+* [**airports**]{.hl-yellow}: datos de aeropuertos (nombres, longitud, latitud, altitud, etc).
+* [**flights**]{.hl-yellow}: datos de vuelos.
+* [**planes**]{.hl-yellow}: datos de los aviones.
+* [**weather**]{.hl-yellow}: datos meteorológicos horarios de las estaciones LGA, JFK y EWR.
+
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Del paquete `{nycflights13}` cruza la tabla `flights` con `airlines`. Queremos mantener todos los registros de vuelos, añadiendo la información de las aerolíneas a dicha tabla.
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines <-
+  flights |> 
+  left_join(airlines, by = "carrier")
+flights_airlines
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 A la tabla obtenida del cruce del apartado anterior, cruza después con los datos de los aviones en `planes`, pero incluyendo solo aquellos vuelos de los que tengamos información de sus aviones (y viceversa). 
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum")
+flights_airlines_planes
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Repite el ejercicio anterior pero conservando ambas variables `year` (en una es el año del vuelo, en la otra es el año de construcción del avión), y distinguiéndolas entre sí
+
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes <- 
+  flights_airlines |> 
+  inner_join(planes, by = "tailnum",
+             suffix = c("_flight", "_build_aircraft"))
+flights_airlines_planes
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Al cruce obtenido del ejercicio anterior incluye la longitud y latitud de los aeropuertos en `airports`, distinguiendo entre la latitud/longitud del aeropuerto en destino y en origen.
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights_airlines_planes %>%
+  left_join(airports %>% select(faa, lat, lon),
+            by = c("origin" = "faa")) |> 
+  rename(lat_origin = lat, lon_origin = lon) |> 
+  left_join(airports %>% select(faa, lat, lon),
+            by = c("dest" = "faa")) |> 
+  rename(lat_dest = lat, lon_dest = lon)
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Filtra de `airports` solo aquellos aeropuertos de los que salgan vuelos. Repite el proceso filtrado solo aquellos a los que lleguen vuelos
+
+```{r}
+#| eval: false
+#| code-fold: true
+airports |> 
+  semi_join(flights, by = c("faa" = "origin"))
+airports |> 
+  semi_join(flights, by = c("faa" = "dest"))
+```
+
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 ¿De cuántos vuelos no disponemos información del avión? Elimina antes los vuelos que no tengan identificar (diferente a NA) del avión
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+flights |> 
+  drop_na(tailnum) |>
+  anti_join(planes, by = "tailnum") |>
+  count(tailnum, sort = TRUE) # de mayor a menor ya de paso
+```
+
+:::
+
+
+## 🐣Caso práctico I: Beatles y Rolling Stones
+
+Vamos a empezar a practicar joins sencillos con la tabla `band_members` y `band_instruments` ya incluidos en el paquete `{dplyr}`.
+
+```{r}
+library(dplyr)
+band_members
+band_instruments
+```
+
+En la primera tenemos una serie de artistas y la banda a la que pertenecen; en la segunda tenemos una serie de artistas y el instrumento que tocan. Además de realizar las acciones solicitadas intenta visualizar qué tabla final tendrías antes de ejecutar el código..
+
+### Pregunta 1
+
+> Dada la tabla `band_members`, incorpora la información de qué instrumento toca cada miembro (`band_instruments`) de los que tienes en esa tabla.
+
+```{r}
+#| code-fold: true
+left_join_band <-
+  band_members |> 
+  left_join(band_instruments, by = "name")
+```
+
+### Pregunta 2
+
+> Dadas las tablas `band_members` y `band_instruments`, ¿qué tipo de join deberías hacer para tener una tabla completa, sin ausencias, donde todos los miembros de la banda tengan la información de su instrumento, y cada instrumento tenga un miembro asociado a él?
+
+```{r}
+#| code-fold: true
+inner_join_band <-
+  band_members |>
+  inner_join(band_instruments, by = "name")
+```
+
+### Pregunta 3
+
+> Dada la tabla `band_instruments`, ¿cómo incorporar la información de quién toca cada instrumento (en caso de que la conozcamos)?
+
+```{r}
+#| code-fold: true
+right_join_band <-
+  band_members |>
+  right_join(band_instruments, by = "name")
+
+# other option
+left_join_instruments <-
+  band_instruments |> 
+  left_join(band_members, by = "name")
+```
+
+### Pregunta 4
+
+> Dadas las tablas `band_members` y `band_instruments`, ¿qué tipo de join deberías hacer para tener una tabla con toda la información, tanto de los miembros como de los instrumentos, aunque haya miembros cuyo instrumento no conozcas, e instrumentos cuyo portador no conozcas?
+
+```{r}
+#| code-fold: true
+full_join_band <-
+  band_members |>
+  full_join(band_instruments, by = "name")
+```
+
+## 🐣 Caso práctico II: renta municipios
+
+En el archivo `municipios.csv` tenemos guardada la información de los municipios de España a fecha de 2019.
+
+* La variable `LAU_code` representa el código como unidad administrativa local según la estandarización de la UE (ver más en <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
+
+* La variable `codigo_ine` está construida uniendo el código de la provincia y el de la comunidad autónoma.
+
+```{r}
+# datos 2019
+mun_data <- read_csv(file = "./datos/municipios.csv")
+mun_data
+```
+
+
+Por otro lado el archivo `renta_mun` contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.
+
+```{r}
+renta_mun <- read_csv(file = "./datos/renta_mun.csv")
+renta_mun
+```
+
+
+Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+### Pregunta 1
+
+> Convierte a tidydata `renta_mun` obteniendo una tabla de 4 columnas: `unidad`, `year`, `renta` y `codigo_ine` (sin ausentes y cada dato del tipo correcto)
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun |> 
+  pivot_longer(cols = contains("x"), names_to = "year",
+               values_to = "renta", names_prefix = "x",
+               names_transform = list(year = as.numeric),
+               values_drop_na = TRUE)
+```
+
+### Pregunta 2
+
+> Si te fijas en la tabla anterior, tenemos datos de diferentes unidades administrativas que no siempre son municipios. Sabiendo que todos los municipios tienen un código de 5 caracteres (que representan todos ellos números), filtra sólo aquellos registros que correspondan a unidades municipales.
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun_tidy |>
+  filter(str_detect(codigo_ine, pattern = "[0-9]{5}") & 
+           str_length(codigo_ine) == 5)
+```
+
+### Pregunta 3
+
+> A continuación separa adecuadamente la variable de unidad en dos columnas: una con el código (que ya tiene, por lo que debe eliminar uno de los dos) y el nombre. Elimina los espacios sobrantes (echa un vistazo a las opciones del paquete `{stringr}`).
+
+```{r}
+#| code-fold: true
+renta_mun_tidy <-
+  renta_mun_tidy |>
+  separate(col = "unidad", into = c("cod_rm", "name"), sep = 5) |> 
+  select(-cod_rm) |> 
+  mutate(name = str_trim(name)) 
+```
+
+### Pregunta 4
+
+> ¿En qué año fue mayor la renta media? ¿Y más baja? ¿Cuál fue la renta mediana de los municipios de España en 2019?
+
+```{r}
+summary_renta <-
+  renta_mun_tidy |> 
+  summarise("mean_renta" = mean(renta, na.rm = TRUE),
+            .by = year)
+summary_renta |>
+  slice_min(mean_renta, n = 1)
+summary_renta |>
+  slice_max(mean_renta, n = 1)
+
+renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  summarise("median_renta" = median(renta, na.rm = TRUE))
+```
+
+
+### Pregunta 5
+
+> Haz lo que consideres para obtener la provincia con la renta media más alta en 2019 y la más baja. Asegúrate de obtener su nombre.
+
+```{r}
+#| code-fold: true
+summary_by_prov <-
+  renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  left_join(mun_data, by = "codigo_ine", suffix = c("", "_rm")) |> 
+  select(-contains("rm")) |> 
+  summarise("mean_by_prov" = mean(renta, na.rm = TRUE),
+            .by = c("cpro", "ine_prov_name"))
+
+summary_by_prov |> 
+  slice_max(mean_by_prov, n = 1)
+
+summary_by_prov |> 
+  slice_min(mean_by_prov, n = 1)
+```
+
+### Pregunta 6
+
+> Obten de cada ccaa el nombre del municipio con mayor renta en 2019.
+
+```{r}
+#| code-fold: true
+renta_mun_tidy |> 
+  filter(year == 2019) |> 
+  left_join(mun_data, by = "codigo_ine", suffix = c("", "_rm")) |> 
+  select(-contains("rm")) |> 
+  slice_max(renta, by = "codauto")
+```

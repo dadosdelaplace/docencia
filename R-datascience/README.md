@@ -46,4 +46,5 @@
   - [Funciones en R (functions)](https://javieralvarezliebana.quarto.pub/funciones-en-r/)
   - [Introducción a tidy data (intro to tidy data)](https://javieralvarezliebana.quarto.pub/tidydata/)
   - [Introducción a dplyr de tidyverse (intro to tidyverse)](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/)
+  - [Joins, importa y exportar en R (joins, import and export files)](https://javieralvarezliebana.quarto.pub/joins-import-export)
 

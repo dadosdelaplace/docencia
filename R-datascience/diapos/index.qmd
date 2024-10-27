@@ -34,11 +34,11 @@ execute:
 [**Correo**]{.hl-green}: **<javalv09@ucm.es>**. [**Despacho**]{.hl-green}: 722 (3ª planta). [**Tutorías (curso 2024-2025)**]{.hl-green}: lunes y martes de 11 a 13.
 
 ::: columns
-::: {.column width="30%"}
+::: {.column width="25%"}
 ![](img/me.jpeg)
 :::
 
-::: {.column width="70%"}
+::: {.column width="75%"}
 ::: incremental
 -   [**Javier Álvarez Liébana**]{.hl-yellow}, de Carabanchel. Licenciado en Matemáticas (UCM). [**Doctor en estadística**]{.hl-yellow} (UGR)
 
@@ -122,7 +122,7 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 
 ---
 
-## Planificación {#planificacion}
+## Planificación (parte I) {#planificacion}
 
 ::: column-screen-inset-right
 ::: {style="font-size:20px"}
@@ -140,15 +140,25 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [10](#clase-10) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-10-1) [💻](#tu-turno-10-2) | [🐣](#caso-practico-10) |  |
 | [11](#clase-11) | S6 | 17 oct | Tidyverse: columnas | [💻](#tu-turno-11-1) [💻](#tu-turno-11-2) | [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  [🐣](#caso-practico-11-3) |  |
 | [12](#clase-12) | S7 | 21 oct | Tidyverse: resúmenes | [💻](#tu-turno-12-1) |  [🐣](#caso-practico-12-1) [🐣](#caso-practico-12-2)  |  |
-| [13](#clase-12) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2)  |  |
+| [13](#clase-13) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2) [🐣](#caso-practico-13-3)  |  |
 | [14-15](#clase-14) | S8 | 28 oct (2 clases) | Concurso | | |  |
+:::
+:::
+
+---
+
+## Planificación (parte II) {#planificacion}
+
+::: column-screen-inset-right
+::: {style="font-size:20px"}
+|  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
+|:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [16](#clase-16) | S8 | 31 oct | Listas y paquete purrr | | |  |
 | [17](#clase-17) | S9 | 4 nov | Inferencia y simulación | | |  |
 | [18](#clase-18) | S9 | 7 nov | Repaso | | |  |
 | [19](#clase-19) | S10 | 11 nov | Entrega III | | | [🎯 25%](#clase-19) |
 :::
 :::
-
 
 ---
 
@@ -163,53 +173,6 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 * [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
 
 * [📚 **Recursos de apoyo**]{.hl-yellow}: en inglés <https://r4ds.had.co.nz/> y en castellano <https://cdr-book.github.io/>, y <https://ivelasq.quarto.pub/intro-to-quarto/> para Quarto.
-
----
-
-## Datasets
-
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
-
-&nbsp;
-
-* `airquality` del paquete `{datasets}` (ya instalado por defecto):
-medidas diarias (153 observaciones) de la calidad del aire en Nueva York, de mayo a septiembre de 1973. Se midieron **6 variables**: ozono, radiación solar, viento, temperatura, mes y día.
-
-* `salto_longitud`: guarda cómo ha **progresado el récord de salto de longitud masculino**. Tabla extraída de la wikipedia <https://shorturl.at/Wqif1>
-
-* `pinniped` del paquete `{Biostatistics}`: **peso corporal y cerebral** de 33 especies de pinnípedos (morsas, leones marinos y elefantes marinos) desagregado por sexos y mono/poligamia.
-
----
-
-## Datasets
-
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
-
-&nbsp;
-
-* `discursos`: recopila los discursos de navidad de los jefes de Estado en España (en dictadura y en democracia) desde 1946 hasta 2021
-
-* `relig_income` del paquete `{tidyr}`: recopila los datos de ingresos anuales en función de la religión (fuente original <https://www.pewresearch.org/religion/religious-landscape-study/>)
-
-* `who/who2` del paquete `{tidyr}`: datos de la OMS respecto infecciones por tuberculosis, desagregados por tipo de enfermedad, sexo y edad.
-
-* `billboard` del paquete `{tidyr}`: ranking top 100 de canciones según Billboard (algo parecido a Los 40) para el año 2000.
-
-
----
-
-## Datasets
-
-* [🗃 **Datos**]{.hl-yellow}: datasets que usaremos a lo largo de la asignatura, disponibles en **<https://javieralvarezliebana.es/docencia/R-datascience/material>**
-
-&nbsp;
-
-* `starwars` del paquete `{dplyr}`: características de 87 personajes de las sagas de Starwars
-
-* `lotr`: conteo de palabras por raza y género de los personajes de El Señor de los Anillos en cada una de las películas de la trilogía. Extraídos de <https://github.com/jennybc/lotr-tidy/tree/master/data>.
-
-
-* `futbol`: dataset que captura las estadísticas de los jugadores de las 5 principales ligas de futbol masculinas, desde 2005 hasta 2019. Los datos se han extraído directamente haciendo uso del paquete `{worldfootballR}`, que nos permite extraer datos de <https://www.fbref.com>
 
 
 # Clase 1: [primeros pasos]{.flow} {#clase-1}
@@ -8673,8 +8636,16 @@ Vamos a volver al [**análisis de Taylor Swift**]{.hl-yellow} pero esta vez desd
 
 
 ```{r}
+#| eval: false
 library(taylor)
 taylor_album_songs
+```
+
+
+```{r}
+#| echo: false
+library(taylor)
+taylor_album_songs |> slice(1:5)
 ```
 
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-ii-taylor-swift)
@@ -8682,7 +8653,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## 🐣 Caso práctico III: señor de los anillos {#caso-practico-11-3}
+## 🐣 Caso práctico III: el señor de los anillos {#caso-practico-11-3}
 
 
 Para practicar algunas funciones de `{dplyr}` vamos a usar datos de las películas de la [**trilogía de El Señor de los Anillos**]{.hl-yellow}. Los datos los cargaremos directamente desde la web (Github en este caso), sin pasar por el ordenador antes, simplemente **indicando como ruta la web donde está el archivo**
@@ -8693,8 +8664,11 @@ Para practicar algunas funciones de `{dplyr}` vamos a usar datos de las películ
 
 * El Retorno del Rey ->  <https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv>
 
+---
+
+## 🐣 Caso práctico III: el señor de los anillos
+
 ```{r}
-#| code-fold: true
 library(readr)
 lotr_1 <-
   read_csv(file = "https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv")
@@ -8710,7 +8684,7 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 # Clase 12: [tidyverse (resúmenes)]{.flow} {#clase-12}
 
-[**Summarise y group_by(). Contar y resumir: estadísticas desagregadas por factores/grupos.**]{style="color:#444442;"}
+[**Summarise y group_by(). Contar y resumir.**]{style="color:#444442;"}
 
 
 * [💻 Ejercicios resueltos](#tu-turno-12-1) 
@@ -9231,6 +9205,8 @@ Las variables capturan la siguiente información:
 * `pk`, `pk_attemp`, `goals_minus_pk`: penalties marcados, penalties tirados y goles marcados sin contar los penalties.
 * `yellow_card`, `red_card`: tarjetas amarillas/rojas.
 
+[**Importante**]{.hl-red}: la variable `matches` debes crearla tú haciendo uso de `minutes_playing` (por ejemplo, si ha jugado 315 minutos, cuentan como 3.5 partidos)
+
 ---
 
 ## 🐣 Caso práctico II: fútbol
@@ -9258,14 +9234,22 @@ Piensa como responder a las mismas preguntas que hicimos en R base pero **en mod
 
 ---
 
-## 🐣 Caso práctico IV: covid again
+## 🐣 Caso práctico IV: covid
 
 Vamos a volver al [**dataset de covid**]{.hl-yellow} de la entrega II pero esta vez desde una **perspectiva tidyverse**
 
 ```{r}
+#| eval: false
 library(readr)
 datos <- read_csv(file = "./datos/messy_covid_data.csv")
 datos
+```
+
+```{r}
+#| echo: false
+library(readr)
+datos <- read_csv(file = "./datos/messy_covid_data.csv")
+datos |> slice(1:5)
 ```
 
 Piensa como responder a las mismas preguntas que hicimos en R base pero **en modo tidyverse** en el [**workbook**](https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iv-r-base-vs-tidyverse)
@@ -9274,16 +9258,18 @@ Piensa como responder a las mismas preguntas que hicimos en R base pero **en mod
 
 # Clase 13: [importar y joins]{.flow} {#clase-13}
 
-[**¿Cómo cruzar dos tablas? ¿Cómo importar y exportar archivos?**]{style="color:#444442;"}
+[**¿Cómo cruzar dos tablas? ¿Cómo importar y exportar?**]{style="color:#444442;"}
 
 
 * [💻 Ejercicios resueltos: joins](#tu-turno-13-1) 
 
 * [💻 Ejercicios resueltos: import/export](#tu-turno-13-2) 
 
-* [🐣 Workbook/caso práctico I: datos de renta](#caso-practico-13-1)
+* [🐣 Workbook/caso práctico I: Beatles](#caso-practico-13-1)
 
-* [🐣 Workbook/caso práctico II: tabla SPSS](#caso-practico-13-2)
+* [🐣 Workbook/caso práctico II: datos de renta](#caso-practico-13-2)
+
+* [🐣 Workbook/caso práctico IIi: tabla SPSS](#caso-practico-13-3)
 
 * [📆 Planificación](#planificacion)
 
@@ -9665,7 +9651,7 @@ library(nycflights13)
 
 ### [**Ejercicio 1**]{.hl-yellow}
 
-📝 Del paquete `{nycflights13}` cruza la tabla `flights` con `airlines`. Queremos mantener todos los registros de vuelos, añadiendo la información de las aerolíneas a la tabla de aviones.
+📝 Del paquete `{nycflights13}` cruza la tabla `flights` con `airlines`. Queremos mantener todos los registros de vuelos, añadiendo la información de las aerolíneas a dicha tabla.
 
 ```{r}
 #| eval: false
@@ -9755,11 +9741,68 @@ flights |>
 
 ---
 
-## 🐣 Caso práctico I: renta municipios {#caso-practico-13-1}
+## 🐣 Caso práctico I: Beatles {#caso-practico-13-1}
 
-pendiente de subir
+Vamos a empezar a practicar joins sencillos con la tabla `band_members` y `band_instruments` ya incluidos en el paquete `{dplyr}`.
 
-Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
+```{r}
+library(dplyr)
+band_members
+band_instruments
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-i-beatles-y-rolling-stones)
+
+
+---
+
+## 🐣 Caso práctico II: renta municipios {#caso-practico-13-2}
+
+En el archivo `municipios.csv` tenemos guardada la información de los municipios de España a fecha de 2019.
+
+* La variable `LAU_code` representa el código como unidad administrativa local según la estandarización de la UE (ver más en <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
+
+* La variable `codigo_ine` está construida uniendo el código de la provincia y el de la comunidad autónoma.
+
+```{r}
+# datos 2019
+mun_data <- read_csv(file = "./datos/municipios.csv")
+mun_data
+```
+
+---
+
+## 🐣 Caso práctico II: renta municipios
+
+Por otro lado el archivo `renta_mun` contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.
+
+```{r}
+renta_mun <- read_csv(file = "./datos/renta_mun.csv")
+renta_mun
+```
+
+---
+
+## 🐣 Caso práctico II: renta municipios
+
+Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-ii-renta-municipios)
+
+
 
 ---
 
@@ -10369,7 +10412,7 @@ who_select
 
 ---
 
-## 🐣 Caso práctico II: tabla en SPSS {#caso-practico-13-2}
+## 🐣 Caso práctico III: tabla en SPSS {#caso-practico-13-3}
 
 
 ¿brexit?
