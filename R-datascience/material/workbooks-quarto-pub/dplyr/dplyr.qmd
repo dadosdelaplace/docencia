@@ -1853,7 +1853,15 @@ Las variables capturan la siguiente información:
 * `season`, `team`, `league`: temporada, equipo y liga
 * `player`: nombre del jugador
 * `country`, `position`, `date_birth`: país, posición y año de nacimiento.
-* `minutes_playing`, `matches`: minutos totales jugados y partidos jugados en media (es decir, cuantos partidos de 90 minutos ha jugado con los minutos jugados).
+* `minutes_playing`, `matches`: minutos totales jugados y partidos jugados en media (es decir, cuantos partidos de 90 minutos ha jugado con los minutos jugados). Esta última la vamos a crear nosotros
+
+```{r}
+datos <-
+  datos |> 
+  mutate("matches" = minutes_playing / 90)
+datos
+```
+
 * `goals`, `assist`: goles y asistencias totales
 * `pk`, `pk_attemp`, `goals_minus_pk`: penalties marcados, penalties tirados y goles marcados sin contar los penalties.
 * `yellow_card`, `red_card`: tarjetas amarillas/rojas.

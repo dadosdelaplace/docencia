@@ -3670,8 +3670,8 @@ Importante
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Palpatine    170    75 grey       pale       yellow            82 male  mascu…
-2 Shaak Ti     178    57 none       red, blue… black             NA fema… femin…
+1 Lando Ca…    177    79 black      dark       brown             31 male  mascu…
+2 Plo Koon     188    80 none       orange     black             22 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -3698,10 +3698,10 @@ Importante…
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Beru Whi…    165    75 brown      light      blue              47 fema… femin…
-2 Zam Wese…    168    55 blonde     fair, gre… yellow            NA fema… femin…
-3 Cordé        157    NA brown      light      brown             NA &lt;NA&gt;  &lt;NA&gt;  
-4 Tion Med…    206    80 none       grey       black             NA male  mascu…
+1 Captain …     NA    NA none       none       unknown           NA fema… femin…
+2 Finn          NA    NA black      dark       dark              NA male  mascu…
+3 San Hill     191    NA none       grey       gold              NA male  mascu…
+4 Jar Jar …    196    66 none       orange     orange            52 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -3714,8 +3714,8 @@ Importante…
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
-2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -3747,7 +3747,7 @@ Importante…
 <div class="cell">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 4 5 2 3 3 4 4 2 2 3</code></pre>
+<pre><code> [1] 3 2 2 3 1 4 5 2 2 3</code></pre>
 </div>
 </div>
 <p>La opción anterior lo que genera son sucesos de una variable aleatoria <span class="hl-yellow"><strong>equiprobable</strong></span> pero al igual que antes, podemos asignarle un vector de probabilidades o <span class="hl-yellow"><strong>función de masa</strong></span> concreta con el argumento <code>prob = ...</code></p>
@@ -3755,8 +3755,8 @@ Importante…
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 2 1 1 4 1 5 2 1 2 4 1 1 1 3 3 1 1 2 2 3 2 2 1 4 1 2 1 1 1 4 1 2 2 6 1 1 1
-[39] 1 2 3 4 1 3 1 1 1 5 1 2</code></pre>
+<pre><code> [1] 1 2 1 1 2 1 1 2 4 2 1 5 2 1 1 1 2 2 1 2 5 2 1 3 5 2 1 1 6 3 1 2 1 3 1 1 1 2
+[39] 1 1 2 3 1 1 1 3 2 1 2 1</code></pre>
 </div>
 </div>
 <p><strong>¿Cómo harías el siguiente enunciado?</strong></p>
@@ -5785,7 +5785,34 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <li><code>season</code>, <code>team</code>, <code>league</code>: temporada, equipo y liga</li>
 <li><code>player</code>: nombre del jugador</li>
 <li><code>country</code>, <code>position</code>, <code>date_birth</code>: país, posición y año de nacimiento.</li>
-<li><code>minutes_playing</code>, <code>matches</code>: minutos totales jugados y partidos jugados en media (es decir, cuantos partidos de 90 minutos ha jugado con los minutos jugados).</li>
+<li><code>minutes_playing</code>, <code>matches</code>: minutos totales jugados y partidos jugados en media (es decir, cuantos partidos de 90 minutos ha jugado con los minutos jugados). Esta última la vamos a crear nosotros</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb222-2"><a href="#cb222-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb222-3"><a href="#cb222-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;matches&quot;</span> <span class="ot">=</span> minutes_playing <span class="sc">/</span> <span class="dv">90</span>)</span>
+<span id="cb222-4"><a href="#cb222-4" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 40,393 × 16
+   season team    league  player     country position date_birth minutes_playing
+    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;           &lt;dbl&gt;
+ 1   2005 Ajaccio Ligue 1 Djamel Ab… ALG     MF             1986              30
+ 2   2005 Ajaccio Ligue 1 Gaspar Az… POR     DF             1975            1224
+ 3   2005 Ajaccio Ligue 1 Yacine Be… ALG     MF             1981             140
+ 4   2005 Ajaccio Ligue 1 Nicolas B… FRA     MF             1976             892
+ 5   2005 Ajaccio Ligue 1 Marcelinh… BRA     MF             1971             704
+ 6   2005 Ajaccio Ligue 1 Cyril Cha… FRA     FW             1979            1308
+ 7   2005 Ajaccio Ligue 1 Xavier Co… FRA     DF             1974            2734
+ 8   2005 Ajaccio Ligue 1 Renaud Co… FRA     MF             1980             896
+ 9   2005 Ajaccio Ligue 1 Yohan Dem… FRA     DF,MF          1978            2658
+10   2005 Ajaccio Ligue 1 Christoph… FRA     DF             1973              74
+# ℹ 40,383 more rows
+# ℹ 8 more variables: matches &lt;dbl&gt;, goals &lt;dbl&gt;, assist &lt;dbl&gt;,
+#   goals_minus_pk &lt;dbl&gt;, pk &lt;dbl&gt;, pk_attemp &lt;dbl&gt;, yellow_card &lt;dbl&gt;,
+#   red_card &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<ul>
 <li><code>goals</code>, <code>assist</code>: goles y asistencias totales</li>
 <li><code>pk</code>, <code>pk_attemp</code>, <code>goals_minus_pk</code>: penalties marcados, penalties tirados y goles marcados sin contar los penalties.</li>
 <li><code>yellow_card</code>, <code>red_card</code>: tarjetas amarillas/rojas.</li>
@@ -5798,10 +5825,10 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb222-2"><a href="#cb222-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb222-3"><a href="#cb222-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> season <span class="sc">-</span> date_birth, <span class="at">.after =</span> <span class="st">&quot;date_birth&quot;</span>)</span>
-<span id="cb222-4"><a href="#cb222-4" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> season <span class="sc">-</span> date_birth, <span class="at">.after =</span> <span class="st">&quot;date_birth&quot;</span>)</span>
+<span id="cb224-4"><a href="#cb224-4" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5813,12 +5840,12 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb223-2"><a href="#cb223-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span></span>
-<span id="cb223-3"><a href="#cb223-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(minutes_playing <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">&amp;</span> matches <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
-<span id="cb223-4"><a href="#cb223-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">goals_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> goals <span class="sc">/</span> minutes_playing,</span>
-<span id="cb223-5"><a href="#cb223-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">assist_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> assist <span class="sc">/</span> minutes_playing)</span>
-<span id="cb223-6"><a href="#cb223-6" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(minutes_playing <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">&amp;</span> matches <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb225-4"><a href="#cb225-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">goals_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> goals <span class="sc">/</span> minutes_playing,</span>
+<span id="cb225-5"><a href="#cb225-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">assist_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> assist <span class="sc">/</span> minutes_playing)</span>
+<span id="cb225-6"><a href="#cb225-6" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5830,11 +5857,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pk_fails =</span> pk_attemp <span class="sc">-</span> pk,</span>
-<span id="cb224-4"><a href="#cb224-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">goals_minus_pk_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> goals_minus_pk <span class="sc">/</span> minutes_playing)</span>
-<span id="cb224-5"><a href="#cb224-5" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb226-3"><a href="#cb226-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pk_fails =</span> pk_attemp <span class="sc">-</span> pk,</span>
+<span id="cb226-4"><a href="#cb226-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">goals_minus_pk_per_90 =</span> <span class="dv">90</span> <span class="sc">*</span> goals_minus_pk <span class="sc">/</span> minutes_playing)</span>
+<span id="cb226-5"><a href="#cb226-5" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5846,13 +5873,13 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
-<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rol =</span> <span class="fu">case_when</span>(matches <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">&quot;titular&quot;</span>,</span>
-<span id="cb225-4"><a href="#cb225-4" aria-hidden="true" tabindex="-1"></a>                         matches <span class="sc">&gt;</span> <span class="dv">20</span> <span class="sc">~</span> <span class="st">&quot;recurrente&quot;</span>,</span>
-<span id="cb225-5"><a href="#cb225-5" aria-hidden="true" tabindex="-1"></a>                         matches <span class="sc">&gt;</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;suplente&quot;</span>,</span>
-<span id="cb225-6"><a href="#cb225-6" aria-hidden="true" tabindex="-1"></a>                         <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;esporádico&quot;</span>))</span>
-<span id="cb225-7"><a href="#cb225-7" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb227-2"><a href="#cb227-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb227-3"><a href="#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rol =</span> <span class="fu">case_when</span>(matches <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">&quot;titular&quot;</span>,</span>
+<span id="cb227-4"><a href="#cb227-4" aria-hidden="true" tabindex="-1"></a>                         matches <span class="sc">&gt;</span> <span class="dv">20</span> <span class="sc">~</span> <span class="st">&quot;recurrente&quot;</span>,</span>
+<span id="cb227-5"><a href="#cb227-5" aria-hidden="true" tabindex="-1"></a>                         matches <span class="sc">&gt;</span> <span class="dv">7</span> <span class="sc">~</span> <span class="st">&quot;suplente&quot;</span>,</span>
+<span id="cb227-6"><a href="#cb227-6" aria-hidden="true" tabindex="-1"></a>                         <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;esporádico&quot;</span>))</span>
+<span id="cb227-7"><a href="#cb227-7" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5864,10 +5891,10 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb226-2"><a href="#cb226-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_goals =</span> <span class="fu">mean</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb226-3"><a href="#cb226-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_goals_per_90 =</span> <span class="fu">mean</span>(goals_per_90, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb226-4"><a href="#cb226-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="st">&quot;rol&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb228-2"><a href="#cb228-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_goals =</span> <span class="fu">mean</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb228-3"><a href="#cb228-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_goals_per_90 =</span> <span class="fu">mean</span>(goals_per_90, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb228-4"><a href="#cb228-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="st">&quot;rol&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5879,14 +5906,14 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># top 10</span></span>
-<span id="cb227-2"><a href="#cb227-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb227-3"><a href="#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb227-4"><a href="#cb227-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb227-5"><a href="#cb227-5" aria-hidden="true" tabindex="-1"></a><span class="co"># solo paco alcácer</span></span>
-<span id="cb227-6"><a href="#cb227-6" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb227-7"><a href="#cb227-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb227-8"><a href="#cb227-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;ESP&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># top 10</span></span>
+<span id="cb229-2"><a href="#cb229-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb229-3"><a href="#cb229-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb229-4"><a href="#cb229-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-5"><a href="#cb229-5" aria-hidden="true" tabindex="-1"></a><span class="co"># solo paco alcácer</span></span>
+<span id="cb229-6"><a href="#cb229-6" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb229-7"><a href="#cb229-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb229-8"><a href="#cb229-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;ESP&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5898,11 +5925,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb228"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb228-1"><a href="#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la española la más ofensiva</span></span>
-<span id="cb228-2"><a href="#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la alemana la menos</span></span>
-<span id="cb228-3"><a href="#cb228-3" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb228-4"><a href="#cb228-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_goals =</span> <span class="fu">sum</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> league) <span class="sc">|&gt;</span> </span>
-<span id="cb228-5"><a href="#cb228-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_goals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la española la más ofensiva</span></span>
+<span id="cb230-2"><a href="#cb230-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la alemana la menos</span></span>
+<span id="cb230-3"><a href="#cb230-3" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb230-4"><a href="#cb230-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_goals =</span> <span class="fu">sum</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> league) <span class="sc">|&gt;</span> </span>
+<span id="cb230-5"><a href="#cb230-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_goals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <blockquote class="blockquote">
@@ -5911,13 +5938,13 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2017</span></span>
-<span id="cb229-2"><a href="#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la italiana 2017</span></span>
-<span id="cb229-3"><a href="#cb229-3" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2019</span></span>
-<span id="cb229-4"><a href="#cb229-4" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2013</span></span>
-<span id="cb229-5"><a href="#cb229-5" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb229-6"><a href="#cb229-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_goals =</span> <span class="fu">sum</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
-<span id="cb229-7"><a href="#cb229-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_goals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2017</span></span>
+<span id="cb231-2"><a href="#cb231-2" aria-hidden="true" tabindex="-1"></a><span class="co"># la italiana 2017</span></span>
+<span id="cb231-3"><a href="#cb231-3" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2019</span></span>
+<span id="cb231-4"><a href="#cb231-4" aria-hidden="true" tabindex="-1"></a><span class="co"># la española 2013</span></span>
+<span id="cb231-5"><a href="#cb231-5" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb231-6"><a href="#cb231-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_goals =</span> <span class="fu">sum</span>(goals, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
+<span id="cb231-7"><a href="#cb231-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_goals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5929,16 +5956,16 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb230-2"><a href="#cb230-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league))</span>
-<span id="cb230-3"><a href="#cb230-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-4"><a href="#cb230-4" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb230-5"><a href="#cb230-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
-<span id="cb230-6"><a href="#cb230-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(player <span class="sc">==</span> <span class="st">&quot;Cristiano Ronaldo&quot;</span>)</span>
-<span id="cb230-7"><a href="#cb230-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb230-8"><a href="#cb230-8" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
-<span id="cb230-9"><a href="#cb230-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
-<span id="cb230-10"><a href="#cb230-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(player <span class="sc">==</span> <span class="st">&quot;Lionel Messi&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb232-2"><a href="#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league))</span>
+<span id="cb232-3"><a href="#cb232-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-4"><a href="#cb232-4" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb232-5"><a href="#cb232-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
+<span id="cb232-6"><a href="#cb232-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(player <span class="sc">==</span> <span class="st">&quot;Cristiano Ronaldo&quot;</span>)</span>
+<span id="cb232-7"><a href="#cb232-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-8"><a href="#cb232-8" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb232-9"><a href="#cb232-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league)) <span class="sc">|&gt;</span> </span>
+<span id="cb232-10"><a href="#cb232-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(player <span class="sc">==</span> <span class="st">&quot;Lionel Messi&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5950,20 +5977,20 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 cr, 8 messi de las 14 temporadas que jugaron (del dataset al menos)</span></span>
-<span id="cb231-2"><a href="#cb231-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb231-3"><a href="#cb231-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nos quedamos solo con los dos jugadores</span></span>
-<span id="cb231-4"><a href="#cb231-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Cristiano Ronaldo&quot;</span>, <span class="st">&quot;Lionel Messi&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb231-5"><a href="#cb231-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># solo nos interesa season, su nombre y su dato (lo demás sobra)</span></span>
-<span id="cb231-6"><a href="#cb231-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(season, player, goals_per_90) <span class="sc">|&gt;</span> </span>
-<span id="cb231-7"><a href="#cb231-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pivotamos para tener los registros de ambos jugadores en la misma fila</span></span>
-<span id="cb231-8"><a href="#cb231-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;player&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;goals_per_90&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb231-9"><a href="#cb231-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># eliminamos ausentes (años donde alguno de los dos no jugó)</span></span>
-<span id="cb231-10"><a href="#cb231-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb231-11"><a href="#cb231-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># normalizamos nombres de columnas</span></span>
-<span id="cb231-12"><a href="#cb231-12" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb231-13"><a href="#cb231-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># contamos</span></span>
-<span id="cb231-14"><a href="#cb231-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cristiano_ronaldo <span class="sc">&gt;</span> lionel_messi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 6 cr, 8 messi de las 14 temporadas que jugaron (del dataset al menos)</span></span>
+<span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb233-3"><a href="#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nos quedamos solo con los dos jugadores</span></span>
+<span id="cb233-4"><a href="#cb233-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(player <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Cristiano Ronaldo&quot;</span>, <span class="st">&quot;Lionel Messi&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb233-5"><a href="#cb233-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># solo nos interesa season, su nombre y su dato (lo demás sobra)</span></span>
+<span id="cb233-6"><a href="#cb233-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(season, player, goals_per_90) <span class="sc">|&gt;</span> </span>
+<span id="cb233-7"><a href="#cb233-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pivotamos para tener los registros de ambos jugadores en la misma fila</span></span>
+<span id="cb233-8"><a href="#cb233-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;player&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;goals_per_90&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb233-9"><a href="#cb233-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># eliminamos ausentes (años donde alguno de los dos no jugó)</span></span>
+<span id="cb233-10"><a href="#cb233-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb233-11"><a href="#cb233-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># normalizamos nombres de columnas</span></span>
+<span id="cb233-12"><a href="#cb233-12" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb233-13"><a href="#cb233-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># contamos</span></span>
+<span id="cb233-14"><a href="#cb233-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(cristiano_ronaldo <span class="sc">&gt;</span> lionel_messi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5975,10 +6002,10 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="co"># porteros (goalkeepers) por supuesto</span></span>
-<span id="cb232-2"><a href="#cb232-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb232-3"><a href="#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ave_min =</span> <span class="fu">mean</span>(minutes_playing), <span class="at">.by =</span> position) <span class="sc">|&gt;</span> </span>
-<span id="cb232-4"><a href="#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ave_min))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="co"># porteros (goalkeepers) por supuesto</span></span>
+<span id="cb234-2"><a href="#cb234-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb234-3"><a href="#cb234-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">ave_min =</span> <span class="fu">mean</span>(minutes_playing), <span class="at">.by =</span> position) <span class="sc">|&gt;</span> </span>
+<span id="cb234-4"><a href="#cb234-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ave_min))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -5990,13 +6017,13 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb233"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rol <span class="sc">==</span> <span class="st">&quot;titular&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">str_detect</span>(position, <span class="st">&quot;GK|DF&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb233-3"><a href="#cb233-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league), <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb233-4"><a href="#cb233-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb233-5"><a href="#cb233-5" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb233-6"><a href="#cb233-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rol <span class="sc">==</span> <span class="st">&quot;titular&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">str_detect</span>(position, <span class="st">&quot;GK|DF&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb233-7"><a href="#cb233-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league), <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb235-2"><a href="#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rol <span class="sc">==</span> <span class="st">&quot;titular&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">str_detect</span>(position, <span class="st">&quot;GK|DF&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb235-3"><a href="#cb235-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league), <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb235-4"><a href="#cb235-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb235-5"><a href="#cb235-5" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb235-6"><a href="#cb235-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(rol <span class="sc">==</span> <span class="st">&quot;titular&quot;</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">str_detect</span>(position, <span class="st">&quot;GK|DF&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb235-7"><a href="#cb235-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(goals_per_90, <span class="at">by =</span> <span class="fu">c</span>(season, league), <span class="at">with_ties =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6005,7 +6032,7 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <h2 data-number="10" class="anchored" data-anchor-id="caso-práctico-iii-discursos"><span class="header-section-number">10</span> 🐣 Caso práctico III: discursos</h2>
 <p>Volvamos al dataset <code>discursos</code> donde teníamos guardados los discursos navideños de los «jefes» de Estado desde 1946 hasta 2021.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">&quot;./datos/discursos.RData&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">&quot;./datos/discursos.RData&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Piensa como responder a las mismas preguntas que hicimos en R base pero <strong>en modo tidyverse</strong>.</p>
 <section id="pregunta-1-6" class="level3" data-number="10.1">
@@ -6016,10 +6043,10 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb235-2"><a href="#cb235-2" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
-<span id="cb235-3"><a href="#cb235-3" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
-<span id="cb235-4"><a href="#cb235-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;texto&quot;</span> <span class="ot">=</span> <span class="fu">str_to_lower</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb237-2"><a href="#cb237-2" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
+<span id="cb237-3"><a href="#cb237-3" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
+<span id="cb237-4"><a href="#cb237-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;texto&quot;</span> <span class="ot">=</span> <span class="fu">str_to_lower</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6031,11 +6058,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb236"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb236-1"><a href="#cb236-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
-<span id="cb236-2"><a href="#cb236-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
-<span id="cb236-3"><a href="#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;texto&quot;</span> <span class="ot">=</span></span>
-<span id="cb236-4"><a href="#cb236-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">str_remove_all</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">:|</span><span class="sc">\\</span><span class="st">,|</span><span class="sc">\\</span><span class="st">.|</span><span class="sc">\\</span><span class="st">;|</span><span class="sc">\\</span><span class="st">¡|</span><span class="sc">\\</span><span class="st">!|</span><span class="sc">\\</span><span class="st">¿|</span><span class="sc">\\</span><span class="st">?&quot;</span>),</span>
-<span id="cb236-5"><a href="#cb236-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;texto&quot;</span> <span class="ot">=</span> <span class="fu">str_squish</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
+<span id="cb238-2"><a href="#cb238-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
+<span id="cb238-3"><a href="#cb238-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;texto&quot;</span> <span class="ot">=</span></span>
+<span id="cb238-4"><a href="#cb238-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">str_remove_all</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">:|</span><span class="sc">\\</span><span class="st">,|</span><span class="sc">\\</span><span class="st">.|</span><span class="sc">\\</span><span class="st">;|</span><span class="sc">\\</span><span class="st">¡|</span><span class="sc">\\</span><span class="st">!|</span><span class="sc">\\</span><span class="st">¿|</span><span class="sc">\\</span><span class="st">?&quot;</span>),</span>
+<span id="cb238-5"><a href="#cb238-5" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;texto&quot;</span> <span class="ot">=</span> <span class="fu">str_squish</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6047,9 +6074,9 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span> </span>
-<span id="cb237-2"><a href="#cb237-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
-<span id="cb237-3"><a href="#cb237-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;long&quot;</span> <span class="ot">=</span> <span class="fu">str_length</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span> </span>
+<span id="cb239-2"><a href="#cb239-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
+<span id="cb239-3"><a href="#cb239-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;long&quot;</span> <span class="ot">=</span> <span class="fu">str_length</span>(texto))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6061,11 +6088,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb238"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
-<span id="cb238-2"><a href="#cb238-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
-<span id="cb238-3"><a href="#cb238-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ojo: length para vectores, lengths para listas</span></span>
-<span id="cb238-4"><a href="#cb238-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># haz un ejemplo sencillo para ver como funciona str_split</span></span>
-<span id="cb238-5"><a href="#cb238-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;n_words&quot;</span> <span class="ot">=</span> <span class="fu">lengths</span>(<span class="fu">str_split</span>(texto, <span class="fu">boundary</span>(<span class="st">&quot;word&quot;</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span></span>
+<span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
+<span id="cb240-3"><a href="#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ojo: length para vectores, lengths para listas</span></span>
+<span id="cb240-4"><a href="#cb240-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># haz un ejemplo sencillo para ver como funciona str_split</span></span>
+<span id="cb240-5"><a href="#cb240-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;n_words&quot;</span> <span class="ot">=</span> <span class="fu">lengths</span>(<span class="fu">str_split</span>(texto, <span class="fu">boundary</span>(<span class="st">&quot;word&quot;</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6077,11 +6104,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
-<span id="cb239-2"><a href="#cb239-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(long, <span class="at">n =</span> <span class="dv">5</span>)</span>
-<span id="cb239-3"><a href="#cb239-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb239-4"><a href="#cb239-4" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
-<span id="cb239-5"><a href="#cb239-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(n_words, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
+<span id="cb241-2"><a href="#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(long, <span class="at">n =</span> <span class="dv">5</span>)</span>
+<span id="cb241-3"><a href="#cb241-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb241-4"><a href="#cb241-4" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
+<span id="cb241-5"><a href="#cb241-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(n_words, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6093,9 +6120,9 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
-<span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;spain&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;españoles|españolas|españa&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb240-3"><a href="#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(spain, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
+<span id="cb242-2"><a href="#cb242-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;spain&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;españoles|españolas|españa&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb242-3"><a href="#cb242-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(spain, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6107,11 +6134,11 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
-<span id="cb241-2"><a href="#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="st">&quot;year&quot;</span> <span class="ot">=</span> year,</span>
-<span id="cb241-3"><a href="#cb241-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;n_mujer&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;mujer|mujeres&quot;</span>),</span>
-<span id="cb241-4"><a href="#cb241-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;n_hombre&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;hombre|hombres&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb241-5"><a href="#cb241-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_mujer <span class="sc">&gt;</span> n_hombre)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="sc">|&gt;</span> </span>
+<span id="cb243-2"><a href="#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="st">&quot;year&quot;</span> <span class="ot">=</span> year,</span>
+<span id="cb243-3"><a href="#cb243-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;n_mujer&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;mujer|mujeres&quot;</span>),</span>
+<span id="cb243-4"><a href="#cb243-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;n_hombre&quot;</span> <span class="ot">=</span> <span class="fu">str_count</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;hombre|hombres&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb243-5"><a href="#cb243-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(n_mujer <span class="sc">&gt;</span> n_hombre)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6123,9 +6150,9 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1" aria-hidden="true" tabindex="-1"></a>discursos_cat <span class="ot">&lt;-</span></span>
-<span id="cb242-2"><a href="#cb242-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
-<span id="cb242-3"><a href="#cb242-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;cataluña|catalanes|catalán|catalanas&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1" aria-hidden="true" tabindex="-1"></a>discursos_cat <span class="ot">&lt;-</span></span>
+<span id="cb244-2"><a href="#cb244-2" aria-hidden="true" tabindex="-1"></a>  discursos <span class="sc">|&gt;</span> </span>
+<span id="cb244-3"><a href="#cb244-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(texto, <span class="at">pattern =</span> <span class="st">&quot;cataluña|catalanes|catalán|catalanas&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6134,8 +6161,8 @@ dbl (11): season, date_birth, minutes_playing, matches, goals, assist, goals...
 <h2 data-number="11" class="anchored" data-anchor-id="caso-práctico-iv-r-base-vs-tidyverse"><span class="header-section-number">11</span> 🐣 Caso práctico IV: R base vs tidyverse</h2>
 <p>Vamos a volver al <span class="hl-yellow"><strong>dataset de covid</strong></span> de la entrega II pero esta vez desde una <strong>perspectiva tidyverse</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb243"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb243-1"><a href="#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb243-2"><a href="#cb243-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;./datos/messy_covid_data.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb245-2"><a href="#cb245-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;./datos/messy_covid_data.csv&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 9486 Columns: 31
 ── Column specification ────────────────────────────────────────────────────────
@@ -6147,7 +6174,7 @@ dttm  (1): fecha
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9,486 × 31
    provincia_iso fecha               `0-9_H` `10-19_H` `20-29_H` `30-39_H`
@@ -6180,10 +6207,10 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> </span>
-<span id="cb247-2"><a href="#cb247-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb247-3"><a href="#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric),</span>
-<span id="cb247-4"><a href="#cb247-4" aria-hidden="true" tabindex="-1"></a>                <span class="cf">function</span>(x) { <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA</span>, x) }))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> </span>
+<span id="cb249-2"><a href="#cb249-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb249-3"><a href="#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric),</span>
+<span id="cb249-4"><a href="#cb249-4" aria-hidden="true" tabindex="-1"></a>                <span class="cf">function</span>(x) { <span class="fu">if_else</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="cn">NA</span>, x) }))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6195,11 +6222,11 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
-<span id="cb248-2"><a href="#cb248-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb248-3"><a href="#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(provincia_iso, fecha),</span>
-<span id="cb248-4"><a href="#cb248-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;grupo&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;casos&quot;</span>, </span>
-<span id="cb248-5"><a href="#cb248-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
+<span id="cb250-2"><a href="#cb250-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb250-3"><a href="#cb250-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(provincia_iso, fecha),</span>
+<span id="cb250-4"><a href="#cb250-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;grupo&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;casos&quot;</span>, </span>
+<span id="cb250-5"><a href="#cb250-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_drop_na =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6211,12 +6238,12 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb249-2"><a href="#cb249-2" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
-<span id="cb249-3"><a href="#cb249-3" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span> </span>
-<span id="cb249-4"><a href="#cb249-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grupo =</span> <span class="fu">str_replace_all</span>(grupo, <span class="st">&quot;Inf|NC&quot;</span>, <span class="st">&quot;NA&quot;</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb249-5"><a href="#cb249-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> <span class="st">&quot;grupo&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;edad_inf&quot;</span>, <span class="st">&quot;edad_sup&quot;</span>, <span class="st">&quot;sexo&quot;</span>),</span>
-<span id="cb249-6"><a href="#cb249-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb251-2"><a href="#cb251-2" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
+<span id="cb251-3"><a href="#cb251-3" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span> </span>
+<span id="cb251-4"><a href="#cb251-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grupo =</span> <span class="fu">str_replace_all</span>(grupo, <span class="st">&quot;Inf|NC&quot;</span>, <span class="st">&quot;NA&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb251-5"><a href="#cb251-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> <span class="st">&quot;grupo&quot;</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;edad_inf&quot;</span>, <span class="st">&quot;edad_sup&quot;</span>, <span class="st">&quot;sexo&quot;</span>),</span>
+<span id="cb251-6"><a href="#cb251-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6228,13 +6255,13 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb250-2"><a href="#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
-<span id="cb250-3"><a href="#cb250-3" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
-<span id="cb250-4"><a href="#cb250-4" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span></span>
-<span id="cb250-5"><a href="#cb250-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">month</span>(fecha),</span>
-<span id="cb250-6"><a href="#cb250-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> <span class="fu">year</span>(fecha),</span>
-<span id="cb250-7"><a href="#cb250-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">mes_year =</span> <span class="fu">glue</span>(<span class="st">&quot;{mes}-{year}&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb252"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb252-2"><a href="#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb252-3"><a href="#cb252-3" aria-hidden="true" tabindex="-1"></a>tidy_covid <span class="ot">&lt;-</span></span>
+<span id="cb252-4"><a href="#cb252-4" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span></span>
+<span id="cb252-5"><a href="#cb252-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">month</span>(fecha),</span>
+<span id="cb252-6"><a href="#cb252-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">year =</span> <span class="fu">year</span>(fecha),</span>
+<span id="cb252-7"><a href="#cb252-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">mes_year =</span> <span class="fu">glue</span>(<span class="st">&quot;{mes}-{year}&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6246,12 +6273,12 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1" aria-hidden="true" tabindex="-1"></a>provincias_permitidas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;Z&quot;</span>)</span>
-<span id="cb251-2"><a href="#cb251-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb251-3"><a href="#cb251-3" aria-hidden="true" tabindex="-1"></a>resumen_mes_provincia <span class="ot">&lt;-</span></span>
-<span id="cb251-4"><a href="#cb251-4" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span> </span>
-<span id="cb251-5"><a href="#cb251-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">%in%</span> provincias_permitidas) <span class="sc">|&gt;</span> </span>
-<span id="cb251-6"><a href="#cb251-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;mean_casos&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(casos), <span class="at">.by =</span> <span class="fu">c</span>(provincia_iso, mes_year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a>provincias_permitidas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;Z&quot;</span>)</span>
+<span id="cb253-2"><a href="#cb253-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-3"><a href="#cb253-3" aria-hidden="true" tabindex="-1"></a>resumen_mes_provincia <span class="ot">&lt;-</span></span>
+<span id="cb253-4"><a href="#cb253-4" aria-hidden="true" tabindex="-1"></a>  tidy_covid <span class="sc">|&gt;</span> </span>
+<span id="cb253-5"><a href="#cb253-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">%in%</span> provincias_permitidas) <span class="sc">|&gt;</span> </span>
+<span id="cb253-6"><a href="#cb253-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;mean_casos&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(casos), <span class="at">.by =</span> <span class="fu">c</span>(provincia_iso, mes_year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6263,23 +6290,23 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb252"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1" aria-hidden="true" tabindex="-1"></a>provincias_permitidas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;Z&quot;</span>)</span>
-<span id="cb252-2"><a href="#cb252-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb252-3"><a href="#cb252-3" aria-hidden="true" tabindex="-1"></a>resumen_por_fecha_provincia <span class="ot">&lt;-</span> <span class="cf">function</span>(prov_iso, datos) {</span>
-<span id="cb252-4"><a href="#cb252-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb252-5"><a href="#cb252-5" aria-hidden="true" tabindex="-1"></a>  datos <span class="ot">&lt;-</span></span>
-<span id="cb252-6"><a href="#cb252-6" aria-hidden="true" tabindex="-1"></a>    datos <span class="sc">|&gt;</span></span>
-<span id="cb252-7"><a href="#cb252-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">month</span>(fecha), <span class="at">year =</span> <span class="fu">year</span>(fecha),</span>
-<span id="cb252-8"><a href="#cb252-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">mes_year =</span> <span class="fu">glue</span>(<span class="st">&quot;{mes}-{year}&quot;</span>))</span>
-<span id="cb252-9"><a href="#cb252-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb252-10"><a href="#cb252-10" aria-hidden="true" tabindex="-1"></a>  resumen_mes_provincia <span class="ot">&lt;-</span></span>
-<span id="cb252-11"><a href="#cb252-11" aria-hidden="true" tabindex="-1"></a>    datos <span class="sc">|&gt;</span> </span>
-<span id="cb252-12"><a href="#cb252-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(provincia_iso <span class="sc">%in%</span> prov_iso) <span class="sc">|&gt;</span> </span>
-<span id="cb252-13"><a href="#cb252-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="st">&quot;mean_casos&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(casos), <span class="at">.by =</span> <span class="fu">c</span>(provincia_iso, mes_year))</span>
-<span id="cb252-14"><a href="#cb252-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb252-15"><a href="#cb252-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resumen_mes_provincia)</span>
-<span id="cb252-16"><a href="#cb252-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb252-17"><a href="#cb252-17" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">resumen_por_fecha_provincia</span>(<span class="at">datos =</span> tidy_covid, <span class="at">prov_iso =</span> provincias_permitidas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1" aria-hidden="true" tabindex="-1"></a>provincias_permitidas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;SE&quot;</span>, <span class="st">&quot;V&quot;</span>, <span class="st">&quot;Z&quot;</span>)</span>
+<span id="cb254-2"><a href="#cb254-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb254-3"><a href="#cb254-3" aria-hidden="true" tabindex="-1"></a>resumen_por_fecha_provincia <span class="ot">&lt;-</span> <span class="cf">function</span>(prov_iso, datos) {</span>
+<span id="cb254-4"><a href="#cb254-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb254-5"><a href="#cb254-5" aria-hidden="true" tabindex="-1"></a>  datos <span class="ot">&lt;-</span></span>
+<span id="cb254-6"><a href="#cb254-6" aria-hidden="true" tabindex="-1"></a>    datos <span class="sc">|&gt;</span></span>
+<span id="cb254-7"><a href="#cb254-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">mes =</span> <span class="fu">month</span>(fecha), <span class="at">year =</span> <span class="fu">year</span>(fecha),</span>
+<span id="cb254-8"><a href="#cb254-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">mes_year =</span> <span class="fu">glue</span>(<span class="st">&quot;{mes}-{year}&quot;</span>))</span>
+<span id="cb254-9"><a href="#cb254-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb254-10"><a href="#cb254-10" aria-hidden="true" tabindex="-1"></a>  resumen_mes_provincia <span class="ot">&lt;-</span></span>
+<span id="cb254-11"><a href="#cb254-11" aria-hidden="true" tabindex="-1"></a>    datos <span class="sc">|&gt;</span> </span>
+<span id="cb254-12"><a href="#cb254-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(provincia_iso <span class="sc">%in%</span> prov_iso) <span class="sc">|&gt;</span> </span>
+<span id="cb254-13"><a href="#cb254-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="st">&quot;mean_casos&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(casos), <span class="at">.by =</span> <span class="fu">c</span>(provincia_iso, mes_year))</span>
+<span id="cb254-14"><a href="#cb254-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb254-15"><a href="#cb254-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resumen_mes_provincia)</span>
+<span id="cb254-16"><a href="#cb254-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb254-17"><a href="#cb254-17" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">resumen_por_fecha_provincia</span>(<span class="at">datos =</span> tidy_covid, <span class="at">prov_iso =</span> provincias_permitidas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -6291,15 +6318,15 @@ dttm  (1): fecha
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
-<span id="cb253-2"><a href="#cb253-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">==</span> <span class="st">&quot;M&quot;</span> <span class="sc">&amp;</span> mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>)</span>
-<span id="cb253-3"><a href="#cb253-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb253-4"><a href="#cb253-4" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
-<span id="cb253-5"><a href="#cb253-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">==</span> <span class="st">&quot;B&quot;</span> <span class="sc">&amp;</span> mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>)</span>
-<span id="cb253-6"><a href="#cb253-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb253-7"><a href="#cb253-7" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
-<span id="cb253-8"><a href="#cb253-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb253-9"><a href="#cb253-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(mean_casos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
+<span id="cb255-2"><a href="#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">==</span> <span class="st">&quot;M&quot;</span> <span class="sc">&amp;</span> mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>)</span>
+<span id="cb255-3"><a href="#cb255-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb255-4"><a href="#cb255-4" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
+<span id="cb255-5"><a href="#cb255-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(provincia_iso <span class="sc">==</span> <span class="st">&quot;B&quot;</span> <span class="sc">&amp;</span> mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>)</span>
+<span id="cb255-6"><a href="#cb255-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb255-7"><a href="#cb255-7" aria-hidden="true" tabindex="-1"></a>resumen <span class="sc">|&gt;</span></span>
+<span id="cb255-8"><a href="#cb255-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mes_year <span class="sc">==</span> <span class="st">&quot;4-2020&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb255-9"><a href="#cb255-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(mean_casos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>

@@ -8316,6 +8316,7 @@ heights <-
   pull(height)
   
 starwars |> 
+  drop_na(height) |> 
   slice_sample(prop = 0.5, weight_by = 1/heights)
 ```
 
