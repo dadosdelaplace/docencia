@@ -9228,11 +9228,69 @@ flights |>
 
 ---
 
-## 🐣 Caso práctico I: renta municipios {#caso-practico-13-1}
 
-pendiente de subir
+## 🐣 Caso práctico I: Beatles {#caso-practico-13-1}
 
-Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
+Vamos a empezar a practicar joins sencillos con la tabla `band_members` y `band_instruments` ya incluidos en el paquete `{dplyr}`.
+
+```{r}
+library(dplyr)
+band_members
+band_instruments
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export-bio/#caso-pr%C3%A1ctico-i-beatles-y-rolling-stones)
+
+
+---
+
+## 🐣 Caso práctico II: renta municipios {#caso-practico-13-2}
+
+En el archivo `municipios.csv` tenemos guardada la información de los municipios de España a fecha de 2019.
+
+* La variable `LAU_code` representa el código como unidad administrativa local según la estandarización de la UE (ver más en <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
+
+* La variable `codigo_ine` está construida uniendo el código de la provincia y el de la comunidad autónoma.
+
+```{r}
+# datos 2019
+mun_data <- read_csv(file = "./datos/municipios.csv")
+mun_data
+```
+
+---
+
+## 🐣 Caso práctico II: renta municipios
+
+Por otro lado el archivo `renta_mun` contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.
+
+```{r}
+renta_mun <- read_csv(file = "./datos/renta_mun.csv")
+renta_mun
+```
+
+---
+
+## 🐣 Caso práctico II: renta municipios
+
+Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export-bio/#caso-pr%C3%A1ctico-ii-renta-municipios)
+
+
 
 ---
 
@@ -9667,7 +9725,7 @@ owid_covid() |> as_tibble()
 ```
 
 ```{r}
-#| echo: false
+#| eval: false
 library(owidR)
 owid_covid() |> as_tibble() |> slice(1:7)
 ```

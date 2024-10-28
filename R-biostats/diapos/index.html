@@ -1807,7 +1807,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-23"</code></pre>
+<pre><code>[1] "2024-10-28"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1817,7 +1817,7 @@ Máster de Bioestadística • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-23 12:46:37 CEST"</code></pre>
+<pre><code>[1] "2024-10-28 16:07:11 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -4503,12 +4503,12 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb400-5"><a href="#cb400-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr     min       lq        mean  median
-                                y &lt;- x^2   1.025   1.2710    1.945696   1.476
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 757.516 795.1745 1053.485406 819.631
+                                    expr      min       lq       mean   median
+                                y &lt;- x^2    1.722    1.968    2.37964    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1257.224 1285.063 1353.15326 1292.464
        uq      max neval
-   2.0910    47.97   500
- 916.2065 86313.49   500</code></pre>
+    2.173   12.587   500
+ 1351.954 3991.555   500</code></pre>
 </div>
 </div>
 </section>
@@ -4714,14 +4714,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb420"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb420-1"><a href="#cb420-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]         [,2]        [,3]
-[1,] -0.09954101  0.564252070  0.96665475
-[2,] -2.06896694 -0.409566781  1.28496203
-[3,] -1.27912831  0.009623897  0.45617234
-[4,] -1.02343873 -1.474587290 -1.26912129
-[5,] -2.06765541 -0.314615831  1.05718802
-[6,]  0.48344209 -2.203499969 -0.95963087
-[7,] -1.66942822  1.126295353  0.09068746</code></pre>
+<pre><code>           [,1]        [,2]        [,3]
+[1,]  1.0184739 -0.27491052  0.56686667
+[2,]  1.2273322  0.60433344 -0.89398462
+[3,]  0.7147201 -0.07879122 -0.56597359
+[4,]  1.9478919  0.31273993  0.90228077
+[5,]  1.2341911  1.00071058 -0.71537255
+[6,]  1.7052424  0.31264445 -0.06183813
+[7,] -1.0098848 -0.17748108  0.19612413</code></pre>
 </div>
 </div>
 </section>
@@ -7505,8 +7505,8 @@ $tipo
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Dexter J…    198   102 none       brown      yellow            NA male  mascu…
-2 Cordé        157    NA brown      light      brown             NA &lt;NA&gt;  &lt;NA&gt;  
+1 Roos Tar…    224    82 none       grey       orange            NA male  mascu…
+2 Ayla Sec…    178    55 none       blue       hazel             48 fema… femin…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -7551,10 +7551,10 @@ $tipo
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
-2 Wat Tamb…    193    48 none       green, gr… unknown           NA male  mascu…
-3 Leia Org…    150    49 brown      light      brown             19 fema… femin…
-4 Wilhuff …    180    NA auburn, g… fair       blue              64 male  mascu…
+1 Ki-Adi-M…    198    82 white      pale       yellow            92 male  mascu…
+2 Sly Moore    178    48 none       pale       white             NA &lt;NA&gt;  &lt;NA&gt;  
+3 Bib Fort…    180    NA none       pale       pink              NA male  mascu…
+4 Ackbar       180    83 none       brown mot… orange            41 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -7583,8 +7583,8 @@ $tipo
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
-2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -7597,8 +7597,8 @@ $tipo
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
-2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -7618,7 +7618,7 @@ $tipo
 <div class="cell">
 <div class="sourceCode cell-code" id="cb663"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb663-1"><a href="#cb663-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 2 2 6 1 3 2 5 1 1 4</code></pre>
+<pre><code> [1] 1 4 5 2 6 4 2 2 6 5</code></pre>
 </div>
 </div>
 </div>
@@ -7630,8 +7630,8 @@ $tipo
 <div class="sourceCode cell-code" id="cb665"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb665-1"><a href="#cb665-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb665-2"><a href="#cb665-2"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 4 1 4 2 4 1 2 2 1 1 2 4 2 2 1 1 1 1 1 1 6 1 1 1 4 1 2 4 1 1 1 1 3 1 1 1
-[39] 1 1 1 5 2 1 2 1 2 2 4 5</code></pre>
+<pre><code> [1] 4 2 1 6 1 6 2 6 2 1 1 1 2 4 1 2 2 2 1 1 1 1 1 1 1 1 1 3 1 4 2 1 1 3 3 1 1 3
+[39] 2 1 1 1 3 2 1 4 1 6 1 4</code></pre>
 </div>
 </div>
 </section>
@@ -9500,7 +9500,7 @@ dplyr 1.1.0.
 <p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-ii-messi-vs-ronaldo"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-práctico-iii-discursos" class="slide level2">
-<h2>Caso práctico III: discursos</h2>
+<h2>🐣 Caso práctico III: discursos</h2>
 <p>Vamos a hacer un ejercicio con textos. En el <a href="https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-discursos">workbook</a> tienes no solo un caso práctico sino un mini tutorial de cómo trabajar con textos en R haciendo uso del paquete <code>{stringr}</code>. En concreto vamos a <span class="hl-yellow"><strong>analizar los discursos de Navidad de los jefes de Estado españoles</strong></span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb848"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb848-1"><a href="#cb848-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./datos/discursos.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -9509,7 +9509,7 @@ dplyr 1.1.0.
 <p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas/#caso-pr%C3%A1ctico-iii-discursos"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-práctico-iv-covid" class="slide level2">
-<h2>Caso práctico IV: covid</h2>
+<h2>🐣 Caso práctico IV: covid</h2>
 <p>Vamos a volver al dataset de covid de la entrega II pero <strong>esta vez desde una perspectiva tidyverse</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb849"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb849-1"><a href="#cb849-1"></a><span class="fu">library</span>(readr)</span>
@@ -9992,9 +9992,98 @@ dplyr 1.1.0.
 </div>
 </section>
 <section id="caso-practico-13-1" class="slide level2">
-<h2>🐣 Caso práctico I: renta municipios</h2>
-<p>pendiente de subir</p>
-<p>Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019</p>
+<h2>🐣 Caso práctico I: Beatles</h2>
+<p>Vamos a empezar a practicar joins sencillos con la tabla <code>band_members</code> y <code>band_instruments</code> ya incluidos en el paquete <code>{dplyr}</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb896"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb896-1"><a href="#cb896-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb896-2"><a href="#cb896-2"></a>band_members</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  name  band   
+  &lt;chr&gt; &lt;chr&gt;  
+1 Mick  Stones 
+2 John  Beatles
+3 Paul  Beatles</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb898"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb898-1"><a href="#cb898-1"></a>band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  name  plays 
+  &lt;chr&gt; &lt;chr&gt; 
+1 John  guitar
+2 Paul  bass  
+3 Keith guitar</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/joins-import-export-bio/#caso-pr%C3%A1ctico-i-beatles-y-rolling-stones"><strong>workbook</strong></a></p>
+</section>
+<section id="caso-practico-13-2" class="slide level2">
+<h2>🐣 Caso práctico II: renta municipios</h2>
+<p>En el archivo <code>municipios.csv</code> tenemos guardada la información de los municipios de España a fecha de 2019.</p>
+<ul>
+<li><p>La variable <code>LAU_code</code> representa el código como unidad administrativa local según la estandarización de la UE (ver más en <a href="https://ec.europa.eu/eurostat/web/nuts/local-administrative-units" class="uri">https://ec.europa.eu/eurostat/web/nuts/local-administrative-units</a>).</p></li>
+<li><p>La variable <code>codigo_ine</code> está construida uniendo el código de la provincia y el de la comunidad autónoma.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb900"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb900-1"><a href="#cb900-1"></a><span class="co"># datos 2019</span></span>
+<span id="cb900-2"><a href="#cb900-2"></a>mun_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/municipios.csv"</span>)</span>
+<span id="cb900-3"><a href="#cb900-3"></a>mun_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8,212 × 8
+   codauto ine.ccaa.name cpro  ine.prov.name cmun  name      LAU_CODE codigo_ine
+   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;     
+ 1 01      Andalucía     04    Almería       001   Abla      04001    04001     
+ 2 01      Andalucía     04    Almería       002   Abrucena  04002    04002     
+ 3 01      Andalucía     04    Almería       003   Adra      04003    04003     
+ 4 01      Andalucía     04    Almería       004   Albanchez 04004    04004     
+ 5 01      Andalucía     04    Almería       005   Alboloduy 04005    04005     
+ 6 01      Andalucía     04    Almería       006   Albox     04006    04006     
+ 7 01      Andalucía     04    Almería       007   Alcolea   04007    04007     
+ 8 01      Andalucía     04    Almería       008   Alcóntar  04008    04008     
+ 9 01      Andalucía     04    Almería       009   Alcudia … 04009    04009     
+10 01      Andalucía     04    Almería       010   Alhabia   04010    04010     
+# ℹ 8,202 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="caso-práctico-ii-renta-municipios" class="slide level2">
+<h2>🐣 Caso práctico II: renta municipios</h2>
+<p>Por otro lado el archivo <code>renta_mun</code> contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb902"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb902-1"><a href="#cb902-1"></a>renta_mun <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/renta_mun.csv"</span>)</span>
+<span id="cb902-2"><a href="#cb902-2"></a>renta_mun</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 55,273 × 7
+   Unidad                          `2019` `2018` `2017` `2016` `2015` codigo_ine
+   &lt;chr&gt;                            &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
+ 1 44001 Ababuj                        NA     NA     NA     NA     NA 44001     
+ 2 4400101 Ababuj distrito 01          NA     NA     NA     NA     NA 4400101   
+ 3 4400101001 Ababuj sección 01001     NA     NA     NA     NA     NA 4400101001
+ 4 40001 Abades                     11429  10731  10314   9816   9904 40001     
+ 5 4000101 Abades distrito 01       11429  10731  10314   9816   9904 4000101   
+ 6 4000101001 Abades sección 01001  11429  10731  10314   9816   9904 4000101001
+ 7 10001 Abadía                      8954   8589   8207   7671   8416 10001     
+ 8 1000101 Abadía distrito 01        8954   8589   8207   7671   8416 1000101   
+ 9 1000101001 Abadía sección 01001   8954   8589   8207   7671   8416 1000101001
+10 27001 Abadín                     10791  10258   9762   9478   9116 27001     
+# ℹ 55,263 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="caso-práctico-ii-renta-municipios-1" class="slide level2">
+<h2>🐣 Caso práctico II: renta municipios</h2>
+<p>Antes de empezar vamos a <span class="hl-yellow"><strong>normalizar nombres de variables</strong></span> haciendo uso de <code>clean_names()</code> del paquete <code>{janitor}</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb904"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb904-1"><a href="#cb904-1"></a>mun_data <span class="ot">&lt;-</span></span>
+<span id="cb904-2"><a href="#cb904-2"></a>  mun_data <span class="sc">|&gt;</span> </span>
+<span id="cb904-3"><a href="#cb904-3"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb904-4"><a href="#cb904-4"></a>renta_mun <span class="ot">&lt;-</span></span>
+<span id="cb904-5"><a href="#cb904-5"></a>  renta_mun <span class="sc">|&gt;</span> </span>
+<span id="cb904-6"><a href="#cb904-6"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/joins-import-export-bio/#caso-pr%C3%A1ctico-ii-renta-municipios"><strong>workbook</strong></a></p>
 </section>
 <section id="importarexportar" class="slide level2">
 <h2>Importar/exportar</h2>
@@ -10016,8 +10105,8 @@ dplyr 1.1.0.
 <li>Archivos <code>RData</code>: vamos a importar el archivo <code>world_bank_pop.RData</code> que incluye la tabla <code>world_bank_pop</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb896"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb896-1"><a href="#cb896-1"></a><span class="fu">load</span>(<span class="st">"./datos/world_bank_pop.RData"</span>)</span>
-<span id="cb896-2"><a href="#cb896-2"></a>world_bank_pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb905"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb905-1"><a href="#cb905-1"></a><span class="fu">load</span>(<span class="st">"./datos/world_bank_pop.RData"</span>)</span>
+<span id="cb905-2"><a href="#cb905-2"></a>world_bank_pop</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,064 × 20
    country indicator      `2000`  `2001`  `2002`  `2003`  `2004`  `2005`  `2006`
@@ -10045,8 +10134,8 @@ dplyr 1.1.0.
 <li>Archivos <code>.rda</code>: vamos a importar el dataset airquality desde <code>airquality.rda</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb898"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb898-1"><a href="#cb898-1"></a><span class="fu">load</span>(<span class="st">"./datos/airquality.rda"</span>)</span>
-<span id="cb898-2"><a href="#cb898-2"></a>airquality <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb907"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb907-1"><a href="#cb907-1"></a><span class="fu">load</span>(<span class="st">"./datos/airquality.rda"</span>)</span>
+<span id="cb907-2"><a href="#cb907-2"></a>airquality <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 153 × 6
    Ozone Solar.R  Wind  Temp Month   Day
@@ -10070,7 +10159,7 @@ dplyr 1.1.0.
 <p>Tenga en cuenta que los archivos cargados con <code>load()</code> se cargan <span class="hl-yellow"><strong>automáticamente en el entorno</strong></span> (con el nombre guardado originalmente), y no sólo se pueden cargar conjuntos de datos: <code>load()</code> nos permite cargar múltiples objetos (no sólo datos tabulares).</p>
 <p>Los archivos nativos <code>.rda</code> y <code>.RData</code> son una forma adecuada de guardar el entorno.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb900"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb900-1"><a href="#cb900-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./datos/multiple_objects.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb909"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb909-1"><a href="#cb909-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"./datos/multiple_objects.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="formatos-nativos-3" class="slide level2">
@@ -10079,10 +10168,10 @@ dplyr 1.1.0.
 <li>Archivos <code>.rds</code>: para este tipo debemos utilizar <code>readRDS()</code>, y necesitamos incorporar un <span class="hl-yellow"><strong>argumento <code>file</code></strong></span> con la ruta. En este caso vamos a importar <span class="hl-purple"><strong>datos de cáncer de pulmón</strong></span> del North Central Cancer Treatment Group. Observe que ahora <span class="hl-red"><strong>los archivos .rds incorporar solo una tabla, no un objeto en general</strong></span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb901"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb901-1"><a href="#cb901-1"></a>lung_cancer <span class="ot">&lt;-</span></span>
-<span id="cb901-2"><a href="#cb901-2"></a>  <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"./datos/NCCTG_lung_cancer.rds"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb901-3"><a href="#cb901-3"></a>  <span class="fu">as_tibble</span>()</span>
-<span id="cb901-4"><a href="#cb901-4"></a>lung_cancer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb910"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb910-1"><a href="#cb910-1"></a>lung_cancer <span class="ot">&lt;-</span></span>
+<span id="cb910-2"><a href="#cb910-2"></a>  <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">"./datos/NCCTG_lung_cancer.rds"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb910-3"><a href="#cb910-3"></a>  <span class="fu">as_tibble</span>()</span>
+<span id="cb910-4"><a href="#cb910-4"></a>lung_cancer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 228 × 10
     inst  time status   age   sex ph.ecog ph.karno pat.karno meal.cal wt.loss
@@ -10140,9 +10229,9 @@ dplyr 1.1.0.
 <li>Archivo <code>.csv</code>: con <code>read_csv()</code> cargaremos archivos <span class="hl-purple"><strong>separados por comas</strong></span>, pasando como <span class="hl-yellow"><strong>argumento la ruta</strong></span> en <code>file = ...</code>. Vamos a importar el conjunto de datos <code>chickens.csv</code> (sobre pollos de dibujos animados, por qué no). Si nos fijamos en la salida nos da el tipo de variables.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb903"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb903-1"><a href="#cb903-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb903-2"><a href="#cb903-2"></a>chickens <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>)</span>
-<span id="cb903-3"><a href="#cb903-3"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb912"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb912-1"><a href="#cb912-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb912-2"><a href="#cb912-2"></a>chickens <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>)</span>
+<span id="cb912-3"><a href="#cb912-3"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
   chicken                 sex     eggs_laid motto                               
@@ -10160,7 +10249,7 @@ dplyr 1.1.0.
 <h2>Datos tabulados (.csv, .tsv)</h2>
 <p>El <span class="hl-yellow"><strong>formato de la variable</strong></span> se hará normalmente <span class="hl-yellow"><strong>automáticamente</strong></span> por <code>read_csv()</code>, y podemos consultarlo con <code>spec()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb905"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb905-1"><a href="#cb905-1"></a><span class="fu">spec</span>(chickens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb914"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb914-1"><a href="#cb914-1"></a><span class="fu">spec</span>(chickens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>cols(
   chicken = col_character(),
@@ -10175,11 +10264,11 @@ dplyr 1.1.0.
 <h2>Datos tabulados (.csv, .tsv)</h2>
 <p>Aunque normalmente lo hace bien automáticamente podemos <span class="hl-yellow"><strong>especificar el formato explícitamente</strong></span> en <code>col_types = lista()</code> (en formato lista, con <code>col_xxx()</code> para cada tipo de variable, por ejemplo <code>eggs_laid</code> se importará como carácter).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb907"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb907-1"><a href="#cb907-1"></a>chickens <span class="ot">&lt;-</span></span>
-<span id="cb907-2"><a href="#cb907-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>,</span>
-<span id="cb907-3"><a href="#cb907-3"></a>           <span class="at">col_types =</span> <span class="fu">list</span>(<span class="fu">col_character</span>(), <span class="fu">col_character</span>(),</span>
-<span id="cb907-4"><a href="#cb907-4"></a>                            <span class="fu">col_character</span>(), <span class="fu">col_character</span>()))</span>
-<span id="cb907-5"><a href="#cb907-5"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb916"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb916-1"><a href="#cb916-1"></a>chickens <span class="ot">&lt;-</span></span>
+<span id="cb916-2"><a href="#cb916-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>,</span>
+<span id="cb916-3"><a href="#cb916-3"></a>           <span class="at">col_types =</span> <span class="fu">list</span>(<span class="fu">col_character</span>(), <span class="fu">col_character</span>(),</span>
+<span id="cb916-4"><a href="#cb916-4"></a>                            <span class="fu">col_character</span>(), <span class="fu">col_character</span>()))</span>
+<span id="cb916-5"><a href="#cb916-5"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
   chicken                 sex     eggs_laid motto                               
@@ -10196,10 +10285,10 @@ dplyr 1.1.0.
 <h2>Datos tabulados (.csv, .tsv)</h2>
 <p>Incluso podemos indicar que <span class="hl-yellow"><strong>variables queremos seleccionar</strong></span> (sin ocupar memoria), indicándolo en <code>col_select = ...</code> (en formato lista, con <code>col_select = ...</code>).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb909"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb909-1"><a href="#cb909-1"></a>chickens <span class="ot">&lt;-</span></span>
-<span id="cb909-2"><a href="#cb909-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>,</span>
-<span id="cb909-3"><a href="#cb909-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(chicken, sex, eggs_laid))</span>
-<span id="cb909-4"><a href="#cb909-4"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb918"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb918-1"><a href="#cb918-1"></a>chickens <span class="ot">&lt;-</span></span>
+<span id="cb918-2"><a href="#cb918-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/chickens.csv"</span>,</span>
+<span id="cb918-3"><a href="#cb918-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(chicken, sex, eggs_laid))</span>
+<span id="cb918-4"><a href="#cb918-4"></a>chickens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
   chicken                 sex     eggs_laid
@@ -10218,12 +10307,12 @@ dplyr 1.1.0.
 <div class="fragment">
 <p>Si usamos <code>read_csv()</code> espera que el separador entre columnas sea una coma pero, como puedes ver con el siguiente <code>.txt</code>, lo interpreta todo como una sola columna: <span class="hl-yellow"><strong>no tiene coma y no sabe dónde separar</strong></span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb911"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb911-1"><a href="#cb911-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/massey-rating.txt"</span>)</span>
-<span id="cb911-2"><a href="#cb911-2"></a><span class="fu">dim</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb920"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb920-1"><a href="#cb920-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/massey-rating.txt"</span>)</span>
+<span id="cb920-2"><a href="#cb920-2"></a><span class="fu">dim</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10  1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb913"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb913-1"><a href="#cb913-1"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb922"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb922-1"><a href="#cb922-1"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 1
    `UCC PAY LAZ KPK  RT   COF BIH DII ENG ACU Rank Team            Conf`
@@ -10250,8 +10339,8 @@ dplyr 1.1.0.
 <li><p><code>read_delim()</code> en general.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb915"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb915-1"><a href="#cb915-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="at">file =</span> <span class="st">"./datos/massey-rating.txt"</span>)</span>
-<span id="cb915-2"><a href="#cb915-2"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb924"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb924-1"><a href="#cb924-1"></a>datos_txt <span class="ot">&lt;-</span> <span class="fu">read_table</span>(<span class="at">file =</span> <span class="st">"./datos/massey-rating.txt"</span>)</span>
+<span id="cb924-2"><a href="#cb924-2"></a><span class="fu">as_tibble</span>(datos_txt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 13
      UCC   PAY   LAZ   KPK    RT   COF   BIH   DII   ENG   ACU  Rank Team  Conf 
@@ -10279,9 +10368,9 @@ dplyr 1.1.0.
 <div class="fragment">
 <p>Vamos a importar <code>deaths.xlsx</code> con los registros de defunciones de famosos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb917"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb917-1"><a href="#cb917-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb917-2"><a href="#cb917-2"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>)</span>
-<span id="cb917-3"><a href="#cb917-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb926"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb926-1"><a href="#cb926-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb926-2"><a href="#cb926-2"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>)</span>
+<span id="cb926-3"><a href="#cb926-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 6
    `Lots of people`             ...2                     ...3  ...4  ...5  ...6 
@@ -10311,7 +10400,7 @@ dplyr 1.1.0.
 <section id="datos-excel-.xls-.xlsx-1" class="slide level2">
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb919"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb919-1"><a href="#cb919-1"></a>deaths <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb928"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb928-1"><a href="#cb928-1"></a>deaths <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   `Lots of people`             ...2       ...3  ...4     ...5          ...6     
@@ -10330,8 +10419,8 @@ dplyr 1.1.0.
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <p>Podemos <span class="hl-yellow"><strong>saltar estas filas</strong></span> directamente en la carga con <code>skip = ...</code> (indicando el número de filas a saltar).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb921"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb921-1"><a href="#cb921-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
-<span id="cb921-2"><a href="#cb921-2"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb930"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb930-1"><a href="#cb930-1"></a>deaths <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb930-2"><a href="#cb930-2"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 6
    Name          Profession Age   `Has kids` `Date of birth`     `Date of death`
@@ -10357,10 +10446,10 @@ dplyr 1.1.0.
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <p>Además con <code>col_names = ...</code> ya podemos renombrar las columnas en la importación (<span class="hl-yellow"><strong>proporcionar nombres supone 1ª línea ya como dato</strong></span>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb923" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb923-1"><a href="#cb923-1"></a>deaths <span class="ot">&lt;-</span></span>
-<span id="cb923-2"><a href="#cb923-2"></a>  <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">5</span>,</span>
-<span id="cb923-3"><a href="#cb923-3"></a>            <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"profesion"</span>, <span class="st">"edad"</span>, <span class="st">"hijos"</span>, <span class="st">"nacimiento"</span>, <span class="st">"muerte"</span>))</span>
-<span id="cb923-4"><a href="#cb923-4"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb932" data-code-line-numbers="2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb932-1"><a href="#cb932-1"></a>deaths <span class="ot">&lt;-</span></span>
+<span id="cb932-2"><a href="#cb932-2"></a>  <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/deaths.xlsx"</span>, <span class="at">skip =</span> <span class="dv">5</span>,</span>
+<span id="cb932-3"><a href="#cb932-3"></a>            <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"nombre"</span>, <span class="st">"profesion"</span>, <span class="st">"edad"</span>, <span class="st">"hijos"</span>, <span class="st">"nacimiento"</span>, <span class="st">"muerte"</span>))</span>
+<span id="cb932-4"><a href="#cb932-4"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 6
    nombre             profesion           edad  hijos nacimiento          muerte
@@ -10386,9 +10475,9 @@ dplyr 1.1.0.
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <p>A veces las <span class="hl-red"><strong>fechas de Excel tienen un formato incorrecto</strong></span> (sorpresa): podemos utilizar <code>convertToDate()</code> del paquete <code>{openxlsx}</code> para convertirlo.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb925"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb925-1"><a href="#cb925-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb925-2"><a href="#cb925-2"></a>deaths<span class="sc">$</span>muerte <span class="ot">&lt;-</span> <span class="fu">convertToDate</span>(deaths<span class="sc">$</span>muerte)</span>
-<span id="cb925-3"><a href="#cb925-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb934"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb934-1"><a href="#cb934-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb934-2"><a href="#cb934-2"></a>deaths<span class="sc">$</span>muerte <span class="ot">&lt;-</span> <span class="fu">convertToDate</span>(deaths<span class="sc">$</span>muerte)</span>
+<span id="cb934-3"><a href="#cb934-3"></a>deaths</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 14 × 6
    nombre             profesion       edad  hijos nacimiento          muerte    
@@ -10414,8 +10503,8 @@ dplyr 1.1.0.
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <p>También podemos <span class="hl-yellow"><strong>cargar un Excel con varias hojas</strong></span>: para <span class="hl-yellow"><strong>indicar la hoja</strong></span> (ya sea por su nombre o por su número) utilizaremos el argumento <code>sheet = ...</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb927"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb927-1"><a href="#cb927-1"></a>mtcars <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mtcars"</span>)</span>
-<span id="cb927-2"><a href="#cb927-2"></a>mtcars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb936"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb936-1"><a href="#cb936-1"></a>mtcars <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"mtcars"</span>)</span>
+<span id="cb936-2"><a href="#cb936-2"></a>mtcars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 32 × 11
      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
@@ -10438,8 +10527,8 @@ dplyr 1.1.0.
 <h2>Datos Excel (.xls, .xlsx)</h2>
 <p>Incluso podemos indicar el <span class="hl-yellow"><strong>rango de celdas</strong></span> a cargar con <code>range = ...</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb929"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb929-1"><a href="#cb929-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"iris"</span>, <span class="at">range =</span> <span class="st">"C1:E4"</span>)</span>
-<span id="cb929-2"><a href="#cb929-2"></a>iris</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb938"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb938-1"><a href="#cb938-1"></a>iris <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/datasets.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"iris"</span>, <span class="at">range =</span> <span class="st">"C1:E4"</span>)</span>
+<span id="cb938-2"><a href="#cb938-2"></a>iris</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   Petal.Length Petal.Width Species
@@ -10454,16 +10543,16 @@ dplyr 1.1.0.
 <h2>Importar desde SAS/STATA/SPSS</h2>
 <p>El paquete <code>{haven}</code> dentro del universo tidyverse nos permitirá <span class="hl-yellow"><strong>importar ficheros de los 3 software de pago más importantes</strong></span>: SAS, SPSS y Stata.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb931"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb931-1"><a href="#cb931-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb931-2"><a href="#cb931-2"></a></span>
-<span id="cb931-3"><a href="#cb931-3"></a><span class="co"># SAS</span></span>
-<span id="cb931-4"><a href="#cb931-4"></a>iris_sas <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="at">data_file =</span> <span class="st">"./datos/iris.sas7bdat"</span>)</span>
-<span id="cb931-5"><a href="#cb931-5"></a></span>
-<span id="cb931-6"><a href="#cb931-6"></a><span class="co"># SPSS</span></span>
-<span id="cb931-7"><a href="#cb931-7"></a>iris_spss <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="at">file =</span> <span class="st">"./datos/iris.sav"</span>)</span>
-<span id="cb931-8"><a href="#cb931-8"></a></span>
-<span id="cb931-9"><a href="#cb931-9"></a><span class="co"># Stata</span></span>
-<span id="cb931-10"><a href="#cb931-10"></a>iris_stata <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">file =</span> <span class="st">"./datos/iris.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb940"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb940-1"><a href="#cb940-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb940-2"><a href="#cb940-2"></a></span>
+<span id="cb940-3"><a href="#cb940-3"></a><span class="co"># SAS</span></span>
+<span id="cb940-4"><a href="#cb940-4"></a>iris_sas <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="at">data_file =</span> <span class="st">"./datos/iris.sas7bdat"</span>)</span>
+<span id="cb940-5"><a href="#cb940-5"></a></span>
+<span id="cb940-6"><a href="#cb940-6"></a><span class="co"># SPSS</span></span>
+<span id="cb940-7"><a href="#cb940-7"></a>iris_spss <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="at">file =</span> <span class="st">"./datos/iris.sav"</span>)</span>
+<span id="cb940-8"><a href="#cb940-8"></a></span>
+<span id="cb940-9"><a href="#cb940-9"></a><span class="co"># Stata</span></span>
+<span id="cb940-10"><a href="#cb940-10"></a>iris_stata <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">file =</span> <span class="st">"./datos/iris.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exportar" class="slide level2">
@@ -10473,11 +10562,11 @@ dplyr 1.1.0.
 <li>exportar en <code>.RData</code> (opción recomendada para variables almacenadas en <code>R</code>). Recuerda que esta extensión <span class="hl-yellow"><strong>sólo se puede utilizar en <code>R</code></strong></span>. Para ello, basta con utilizar <code>save(object, file = path)</code>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb932"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb932-1"><a href="#cb932-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb932-2"><a href="#cb932-2"></a><span class="fu">save</span>(table, <span class="at">file =</span> <span class="st">"./datos/table.RData"</span>)</span>
-<span id="cb932-3"><a href="#cb932-3"></a><span class="fu">rm</span>(table) <span class="co"># eliminar</span></span>
-<span id="cb932-4"><a href="#cb932-4"></a><span class="fu">load</span>(<span class="st">"./datos/table.RData"</span>)</span>
-<span id="cb932-5"><a href="#cb932-5"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb941"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb941-1"><a href="#cb941-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb941-2"><a href="#cb941-2"></a><span class="fu">save</span>(table, <span class="at">file =</span> <span class="st">"./datos/table.RData"</span>)</span>
+<span id="cb941-3"><a href="#cb941-3"></a><span class="fu">rm</span>(table) <span class="co"># eliminar</span></span>
+<span id="cb941-4"><a href="#cb941-4"></a><span class="fu">load</span>(<span class="st">"./datos/table.RData"</span>)</span>
+<span id="cb941-5"><a href="#cb941-5"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
       a     b
@@ -10493,13 +10582,13 @@ dplyr 1.1.0.
 <h2>Exportar</h2>
 <p>La ventaja de <code>.RData</code> es que podemos <span class="hl-yellow"><strong>exportar múltiples variables de nuestro environment</strong></span>, no solo un único dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb934"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb934-1"><a href="#cb934-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb934-2"><a href="#cb934-2"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb934-3"><a href="#cb934-3"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"javi"</span>, <span class="st">"sandra"</span>)</span>
-<span id="cb934-4"><a href="#cb934-4"></a><span class="fu">save</span>(table, a, b, <span class="at">file =</span> <span class="st">"./datos/mult_obj.RData"</span>)</span>
-<span id="cb934-5"><a href="#cb934-5"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"table"</span>))</span>
-<span id="cb934-6"><a href="#cb934-6"></a><span class="fu">load</span>(<span class="st">"./datos/mult_obj.RData"</span>)</span>
-<span id="cb934-7"><a href="#cb934-7"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb943"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb943-1"><a href="#cb943-1"></a>table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb943-2"><a href="#cb943-2"></a>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb943-3"><a href="#cb943-3"></a>b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"javi"</span>, <span class="st">"sandra"</span>)</span>
+<span id="cb943-4"><a href="#cb943-4"></a><span class="fu">save</span>(table, a, b, <span class="at">file =</span> <span class="st">"./datos/mult_obj.RData"</span>)</span>
+<span id="cb943-5"><a href="#cb943-5"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"table"</span>))</span>
+<span id="cb943-6"><a href="#cb943-6"></a><span class="fu">load</span>(<span class="st">"./datos/mult_obj.RData"</span>)</span>
+<span id="cb943-7"><a href="#cb943-7"></a>table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
       a     b
@@ -10517,8 +10606,8 @@ dplyr 1.1.0.
 <li><span class="hl-yellow"><strong>exportado en <code>.csv</code></strong></span>. Para ello simplemente utilizamos <code>write_csv(object, file = path)</code>, y es el más recomendable para exportar bases de datos de tamaño pequeño o mediano. Ver <a href="https://arrow.apache.org/docs/r/" class="uri">https://arrow.apache.org/docs/r/</a> para bases de datos masivas.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb936"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb936-1"><a href="#cb936-1"></a><span class="fu">write_csv</span>(table, <span class="at">file =</span> <span class="st">"./datos/table.csv"</span>)</span>
-<span id="cb936-2"><a href="#cb936-2"></a><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/table.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb945"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb945-1"><a href="#cb945-1"></a><span class="fu">write_csv</span>(table, <span class="at">file =</span> <span class="st">"./datos/table.csv"</span>)</span>
+<span id="cb945-2"><a href="#cb945-2"></a><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/table.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
       a     b
@@ -10534,9 +10623,9 @@ dplyr 1.1.0.
 <h2>Importar desde web</h2>
 <p>Una de las principales ventajas de <code>R</code> es que podemos hacer uso de todas las funciones anteriores de <span class="hl-yellow"><strong>importar pero directamente desde una web</strong></span>, sin necesidad de realizar la descarga manual: en lugar de pasarle la ruta local le indicaremos el <span class="hl-yellow"><strong>enlace</strong></span>. Por ejemplo, vamos a descargar los datos covid del ISCIII (<a href="https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos" class="uri">https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos</a>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb938"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb938-1"><a href="#cb938-1"></a>covid_data <span class="ot">&lt;-</span></span>
-<span id="cb938-2"><a href="#cb938-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"</span>)</span>
-<span id="cb938-3"><a href="#cb938-3"></a>covid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb947"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb947-1"><a href="#cb947-1"></a>covid_data <span class="ot">&lt;-</span></span>
+<span id="cb947-2"><a href="#cb947-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv"</span>)</span>
+<span id="cb947-3"><a href="#cb947-3"></a>covid_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -10561,11 +10650,11 @@ dplyr 1.1.0.
 <h2>Importar desde wikipedia</h2>
 <p>El paquete <code>{rvest}</code>, uno de los más útiles de <code>{tidyverse}</code> nos permite <span class="hl-yellow"><strong>importar (scrappear) directamente desde un <code>html</code></strong></span>. Por ejemplo, para exportar tablas de wikipedia basta con <code>read_html()</code> para importar el html, <code>html_element(«table»)</code> para extraer los objetos tabla, y <code>html_table()</code> para convertir la tabla html a <code>tibble</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb940"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb940-1"><a href="#cb940-1"></a><span class="fu">library</span>(rvest)</span>
-<span id="cb940-2"><a href="#cb940-2"></a>wiki_jump <span class="ot">&lt;-</span> <span class="st">'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'</span></span>
-<span id="cb940-3"><a href="#cb940-3"></a>wiki_jump <span class="sc">|&gt;</span> <span class="fu">read_html</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb940-4"><a href="#cb940-4"></a>  <span class="fu">html_element</span>(<span class="st">"table"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb940-5"><a href="#cb940-5"></a>  <span class="fu">html_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb949"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb949-1"><a href="#cb949-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb949-2"><a href="#cb949-2"></a>wiki_jump <span class="ot">&lt;-</span> <span class="st">'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'</span></span>
+<span id="cb949-3"><a href="#cb949-3"></a>wiki_jump <span class="sc">|&gt;</span> <span class="fu">read_html</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb949-4"><a href="#cb949-4"></a>  <span class="fu">html_element</span>(<span class="st">"table"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb949-5"><a href="#cb949-5"></a>  <span class="fu">html_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 19 × 5
    Mark                       Wind   Athlete                  Place        Date 
@@ -10597,10 +10686,10 @@ dplyr 1.1.0.
 <p>Otra opción disponible (especialmente si trabajamos con otras personas trabajando) es <span class="hl-yellow"><strong>importar desde una hoja de cálculo de Google Drive</strong></span>, haciendo uso de <code>read_sheet()</code> del paquete <code>{googlesheets4}</code>.</p>
 <p>La primera vez se te pedirá un permiso tidyverse para interactuar con tu drive</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb942"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb942-1"><a href="#cb942-1"></a><span class="fu">library</span>(googlesheets4)</span>
-<span id="cb942-2"><a href="#cb942-2"></a>google_sheet <span class="ot">&lt;-</span></span>
-<span id="cb942-3"><a href="#cb942-3"></a>  <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing"</span>)</span>
-<span id="cb942-4"><a href="#cb942-4"></a>google_sheet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb951"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb951-1"><a href="#cb951-1"></a><span class="fu">library</span>(googlesheets4)</span>
+<span id="cb951-2"><a href="#cb951-2"></a>google_sheet <span class="ot">&lt;-</span></span>
+<span id="cb951-3"><a href="#cb951-3"></a>  <span class="fu">read_sheet</span>(<span class="st">"https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing"</span>)</span>
+<span id="cb951-4"><a href="#cb951-4"></a>google_sheet</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   a         b     c d     
@@ -10615,29 +10704,12 @@ dplyr 1.1.0.
 <h2>Importar desde API (owid)</h2>
 <p>Otra opción interesante es la <span class="hl-yellow"><strong>descarga de datos desde una API</strong></span>: un intermediario entre una app o proveedor de datos y nuestro <code>R</code>. Por ejemplo, carguemos la librería <code>{owidR}</code>, que nos permite descargar datos de la web <a href="https://ourworldindata.org/" class="uri">https://ourworldindata.org/</a>. Por ejemplo, la función <code>owid_covid()</code> carga sin darnos cuenta más de 400 000 registros con más de 60 variables de 238 países.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb944"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb944-1"><a href="#cb944-1"></a><span class="fu">library</span>(owidR)</span>
-<span id="cb944-2"><a href="#cb944-2"></a><span class="fu">owid_covid</span>() <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb953"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb953-1"><a href="#cb953-1"></a><span class="fu">library</span>(owidR)</span>
+<span id="cb953-2"><a href="#cb953-2"></a><span class="fu">owid_covid</span>() <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 67
-  iso_code continent location    date       total_cases new_cases
-  &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;IDate&gt;          &lt;int&gt;     &lt;int&gt;
-1 AFG      Asia      Afghanistan 2020-01-05           0         0
-2 AFG      Asia      Afghanistan 2020-01-06           0         0
-3 AFG      Asia      Afghanistan 2020-01-07           0         0
-4 AFG      Asia      Afghanistan 2020-01-08           0         0
-5 AFG      Asia      Afghanistan 2020-01-09           0         0
-6 AFG      Asia      Afghanistan 2020-01-10           0         0
-7 AFG      Asia      Afghanistan 2020-01-11           0         0
-# ℹ 61 more variables: new_cases_smoothed &lt;dbl&gt;, total_deaths &lt;int&gt;,
-#   new_deaths &lt;int&gt;, new_deaths_smoothed &lt;dbl&gt;, total_cases_per_million &lt;dbl&gt;,
-#   new_cases_per_million &lt;dbl&gt;, new_cases_smoothed_per_million &lt;dbl&gt;,
-#   total_deaths_per_million &lt;dbl&gt;, new_deaths_per_million &lt;dbl&gt;,
-#   new_deaths_smoothed_per_million &lt;dbl&gt;, reproduction_rate &lt;dbl&gt;,
-#   icu_patients &lt;int&gt;, icu_patients_per_million &lt;dbl&gt;, hosp_patients &lt;int&gt;,
-#   hosp_patients_per_million &lt;dbl&gt;, weekly_icu_admissions &lt;int&gt;, …</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb954"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb954-1"><a href="#cb954-1"></a><span class="fu">library</span>(owidR)</span>
+<span id="cb954-2"><a href="#cb954-2"></a><span class="fu">owid_covid</span>() <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="importar-desde-api-aemet" class="slide level2">
@@ -10645,20 +10717,20 @@ dplyr 1.1.0.
 <p>En muchas ocasiones para conectarnos a la API primero tendremos que <span class="hl-yellow"><strong>registrarnos y obtener una clave</strong></span>, este es el caso del paquete <code>{climaemet}</code> para acceder a <span class="hl-yellow"><strong>datos meteorológicos de España</strong></span> (<a href="https://opendata.aemet.es/centrodedescargas/inicio" class="uri">https://opendata.aemet.es/centrodedescargas/inicio</a>).</p>
 <p>Una vez tengamos la clave API la registramos en nuestro RStudio para poder utilizarla en el futuro.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb946"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb946-1"><a href="#cb946-1"></a><span class="fu">library</span>(climaemet)</span>
-<span id="cb946-2"><a href="#cb946-2"></a></span>
-<span id="cb946-3"><a href="#cb946-3"></a><span class="co"># Api key</span></span>
-<span id="cb946-4"><a href="#cb946-4"></a>apikey <span class="ot">&lt;-</span> <span class="st">"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"</span></span>
-<span id="cb946-5"><a href="#cb946-5"></a></span>
-<span id="cb946-6"><a href="#cb946-6"></a><span class="fu">aemet_api_key</span>(apikey, <span class="at">install =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb955"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb955-1"><a href="#cb955-1"></a><span class="fu">library</span>(climaemet)</span>
+<span id="cb955-2"><a href="#cb955-2"></a></span>
+<span id="cb955-3"><a href="#cb955-3"></a><span class="co"># Api key</span></span>
+<span id="cb955-4"><a href="#cb955-4"></a>apikey <span class="ot">&lt;-</span> <span class="st">"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"</span></span>
+<span id="cb955-5"><a href="#cb955-5"></a></span>
+<span id="cb955-6"><a href="#cb955-6"></a><span class="fu">aemet_api_key</span>(apikey, <span class="at">install =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="importar-desde-api-aemet-1" class="slide level2">
 <h2>Importar desde API (aemet)</h2>
 <p>Con este paquete podemos hacer una <span class="hl-yellow"><strong>búsqueda de estaciones</strong></span> para conocer tanto su código postal como su código identificador dentro de la red AEMET</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb947"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb947-1"><a href="#cb947-1"></a>stations <span class="ot">&lt;-</span> <span class="fu">aemet_stations</span>()</span>
-<span id="cb947-2"><a href="#cb947-2"></a>stations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb956"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb956-1"><a href="#cb956-1"></a>stations <span class="ot">&lt;-</span> <span class="fu">aemet_stations</span>()</span>
+<span id="cb956-2"><a href="#cb956-2"></a>stations</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 947 × 7
    indicativo indsinop nombre                 provincia altitud longitud latitud
@@ -10681,24 +10753,23 @@ dplyr 1.1.0.
 <h2>Importar desde API (aemet)</h2>
 <p>Por ejemplo, para obtener datos de la estación del aeropuerto de El Prat, Barcelona, el código a proporcionar es <code>«0076»</code>, obteniendo <strong>datos horarios</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb949"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb949-1"><a href="#cb949-1"></a><span class="fu">aemet_last_obs</span>(<span class="st">"0076"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb958"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb958-1"><a href="#cb958-1"></a><span class="fu">aemet_last_obs</span>(<span class="st">"0076"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 13 × 23
+<pre><code># A tibble: 12 × 23
    idema   lon fint                 prec   alt  vmax    vv    dv   lat  dmax
    &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 0076   2.07 2024-10-22 22:00:00     0     4   4.1   3.4   360  41.3    10
- 2 0076   2.07 2024-10-22 23:00:00     0     4   5.7   3.2   360  41.3   360
- 3 0076   2.07 2024-10-23 00:00:00     0     4   5.1   3.1    10  41.3   340
- 4 0076   2.07 2024-10-23 01:00:00     0     4   4.6   3.4   360  41.3   350
- 5 0076   2.07 2024-10-23 02:00:00     0     4   5.7   4.1   360  41.3    10
- 6 0076   2.07 2024-10-23 03:00:00     0     4   5.7   4.1   360  41.3   360
- 7 0076   2.07 2024-10-23 04:00:00     0     4   5.7   3.7   360  41.3   360
- 8 0076   2.07 2024-10-23 05:00:00     0     4   5.7   3.6   360  41.3    10
- 9 0076   2.07 2024-10-23 06:00:00     0     4   6.2   4.6   360  41.3   360
-10 0076   2.07 2024-10-23 07:00:00     0     4   5.7   3.9   360  41.3   360
-11 0076   2.07 2024-10-23 08:00:00     0     4   6.2   4.2    10  41.3   360
-12 0076   2.07 2024-10-23 09:00:00     0     4   5.7   3.5    10  41.3   350
-13 0076   2.07 2024-10-23 10:00:00     0     4   7.2   1.7    40  41.3    10
+ 1 0076   2.07 2024-10-28 03:00:00   0       4  10.3   7.4    60  41.3    70
+ 2 0076   2.07 2024-10-28 04:00:00   0       4  11.3   7.9    70  41.3    70
+ 3 0076   2.07 2024-10-28 05:00:00   0       4  12.9   9.1    70  41.3    70
+ 4 0076   2.07 2024-10-28 06:00:00   0       4  11.8   5.7    60  41.3    70
+ 5 0076   2.07 2024-10-28 07:00:00   0       4  12.9   7.6    60  41.3    30
+ 6 0076   2.07 2024-10-28 08:00:00   0.3     4  14.4   8.7    60  41.3    50
+ 7 0076   2.07 2024-10-28 09:00:00   4.6     4  12.9   5.7    50  41.3    60
+ 8 0076   2.07 2024-10-28 10:00:00   8.9     4   9.8   3.8   360  41.3    40
+ 9 0076   2.07 2024-10-28 11:00:00   4.4     4   8.8   3.6    10  41.3    20
+10 0076   2.07 2024-10-28 12:00:00   3.6     4  11.3   4.6    20  41.3   360
+11 0076   2.07 2024-10-28 13:00:00   0       4  12.9   4.3    20  41.3    20
+12 0076   2.07 2024-10-28 14:00:00   0       4  12.4   9.3    70  41.3    70
 # ℹ 13 more variables: ubi &lt;chr&gt;, pres &lt;dbl&gt;, hr &lt;dbl&gt;, stdvv &lt;dbl&gt;, ts &lt;dbl&gt;,
 #   pres_nmar &lt;dbl&gt;, tamin &lt;dbl&gt;, ta &lt;dbl&gt;, tamax &lt;dbl&gt;, tpr &lt;dbl&gt;, vis &lt;dbl&gt;,
 #   stddv &lt;dbl&gt;, inso &lt;dbl&gt;</code></pre>
@@ -10709,7 +10780,7 @@ dplyr 1.1.0.
 <h2>Importar desde API (US census)</h2>
 <p>Una de las herramientas más útiles de los últimos años es la conocida como <code>{tidycensus}</code>: una herramienta para <span class="hl-yellow"><strong>facilitar el proceso de descarga de datos censales</strong></span> de Estados Unidos desde <code>R</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb951"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb951-1"><a href="#cb951-1"></a><span class="fu">library</span>(tidycensus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb960"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb960-1"><a href="#cb960-1"></a><span class="fu">library</span>(tidycensus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><p><code>get_decennial()</code>: para acceder a los <span class="hl-yellow"><strong>datos de censos (US Decennial Census)</strong></span>, se hacen cada 10 años (años 2000, 2010 y 2020).</p></li>
@@ -10723,11 +10794,11 @@ dplyr 1.1.0.
 <h2>Importar desde API (US census)</h2>
 <p>Por ejemplo vamos a descargarnos los <strong>datos censales</strong> (<code>get_decennial()</code>) a nivel estado (<code>geography = "state"</code>) de la población (variable <code>variables = "P001001"</code>) para el año 2010 (ver variables en <code>tidycensus::load_variables()</code>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb952"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb952-1"><a href="#cb952-1"></a>total_population_10 <span class="ot">&lt;-</span></span>
-<span id="cb952-2"><a href="#cb952-2"></a>  <span class="fu">get_decennial</span>(<span class="at">geography =</span> <span class="st">"state"</span>, </span>
-<span id="cb952-3"><a href="#cb952-3"></a>  <span class="at">variables =</span> <span class="st">"P001001"</span>,</span>
-<span id="cb952-4"><a href="#cb952-4"></a>  <span class="at">year =</span> <span class="dv">2010</span>)</span>
-<span id="cb952-5"><a href="#cb952-5"></a>total_population_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb961"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb961-1"><a href="#cb961-1"></a>total_population_10 <span class="ot">&lt;-</span></span>
+<span id="cb961-2"><a href="#cb961-2"></a>  <span class="fu">get_decennial</span>(<span class="at">geography =</span> <span class="st">"state"</span>, </span>
+<span id="cb961-3"><a href="#cb961-3"></a>  <span class="at">variables =</span> <span class="st">"P001001"</span>,</span>
+<span id="cb961-4"><a href="#cb961-4"></a>  <span class="at">year =</span> <span class="dv">2010</span>)</span>
+<span id="cb961-5"><a href="#cb961-5"></a>total_population_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 52 × 4
    GEOID NAME        variable    value
@@ -10767,8 +10838,8 @@ dplyr 1.1.0.
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb954"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb954-1"><a href="#cb954-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb954-2"><a href="#cb954-2"></a><span class="fu">save</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb963"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb963-1"><a href="#cb963-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb963-2"><a href="#cb963-2"></a><span class="fu">save</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -10777,7 +10848,7 @@ dplyr 1.1.0.
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb955"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb955-1"><a href="#cb955-1"></a><span class="fu">load</span>(<span class="st">"./datos/who2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb964"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb964-1"><a href="#cb964-1"></a><span class="fu">load</span>(<span class="st">"./datos/who2.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -10786,23 +10857,23 @@ dplyr 1.1.0.
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb956"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb956-1"><a href="#cb956-1"></a><span class="co"># csv</span></span>
-<span id="cb956-2"><a href="#cb956-2"></a><span class="fu">library</span>(readr)</span>
-<span id="cb956-3"><a href="#cb956-3"></a><span class="fu">write_csv</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>)</span>
-<span id="cb956-4"><a href="#cb956-4"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>)</span>
-<span id="cb956-5"><a href="#cb956-5"></a></span>
-<span id="cb956-6"><a href="#cb956-6"></a><span class="co"># excel</span></span>
-<span id="cb956-7"><a href="#cb956-7"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb956-8"><a href="#cb956-8"></a><span class="fu">write.xlsx</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.xlsx"</span>)</span>
-<span id="cb956-9"><a href="#cb956-9"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/who2.xlsx"</span>)</span>
-<span id="cb956-10"><a href="#cb956-10"></a></span>
-<span id="cb956-11"><a href="#cb956-11"></a><span class="co"># sas y stata</span></span>
-<span id="cb956-12"><a href="#cb956-12"></a><span class="fu">library</span>(haven)</span>
-<span id="cb956-13"><a href="#cb956-13"></a><span class="fu">write_sav</span>(who2, <span class="at">path =</span> <span class="st">"./datos/who2.sav"</span>)</span>
-<span id="cb956-14"><a href="#cb956-14"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_spss</span>(<span class="at">path =</span> <span class="st">"./datos/who2.sav"</span>)</span>
-<span id="cb956-15"><a href="#cb956-15"></a></span>
-<span id="cb956-16"><a href="#cb956-16"></a><span class="fu">write_dta</span>(who2, <span class="at">path =</span> <span class="st">"./datos/who2.dta"</span>)</span>
-<span id="cb956-17"><a href="#cb956-17"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">path =</span> <span class="st">"./datos/who2.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb965"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb965-1"><a href="#cb965-1"></a><span class="co"># csv</span></span>
+<span id="cb965-2"><a href="#cb965-2"></a><span class="fu">library</span>(readr)</span>
+<span id="cb965-3"><a href="#cb965-3"></a><span class="fu">write_csv</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>)</span>
+<span id="cb965-4"><a href="#cb965-4"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>)</span>
+<span id="cb965-5"><a href="#cb965-5"></a></span>
+<span id="cb965-6"><a href="#cb965-6"></a><span class="co"># excel</span></span>
+<span id="cb965-7"><a href="#cb965-7"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb965-8"><a href="#cb965-8"></a><span class="fu">write.xlsx</span>(who2, <span class="at">file =</span> <span class="st">"./datos/who2.xlsx"</span>)</span>
+<span id="cb965-9"><a href="#cb965-9"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path =</span> <span class="st">"./datos/who2.xlsx"</span>)</span>
+<span id="cb965-10"><a href="#cb965-10"></a></span>
+<span id="cb965-11"><a href="#cb965-11"></a><span class="co"># sas y stata</span></span>
+<span id="cb965-12"><a href="#cb965-12"></a><span class="fu">library</span>(haven)</span>
+<span id="cb965-13"><a href="#cb965-13"></a><span class="fu">write_sav</span>(who2, <span class="at">path =</span> <span class="st">"./datos/who2.sav"</span>)</span>
+<span id="cb965-14"><a href="#cb965-14"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_spss</span>(<span class="at">path =</span> <span class="st">"./datos/who2.sav"</span>)</span>
+<span id="cb965-15"><a href="#cb965-15"></a></span>
+<span id="cb965-16"><a href="#cb965-16"></a><span class="fu">write_dta</span>(who2, <span class="at">path =</span> <span class="st">"./datos/who2.dta"</span>)</span>
+<span id="cb965-17"><a href="#cb965-17"></a>who2_data <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="at">path =</span> <span class="st">"./datos/who2.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -10811,10 +10882,10 @@ dplyr 1.1.0.
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb957"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb957-1"><a href="#cb957-1"></a>who_select <span class="ot">&lt;-</span></span>
-<span id="cb957-2"><a href="#cb957-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>,</span>
-<span id="cb957-3"><a href="#cb957-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"iso2"</span>, <span class="st">"iso3"</span>, <span class="st">"year"</span>))</span>
-<span id="cb957-4"><a href="#cb957-4"></a>who_select</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb966"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb966-1"><a href="#cb966-1"></a>who_select <span class="ot">&lt;-</span></span>
+<span id="cb966-2"><a href="#cb966-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/who2.csv"</span>,</span>
+<span id="cb966-3"><a href="#cb966-3"></a>           <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"iso2"</span>, <span class="st">"iso3"</span>, <span class="st">"year"</span>))</span>
+<span id="cb966-4"><a href="#cb966-4"></a>who_select</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

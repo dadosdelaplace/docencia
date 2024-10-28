@@ -1,0 +1,32 @@
+- source: textos-tibbles.qmd
+  quarto-pub:
+    - id: 447b4871-0ce3-4279-8e20-41e4c30a85c8
+      url: 'https://javieralvarezliebana.quarto.pub/textos-primeras-bbdd'
+- source: flow-structures.qmd
+  quarto-pub:
+    - id: e6d18394-59ac-4cf4-82bc-214f42e74e71
+      url: 'https://javieralvarezliebana.quarto.pub/control-bucles-if-else'
+- source: funciones.qmd
+  quarto-pub:
+    - id: f545ba4f-d423-45c8-a9ab-a90c878c15a8
+      url: 'https://javieralvarezliebana.quarto.pub/funciones-en-r'
+- source: tidydata.qmd
+  quarto-pub:
+    - id: 94165ff1-05f3-467a-86f2-89a5f5a0e86d
+      url: 'https://javieralvarezliebana.quarto.pub/tidydata'
+- source: dplyr.qmd
+  quarto-pub:
+    - id: adfc834a-9c90-44b1-9a60-0dce213fbd93
+      url: 'https://javieralvarezliebana.quarto.pub/tidyverse-manipulación-de-filas-y-columnas'
+    - id: 009e2f00-f8c6-4004-a54a-878dbc06be10
+      url: 'https://javieralvarezliebana.quarto.pub/tidyverse-filas-columnas'
+    - id: 9789fa2b-36b5-45eb-b0bf-4b888fb195eb
+      url: 'https://javieralvarezliebana.quarto.pub/dplyr-filas-columnas'
+- source: joins-import.qmd
+  quarto-pub:
+    - id: ee25a484-4403-4eb1-b5f2-2f2b1982491c
+      url: 'https://javieralvarezliebana.quarto.pub/joins-import-export'
+- source: joins-import-bio.qmd
+  quarto-pub:
+    - id: d89b3141-51b0-4e7b-a9b4-1d1786aefe4c
+      url: 'https://javieralvarezliebana.quarto.pub/joins-import-export-bio'
