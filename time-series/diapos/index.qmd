@@ -6571,8 +6571,32 @@ predicciones |>
 ```
 
 
+# Clase 13: [métodos de alisado]{.flow} {#clase-13}
+
 ---
 
+## Alisado triple de Holt-Winters
+
+Veamos un **repaso de los métodos de alisado** explicados.
+
+. . .
+
+* [**Alisado simple**]{.hl-yellow}: la predicción de la serie a horizonte $h$ es el último nivel de la serie estimado (donde se estimó que la serie la última vez). Dicho nivel se obtiene de manera iterativa [**ponderando el nivel previo (la estimación anterior) y la última observación real**]{.hl-yellow}
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{purple}{\ell_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_t} &=& \theta \color{purple}{\ell_{t-1}}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}$$
+
+---
+
+## Alisado triple de Holt-Winters
+
+
+* [**Alisado doble**]{.hl-yellow}: la predicción de la serie a horizonte $h$ es el [**último nivel de la serie estimado (donde se estimó la serie la última vez) y la última pendiente estimada**]{.hl-yellow}: para predecir donde estará en la carretera a las 5h uso donde estaba a las 4h y la pendiente de la carretera en ese momento.
+
+Como antes, el nivel se obtiene iterativamente **ponderando el nivel previo (estimación anterior) y la última observación**. La pendiente se estima de la misma forma, usando la predicción de la estimación y la última estimación disponible.
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{purple}{\ell_t} + h*\color{green}{\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &=& \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right)X_t \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &=& \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \quad \text{suavizado tendencia} \end{eqnarray}$$
+
+---
 
 ## Alisado triple de Holt-Winters
 
@@ -6594,90 +6618,342 @@ Y tendremos [**dos tipos de formas de incluir la estacionalidad**]{.hl-yellow}: 
 
 ## Alisado triple de Holt-Winters
 
+La idea es que ahora, al nivel y la tendencia, para predecir la serie a horizonte $h$ le sumaremos una [**componente estacional**]{.hl-yellow}. Imagina que tenemos una serie mensual con $s= 12$ (periodicidad anual). ¿Cuánto valdrá la predicción de $t+1$ con los datos hasta $t$?
 
----
-
-## Escenarios
-
-```{r}
-#| eval: false
-#| echo: false
-fit_airpass <-
-  airpass |>
-  model(reg_poly = TSLM(value ~ index),
-        rw_drift = RW(value ~ drift()),
-        naive = NAIVE(value),
-        season_naive = SNAIVE(value ~ lag(12)))
-
-ultimo_year <- 
-  airpass |>
-  slice_max(index, n = 12) |> 
-  mutate(incremento = 1.25*value,
-         descenso = 0.75*value)
-
-future_scenarios <-
-  scenarios(incremento =
-              new_data(airpass, 12) |>
-              mutate("value" =
-                       ultimo_year |> pull(incremento)),
-            descenso =
-              new_data(airpass, 12) |>
-              mutate("value" =
-                       ultimo_year |> pull(descenso)))
-
-predicciones <-
-  fit_airpass |> 
-  forecast(new_data = future_scenarios)
-
-airpass |> 
-  autoplot(.vars = value) +
-  autolayer(predicciones) +
-  ggthemes::scale_fill_colorblind() +
-  labs(title = "US consumption", y = "% change")
-
-predicciones |> 
-  autoplot(value, level = NULL) +
-  scale_color_manual(values = ggthemes::colorblind_pal()(7)[-1]) +
-  scale_x_yearquarter(date_breaks = "24 months") +
-  theme_minimal()
-us_change |>
-  autoplot(Consumption) +
-  autolayer(fc) +
-  labs(title = "US consumption", y = "% change")
-
-```
+. . .
 
 
----
+$$\color{red}{\widehat{X}_{t+1|t}} = \color{purple}{\ell_t} + \color{green}{\mu_t} + \color{blue}{s_{t+1}}$$
 
-## pendiente
+¿Y en $t+2$?
 
-* train/test
-* scenarios
-* acf feasts
-* evaluación
+. . .
 
----
+$$\color{red}{\widehat{X}_{t+2|t}} = \color{purple}{\ell_t} + 2*\color{green}{\mu_t} + \color{blue}{s_{t+2}}$$
 
+Fíjate que en el [**nivel y la tendencia el valor más reciente que podemos usar es $t$*]{.hl-yellow} pero $s_{t+2}$ sí está disponible ya que es periódica, es decir, $s_{t+2} = s_{(t+2) - s}$
 
+. . .
+
+¿Y si $h = 13$?
 
 
 ---
 
 ## Alisado triple de Holt-Winters
 
-con estacionalidad aditiva + multipicativa
+
+$$\color{red}{\widehat{X}_{t+13|t}} = \color{purple}{\ell_t} + 13*\color{green}{\mu_t} + \color{blue}{s_{t+13}}$$
+Pero como tenemos una periodicidad $s = 12$, entonces $s_{t+13} = s_{t+13-12} = s_{t+1}$: le [**hemos restado la cantidad de años completos que había en $h = 13$**]{.hl-yellow}.
+
+. . .
+
+De manera coloquial podemos expresarlo de manera general como
+
+$$\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}}$$
+
+donde $per.comp$ es el número de **periodos completos** (en este caso años) que han pasado en tiempo $h$. Matemáticamente es
+
+$$\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*(k + 1)}}, \quad k = \lfloor \frac{h-1}{s} \rfloor$$
+
+---
+
+## Alisado triple de Holt-Winters
 
 
+$$\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}}$$
+Se conoce como [**alisado triple**]{.hl-yellow} ya que tendremos que suavizar de manera iterativa tres componentes: nivel, tendencia y estacionalidad. 
+
+. . .
+
+Si entendemos el **nivel como «en que punto está la serie»**, y dado que la componente estacional es cíclica («por dónde va la tasa de paro» debería ser ajeno a si es navidad o verano), el [**nivel será suavizado ponderando la última predicción y la serie desestacionalizada por el periodo previo**]{.hl-yellow}
 
 
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &=& \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &=& \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}\end{eqnarray}$$
 
-# Clase 13: [evaluación y diagnosis]{.flow} {#clase-13}
+---
+
+## Alisado triple de Holt-Winters
+
+Por último, el suavizado de la estacionalidad será similar: una [**ponderación entre la estimación de la misma**]{.hl-yellow} y la [**última estacionalidad (hace s periodos)**]{.hl-yellow}
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &=& \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &=& \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &=& \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3(X_{t}-\color{purple}{\ell_{t-1}} - \color{green}{\mu_{t-1}}) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}$$
+
+---
+
+## Alisado triple de Holt-Winters
+
+Para realizar el triple alisado simplemente debemos usar `ETS()` incluyendo ahora estacionalidad (aditiva `season("A")` o  multiplicativa `season("M")`)
+
+```{r}
+airpass <- AirPassengers |> as_tsibble()
+fit_airpass <-
+  airpass |>
+  model("alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(value ~ error("A") + trend("A") + season("N")),
+        "alisado_triple" = ETS(value ~ error("A") + trend("A") + season("A")))
+
+estimaciones <- fit_airpass |> augment()
+predicciones <- fit_airpass |> forecast(h = 36)
+estimaciones
+```
+
+---
+
+## Alisado triple de Holt-Winters
+
+Fíjate que las «montañitas» ahora suben pero no incrementan su altura, simplemente acaban un poco más arriba ya que tenemos una componente de tendencia.
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(airpass, level = NULL) +
+  geom_line(data = estimaciones, aes(x = index, y = .fitted, color = .model)) +
+  geom_line(data = predicciones, aes(x = index, y = .mean, color = .model)) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(4)[-1]) +
+  theme_minimal()
+```
+
+---
+
+## Alisado triple de Holt-Winters
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &=& \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &=& \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &=& \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3(X_{t}-\color{purple}{\ell_{t-1}} - \color{green}{\mu_{t-1}}) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}$$
+
+La [**versión multiplicativa**]{.hl-yellow} sería realizar el mismo alisado pero la estacionalidad ahora [**siempre aparece multiplicando**]{.hl-yellow}
+
+. . .
+
+$$\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &=& \left(\color{purple}{\ell_t} + h*\color{green}{\mu_t} \right) \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &=& \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \frac{X_t}{\color{blue}{s_{t-s}}} \nonumber \\ \color{green}{\mu_{t}} &=& \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &=& \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3\left(\frac{X_{t}}{\color{purple}{\ell_{t-1}} + \color{green}{\mu_{t-1}}} \right) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}$$
+
+---
+
+
+## Alisado triple de Holt-Winters
+
+Si `season("M")` el residuo también será multiplicativo  `error("M")`
+
+```{r}
+airpass <- AirPassengers |> as_tsibble()
+fit_airpass <-
+  airpass |>
+  model("alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(value ~ error("A") + trend("A") + season("N")),
+        "alisado_triple_ad" = ETS(value ~ error("A") + trend("A") + season("A")),
+        "alisado_triple_mult" = ETS(value ~ error("M") + trend("A") + season("M")))
+
+estimaciones <- fit_airpass |> augment()
+predicciones <- fit_airpass |> forecast(h = 36)
+estimaciones
+```
+
+---
+
+## Alisado triple de Holt-Winters
+
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(airpass, level = NULL) +
+  geom_line(data = estimaciones, aes(x = index, y = .fitted, color = .model)) +
+  geom_line(data = predicciones, aes(x = index, y = .mean, color = .model)) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(5)[-1]) +
+  theme_minimal()
+```
+
+---
+
+## Diagnosis errores
+
+Como ya hicimos una vez en clase, es importante realizar una [**diagnosis correcta de los residuales**]{.hl-yellow}. Para ello tenemos la función `gg_tsresiduals()` del paquete `{feasts}` que nos permite visualizar su **evolución temporal**, sus **autocorrelaciones** y su **distribución**
+
+```{r}
+#| eval: false
+alisado_simple <-
+  airpass |>
+  model("alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")))
+
+alisado_simple |>
+  gg_tsresiduals()
+```
+
+---
+
+## Diagnosis errores
+
+Por ejemplo en el caso del alisado simple observamos como los [**errores van aumentando según avanza el tiempo debido a la heterocedasticidad**]{.hl-red} de la serie, con magnitudes muy elevadas, y teniendo además unas autocorrelaciones muy altas en algunos retardos.
+
+```{r}
+#| code-fold: true
+alisado_simple <-
+  airpass |>
+  model("alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")))
+
+alisado_simple |>
+  gg_tsresiduals()
+```
 
 
 ---
 
-## dasda
+
+## Diagnosis errores
+
+En el caso del alisado triple multiplicativo observamos como los [**errores ya no aumentan según avanza el tiempo (magnitudes pequeñas)**]{.hl-green}, y teniendo además unas autocorrelaciones casi todas dentro de la banda.
+
+
+```{r}
+#| code-fold: true
+alisado_triple_mult <-
+  airpass |>
+  model("alisado_triple_mult" = ETS(value ~ error("M") + trend("A") + season("M")))
+
+alisado_triple_mult |>
+  gg_tsresiduals()
+```
+
+---
+
+## Train vs test
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/traintest-1.png)
+
+Como sucede en otro tipo de modelos, es importante darse cuenta de que a la hora de [**evaluar un modelo**]{.hl-yellow} tendremos que considerar dos aspectos diferentes:
+
+
+* ¿Cómo funciona el modelo con los [**datos que conoce**]{.hl-yellow}? Es lo que hemos llamado hasta ahora estimaciones.
+
+* ¿Cómo funcionaría el modelo con unos [**datos que no conoce**]{.hl-purple}? Es lo que hemos llamado hasta ahora predicciones
+
+. . .
+
+El problema es que las [**predicciones hasta ahora no podíamos evaluarlas**]{.hl-red} ya que el dato real del futuro no lo tenemos...¿Y si [**partimos nuestras series (train y test)**]{.hl-yellow} de forma que solo le dejamos usar una parte de la información para diseñar el modelo, y así poder evaluarlo en el otro subconjunto?
+
+
+---
+
+## Train vs test
+
+Vamos a [**dividir nuestra serie temporal de pasajeros aéreos**]{.hl-yellow} en train y test. Normalmente el [**% de datos en test es igual al horizonte al que queremos evaluar**]{.hl-yellow} cómo funciona (por ejemplo, si $h = 24$, usaremos los 2 últimos años como test).
+
+```{r}
+airpass_train <-
+  airpass |> 
+  filter(year(index) <= 1958)
+
+airpass_test <-
+  airpass |> 
+  filter(year(index) > 1958)
+```
+
+
+---
+
+## Evaluación
+
+Lo que haremos por tanto será [**pasarle solo la info de `airpass_train` al modelo**]{.hl-yellow}. Tras ello [**predeciremos a horizonte $h = 24$**]{.hl-yellow}
+
+```{r}
+airpass_fit <-
+  airpass_train |>
+  model("mean_cte" = MEAN(value),
+        "alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(value ~ error("A") + trend("A") + season("N")),
+        "alisado_triple_ad" = ETS(value ~ error("A") + trend("A") + season("A")),
+        "alisado_triple_mult" = ETS(value ~ error("M") + trend("A") + season("M")))
+estimaciones <- airpass_fit |> augment()
+predicciones <- airpass_fit |> forecast(h = 24)
+```
+
+---
+
+
+## Evaluación
+
+En el gráfico le indicaremos las **predicciones futuras** (de datos que tenemos guardados en el **dataset completo airpass**)
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(airpass, level = NULL) +
+  geom_line(data = estimaciones,
+            aes(x = index, y = .fitted, color = .model), linewidth = 0.75) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(6)[-1]) +
+  theme_minimal()
+```
+
+
+---
+
+
+## Evaluación
+
+
+Con la función `accuracy(estimaciones)` y `accuracy(predicciones, datos_test)` podemos evaluar **métricas de error** en test
+
+$$\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}$$
+
+
+```{r}
+accuracy(fit_airpass)
+accuracy(predicciones, airpass_test)
+```
+
+---
+
+
+
+## Evaluación
+
+$$\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}$$
+
+* [**Error medio (ME)**]{.hl-yellow}: definido como $\frac{1}{n} \sum_{t=1}^{n}  \widehat{\varepsilon}_{t}$
+
+* [**Error medio absoluto (MAE)**]{.hl-yellow}: definido como $\frac{1}{n} \sum_{t=1}^{n}  \left| \widehat{\varepsilon}_{t} \right|$
+
+* [**Error cuadrático medio (RSME)**]{.hl-yellow}: definido como $\frac{1}{n} \sum_{t=1}^{n}  \widehat{\varepsilon}_{t}^2$
+
+Ambos [**dependen de la escala de los datos**]{.hl-red}
+
+```{r}
+accuracy(predicciones, airpass_test)
+```
+
+---
+
+## Evaluación
+
+
+$$\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}$$
+
+* [**Error  medio porcentual (MPE)**]{.hl-yellow}: definido como $\frac{1}{n} \sum_{t=1}^{n}  100* \frac{\widehat{\varepsilon}_{t} }{X_t}$
+
+* [**Error absoluto medio porcentual (MAPE)**]{.hl-yellow}: definido como
+
+$$\frac{1}{n} \sum_{t=1}^{n}  100*\left| \frac{\widehat{\varepsilon}_{t} }{X_t}\right|$$
+
+
+Ambos son [**adimensionales**]{.hl-green} pero [**pueden tender a infinito si $X_t \to 0$**]{.hl-red}
+
+```{r}
+accuracy(predicciones, airpass_test)
+```
+
+
+
+---
+
+## pendiente
+
+* evaluación (cross)
+
+* scenarios
+* acf feasts
+* box-cox
+
+---
+
 
 
 # Clases 14-15-16-17: [procesos estocásticos y arima]{.flow} {#clase-14}

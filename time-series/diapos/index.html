@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.3.294">
 
   <meta name="author" content="Grado en Estadística Aplicada • Javier Álvarez Liébana">
   <title>Series temporales</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg"></p>
+<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -1100,7 +1100,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1128,7 +1128,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-25"</code></pre>
+<pre><code>[1] "2024-10-29"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-25 10:13:25 CEST"</code></pre>
+<pre><code>[1] "2024-10-29 12:49:07 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -1466,7 +1466,7 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 </div>
@@ -1513,7 +1513,7 @@ pesos       63   70   85   95</code></pre>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb84-2"><a href="#cb84-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -2673,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean
-                                y &lt;- x^2    1.681    1.927    2.128556
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1360.011 1370.979 1543.990792
-    median       uq      max neval
-    1.9885    2.132    7.421   500
- 1385.9025 1412.655 7308.619   500</code></pre>
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.701    2.001    3.559988    3.601
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 2049.701 2159.500 2352.217238 2216.501
+       uq      max neval cld
+    4.801   28.101   500  a 
+ 2314.950 8798.800   500   b</code></pre>
 </div>
 </div>
 </section>
@@ -4751,16 +4751,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.149  sd_0.5
- 2     2 -0.419  sd_0.5
- 3     3 -1.27   sd_0.5
- 4     4  0.343  sd_0.5
- 5     5  0.0859 sd_0.5
- 6     6 -0.0245 sd_0.5
- 7     7 -0.190  sd_0.5
- 8     8  0.469  sd_0.5
- 9     9 -0.771  sd_0.5
-10    10  0.361  sd_0.5
+ 1     1 -0.497  sd_0.5
+ 2     2 -0.256  sd_0.5
+ 3     3  0.0141 sd_0.5
+ 4     4 -0.917  sd_0.5
+ 5     5 -0.250  sd_0.5
+ 6     6 -0.310  sd_0.5
+ 7     7 -0.0771 sd_0.5
+ 8     8 -0.984  sd_0.5
+ 9     9  0.731  sd_0.5
+10    10  0.126  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd         X_t
-   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.420 
- 2     2 sd_0.5  0.363 
- 3     3 sd_0.5 -0.0624
- 4     4 sd_0.5 -0.0351
- 5     5 sd_0.5 -0.615 
- 6     6 sd_0.5  0.834 
- 7     7 sd_0.5 -0.0546
- 8     8 sd_0.5  0.467 
- 9     9 sd_0.5 -0.781 
-10    10 sd_0.5 -0.212 
+       t sd          X_t
+   &lt;int&gt; &lt;glue&gt;    &lt;dbl&gt;
+ 1     1 sd_0.5 -0.199  
+ 2     2 sd_0.5 -0.105  
+ 3     3 sd_0.5  0.932  
+ 4     4 sd_0.5  0.807  
+ 5     5 sd_0.5  0.0794 
+ 6     6 sd_0.5 -1.09   
+ 7     7 sd_0.5 -0.137  
+ 8     8 sd_0.5  0.00333
+ 9     9 sd_0.5 -0.530  
+10    10 sd_0.5  0.0838 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -6429,18 +6429,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 864 x 6 [1M]
 # Key:       .model [6]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 854 more rows</code></pre>
 </div>
 </div>
@@ -6504,18 +6504,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        value = trend + seasonal + random
-   .model    index value trend seasonal random season_adjust
-   &lt;chr&gt;     &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
- 1 cts    1949 Jan   112   NA    -24.7   NA            137. 
- 2 cts    1949 Feb   118   NA    -36.2   NA            154. 
- 3 cts    1949 Mar   132   NA     -2.24  NA            134. 
- 4 cts    1949 Apr   129   NA     -8.04  NA            137. 
- 5 cts    1949 May   121   NA     -4.51  NA            126. 
- 6 cts    1949 Jun   135   NA     35.4   NA             99.6
- 7 cts    1949 Jul   148  127.    63.8  -42.6           84.2
- 8 cts    1949 Aug   148  127.    62.8  -42.1           85.2
- 9 cts    1949 Sep   136  128.    16.5   -8.48         119. 
-10 cts    1949 Oct   119  129.   -20.6   11.1          140. 
+   .model     index value trend seasonal random season_adjust
+   &lt;chr&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+ 1 cts    1949 ene.   112   NA    -24.7   NA            137. 
+ 2 cts    1949 feb.   118   NA    -36.2   NA            154. 
+ 3 cts    1949 mar.   132   NA     -2.24  NA            134. 
+ 4 cts    1949 abr.   129   NA     -8.04  NA            137. 
+ 5 cts    1949 may.   121   NA     -4.51  NA            126. 
+ 6 cts    1949 jun.   135   NA     35.4   NA             99.6
+ 7 cts    1949 jul.   148  127.    63.8  -42.6           84.2
+ 8 cts    1949 ago.   148  127.    62.8  -42.1           85.2
+ 9 cts    1949 sep.   136  128.    16.5   -8.48         119. 
+10 cts    1949 oct.   119  129.   -20.6   11.1          140. 
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6583,18 +6583,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        log(value) = trend + season_12 + remainder
-   .model    index `log(value)` trend season_12 remainder season_adjust
-   &lt;chr&gt;     &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
- 1 stl    1949 Jan         4.72  4.87   -0.105   -0.0448           4.82
- 2 stl    1949 Feb         4.77  4.87   -0.142    0.0408           4.91
- 3 stl    1949 Mar         4.88  4.87   -0.0118   0.0213           4.89
- 4 stl    1949 Apr         4.86  4.87   -0.0337   0.0256           4.89
- 5 stl    1949 May         4.80  4.84   -0.0261  -0.0154           4.82
- 6 stl    1949 Jun         4.91  4.81    0.106   -0.00733          4.80
- 7 stl    1949 Jul         5.00  4.79    0.220   -0.0149           4.78
- 8 stl    1949 Aug         5.00  4.80    0.221   -0.0198           4.78
- 9 stl    1949 Sep         4.91  4.81    0.0864   0.0188           4.83
-10 stl    1949 Oct         4.78  4.82   -0.0417  -0.00306          4.82
+   .model     index `log(value)` trend season_12 remainder season_adjust
+   &lt;chr&gt;      &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 stl    1949 ene.         4.72  4.87   -0.105   -0.0448           4.82
+ 2 stl    1949 feb.         4.77  4.87   -0.142    0.0408           4.91
+ 3 stl    1949 mar.         4.88  4.87   -0.0118   0.0213           4.89
+ 4 stl    1949 abr.         4.86  4.87   -0.0337   0.0256           4.89
+ 5 stl    1949 may.         4.80  4.84   -0.0261  -0.0154           4.82
+ 6 stl    1949 jun.         4.91  4.81    0.106   -0.00733          4.80
+ 7 stl    1949 jul.         5.00  4.79    0.220   -0.0149           4.78
+ 8 stl    1949 ago.         5.00  4.80    0.221   -0.0198           4.78
+ 9 stl    1949 sep.         4.91  4.81    0.0864   0.0188           4.83
+10 stl    1949 oct.         4.78  4.82   -0.0417  -0.00306          4.82
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6708,18 +6708,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 288 x 6 [1M]
 # Key:       .model [2]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 278 more rows</code></pre>
 </div>
 </div>
@@ -6776,18 +6776,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6806,8 +6806,31 @@ No todavía, vamos por el ciclo 4</code></pre>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-265-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-265-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="clase-13" class="title-slide slide level1 center">
+<h1>Clase 13: <span class="flow">métodos de alisado</span></h1>
+
+</section>
 <section id="alisado-triple-de-holt-winters" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>Veamos un <strong>repaso de los métodos de alisado</strong> explicados.</p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Alisado simple</strong></span>: la predicción de la serie a horizonte <span class="math inline">\(h\)</span> es el último nivel de la serie estimado (donde se estimó que la serie la última vez). Dicho nivel se obtiene de manera iterativa <span class="hl-yellow"><strong>ponderando el nivel previo (la estimación anterior) y la última observación real</strong></span></li>
+</ul>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{purple}{\ell_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_t} &amp;=&amp; \theta \color{purple}{\ell_{t-1}}+ \left( 1 - \theta \right)X_t \quad \text{suavizado de componentes} \end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-1" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Alisado doble</strong></span>: la predicción de la serie a horizonte <span class="math inline">\(h\)</span> es el <span class="hl-yellow"><strong>último nivel de la serie estimado (donde se estimó la serie la última vez) y la última pendiente estimada</strong></span>: para predecir donde estará en la carretera a las 5h uso donde estaba a las 4h y la pendiente de la carretera en ese momento.</li>
+</ul>
+<p>Como antes, el nivel se obtiene iterativamente <strong>ponderando el nivel previo (estimación anterior) y la última observación</strong>. La pendiente se estima de la misma forma, usando la predicción de la estimación y la última estimación disponible.</p>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{purple}{\ell_t} + h*\color{green}{\mu_t} \quad \text{predicción (en base a componentes)} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right)X_t \quad \text{suavizado nivel} \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \quad \text{suavizado tendencia} \end{eqnarray}\]</span></p>
+</section>
+<section id="alisado-triple-de-holt-winters-2" class="slide level2">
 <h2>Alisado triple de Holt-Winters</h2>
 <p>Unos años más tarde, Holt y Winters (1960) ampliaron los métodos anteriores para <span class="hl-yellow"><strong>poder capturar la estacionalidad</strong></span>. Se conoce como <span class="hl-yellow"><strong>alisado triple</strong></span> ya que tendremos ahora tres ecuaciones de suavizado: suavizado del nivel, suavizado de la tendencia y suavizado de la componente estacional.</p>
 <div class="fragment">
@@ -6821,42 +6844,342 @@ No todavía, vamos por el ciclo 4</code></pre>
 <p>Y tendremos <span class="hl-yellow"><strong>dos tipos de formas de incluir la estacionalidad</strong></span>: aditivo (varianza constante a lo largo del tiempo, la componente estacional se expresa en términos absolutos) y multiplicativo (la componente estacional se expresa en términos relativos, en porcentajes).</p>
 </div>
 </section>
-<section id="alisado-triple-de-holt-winters-1" class="slide level2">
+<section id="alisado-triple-de-holt-winters-3" class="slide level2">
 <h2>Alisado triple de Holt-Winters</h2>
+<p>La idea es que ahora, al nivel y la tendencia, para predecir la serie a horizonte <span class="math inline">\(h\)</span> le sumaremos una <span class="hl-yellow"><strong>componente estacional</strong></span>. Imagina que tenemos una serie mensual con <span class="math inline">\(s= 12\)</span> (periodicidad anual). ¿Cuánto valdrá la predicción de <span class="math inline">\(t+1\)</span> con los datos hasta <span class="math inline">\(t\)</span>?</p>
+<div class="fragment">
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+1|t}} = \color{purple}{\ell_t} + \color{green}{\mu_t} + \color{blue}{s_{t+1}}\]</span></p>
+<p>¿Y en <span class="math inline">\(t+2\)</span>?</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+2|t}} = \color{purple}{\ell_t} + 2*\color{green}{\mu_t} + \color{blue}{s_{t+2}}\]</span></p>
+<p>Fíjate que en el <span class="hl-yellow">**nivel y la tendencia el valor más reciente que podemos usar es <span class="math inline">\(t\)</span>*</span> pero <span class="math inline">\(s_{t+2}\)</span> sí está disponible ya que es periódica, es decir, <span class="math inline">\(s_{t+2} = s_{(t+2) - s}\)</span></p>
+</div>
+<div class="fragment">
+<p>¿Y si <span class="math inline">\(h = 13\)</span>?</p>
+</div>
 </section>
-<section id="escenarios" class="slide level2">
-<h2>Escenarios</h2>
+<section id="alisado-triple-de-holt-winters-4" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+13|t}} = \color{purple}{\ell_t} + 13*\color{green}{\mu_t} + \color{blue}{s_{t+13}}\]</span> Pero como tenemos una periodicidad <span class="math inline">\(s = 12\)</span>, entonces <span class="math inline">\(s_{t+13} = s_{t+13-12} = s_{t+1}\)</span>: le <span class="hl-yellow"><strong>hemos restado la cantidad de años completos que había en <span class="math inline">\(h = 13\)</span></strong></span>.</p>
+<div class="fragment">
+<p>De manera coloquial podemos expresarlo de manera general como</p>
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}}\]</span></p>
+<p>donde <span class="math inline">\(per.comp\)</span> es el número de <strong>periodos completos</strong> (en este caso años) que han pasado en tiempo <span class="math inline">\(h\)</span>. Matemáticamente es</p>
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*(k + 1)}}, \quad k = \lfloor \frac{h-1}{s} \rfloor\]</span></p>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-5" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p><span class="math display">\[\color{red}{\widehat{X}_{t+h|t}} = \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}}\]</span> Se conoce como <span class="hl-yellow"><strong>alisado triple</strong></span> ya que tendremos que suavizar de manera iterativa tres componentes: nivel, tendencia y estacionalidad.</p>
+<div class="fragment">
+<p>Si entendemos el <strong>nivel como «en que punto está la serie»</strong>, y dado que la componente estacional es cíclica («por dónde va la tasa de paro» debería ser ajeno a si es navidad o verano), el <span class="hl-yellow"><strong>nivel será suavizado ponderando la última predicción y la serie desestacionalizada por el periodo previo</strong></span></p>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}\end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-6" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>Por último, el suavizado de la estacionalidad será similar: una <span class="hl-yellow"><strong>ponderación entre la estimación de la misma</strong></span> y la <span class="hl-yellow"><strong>última estacionalidad (hace s periodos)</strong></span></p>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &amp;=&amp; \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3(X_{t}-\color{purple}{\ell_{t-1}} - \color{green}{\mu_{t-1}}) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}\]</span></p>
+</section>
+<section id="alisado-triple-de-holt-winters-7" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>Para realizar el triple alisado simplemente debemos usar <code>ETS()</code> incluyendo ahora estacionalidad (aditiva <code>season("A")</code> o multiplicativa <code>season("M")</code>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb394"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb394-1"><a href="#cb394-1"></a>airpass <span class="ot">&lt;-</span> AirPassengers <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb394-2"><a href="#cb394-2"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb394-3"><a href="#cb394-3"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb394-4"><a href="#cb394-4"></a>  <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb394-5"><a href="#cb394-5"></a>        <span class="st">"alisado_doble"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb394-6"><a href="#cb394-6"></a>        <span class="st">"alisado_triple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>)))</span>
+<span id="cb394-7"><a href="#cb394-7"></a></span>
+<span id="cb394-8"><a href="#cb394-8"></a>estimaciones <span class="ot">&lt;-</span> fit_airpass <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb394-9"><a href="#cb394-9"></a>predicciones <span class="ot">&lt;-</span> fit_airpass <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">36</span>)</span>
+<span id="cb394-10"><a href="#cb394-10"></a>estimaciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 432 x 6 [1M]
+# Key:       .model [3]
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+# ℹ 422 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-8" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>Fíjate que las «montañitas» ahora suben pero no incrementan su altura, simplemente acaban un poco más arriba ya que tenemos una componente de tendencia.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb396"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb396-1"><a href="#cb396-1"></a>predicciones <span class="sc">|&gt;</span> </span>
+<span id="cb396-2"><a href="#cb396-2"></a>  <span class="fu">autoplot</span>(airpass, <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb396-3"><a href="#cb396-3"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> estimaciones, <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .fitted, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb396-4"><a href="#cb396-4"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> predicciones, <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .mean, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb396-5"><a href="#cb396-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">4</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb396-6"><a href="#cb396-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-267-1.png" width="960" class="r-stretch"></section>
+<section id="alisado-triple-de-holt-winters-9" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \color{purple}{\ell_t} + h*\color{green}{\mu_t} + \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \left(X_t - \color{blue}{s_{t-s}} \right) \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &amp;=&amp; \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3(X_{t}-\color{purple}{\ell_{t-1}} - \color{green}{\mu_{t-1}}) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}\]</span></p>
+<p>La <span class="hl-yellow"><strong>versión multiplicativa</strong></span> sería realizar el mismo alisado pero la estacionalidad ahora <span class="hl-yellow"><strong>siempre aparece multiplicando</strong></span></p>
+<div class="fragment">
+<p><span class="math display">\[\begin{eqnarray}\color{red}{\widehat{X}_{t+h|t}} &amp;=&amp; \left(\color{purple}{\ell_t} + h*\color{green}{\mu_t} \right) \color{blue}{s_{(t+h) - s*per.comp}} \nonumber \\ \color{purple}{\ell_{t}} &amp;=&amp; \theta_1 \color{red}{\widehat{X}_{t|t-1}} + \left( 1 - \theta_1 \right)X_t = \theta_1 \left( \color{purple}{\ell_{t-1}}+ \color{green}{\mu_{t-1}} \right) + \left( 1 - \theta_1 \right) \frac{X_t}{\color{blue}{s_{t-s}}} \nonumber \\ \color{green}{\mu_{t}} &amp;=&amp; \theta_2 \widehat{\mu}_{t}   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}}= \theta_2 \left( \color{purple}{\ell_t - \ell_{t-1}} \right)   + \left( 1 - \theta_2 \right) \color{green}{\mu_{t-1}} \nonumber \\ \color{blue}{s_{t}} &amp;=&amp; \theta_3 \color{blue}{\widehat{s}_{t}} + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}} = \theta_3\left(\frac{X_{t}}{\color{purple}{\ell_{t-1}} + \color{green}{\mu_{t-1}}} \right) + \left( 1 - \theta_3 \right) \color{blue}{s_{t-s}},\end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-10" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<p>Si <code>season("M")</code> el residuo también será multiplicativo <code>error("M")</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb397"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb397-1"><a href="#cb397-1"></a>airpass <span class="ot">&lt;-</span> AirPassengers <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb397-2"><a href="#cb397-2"></a>fit_airpass <span class="ot">&lt;-</span></span>
+<span id="cb397-3"><a href="#cb397-3"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb397-4"><a href="#cb397-4"></a>  <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb397-5"><a href="#cb397-5"></a>        <span class="st">"alisado_doble"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb397-6"><a href="#cb397-6"></a>        <span class="st">"alisado_triple_ad"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>)),</span>
+<span id="cb397-7"><a href="#cb397-7"></a>        <span class="st">"alisado_triple_mult"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>)))</span>
+<span id="cb397-8"><a href="#cb397-8"></a></span>
+<span id="cb397-9"><a href="#cb397-9"></a>estimaciones <span class="ot">&lt;-</span> fit_airpass <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb397-10"><a href="#cb397-10"></a>predicciones <span class="ot">&lt;-</span> fit_airpass <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">36</span>)</span>
+<span id="cb397-11"><a href="#cb397-11"></a>estimaciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 576 x 6 [1M]
+# Key:       .model [4]
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+# ℹ 566 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="alisado-triple-de-holt-winters-11" class="slide level2">
+<h2>Alisado triple de Holt-Winters</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb399"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb399-1"><a href="#cb399-1"></a>predicciones <span class="sc">|&gt;</span> </span>
+<span id="cb399-2"><a href="#cb399-2"></a>  <span class="fu">autoplot</span>(airpass, <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb399-3"><a href="#cb399-3"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> estimaciones, <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .fitted, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb399-4"><a href="#cb399-4"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> predicciones, <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .mean, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb399-5"><a href="#cb399-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">5</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb399-6"><a href="#cb399-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-269-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-errores" class="slide level2">
+<h2>Diagnosis errores</h2>
+<p>Como ya hicimos una vez en clase, es importante realizar una <span class="hl-yellow"><strong>diagnosis correcta de los residuales</strong></span>. Para ello tenemos la función <code>gg_tsresiduals()</code> del paquete <code>{feasts}</code> que nos permite visualizar su <strong>evolución temporal</strong>, sus <strong>autocorrelaciones</strong> y su <strong>distribución</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb400"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb400-1"><a href="#cb400-1"></a>alisado_simple <span class="ot">&lt;-</span></span>
+<span id="cb400-2"><a href="#cb400-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb400-3"><a href="#cb400-3"></a>  <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb400-4"><a href="#cb400-4"></a></span>
+<span id="cb400-5"><a href="#cb400-5"></a>alisado_simple <span class="sc">|&gt;</span></span>
+<span id="cb400-6"><a href="#cb400-6"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="diagnosis-errores-1" class="slide level2">
+<h2>Diagnosis errores</h2>
+<p>Por ejemplo en el caso del alisado simple observamos como los <span class="hl-red"><strong>errores van aumentando según avanza el tiempo debido a la heterocedasticidad</strong></span> de la serie, con magnitudes muy elevadas, y teniendo además unas autocorrelaciones muy altas en algunos retardos.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb401"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb401-1"><a href="#cb401-1"></a>alisado_simple <span class="ot">&lt;-</span></span>
+<span id="cb401-2"><a href="#cb401-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb401-3"><a href="#cb401-3"></a>  <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)))</span>
+<span id="cb401-4"><a href="#cb401-4"></a></span>
+<span id="cb401-5"><a href="#cb401-5"></a>alisado_simple <span class="sc">|&gt;</span></span>
+<span id="cb401-6"><a href="#cb401-6"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-271-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-errores-2" class="slide level2">
+<h2>Diagnosis errores</h2>
+<p>En el caso del alisado triple multiplicativo observamos como los <span class="hl-green"><strong>errores ya no aumentan según avanza el tiempo (magnitudes pequeñas)</strong></span>, y teniendo además unas autocorrelaciones casi todas dentro de la banda.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb402"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb402-1"><a href="#cb402-1"></a>alisado_triple_mult <span class="ot">&lt;-</span></span>
+<span id="cb402-2"><a href="#cb402-2"></a>  airpass <span class="sc">|&gt;</span></span>
+<span id="cb402-3"><a href="#cb402-3"></a>  <span class="fu">model</span>(<span class="st">"alisado_triple_mult"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>)))</span>
+<span id="cb402-4"><a href="#cb402-4"></a></span>
+<span id="cb402-5"><a href="#cb402-5"></a>alisado_triple_mult <span class="sc">|&gt;</span></span>
+<span id="cb402-6"><a href="#cb402-6"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-272-1.png" width="960" class="r-stretch"></section>
+<section id="train-vs-test" class="slide level2">
+<h2>Train vs test</h2>
+
+<img data-src="https://otexts.com/fpp3/fpp_files/figure-html/traintest-1.png" class="r-stretch"><p>Como sucede en otro tipo de modelos, es importante darse cuenta de que a la hora de <span class="hl-yellow"><strong>evaluar un modelo</strong></span> tendremos que considerar dos aspectos diferentes:</p>
+<ul>
+<li><p>¿Cómo funciona el modelo con los <span class="hl-yellow"><strong>datos que conoce</strong></span>? Es lo que hemos llamado hasta ahora estimaciones.</p></li>
+<li><p>¿Cómo funcionaría el modelo con unos <span class="hl-purple"><strong>datos que no conoce</strong></span>? Es lo que hemos llamado hasta ahora predicciones</p></li>
+</ul>
+<div class="fragment">
+<p>El problema es que las <span class="hl-red"><strong>predicciones hasta ahora no podíamos evaluarlas</strong></span> ya que el dato real del futuro no lo tenemos…¿Y si <span class="hl-yellow"><strong>partimos nuestras series (train y test)</strong></span> de forma que solo le dejamos usar una parte de la información para diseñar el modelo, y así poder evaluarlo en el otro subconjunto?</p>
+</div>
+</section>
+<section id="train-vs-test-1" class="slide level2">
+<h2>Train vs test</h2>
+<p>Vamos a <span class="hl-yellow"><strong>dividir nuestra serie temporal de pasajeros aéreos</strong></span> en train y test. Normalmente el <span class="hl-yellow"><strong>% de datos en test es igual al horizonte al que queremos evaluar</strong></span> cómo funciona (por ejemplo, si <span class="math inline">\(h = 24\)</span>, usaremos los 2 últimos años como test).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb403"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb403-1"><a href="#cb403-1"></a>airpass_train <span class="ot">&lt;-</span></span>
+<span id="cb403-2"><a href="#cb403-2"></a>  airpass <span class="sc">|&gt;</span> </span>
+<span id="cb403-3"><a href="#cb403-3"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(index) <span class="sc">&lt;=</span> <span class="dv">1958</span>)</span>
+<span id="cb403-4"><a href="#cb403-4"></a></span>
+<span id="cb403-5"><a href="#cb403-5"></a>airpass_test <span class="ot">&lt;-</span></span>
+<span id="cb403-6"><a href="#cb403-6"></a>  airpass <span class="sc">|&gt;</span> </span>
+<span id="cb403-7"><a href="#cb403-7"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(index) <span class="sc">&gt;</span> <span class="dv">1958</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluación-1" class="slide level2">
+<h2>Evaluación</h2>
+<p>Lo que haremos por tanto será <span class="hl-yellow"><strong>pasarle solo la info de <code>airpass_train</code> al modelo</strong></span>. Tras ello <span class="hl-yellow"><strong>predeciremos a horizonte <span class="math inline">\(h = 24\)</span></strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb404"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb404-1"><a href="#cb404-1"></a>airpass_fit <span class="ot">&lt;-</span></span>
+<span id="cb404-2"><a href="#cb404-2"></a>  airpass_train <span class="sc">|&gt;</span></span>
+<span id="cb404-3"><a href="#cb404-3"></a>  <span class="fu">model</span>(<span class="st">"mean_cte"</span> <span class="ot">=</span> <span class="fu">MEAN</span>(value),</span>
+<span id="cb404-4"><a href="#cb404-4"></a>        <span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb404-5"><a href="#cb404-5"></a>        <span class="st">"alisado_doble"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb404-6"><a href="#cb404-6"></a>        <span class="st">"alisado_triple_ad"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>)),</span>
+<span id="cb404-7"><a href="#cb404-7"></a>        <span class="st">"alisado_triple_mult"</span> <span class="ot">=</span> <span class="fu">ETS</span>(value <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>)))</span>
+<span id="cb404-8"><a href="#cb404-8"></a>estimaciones <span class="ot">&lt;-</span> airpass_fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb404-9"><a href="#cb404-9"></a>predicciones <span class="ot">&lt;-</span> airpass_fit <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">24</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="evaluación-2" class="slide level2">
+<h2>Evaluación</h2>
+<p>En el gráfico le indicaremos las <strong>predicciones futuras</strong> (de datos que tenemos guardados en el <strong>dataset completo airpass</strong>)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb405"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb405-1"><a href="#cb405-1"></a>predicciones <span class="sc">|&gt;</span> </span>
+<span id="cb405-2"><a href="#cb405-2"></a>  <span class="fu">autoplot</span>(airpass, <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb405-3"><a href="#cb405-3"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> estimaciones,</span>
+<span id="cb405-4"><a href="#cb405-4"></a>            <span class="fu">aes</span>(<span class="at">x =</span> index, <span class="at">y =</span> .fitted, <span class="at">color =</span> .model), <span class="at">linewidth =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb405-5"><a href="#cb405-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">6</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb405-6"><a href="#cb405-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-275-1.png" width="960" class="r-stretch"></section>
+<section id="evaluación-3" class="slide level2">
+<h2>Evaluación</h2>
+<p>Con la función <code>accuracy(estimaciones)</code> y <code>accuracy(predicciones, datos_test)</code> podemos evaluar <strong>métricas de error</strong> en test</p>
+<p><span class="math display">\[\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb406"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb406-1"><a href="#cb406-1"></a><span class="fu">accuracy</span>(fit_airpass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 10
+  .model              .type       ME  RMSE   MAE    MPE  MAPE  MASE RMSSE  ACF1
+  &lt;chr&gt;               &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 alisado_simple      Training 2.22   33.6 25.7   0.375  8.96 0.802 0.925 0.303
+2 alisado_doble       Training 0.568  33.5 25.6  -0.362  9.00 0.800 0.923 0.302
+3 alisado_triple_ad   Training 0.964  17.0 12.8   0.354  5.22 0.400 0.469 0.188
+4 alisado_triple_mult Training 1.66   11.3  7.91  0.410  2.80 0.247 0.310 0.256</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb408"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb408-1"><a href="#cb408-1"></a><span class="fu">accuracy</span>(predicciones, airpass_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  .model              .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE  ACF1
+  &lt;chr&gt;               &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 alisado_doble       Test   93.2 117.   93.2 18.8  18.8    NaN   NaN 0.708
+2 alisado_simple      Test  115.  137.  115.  23.6  23.6    NaN   NaN 0.728
+3 alisado_triple_ad   Test   79.3  91.2  79.3 16.5  16.5    NaN   NaN 0.720
+4 alisado_triple_mult Test   34.6  39.9  34.8  7.54  7.58   NaN   NaN 0.566
+5 mean_cte            Test  206.  219.  206.  44.2  44.2    NaN   NaN 0.728</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluación-4" class="slide level2">
+<h2>Evaluación</h2>
+<p><span class="math display">\[\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}\]</span></p>
+<ul>
+<li><p><span class="hl-yellow"><strong>Error medio (ME)</strong></span>: definido como <span class="math inline">\(\frac{1}{n} \sum_{t=1}^{n} \widehat{\varepsilon}_{t}\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>Error medio absoluto (MAE)</strong></span>: definido como <span class="math inline">\(\frac{1}{n} \sum_{t=1}^{n} \left| \widehat{\varepsilon}_{t} \right|\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>Error cuadrático medio (RSME)</strong></span>: definido como <span class="math inline">\(\frac{1}{n} \sum_{t=1}^{n} \widehat{\varepsilon}_{t}^2\)</span></p></li>
+</ul>
+<p>Ambos <span class="hl-red"><strong>dependen de la escala de los datos</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb410"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb410-1"><a href="#cb410-1"></a><span class="fu">accuracy</span>(predicciones, airpass_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  .model              .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE  ACF1
+  &lt;chr&gt;               &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 alisado_doble       Test   93.2 117.   93.2 18.8  18.8    NaN   NaN 0.708
+2 alisado_simple      Test  115.  137.  115.  23.6  23.6    NaN   NaN 0.728
+3 alisado_triple_ad   Test   79.3  91.2  79.3 16.5  16.5    NaN   NaN 0.720
+4 alisado_triple_mult Test   34.6  39.9  34.8  7.54  7.58   NaN   NaN 0.566
+5 mean_cte            Test  206.  219.  206.  44.2  44.2    NaN   NaN 0.728</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluación-5" class="slide level2">
+<h2>Evaluación</h2>
+<p><span class="math display">\[\widehat{\varepsilon}_{t+h|t} = X_{t+h|t} - \widehat{X}_{t+h|t}\]</span></p>
+<ul>
+<li><p><span class="hl-yellow"><strong>Error medio porcentual (MPE)</strong></span>: definido como <span class="math inline">\(\frac{1}{n} \sum_{t=1}^{n} 100* \frac{\widehat{\varepsilon}_{t} }{X_t}\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>Error absoluto medio porcentual (MAPE)</strong></span>: definido como</p></li>
+</ul>
+<p><span class="math display">\[\frac{1}{n} \sum_{t=1}^{n}  100*\left| \frac{\widehat{\varepsilon}_{t} }{X_t}\right|\]</span></p>
+<p>Ambos son <span class="hl-green"><strong>adimensionales</strong></span> pero <span class="hl-red"><strong>pueden tender a infinito si <span class="math inline">\(X_t \to 0\)</span></strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb412"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb412-1"><a href="#cb412-1"></a><span class="fu">accuracy</span>(predicciones, airpass_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 10
+  .model              .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE  ACF1
+  &lt;chr&gt;               &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 alisado_doble       Test   93.2 117.   93.2 18.8  18.8    NaN   NaN 0.708
+2 alisado_simple      Test  115.  137.  115.  23.6  23.6    NaN   NaN 0.728
+3 alisado_triple_ad   Test   79.3  91.2  79.3 16.5  16.5    NaN   NaN 0.720
+4 alisado_triple_mult Test   34.6  39.9  34.8  7.54  7.58   NaN   NaN 0.566
+5 mean_cte            Test  206.  219.  206.  44.2  44.2    NaN   NaN 0.728</code></pre>
+</div>
+</div>
 </section>
 <section id="pendiente" class="slide level2">
 <h2>pendiente</h2>
 <ul>
-<li>train/test</li>
-<li>scenarios</li>
-<li>acf feasts</li>
-<li>evaluación</li>
+<li><p>evaluación (cross)</p></li>
+<li><p>scenarios</p></li>
+<li><p>acf feasts</p></li>
+<li><p>box-cox</p></li>
 </ul>
 </section>
 <section class="slide level2">
 
-</section>
-<section id="alisado-triple-de-holt-winters-2" class="slide level2">
-<h2>Alisado triple de Holt-Winters</h2>
-<p>con estacionalidad aditiva + multipicativa</p>
-</section></section>
-<section>
-<section id="clase-13" class="title-slide slide level1 center">
-<h1>Clase 13: <span class="flow">evaluación y diagnosis</span></h1>
-
-</section>
-<section id="dasda" class="slide level2">
-<h2>dasda</h2>
 </section></section>
 <section>
 <section id="clase-14" class="title-slide slide level1 center">
 <h1>Clases 14-15-16-17: <span class="flow">procesos estocásticos y arima</span></h1>
 
 </section>
-<section id="dasda-1" class="slide level2">
+<section id="dasda" class="slide level2">
 <h2>dasda</h2>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Estadística Aplicada (UCM)</p>
