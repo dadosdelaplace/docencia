@@ -9270,7 +9270,7 @@ Piensa como responder a las mismas preguntas que hicimos en R base pero **en mod
 
 * [🐣 Workbook/caso práctico II: datos de renta](#caso-practico-13-2)
 
-* [🐣 Workbook/caso práctico IIi: tabla SPSS](#caso-practico-13-3)
+* [🐣 Workbook/caso práctico III: tabla SPSS](#caso-practico-13-3)
 
 * [📆 Planificación](#planificacion)
 
