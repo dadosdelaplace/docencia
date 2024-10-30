@@ -4651,7 +4651,7 @@ billboard |>
 
 ## 🐣 Caso práctico I: tidy data {#caso-practico-4-1}
 
-En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook (pendiente de añadir)**](...).
+En el paquete `{tidyr}` contamos con el dataset `who2` (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/tidydata-isciii/#caso-pr%C3%A1ctico-an%C3%A1lisis-de-datos-de-la-oms).
 
 ```{r}
 who2

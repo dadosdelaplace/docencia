@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.294">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Máster de Bioinformática • Javier Álvarez Liébana">
   <title>Bioestadística en R</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta de la Facultad de Estudios Estadísticos de la UCM).</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
+<p><img data-src="img/me.jpeg"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -834,7 +834,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="st">"a"</span> <span class="sc">+</span> <span class="dv">1</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "a" + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in "a" + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -846,7 +846,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Ejecuta la orden pero el resultado es NaN, **Not A Number**, un valor que no existe</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in sqrt(-1): Se han producido NaNs</code></pre>
+<pre><code>Warning in sqrt(-1): NaNs produced</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NaN</code></pre>
@@ -1033,7 +1033,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <span id="cb22-3"><a href="#cb22-3"></a></span>
 <span id="cb22-4"><a href="#cb22-4"></a>X <span class="sc">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): objeto 'X' no encontrado</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): object 'X' not found</code></pre>
 </div>
 </div>
 </div>
@@ -1283,7 +1283,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>nombre <span class="sc">+</span> <span class="dv">1</span> <span class="co"># error al sumar número a texto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in nombre + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in nombre + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1461,7 +1461,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a><span class="st">"TRUE"</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "TRUE" + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in "TRUE" + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1551,7 +1551,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1579,7 +1579,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb99-2"><a href="#cb99-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1652,7 +1652,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-10-29 16:51:41 CET"</code></pre>
+<pre><code>[1] "2024-10-29 20:00:30 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -1721,7 +1721,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1"></a>edad <span class="sc">+</span> nombre</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in edad + nombre: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in edad + nombre: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1849,7 +1849,7 @@ Máster de Bioinformática • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1"></a><span class="st">"a"</span><span class="sc">:</span><span class="st">"z"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in "a":"z": Argumento NA/NaN</code></pre>
+<pre><code>Error in "a":"z": NA/NaN argument</code></pre>
 </div>
 </div>
 </div>
@@ -2679,8 +2679,8 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb283"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">nrow =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in matrix(1:15, nrow = 4): la longitud de los datos [15] no es un
-submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
+<pre><code>Warning in matrix(1:15, nrow = 4): data length [15] is not a sub-multiple or
+multiple of the number of rows [4]</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4]
@@ -2726,7 +2726,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb290"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb290-1"><a href="#cb290-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -2754,7 +2754,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb294"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb294-1"><a href="#cb294-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -2888,7 +2888,7 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <div class="sourceCode cell-code" id="cb318"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb318-2"><a href="#cb318-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -3612,13 +3612,13 @@ submúltiplo o múltiplo del número de filas [4] en la matriz</code></pre>
 <span id="cb380-4"><a href="#cb380-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb380-5"><a href="#cb380-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr     min      lq        mean  median
-                                y &lt;- x^2     800    1001    1712.776    1501
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1046402 1089102 1205702.448 1116302
-      uq     max neval cld
-    1801   32301   500  a 
- 1169201 5665501   500   b</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.927    2.175214    2.009
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1269.442 1286.539 1383.159928 1297.178
+       uq      max neval
+    2.173    5.658   500
+ 1352.447 7235.229   500</code></pre>
 </div>
 </div>
 </section>
@@ -3824,14 +3824,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb400"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb400-1"><a href="#cb400-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            [,1]        [,2]       [,3]
-[1,]  0.09787676 -0.01062889 -1.0306861
-[2,] -1.58848232  0.03777710  0.3265241
-[3,]  0.84165395 -1.04809486  0.2760218
-[4,] -0.29695417 -0.86334380 -0.7482683
-[5,]  0.53786663 -0.66436835  1.6294606
-[6,] -1.45835766  0.93554052  1.8293530
-[7,]  0.62186796  0.20648291 -0.5813541</code></pre>
+<pre><code>            [,1]       [,2]       [,3]
+[1,]  1.31218129 -1.0902514  0.2205070
+[2,]  0.06876656 -1.9789791  0.7694959
+[3,] -0.52645832  1.6858365  0.2188170
+[4,]  0.80049176 -2.0575342  0.5033892
+[5,] -0.79104583 -2.3943605  0.4132186
+[6,]  0.43647064  0.9924861 -0.3758388
+[7,]  0.13019892  0.4311123 -0.4131608</code></pre>
 </div>
 </div>
 </section>
@@ -5063,7 +5063,7 @@ No todavía, vamos por el ciclo 4</code></pre>
 </section>
 <section id="caso-practico-4-1" class="slide level2">
 <h2>🐣 Caso práctico I: tidy data</h2>
-<p>En el paquete <code>{tidyr}</code> contamos con el dataset <code>who2</code> (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el <a href="..."><strong>workbook (pendiente de añadir)</strong></a>.</p>
+<p>En el paquete <code>{tidyr}</code> contamos con el dataset <code>who2</code> (dataset de la Organización Mundial de la Salud). Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/tidydata-isciii/#caso-pr%C3%A1ctico-an%C3%A1lisis-de-datos-de-la-oms"><strong>workbook</strong></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb463"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb463-1"><a href="#cb463-1"></a>who2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -5718,8 +5718,8 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Ayla Sec…    178    55 none       blue       hazel             48 fema… femin…
-2 Rey           NA    NA brown      light      hazel             NA fema… femin…
+1 Darth Ma…    175    80 none       red        yellow            54 male  mascu…
+2 Ackbar       180    83 none       brown mot… orange            41 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -5764,10 +5764,10 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
-2 Jocasta …    167    NA white      fair       blue            NA   fema… femin…
-3 Barriss …    166    50 black      yellow     blue            40   fema… femin…
-4 Rey           NA    NA brown      light      hazel           NA   fema… femin…
+1 San Hill     191    NA none       grey       gold              NA male  mascu…
+2 Dooku        193    80 white      fair       brown            102 male  mascu…
+3 Lama Su      229    88 none       grey       black             NA male  mascu…
+4 Tion Med…    206    80 none       grey       black             NA male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -7341,7 +7341,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/primera_densidad.jpg" style="width:100.0%"></p>
-<p></p><figcaption>Primera función de densidad, extraída de https://omeka.lehigh.edu/exhibits/show/data_visualization/vital_statistics/huygen</figcaption><p></p>
+<figcaption>Primera función de densidad, extraída de https://omeka.lehigh.edu/exhibits/show/data_visualization/vital_statistics/huygen</figcaption>
 </figure>
 </div>
 </div>
@@ -7360,7 +7360,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_1.jpg" style="width:70.0%"></p>
-<p></p><figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption><p></p>
+<figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption>
 </figure>
 </div>
 </div>
@@ -7371,7 +7371,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_2.jpg" style="width:25.0%"></p>
-<p></p><figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption><p></p>
+<figcaption>Extraídas de Funkhouser y Walker (1935)</figcaption>
 </figure>
 </div>
 </div>
@@ -7389,7 +7389,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_5.jpg" style="width:90.0%"></p>
-<p></p><figcaption>Gráficas de Playfair de importaciones (barras grises) y exportaciones (negras) de Escocia en 1781, extraídas de la wikipedia.</figcaption><p></p>
+<figcaption>Gráficas de Playfair de importaciones (barras grises) y exportaciones (negras) de Escocia en 1781, extraídas de la wikipedia.</figcaption>
 </figure>
 </div>
 </div>
@@ -7400,7 +7400,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_6.jpg" style="width:90.0%"></p>
-<p></p><figcaption>Primer diagrama de barras (P. Buache y G. de L’Isle), visualizando los niveles del Sena (1732 - 1766), extraída de https://friendly.github.io/HistDataVis</figcaption><p></p>
+<figcaption>Primer diagrama de barras (P. Buache y G. de L’Isle), visualizando los niveles del Sena (1732 - 1766), extraída de https://friendly.github.io/HistDataVis</figcaption>
 </figure>
 </div>
 </div>
@@ -7418,7 +7418,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_7.jpg" style="width:85.0%"></p>
-<p></p><figcaption>Visualiza 3 series temporales: precios (barras) del trigo, salarios (línea) y time-line con reinados, extraída de https://friendly.github.io/HistDataVis.</figcaption><p></p>
+<figcaption>Visualiza 3 series temporales: precios (barras) del trigo, salarios (línea) y time-line con reinados, extraída de https://friendly.github.io/HistDataVis.</figcaption>
 </figure>
 </div>
 </div>
@@ -7429,7 +7429,7 @@ dplyr 1.1.0.
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./img/playfair_8.png" style="width:85.0%"></p>
-<p></p><figcaption>Time-line histórico, extraída de https://friendly.github.io/HistDataVis.</figcaption><p></p>
+<figcaption>Time-line histórico, extraída de https://friendly.github.io/HistDataVis.</figcaption>
 </figure>
 </div>
 </div>
@@ -8126,22 +8126,21 @@ dplyr 1.1.0.
 <div class="cell">
 <div class="sourceCode cell-code" id="cb728"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb728-1"><a href="#cb728-1"></a><span class="fu">aemet_last_obs</span>(<span class="st">"0076"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 13 × 23
+<pre><code># A tibble: 12 × 23
    idema   lon fint                 prec   alt  vmax    vv    dv   lat  dmax
    &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 0076   2.07 2024-10-29 03:00:00     0     4   6.2   3.9    20  41.3    20
- 2 0076   2.07 2024-10-29 04:00:00     0     4   5.1   3.9    20  41.3    20
- 3 0076   2.07 2024-10-29 05:00:00     0     4   6.2   4.1    20  41.3    30
- 4 0076   2.07 2024-10-29 06:00:00     0     4   5.1   3.8    10  41.3    20
- 5 0076   2.07 2024-10-29 07:00:00     0     4   9.3   3.4    30  41.3    60
- 6 0076   2.07 2024-10-29 08:00:00     0     4   9.8   6.3    60  41.3    50
- 7 0076   2.07 2024-10-29 09:00:00     0     4  12.9   9.4    80  41.3    70
- 8 0076   2.07 2024-10-29 10:00:00     0     4  13.9  10.4    80  41.3    70
- 9 0076   2.07 2024-10-29 11:00:00     0     4  13.9  11      70  41.3    90
-10 0076   2.07 2024-10-29 12:00:00     0     4  14.9  11.6    80  41.3    80
-11 0076   2.07 2024-10-29 13:00:00     0     4  13.9  10      90  41.3    80
-12 0076   2.07 2024-10-29 14:00:00     0     4  14.4  11.3    80  41.3    70
-13 0076   2.07 2024-10-29 15:00:00     0     4  13.9  11      80  41.3    80
+ 1 0076   2.07 2024-10-29 07:00:00     0     4   9.3   3.4    30  41.3    60
+ 2 0076   2.07 2024-10-29 08:00:00     0     4   9.8   6.3    60  41.3    50
+ 3 0076   2.07 2024-10-29 09:00:00     0     4  12.9   9.4    80  41.3    70
+ 4 0076   2.07 2024-10-29 10:00:00     0     4  13.9  10.4    80  41.3    70
+ 5 0076   2.07 2024-10-29 11:00:00     0     4  13.9  11      70  41.3    90
+ 6 0076   2.07 2024-10-29 12:00:00     0     4  14.9  11.6    80  41.3    80
+ 7 0076   2.07 2024-10-29 13:00:00     0     4  13.9  10      90  41.3    80
+ 8 0076   2.07 2024-10-29 14:00:00     0     4  14.4  11.3    80  41.3    70
+ 9 0076   2.07 2024-10-29 15:00:00     0     4  13.9  11      80  41.3    80
+10 0076   2.07 2024-10-29 16:00:00     0     4  14.9  10.5    80  41.3    80
+11 0076   2.07 2024-10-29 17:00:00     0     4  14.9  11.3    90  41.3    80
+12 0076   2.07 2024-10-29 18:00:00     0     4  15.4  11.3    80  41.3    80
 # ℹ 13 more variables: ubi &lt;chr&gt;, pres &lt;dbl&gt;, hr &lt;dbl&gt;, stdvv &lt;dbl&gt;, ts &lt;dbl&gt;,
 #   pres_nmar &lt;dbl&gt;, tamin &lt;dbl&gt;, ta &lt;dbl&gt;, tamax &lt;dbl&gt;, tpr &lt;dbl&gt;, vis &lt;dbl&gt;,
 #   stddv &lt;dbl&gt;, inso &lt;dbl&gt;</code></pre>
@@ -8698,7 +8697,7 @@ $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.11
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="https://raw.githubusercontent.com/aljrico/harrypotter/master/readme_raw_files/palettes/ravenclaw.png" style="width:20.0%"></p>
-<p></p><figcaption>Paleta basada en la casa Ravenclaw</figcaption><p></p>
+<figcaption>Paleta basada en la casa Ravenclaw</figcaption>
 </figure>
 </div>
 </div>
@@ -9327,7 +9326,7 @@ $edad_hermanos
 <div class="sourceCode cell-code" id="cb801"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb801-1"><a href="#cb801-1"></a><span class="fu">library</span>(tibble)</span>
 <span id="cb801-2"><a href="#cb801-2"></a><span class="fu">tibble</span>(<span class="st">"progenitores"</span> <span class="ot">=</span> var_1, <span class="st">"lugar_nac"</span> <span class="ot">=</span> va_2, <span class="st">"edad_hermanos"</span> <span class="ot">=</span> var_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in eval_tidy(xs[[j]], mask): objeto 'va_2' no encontrado</code></pre>
+<pre><code>Error in eval_tidy(xs[[j]], mask): object 'va_2' not found</code></pre>
 </div>
 </div>
 </section>
