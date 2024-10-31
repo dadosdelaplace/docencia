@@ -138,6 +138,35 @@ ggplot(...) +
   theme_minimal() 
 ```
 
+> Crear un diagrama de barras para la variable género
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Género
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  labs(title = "Diagrama de barras de la variable género", 
+       x = "Categoría", y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+> Personaliza los colores con alguna paleta
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Género
+ggplot(...) +
+  geom_bar(...) +
+  scale_... +
+  labs(...) +
+  theme_minimal() 
+```
+
 ### Pregunta 5
 
 > Crear un diagrama de barras para la variable estado de salud
@@ -220,17 +249,14 @@ ggplot(...) +
 
 # Crear un boxplot de la variable Edad
 ggplot(...) +
-  geom_boxplot(..., fill = "lightblue", alpha = 0.75,
-               # Personaliza los outliers
-               outlier.colour = "red", outlier.shape = 16, 
-               outlier.size = 2) +  
+  geom_boxplot(..., fill = "lightblue", alpha = 0.75) +  
   labs(title = "Boxplot de edad", 
        y = "Edad") +
   theme_minimal()
 
 # Crear un boxplot de numero de visitas por Género
 ggplot(...) +
-  geom_boxplot(...) +  # Personaliza los outliers
+  geom_boxplot(...) +
   labs(...) +
   theme_minimal()
 ```

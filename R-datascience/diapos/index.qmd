@@ -140,8 +140,6 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [10](#clase-10) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-10-1) [💻](#tu-turno-10-2) | [🐣](#caso-practico-10) |  |
 | [11](#clase-11) | S6 | 17 oct | Tidyverse: columnas | [💻](#tu-turno-11-1) [💻](#tu-turno-11-2) | [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  [🐣](#caso-practico-11-3) |  |
 | [12](#clase-12) | S7 | 21 oct | Tidyverse: resúmenes | [💻](#tu-turno-12-1) |  [🐣](#caso-practico-12-1) [🐣](#caso-practico-12-2)  |  |
-| [13](#clase-13) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2) [🐣](#caso-practico-13-3)  |  |
-| [14-15](#clase-14) | S8 | 28 oct (2 clases) | Concurso | | |  |
 :::
 :::
 
@@ -153,10 +151,22 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 ::: {style="font-size:20px"}
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [16](#clase-16) | S8 | 31 oct | Listas y paquete purrr | | |  |
-| [17](#clase-17) | S9 | 4 nov | Inferencia y simulación | | |  |
-| [18](#clase-18) | S9 | 7 nov | Repaso | | |  |
+| [13](#clase-13) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2) |  |
+| [14-15-16](#clase-14) | S8 | 28 y 31 oct (3 clases) | Concurso | | |  |
+| [17](#clase-17) | S9 | 4 nov | Listas. Casos reales | [💻](#tu-turno-17-1) | [🐣](#caso-practico-17-1) [🐣](#caso-practico-17-2) |  |
+| [18](#clase-18) | S9 | 7 nov | Casos reales | | |  |
 | [19](#clase-19) | S10 | 11 nov | Entrega III | | | [🎯 25%](#clase-19) |
+| [20](#clase-20) | S10 | 14 nov | Intro al dataviz | | |  |
+| [21](#clase-21) | S11 | 18 nov | ggplot1 | | |  |
+| [22](#clase-22) | S11 | 21 nov | ggplot2 | | |  |
+| [23](#clase-23) | S12 | 25 nov | ggplot3 | | |  |
+| [24](#clase-24) | S12 | 28 nov | ggplot4 | | |  |
+| [25](#clase-25) | S13 | 2 dic | casos prácticos | | |  |
+| [26](#clase-26) | S13 | 5 dic | inferencia | | |  |
+| [27](#clase-27) | S14 | 9 dic | casos prácticos (r base también) | | |  |
+| [28](#clase-28) | S14 | 12 dic | sql + arrow | | |  |
+| [29](#clase-29) | S15 | 16 dic | ... | | |  |
+| [30](#clase-30) | S15 | 19 dic | Entrega IV | | | [🎯 30%](#clase-30) |
 :::
 :::
 
@@ -9268,9 +9278,7 @@ Piensa como responder a las mismas preguntas que hicimos en R base pero **en mod
 
 * [🐣 Workbook/caso práctico I: Beatles](#caso-practico-13-1)
 
-* [🐣 Workbook/caso práctico II: datos de renta](#caso-practico-13-2)
-
-* [🐣 Workbook/caso práctico III: tabla SPSS](#caso-practico-13-3)
+* [🐣 Workbook/caso práctico II: tabla SPSS](#caso-practico-13-2)
 
 * [📆 Planificación](#planificacion)
 
@@ -9755,53 +9763,6 @@ band_instruments
 &nbsp;
 
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-i-beatles-y-rolling-stones)
-
-
----
-
-## 🐣 Caso práctico II: renta municipios {#caso-practico-13-2}
-
-En el archivo `municipios.csv` tenemos guardada la información de los municipios de España a fecha de 2019.
-
-* La variable `LAU_code` representa el código como unidad administrativa local según la estandarización de la UE (ver más en <https://ec.europa.eu/eurostat/web/nuts/local-administrative-units>).
-
-* La variable `codigo_ine` está construida uniendo el código de la provincia y el de la comunidad autónoma.
-
-```{r}
-# datos 2019
-mun_data <- read_csv(file = "./datos/municipios.csv")
-mun_data
-```
-
----
-
-## 🐣 Caso práctico II: renta municipios
-
-Por otro lado el archivo `renta_mun` contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.
-
-```{r}
-renta_mun <- read_csv(file = "./datos/renta_mun.csv")
-renta_mun
-```
-
----
-
-## 🐣 Caso práctico II: renta municipios
-
-Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
-
-```{r}
-mun_data <-
-  mun_data |> 
-  janitor::clean_names()
-renta_mun <-
-  renta_mun |> 
-  janitor::clean_names()
-```
-
-&nbsp;
-
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-ii-renta-municipios)
 
 
 
@@ -10413,34 +10374,237 @@ who_select
 
 ---
 
-## 🐣 Caso práctico III: tabla en SPSS {#caso-practico-13-3}
+## 🐣 Caso práctico II: tabla en SPSS {#caso-practico-13-2}
 
 
-¿brexit?
 
-# clase 14-15: [concurso]{.flow} {#clase-14}
+
+# clase 14-15-16: [concurso]{.flow} {#clase-14}
 
 
 [**Concurso: R base vs tidyverse**]{style="color:#444442;"}
+
+---
+
+## Pregunta 1
+
+Debéis crear **TODOS los miembros del equipo** un proyecto de R Studio que contenga al menos:
+
+* un archivo .Rproj
+
+* un fichero `.qmd` creado donde vamos a realizar cada ejercicio.
+
+* una carpeta de datos que tenga dentro los 3 siguientes datasets: <https://drive.google.com/drive/folders/1ZBJhbipBnzBwFqPThVsLIDG5b5T4knYk?usp=sharing>
+
+```{r}
+library(tidyverse)
+datos <- read_csv(file = "datos/datos_elecciones_brutos.csv")
+datos
+```
 
 
 
 ---
 
-solo practicar
-
-- encuesta viogen
-
-- contaminación (contam_mad)
-
-- accidentes de tráfico (accidentes2020_data)
+## Datos
 
 
-# clase 16: [listas]{.flow} {#clase-16}
+Las variables son las siguientes:
+
+-   `tipo_eleccion`: tipo de elección (02 si es elección al congreso)
+-   `anno`, `mes`: año y mes de las elecciones
+-   `vuelta`: vuelta electoral (1 si es primera vuelta)
+-   `codigo_ccaa, codigo_provincia, codigo_municipio, codigo_distrito_electoral`: código de la ccaa, provincia, municipio y distrito electoral.
+-   `numero_mesas`: número de mesas electorales
+
+---
+
+## Datos
+
+Las variables son las siguientes:
 
 
-[**Manejo de listas con paquete purrr**]{style="color:#444442;"}
+-   `censo`: censo electoral
+-   `participacion_1, participacion_2`: participación en el primer avance (14:00) y segundo avance (18:00) antes del cierre de urnas (20:00)
+-   `votos_blancos`: votos en blanco
+-   `votos_candidaturas`: votos a papeletas de partidos
+-   `votos_nulos`: votos nulos
 
++ variables de voto de cada partido (se ha adaptado el archivo depurándolo un poco)
+
+---
+
+
+## Pregunta 2
+
+> Convierte a tidy data de la manera más apropiada y completa posible (organización, tipo de dato de cada variable debe ser el adecuado... ausentes, etc).
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos |> 
+  pivot_longer(cols = -c(tipo_eleccion:votos_nulos),
+               names_to = "partidos", values_to = "votos",
+               values_drop_na = TRUE) |> 
+  # tenemos algunas lógicas que deberían ser números
+  mutate(across(where(is.logical), as.numeric))
+```
+
+---
+
+## Pregunta 3
+
+> En estadística información = varianza: si no hay de lo segundo no hay de lo primero. ¿Qué variables deberíamos eliminar y por qué? Hazlo de la manera más eficiente posible.
+ 
+
+```{r}
+#| code-fold: true
+# vemos primero cantidad de valores únicos en cada una
+n_dist <-
+  datos_tidy |> 
+  summarise(across(everything(), n_distinct))
+
+# en tres (tipo_eleccion, vuelta, codigo_distrito_electoral) tenemos 
+# un solo valor cte --> no nos aporta nada
+
+datos_tidy <-
+  datos_tidy |> 
+  select(-c(tipo_eleccion, vuelta, codigo_distrito_electoral))
+```
+
+
+---
+
+## Pregunta 4
+
+> La variable fecha debería existir y no existe: solo tenemos año y mes de las elecciones (que en realidad no nos aportan una vez tuviésemos la fecha de las elecciones). Considera que todas las elecciones fueron el 1 de cada mes y crea dicha variable de manera adecuada
+
+```{r}
+#| code-fold: true
+
+# en tres (tipo_eleccion, vuelta, codigo_distrito_electoral) tenemos 
+# un solo valor cte --> no nos aporta nada
+
+datos_tidy <-
+  datos_tidy |> 
+  mutate("fecha" = as_date(glue("{anno}-{mes}-01")), .before = everything()) |> 
+  select(-anno, -mes)
+```
+
+---
+
+## Pregunta 5
+
+> Crea los id que consideres para poder eliminar duplicados por municipio, fecha electoral y partido (un registro será considerado igual si es coinciden ambos campos). Deberás crear obligatoriamente al menos una variable nueva. Tras ello elimina esos duplicados.
+
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos_tidy |> 
+  mutate("id_mun" = glue("{codigo_ccaa}-{codigo_provincia}-{codigo_municipio}"),
+         "id_elec" = glue("{fecha}-{id_mun}"), .after = fecha) |> 
+  mutate("id_result" = glue("{id_elec}-{partidos}"), .before = everything()) |> 
+  distinct(id_result, .keep_all = TRUE)
+```
+
+---
+
+## Pregunta 6
+
+> Tenemos muchísimos partidos que se presentan a las elecciones. Solo nos intereserán los partidos agrupados como (cuidado: tienen/tuvieron federaciones - sucursales - con algún otro nombre):
+
+    -   PSOE 
+    -   PARTIDO POPULAR
+    -   CIUDADANOS
+    -   PARTIDO NACIONALISTA VASCO
+    -   BLOQUE NACIONALISTA GALEGO
+    -   PODEMOS/UNIDAS PODEMOS/IU (no siempre han ido juntos, pero aquí los analizaremos juntos)
+    -   ESQUERRA REPUBLICANA DE CATALUNYA
+    -   BILDU
+    -   MÁS PAÍS
+    -   VOX
+
+> Recodifica de manera adecuada creando siglas. Todo lo que no sea alguno de los anteriores partidos deberá ser codificado como "OTROS". Cuidado: si UNIDAS PODEMOS y PODEMOS son lo mismo, los votos de cada uno deberían estar sumados juntos bajo las siglas de UP (por ejemplo).
+
+---
+
+## Pregunta 6
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos_tidy |> 
+  mutate("siglas" = 
+           case_when(str_detect(partidos, "SOCIALISTA|SOCIALISTES") ~ "PSOE",
+                     str_detect(partidos, "PARTIDO POPULAR") ~ "PP",
+                     str_detect(partidos, "CIUDADANOS|CIUDADANÍA|CIUDADANIA|CIUTADANS") ~ "CS",
+                     str_detect(partidos, "PARTIDO NACIONALISTA VASCO") ~ "PNV",
+                     str_detect(partidos, "BLOQUE NACIONALISTA GALEGO") ~ "BNG",
+                     str_detect(partidos, "PODEMOS|IZQUIERDA UNIDA") ~ "UP",
+                     str_detect(partidos, "ESQUERRA REPUBLICANA DE CAT") ~ "ERC",
+                     str_detect(partidos, "BILDU") ~ "BILDU",
+                     str_detect(partidos, "MÁS PAÍS|MAS PAIS|MÁS PAIS|MAS PAÍS") ~ "MP",
+                     str_detect(partidos, "VOX") ~ "VOX",
+                     TRUE ~ "OTROS"))
+
+datos_tidy <-
+  datos_tidy |> 
+  # hago mutate porqueno quiero perder el resto de info
+  mutate("votos" = sum(votos, na.rm = TRUE), .by = c(id_elec, siglas)) |> 
+  # pero entonces ahora si PACMA + PCE suman 200 votos, tendré
+  # en ese municpio y fecha (id_elec) dos filas para OTROS con el mismo valor (200)
+  distinct(id_elec, siglas, .keep_all = TRUE)
+```
+
+
+---
+
+## Pregunta 7
+
+> Incorpora como variable nueva el porcentaje de votos de cada partido (en cada cita electoral - fecha - y en cada municipio). El porcentaje se calcula como votos del partido entre votos válidos (y votos válidos = votos a partidos + blancos)
+
+```{r}
+#| code-fold: true
+votos_partidos <-
+  datos_tidy |> 
+  summarise("votos_partidos" = sum(votos, na.rm = TRUE), .by = id_elec)
+
+# juntamos esa info a la tabla grande
+datos_tidy <-
+  datos_tidy |> 
+  left_join(votos_partidos, by = "id_elec") |> 
+  mutate("porc_voto" = 100*votos / (votos_partidos + votos_blancos))
+```
+
+
+---
+
+## Pregunta 8
+
+> Incorpora como variable el porcentaje de participación (en cada cita electoral y en cada municipio), calculado como votos emitidos (votos a partidos + blancos + nulos) entre censo.
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos_tidy |> 
+  mutate("participacion" = 100*(votos_partidos + votos_blancos + votos_nulos) / censo)
+```
+
+
+# clase 17: [listas]{.flow} {#clase-17}
+
+
+[**Manejo de listas con paquete purrr. Ejemplos casos rales**]{style="color:#444442;"}
+
+
+* [💻 Ejercicios resueltos: listas](#tu-turno-17-1) 
+
+* [🐣 Workbook/caso práctico I: renta municipios](#caso-practico-17-1)
+
+* [🐣 Workbook/caso práctico II: estadística descriptiva](#caso-practico-17-2)
+
+* [📆 Planificación](#planificacion)
 
 ---
 
@@ -10698,24 +10862,17 @@ list("a" = 1:3, "b" = 4:6) |>
   walk(print)
 ```
 
----
-
-## Falta ...
-
-unirlo con nest
-
-más funciones de purrr
 
 ---
 
-## 💻  Tu turno {#tu-turno-16-1}
+## 💻  Tu turno {#tu-turno-17-1}
 
 
 ::: panel-tabset
 
 ### [**Ejercicio 1**]{.hl-yellow}
 
-📝 Define a list of 4 elements of different types and access the second of them (I will include one that is a tibble so that you can see that in a list there is room for everything).
+📝 Define una lista de 4 elementos de distintos tipos y accede al segundo de ellos (incluiré uno que sea un tibble para que veas que en una lista cabe de todo).
 
 ```{r}
 #| code-fold: true
@@ -10757,31 +10914,484 @@ map_lgl(second_film, is.null)
 
 ### [**Ejercicio 4**]{.hl-yellow}
 
+📝 Convierte a tibble la base de datos `iris` incluida en `R base` (no necesitas ningún paquete, ya la tienes). Vamos a agrupar por species para después usar `group_split()`: nos genera una lista tal que cada elemento es la tabla para cada uno de los grupos (como un filter de cada grupo pero en un mismo objeto).
 
-### [**Ejercicio 5**]{.hl-yellow}
+```{r}
+iris_list <-
+  iris |> as_tibble() |>
+  group_by(Species) |> 
+  group_split()
+```
 
+Accede a cada variable  `Sepal.Length` para cada una de las subtablas y haz la media (nos tendría que salir un vector de medias)
 
-### [**Ejercicio 6**]{.hl-yellow}
+```{r}
+#| code-fold: true
+#| eval: false
+iris_list |> 
+  map("Sepal.Length") |> 
+  map_dbl(mean)
+```
+
 
 :::
 
-# Clase 17: inferencia {#clase-17}
+---
 
 
-[**Distribuciones, inferencia y simulación. Paquete inferr**]{style="color:#444442;"}
+## 🐣 Caso práctico I: renta municipios {#caso-practico-17-1}
+
+En el archivo `municipios.csv` tenemos guardada la información de los municipios de España a fecha de 2019.
+
+* La variable `LAU_code` representa el código como unidad administrativa local según la estandarización de la UE ([ver más](https://ec.europa.eu/eurostat/web/nuts/local-administrative-units)).
+
+* La variable `codigo_ine` está construida uniendo el código de la provincia y el de la comunidad autónoma.
+
+```{r}
+# datos 2019
+mun_data <- read_csv(file = "./datos/municipios.csv")
+mun_data
+```
 
 ---
 
-## ...
+## 🐣 Caso práctico I: renta municipios
 
-# Clase 18: repaso {#clase-18}
+Por otro lado el archivo `renta_mun` contiene datos de la renta per capita edmai de cada unidad administrativa (municipios, distritos, provincias, comunidades autonónomas, etc) para diferentes años.
 
+```{r}
+renta_mun <- read_csv(file = "./datos/renta_mun.csv")
+renta_mun
+```
+
+---
+
+## 🐣 Caso práctico I: renta municipios
+
+Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
+
+```{r}
+mun_data <-
+  mun_data |> 
+  janitor::clean_names()
+renta_mun <-
+  renta_mun |> 
+  janitor::clean_names()
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-ii-renta-municipios)
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción {#caso-practico-17-2}
+
+
+Para este ejercicio usaremos la tabla de datos de satisfacción de pacientes en un hospital guardada en el archivo `.csv` llamada `SatisfaccionPacientes.csv`
+
+
+```{r}
+library(tidyverse)
+datos <-
+  read_csv("./datos/SatisfaccionPacientes.csv") |> 
+  # normalización de nombres de variables
+  janitor::clean_names()
+datos
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Aplica el código que sea necesario para determinar el tamaño muestral, el número de variables y el tipo de estas.
+
+```{r}
+#| code-fold: true
+
+# Tamaño muestral / número de observaciones
+n <- datos |> nrow()
+
+# Número de variables
+p <- datos |> ncol()
+
+# Tipo de variables
+dplyr::glimpse(datos)
+```
+
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Usando tidyverse, obtén la tabla de frecuencias absolutas de la variable `genero`.
+
+```{r}
+#| code-fold: true
+tabla_freq <-
+  datos |> 
+  count(genero)
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Incorpora a la tabla anterior las frecuencias relativas. ¿Podríamos calcular las frecuencias acumuladas? ¿Por qué?
+
+```{r}
+#| code-fold: true
+tabla_freq <-
+  tabla_freq |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+
+# No podemos acumuladas ya que necesitamos una jerarquía de orden
+# son cualis nominales, no ordinales
+```
+
+Haciendo uso de la tabla, **¿qué % de pacientes son mujeres?**
+
+. . .
+
+Haz lo mismo tu solo con la variable `estado_civil` y determina el número de personas casadas (deberían ser 26).
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+En `R` las [**variables cualitativas pueden ser tratadas como tales**]{.hl-yellow} convirtiendo una cadena de texto a lo que se conoce como [**factor**]{.hl-yellow}. Por ejemplo, supongamos que tenemos un vector de notas
+
+```{r}
+notas <- c("suspenso", "notable", "suspenso", "aprobado", "notable", "suspenso")
+notas
+```
+
+. . .
+
+Para [**convertir a factor nos basta con `factor()`**]{.hl-yellow}. ¿Qué notas diferente?
+
+```{r}
+notas_fct <- factor(notas)
+notas_fct
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+```{r}
+notas_fct
+```
+
+Si te fijas ahora [**tenemos disponibles unos niveles (levels)**]{.hl-yellow}: son las posibles modalidades de nuestra variable cualitativa, el soporte, de manera que aunque borremos uno de ellos (vamos a borrar todos los aprobados), la opción sigue disponible si entrase un dato nuevo (algo así como un menú de opciones permitidas)
+
+```{r}
+notas_fct[notas_fct != "aprobado"]
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+
+
+En el caso de las [**cualitativas ordinales podemos incluso establecer una jerarquía**]{.hl-yellow}, indicando explícitamente los niveles y `ordered = TRUE`
+
+```{r}
+notas_fct_ord <- factor(notas, levels = c("aprobado", "notable", "suspenso"),
+                        ordered = TRUE)
+notas_fct_ord
+```
+
+Fíjate que ahora tenemos una [**jerarquía**]{.hl-yellow} y aunque sea cualitativa podemos buscar [**elementos <= o >= que otros**]{.hl-yellow}
+
+```{r}
+notas_fct_ord[notas_fct_ord <= "notable"]
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Haz que tu variable `estado_salud` sea una factor representando una cualitativa ordinal
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno", "Excelente"),
+                  ordered = TRUE))
+
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Calcula la tabla de frecuencias para `estado_salud` incluyendo todo lo que puedas (¿se puede ahora calcular las frecuencias acumuladas). ¿Cuántos pacientes están en un estado de salud regular o peor? (pisa: 59 personas).
+
+```{r}
+#| code-fold: true
+#| eval: false
+tabla_freq <- 
+  datos |> 
+  count(estado_salud) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs),
+         frecuencia_acum_abs = cumsum(frecuencia_abs),
+         frecuencia_acum_rel = cumsum(frecuencia_rel))
+
+datos |>
+  count(estado_salud <= "Regular")
+```
+
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Calcula la media, mediana, cuartiles y desviación típica de edad y tiempo de espera. Guarda los resultados en `resumen` y expórtalo a un `resumen.csv`
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad),
+            mediana_edad = median(edad),
+            Q1_edad = quantile(edad, probs = 0.25),
+            Q3_edad = quantile(edad, probs = 0.75),
+            # tiempo espera
+            media_tiempo_espera = mean(tiempo_espera), 
+            sd_tiempo_espera = sd(tiempo_espera),
+            mediana_tiempo_espera = median(tiempo_espera),
+            Q1_tiempo_espera = quantile(tiempo_espera, probs = 0.25),
+            Q3_tiempo_espera = quantile(tiempo_espera, probs = 0.75))
+write_csv(resumen, file = "./datos/resumen.csv")
+```
+
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Haz una tabla de frecuencias (absolutas) cruzada entre `genero` y `estado_salud` con tidyverse para que quede como la tabla inferior
+
+```{r}
+#| code-fold: true
+
+# Primero cuento de manera bidimensional con count(var1, var2)
+conteo_bidim <-
+  datos |>
+  count(genero, estado_salud)
+conteo_bidim
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Haciendo uso de la tabla anterior, ¿qué debes hacer para obtener una tabla de frecuencias bidimensional como la de abajo? (la tabla de frecuencias en formato habitual)
+
+
+```{r}
+#| code-fold: true
+# Después pivoto para que use la columna estado_salud
+# como futuros nombres de variables (pivota de vertical a horizontal)
+#   - names_from: de donde saldrán los futuros nombres de columnas
+#   - values_from: de donde sacamos los valores numéricos (en este caso n)
+#     para rellenar la tabla
+tabla_freq_abs <-
+  conteo_bidim |> pivot_wider(names_from = estado_salud, values_from = n)
+tabla_freq_abs
+```
+
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+También se puede hacer en `R base` con `table()` (que además de ser más sencillo respeta la jerarquía de la ordinal). [**Moraleja: a veces R base nos facilita la vida, no lo olvidemos porque lo vas a necesitar**]{.hl-yellow }
+
+```{r}
+tabla_freq <- table(datos$genero, datos$estado_salud)
+tabla_freq
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+La tabla anterior se puede [**calcular con frecuencias relativa por filas y por columnas**]{.hl-yellow} (es decir,una que toda las filas sumen el total, 1, y otra que las columnas sumen 1) haciendo uso de `prop.table()` aplicada a la tabla anterior (si `margin = 1` normaliza por filas, si `margin = 2` por columnas).
+
+```{r}
+#| code-fold: true
+prop.table(tabla_freq, margin = 1)
+prop.table(tabla_freq, margin = 2)
+```
+
+[**Moraleja: tablas de frecuencia podemos hacerlas en tidyverse pero bidimensionales R base nos ayuda mejor. Deberemos viajar entre los dos mundos muchas veces**]{.hl-yellow}
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Haciendo uso de las tablas anteriores contesta a las siguientes preguntas:
+
+* ¿Qué porcentaje de entre las mujeres tiene un buen estado de salud?
+
+* ¿Qué porcentaje de entre los hombres tiene un estado de salud regular?
+
+* ¿Qué porcentaje de los que tienen estado de salud malo son mujeres?
+
+**Clicka debajo para ver la respuesta cuando lo tengas**
+
+```{r}
+#| code-fold: true
+
+# De entre las mujeres un 45.28% tiene un buen estado de salud
+# De entre los hombres un 34.04% tiene un estado de salud regular
+# Un 33.33% de los que tienen un estado de salud malo, son mujeres
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 **Un poquito de reminder de inferencia**. Haciendo uso de la tabla de frecuencias absolutas, ejecuta el código que consideres para responder a la pregunta: ¿están estas dos variables (`estado_salud` y `genero`) asociadas? ¿Existe algún tipo de dependencia entre ellas? Hazlo considerando $\alpha = 0.05$.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Opción 1: prueba de chi-cuadrado que nos permite sacar conclusiones
+# sobre la independencia de dos variables cualitativas
+
+# chisq.test() hace el contraste haciendo uso de la tabla de frec
+chisq.test(tabla_freq)
+
+# Como el p-value = 0.2322 y alpha = 5%, no podemos rechazar la
+# hipótesis nula de independencia: no hay evidencias suficientes 
+# CON LA MUESTRA QUE TENEMOS para concluir que haya alguna asociación
+# entre género y estado de salud
+
+# Opción 2: test exacto de Fisher, especialmente útil cuando
+# las frecuencias esperadas son bajas.
+fisher.test(tabla_freq)
+# Diferente p-valor pero misma conclusión
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+Las funciones `chisq.test()` y `fisher.test()` pueden tomar como argumento una tabla de frecuencias ya resumida o puede tomar [**dos variables y la función ya realiza el conteo**]{.hl-yellow. Por ejemplo si hacemos `chisq.test(var1, var2)` obtenemos un objeto `htest` que dentro contiene el p-valor.
+
+```{r}
+test_chisq <- chisq.test(datos$genero, datos$estado_salud)
+names(test_chisq)
+```
+
+. . .
+
+Por tanto si aplicamos la función y hacemos después `$p.value` podemos obtener **directamente el valor numérico que nos interesa**
+
+```{r}
+chisq.test(datos$genero, datos$estado_salud)$p.value
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝  ¿Cómo usar tidyverse para tener en una tabla resumen ambos p-valores?
+
+```{r}
+#| code-fold: true
+tabla_p_valores <-
+  datos |> 
+  summarise("sig_chisq" = chisq.test(genero, estado_salud)$p.value,
+            "sig_fisher" = fisher.test(genero, estado_salud)$p.value)
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Cálcula la matriz correlaciones de Pearson entre las variables numéricas. ¿Existe dependencia LINEAL entre la variable edad y el tiempo de espera? (recuerda: correlación de Pearson solo mide asociación lineal). Echa un vistazo al paquete `{corrr}`
+
+```{r}
+#| code-fold: true
+
+# Opción 1
+mat_cor <-
+  datos |> 
+  select(where(is.numeric)) |> 
+  cor()
+
+# Opción 2
+mat_cor <-
+  datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+
+# La correlación es de 0.0669 por lo que no parezca exista relación
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝 Calcula en una tabla resumen la correlación y el p-valor derivado de un test de correlaciones (`cor.test()`) entre ambas variables
+
+```{r}
+#| code-fold: true
+cor_summary <-
+  datos |> 
+  summarise("cor" = cor(edad, tiempo_espera),
+            "sig_cor" = cor.test(edad, tiempo_espera)$p.value)
+# No parece existir evidencia significativa de dependencia lineal
+```
+
+---
+
+## 🐣 Caso práctico II: encuesta de satisfacción
+
+📝  Repite todo lo anterior con las variables tiempo de espera y grado de satisfacción
+
+```{r}
+#| code-fold: true
+mat_cor <- 
+  datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+
+cor_summary <-
+  datos |> 
+  summarise("cor" = cor(grado_satisfaccion, tiempo_espera),
+            "sig_cor" = cor.test(grado_satisfaccion, tiempo_espera)$p.value)
+# Sí parece existir evidencia significativa de dependencia lineal
+# concretamente negativa: a más espera, menor satisfacción
+```
+
+
+# Clase 18: casos reales {#clase-18}
 
 [**Repaso con casos reales**]{style="color:#444442;"}
 
+
 ---
 
-## ...
+- brexit
+
+- datos contaminación
+
+- encuesta viogen
+
+- contaminación (contam_mad)
+
+
 
 # Clase 19: [entrega III]{.flow} {#clase-19}
 
