@@ -113,7 +113,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 . . .
 
-- [**Final exam**]{.hl-yellow} with all materials and internet (25%). [**You are exempt if you get more than 7.5/10**]{.hl-purple} in the previous tasks.
+- [**Final exam**]{.hl-yellow} with all materials and internet (25%). [**You are exempt if you get more than 7/10**]{.hl-purple} in the previous tasks.
 
 . . .
 
@@ -168,8 +168,8 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [4](#clase-4) | S5 | 3 oct | Tidyverse: summary | [💻](#tu-turno-4-1)  | [🐣](#caso-practico-4-1) [🐣](#caso-practico-4-2) |  | 
 | [5](#clase-5) | S6 | 10 oct | Loops | [💻](#tu-turno-5-1)  | [🐣](#caso-practico-5-1) [🐣](#caso-practico-5-2) |  |
 | [6](#clase-6) | S7 | 17 oct | Functions and joins |  [💻](#tu-turno-6-1) [💻](#tu-turno-6-2)  | [🐣](#caso-practico-6-1) [🐣](#caso-practico-6-2) [🐣](#caso-practico-6-3)  |  |
-| [7](#clase-7) | S8 | 24 oct | Import/export |  [💻](#tu-turno-7-1) | [🐣](#caso-practico-7-1) [🐣](#caso-practico-7-2)  |  |
-| [8](#clase-8) | S10 | 6 nov | Purrr and forcats packages  |   |  |  |
+| [7](#clase-7) | S8 | 24 oct | Import/export |  [💻](#tu-turno-7-1) | [🐣](#caso-practico-7-1)  |  |
+| [8](#clase-8) | S10 | 6 nov | Purrr and forcats packages  | [💻](#tu-turno-8-1) [💻](#tu-turno-8-2)  |  [🐣](#caso-practico-8-1) |  |
 | [9](#clase-9) | S11 | 13 nov | Github and SQL connection |   |  |  |
 :::
 :::
@@ -186,40 +186,9 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 * [**Material**]{.hl-yellow}: [**workbooks**](https://javieralvarezliebana.es/docencia/mucss-data-programming/material/) and extra materials.
 
-* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>**
+* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://javieralvarezliebana.es/docencia/mucss-data-programming/material>** or **Google Drive** <https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing>
 
 * [📚 **Extra resources**]{.hl-yellow}:  <https://r4ds.had.co.nz/>, <https://cdr-book.github.io/> and <https://ivelasq.quarto.pub/intro-to-quarto/>.
-
----
-
-## Datasets
-
-* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/data>**
-
-&nbsp;
-
-* `airquality` from the `{datasets}` package (already installed by default): daily measurements (153 observations) of air quality in New York, from May to September 1973. Measured **6 variables**: ozone, solar radiation, wind, temperature, month and day.
-
-* `surveys`: we have all **poll surveys for Spain from 1982 to 2019** collected from Wikipedia.
-
-* `discursos`: compiles the Christmas speeches of the heads of state in Spain (under dictatorship and democracy) from 1946 to 2021.
-
-
----
-
-## Datasets
-
-* [🗃 **Data**]{.hl-yellow}: datasets that will be used, available on **<https://github.com/dadosdelaplace/docencia/tree/main/mucss-data-programming/slides/data>**
-
-&nbsp;
-
-* `relig_income` from the `{tidyr}` package: compiles annual income data by religion (original source <https://www.pewresearch.org/religion/religious-landscape-study/>)
-
-* `who2` from the `{tidyr}` package: WHO data on tuberculosis infections, disaggregated by disease type, sex and age.
-
-* `billboard` from the `{tidyr}` package: top 100 ranking of songs according to Billboard (something like The 40) for the year 2000.
-
-* `world_bank_pop` from the `{tidyr}` package: data from the World Bank about population per country from 2000 to 2018.
 
 
 # L1: [first steps]{.flow} {#clase-0-1}
@@ -2642,7 +2611,7 @@ Las tablas en formato `tibble` nos permitirá una [**gestión más ágil, eficie
 
 ---
 
-## Last attempt: tibble
+## Last attempt: tibble {#data-pasta}
 
 - [**Consistency**]{.hl-yellow}: if you access a column that does not exist, it warns you with a warning
 
@@ -2664,7 +2633,7 @@ tribble(~colA, ~colB,
 . . .
 
 ::: callout-tip
-The `{datapasta}` package allows us to [**copy and paste**]{.hl-green} tables from web pages and simple documents.
+The `{datapasta}` package allows us to [**copy and paste**]{.hl-green} tables from web pages and simple documents as a tribble. See more in <https://milesmcbain.github.io/datapasta/articles/how-to-datapasta.html#pasting-a-table-as-a-formatted-tibble-definition-with-tribble_paste>
 :::
 
 
@@ -8880,6 +8849,8 @@ Try to answer the questions posed in the [**workbook**](https://javieralvarezlie
 
 [**Import and export data**]{style="color:#444442;"}
 
+* [📊 Data](https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing)
+
 * [💻 Solved exercises](#tu-turno-7-1) 
 
 * [🐣 Workbook/case study I](#caso-practico-7-1)
@@ -9419,6 +9390,8 @@ Other options:
 
 [**Try to solve the following exercises without looking at the solutions**]{style="color:#444442;"}
 
+[📊 Data](https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing)
+
 ::: panel-tabset
 ### [**Exercise 1**]{.hl-yellow}
 
@@ -9485,12 +9458,15 @@ who_select <-
 
 ---
 
-## 🐣 Case study I: SPSS {#caso-practico-7-1}
+## 🐣 Case study I: CIS feminism {#caso-practico-7-1}
 
----
+[📊 Data](https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing)
 
-## 🐣 Case study II: Brexit {#caso-practico-7-2}
+We are going to **put into practice the loading and preprocessing of a file generated by one of the most used software (SPSS)**. The file contains data from the [**CIS (Centro de Investigaciones Sociológicas) barometer «Perceptions on equality between men and women and gender stereotypes»**]{.hl-yellow} (file extension `.sav` that you have in the subfolder `CIS-feminism` inside the data folder) whose sample work was carried out from November 6 to 14 (4000 interviews of both sexes over 16 years old in 1174 municipalities and 50 provinces).
 
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](...)
 
 # L8: [factors and lists]{.flow} {#clase-8}
 
@@ -9501,8 +9477,6 @@ who_select <-
 * [💻 Solved exercises: factors](#tu-turno-8-2) 
 
 * [🐣 Workbook/case study I](#caso-practico-8-1)
-
-* [🐣 Workbook/case study II](#caso-practico-8-2)
 
 * [📆 Planning](#planificacion-curso)
 
@@ -9671,6 +9645,23 @@ Also, if you pass it a [**number**]{.hl-yellow} instead of a function, it will r
 map_dbl(x, 3)
 ```
 
+---
+
+
+## Lists
+
+```{r}
+list_dummy <- list("a" = dplyr::starwars, "b" = tidyr::billboard)
+```
+
+
+We can also use `pluck()` to [**access to the i-th element of a list**]{.hl-yellow}
+
+```{r}
+list_dummy |> 
+  pluck(1)
+```
+
 
 ---
 
@@ -9777,9 +9768,6 @@ map_lgl(second_film, is.null)
 
 :::
 
----
-
-## 🐣 Case study I: ... {#caso-practico-8-1}
 
 ---
 
@@ -10290,7 +10278,16 @@ months_fct
 
 ---
 
-## 🐣 Case study II: ... {#caso-practico-8-2}
+## 🐣 Case study I: CIS feminism {#caso-practico-8-1}
+
+[📊 Data](https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing)
+
+We are going to work again with file contains data from the CIS (Centro de Investigaciones Sociológicas) barometer «Perceptions on equality between men and women and gender stereotypes» whose sample work was carried out from November 6 to 14 (4000 interviews of both sexes over 16 years old in 1174 municipalities and 50 provinces).
+
+&nbsp;
+
+Try to answer the questions posed in the [**workbook**](...)
+
 
 # L9: [dbplyr and github]{.flow} {#clase-9}
 
