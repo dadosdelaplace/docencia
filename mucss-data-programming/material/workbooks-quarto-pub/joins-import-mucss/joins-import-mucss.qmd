@@ -1066,7 +1066,7 @@ We are going to put into practice the loading and preprocessing of a file genera
 #| code-fold: true
 library(haven)
 data <-
-  read_sav(file = "./data/CIS-feminismo/3428.sav") |> 
+  read_sav(file = "./datos/CIS-feminismo/3428.sav") |> 
   janitor::clean_names()
 ```
 
@@ -1116,7 +1116,7 @@ data <-
   select(-contains("ia_"), -contains("peso"))
 ```
 
-# Question 5
+### Question 5
 
 > Calculate the number of interviews per autonomous community (`ccaa`) and extract the 5 with the fewest interviews.
 
@@ -1237,11 +1237,6 @@ list_var$marks
 
 
 
----
-
-## Lists
-
-
 We can also make [**lists with other lists inside**]{.hl-yellow}, so that to access each level we must use the `[[]]` operator.
 
 ```{r}
@@ -1257,13 +1252,10 @@ names(list_of_lists[[1]])
 list_of_lists[[1]][[1]]
 ```
 
-. . .
 
 We are allowed to store [**n-dimensional data**]{.hl-yellow}!
 
----
-
-## Lists
+&nbsp;
 
 One of the disadvantages is that a list [**cannot be vectorized**]{.hl-yellow} immediately, so any arithmetic operation applied to a list will give [**error**]{.hl-red}.
 
@@ -1273,8 +1265,6 @@ data <- list("a" = 1:5, "b" = 10:20)
 data / 2
 ```
 
-. . .
-
 For this purpose, one of the common (but outdated) options is to make use of the `lapply()` family.
 
 ```{r}
@@ -1283,9 +1273,6 @@ lapply(data, FUN = function(x) { x / 2})
 
 By default, the output of `lapply()`is always a [**list of equal length**]{.hl-yellow}.
 
----
-
-## Lists
 
 
 A more flexible and versatile option is to make use of the `{purrr}` package of the `{tidyverse}` environment.
@@ -1298,22 +1285,17 @@ This package is intended to mimic the [**functional programming**]{.hl-yellow} o
 
 ![](img/purrr.png)
 
----
 
-## Lists
 
 The simplest function of the `{purrr}` package is the `map()` function, which [**applies a vectorized function**]{.hl-yellow} to each of the elements of a list. Let's see a first example applied to vectors
 
-. . .
 
-`map()` allows us to [**"map" each list**]{.hl-yellow} and apply the function element by element (if applicable).
+* `map()` allows us to [**"map" each list**]{.hl-yellow} and apply the function element by element (if applicable).
 
 ```{r}
 x <- list("x1" = 1:4, "x2" = 11:20)
 map(x, sqrt) 
 ```
-
-. . .
 
 
 ::: callout-warning
@@ -1322,10 +1304,6 @@ map(x, sqrt)
 With vectors we have a default vectorization because `R` performs element-by-element operations. Note that, by default, the [**output of `map` is a list**]{.hl-yellow}.
 :::
 
-
----
-
-## Lists
 
 Let's look at another example. Define in a list two samples from 2 normal distributions, of different sample size and different mean. Compute the mean of each one.
 
@@ -1336,10 +1314,6 @@ x <- list(rnorm(n = 1500, mean = 0, sd = 0.7),
 map(x, mean)
 ```
 
----
-
-## Lists
-
 What if we want to calculate the mean of their squared values?
 
 ```{r}
@@ -1347,10 +1321,6 @@ What if we want to calculate the mean of their squared values?
 map(x, function(x) { mean(x^2) })
 ```
 
-
----
-
-## Lists
 
 In addition to being [**more readable and efficient**]{.hl-yellow}, with `{purrr}` we can [**decide the output format**]{.hl-yellow} after the operation
 
@@ -1360,13 +1330,11 @@ In addition to being [**more readable and efficient**]{.hl-yellow}, with `{purrr
 * output as [**logical vector**]{.hl-purple} with `map_lgl()`
 
 ```{r}
+library(glue)
 map_dbl(x, mean)
 map_chr(x, function(x) { glue("Mean is {round(mean(x), 5)}") })
 ```
 
----
-
-## Lists
 
 ```{r}
 c(x[[1]][3], x[[2]][3])
@@ -1378,11 +1346,6 @@ Also, if you pass it a [**number**]{.hl-yellow} instead of a function, it will r
 ```{r}
 map_dbl(x, 3)
 ```
-
----
-
-
-## Lists
 
 ```{r}
 list_dummy <- list("a" = dplyr::starwars, "b" = tidyr::billboard)
@@ -1397,11 +1360,6 @@ list_dummy |>
 ```
 
 
----
-
-
-## Lists
-
 We also have the option of generalizing it to be able to use functions that [**need two arguments in the form of a list**]{.hl-yellow} (binary operations), with `map2()`
 
 
@@ -1410,10 +1368,6 @@ x <- list("a" = 1:3, "b" = 4:6)
 y <- list("c" = c(-1, 4, 0), "b" = c(5, -4, -1))
 map2(x, y, function(x, y) { x^2 + y^2})
 ```
-
----
-
-## Lists
 
 We can obtain the output in the form of `data.frame` by adding `list_rbind()` or `list_cbind()`, which [**converts a list into a table**]{.hl-yellow}.
 
@@ -1424,9 +1378,6 @@ y <- 1:3
 map2(x, y, function(x, y) { tibble(x, y) }) |> list_rbind()
 ```
 
----
-
-## Lists
 
 We can generalize it further with `pmap_xxx()` which allows us to use [**multiple arguments (multiple lists)**]{.hl-yellow}.
 
@@ -1438,9 +1389,6 @@ z <- list(100, 200, 300)
 pmap_dbl(list(x, y, z), sum)
 ```
 
----
-
-## Lists
 
 We have other types of iterators that, although they assume inputs, do not return anything, as `walk()` (just one input argument), `walk2()` (two arguments) and `pwalk()` (multiple arguments), all [**invisibly return**]{.hl-yellow}, just call a function for its [**side effects**]{.hl-yellow} rather than its return value.
 
@@ -1451,9 +1399,8 @@ list("a" = 1:3, "b" = 4:6) |>
   walk(print)
 ```
 
----
 
-## 💻 It's your turn {#tu-turno-8-1}
+### 💻 It's your turn 
 
 
 ::: panel-tabset
@@ -1503,10 +1450,8 @@ map_lgl(second_film, is.null)
 :::
 
 
----
 
-
-## Quali: factors
+## Quali: factors (forcats package)
 
 In statistics, when we talk about [**qualitative variables**]{.hl-yellow}, we will call **levels or modalities** the **different values** that these data can take. For example, in the case of the `sex` variable of the `starwars` set, we have 4 allowed levels: `female`, `hermaphroditic`, `male` and `none` (in addition to missing data).
 
@@ -1515,24 +1460,14 @@ starwars |> count(sex)
 ```
 
 
-
----
-
-## Quali: factors
-
 These kinds of variables are known in `R` as [**factors**]{.hl-yellow}, and the fundamental package to deal with them is `{forcats}` (from the `{tidyverse}` environment). 
 
 
 ![](img/factors.jpg)
 
 
----
-
-## Quali: factors
-
 This package allows us to set the [**levels**]{.hl-yellow} (stored internally as `levels`) that a given categorical variable takes so that no mistakes, errors in data collection and generation can be generated. It also makes their analysis less computationally expensive when doing searches and comparisons, giving them a [**different treatment than normal text strings**]{.hl-yellow}.
 
-. . .
 
 Let's see a simple example simulating a `party` variable taking the values `"PP"`, `"PSOE"` and `"SUMAR"` (of size 15)
 
@@ -1548,13 +1483,9 @@ The `party` variable is currently of [**type text**]{.hl-yellow}, of type `chr`,
 class(party)
 ```
 
----
-
-## Quali: factors
 
 From a statistical and computational point of view, for `R` this variable right now would be equivalent to a named variable. But statistically [**a variable as a string**]{.hl-yellow} is not the same as a categorical variable that [**can only take those 3 levels**]{.hl-yellow}. How to [**convert to factor**]{.hl-yellow}? 
 
-. . .
 
 By making use of the `as_factor()` function from the `{forcats}` package.
 
@@ -1565,9 +1496,6 @@ party_fct <- tibble("id" = 1:length(party),
 party_fct
 ```
 
----
-
-## Quali: factors
 
 Not only the class of the variable  has  changed, but now, below the saved value, the sentence `Levels: ...` appears: these are the [**modalities or levels**]{.hl-yellow} of our qualitative. 
 
@@ -1575,10 +1503,6 @@ Not only the class of the variable  has  changed, but now, below the saved value
 party_fct |> pull(party)
 ```
 
----
-
-
-## Quali: factors
 
 Imagine that we are defining the database of deputies of the Congress and that the deputies of the PP did not attend that day to the plenary session: although our variable does not take that value THAT DAY, the state `PSOE` is a [**allowed level in the database**]{.hl-yellow} (so even if we eliminate it, because it is a factor, the level remains, we do not have it now but it is an allowed level).
 
@@ -1589,9 +1513,6 @@ party_fct |>
   pull(party)
 ```
 
----
-
-## Quali: factors
 
 With `factor()` function we can [**explicitly specify**]{.hl-yellow} the names of the modalities and using `levels = ...` we can explicitly tell it the [**"order" of the modalities**]{.hl-yellow} 
 
@@ -1604,11 +1525,6 @@ party_fct |> pull(party)
 ```
 
 
----
-
-
-## Quali: factors
-
 The previous "order" is just in the sense which it will be counted/plotted first) but [**we don't have (yet) an ordinal variable**]{.hl-purple}
 
 
@@ -1616,7 +1532,6 @@ The previous "order" is just in the sense which it will be counted/plotted first
 party_fct$party < "SUMAR"
 ```
 
-. . .
 
 What if we want to [**define a qualitative variable ORDINAL**]{.hl-yellow}? Inside `factor()` we must indicate that `ordered = TRUE`.
 
@@ -1630,23 +1545,12 @@ marks_database <-
 marks_database |> pull(marks)
 ```
 
----
-
-## Quali: factors
-
 What changes? If you notice now, although the variable is still qualitative, we can [**make comparisons and order the records**]{.hl-yellow} because there is a [**hierarchy**]{.hl-purple} between the modalities.
 
 ```{r}
 marks_database |> filter(marks >= "B")
 ```
 
----
-
-## Quali: factors
-
-
-:::: columns
-::: {.column width="45%"}
 
 If we want to tell it to [**drop an unused level**]{.hl-yellow} at that moment (and that we want to [**exclude from the definition**]{.hl-purple}) we can do it with `fct_drop()`.
 
@@ -1656,18 +1560,12 @@ marks_database |>
   pull(marks)
 ```
 
-:::
-
-::: {.column width="55%"}
-
 
 ```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
 knitr::include_graphics("./img/drop_factor.jpg")
 ``` 
 
-:::
 
-::::
 
 ```{r}
 marks_database |> 
@@ -1676,28 +1574,14 @@ marks_database |>
   pull(marks)
 ```
 
----
-
-## Quali: factors
-
-
-:::: columns
-::: {.column width="45%"}
-
 
 Just as we can delete levels we can [**expand existing levels**]{.hl-yellow} (even if there is no data for that level at that time) with `fct_expand()`.
 
-:::
-
-::: {.column width="55%"}
 
 
 ```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
 knitr::include_graphics("./img/factor_expand.jpg")
 ``` 
-
-:::
-::::
 
 ```{r}
 marks_database |> 
@@ -1705,34 +1589,20 @@ marks_database |>
   pull(marks)
 ```
 
----
-
-## Quali: factors
-
-:::: columns
-::: {.column width="45%"}
 
 In addition with `fct_explicit_na()` we can [**assign a level to the missing values**]{.hl-yellow} to be included in the analysis and visualizations.
 
-:::
-
-::: {.column width="55%"}
 
 
 ```{r echo = FALSE,  out.width = "100%", fig.align = "left"}
 knitr::include_graphics("./img/factor_explicit.jpg")
 ``` 
 
-:::
-::::
 
 ```{r}
 fct_explicit_na(factor(c("a", "b", NA)))
 ```
 
----
-
-## Quali: factors
 
 Even once defined we can [**reorder the levels**]{.hl-yellow} with `fct_relevel()`.
 
@@ -1749,26 +1619,13 @@ marks_database_expand |>
 ```
 
 
----
-
-## Quali: factors
-
-:::: columns
-::: {.column width="55%"}
-
 This way of working with qualitative variables allows us to give a [**theoretical definition**]{.hl-yellow} of our database, and we can even count values that do not yet exist (but could), making use of `fct_count()`.
-
-:::
-
-::: {.column width="45%"}
 
 
 ```{r echo = FALSE,  out.width = "70%", fig.align = "left"}
 knitr::include_graphics("./img/fct_count.jpg")
 ``` 
 
-:::
-::::
 
 ```{r}
 marks_database |> 
@@ -1778,9 +1635,6 @@ marks_database |>
 ```
 
 
----
-
-## Quali: factors
 
 The levels can also be [**sorted by frequency**]{.hl-yellow} with `fct_infreq()`.
 
@@ -1795,15 +1649,9 @@ marks_database |>
   fct_count()
 ```
 
----
-
-## Quali: factors
-
 
 Sometimes we will want to [**group levels**]{.hl-yellow}, for example, not allowing levels that [**do not happen a minimum number of times**]{.hl-yellow} with `fct_lump_min(..., min = ..)` (observations that do not meet this will go to a **generic level** called `Other`, although this can be changed with the `other_level` argument). 
 
-:::: columns
-::: {.column width="50%"}
 
 
 ```{r}
@@ -1811,10 +1659,6 @@ marks_database |>
   pull(marks) %>% 
   fct_lump_min(min = 3)
 ```
-
-:::
-
-::: {.column width="50%"}
 
 
 ```{r}
@@ -1824,12 +1668,6 @@ marks_database |>
                other_level = "Less frequent")
 ```
 
-:::
-::::
-
----
-
-## Quali: factors
 
 
 We can do something equivalent but based on its [**relative frequency**]{.hl-yellow} with `fct_lump_prop()`.
@@ -1842,10 +1680,6 @@ marks_database |>
                 other_level = "less frequent")
 ```
 
----
-
-
-## Quali: factors
 
 We can apply this to our datasets to [**recategorize variables**]{.hl-yellow} very quickly.
 
@@ -1858,9 +1692,6 @@ starwars |>
   count(species)
 ```
 
----
-
-## Quali: factors
 
 
 
@@ -1876,17 +1707,11 @@ starwars_factor <-
                         other_level = "Others"))
 ```
 
-:::: columns
-::: {.column width="50%"}
 
 
 ```{r}
 starwars_factor |>  pull(species)
 ```
-
-:::
-
-::: {.column width="50%"}
 
 
 ```{r}
@@ -1895,13 +1720,9 @@ starwars_factor |>
   pull(species)
 ```
 
-:::
-::::
 
 
----
-
-## 💻 It's your turn {#tu-turno-8-2}
+### 💻 It's your turn
 
 
 ::: panel-tabset
@@ -2016,8 +1837,86 @@ months_fct
 
 We are going to work again with file contains data from the CIS (Centro de Investigaciones Sociológicas) barometer «Perceptions on equality between men and women and gender stereotypes» whose sample work was carried out from November 6 to 14 (4000 interviews of both sexes over 16 years old in 1174 municipalities and 50 provinces).
 
+### Question 1
 
-> Fíjate que muchas columnas son del tipo `<dbl+lbl>`, un nuevo tipo de dato heredado de SPSS para poder disponer del valor numérico (por ejemplo, `1` para Andalucía) pero también de la etiqueta (`"Andalucía"`). Puedes ver más en el paquete `{labelled}` pero de momento vamos a usar `to_factor()` para poder trabajar con esas etiquetas si queremos.
+> Run the entire code of the previous case study
+
+```{r}
+library(haven)
+data <-
+  read_sav(file = "./datos/CIS-feminismo/3428.sav") |> 
+  janitor::clean_names()
+
+rm_variables <-
+  data |> 
+  summarise(across(everything(), n_distinct)) |> 
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "n_values") |> 
+  filter(n_values <= 1) |> 
+  pull(variable)
+data <-
+  data |> 
+  select(-rm_variables)
+
+rm_variables <-
+  data |> 
+  summarise(across(everything(), n_distinct)) |> 
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "n_values") |> 
+  filter(n_values == nrow(data)) |> 
+  pull(variable)
+data <-
+  data |> 
+  # all of them except one of them
+  select(-rm_variables[-1])
+
+data <-
+  data |> 
+  select(-contains("ia_"), -contains("peso"))
+
+population <- 
+  tibble::tribble(~Total, ~`47.385.107`,
+                    "01 Andalucía",   "8.472.407",
+                       "02 Aragón",   "1.326.261",
+      "03 Asturias, Principado de",   "1.011.792",
+               "04 Balears, Illes",   "1.173.008",
+                     "05 Canarias",   "2.172.944",
+                    "06 Cantabria",     "584.507",
+              "07 Castilla y León",   "2.383.139",
+         "08 Castilla - La Mancha",   "2.049.562",
+                     "09 Cataluña",   "7.763.362",
+         "10 Comunitat Valenciana",   "5.058.138",
+                  "11 Extremadura",   "1.059.501",
+                      "12 Galicia",   "2.695.645",
+         "13 Madrid, Comunidad de",   "6.751.251",
+            "14 Murcia, Región de",   "1.518.486",
+  "15 Navarra, Comunidad Foral de",     "661.537",
+                   "16 País Vasco",   "2.213.993",
+                    "17 Rioja, La",     "319.796",
+                        "18 Ceuta",      "83.517",
+                      "19 Melilla",      "86.261"
+  )
+
+population <-
+  population |> 
+  rename(ccaa = Total, pop = `47.385.107`) |> 
+  # First to convert to numeric we need to remove dots
+  mutate("pop" = as.numeric(str_replace_all(pop, "\\.", ""))) |> 
+  # if we use " " as sep, we split also some names
+  separate(col = ccaa, into = c("cod_INE", "name"), sep = 2) |> 
+  # From stringr package, str_squish() removes whitespace at the start 
+  # and end, and replaces all internal whitespace with a single space.
+  mutate(name = str_squish(name))
+
+data <-
+  data |> 
+  # you need first to convert cod_INE as numeric since both 
+  # key columns should be of same type
+  left_join(population |> mutate("cod_INE" = as.numeric(cod_INE)),
+            by = c("ccaa" = "cod_INE")) |> 
+  relocate(name, pop, .after = "ccaa")
+```
+### Question 2
+
+> Notice that many columns are of type `<dbl+lbl>`, a new data type inherited from SPSS to be able to have the numeric value (e.g. `1` for the autonomous community ccaa of Andalusia) but also the label (`«Andalucía»`). You can see more in the `{labelled}` package but for now we are going to use `to_factor()` to be able to work with those labels if we want.
 
 ```{r}
 data |> 
@@ -2030,24 +1929,35 @@ data |>
 ```
 
 
-> Las variables `escfeminis` y `sitconv` en realidad corresponde a la pregunta `P16` y `P18` del cuestionario. Renómbralas como `p16` y  `p18`. Las variables `tarhogentrev_1`, `tarhogentrev_2`, `tarhogentrev_8`, `tarhogentrev_9`, `tarhogentrev_hh`, `tarhogentrev_mm` hablan de la misma pregunta: tiempo dedicado a las tareas del hogar. 
-
-* La variable `tarhogentrev_1` guarda un `1` si el entrevistado respondió en horas (en caso contrario `2`)
-
-* La variable `tarhogentrev_2` guarda un `1` si el entrevistado respondió en minutos (en caso contrario `2`)
-
-* La variable `tarhogentrev_8` guarda un `1` si el entrevistado respondió «no sé decir» (en caso contrario `2`)
-
-* La variable `tarhogentrev_9` guarda un `1` si el entrevistado respondió no quiso responder.
-
-* Las variables `tarhogentrev_hh` y `tarhogentrev_mm` guardan las cantidades (en horas o en minutos, o `99` o `98` si no sabe o no quiso responder)
-
-Usa la información de estas 5 variables de manera que dicha información esté contenida en una sola variable `p19` con el número de minutos dedicados (si no se puede saber `NA`)
+> The variables `escfeminis` and `sitconv` actually correspond to question `P16` and `P18` of the questionnaire. Rename them as `p16` and `p18`.
 
 ```{r}
+#| code-fold: true
 data <- 
   data |> 
-  rename(p16 = escfeminis, p18 = sitconv) |> 
+  rename(p16 = escfeminis, p18 = sitconv)
+```
+
+### Question 3
+
+The variables `tarhogentrev_1`, `tarhogentrev_2`, `tarhogentrev_8`, `tarhogentrev_9`, `tarhogentrev_hh`, `tarhogentrev_mm` refer to the same question: time spent on household chores.
+
+* The variable `tarhogentrev_1` stores a `1` if the respondent answered in hours (otherwise `2`)
+
+* The variable `tarhogentrev_2` stores a `1` if the respondent answered in minutes (otherwise `2`)
+
+* The variable `tarhogentrev_8` stores a `1` if the respondent answered “can't say” (otherwise `2`)
+
+* The variable `tarhogentrev_9` stores a `1` if the respondent did not want to answer.
+
+* The variables `tarhogentrev_hh` and `tarhogentrev_mm` store the amounts (in hours or minutes, or `99` or `98` if the respondent did not know or did not want to answer).
+
+> Use the information from these 5 variables in such a way that the information is contained in a single variable `p19` with the number of minutes spent (if `NA` cannot be known) and delete all the others
+
+```{r}
+#| code-fold: true
+data <- 
+  data |>
   mutate("p19" =
            if_else(tarhogentrev_1 == 1, tarhogentrev_hh * 60,
                    if_else(tarhogentrev_2 == 1, tarhogentrev_mm, NA)),
@@ -2055,8 +1965,9 @@ data <-
   select(-contains("tarhogentrev"))
 ```
 
+### Question 4
 
-> Realiza la misma recodificación con las variables `tarhogparej_1`, `tarhogparej_2`, `tarhogparej_8`, `tarhogparej_9`, `tarhogparej_hh`, `tarhogparej_mm` (tiempo dedicado a las tareas del hogar de la pareja) y agrupa su info en `p20`
+> Perform the same recoding with the variables `tarhogparej_1`, `tarhogparej_2`, `tarhogparej_8`, `tarhogparej_9`, `tarhogparej_hh`, `tarhogparej_mm` (time spent on household chores of the couple) and group their info in `p20`.
 
 
 ```{r}
@@ -2069,7 +1980,9 @@ data <-
   select(-contains("tarhogparej"))
 ```
 
-> La variable `hijomenor_1`  contiene un `1` si tiene hijos y el número de fijos está en `hijomenor_n`; si `hijomenor_97` contiene un `1` deberíamos apuntar `0` en número de hijos; si `hijomenor_99` es `1` deberíamos imputar `NA`. Resume la info de las 4 variables en una sola variable llamada `p21`
+### Question 5
+
+> The variable `hijomenor_1` contains a `1` if it has children and the number of fixed is in `hijomenor_n`; if `hijomenor_97` contains a `1` we should impute `0` in number of children; if `hijomenor_99` is `1` we should impute `NA`. Collects the info of the 4 variables in a single variable called `p21`.
 
 ```{r}
 data <- 
@@ -2081,7 +1994,10 @@ data <-
   select(-contains("hijomenor"))
 ```
 
-> Las variables siguientes (`cuidadohijos_xxx` y `ciudadohijospar_xxx`) codifican algo similar respecto al tiempo dedicado al cuidado de hijos (del entrevistado y su pareja). Resume la info en dos variables `p21a` y `p21b` como hemos hecho con `p19` y `p20`
+### Question 6
+
+> The following variables (`cuidadohijos_xxx` and `cuidadohijospar_xxx`) code something similar with respect to time spent on childcare (of the respondent and his/her partner). Summarize the information in two variables `p21a` and `p21b` as we have done with `p19` and `p20`.
+
 
 ```{r}
 data <- 
@@ -2096,7 +2012,9 @@ data <-
   select(-contains("cuidadohijos"))
 ```
 
-> Haz lo mismo con `tareascuid_xxx` respecto al tiempo empleado a cuidado y atención de una persona enferma y/o dependiente en un día laborable, y guarda la info en `p22a`. Piensa que en `p22` está guardado si tiene a su cargo una persona enferma o dependiente; si `p22` es `No` (`2`) o `N.C.` (`9`) el valor de `p22a` debería ser `NA`.
+### Question 7
+
+> Do the same with `tareascuid_xxx` regarding the time spent on care and attention of a sick and/or dependent person in a working day, and store the info in `p22a`. Think that in `p22` is stored if you have a sick or dependent person in your care; if `p22` is `No` (`2`) or `N.C.` (`9`) the value of `p22a` should be `NA`.
 
 ```{r}
 data <- 
@@ -2109,13 +2027,13 @@ data <-
   select(-contains("tareascui"))
 ```
 
-> Por último las variables `escideol`, `participaciong`, `recuvotog`, `escuela`, `nivelestentrev`, `religion`, `practicarelig6`, `sitlab`, `relalab`, `cno11`, `tipojor`, `ingreshog`, `clasesocial`, `paisnac`, `paisnac2` deberían ser renombradas como `p24`, `p25`, `p25a`, `p26`, `p26a`, `p27`, `p27a`, `p28`, `p28a`, `p28b`, `p28c`, `p29`, `p30`, `p31` y `p31a`. 
+### Question 8
 
-> La variable `sinceridad` recopila la sinceridad subjetiva que el encuestador ha percibido en el entrevistado y las variables `recuvotogr` y `recuerdo` capturan información de recuerdo de voto que ya tenemos recoficada en otros sitios. Tras eliminarlas moveremos las variables `estudios`, `cno11r`, `clasesub` (estudios, ocupación  según codificación de Seguridad Social e identificación subjetiva de clase) antes de las preguntas encuestadas
+> Finally the variables `escideol`, `participaciong`, `recuvotog`, `escuela`, `nivelestentrev`, `religion`, `practicarelig6`, `sitlab`, `relalab`, `cno11`, `tipojor`, `ingreshog`, `clasesocial`, `paisnac`, `paisnac2` should be renamed as `p24`, `p25`, `p25a`, `p26`, `p26a`, `p27`, `p27a`, `p28`, `p28a`, `p28b`, `p28c`, `p29`, `p30`, `p31` and `p31a`. In addition the variable `sinceridad` collects the subjective sincerity that the pollster has perceived in the respondent and the variables `recuvotogr` and `recuerdo` capture vote recall information that we already have collected elsewhere. Rename the former, delete the latter and move the variables `estudios`, `cno11r`, `clasesub` (studies, occupation according to Social Security coding and subjective class identification) before the surveyed questions.
 
-Así deberíamos acabar con un dataset de 107 columnas de las cuales las primeras 14 columnas dedicadas a caracterizar sociológicamente al entrevistado.
 
 ```{r}
+#| code-fold: true
 data <-
   data |> 
   rename(p24 = escideol, p25 = participaciong, p25a = recuvotog,
@@ -2125,26 +2043,256 @@ data <-
          p30 = clasesocial, p31 = paisnac, p31a = paisnac2) |> 
   select(-(sinceridad:recuerdo)) |> 
   relocate(estudios, cno11r, clasesub, .before = p0)
+data
 ```
 
 
+### Question 9
 
-> Fíjate que hay variables como `p0` y `p1` que aunque estén codificadas de manera numérica en realidad deberíamos tenerlas solo de forma cualitativa. Por ejemplo, si miras el cuestionario, la variable `p0` corresponde a la pregunta `P0.c` que dice
+Note that there are variables in the questionnaire, such as `p0` and `p1`, that although they are coded numerically, in reality we should have them only qualitatively. For example, if you look at the questionnaire, the variable `p0` corresponds to the question `P0.c` which says “First of all I would like to ask you if you have...
 
-«En primer lugar quisiera preguntarle si tiene Ud
+* Spanish nationality --> 1
 
-* La nacionalidad española --> 1
-* La nacionalidad española y otra --> 2
-* Otra nacionalidad --> 3
+* Spanish nationality and other --> 2
+
+* Other nationality --> 3
 
 ```{r}
 data |> count(p0)
 ```
 
-Si dejásemos la variable tal cual, de manera numérica, estamos asumiendo dos cosas incorrectas:
+If we were to leave the variable as it is, numerically, we would be assuming two incorrect things:
 
-1) Hay una jerarquía (tener nacionalidad española es mejor o peor que tener otra nacionalidad)
+1) There is a hierarchy (having Spanish nationality is better or worse than having another nationality).
 
-2) Esa jerarquía además se cuantifica de manera numérica: dad que 2 es el doble 1, implica que, de alguna forma, tener dos nacionalidades "el doble de algo" que tener solo la nacionalidad española
+2) This hierarchy is also quantified numerically: since 2 is double 1, it implies that, in some way, having two nationalities is “twice as much” as having only Spanish nationality
 
-Si te fijas en el cuestionario
+If you look at the questionnaire, all the variables that are `p{number}` (without the low slash `_`) are of this type. The others respond to a more complex questionnaire (a series of questions to be assessed on a scale that is qualitative ordinal and we will consider that it can be converted to an ordinal factor).
+
+> Convert the `p{number}` to qualitative (nominal) with its label and the `p{number}_x` to ordinal qualitative (with its number). In the latter, note that “don't know/no answer” responses are coded as `98` and `99` (and should be NA).
+
+```{r}
+#| code-fold: true
+library(labelled)
+data <-
+  data |> 
+  # with $ to specify "not more than..."
+  mutate(across(matches("p[0-9]{1}$|p[0-9]{2}$"), to_factor),
+         across(matches("p[0-9]{1}_|p[0-9]{2}_"),
+                function(x) { factor(if_else(x %in% c(98, 99), NA, x),
+                                     ordered = TRUE) } ))
+```
+
+> In some compound questions with only 5 options, the `NA` are coded as `7`, `8` or `9`.
+
+```{r}
+data <-
+  data |> 
+  # with $ to specify "not more than..."
+  mutate(across(matches("p[0-9]{1}_|p[0-9]{2}_"),
+                function(x) { factor(if_else(x %in% c(7, 8, 9), NA, x),
+                                     ordered = TRUE) } ))
+```
+
+### Question 10
+
+> Calculate a two-dimensional table of relative frequencies between the variable `sex` and the variable `p4` (degree of inequality between men and women in Spain) normalizing as you consider to answer the following question: what percentage of women believe that inequalities are very large or quite large? And of men?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table_freq <- table(to_factor(data$sexo), data$p4)
+prop.table(table_freq, margin = 1)
+# 67% of women
+# 48.7% of men
+```
+
+
+### Question 11
+
+> Calculate a measure of association between these variables and detail conclusions.
+
+```{r}
+#| code-fold: true
+#| eval: false
+data |> 
+  summarise("sig_chisq" = chisq.test(to_factor(sexo), p4)$p.value)
+# tiny p-valor --> enough evidences againts null hyp --> 
+# answers to p4 depends on sex
+```
+
+### Question 12
+
+> Create a simple graph in `ggplot()` that allows to represent the variable `p4` in function of sexes, allowing to appreciate the differences in them.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# first option: geom_bar with abs freqs
+ggplot(data |>
+         mutate("sexo" = to_factor(sexo))) +
+  geom_bar(aes(x = p4, fill = p4), alpha = 0.7) +
+  ggthemes::scale_fill_colorblind() +
+  facet_wrap(~sexo) +
+  theme_minimal()
+
+# second option: geom_col with rel freqs
+ggplot(data |>
+         mutate("sexo" = to_factor(sexo)) |> 
+         count(sexo, p4) |> 
+         mutate("porc" = n/sum(n))) +
+  geom_col(aes(x = p4, y = porc, fill = p4), alpha = 0.7) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  ggthemes::scale_fill_colorblind() +
+  facet_wrap(~sexo) +
+  theme_minimal()
+
+# third option: horizontal bars
+ggplot(data |>
+         mutate("sexo" = to_factor(sexo)) |> 
+         count(sexo, p4) |> 
+         mutate("porc" = n/sum(n)) |> 
+         mutate("porc" = if_else(sexo == "Hombre", -porc, porc))) +
+  geom_col(aes(y = p4, x = porc, fill = p4), alpha = 0.7) +
+  scale_x_continuous(labels = scales::label_percent()) +
+  ggthemes::scale_fill_colorblind() +
+  facet_wrap(~sexo, scales = "free_x") +
+  theme_minimal()
+
+# fourth option: fill geom bar
+ggplot(data |>
+         mutate("sexo" = to_factor(sexo))) +
+  geom_bar(aes(x = sexo, fill = p4), position = "fill",
+           alpha = 0.7) +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+### Question 13
+
+> Performs the same analysis but regroups `p4` earlier into only 3 levels: grandes (`Muy grandes` and `Bastante grandes`), pequeñas (`Pequeñas` and `Casi inexistentes`) and `NS/NC`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+data <-
+  data |> 
+  mutate("p4" =
+           fct_collapse(data$p4,
+                        "grandes" = c("Muy grandes", "Bastante grandes"), "NS/NC" = c("N.S.", "N.C."),
+                        other_level = "pequeñas"))
+
+table_freq <- table(to_factor(data$sexo), data$p4)
+prop.table(table_freq, margin = 1)
+# 67% of women
+# 48.7% of men
+
+data |>
+  summarise("sig_chisq" = chisq.test(to_factor(sexo), p4)$p.value)
+
+ggplot(data |>
+         mutate("sexo" = to_factor(sexo))) +
+  geom_bar(aes(x = sexo, fill = p4), position = "fill",
+           alpha = 0.7) +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+### Question 14
+
+> Question `p16` captures, on a scale of 0 to 10 (where 0 means “not at all feminist” and 10 means “very feminist”) the self-placement of the respondents. How is this variable distributed by gender? Make a frequency table
+
+```{r}
+#| code-fold: true
+#| eval: false
+prop.table(table(to_factor(data$sexo), data$p16), margin = 1)
+```
+
+> What % of men and women declare themselves above 6?
+
+```{r}
+#| code-fold: true
+#| eval: false
+data |> 
+  mutate("p16" = factor(p16, ordered = TRUE)) |> 
+  group_by(sexo) |> 
+  count(p16 > 7) |> 
+  mutate("porc" = 100*n/sum(n)) |> 
+  ungroup()
+# 48.3% between men
+# 62.3% between women
+```
+
+> Question `p19` captured minutes spent on household chores. Converts to numeric (“No minutes” as 0).
+
+```{r}
+#| code-fold: true
+data <-
+  data |>
+  mutate("p19" = as.numeric(as.character(p19)))
+
+```
+
+> After that, first calculate the average by sex disaggregated, and then the average disaggregated by sex and `p16`. What conclusions do you draw? Make a graph if you consider it
+
+```{r}
+#| code-fold: true
+mean_sex <-
+  data |> 
+  summarise("avg_min" = mean(p19, na.rm = TRUE), .by = sexo)
+# 175 minutes in women vs 129 in men
+
+mean_sex_feminism <-
+  data |> 
+  summarise("avg_min" = mean(p19, na.rm = TRUE),
+            .by = c(sexo, p16))
+ggplot(mean_sex_feminism) +
+  geom_col(aes(x = p16, y = avg_min, fill = avg_min),
+           alpha = 0.7) +
+  scale_fill_viridis_c(option = "magma") +
+  facet_wrap(~to_factor(sexo)) +
+  theme_minimal()
+# We can see how in men the average minutes remains cte
+# without depending on the self-localization in the
+# feminism scale
+```
+
+### Question 15
+
+> We will calculate in a new variable the difference in minutes spent at home between the respondent (`p19`) and his/her partner (`p20`).
+
+```{r}
+#| code-fold: true
+data <- 
+  data |>
+  mutate("p20" = as.numeric(as.character(p20))) |> 
+  mutate("diff_min" = p19 - p20)
+```
+
+> Repeat the previous analysis using this difference in minutes.
+
+```{r}
+#| code-fold: true
+mean_sex <-
+  data |> 
+  filter(p17a %in% c(1, 2) & as.numeric(p17a) != as.numeric(sexo)) |>
+  summarise("avg_diff_min" = mean(diff_min, na.rm = TRUE), .by = sexo)
+# +63.7 minutes in women vs -40.6 in men
+
+mean_sex_feminism <-
+  data |> 
+  filter(p17a %in% c(1, 2) & as.numeric(p17a) != as.numeric(sexo)) |>
+  summarise("avg_diff_min" = mean(diff_min, na.rm = TRUE),
+            .by = c(sexo, p16))
+
+ggplot(mean_sex_feminism) +
+  geom_col(aes(x = p16, y = avg_diff_min, fill = avg_diff_min),
+           alpha = 0.7) +
+  scale_fill_viridis_c(option = "magma") +
+  facet_wrap(~to_factor(sexo)) +
+  theme_minimal()
+```
+
+
+
+

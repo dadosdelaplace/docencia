@@ -9381,3 +9381,725 @@ Para practicar con funciones vamos a crear un completo **conversor de temperatur
 Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/if-else-bucles-funciones-isciii/) hasta construirlo.
 
 
+---
+
+
+## ¿Qué es Github?
+
+[**GitHub**]{.hl-yellow} es la plataforma colaborativa más conocida basada en el [**sistema de control de versiones Git**]{.hl-yellow}
+
+. . .
+
+-   [**¿Qué es Git?**]{.hl-purple} Git es un sistema de [**control de versiones**]{.hl-yellow}: una especie de [**Dropbox**]{.hl-yellow} para facilitar la [**programación colaborativa**]{.hl-yellow} entre un grupo de personas, permitiendo llevar la [**trazabilidad de los cambios**]{.hl-yellow} realizados.
+
+. . .
+
+-   [**¿Qué es Github?**]{.hl-purple} Nuestra [**plataforma/interfaz**]{.hl-yellow} para ejecutar el control de versiones: nos servirá no solo para trabajar colaborativamente sino para [**hacer transparente**]{.hl-yellow} el proceso de construcción de nuestros proyectos de código.
+
+. . .
+
+::: callout-important
+## Importante
+
+Desde el 4 de junio de 2018 Github es de Microsoft (ergo el código que subas también)
+:::
+
+---
+
+## Visión general
+
+Tras hacernos una cuenta en Github, [**arriba a la derecha**]{.hl-purple} tendremos un círculo, y haciendo click en [**Your Profile**]{.hl-purple}, veremos algo similar a esto
+
+::: columns
+::: {.column width="55%"}
+![](img/github_1.png)
+:::
+
+::: {.column width="45%"}
+-   [**Edit profile**]{.hl-purple}: nos permite añadir una [**descripción y foto de perfil**]{.hl-yellow}.
+
+-   [**Overview**]{.hl-purple}: en ese panel de cuadrados se [**visualizará nuestra actividad**]{.hl-yellow} a lo largo del tiempo.
+
+-   [**Repositories**]{.hl-purple}: el códugo será subido a [**repositorios**]{.hl-yellow}, el equivalente a nuestras carpetas compartidas en Dropbox.
+:::
+:::
+
+---
+
+## Primer uso: consumidor
+
+Antes de aprender como crear repositorios, Github también nos servirá para
+
+-   [**Acceder a código**]{.hl-purple} ajeno
+-   [**Proponer mejoras**]{.hl-purple} a otros usuarios, e incluso proponer [**correcciones de error que detectemos**]{.hl-yellow} de software que usemos
+
+. . .
+
+-   [**Instalar paquetes de R**]{.hl-purple}. En muchas ocasiones los desarrolladores de paquetes suben las actualizaciones a CRAN cada cierto tiempo, y en otras el software no es suficientemente «amplio» para poder ser subido como paquete.
+
+El código de paquetes que no tengamos subido en CRAN podremos [**instalarlo como código desde Github**]{.hl-yellow}
+
+---
+
+## Instalar desde Github
+
+Por ejemplo, vamos a instalar un paquete llamado [`{peRReo}`](https://github.com/jbgb13/peRReo), cuya única función es darnos [**paletas de colores**]{.hl-yellow} basadas en portadas de [**álbumes de música urbana**]{.hl-yellow}
+
+::: columns
+::: {.column width="50%"}
+![](img/perrreo.png)
+:::
+
+::: {.column width="50%"}
+![](img/rosalia.png){width="360"}
+:::
+:::
+
+. . .
+
+Para ello antes tendremos que instalar un [**conjunto de paquetes para desarrolladores**]{.hl-yellow} llamado `{devtools}`, que nos permitirá la instalación desde Github
+
+```{r}
+#| eval: false
+install.packages("devtools")
+```
+
+---
+
+## Instalar desde Github
+
+Las [**instrucciones de instalación**]{.hl-yellow} suelen venir detalladas en la portada del repositorio
+
+::: columns
+::: {.column width="50%"}
+![](img/install_perreo.png)
+:::
+
+::: {.column width="50%"}
+![](img/rosalia.png){width="310"}
+:::
+:::
+
+. . .
+
+En la mayoría de casos bastará con la función `install_github()` (del paquete que acabamos de instalar), pasándole como argumento la [**ruta del repositorio**]{.hl-yellow} (sin "github.com/").
+
+```{r}
+#| eval: false
+devtools::install_github("jbgb13/peRReo")
+```
+
+Ya puedes perrear con ggplot ;)
+
+---
+
+## Descargar desde Github
+
+La mayoría de veces lo que subamos no será un paquete de R como tal sino que [**subiremos un código más o menos organizado**]{.hl-yellow} y comentado. En ese caso podremos [**descargar el repo entero**]{.hl-yellow} haciendo click [**Code**]{.hl-green} y luego Download ZIP.
+
+Por ejemplo, vamos a descargarnos los scripts de dataviz que han subido desde el [Centre d'Estudis d'Opinió](https://github.com/ceopinio/bop-grafics)
+
+![](img/ceo_github.png)
+
+---
+
+## Ideal
+
+![](img/abogados_simpson.jpeg){width="600"}
+
+[**¿Lo ideal en caso de RTVE?**]{.hl-purple} Tener dos tipos de repositorios
+
+-   Una [**colección de repositorios públicos (producción)**]{.hl-yellow} donde hacer transparente el código y los datos ([**ya validados**]{.hl-purple}), coordinado por un nº reducido de personas.
+
+-   Una [**colección de repositorios privados (desarrollo)**]{.hl-yellow} donde esté todo el equipo colaborando y donde se haga el [**trabajo del día**]{.hl-purple}, con trazabilidad interna.
+
+---
+
+## Nuestro primer repositorio
+
+Vamos a [**crear nuestro primero repositorio**]{.hl-yellow} que servirá además como [**carta de presentación**]{.hl-yellow} de nuestro perfil en Github.
+
+1.  [**Repositories**]{.hl-purple}: hacemos click en las pestaña de Repositories.
+
+2.  [**New**]{.hl-purple}: hacemos click en el [**botón verde New**]{.hl-green} para crear un nuevo repositorio
+
+![](img/new_repo.png)
+
+---
+
+## Nuestro primer repositorio
+
+-   [**Repository name**]{.hl-purple}: el [**nombre del repositorio**]{.hl-yellow}. En este caso vamos a crear un repositorio muy concreto: el nombre debe [**coincidir exactamente con tu nombre de usuario**]{.hl-yellow}
+
+-   [**Description**]{.hl-purple}: descripción de tu repositorio. En este caso será un repo de presentación.
+
+![](img/repo_init_1.png)
+
+---
+
+## Nuestro primer repositorio
+
+-   [**Public vs private**]{.hl-purple}: con cada repositorio tendremos la opción de hacer el repositorio
+
+    -   [**público**]{.hl-purple}: todos los usuarios podrán ver el código así cómo la trazabilidad de su desarrollo (qué se añade y cuándo). Es para mí la opción más recomendable cuando quieres darle [**visibilidad y transparencia**]{.hl-yellow} a tu trabajo
+    -   [**privado**]{.hl-purple}: solo tendrán acceso al repositorio aquellos usuarios a los que se lo permitas. No se podrá visualizar ni instalar nada de él fuera de Github.
+
+![](img/repo_init_2.png)
+
+En este caso concreto, dado que será un repositorio de presentación, lo [**haremos público**]{.hl-yellow}.
+
+---
+
+## Nuestro primer repositorio
+
+-   [**Add a README file**]{.hl-purple}: un README file será el archivo donde incluiremos las [**instrucciones y detalles de uso**]{.hl-yellow} a los demás (en el caso de `{peRReo}` era el archivo que contenía los detalles de instalación)
+
+![](img/repo_init_3.png)
+
+De momento [**ignoraremos los demás campos**]{.hl-red} para este primer repositorio.
+
+---
+
+## Nuestro primer repositorio
+
+![](img/repo_init_1.png)
+
+Por defecto Github asume que este repositorio, con el [**mismo nombre que nuestro usuario**]{.hl-yellow} será el repositorio que querremos que se presente de inicio cuando alguien entra en nuestro perfil, y será el repositorio donde \[**incluir en el README.md**\] una presentación de nosotros y un índice de tu trabajo (si quieres).
+
+---
+
+## Nuestro primer repositorio
+
+![](img/profile_github_md.png)
+
+Fíjate que ahora en nuestra [**portada tenemos dicho README.md**]{.hl-yellow} que podemos personalizar a nuestro gusto haciendo uso de [**html y markdown**]{.hl-yellow}.
+
+Aquí puedes ver [**algunos ejemplos de README.MD**](https://github.com/matiassingers/awesome-readme)
+
+---
+
+## Repo de código
+
+Una vez que tenemos nuestro README de presentación (recuerda que puedes [**personalizar a tu gusto con html y markdown**]{.hl-yellow}) vamos a crear un [**repositorio de código**]{.hl-yellow}.
+
+. . .
+
+Si ya era importante [**trabajar con proyectos**]{.hl-yellow} en `RStudio`, cuando lo combinamos con Github es aún más crucial que creemos un proyecto antes de subir el código, así que vamos a crear uno de prueba que se llame `repo-github-1`.
+
+. . .
+
+En dicho proyecto vamos a [**crear un script**]{.hl-yellow} (en mi caso llamado **codigo.R**) en el que deberás hacer los siguientes pasos:
+
+---
+
+## Repo de código
+
+1.  [**Carga**]{.hl-yellow} directamente desde la página del [ISCIII](https://cnecovid.isciii.es/covid19/resources) el archivo llamado `casos_hosp_uci_def_sexo_edad_provres.csv`
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Carga de datos desde ISCIII
+datos_covid <- read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+```
+
+. . .
+
+2.  [**Filtra**]{.hl-yellow} datos de Madrid (`"M"`), de 2020 y con sexo conocido (hombre/mujer). Tras ello quédate con las columnas `fecha`, `sexo`, `grupo_edad`, `num_casos` (ese orden). Por último obtén la suma de casos diarios por fecha y sexo.
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Depuración
+datos_madrid <-
+  datos_covid |>
+  # Filtrado por Madrid y fecha
+  filter(provincia_iso == "M" & fecha <= "2020-12-31" & sexo != "NC") |> 
+  # Selección de columnas
+  select(provincia_iso:fecha, num_casos) |> 
+  # Resumen de casos diarios por fecha y sexo
+  summarise(num_casos = sum(num_casos), .by = c(fecha, sexo))
+  
+```
+
+---
+
+## Repo de código
+
+3.  [**Exporta el dataset a un csv**]{.hl-yellow} en una carpeta que se llame `exportado`
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Exportamos datos
+write_csv(datos_madrid, file = "./exportado/datos_madrid.csv")
+```
+
+. . .
+
+::: columns
+::: {.column width="40%"}
+4.  Crea una [**gráfica de líneas**]{.hl-yellow} que tenga en el eje x fecha, en el eje y casos, con una curva por sexo (gráficas separadas).
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Gráfica
+ggplot(datos_madrid) +
+  geom_line(aes(x = fecha, y = num_casos, color = sexo),
+            alpha = 0.6, linewidth = 0.7) +
+  scale_color_manual(values = c("#85519D", "#278862")) +
+  facet_wrap(~sexo) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+:::
+
+::: {.column width="60%"}
+![](./img/ggplot.png){width="380"}
+:::
+:::
+
+. . .
+
+5.  Tras ello [**exportamos la gráfica**]{.hl-yellow}
+
+```{r}
+#| eval: false
+ggsave(filename = "./exportado/ggplot.png", plot = last_plot(),
+       bg = "white", width = 12, height = 8)
+```
+
+---
+
+## Repo de código
+
+¿Cómo [**subimos el proyecto**]{.hl-yellow}? Vamos de nuevo a [**crear un proyecto de cero**]{.hl-yellow}. Antes no hemos hablado de dos campos importantes:
+
+::: columns
+::: {.column width="50%"}
+![](./img/repo-1.png){width="460"}
+:::
+
+::: {.column width="50%"}
+-   `Add .gitignore` nos permitirá [**seleccionar el lenguaje**]{.hl-yellow} en el que estará nuestro proyecto para que Github lo entienda al sincronizar (y no actualice cosas que no deba).
+
+-   `Choose a license` nos permitirá [**seleccionar la licencia**]{.hl-yellow} que determinará las condiciones en las que otros podrán reusar tu código.
+:::
+:::
+
+---
+
+## Repo de código
+
+::: columns
+::: {.column width="50%"}
+![](./img/repo-1-1.png)
+:::
+
+::: {.column width="50%"}
+Si te fijas traer crearlo tenemos solo 3 archivos: el de licencia, el .gitignore y el readme.md (donde deberíamos escribir una guía de uso de lo que hayamos subido)
+:::
+:::
+
+Para subir los archivos vamos a clickar en [**Add file \< Upload File**]{.hl-purple} y [**arrastraremos TODOS los archivos**]{.hl-yellow} de la carpeta de nuestro proyecto.
+
+---
+
+## Repo de código
+
+Tras la subida de archivos tendremos un cuadro llamado [**Commit changes**]{.hl-purple}
+
+![](./img/commit-1.png)
+
+Un [**commit**]{.hl-purple} es una [**modificación del repositorio**]{.hl-yellow} con algo que se añade/elimine/modifique, y dicho cuadro es recomendable usarlo para [**resumir en qué consiste la modificación**]{.hl-yellow}, de manera que quede trazado el cambio.
+
+---
+
+## Repo de código
+
+Haciendo click en el reloj donde indica el [**número de commits**]{.hl-yellow} accedemos al [**histórico de commits (cambios)**]{.hl-yellow} con hora, día, autor, comentarios, etc.
+
+![](./img/commit-reloj.png)
+
+---
+
+## Repo de código
+
+Vamos a realizar un [**cambio en nuestro código**]{.hl-yellow}: en tu código local (local --\> tu ordenador), en lugar de filtrar por Madrid haz el [**filtro por Barcelona**]{.hl-yellow}, guarda el código y sube en el repositorio el nuevo archivo (con el mismo nombre, Github hará la sobrescritura)
+
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+datos_bcn <-
+  datos_covid |>
+  filter(provincia_iso == "B" & fecha <= "2020-12-31" & sexo != "NC") |> 
+  select(fecha, sexo, grupo_edad, num_casos) |> 
+  summarise(num_casos = sum(num_casos), .by = c(fecha, sexo))
+```
+
+---
+
+## Consulta de commits
+
+![](./img/barcelona_covid.png){width="550"}
+
+::: columns
+::: {.column width="40%"}
+Si ahora [**consultamos el commit**]{.hl-yellow}, al lado hay un número que lo identifica, y clickando en él nos resume los cambios: no solo [**almacena todas las versiones pasadas**]{.hl-yellow} sino que además nos [**muestra las diferencias entre los archivos cambiados**]{.hl-yellow}
+:::
+
+::: {.column width="60%"}
+![](./img/commit_cambio.png)
+:::
+:::
+
+---
+
+## Trazabilidad de cambios
+
+::: columns
+::: {.column width="72%"}
+![](./img/commit_split.png) ![](./img/commit_unified.png)
+:::
+
+::: {.column width="28%"}
+Tenemos [**dos modos de visualización**]{.hl-yellow} de los cambios: el modo split nos muestra el antiguo y el nuevo, con las inclusiones en verde y lo que ya no está en rojo; y el modo unified nos muestra todo en un mismo documento.
+:::
+:::
+
+---
+
+## Recuperación de commits
+
+![](./img/browse-repo.png)
+
+Github nos permite incluso [**recuperar una versión del pasado**]{.hl-yellow} de nuestro repositorio, haciendo click en el tercer icono del commit.
+
+---
+
+## Recuperación de commits
+
+![](./img/branch-commit.png)
+
+Si te fijas ahora al lado de `1 branch` tenemos un [**menú desplegable**]{.hl-yellow} en el que antes ponía `main` y ahora un número identificador del commit. Ya hablaremos de la idea de [**rama (branch)**]{.hl-yellow}
+
+---
+
+## Repo con rmd/qmd
+
+::: columns
+::: {.column width="60%"}
+Vamos a poner en práctica lo aprendido:
+
+1.  Crea un nuevo repositorio en Github (llamado `repo-github-2`) donde habrá alojado con proyecto de R.
+
+2.  Crea un proyecto en `RStudio` que se llame (por ejemplo) `proyecto-qmd`
+
+3.  Una vez dentro del proyecto en `RStudio` haz click en `File < New File < Quarto Document`
+:::
+
+::: {.column width="40%"}
+![](./img/primer-qmd.png)
+:::
+:::
+
+Deberás tener un documento similar a este: un [**quarto markdown (.qmd)**]{.hl-yellow}, un documento que nos permitirá incluir [**markdown + código**]{.hl-yellow} (puede ser `R` o puede ser `Observable`, `D3`, etc).
+
+---
+
+## Repo con rmd/qmd
+
+Este formato es ideal para:
+
+-   [**Trabajar en equipo**]{.hl-yellow} construyendo el borrador de una pieza.
+-   Tomar [**apuntes o informes**]{.hl-yellow} para uno mismo.
+-   [**Presentar**]{.hl-yellow} tu trabajo a tus compañeros.
+
+::: columns
+::: {.column width="50%"}
+![](./img/prueba-qmd-html.png)
+:::
+
+::: {.column width="50%"}
+Si te fijas ahora nuestro repositorio tiene un archivo con formato `.html`...es decir...
+
+[**¡Es una web!**]{.hl-yellow}
+:::
+:::
+
+---
+
+## Github pages
+
+¿Cómo [**convertir nuestro repositorio en una web**]{.hl-yellow}?
+
+![](./img/github-pages.png)
+
+1.  Haz click en `Settings`
+2.  Ve al apartado `Pages`
+3.  En el subapartado `branch` selecciona la única rama que tenemos ahora (`main`)
+4.  Selecciona la carpeta donde tengas el `.html` (en web complejas estará como en cualquier web en `docs`, en algo simple estará en la ruta raiz del repositorio)
+5.  Haz click en `Save`
+
+---
+
+## Github pages
+
+Si te fijas en la [**parte superior del repositorio**]{.hl-yellow} ahora tenemos un icono naranja, que nos indica que la [**web está en proceso de ser desplegada (deploy)**]{.hl-orange}
+
+![](./img/github-naranja.png)
+
+---
+
+## Github pages
+
+Pasados unos segundos (dependiendo del tamaño de la web y tu conexión a internet) ese [**icono pasará a ser un check verde**]{.hl-green}: habemus web
+
+![](./img/github-verde.png)
+
+El [**link de la web por defecto**]{.hl-yellow} será `{nombre_usuario}.github.io/{nombre_repo}`
+
+---
+
+## Github pages
+
+![](./img/github-pages-deploy.png)
+
+¡Un momento! Ahora mismo nuestra web [**no nos está mostrando nuestro .qmd**]{.hl-red}, sino por defecto el [**README.md**]{.hl-yellow}.
+
+. . .
+
+Para que Github entienda que queremos visualizar ese `.html` que hemos generado a partir del `.qmd` vamos en nuestro proyecto local a [**borrar**]{.hl-yellow} todo lo que no sea nuestro archivo `.Rproj` y nuestro archivo `.qmd`, y vamos a [**cambiar el nombre**]{.hl-yellow} a este último llamándolo `index.qmd`, y volvemos a compilarlo para [**generar un index.html**]{.hl-yellow}
+
+---
+
+## Github pages
+
+Vamos a [**subir a Github ese nuevo proyecto**]{.hl-yellow} con el cambio de nombre (llamado `repo-github-3`) para ver luego las diferencias entre uno y otro
+
+![](./img/repo-index-html.png)
+
+---
+
+## Github pages
+
+Si [**repetimos el proceso para hacer una Page**]{.hl-yellow} y esperamos al tick verde...
+
+::: columns
+::: {.column width="50%"}
+![](./img/index-html-qmd.png)
+:::
+
+::: {.column width="50%"}
+Si a tu `.qmd` ya le llamas de inicio `index.qmd`, automáticamente, al detectar Github un `index.html`, interpreta que ese [**archivo index.html**]{.hl-yellow} es el que define la web (y puedes personalizar añadiendo un archivo `css` de estilos)
+
+[**Habemus web**]{.hl-green} simplemente clickando en Pages :)
+:::
+:::
+
+---
+
+## Repo con diapositivas
+
+Vamos a crear el último repositorio que se llamará `repo-diapos`, y crear un proyecto en `RStudio` del mismo nombre (por ejemplo). Una vez creado le daremos a `File < New File < Quarto Presentation`.
+
+::: columns
+::: {.column width="45%"}
+![](img/quarto-slides.png)
+:::
+
+::: {.column width="55%"}
+La forma de escribir será igual que un `.qmd` normal solo que ahora [**cada diapositiva la separaremos**]{.hl-yellow} con un `---` (usando archivos de estilos podemos personalizar lo que queramos)
+
+Llama al archivo directamente `index.qmd`, súbelo a Github y con un click en Pages tienes una [**web con tus diapositivas**]{.hl-yellow}
+:::
+:::
+
+---
+
+## Uso de Gitkraken
+
+La forma más [**sencilla para trabajar de manera colaborativa**]{.hl-yellow} en Github, y tenerlo sincronizado con nuestro local, es hacer uso de [Gitkraken](https://www.gitkraken.com/download)
+
+::: columns
+::: {.column width="50%"}
+![](img/gitkraken-repo.png)
+:::
+
+::: {.column width="50%"}
+Una vez dentro clickamos en el icono de la carpeta (`Repo Management`) y si ya tenemos el repositorio en Github seleccionamos `Clone`, indicando donde queremos clonar (en nuestro local) y que [**repositorio de Github queremos clonar**]{.hl-yellow}.
+:::
+:::
+
+---
+
+## Uso de Gitkraken
+
+::: columns
+::: {.column width="50%"}
+![](img/view-change.png)
+:::
+
+::: {.column width="50%"}
+Una vez clonado, la idea es que cada [**cambio que hagamos en local nos aparecerá en Gitkraken**]{.hl-yellow} como `View changes`.
+:::
+:::
+
+---
+
+## Uso de Gitkraken
+
+Cuando tengas suficientes cambios como para [**actualizar el repositorio**]{.hl-yellow} (tampoco tiene sentido actualizar con cada edición), verás algo similar a esto con todos los [**commits realizados**]{.hl-yellow}
+
+::: columns
+::: {.column width="50%"}
+![](img/stage-all-changes.png)
+:::
+
+::: {.column width="50%"}
+Podrás decidir cuáles de los [**commits locales quieres incluir en remoto**]{.hl-yellow}, bien uno a uno o en `Stage all changes` (para todos)
+:::
+:::
+
+---
+
+## Uso de Gitkraken
+
+Tras incluir los commits deberás incluir un [**título y descripción del commit**]{.hl-yellow}
+
+![](img/titulo-commit.png)
+
+---
+
+## Uso de Gitkraken
+
+Tras hacerlo verás que ahora tenemos [**dos iconos separados en una especie de árbol**]{.hl-yellow} (¿te acuerdas de la `branch` o rama?):
+
+-   [**Ordenador**]{.hl-purple}: la versión del repositorio que tienes en tu [**ordenador**]{.hl-yellow}.
+
+-   [**Logo**]{.hl-purple}: la versión del repositorio que tienes [**subida en remoto**]{.hl-yellow}
+
+![](img/split-gitkraken.png)
+
+---
+
+## Uso de Gitkraken
+
+Mientras eso suceda solo tendrás sincronizado tu ordenador con Gitkraken, pero no con Github. Para ello haremos [**click en Push**]{.hl-yellow} (con `Pull` podrás forzar a tener en local lo mismo que en remoto).
+
+![](img/push-gitkraken.png)
+
+---
+
+## Branchs
+
+Como hemos mencionado ya en varias ocasiones, hay un elefante en la habitación que aún no hemos mentado: las [**ramas o branchs**]{.hl-yellow} de un repositorio.
+
+. . .
+
+Imagina que estáis trabajando varios en un proyecto y teneís una versión que funciona pero que queréis [**modificar en paralelo a partir del estado actual**]{.hl-yellow} del repositorio.
+
+. . .
+
+Las [**ramas**]{.hl-yellow} nos permiten partir de una versión común del repositorio y hacer cambios que [**no afecten a los demás**]{.hl-yellow}
+
+---
+
+## Branchs
+
+Para [**crear una rama**]{.hl-yellow} a partir del estado actual de repositorio haremos click en `Branch` y le pondremos un nombre
+
+![](img/branch-button.png)
+
+Una vez creada verás [**dos iconos**]{.hl-yellow} y un [**menú desplegable**]{.hl-yellow} con las distintas ramas en las que quieres hacer el commit. Imagina que realizas un cambio pero [**no quieres añadirlo a la rama principal**]{.hl-yellow}: puedes hacer el [**commit en tu rama propia en LOCAL**]{.hl-yellow} (lo harás en la rama activa de tu menú de branchs).
+
+---
+
+## Branchs
+
+La primera vez te pedirá que escribas la [**rama en REMOTO**]{.hl-yellow} con la quieres sincronizar tu rama en local. [**Consejo**]{.hl-green}: ponle el mismo nombre en remoto que en local.
+
+![](img/name-branch.png)
+
+---
+
+## Branchs
+
+Fíjate que ahora tenemos el ordenador y el logo en el mismo sitio. Esto no significa que tengas ambas ramas en tu local, solo que [**Gitkraken tiene ambas sincronizadas**]{.hl-yellow}: clickando en cualquiera de ellas, tus archivos en tu ordenador cambiarán.
+
+![](img/both-branchs.png)
+
+---
+
+## Pull request
+
+Lo más recomendable es que [**solo se incorpore de una rama secundaria**]{.hl-yellow} a la rama principal aquello que está [**validado por un/a coordinador/a**]{.hl-yellow} del repositorio, asegurándose que todo funciona correctamente.
+
+Cuando queramos incluirlo haremos [**click con botón derecho**]{.hl-yellow} en el icono de la rama secundaria y seleccionamos `Start a pull request to origin from...`
+
+![](img/pull-request-menu.png)
+
+. . .
+
+Una [**pull request**]{.hl-yellow} será una [**petición al responsable de la rama principal**]{.hl-yellow} para incluir los cambios
+
+---
+
+## Pull request
+
+::: columns
+::: {.column width="60%"}
+![](img/create-pull-request.png)
+:::
+
+::: {.column width="40%"}
+En el cuadro que no se abre deberemos escribir:
+
+-   La [**rama**]{.hl-yellow} a la que hacer el `merge` (normalmente la `main`)
+-   Título y resumen de los cambios
+-   Puedes incluso asignar un [**revisor**]{.hl-yellow} entre los colaboradores del repo.
+-   Puedes asignar [**etiquetas**]{.hl-yellow}
+:::
+:::
+
+---
+
+## Pull request
+
+Mientras no se acepte aparecerá un [**icono de rama**]{.hl-yellow} y un +1 en Pull Requests
+
+![](img/pending-branch.png){width="500"}
+
+. . .
+
+Si somos al mantenedor del repositorio, haciendo click en el menú nos saldrán las ramas que nos quieren hacer hacer `merge`
+
+![](img/menu-pr.png){width="500"}
+
+---
+
+## Pull request
+
+Al hacer click se abrirá un [**cuadro de Pull Request**]{.hl-yellow} para decidir si
+
+-   [**Revisar**]{.hl-yellow} los cambios
+-   [**Aprobar**]{.hl-yellow} el `merge`
+-   [**Añadir comentarios**]{.hl-yellow} al que ha solicitado el `merge` por si queremos solicitar algún cambio [**antes de ser aprobado**]{.hl-yellow}
+
+## ![](img/menu-pr-2.png)
+
+## Pull request
+
+Tras revisar todo y aprobarlo clickaremos en `Confirm merge`, y tras ello podremos decidir si esa rama que era paralela a la principal la queremos [**eliminar**]{.hl-yellow} o dejar visible a todos (consejo: dejar visible para tene [**trazabilidad**]{.hl-yellow} del proyecto de trabajo)
+
+::: columns
+::: {.column width="50%"}
+![](img/merge-branch.png)
+:::
+
+::: {.column width="50%"}
+![](img/delete-branch.png)
+:::
+:::
+

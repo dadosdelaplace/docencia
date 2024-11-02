@@ -10431,3 +10431,551 @@ You can also use `translate_sql()` to translate individual expressions from `dpl
 dbplyr::translate_sql((x + y) / 2, con = connection)
 ```
 
+---
+
+## What about Github?
+
+[**GitHub**]{.hl-yellow} is the most well-known collaborative platform based on the [**Git version control system**]{.hl-yellow}
+
+. . .
+
+-  [**What is Git?**]{.hl-purple} Git is a [**version control**]{.hl-yellow} system: a kind of [**Dropbox**]{.hl-yellow} to facilitate [**collaborative programming**]{.hl-yellow} among a group of people, allowing to keep track of the [**traceability of changes**]{.hl-yellow} made.
+
+. . .
+
+- [**What is Github?**]{.hl-purple} Our [**platform/interface**]{.hl-yellow} for running version control: it will serve us not only to work collaboratively but to [**make transparent**]{.hl-yellow} the process of building our code projects.
+
+. . .
+
+::: callout-important
+## Important
+
+As of June 4, 2018 Github is owned by Microsoft (ergo the code you upload as well).
+:::
+
+---
+
+## Overview
+
+After making an account in Github, [**up right**]{.hl-purple} we will have a circle, and clicking on [**Your Profile**]{.hl-purple}, we will see something like this
+
+::: columns
+::: {.column width="55%"}
+![](img/github_1.png)
+:::
+
+::: {.column width="45%"}
+- [**Edit profile**]{.hl-purple}: allows us to add a [**description and profile picture**]{.hl-yellow}.
+
+- [**Overview**]{.hl-purple}: in that squares panel will [**view our activity**]{.hl-yellow} over time.
+
+- [**Repositories**]{.hl-purple}: the code will be uploaded to [**repositories**]{.hl-yellow}, the equivalent of our shared folders in Dropbox.
+:::
+:::
+
+---
+
+## First use
+
+Before learning how to create repositories, Github will also be useful to
+
+- [**Access code**]{.hl-purple} from others
+
+- [**Propose improvements**]{.hl-purple} to other users, and even propose [**bug fixes we detect**]{.hl-yellow} for software we use.
+
+. . .
+
+- **Install R packages**]{.hl-purple}. In many cases package developers upload updates to CRAN from time to time, and in other cases the software is not “wide” enough to be uploaded as a package.
+
+Package code that is not uploaded to CRAN can be [**installed as code from Github**]{.hl-yellow}
+
+---
+
+## Installing from Github
+
+For example, let's install a package called [`{peRReo}`](https://github.com/jbgb13/peRReo), whose only function is to give us [**color palettes**]{.hl-yellow} based on [**urban music albums**]{.hl-yellow} covers.
+
+::: columns
+::: {.column width="50%"}
+![](img/perrreo.png)
+:::
+
+::: {.column width="50%"}
+![](img/rosalia.png){width="360"}
+:::
+:::
+
+. . .
+
+To do this we first need to install a [**developer package set**]{.hl-yellow} called `{devtools}`, which will allow us to install from Github
+
+```{r}
+#| eval: false
+install.packages("devtools")
+```
+
+---
+
+## Installing from Github
+
+The [**installation instructions**]{.hl-yellow} are usually detailed in the repository cover page (`README.md` file)
+
+::: columns
+::: {.column width="50%"}
+![](img/install_perreo.png)
+:::
+
+::: {.column width="50%"}
+![](img/rosalia.png){width="310"}
+:::
+:::
+
+. . .
+
+In most cases the `install_github()` function (from the package we just installed) will suffice, passing it the [**repository path**]{.hl-yellow} (without “github.com/”) as an argument.
+
+```{r}
+#| eval: false
+devtools::install_github("jbgb13/peRReo")
+```
+
+
+---
+
+## Installing from Github
+
+Most of the time what we upload will not be an R package as such but [**we will upload a more or less organized**]{.hl-yellow} and commented code. In that case we can [**download the whole repo**]{.hl-yellow} by clicking [**Code**]{.hl-green} and then Download ZIP.
+
+For example, let's download the dataviz scripts that have been uploaded from the [Centre d'Estudis d'Opinió](https://github.com/ceopinio/bop-grafics) (Catalan CIS).
+
+
+![](img/ceo_github.png)
+
+
+---
+
+## First repo
+
+Let's [**create our first repository**]{.hl-yellow} that will also serve as the [**cover page**]{.hl-yellow} of our Github profile.
+
+1. [**Repositories**]{.hl-purple}: click on the Repositories tab.
+
+2. [**New**]{.hl-purple}: click on the [**New**]{.hl-green} button to create a new repository.
+
+![](img/new_repo.png)
+
+---
+
+## First repo
+
+- [**Repository name**]{.hl-purple}: the [**repository name**]{.hl-yellow}. In this case we are going to create a very specific repository: the name must [**exactly match your username**]{.hl-yellow}
+
+- [**Description**]{.hl-purple}: description of your repository. In this case it will be a presentation repo.
+![](img/repo_init_1.png)
+
+---
+
+## First repo
+
+- [**Public vs private**]{.hl-purple}: with each repository we will have the option to make the repository
+
+  - [**public**]{.hl-purple}: all users will be able to see the code as well as the traceability of your development (what is added and when). It is for me the most recommended option when you want to give [**visibility and transparency**]{.hl-yellow} to your work
+  - [**private**]{.hl-purple}: only those users you allow will have access to the repository. Nothing can be viewed or installed from it outside of Github.
+
+![](img/repo_init_2.png)
+
+In this particular case, since it will be a presentation repository, we will [**make it public**]{.hl-yellow}.
+
+---
+
+## First repo
+
+- **Add a README file**]{.hl-purple}: a README file will be the file where we will include the [**instructions and usage details**]{.hl-yellow} to the others (in the case of `{peRReo}` it was the file containing the installation details).
+
+![](img/repo_init_3.png)
+
+For the time being [**ignore other fields**]{.hl-net} for this first repository.
+
+---
+
+## First repo
+
+![](img/repo_init_1.png)
+
+By default Github assumes that this repository, with the [**same name as our user**]{.hl-yellow} will be the repository we want to be presented at startup when someone logs into our profile, and will be the repository where [**include in the README.md**]{.hl-yellow} a presentation of us and an index of your work (if you want).
+
+---
+
+## First repo
+
+![](img/profile_github_md.png)
+
+Notice that now in our [**cover page we have said README.md**]{.hl-yellow} that we can customize to our liking using [**html and markdown**]{.hl-yellow}.Here you can see [**some examples of README.md**](https://github.com/matiassingers/awesome-readme)
+
+---
+
+## Code repo
+
+Una vez que tenemos nuestro README de presentación (recuerda que puedes [**personalizar a tu gusto con html y markdown**]{.hl-yellow}) vamos a crear un [**repositorio de código**]{.hl-yellow}.
+
+. . .
+
+Si ya era importante [**trabajar con proyectos**]{.hl-yellow} en `RStudio`, cuando lo combinamos con Github es aún más crucial que creemos un proyecto antes de subir el código, así que vamos a crear uno de prueba que se llame `repo-github-1`.
+
+. . .
+
+En dicho proyecto vamos a [**crear un script**]{.hl-yellow} (en mi caso llamado **codigo.R**) en el que deberás hacer los siguientes pasos:
+
+---
+
+## Code repo
+
+1.  [**Carga**]{.hl-yellow} directamente desde la página del [ISCIII](https://cnecovid.isciii.es/covid19/resources) el archivo llamado `casos_hosp_uci_def_sexo_edad_provres.csv`
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Carga de datos desde ISCIII
+datos_covid <- read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+```
+
+. . .
+
+2.  [**Filtra**]{.hl-yellow} datos de Madrid (`"M"`), entre el 1 de marzo de 2020 y el 31 de diciembre de 2020, y con sexo `"H"`. Tras ello quédate con las columnas `fecha`, `grupo_edad`, `num_casos` (ese orden). Por último obtén la suma de casos diarios por fecha (sin importar el tramo etario).
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Depuración
+datos_madrid <-
+  datos_covid |>
+  # Filtrado por Madrid y fecha
+  filter(provincia_iso == "M" &
+           between(fecha, as_date("2020-03-01"), as_date("2020-12-31")) &
+           sexo == "H") |> 
+  # Selección de columnas
+  select(fecha, grupo_edad, num_casos) |> 
+  # Resumen de casos diarios por fecha y sexo
+  summarise(num_casos = sum(num_casos), .by = c(fecha))
+  
+```
+
+---
+
+
+## Code repo
+
+3.  [**Exporta el dataset a un csv**]{.hl-yellow} en una carpeta que se llame `exportado`
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Exportamos datos
+write_csv(datos_madrid, file = "./exportado/datos_madrid.csv")
+```
+
+. . .
+
+:::: columns
+::: {.column width="40%"}
+
+4.  Crea una [**gráfica de líneas**]{.hl-yellow} que tenga en el eje x fecha, en el eje y casos, con una curva por sexo (gráficas separadas).
+
+```{r}
+#| eval: false
+#| code-fold: true
+# Gráfica
+grafica <-
+  ggplot(datos_madrid) +
+  geom_col(aes(x = fecha, y = num_casos),
+            alpha = 0.6, linewidth = 0.7)  +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+ggplot(datos_madrid) +
+  geom_col(aes(x = fecha, y = num_casos),
+            alpha = 0.6, linewidth = 0.7)  +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+:::
+::::
+
+. . .
+
+5.  Tras ello [**exportamos la gráfica**]{.hl-yellow}
+
+```{r}
+#| eval: false
+ggsave(filename = "./exportado/ggplot.png", plot = grafica,
+       bg = "white", width = 12, height = 8)
+
+# otra opción
+ggsave(filename = "./exportado/ggplot.png", plot = last_plot(),
+       bg = "white", width = 12, height = 8)
+```
+
+---
+
+
+## Code repo
+
+¿Cómo [**subimos el proyecto**]{.hl-yellow}? Vamos de nuevo a [**crear un proyecto de cero**]{.hl-yellow}. Antes no hemos hablado de dos campos importantes:
+
+::: columns
+::: {.column width="50%"}
+![](./img/repo-1.png){width="460"}
+:::
+
+::: {.column width="50%"}
+-   `Add .gitignore` nos permitirá [**seleccionar el lenguaje**]{.hl-yellow} en el que estará nuestro proyecto para que Github lo entienda al sincronizar (y no actualice cosas que no deba).
+
+-   `Choose a license` nos permitirá [**seleccionar la licencia**]{.hl-yellow} que determinará las condiciones en las que otros podrán reusar tu código.
+:::
+:::
+
+---
+
+
+## Code repo
+
+::: columns
+::: {.column width="50%"}
+![](./img/repo-1-1.png)
+:::
+
+::: {.column width="50%"}
+Si te fijas traer crearlo tenemos solo 3 archivos: el de licencia, el .gitignore y el readme.md (donde deberíamos escribir una guía de uso de lo que hayamos subido)
+:::
+:::
+
+Para subir los archivos vamos a clickar en [**Add file \< Upload File**]{.hl-purple} y [**arrastraremos TODOS los archivos**]{.hl-yellow} de la carpeta de nuestro proyecto.
+
+---
+
+## Code repo
+
+Tras la subida de archivos tendremos un cuadro llamado [**Commit changes**]{.hl-purple}
+
+![](./img/commit-1.png)
+
+Un [**commit**]{.hl-purple} es una [**modificación del repositorio**]{.hl-yellow} con algo que se añade/elimine/modifique, y dicho cuadro es recomendable usarlo para [**resumir en qué consiste la modificación**]{.hl-yellow}, de manera que quede trazado el cambio.
+
+---
+
+## Code repo
+
+Haciendo click en el reloj donde indica el [**número de commits**]{.hl-yellow} accedemos al [**histórico de commits (cambios)**]{.hl-yellow} con hora, día, autor, comentarios, etc.
+
+![](./img/commit-reloj.png)
+
+---
+
+## Code repo
+
+Vamos a realizar un [**cambio en nuestro código**]{.hl-yellow}: en tu código local (local --\> tu ordenador), en lugar de filtrar por Madrid haz el [**filtro por Barcelona**]{.hl-yellow}, guarda el código y sube en el repositorio el nuevo archivo (con el mismo nombre, Github hará la sobrescritura)
+
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+datos_bcn <-
+  datos_covid |>
+  filter(provincia_iso == "B" & fecha <= "2020-12-31" & sexo != "NC") |> 
+  select(fecha, sexo, grupo_edad, num_casos) |> 
+  summarise(num_casos = sum(num_casos), .by = c(fecha, sexo))
+```
+
+---
+
+## Consulta de commits
+
+![](./img/barcelona_covid.png){width="550"}
+
+::: columns
+::: {.column width="40%"}
+Si ahora [**consultamos el commit**]{.hl-yellow}, al lado hay un número que lo identifica, y clickando en él nos resume los cambios: no solo [**almacena todas las versiones pasadas**]{.hl-yellow} sino que además nos [**muestra las diferencias entre los archivos cambiados**]{.hl-yellow}
+:::
+
+::: {.column width="60%"}
+![](./img/commit_cambio.png)
+:::
+:::
+
+---
+
+## Trazabilidad de cambios
+
+::: columns
+::: {.column width="72%"}
+![](./img/commit_split.png) ![](./img/commit_unified.png)
+:::
+
+::: {.column width="28%"}
+Tenemos [**dos modos de visualización**]{.hl-yellow} de los cambios: el modo split nos muestra el antiguo y el nuevo, con las inclusiones en verde y lo que ya no está en rojo; y el modo unified nos muestra todo en un mismo documento.
+:::
+:::
+
+---
+
+## Recuperación de commits
+
+![](./img/browse-repo.png)
+
+Github nos permite incluso [**recuperar una versión del pasado**]{.hl-yellow} de nuestro repositorio, haciendo click en el tercer icono del commit.
+
+---
+
+## Recuperación de commits
+
+![](./img/branch-commit.png)
+
+Si te fijas ahora al lado de `1 branch` tenemos un [**menú desplegable**]{.hl-yellow} en el que antes ponía `main` y ahora un número identificador del commit. Ya hablaremos de la idea de [**rama (branch)**]{.hl-yellow}
+
+---
+
+## Repo con rmd/qmd
+
+::: columns
+::: {.column width="60%"}
+Vamos a poner en práctica lo aprendido:
+
+1.  Crea un nuevo repositorio en Github (llamado `repo-github-2`) donde habrá alojado con proyecto de R.
+
+2.  Crea un proyecto en `RStudio` que se llame (por ejemplo) `proyecto-qmd`
+
+3.  Una vez dentro del proyecto en `RStudio` haz click en `File < New File < Quarto Document`
+:::
+
+::: {.column width="40%"}
+![](./img/primer-qmd.png)
+:::
+:::
+
+Deberás tener un documento similar a este: un [**quarto markdown (.qmd)**]{.hl-yellow}, un documento que nos permitirá incluir [**markdown + código**]{.hl-yellow} (puede ser `R` o puede ser `Observable`, `D3`, etc).
+
+---
+
+## Repo con rmd/qmd
+
+Este formato es ideal para:
+
+-   [**Trabajar en equipo**]{.hl-yellow} construyendo el borrador de una pieza.
+-   Tomar [**apuntes o informes**]{.hl-yellow} para uno mismo.
+-   [**Presentar**]{.hl-yellow} tu trabajo a tus compañeros.
+
+::: columns
+::: {.column width="50%"}
+![](./img/prueba-qmd-html.png)
+:::
+
+::: {.column width="50%"}
+Si te fijas ahora nuestro repositorio tiene un archivo con formato `.html`...es decir...
+
+[**¡Es una web!**]{.hl-yellow}
+:::
+:::
+
+---
+
+## Github pages
+
+¿Cómo [**convertir nuestro repositorio en una web**]{.hl-yellow}?
+
+![](./img/github-pages.png)
+
+1.  Haz click en `Settings`
+2.  Ve al apartado `Pages`
+3.  En el subapartado `branch` selecciona la única rama que tenemos ahora (`main`)
+4.  Selecciona la carpeta donde tengas el `.html` (en web complejas estará como en cualquier web en `docs`, en algo simple estará en la ruta raiz del repositorio)
+5.  Haz click en `Save`
+
+---
+
+## Github pages
+
+Si te fijas en la [**parte superior del repositorio**]{.hl-yellow} ahora tenemos un icono naranja, que nos indica que la [**web está en proceso de ser desplegada (deploy)**]{.hl-orange}
+
+![](./img/github-naranja.png)
+
+---
+
+## Github pages
+
+Pasados unos segundos (dependiendo del tamaño de la web y tu conexión a internet) ese [**icono pasará a ser un check verde**]{.hl-green}: habemus web
+
+![](./img/github-verde.png)
+
+El [**link de la web por defecto**]{.hl-yellow} será `{nombre_usuario}.github.io/{nombre_repo}`
+
+---
+
+## Github pages
+
+![](./img/github-pages-deploy.png)
+
+¡Un momento! Ahora mismo nuestra web [**no nos está mostrando nuestro .qmd**]{.hl-red}, sino por defecto el [**README.md**]{.hl-yellow}.
+
+. . .
+
+Para que Github entienda que queremos visualizar ese `.html` que hemos generado a partir del `.qmd` vamos en nuestro proyecto local a [**borrar**]{.hl-yellow} todo lo que no sea nuestro archivo `.Rproj` y nuestro archivo `.qmd`, y vamos a [**cambiar el nombre**]{.hl-yellow} a este último llamándolo `index.qmd`, y volvemos a compilarlo para [**generar un index.html**]{.hl-yellow}
+
+---
+
+## Github pages
+
+Vamos a [**subir a Github ese nuevo proyecto**]{.hl-yellow} con el cambio de nombre (llamado `repo-github-3`) para ver luego las diferencias entre uno y otro
+
+![](./img/repo-index-html.png)
+
+---
+
+## Github pages
+
+Si [**repetimos el proceso para hacer una Page**]{.hl-yellow} y esperamos al tick verde...
+
+::: columns
+::: {.column width="50%"}
+![](./img/index-html-qmd.png)
+:::
+
+::: {.column width="50%"}
+Si a tu `.qmd` ya le llamas de inicio `index.qmd`, automáticamente, al detectar Github un `index.html`, interpreta que ese [**archivo index.html**]{.hl-yellow} es el que define la web (y puedes personalizar añadiendo un archivo `css` de estilos)
+
+[**Habemus web**]{.hl-green} simplemente clickando en Pages :)
+:::
+:::
+
+---
+
+## Repo con diapositivas
+
+Vamos a crear el último repositorio que se llamará `repo-diapos`, y crear un proyecto en `RStudio` del mismo nombre (por ejemplo). Una vez creado le daremos a `File < New File < Quarto Presentation`.
+
+::: columns
+::: {.column width="45%"}
+![](img/quarto-slides.png)
+:::
+
+::: {.column width="55%"}
+La forma de escribir será igual que un `.qmd` normal solo que ahora [**cada diapositiva la separaremos**]{.hl-yellow} con un `---` (usando archivos de estilos podemos personalizar lo que queramos)
+
+Llama al archivo directamente `index.qmd`, súbelo a Github y con un click en Pages tienes una [**web con tus diapositivas**]{.hl-yellow}
+:::
+:::
+
+---
+
+## Github Desktop
+
+pending
+
+---
+
+

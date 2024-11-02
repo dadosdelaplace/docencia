@@ -1,0 +1,876 @@
+* Encoding: windows-1252.
+DATA LIST FILE= 'DA3428'
+/ESTU 1-4 REGISTRO 5-10 CUES 11-14 CCAA 15-16 PROV 17-18 MUN 19-21 CAPITAL 22 TAMUNI 23 ENTREV 24-28
+TIPO_TEL 29 SEXO 30 EDAD 31-32 P0 33 P1 34 P2 35 P3_1 36-37 P3_2 38-39 P3_3 40-41 P3_4 42-43
+P3_5 44-45 P4 46 P5 47 P6_1 48 P6_2 49 P6_3 50 P7_1 51 P7_2 52 P7_3 53 P7_4 54 P7_5 55 P7_6 56
+P7_7 57 P8_1 58 P8_2 59 P8_3 60 P8_4 61 P9_1 62 P9_2 63 P9_3 64 P10_1 65 P10_2 66 P10_3 67 P10_4 68
+P11_1 69 P11_2 70 P11_3 71 P11_4 72 P11_5 73 P12_1 74 P12_2 75 P12_3 76 P12_4 77 P12_5 78 P13_1 79
+P13_2 80 P13_3 81 P13_4 82 P13_5 83 P13_6 84 P13_7 85 P14_1 86 P14_2 87 P14_3 88 P14_4 89 P14_5 90
+P14_6 91 P15_1 92 P15_2 93 P15_3 94 P15_4 95 ESCFEMINIS 96-97 P17 98 P17A 99 SITCONV 100-101
+TARHOGENTREV_1 102 TARHOGENTREV_2 103 TARHOGENTREV_8 104 TARHOGENTREV_9 105 TARHOGENTREV_HH 106-107
+TARHOGENTREV_MM 108-109 TARHOGPAREJ_1 110 TARHOGPAREJ_2 111 TARHOGPAREJ_8 112 TARHOGPAREJ_9 113
+TARHOGPAREJ_HH 114-115 TARHOGPAREJ_MM 116-117 HIJOMENOR_1 118 HIJOMENOR_97 119 HIJOMENOR_99 120
+HIJOMENOR_N 121-122 CUIDADOHIJOS_1 123 CUIDADOHIJOS_2 124 CUIDADOHIJOS_8 125 CUIDADOHIJOS_9 126
+CUIDADOHIJOS_HH 127-128 CUIDADOHIJOS_MM 129-130 CUIDADOHIJOSPAR_1 131 CUIDADOHIJOSPAR_2 132
+CUIDADOHIJOSPAR_7 133 CUIDADOHIJOSPAR_8 134 CUIDADOHIJOSPAR_9 135 CUIDADOHIJOSPAR_HH 136-137
+CUIDADOHIJOSPAR_MM 138-139 P22 140 TAREASCUI_1 141 TAREASCUI_2 142 TAREASCUI_8 143 TAREASCUI_9 144
+TAREASCUI_HH 145-146 TAREASCUI_MM 147-148 P23_1 149 P23_2 150 P23_3 151 P23_4 152 P23_5 153
+P23_6 154 P23_7 155 P23_8 156 P23_9 157 ESCIDEOL 158-159 PARTICIPACIONG 160 RECUVOTOG 161-164
+ESCUELA 165 NIVELESTENTREV 166-167 RELIGION 168 PRACTICARELIG6 169 SITLAB 170 RELALAB 171 CNO11 172-173
+TIPOJOR 174 INGRESHOG 175 CLASESOCIAL 176-177 PAISNAC 178 PAISNAC2 179-181 SINCERIDAD 182 IA_I501 183-185
+IA_I502 186-188 IA_I503 189-191 IA_I504 192-194 IA_I505 195-197 IA_I506 198-200 IA_I507 201-203
+IA_I508 204-206 IA_I509 207-209 IA_I510 210-212 IA_I511 213-215 IA_I512 216-218 IA_I513 219-221
+IA_I514 222-224 IA_I515 225-227 IA_I516 228-230 IA_I517 231-233 IA_I518 234-239 IA_I519 240-242
+IA_I520 243-245 IA_I521 246-248 IA_I522 249-251 IA_I523 252-254 IA_I524 255-257 IA_I525 258-260
+IA_I526 261-263 IA_I528 264-266 IA_I529 267-269 IA_I530 270-272 IA_I531 273-275 IA_I532 276-278
+IA_I533 279-281 IA_I534 282-284 IA_I535 285-287 IA_I536 288-290 IA_I537 291-293 IA_I538 294-296
+IA_I539 297-299 IA_I540 300-302 IA_I541 303-305 IA_I542 306-308 IA_I543 309-311 IA_OBS1 312-313
+IA_OBS2 314-315 IA_E1_DIA 316-317 IA_E1_MES 318-319 IA_E1_ANYO 320-321 IA_E2 322 IA_E3 323-325
+IA_E4 326 IA_VALIDA 327 IA_APLAZADA 328 IA_MODIFICADA 329 IA_SUPERVISADA 330 IA_C2 331 IA_C2A 332
+IA_C2B_1 333 IA_C2B_2 334 IA_C2B_3 335 IA_C2B_4 336 IA_C2B_5 337 IA_C2B_6 338 IA_C2B_7 339 IA_C2B_8 340
+IA_C2B_9 341 IA_C2B_10 342 IA_C2B_11 343 IA_C2B_12 344 IA_C2B_13 345 IA_C2B_14 346 IA_C2B_15 347
+IA_C2B_16 348 IA_C2B_17 349 IA_C2B_18 350 IA_C2B_19 351 IA_C2B_20 352 IA_C2B_21 353 IA_C2B_22 354
+IA_C2B_23 355 IA_C2B_24 356 IA_C2B_25 357 IA_C3 358 IA_C4 359-363 TARHOGENTREV 364-367 TARHOGPAREJ 368-371
+HIJOMENOR 372-373 CUIDADOHIJOS 374-377 CUIDADOHIJOSPAR 378-381 TAREASCUI 382-385 RECUVOTOGR 386-389
+RECUERDO 390-393 ESTUDIOS 394 CNO11R 395-396 CLASESUB 397 PESO 398-404(5) PESOHOM 405-411(5)
+PESOMUJ 412-418(5) .
+
+VARIABLE LABELS
+ESTU 'Código del estudio'
+/REGISTRO 'Número de registro'
+/CUES 'Cuestionario'
+/CCAA 'Comunidad autónoma'
+/PROV 'Provincia'
+/MUN 'Municipio'
+/CAPITAL 'Capital'
+/TAMUNI 'Tamaño de municipio'
+/ENTREV 'Entrevistador/a'
+/TIPO_TEL 'Tipo de teléfono'
+/SEXO 'Sexo de la persona entrevistada'
+/EDAD 'Edad de la persona entrevistada'
+/P0 'Nacionalidad de la persona entrevistada'
+/P1 'Tipo de sociedad en la que le gustaría vivir'
+/P2 'Igualdad en la aplicación de las leyes en España'
+/P3_1 'Ecologistas'
+/P3_2 'Pacifistas'
+/P3_3 'Feministas'
+/P3_4 'Pro-derechos humanos'
+/P3_5 'Organizaciones LGTBIQ+'
+/P4 'Grado de desigualdad entre hombres y mujeres en España'
+/P5 'Valoración retrospectiva de las desigualdades entre hombres y mujeres en España (10 años)'
+/P6_1 'Las mujeres no lograrán la igualdad a menos que los hombres también luchen por los derechos de las mujeres'
+/P6_2 'Se ha llegado tan lejos en la promoción de la igualdad de las mujeres que ahora se está discriminando a los hombres'
+/P6_3 'La igualdad entre hombres y mujeres contribuye a hacer una sociedad más justa'
+/P7_1 'Los salarios'
+/P7_2 'Las posibilidades de ascenso en el trabajo'
+/P7_3 'Las oportunidades para encontrar empleo'
+/P7_4 'El acceso a puestos de responsabilidad en las empresas'
+/P7_5 'Las posibilidades de compaginar la vida laboral y familiar'
+/P7_6 'El acceso a puestos de responsabilidad en la vida política'
+/P7_7 'El acceso a la educación'
+/P8_1 'Las mujeres tienen que esforzarse más que los hombres para demostrar que pueden desempeñar el mismo puesto de trabajo'
+/P8_2 'La igualdad de las mujeres en el mundo laboral depende más de ellas que de cualquier ley'
+/P8_3 'Compaginar vida familiar y laboral es un asunto privado de organización doméstica entre hombres y mujeres y de poco sirve que intervengan las instituciones'
+/P8_4 'Cuando un porcentaje elevado de mujeres comienza a acceder a una profesión, esta tiende a perder prestigio social'
+/P9_1 'Familia (padre, madre, cónyuge, pareja, hijos/as, etc.)'
+/P9_2 'Amigos y amigas'
+/P9_3 'Compañero/as de estudio o trabajo'
+/P10_1 'Que un hombre se acoja al permiso de paternidad de 16 semanas para cuidar a su hijo o hija'
+/P10_2 'Que un hombre asuma una parte igualitaria de las tareas del hogar'
+/P10_3 'Que un hombre recrimine a sus amigos por tener comportamientos machistas'
+/P10_4 'Que un hombre se defina como feminista'
+/P11_1 'La maternidad es la mayor satisfacción que una mujer puede tener'
+/P11_2 'Se critica más a una mujer con una vida sexual activa que a un hombre'
+/P11_3 'La crítica a los chistes machistas es exagerada'
+/P11_4 'La mayor parte de la pornografía es machista'
+/P11_5 'Siempre es agradable recibir un piropo'
+/P12_1 'Tomar la iniciativa en una relación sexual'
+/P12_2 'Pagar por mantener relaciones sexuales'
+/P12_3 'Hablar abiertamente sobre sus sentimientos'
+/P12_4 'Ver pornografía'
+/P12_5 'Hablar abiertamente sobre sus deseos sexuales'
+/P13_1 'Si llamara para que le repararan la caldera, calentador, lavadora o lavavajillas'
+/P13_2 'Si acudiera a la policía o a la guardia civil a poner una denuncia'
+/P13_3 'Si cogiera un taxi'
+/P13_4 'Si contratara a alguien para realizar una reforma de su casa'
+/P13_5 'Si tuviera que someterse a una operación en un hospital'
+/P13_6 'Si llamara a alguien para reparar el ordenador'
+/P13_7 'Si buscara a alguien para cuidar a una persona dependiente'
+/P14_1 'Presenció algún caso de discriminación sexual en el trabajo'
+/P14_2 'Escuchó comentarios sexistas por parte de amigos/as o familiares'
+/P14_3 'Firmó una petición (online o en papel) a favor de la igualdad de género'
+/P14_4 'Presenció cómo un hombre acosaba sexualmente a una mujer'
+/P14_5 'Se enfrentó a alguien que estaba acosando sexualmente a una mujer'
+/P14_6 'Participó en una manifestación o protesta a favor de los derechos de las mujeres'
+/P15_1 'Ha pasado miedo volviendo sola a casa de noche'
+/P15_2 'Un hombre quiso explicarle alguna cosa asumiendo que Ud. no la sabía'
+/P15_3 'Se ha sentido discriminada en el trabajo por ser mujer'
+/P15_4 'Ha dejado de expresar lo que pensaba en un entorno público porque se sentía insegura (clases, conferencias, reuniones de trabajo u otras situaciones)'
+/ESCFEMINIS 'Escala de autodefinición feminista (0-10)'
+/P17 'Tenencia de pareja en la actualidad'
+/P17A 'Sexo de la pareja'
+/SITCONV 'Situación personal de convivencia actual'
+/TARHOGENTREV_1 'La persona entrevistada utiliza horas para medir tiempo dedicado a tareas del hogar'
+/TARHOGENTREV_2 'La persona entrevistada utiliza minutos para medir tiempo dedicado realizar tareas del hogar'
+/TARHOGENTREV_8 'No sabría decir'
+/TARHOGENTREV_9 'N.C.'
+/TARHOGENTREV_HH 'Horas dedicadas a tareas del hogar'
+/TARHOGENTREV_MM 'Minutos dedicados a tareas del hogar'
+/TARHOGPAREJ_1 'El cónyuge o pareja utiliza horas para medir tiempo dedicado a tareas del hogar'
+/TARHOGPAREJ_2 'El cónyuge o pareja utiliza minutos para medir tiempo dedicado a tareas del hogar'
+/TARHOGPAREJ_8 'No sabría decir'
+/TARHOGPAREJ_9 'N.C.'
+/TARHOGPAREJ_HH 'Horas'
+/TARHOGPAREJ_MM 'Minutos'
+/HIJOMENOR_1 'Tenencia de hijos/as menores de edad'
+/HIJOMENOR_97 'Ninguno/a'
+/HIJOMENOR_99 'N.C.'
+/HIJOMENOR_N 'Número de hijos/as menores de edad'
+/CUIDADOHIJOS_1 'La persona entrevistada utiliza horas para medir tiempo dedicado al cuidado de los hijos/as menores'
+/CUIDADOHIJOS_2 'La persona entrevistada utiliza minutos para medir el tiempo dedicado al cuidado de los hijos/as menores'
+/CUIDADOHIJOS_8 'No sabría decir'
+/CUIDADOHIJOS_9 'N.C.'
+/CUIDADOHIJOS_HH 'Horas'
+/CUIDADOHIJOS_MM 'Minutos'
+/CUIDADOHIJOSPAR_1 'El cónyuge o pareja utiliza horas para medir tiempo dedicado al cuidado de los hijos/as menores'
+/CUIDADOHIJOSPAR_2 'El cónyuge o pareja utiliza minutos para medir tiempo dedicado al cuidado de los hijos/as menores'
+/CUIDADOHIJOSPAR_7 'Su pareja no tiene hijos/as menores'
+/CUIDADOHIJOSPAR_8 'No sabría decir'
+/CUIDADOHIJOSPAR_9 'N.C.'
+/CUIDADOHIJOSPAR_HH 'Horas'
+/CUIDADOHIJOSPAR_MM 'Minutos'
+/P22 'Tenencia de alguna persona enferma y/o dependiente a cargo de la persona entrevistada'
+/TAREASCUI_1 'La persona entrevistada utiliza horas para medir tiempo dedicado al cuidado de la persona enferma y/o dependiente'
+/TAREASCUI_2 'La persona entrevistada utiliza minutos para medir tiempo dedicado al cuidado de la persona enferma y/o dependiente'
+/TAREASCUI_8 'No sabría decir'
+/TAREASCUI_9 'N.C.'
+/TAREASCUI_HH 'Horas'
+/TAREASCUI_MM 'Minutos'
+/P23_1 'Cuidar a familiares enfermos/as'
+/P23_2 'Cuidar a los hijos e hijas pequeños'
+/P23_3 'Llevar a los hijos e hijas al colegio'
+/P23_4 'Llevar a los hijos e hijas a las actividades extraescolares'
+/P23_5 'Llevar a los hijos e hijas al médico/a'
+/P23_6 'Hacer la comida'
+/P23_7 'Limpiar la casa'
+/P23_8 'Poner la lavadora o el lavavajillas'
+/P23_9 'Hacer la compra del hogar y de la alimentación'
+/ESCIDEOL 'Escala de autoubicación ideológica (1-10)'
+/PARTICIPACIONG 'Participación electoral en las elecciones generales de 2023'
+/RECUVOTOG 'Recuerdo de voto en las elecciones generales de 2023 de los votantes'
+/ESCUELA 'Escolarización de la persona entrevistada'
+/NIVELESTENTREV 'Nivel de estudios alcanzado por la persona entrevistada'
+/RELIGION 'Religiosidad de la persona entrevistada'
+/PRACTICARELIG6 'Frecuencia de asistencia a oficios religiosos'
+/SITLAB 'Situación laboral de la persona entrevistada'
+/RELALAB 'Situación profesional de la persona entrevistada'
+/CNO11 'Ocupación de la persona entrevistada'
+/TIPOJOR 'Tipo de jornada de la persona entrevistada'
+/INGRESHOG 'Nivel de ingresos netos del hogar'
+/CLASESOCIAL 'Clase social subjetiva de la persona entrevistada'
+/PAISNAC 'Lugar de nacimiento (país)'
+/PAISNAC2 'Lugar de nacimiento de los nacidos fuera de España (país)'
+/SINCERIDAD 'Grado de sinceridad de la persona entrevistada según el/la entrevistador/a'
+/IA_I501 'Dificultad de acceso al edificio, casa, urbanización, etc.'
+/IA_I502 'Viviendas en las que no hay nadie'
+/IA_I503 'Viviendas en las que se niegan a recibir ninguna explicación'
+/IA_I504 'Negativas de hombres a realizar la entrevista'
+/IA_I505 'Negativas de mujeres a realizar la entrevista'
+/IA_I506 'Contactos fallidos por no cumplir cuotas'
+/IA_I507 'Contactos fallidos por no ser una vivienda (oficinas, consultas médicas, etc.)'
+/IA_I508 'Viviendas de población extranjera'
+/IA_I509 '01.  No quiere colaborar'
+/IA_I510 '02.  Falta de tiempo. Está muy ocupado/a'
+/IA_I511 '03.  Falta de interés por hacer una encuesta'
+/IA_I512 '04.  Desconfianza hacia las encuestas'
+/IA_I513 '05.  Desconfianza hacia el CIS'
+/IA_I514 '06.  Rehúsa porque su pareja/familia/hogar no quiere'
+/IA_I515 '07.  Lo considera una pérdida de tiempo'
+/IA_I516 '08.  No sabe lo suficiente/nada del tema, demasiado difícil'
+/IA_I517 '09.  El tema no le interesa'
+/IA_I518 '10.  Resulta demasiada larga'
+/IA_I519 '11.  No le gusta el ordenador'
+/IA_I520 '96. Otras'
+/IA_I521 '99. No contesta'
+/IA_I522 '00. Error al iniciar'
+/IA_I523 'Teléfono apagado/fuera de cobertura'
+/IA_I524 'Negativas a realizar la entrevista'
+/IA_I525 'Interrupción llamada'
+/IA_I526 'Dificultad con el idioma'
+/IA_I528 'Contacto fallido por no ser una vivienda/persona'
+/IA_I529 'Contacto fallido por no ser elegible'
+/IA_I530 'Incapacidad para responder/ininteligible'
+/IA_I531 'Otras'
+/IA_I532 'No le gusta dar información por teléfono'
+/IA_I533 'No tiene la garantía de la privacidad de sus datos'
+/IA_I534 'Dificultad con el idioma'
+/IA_I535 'Incapacidad para responder/ininteligible'
+/IA_I536 'No elegible'
+/IA_I537 'Rechazo por falta de tiempo o de interés en la encuesta'
+/IA_I538 'Rechazo por desconfianza hacia las encuestas'
+/IA_I539 'Rechazo por desconfianza hacia el CIS'
+/IA_I540 'Rechazo por desconfiar de la llamada o por mantener la privacidad'
+/IA_I541 'Rechaza ser encuestado/a en el idioma del cuestionario'
+/IA_I542 'Rechazo por otras razones o sin dar explicaciones'
+/IA_I543 'Otras incidencias'
+/IA_OBS1 'Pregunta incómoda'
+/IA_OBS2 'Pregunta explicada'
+/IA_E1_DIA 'Día de realización'
+/IA_E1_MES 'Mes de realización'
+/IA_E1_ANYO 'Año de realización'
+/IA_E2 'Día de la semana que se realiza la entrevista'
+/IA_E3 'Duración de la entrevista en minutos'
+/IA_E4 'Hora de realización'
+/IA_VALIDA 'Entrevista válida'
+/IA_APLAZADA 'Entrevista con aplazamientos'
+/IA_MODIFICADA 'Entrevista modificada'
+/IA_SUPERVISADA 'Entrevista supervisada'
+/IA_C2 'Valoración de la supervisión'
+/IA_C2A 'Resultado supervisión'
+/IA_C2B_1 'Motivos entrevista incorrecta: Dirección inexistente (no existe número en la calle, piso, etc.)'
+/IA_C2B_2 'Motivos entrevista incorrecta: Dirección ilocalizable (faltan datos: número, piso, letra, etc.)'
+/IA_C2B_3 'Motivos entrevista incorrecta: No coinciden datos personales y no ha sido realizada en la dirección que se hace constar'
+/IA_C2B_4 'Motivos entrevista incorrecta: Negativa que ofrece dudas. Coinciden datos personales, pero niegan haber realizado la entrevista'
+/IA_C2B_5 'Motivos entrevista incorrecta: Realizada a una persona, recogiendo los datos de otra'
+/IA_C2B_6 'Motivos entrevista incorrecta: Realizada cambiando género del entrevistado'
+/IA_C2B_7 'Motivos entrevista incorrecta: Cambio de edad por otra de un tramo contiguo'
+/IA_C2B_8 'Motivos entrevista incorrecta: Cambio de edad por otra de un tramo no contiguo'
+/IA_C2B_9 'Motivos entrevista incorrecta: Realizada fuera de la vivienda, pero vive en la sección electoral'
+/IA_C2B_10 'Motivos entrevista incorrecta: Realizada fuera de la vivienda, y no vive en la sección electoral'
+/IA_C2B_11 'Motivos entrevista incorrecta: Realizada en dirección que no corresponde a la sección electoral'
+/IA_C2B_12 'Motivos entrevista incorrecta: Realizada, pero no respeta las normas de ruta'
+/IA_C2B_13 'Motivos entrevista incorrecta: Se detecta que no ha hecho todas las preguntas'
+/IA_C2B_14 'Motivos entrevista incorrecta: Negativa que ofrece dudas: no coincide la dirección ni datos personales. Posibilidad de error en el teléfono'
+/IA_C2B_15 'Motivos entrevista incorrecta: No hay grabación'
+/IA_C2B_16 'Motivos entrevista incorrecta: Realizada en otro idioma'
+/IA_C2B_17 'Motivos entrevista incorrecta: Realizada en un establecimiento o negocio, no es un domicilio'
+/IA_C2B_18 'Motivos entrevista incorrecta: Valores de cuota anotados incorrectamente, distintos de sexo y edad (provincia/municipio/situación laboral)'
+/IA_C2B_19 'Motivos entrevista incorrecta: No se lee el protocolo de inicio o fin de la encuesta'
+/IA_C2B_20 'Motivos entrevista incorrecta: Entrevista interrumpida y autocompletada'
+/IA_C2B_21 'Motivos entrevista incorrecta: No se leen literalmente las preguntas y/o las opciones de respuesta'
+/IA_C2B_22 'Motivos entrevista incorrecta: Induce las respuestas'
+/IA_C2B_23 'Motivos entrevista incorrecta: No se recogen fielmente las respuestas espontáneas'
+/IA_C2B_24 'Motivos entrevista incorrecta: Lee las categorías de respuesta cuando ésta es espontánea'
+/IA_C2B_25 'Motivos entrevista incorrecta: Codificación incorrecta por parte del entrevistador (Ej. estudios, problemas, preguntas precodificadas…)'
+/IA_C3 'Resultado final'
+/IA_C4 'Supervisor'
+/TARHOGENTREV 'Tiempo empleado por la persona entrevistada en las tareas del hogar (minutos)'
+/TARHOGPAREJ 'Tiempo empleado por el cónyuge o pareja en las tareas del hogar (minutos)'
+/HIJOMENOR 'Tenencia de hijos/as menores de edad'
+/CUIDADOHIJOS 'Tiempo empleado por la persona entrevistada en el cuidado de los/as hijos/as menores (minutos)'
+/CUIDADOHIJOSPAR 'Tiempo empleado por el cónyuge o pareja en el cuidado de los/as hijos/as menores (minutos)'
+/TAREASCUI 'Tiempo empleado por la persona entrevistada para el cuidado de la persona enferma y/o dependiente'
+/RECUVOTOGR 'Recuerdo de voto en las elecciones generales de 2023 de los votantes [recodificada]'
+/RECUERDO 'Recuerdo de voto en las elecciones generales de 2023'
+/ESTUDIOS 'Estudios de la persona entrevistada'
+/CNO11R 'Población activa e inactiva'
+/CLASESUB 'Identificación subjetiva de clase'
+/PESO 'Ponderación muestra total'
+/PESOHOM 'Ponderación para la submuestra hombres'
+/PESOMUJ 'Ponderación para la submuestra mujeres'
+.
+
+VALUE LABELS
+ESTU
+/REGISTRO
+/CUES
+/CCAA
+1 'Andalucía' 2 'Aragón' 3 'Asturias (Principado de)' 4 'Balears (Illes)' 5 'Canarias' 6 'Cantabria'
+7 'Castilla-La Mancha' 8 'Castilla y León' 9 'Cataluña' 10 'Comunitat Valenciana' 11 'Extremadura'
+12 'Galicia' 13 'Madrid (Comunidad de)' 14 'Murcia (Región de)' 15 'Navarra (Comunidad Foral de)'
+16 'País Vasco' 17 'Rioja (La)' 18 'Ceuta (Ciudad Autónoma de)' 19 'Melilla (Ciudad Autónoma de)'
+/PROV
+1 'Araba/Álava' 2 'Albacete' 3 'Alicante/Alacant' 4 'Almería' 33 'Asturias' 5 'Ávila' 6 'Badajoz'
+7 'Balears (Illes)' 8 'Barcelona' 9 'Burgos' 10 'Cáceres' 11 'Cádiz' 39 'Cantabria' 12 'Castellón/Castelló'
+13 'Ciudad Real' 14 'Córdoba' 15 'Coruña (A)' 16 'Cuenca' 17 'Girona' 18 'Granada' 19 'Guadalajara'
+20 'Gipuzkoa' 21 'Huelva' 22 'Huesca' 23 'Jaén' 24 'León' 25 'Lleida' 27 'Lugo' 28 'Madrid'
+29 'Málaga' 30 'Murcia' 31 'Navarra' 32 'Ourense' 34 'Palencia' 35 'Palmas (Las)' 36 'Pontevedra'
+26 'Rioja (La)' 37 'Salamanca' 38 'Santa Cruz de Tenerife' 40 'Segovia' 41 'Sevilla' 42 'Soria'
+43 'Tarragona' 44 'Teruel' 45 'Toledo' 46 'Valencia/València' 47 'Valladolid' 48 'Bizkaia' 49 'Zamora'
+50 'Zaragoza' 51 'Ceuta' 52 'Melilla'
+/MUN
+0 'Mun.<=100.000 hab. no capitales de CA o provincia' 1 'Ceuta / Melilla' 3 'Albacete' 4 'Algeciras'
+5 'Alcalá de Henares' 6 'Alcobendas' 7 'Alcorcón' 12 'Cádiz' 13 'Almería / Barakaldo' 14 'Alicante/Alacant'
+15 'Badalona / Badajoz' 16 'Cartagena / Palmas de Gran Canaria (Las)' 19 'Ávila / Barcelona'
+20 'Bilbao / Jerez de la Frontera' 21 'Córdoba' 23 'La Laguna' 24 'Gijón' 26 'Telde' 28 'Lugo'
+30 'Coruña (A) / Murcia' 34 'Ciudad Real' 37 'Cáceres' 38 'Pontevedra / Santa Cruz de Tenerife / Dos Hermanas'
+40 'Castellón de la Plana/Castelló de la Plana / Palma de Mallorca' 41 'Huelva' 44 'Oviedo'
+50 'Jaén' 54 'Ourense' 57 'Vigo' 58 'Fuenlabrada' 59 'Burgos / Vitoria-Gasteiz' 65 'Elche/Elx / Getafe'
+67 'Málaga' 69 'Donostia/San Sebastián / Marbella' 74 'Leganés' 75 'Santander' 78 'Cuenca / Santiago de Compostela'
+79 'Girona / Madrid / Roquetas de Mar' 83 'Mérida' 87 'Granada' 89 'León / Logroño' 91 'Sevilla'
+92 'Móstoles' 101 'Hospitalet de Llobregat' 106 'Parla' 120 'Lleida / Palencia' 121 'Mataró'
+123 'Reus' 125 'Huesca' 130 'Guadalajara' 148 'Tarragona / Torrejón de Ardoz' 168 'Toledo' 173 'Soria'
+186 'Valladolid' 187 'Sabadell' 194 'Segovia' 201 'Pamplona/Iruña' 216 'Teruel' 245 'Santa Coloma de Gramenet'
+250 'València' 274 'Salamanca' 275 'Zamora' 279 'Terrassa' 297 'Zaragoza'
+/CAPITAL
+1 'Capital de CC.AA.' 2 'Capital de provincia' 3 'Otros municipios'
+/TAMUNI
+1 'Menos o igual a 2.000 habitantes' 2 '2.001 a 10.000 habitantes' 3 '10.001 a 50.000 habitantes'
+4 '50.001 a 100.000 habitantes' 5 '100.001 a 400.000 habitantes' 6 '400.001 a 1.000.000 habitantes'
+7 'Más de 1.000.000 habitantes'
+/ENTREV
+0 'Anonimizado'
+/TIPO_TEL
+1 'Fijo' 2 'Móvil'
+/SEXO
+1 'Hombre' 2 'Mujer'
+/EDAD
+99 'N.C.'
+/P0
+1 'La nacionalidad española' 2 'La nacionalidad española y otra' 3 'Otra nacionalidad'
+/P1
+1 'Una sociedad con personas de diferente origen, cultura y religión' 2 'Una sociedad en la que la gran mayoría de la gente tenga el mismo origen, cultura y religión'
+8 'N.S.' 9 'N.C.'
+/P2
+1 'Se da el mismo trato a todos' 2 'Se hacen diferencias según de quién se trate' 8 'N.S.' 9 'N.C.'
+/P3_1
+0 '0 Ninguna simpatía' 10 '10 Mucha simpatía' 98 'N.S.' 99 'N.C.'
+/P3_2
+0 '0 Ninguna simpatía' 10 '10 Mucha simpatía' 98 'N.S.' 99 'N.C.'
+/P3_3
+0 '0 Ninguna simpatía' 10 '10 Mucha simpatía' 98 'N.S.' 99 'N.C.'
+/P3_4
+0 '0 Ninguna simpatía' 10 '10 Mucha simpatía' 98 'N.S.' 99 'N.C.'
+/P3_5
+0 '0 Ninguna simpatía' 10 '10 Mucha simpatía' 98 'N.S.' 99 'N.C.'
+/P4
+1 'Muy grandes' 2 'Bastante grandes' 3 'Pequeñas' 4 'Casi inexistentes' 8 'N.S.' 9 'N.C.'
+/P5
+1 'Mayores' 2 'Iguales' 3 'Menores' 8 'N.S.' 9 'N.C.'
+/P6_1
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 '(NO LEER) Regular' 4 'Poco de acuerdo' 5 'Nada de acuerdo'
+8 'N.S.' 9 'N.C.'
+/P6_2
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 '(NO LEER) Regular' 4 'Poco de acuerdo' 5 'Nada de acuerdo'
+8 'N.S.' 9 'N.C.'
+/P6_3
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 '(NO LEER) Regular' 4 'Poco de acuerdo' 5 'Nada de acuerdo'
+8 'N.S.' 9 'N.C.'
+/P7_1
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_2
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_3
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_4
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_5
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_6
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P7_7
+1 'Mejor' 2 'Igual' 3 'Peor' 8 'N.S.' 9 'N.C.'
+/P8_1
+1 'Más bien de acuerdo' 2 '(NO LEER) Ni de acuerdo ni en desacuerdo' 3 'Más bien en desacuerdo'
+8 'N.S.' 9 'N.C.'
+/P8_2
+1 'Más bien de acuerdo' 2 '(NO LEER) Ni de acuerdo ni en desacuerdo' 3 'Más bien en desacuerdo'
+8 'N.S.' 9 'N.C.'
+/P8_3
+1 'Más bien de acuerdo' 2 '(NO LEER) Ni de acuerdo ni en desacuerdo' 3 'Más bien en desacuerdo'
+8 'N.S.' 9 'N.C.'
+/P8_4
+1 'Más bien de acuerdo' 2 '(NO LEER) Ni de acuerdo ni en desacuerdo' 3 'Más bien en desacuerdo'
+8 'N.S.' 9 'N.C.'
+/P9_1
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P9_2
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P9_3
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P10_1
+1 'Aprueba' 2 'Desaprueba' 8 'N.S.' 9 'N.C.'
+/P10_2
+1 'Aprueba' 2 'Desaprueba' 8 'N.S.' 9 'N.C.'
+/P10_3
+1 'Aprueba' 2 'Desaprueba' 8 'N.S.' 9 'N.C.'
+/P10_4
+1 'Aprueba' 2 'Desaprueba' 8 'N.S.' 9 'N.C.'
+/P11_1
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 'Poco de acuerdo' 4 'Nada de acuerdo' 8 'N.S.'
+9 'N.C.'
+/P11_2
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 'Poco de acuerdo' 4 'Nada de acuerdo' 8 'N.S.'
+9 'N.C.'
+/P11_3
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 'Poco de acuerdo' 4 'Nada de acuerdo' 8 'N.S.'
+9 'N.C.'
+/P11_4
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 'Poco de acuerdo' 4 'Nada de acuerdo' 8 'N.S.'
+9 'N.C.'
+/P11_5
+1 'Muy de acuerdo' 2 'Bastante de acuerdo' 3 'Poco de acuerdo' 4 'Nada de acuerdo' 8 'N.S.'
+9 'N.C.'
+/P12_1
+1 'Más propios de hombres' 2 'Más propios de mujeres' 3 'De ambos por igual' 8 'N.S.' 9 'N.C.'
+/P12_2
+1 'Más propios de hombres' 2 'Más propios de mujeres' 3 'De ambos por igual' 8 'N.S.' 9 'N.C.'
+/P12_3
+1 'Más propios de hombres' 2 'Más propios de mujeres' 3 'De ambos por igual' 8 'N.S.' 9 'N.C.'
+/P12_4
+1 'Más propios de hombres' 2 'Más propios de mujeres' 3 'De ambos por igual' 8 'N.S.' 9 'N.C.'
+/P12_5
+1 'Más propios de hombres' 2 'Más propios de mujeres' 3 'De ambos por igual' 8 'N.S.' 9 'N.C.'
+/P13_1
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_2
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_3
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_4
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_5
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_6
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P13_7
+1 'Una mujer' 2 'Un hombre' 3 'Cualquiera' 8 'N.S.' 9 'N.C.'
+/P14_1
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P14_2
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P14_3
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P14_4
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P14_5
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P14_6
+1 'Sí' 2 'No' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+/P15_1
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+0 'No procede'
+/P15_2
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+0 'No procede'
+/P15_3
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+0 'No procede'
+/P15_4
+1 'A menudo' 2 'Algunas veces' 3 'Raramente' 4 'Nunca' 7 '(NO LEER) No procede' 8 'N.S.' 9 'N.C.'
+0 'No procede'
+/ESCFEMINIS
+0 '0 Nada feminista' 10 '10 Muy feminista' 98 'N.S.' 99 'N.C.'
+/P17
+1 'Sí' 2 'No' 8 'N.S.' 9 'N.C.'
+/P17A
+1 'Un hombre' 2 'Una mujer' 3 '(NO LEER) Otra respuesta' 8 'N.S.' 9 'N.C.' 0 'No procede'
+/SITCONV
+1 'Solo/a' 2 'Solo/a con sus hijos/as' 3 'Con su cónyuge o pareja' 4 'Con su cónyuge o pareja con hijos/as'
+5 'Con su cónyuge o pareja con hijos/as y otras personas' 6 'Con su padre y/o madre con o sin hermanos/as con o sin otros parientes'
+7 'Con otros familiares (hermanos/as, tíos/as, etc.)' 8 'Con amigos/as, compañeros/as de piso, etc.'
+96 'Otra situación' 99 'N.C.'
+/TARHOGENTREV_1
+1 'Menciona' 2 'No menciona'
+/TARHOGENTREV_2
+1 'Menciona' 2 'No menciona'
+/TARHOGENTREV_8
+1 'Menciona' 2 'No menciona'
+/TARHOGENTREV_9
+1 'Menciona' 2 'No menciona'
+/TARHOGENTREV_HH
+0 'Ninguna hora' 98 'N.S.' 99 'N.C.'
+/TARHOGENTREV_MM
+0 'Ningún minuto' 98 'N.S.' 99 'N.C.'
+/TARHOGPAREJ_1
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TARHOGPAREJ_2
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TARHOGPAREJ_8
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TARHOGPAREJ_9
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TARHOGPAREJ_HH
+0 'Ninguna hora' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/TARHOGPAREJ_MM
+0 'Ningún minuto' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/HIJOMENOR_1
+1 'Menciona' 2 'No menciona'
+/HIJOMENOR_97
+1 'Menciona' 2 'No menciona'
+/HIJOMENOR_99
+1 'Menciona' 2 'No menciona'
+/HIJOMENOR_N
+1 '1 hijo/a menor' 2 '2 hijos/as menores' 3 '3 hijos/as menores' 4 '4 hijos/as menores' 5 '5 hijos/as menores'
+99 'N.C.'
+/CUIDADOHIJOS_1
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOS_2
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOS_8
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOS_9
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOS_HH
+0 'Ninguna hora' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/CUIDADOHIJOS_MM
+0 'Ningún minuto' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/CUIDADOHIJOSPAR_1
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOSPAR_2
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOSPAR_7
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOSPAR_8
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOSPAR_9
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/CUIDADOHIJOSPAR_HH
+0 'Ninguna hora' 97 'Su pareja no tiene hijos/as menores' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/CUIDADOHIJOSPAR_MM
+0 'Ningún minuto' 97 'Su pareja no tiene hijos/as menores' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/P22
+1 'Sí' 2 'No' 9 'N.C.'
+/TAREASCUI_1
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TAREASCUI_2
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TAREASCUI_8
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TAREASCUI_9
+1 'Menciona' 2 'No menciona' 0 'No procede'
+/TAREASCUI_HH
+0 'Ninguna hora' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/TAREASCUI_MM
+0 'Ningún minuto' 98 'N.S.' 99 'N.C.' 96 'No procede'
+/P23_1
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_2
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_3
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_4
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_5
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_6
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_7
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_8
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/P23_9
+1 'Propia de hombres' 2 'Propia de mujeres' 3 'De ambos por igual' 4 'De ninguno de los dos'
+8 'N.S.' 9 'N.C.'
+/ESCIDEOL
+1 '1 Izquierda' 10 '10 Derecha' 98 'N.S.' 99 'N.C.'
+/PARTICIPACIONG
+1 'Votó' 2 'No votó' 3 'No tenía edad para votar' 4 'No tenía derecho a voto' 8 'No recuerda'
+9 'N.C.'
+/RECUVOTOG
+1 'PSOE' 2 'PP' 3 'VOX' 6 'PACMA' 21 'Sumar' 503 'CCa' 901 'ERC' 902 'Junts (JxCat)' 1201 'BNG'
+1501 'UPN' 1601 'EAJ-PNV' 1602 'EH Bildu' 8995 'Otros partidos' 8996 'En blanco' 9977 'Voto nulo'
+9998 'N.R.' 9999 'N.C.' 0 'No procede'
+/ESCUELA
+1 'No, es analfabeto/a' 2 'No, pero sabe leer y escribir' 3 'Sí, ha ido a la escuela' 9 'N.C.'
+/NIVELESTENTREV
+1 'Menos de 5 años de escolarización ' 2 'Educación Primaria (Educación Primaria de LOGSE, 5º curso de EGB, enseñanza primaria antigua) '
+3 'F.P. Básica (FPB), FP grado inicial. Programas de Cualificación Profesional Inicial. Programas de garantía social '
+4 'Educación secundaria (ESO, EGB. Graduado Escolar. Certificado de Escolaridad, Bachillerato Elemental) '
+5 'FP de Grado Medio (ciclo/módulo formativo de FP (grado medio), de Artes Plásticas y Diseño, Música y Danza, enseñanzas d'+'eportivas, FP I, Bachiller Laboral Elemental. Oficialía Industrial; Bachillerato Comercial) '
+6 'Bachillerato (Bachillerato LOGSE, BUP, Bachillerato Superior (6º), Bachillerato Universitario (7º), incluidos COU y PREU'+') '
+7 'FP de Grado Superior, FP (grado superior) de Artes Plásticas, Diseño, Música y Danza, Deporte, FP II, Bachillerato Laboral Superior, Maestría industrial, perito/a mercantil; Secretariado de 2º grado; Grado Medio conservatorio'
+8 'Arquitectura/Ingeniería Técnica (aparejador/a; peritos/as) ' 9 'Diplomatura (ATENCIÓN: sólo diplomaturas oficiales, no codificar aquí los tres primeros años de una licenciatura o grado'+' con mayor duración) '
+10 'Grado (estudios de grado, enseñanzas artísticas equivalentes (desde 2006)) ' 11 'Licenciatura (titulaciones con equivalencia oficial: 2º ciclo INEF; Danza y Arte Dramático (desde 1992); Grado Superior '+'de Música) '
+12 'Arquitectura/Ingeniería' 13 'Máster oficial universitario (especialidades médicas o equivalente) '
+14 'Doctorado' 15 'Títulos propios de posgrado (máster no oficial, etc.) ' 16 'Otros estudios '
+98 'N.S./No recuerda ' 99 'N.C.' 0 'No procede'
+/RELIGION
+1 'Católico/a practicante' 2 'Católico/a no practicante' 3 'Creyente de otra religión' 4 'Agnóstico/a (no niegan la existencia de Dios pero tampoco la descartan) '
+5 'Indiferente, no creyente' 6 'Ateo/a (niegan la existencia de Dios) ' 9 'N.C.'
+/PRACTICARELIG6
+1 'Nunca' 2 'Casi nunca' 3 'Varias veces al año' 4 'Dos o tres veces al mes' 5 'Todos los domingos y festivos'
+6 'Varias veces a la semana' 9 'N.C.' 0 'No procede'
+/SITLAB
+1 'Trabaja' 2 'Jubilado/a o pensionista (anteriormente ha trabajado) ' 3 'Pensionista (anteriormente no ha trabajado) '
+4 'En paro y ha trabajado antes ' 5 'En paro y busca su primer empleo ' 6 'Estudiante ' 7 'Trabajo doméstico no remunerado '
+8 'Otra situación' 9 'N.C.'
+/RELALAB
+1 'Asalariado/a por cuenta ajena' 2 'Empresario/a o profesional con asalariados/as' 3 'Profesional o trabajador/a autónomo/a (sin asalariados/as)'
+4 'Ayuda familiar (sin remuneración reglamentada en la empresa o negocio de un/a familiar)'
+5 'Miembro de una cooperativa' 6 'Otra situación' 9 'N.C.' 0 'No procede'
+/CNO11
+1 'Directores/as y gerentes' 2 'Profesionales, científicos e intelectuales' 3 'Técnicos/as y profesionales de nivel medio'
+4 'Personal de apoyo administrativo' 5 'Trabajadores/as de los servicios y vendedores/as de comercios y mercados'
+6 'Agricultores/as y trabajadores/as cualificados/as agropecuarios, forestales y pesqueros/as'
+7 'Oficiales/as, operarios/as, artesanos/as y trabajadores/as de artes mecánicas y de otros oficios'
+8 'Operadores/as de instalaciones y máquinas y ensambladores/as' 9 'Ocupaciones elementales'
+10 'Ocupaciones militares y cuerpos policiales' 11 'Otra/o' 99 'N.C.' 0 'No procede'
+/TIPOJOR
+1 'Tiempo completo' 2 'Tiempo parcial' 9 'N.C.' 0 'No procede'
+/INGRESHOG
+1 'Más de 5.000 â?¬' 2 'De 3.901 a 5.000 â?¬' 3 'De 2.701 a 3.900 â?¬' 4 'De 1.801 a 2.700 â?¬'
+5 'De 1.100 a 1.800 â?¬' 6 'Menos de 1.100 â?¬' 8 'N.S.' 9 'N.C.'
+/CLASESOCIAL
+1 'Clase alta ' 2 'Clase media-alta ' 3 'Clase media-media ' 4 'Clase media-baja ' 5 'Clase trabajadora/obrera '
+12 'Clase baja ' 6 'Clase pobre ' 7 'Infraclase' 8 'Proletariado' 9 'A los/as de abajo ' 10 'Excluidos/as'
+11 'A la gente común ' 96 'Otras' 97 'No cree en las clases ' 98 'No sabe, duda ' 99 'N.C.'
+/PAISNAC
+1 'En España' 2 'En otro país' 9 'N.C.'
+/PAISNAC2
+101 'Albania' 102 'Austria' 103 'Bélgica' 104 'Bulgaria' 106 'Chipre' 107 'Dinamarca' 108 'España'
+109 'Finlandia' 110 'Francia' 111 'Grecia' 112 'Hungría' 113 'Irlanda' 114 'Islandia' 115 'Italia'
+116 'Liechtenstein' 117 'Luxemburgo' 118 'Malta' 119 'Mónaco' 120 'Noruega' 121 'Países Bajos'
+122 'Polonia' 123 'Portugal' 124 'Andorra' 125 'Reino Unido' 126 'Alemania' 128 'Rumanía' 129 'San Marino'
+130 'Santa Sede' 131 'Suecia' 132 'Suiza' 135 'Ucrania' 136 'Letonia' 137 'Moldavia' 138 'Bielorrusia'
+139 'Georgia' 141 'Estonia' 142 'Lituania' 143 'República Checa' 144 'República Eslovaca' 145 'Bosnia Herzegovina'
+146 'Croacia' 147 'Eslovenia' 148 'Armenia' 154 'Rusia' 156 'Macedonia' 157 'Serbia' 158 'Montenegro'
+199 'Otros territorios de Europa' 201 'Burkina Faso' 202 'Angola' 203 'Argelia' 204 'Benín'
+205 'Botsuana' 206 'Burundi' 207 'Cabo Verde' 208 'Camerún' 209 'Comoras' 210 'Congo' 211 'Costa de Marfil'
+212 'Yibuti' 213 'Egipto' 214 'Etiopía' 215 'Gabón' 216 'Gambia' 217 'Ghana' 218 'Guinea' 219 'Guinea Bissau'
+220 'Guinea Ecuatorial' 221 'Kenia' 222 'Lesoto' 223 'Liberia' 224 'Libia' 225 'Madagascar'
+226 'Malaui' 227 'Mali' 228 'Marruecos' 229 'Mauricio' 230 'Mauritania' 231 'Mozambique' 232 'Namibia'
+233 'Níger' 234 'Nigeria' 235 'Rep. Centroafricana' 236 'Sudáfrica' 237 'Ruanda' 238 'Santo Tomé y Príncipe'
+239 'Senegal' 240 'Seychelles' 241 'Sierra Leona' 242 'Somalia' 243 'Sudán' 244 'Suazilandia'
+245 'Tanzania' 246 'Chad' 247 'Togo' 248 'Túnez' 249 'Uganda' 250 'Rep. Democrática del Congo'
+251 'Zambia' 252 'Zimbabue' 253 'Eritrea' 299 'Otros territorios de África' 301 'Canadá' 302 'Estados Unidos de América'
+303 'México' 310 'Antigua y Barbuda' 311 'Bahamas' 312 'Barbados' 313 'Belice' 314 'Costa Rica'
+315 'Cuba' 316 'Dominica' 317 'El Salvador' 318 'Granada' 319 'Guatemala' 320 'Haití' 321 'Honduras'
+322 'Jamaica' 323 'Nicaragua' 324 'Panamá' 325 'San Vicente y las Granadinas' 326 'República Dominicana'
+327 'Trinidad y Tobago' 328 'Santa Lucía' 329 'San Cristóbal y Nieves' 340 'Argentina' 341 'Bolivia'
+342 'Brasil' 343 'Colombia' 344 'Chile' 345 'Ecuador' 346 'Guyana' 347 'Paraguay' 348 'Perú'
+349 'Surinam' 350 'Uruguay' 351 'Venezuela' 399 'Otros territorios de América' 401 'Afganistán'
+402 'Arabia Saudita' 403 'Bahrein' 404 'Bangladés' 405 'Myanmar' 407 'China' 408 'Emiratos Árabes Unidos'
+409 'Filipinas' 410 'India' 411 'Indonesia' 412 'Irak' 413 'Irán' 414 'Israel' 415 'Japón' 416 'Jordania'
+417 'Camboya' 418 'Kuwait' 419 'Laos' 420 'Líbano' 421 'Malasia' 422 'Maldivas' 423 'Mongolia'
+424 'Nepal' 425 'Omán' 426 'Pakistán' 427 'Qatar' 430 'Corea' 431 'Corea del Norte (Rep. Popular Democrática)'
+432 'Singapur' 433 'Siria' 434 'Sri Lanka' 435 'Tailandia' 436 'Turquía' 437 'Vietnam' 439 'Brunéi'
+440 'Islas Marshall' 441 'Yemen' 442 'Azerbaiyán' 443 'Kazajistán' 444 'Kirguistán' 445 'Tayikistán'
+446 'Turkmenistán' 447 'Uzbekistán' 499 'Otros territorios de Asia' 501 'Australia' 502 'Fiyi'
+504 'Nueva Zelanda' 505 'Papúa Nueva Guinea' 506 'Islas Salomón' 507 'Samoa' 508 'Tonga' 509 'Vanuatu'
+511 'Micronesia' 512 'Tuvalu' 513 'Islas Cook' 515 'Nauru' 516 'Palaos' 517 'Timor Oriental'
+555 'Apátridas' 599 'Otros territorios de Oceanía' 999 'N.C.' 0 'No procede'
+/SINCERIDAD
+1 'Mucha' 2 'Bastante' 3 'Poca' 4 'Ninguna' 8 'N.S.'
+/IA_I501
+0 'No procede'
+/IA_I502
+0 'No procede'
+/IA_I503
+0 'No procede'
+/IA_I504
+0 'No procede'
+/IA_I505
+0 'No procede'
+/IA_I506
+0 'No procede'
+/IA_I507
+0 'No procede'
+/IA_I508
+0 'No procede'
+/IA_I509
+0 'No procede'
+/IA_I510
+0 'No procede'
+/IA_I511
+0 'No' 1 'Sí'
+/IA_I512
+0 'No' 1 'Sí'
+/IA_I513
+0 'No' 1 'Sí'
+/IA_I514
+0 'No' 1 'Sí'
+/IA_I515
+0 'No' 1 'Sí'
+/IA_I516
+0 'No' 1 'Sí'
+/IA_I517
+0 'No' 1 'Sí'
+/IA_I518
+0 'No' 1 'Sí'
+/IA_I519
+0 'No procede' 1 'Sí'
+/IA_I520
+0 'No' 1 'Sí'
+/IA_I521
+0 'No' 1 'Sí'
+/IA_I522
+0 'No' 1 'Sí'
+/IA_I523
+0 'No procede'
+/IA_I524
+0 'No procede'
+/IA_I525
+0 'No procede'
+/IA_I526
+0 'No procede'
+/IA_I528
+0 'No procede'
+/IA_I529
+0 'No procede'
+/IA_I530
+0 'No procede'
+/IA_I531
+0 'No procede'
+/IA_I532
+0 'No' 1 'Sí'
+/IA_I533
+0 'No' 1 'Sí'
+/IA_I534
+0 'No'
+/IA_I535
+0 'No'
+/IA_I536
+0 'No'
+/IA_I537
+0 'No'
+/IA_I538
+0 'No'
+/IA_I539
+0 'No'
+/IA_I540
+0 'No'
+/IA_I541
+0 'No'
+/IA_I542
+0 'No'
+/IA_I543
+0 'No'
+/IA_OBS1
+0 'No' 1 'Sí'
+/IA_OBS2
+0 'No' 1 'Sí'
+/IA_E1_DIA
+99 'N.C.'
+/IA_E1_MES
+1 'Enero  ' 2 'Febrero  ' 3 'Marzo  ' 4 'Abril  ' 5 'Mayo  ' 6 'Junio  ' 7 'Julio  ' 8 'Agosto  '
+9 'Septiembre  ' 10 'Octubre  ' 11 'Noviembre    ' 12 'Diciembre  ' 99 'N.C.'
+/IA_E1_ANYO
+23 '2023'
+/IA_E2
+1 'Lunes' 2 'Martes' 3 'Miércoles' 4 'Jueves' 5 'Viernes' 6 'Sábado' 7 'Domingo' 9 'N.C.'
+/IA_E3
+/IA_E4
+1 'Mañana (9-12)' 2 'Mediodía (12-16)' 3 'Tarde (16-20)' 4 'Noche (20-22)' 5 'Otra (22-9)'
+/IA_VALIDA
+0 'No' 1 'Sí'
+/IA_APLAZADA
+0 'No' 1 'Sí'
+/IA_MODIFICADA
+0 'No' 1 'Sí'
+/IA_SUPERVISADA
+0 'No' 1 'Sí'
+/IA_C2
+1 'Entrevista no supervisada' 2 'Supervisión telefónica' 3 'Supervisión personal' 4 'Supervisión telefónica y personal'
+5 'Supervisión directa' 6 'Supervisión de audio (monitorización)'
+/IA_C2A
+1 'Entrevista correcta' 2 'Entrevista incorrecta' 3 'No se ha establecido contacto'
+/IA_C2B_1
+1 'Dirección inexistente (no existe número en la calle, piso, etc.)' 0 'No'
+/IA_C2B_2
+1 'Dirección ilocalizable (faltan datos: número, piso, letra, etc.)' 0 'No'
+/IA_C2B_3
+1 'No coinciden datos personales y no ha sido realizada en la dirección que se hace constar'
+0 'No'
+/IA_C2B_4
+1 'Negativa que ofrece dudas. Coinciden datos personales pero niegan haber realizado la entrevista'
+0 'No'
+/IA_C2B_5
+1 'Realizada a una persona, recogiendo los datos de otra' 0 'No'
+/IA_C2B_6
+1 'Realizada cambiando género del entrevistado' 0 'No'
+/IA_C2B_7
+1 'Cambio de edad por otra de un tramo contiguo' 0 'No'
+/IA_C2B_8
+1 'Cambio de edad por otra de un tramo no contiguo' 0 'No'
+/IA_C2B_9
+1 'Realizada fuera de la vivienda pero vive en la sección electoral' 0 'No'
+/IA_C2B_10
+1 'Realizada fuera de la vivienda, y no vive en la sección electoral' 0 'No'
+/IA_C2B_11
+1 'Realizada en dirección que no corresponde a la sección electoral' 0 'No'
+/IA_C2B_12
+1 'Realizada, pero no respeta las normas de ruta' 0 'No'
+/IA_C2B_13
+1 'Se detecta que no ha hecho todas las preguntas' 0 'No'
+/IA_C2B_14
+1 'Negativa que ofrece dudas: no coincide la dirección ni datos personales. Posibilidad de error en el teléfono'
+0 'No'
+/IA_C2B_15
+1 'No hay grabación' 0 'No'
+/IA_C2B_16
+1 'Realizada en otro idioma' 0 'No'
+/IA_C2B_17
+1 'Realizada en un establecimiento o negocio, no es un domicilio' 0 'No'
+/IA_C2B_18
+1 'Valores de cuota anotados incorrectamente, distintos de sexo y edad (provincia/municipio/situación laboral)'
+0 'No'
+/IA_C2B_19
+1 'No se lee el protocolo de inicio o fin de la encuesta' 0 'No'
+/IA_C2B_20
+1 'Entrevista interrumpida y autocompletada' 0 'No'
+/IA_C2B_21
+1 'No se leen  literalmente las preguntas y/o las opciones de respuesta' 0 'No'
+/IA_C2B_22
+1 'Induce las respuestas' 0 'No'
+/IA_C2B_23
+1 'No se recogen fielmente las respuestas espontáneas' 0 'No'
+/IA_C2B_24
+1 'Lee las categorías de respuesta cuando ésta es espontánea' 0 'No'
+/IA_C2B_25
+1 'Codificación incorrecta por parte del entrevistador (Ej. estudios, problemas, preguntas precodificadas…)'
+0 'No'
+/IA_C3
+1 'Entrevista válida' 2 'Entrevista anulada'
+/IA_C4
+0 'Anonimizado'
+/TARHOGENTREV
+0 'Nada de tiempo' 9998 'N.S.' 9999 'N.C.'
+/TARHOGPAREJ
+0 'Nada de tiempo' 9998 'N.S.' 9999 'N.C.' 9996 'No procede'
+/HIJOMENOR
+0 'Ninguno/a' 1 '1 hijo/a menor' 2 '2 hijos/as menores' 3 '3 hijos/as menores' 4 '4 hijos/as menores'
+5 '5 hijos/as menores' 99 'N.C.'
+/CUIDADOHIJOS
+0 'Nada de tiempo' 9998 'N.S.' 9999 'N.C.' 9996 'No procede'
+/CUIDADOHIJOSPAR
+0 'Nada de tiempo' 9997 'Su pareja no tiene hijos/as menores' 9998 'N.S.' 9999 'N.C.' 9996 'No procede'
+/TAREASCUI
+0 'Nada de tiempo' 9998 'N.S.' 9999 'N.C.' 9996 'No procede'
+/RECUVOTOGR
+2 'PP' 1 'PSOE' 3 'VOX' 21 'Sumar' 901 'ERC' 902 'Junts' 904 'CUP' 1602 'EH Bildu' 1601 'EAJ-PNV'
+1201 'BNG' 503 'CCa' 1501 'UPN' 6 'PACMA' 8995 'Otro partido' 8996 'En blanco' 9977 'Voto nulo'
+9998 'No recuerda' 9999 'N.C.' 0 'No procede'
+/RECUERDO
+2 'PP' 1 'PSOE' 3 'VOX' 21 'Sumar' 901 'ERC' 902 'Junts' 1602 'EH Bildu' 1601 'EAJ-PNV' 1201 'BNG'
+503 'CCa' 1501 'UPN' 6 'PACMA' 8995 'Otro partido' 8996 'En blanco' 9977 'Nulo' 9995 'No tenía edad'
+9997 'No votó' 9996 'No tenía derecho a voto' 9998 'N.R.' 9999 'N.C.'
+/ESTUDIOS
+1 'Sin estudios' 2 'Primaria' 3 'Secundaria 1ª etapa' 4 'Secundaria 2ª etapa' 5 'F.P.' 6 'Superiores'
+7 'Otros' 9 'N.C.'
+/CNO11R
+1 'Directores/as y gerentes' 2 'Profesionales, científicos/as e intelectuales' 3 'Técnicos/as y profesionales de nivel medio'
+4 'Personal de apoyo administrativo' 5 'Trabajadores/as de los servicios y vendedores/as de comercios y mercados'
+6 'Agricultores/as y trabajadores/as agropecuarios/as, forestales y pesqueros/as' 7 'Oficiales/as, operarios/as y artesanos/as'
+8 'Operadores/as de instalaciones y máquinas y ensambladores/as' 9 'Ocupaciones elementales'
+10 'Ocupaciones militares y cuerpos policiales' 11 'Otra/o ocupación' 12 'Jubilado o pensionista (anteriormente ha trabajado)'
+13 'Estudiante' 14 'Trabajo doméstico no remunerado' 15 'Otra situación inactiva' 16 'Parados/as'
+99 'N.C.'
+/CLASESUB
+1 'Clase alta y media alta' 2 'Clase media-media' 3 'Clase media-baja' 4 'Clase trabajadora/obrera/proletariado'
+5 'Clase baja/pobre' 6 'Otras' 8 'N.S.' 9 'N.C.'
+.
+EXECUTE.
+
+MISSING VALUES
+ P15_1 (0) P15_2 (0) P15_3 (0) P15_4 (0) P17A (0) TARHOGPAREJ_1 (0) TARHOGPAREJ_2 (0) TARHOGPAREJ_8 (0)
+ TARHOGPAREJ_9 (0) TARHOGPAREJ_HH (96) TARHOGPAREJ_MM (96) CUIDADOHIJOS_1 (0) CUIDADOHIJOS_2 (0)
+ CUIDADOHIJOS_8 (0) CUIDADOHIJOS_9 (0) CUIDADOHIJOS_HH (96) CUIDADOHIJOS_MM (96) CUIDADOHIJOSPAR_1 (0)
+ CUIDADOHIJOSPAR_2 (0) CUIDADOHIJOSPAR_7 (0) CUIDADOHIJOSPAR_8 (0) CUIDADOHIJOSPAR_9 (0) CUIDADOHIJOSPAR_HH (96)
+ CUIDADOHIJOSPAR_MM (96) TAREASCUI_1 (0) TAREASCUI_2 (0) TAREASCUI_8 (0) TAREASCUI_9 (0) TAREASCUI_HH (96)
+ TAREASCUI_MM (96) RECUVOTOG (0) NIVELESTENTREV (0) PRACTICARELIG6 (0) RELALAB (0) CNO11 (0)
+ TIPOJOR (0) PAISNAC2 (0) TARHOGPAREJ (9996) CUIDADOHIJOS (9996) CUIDADOHIJOSPAR (9996) TAREASCUI (9996)
+ RECUVOTOGR (0).
+EXECUTE.
+WEIGHT BY PESO.
+* WEIGHT BY PESOHOM.
+* WEIGHT BY PESOMUJ.
+FREQUENCIES VARIABLES ALL.
