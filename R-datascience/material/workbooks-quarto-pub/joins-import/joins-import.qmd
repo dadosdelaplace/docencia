@@ -532,3 +532,1294 @@ renta_mun_tidy |>
   select(-contains("rm")) |> 
   slice_max(renta, by = "codauto")
 ```
+
+
+
+## Importar/exportar
+
+Hasta ahora sólo hemos utilizado datos ya cargados en paquetes, pero muchas veces [**necesitaremos importar datos externamente**]{.hl-yellow}. Una de las principales [**fortalezas**]{.hl-yellow} de `R` es que podemos importar datos muy fácilmente en diferentes formatos:
+
+
+
+* [**Formatos nativos de R**]{.hl-yellow}: archivos `.rda`, `.RData` y `.rds`
+
+* [**Rectangular data (datos tabulados)**]{.hl-yellow}: archivos `.csv` y `.tsv`
+
+* [**Datos sin tabular**]{.hl-yellow}: archivos `.txt`.
+
+* [**Datos en excel**]{.hl-yellow}: archivos `.xls` y`.xlsx`.
+
+* [**Datos desde SAS/Stata/SPSS**]{.hl-yellow}: archivos `.sas7bdat`, `.sav` y `.dat`.
+
+* [**Datos desde Google Drive**]{.hl-yellow}
+
+* [**Datos desde API's**]{.hl-yellow}: aemet, catastro, censo, spotify, etc.
+
+### Formatos nativos de R
+
+Los ficheros [**más sencillos**]{.hl-yellow} para importar a `R` (y que suelen ocupar menos espacio en disco) son sus propias [**extensiones nativas**]{.hl-yellow}: ficheros en formatos `.RData`, `.rda` y `.rds`. Para cargar los primeros basta con [**utilizar la función**]{.hl-yellow} `load()` proporcionándole la ruta del fichero.
+
+* Archivos `RData`: vamos a importar el archivo `world_bank_pop.RData` que incluye la tabla `world_bank_pop`
+
+
+```{r}
+load("./datos/world_bank_pop.RData")
+world_bank_pop
+```
+
+
+
+* Archivos `.rda`: vamos a importar el dataset airquality desde `airquality.rda`
+
+```{r}
+load("./datos/airquality.rda")
+airquality |> as_tibble()
+```
+
+
+Ten en cuenta que los archivos cargados con `load()` se cargan [**automáticamente en el entorno**]{.hl-yellow} (con el nombre guardado originalmente), y no sólo se pueden cargar conjuntos de datos: `load()` nos permite cargar múltiples objetos (no sólo datos tabulares).
+
+Los archivos nativos `.rda` y `.RData` son una forma adecuada de guardar el entorno.
+
+```{r}
+load(file = "./datos/multiple_objects.rda")
+```
+
+
+
+* Archivos `.rds`: para este tipo debemos utilizar `readRDS()`, y necesitamos incorporar un [**argumento `file`**]{.hl-yellow} con la ruta. En este caso vamos a importar [**datos de cáncer de pulmón**]{.hl-purple} del North Central Cancer Treatment Group. Observe que ahora [**los archivos .rds incorporar solo una tabla, no un objeto en general**]{.hl-red}
+
+
+```{r}
+lung_cancer <-
+  readRDS(file = "./datos/NCCTG_lung_cancer.rds") |>
+  as_tibble()
+lung_cancer
+```
+
+
+::: callout-important
+
+## Importante
+
+Las [**rutas**]{.hl-yellow deben ser siempre [**sin espacios, ñ, ni acentos**]{.hl-yellow}. 
+
+
+:::
+
+### Datos tabulados: readr
+
+El paquete `{readr}` dentro del entorno `{tidyverse}` contiene varias funciones útiles para [**cargar datos rectangulares (sin formatear pero tabulados)**]{.hl-yellow}.
+
+
+:::: columns
+::: {.column width="50%"}
+
+* `read_csv()`: archivos `.csv` [**variables separadas por comas**]{.hl-purple}
+* `read_csv2()`: variables separadas por [**punto y coma**]{.hl-purple}
+* `read_tsv()`: variables separadas por [**tabuladores**]{.hl-purple}.
+* `read_table()`: variables separadas por [**espacios**]{.hl-purple}.
+* `read_delim()`: función generar con opción de [**especificar el delimitador**]{.hl-purple}.
+
+
+
+![](img/data-import-readr.png)
+
+Todos ellos necesitan como **argumento la ruta del fichero** más **otros opcionales** (saltar cabecera o no, decimales, etc). Ver más en <https://readr.tidyverse.org/>
+
+#### Archivos .csv
+
+La principal ventaja de `{readr}` es que [**automatiza el formato**]{.hl-yellow} para pasar de un fichero plano (sin formato) a un tibble (en filas y columnas, con formato).
+
+
+* Archivo `.csv`: con `read_csv()` cargaremos archivos [**separados por comas**]{.hl-purple}, pasando como [**argumento la ruta**]{.hl-yellow} en `file = ...`. Vamos a importar el conjunto de datos `chickens.csv` (sobre pollos de dibujos animados, por qué no). Si nos fijamos en la salida nos da el tipo de variables.
+
+```{r}
+library(readr)
+chickens <- read_csv(file = "./datos/chickens.csv")
+chickens
+```
+
+
+El [**formato de la variable**]{.hl-yellow} se hará normalmente [**automáticamente**]{.hl-yellow} por `read_csv()`, y podemos consultarlo con `spec()`.
+
+
+```{r}
+spec(chickens)
+```
+
+
+Aunque normalmente lo hace bien automáticamente podemos [**especificar el formato explícitamente**]{.hl-yellow} en `col_types = lista()` (en formato lista, con `col_xxx()` para cada tipo de variable, por ejemplo `eggs_laid` se importará como carácter). 
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_types = list(col_character(), col_character(),
+                            col_character(), col_character()))
+chickens
+```
+
+
+Incluso podemos indicar que [**variables queremos seleccionar**]{.hl-yellow} (sin ocupar memoria), indicándolo en `col_select = ...` (en formato lista, con `col_select = ...`).
+
+
+```{r}
+chickens <-
+  read_csv(file = "./datos/chickens.csv",
+           col_select = c(chicken, sex, eggs_laid))
+chickens
+```
+
+#### Archivos .txt, .tsv
+
+
+
+¿Qué ocurre cuando el [**separador no es correcto**]{.hl-red}?
+
+
+Si usamos `read_csv()` espera que el separador entre columnas sea una coma pero, como puedes ver con el siguiente `.txt`, lo interpreta todo como una sola columna: [**no tiene coma y no sabe dónde separar**]{.hl-yellow}
+
+
+```{r}
+datos_txt <- read_csv(file = "./datos/massey-rating.txt")
+dim(datos_txt)
+as_tibble(datos_txt)
+```
+
+Para ello tenemos.
+
+* `read_csv2()` cuando el [**separador es punto y coma**]{.hl-yellow}, `read_tsv()` cuando es un [**tabulador**]{.hl-yellow} y `read_table()` cuando es un  [**espacio**]{.hl-yellow}.
+
+* `read_delim()` en general.
+
+```{r}
+datos_txt <- read_table(file = "./datos/massey-rating.txt")
+as_tibble(datos_txt)
+```
+
+
+### Datos Excel (.xls, .xlsx)
+
+Otro paquete de importación clave será el paquete `{readxl}` para [**importar datos desde Excel**]{.hl-yellow}. Tres funciones serán clave:
+
+* `read_xls()` específica para `.xls`, `read_xlsx()` específica para `.xlsx`.
+* `read_excel()`: tanto para `.xls` como para `.xlsx`.
+
+
+Vamos a importar `deaths.xlsx` con los registros de defunciones de famosos.
+
+```{r}
+library(readxl)
+deaths <- read_xlsx(path = "./datos/deaths.xlsx")
+deaths
+```
+
+
+
+```{r}
+deaths |> slice(1:6)
+```
+
+[**Una desgracia muy común**]{.hl-red} es que haya algún tipo de comentario o texto al principio del fichero, teniendo que [**saltar esas filas**]{.hl-yellow}.
+
+
+Podemos [**saltar estas filas**]{.hl-yellow} directamente en la carga con `skip = ...` (indicando el número de filas a saltar).
+
+
+```{r}
+deaths <- read_xlsx(path = "./datos/deaths.xlsx", skip = 4)
+deaths
+```
+
+
+Además con `col_names = ...` ya podemos renombrar las columnas en la importación ([**proporcionar nombres supone 1ª línea ya como dato**]{.hl-yellow})
+
+
+```{r}
+#| code-line-numbers: "2-3"
+deaths <-
+  read_xlsx(path = "./datos/deaths.xlsx", skip = 5,
+            col_names = c("nombre", "profesion", "edad", "hijos", "nacimiento", "muerte"))
+deaths
+```
+
+A veces las  [**fechas de Excel tienen un formato incorrecto**]{.hl-red} (sorpresa): podemos utilizar `convertToDate()` del paquete `{openxlsx}` para convertirlo.
+
+
+
+```{r}
+library(openxlsx)
+deaths$muerte <- convertToDate(deaths$muerte)
+deaths
+```
+   
+
+También podemos [**cargar un Excel con varias hojas**]{.hl-yellow}: para [**indicar la hoja**]{.hl-yellow} (ya sea por su nombre o por su número) utilizaremos el argumento `sheet = ...`.
+
+
+```{r}
+mtcars <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "mtcars")
+mtcars
+```
+
+
+Incluso podemos indicar el [**rango de celdas**]{.hl-yellow} a cargar con `range = ...`.
+
+```{r}
+iris <- read_xlsx(path = "./datos/datasets.xlsx", sheet = "iris", range = "C1:E4")
+iris
+```
+
+### Importar desde SAS/STATA/SPSS
+
+El paquete `{haven}` dentro del universo tidyverse nos permitirá [**importar ficheros de los 3 software de pago más importantes**]{.hl-yellow}: SAS, SPSS y Stata.
+
+
+```{r}
+library(haven)
+
+# SAS
+iris_sas <- read_sas(data_file = "./datos/iris.sas7bdat")
+
+# SPSS
+iris_spss <- read_sav(file = "./datos/iris.sav")
+
+# Stata
+iris_stata <- read_dta(file = "./datos/iris.dta")
+```
+
+### Exportar
+
+De la misma forma que podemos importar también podemos [**exportar**]{.hl-yellow}
+
+* exportar en `.RData` (opción recomendada para variables almacenadas en `R`). Recuerda que esta extensión [**sólo se puede utilizar en `R`**]{.hl-yellow}. Para ello, basta con utilizar `save(object, file = path)`.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+save(table, file = "./datos/table.RData")
+rm(table) # eliminar
+load("./datos/table.RData")
+table
+```
+
+
+La ventaja de `.RData` es que podemos [**exportar múltiples variables de nuestro environment**]{.hl-yellow}, no solo un único dataset.
+
+```{r}
+table <- tibble("a" = 1:4, "b" = 1:4)
+a <- 1
+b <- c("javi", "sandra")
+save(table, a, b, file = "./datos/mult_obj.RData")
+rm(list = c("a", "b", "table"))
+load("./datos/mult_obj.RData")
+table
+```
+
+
+* [**exportado en `.csv`**]{.hl-yellow}. Para ello simplemente utilizamos `write_csv(object, file = path)`, y es el más recomendable para exportar bases de datos de tamaño pequeño o mediano. Ver <https://arrow.apache.org/docs/r/> para bases de datos masivas.
+
+```{r}
+write_csv(table, file = "./datos/table.csv")
+read_csv(file = "./datos/table.csv")
+```
+
+### Importar desde web
+
+Una de las principales ventajas de `R` es que podemos hacer uso de todas las funciones anteriores de [**importar pero directamente desde una web**]{.hl-yellow}, sin necesidad de realizar la descarga manual: en lugar de pasarle la ruta local le indicaremos el [**enlace**]{.hl-yellow}. Por ejemplo, vamos a descargar los datos covid del ISCIII (<https://cnecovid.isciii.es/covid19/#documentaci%C3%B3n-y-datos>)
+
+```{r}
+#| eval: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv")
+covid_data
+```
+
+```{r}
+#| echo: false
+covid_data <-
+  read_csv(file = "https://cnecovid.isciii.es/covid19/resources/casos_hosp_uci_def_sexo_edad_provres.csv", n_max = 500)
+covid_data
+```
+
+### Importar desde wikipedia
+
+El paquete `{rvest}`, uno de los más útiles de `{tidyverse}` nos permite [**importar (scrappear) directamente desde un `html`**]{.hl-yellow}. Por ejemplo, para exportar tablas de wikipedia basta con `read_html()` para importar el html, `html_element(«table»)` para extraer los objetos tabla, y `html_table()` para convertir la tabla html a `tibble`.
+
+
+```{r}
+library(rvest)
+wiki_jump <- 'https://en.wikipedia.org/wiki/Men%27s_long_jump_world_record_progression'
+wiki_jump |> read_html() |> 
+  html_element("table") |> 
+  html_table()
+```
+
+### Importar desde google drive
+
+Otra opción disponible (especialmente si trabajamos con otras personas trabajando) es [**importar desde una hoja de cálculo de Google Drive**]{.hl-yellow}, haciendo uso de `read_sheet()` del paquete `{googlesheets4}`.
+
+La primera vez se te pedirá un permiso tidyverse para interactuar con tu drive
+
+
+```{r}
+library(googlesheets4)
+google_sheet <-
+  read_sheet("https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing")
+google_sheet
+```
+
+### Importar desde API
+
+#### owid
+
+Otra opción interesante es la [**descarga de datos desde una API**]{.hl-yellow}: un intermediario entre una app o proveedor de datos y nuestro `R`. Por ejemplo, carguemos la librería `{owidR}`, que nos permite descargar datos de la web <https://ourworldindata.org/>. Por ejemplo, la función `owid_covid()` carga sin darnos cuenta más de 400 000 registros con más de 60 variables de 238 países.
+
+
+```{r}
+#| eval: false
+library(owidR)
+owid_covid() |> as_tibble()
+```
+
+```{r}
+#| echo: false
+library(owidR)
+owid_covid() |> as_tibble() |> slice(1:7)
+```
+
+#### aemet
+
+En muchas ocasiones para conectarnos a la API primero tendremos que [**registrarnos y obtener una clave**]{.hl-yellow}, este es el caso del paquete `{climaemet}` para acceder a [**datos meteorológicos de España**]{.hl-yellow} (<https://opendata.aemet.es/centrodedescargas/inicio>).
+
+
+Una vez tengamos la clave API la registramos en nuestro RStudio para poder utilizarla en el futuro.
+
+```{r}
+#| eval: false
+library(climaemet)
+
+# Api key
+apikey <- "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYXZhbHYwOUB1Y20uZXMiLCJqdGkiOiI4YTU1ODUxMS01MTE3LTQ4MTYtYmM4OS1hYmVkNDhiODBkYzkiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTY2NjQ2OTcxNSwidXNlcklkIjoiOGE1NTg1MTEtNTExNy00ODE2LWJjODktYWJlZDQ4YjgwZGM5Iiwicm9sZSI6IiJ9.HEMR77lZy2ASjmOxJa8ppx2J8Za1IViurMX3p1reVBU"
+
+aemet_api_key(apikey, install = TRUE)
+```
+
+
+```{r}
+#| echo: false
+library(climaemet)
+```
+
+
+Con este paquete podemos hacer una [**búsqueda de estaciones**]{.hl-yellow} para conocer tanto su código postal como su código identificador dentro de la red AEMET
+
+```{r}
+stations <- aemet_stations()
+stations
+```
+
+Por ejemplo, para obtener datos de la estación del aeropuerto de El Prat, Barcelona, el código a proporcionar es `«0076»`, obteniendo **datos horarios**.
+
+```{r}
+aemet_last_obs("0076")
+```
+
+#### US census
+
+Una de las herramientas más útiles de los últimos años es la conocida como `{tidycensus}`: una herramienta para [**facilitar el proceso de descarga de datos censales**]{.hl-yellow} de Estados Unidos desde `R`
+
+```{r}
+library(tidycensus)
+```
+
+* `get_decennial()`: para acceder a los [**datos de censos (US Decennial Census)**]{.hl-yellow}, se hacen cada 10 años (años 2000, 2010 y 2020).
+
+* `get_acs()`: para acceder a los [**datos anuales y quinquenales (5 años)  de la ACS (American Community Survey)**]{.hl-yellow} (censo != encuesta)
+
+* `get_estimates()`: para acceder a las [**estimaciones anuales de población, natalidad y mortalidad**]{.hl-yellow}
+
+* `get_pums()`: para acceder a los [**microdatos (datos sin agregar) de la ACS (anonimizados a nivel individual)**]{.hl-yellow}
+
+* `get_flows()`: para acceder a los datos de [**flujo de migraciones**]{.hl-yellow}
+
+
+Por ejemplo vamos a descargarnos los **datos censales** (`get_decennial()`) a nivel estado (`geography = "state"`) de la población (variable `variables = "P001001"`) para el año 2010 (ver variables en `tidycensus::load_variables()`)
+
+```{r}
+total_population_10 <-
+  get_decennial(geography = "state", 
+  variables = "P001001",
+  year = 2010)
+total_population_10
+```
+
+#### otras
+
+Otras opciones
+
+* `{chessR}`: datos de partidas de ajedrez de las plataformas chess.com y lychess. Ver más en <https://github.com/JaseZiv/chessR>
+
+* `{spotifyr}`: datos de canciones de Spotify. Ver más en <https://www.rcharlie.com/spotifyr/>
+
+* `{gtrendsR}`: datos de Google Trends. Ver más en <https://github.com/PMassicotte/gtrendsR>
+
+* `{scholar}`: datos de Google Scholar. Ver más en <https://github.com/jkeirstead/scholar>
+
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 El conjunto de datos `who2` del paquete `{tidyr}` que hemos utilizado en ejercicios anteriores, expórtalo a un formato nativo `R` en la carpeta `datos` de tu proyecto de RStudio
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(tidyr)
+save(who2, file = "./datos/who2.RData")
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Carga el conjunto de datos `who2` pero desde la carpeta data (importa el fichero creado en el ejercicio anterior)
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+load("./datos/who2.RData")
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Repite lo mismo (exportar e importar) en 4 formatos: `.csv`, `.xlsx`, `.sav` (spss) y `.dta` (stata)
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# csv
+library(readr)
+write_csv(who2, file = "./datos/who2.csv")
+who2_data <- read_csv(file = "./datos/who2.csv")
+
+# excel
+library(openxlsx)
+write.xlsx(who2, file = "./datos/who2.xlsx")
+who2_data <- read_xlsx(path = "./datos/who2.xlsx")
+
+# sas y stata
+library(haven)
+write_sav(who2, path = "./datos/who2.sav")
+who2_data <- read_spss(path = "./datos/who2.sav")
+
+write_dta(who2, path = "./datos/who2.dta")
+who2_data <- read_dta(path = "./datos/who2.dta")
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Repita la carga de `who2.csv` pero seleccione sólo las 4 primeras columnas ya cargadas.
+
+```{r}
+#| code-fold: true
+#| eval: false
+who_select <-
+  read_csv(file = "./datos/who2.csv",
+           col_select = c("country", "iso2", "iso3", "year"))
+who_select
+```
+
+
+:::
+
+
+## 🐣 Caso práctico III: encuesta CIS
+
+[📊 Datos](https://drive.google.com/drive/folders/1HV3kAAHr4iWKvH5spsKWUwAdzWSBS8pw?usp=sharing)
+
+Vamos a poner en práctica la carga y preprocesado de un fichero generado por uno de los programas informáticos más utilizados (SPSS). El fichero contiene [**datos del barómetro del CIS (Centro de Investigaciones Sociológicas) «Percepciones sobre igualdad entre hombres y mujeres y estereotipos de género»**]{.hl-yellow} cuyo trabajo muestral se realizó del 6 al 14 de noviembre (4000 entrevistas a mayores de 16 años de ambos sexos en 1174 municipios y 50 provincias).
+
+### Pregunta 1
+
+> Carga el archivo de extensión `.sav` que tienes en la subcarpeta `CIS-feminismo` dentro de la carpeta de datos. Tras la carga normaliza los nombres de las variables con el paquete `{janitor}`.
+
+```{r}
+#| code-fold: true
+library(haven)
+data <-
+  read_sav(file = "./datos/CIS-feminismo/3428.sav") |> 
+  janitor::clean_names()
+```
+
+### Pregunta 2
+
+> Usando tidyverse calcula la cantidad de elementos diferentes de cada variable y procede a eliminar aquellas cuyo valor sea constante (es decir solo haya una modalidad). Primero obtén el vector de nombres de dichas variables para luego poder usarlo en un `select()` (de manera que no dependa de los nombres de variables de la tabla)
+
+```{r}
+#| code-fold: true
+rm_variables <-
+  data |> 
+  summarise(across(everything(), n_distinct)) |> 
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "n_values") |> 
+  filter(n_values <= 1) |> 
+  pull(variable)
+data <-
+  data |> 
+  select(-rm_variables)
+```
+
+### Pregunta 3
+
+> Haz lo mismo pero para eliminar aquellas variables que en cada fila tomen un valor distinto (no haya ni un solo repetido). Estas columnas harán funciones de `id` del encuestado pero solo necesitamos una de ellas, elimina las demás.
+
+```{r}
+#| code-fold: true
+rm_variables <-
+  data |> 
+  summarise(across(everything(), n_distinct)) |> 
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "n_values") |> 
+  filter(n_values == nrow(data)) |> 
+  pull(variable)
+data <-
+  data |> 
+  select(-rm_variables[-1])
+```
+
+### Pregunta 4
+
+> Para entender qué significan las variables, tienes en la carpeta `CIS-feminismos` el cuestionario que se hizo a cada encuestada en `cues3428.pdf` y la ficha técnica en `FT3428.pdf`. En estos documentos verás cómo, por ejemplo, las variables del cuestionario comienzan casi todas por `p...`, aunque también tenemos otro tipo de variables relacionadas con las tareas del hogar (`tarhog...`), los hijos (`hijomenor...`), el cuidado de los niños (`cuidadohijos...`), las tareas de cuidado en general (`tareascuid...`) y otras variables relacionadas con la escala ideológica, la religión, el recuerdo de voto, etc. Además, todas las variables que comienzan por `ia_xxx` se refieren a códigos relativos a posibles incidencias en la recogida de datos y las variables `peso...` al tipo de ponderación utilizado en el muestreo. Proceda a eliminar estos dos últimos tipos de variables.
+
+```{r}
+#| code-fold: true
+data <-
+  data |> 
+  select(-contains("ia_"), -contains("peso"))
+```
+
+### Pregunta 5
+
+> Calcula el número de entrevistas por comunidad autónoma (`ccaa`) y extrae las 5 con menos entrevistas.
+
+```{r}
+#| code-fold: true
+#| eval: false
+data |>
+  count(ccaa, sort = TRUE)
+
+data |>
+  count(ccaa) |> 
+  slice_min(n = 5, n)
+```
+
+
+### Pregunta 6
+
+> Usa el paquete `{datapasta}` para copiar de la  [página del INE](https://www.ine.es/jaxiT3/Datos.htm?t=2853) la población de cada provincia e importarlo a un tibble
+
+```{r}
+#| code-fold: true
+# este código debería generarse automáticamente: cuando instalas el
+# paquete se instala un addin en R Studio (parte superior) que te
+# permite ctrl+c una tabla y diferentes opciones para importarla
+population <- 
+  tibble::tribble(~Total, ~`47.385.107`,
+                    "01 Andalucía",   "8.472.407",
+                       "02 Aragón",   "1.326.261",
+      "03 Asturias, Principado de",   "1.011.792",
+               "04 Balears, Illes",   "1.173.008",
+                     "05 Canarias",   "2.172.944",
+                    "06 Cantabria",     "584.507",
+              "07 Castilla y León",   "2.383.139",
+         "08 Castilla - La Mancha",   "2.049.562",
+                     "09 Cataluña",   "7.763.362",
+         "10 Comunitat Valenciana",   "5.058.138",
+                  "11 Extremadura",   "1.059.501",
+                      "12 Galicia",   "2.695.645",
+         "13 Madrid, Comunidad de",   "6.751.251",
+            "14 Murcia, Región de",   "1.518.486",
+  "15 Navarra, Comunidad Foral de",     "661.537",
+                   "16 País Vasco",   "2.213.993",
+                    "17 Rioja, La",     "319.796",
+                        "18 Ceuta",      "83.517",
+                      "19 Melilla",      "86.261"
+  )
+```
+
+### Pregunta 7
+
+> Renombra de manera adecuada las variables de `population`, convierte la población a variable numérica y separa la variable de la comunidad autónoma en 2, una para el código y otro para el nomnbre (procesa ete último de manera adecuada con el paquete `{stringr}` para eliminar espacios en blanco).
+
+```{r}
+#| code-fold: true
+population <-
+  population |> 
+  rename(ccaa = Total, pop = `47.385.107`) |> 
+  mutate("pop" = as.numeric(str_replace_all(pop, "\\.", ""))) |> 
+  separate(col = ccaa, into = c("cod_INE", "name"), sep = 2) |> 
+  mutate(name = str_squish(name))
+```
+
+### Pregunta 8
+
+> Incorpora la información de la población a nuestra tabla del CIS. Tras incorporar dicha información calcula una tabla resumen con el ratio entre el porcentaje de población que representa cada ccaa respecto al total de España y el porcentaje de encuestados de dicha comunidad respecto al total de encuestados. ¿Cuáles son las 3 provincias más sobrerepresentadas? ¿Y las 3 más infrarrepresentads? 
+
+```{r}
+#| code-fold: true
+#| eval: false
+data <-
+  data |> 
+  left_join(population |> mutate("cod_INE" = as.numeric(cod_INE)),
+            by = c("ccaa" = "cod_INE")) |> 
+  relocate(name, pop, .after = "ccaa")
+
+prop_surv_pop <-
+  data |>
+  summarise("prop_surv" = n() / sum(nrow(data)),
+            "pop" = unique(pop),
+            .by = ccaa) |> 
+  mutate("prop_pop" = pop / sum(pop),
+         "ratio" = prop_pop / prop_surv)
+
+# sobre
+prop_surv_pop |> 
+  slice_min(ratio, n = 3)
+
+# infra
+prop_surv_pop |> 
+  slice_max(ratio, n = 3)
+```
+
+
+## Listas
+
+Ya hemos visto que las listas son un objeto en R que nos permite almacenar [**colecciones de variables de distinto tipo**]{.hl-yellow} (como con `data.frame` y `tibble`) pero también [**diferentes longitudes**]{.hl-purple}, con estructuras totalmente heterogéneas (incluso una lista puede tener dentro otra lista).
+
+```{r}
+nombre <- "Javi"
+edad <- 34
+notas <- c(7, 8, 5, 3, 10, 9)
+progenitores <- c("Paloma", "Goyo")
+
+# Podemos no ponerle nombre pero solo podremos acceder por índice
+list_var <- list("nombre" = nombre, "edad" = edad,
+                 "notas" = notas, "parents" = progenitores)
+```
+
+
+```{r}
+list_var$nombre
+list_var$progenitores
+```
+
+
+
+---
+
+## Listas
+
+
+También podemos hacer [**listas con otras listas dentro**]{.hl-yellow}, de forma que para acceder a cada nivel debamos utilizar el operador `[[]]`.
+
+```{r}
+list_of_lists <- list("list_1" = list_var[1:2], "list_2" = list_var[3:4])
+names(list_of_lists)
+```
+
+```{r}
+names(list_of_lists[[1]])
+```
+
+```{r}
+list_of_lists[[1]][[1]]
+```
+
+
+¡Se nos permite almacenar [**datos n-dimensionales**]{.hl-yellow}!
+
+
+Sin embargo una de las desventajas es [**no puede ser vectorizada**]{.hl-yellow} inmediatamente, por lo que cualquier operación aritmética aplicada a una lista dará [**error**]{.hl-red}. Por ejemplo, en el código anterior, uno esperaría que hiciese la operación en cada elemento de la lista (en `a` y en `b`) pero no funciona.
+
+```{r}
+#| error: true
+data <- list("a" = 1:5, "b" = 10:20)
+data / 2
+```
+
+
+Para ello una de las opciones habituales (de `R` base) era hacer uso de la familia `lapply(lista, FUN = ...)`: aplica una función `FUN = ...` a cada elemento de la lista
+
+```{r}
+lapply(data, FUN = function(x) { x / 2})
+```
+
+Pero por defecto la salida de `lapply()` es siempre una [**lista de igual longitud**]{.hl-yellow}.
+
+
+### Paquete purrr
+
+
+Una opción más flexible y versátil es hacer uso del paquete `{purrr}` del entorno `{tidyverse}`.
+
+```{r}
+library(purrr)
+```
+
+Este paquete pretende imitar la [**programación funcional**]{.hl-yellow} de otros lenguajes como Scala o la [**estrategia map-reduce**]{.hl-yellow} de Hadoop (de Google).
+
+![](img/purrr.png)
+
+#### map()
+
+La función más sencilla del paquete `{purrr}` es la función `map()`, que [**aplica una función vectorizada**]{.hl-yellow} a cada uno de los elementos de una lista. Veamos un primer ejemplo aplicado a vectores: imagina que tenemos la siguiente lista y queremos aplicar, a cada uno de sus elementos, la suma.
+
+```{r}
+x <- list("x1" = 1:4, "x2" = 11:20)
+```
+
+
+`map(lista, función)` nos permite [**mapear la lista**]{.hl-yellow} y aplicar la función que queramos elemento a elemento
+
+
+```{r}
+map(x, sum) 
+```
+
+
+![](img/map_purrr.png)
+
+::: callout-warning
+## Ten cuidado...
+
+La [**salida por defecto de `map` es a su vez otra lista**]{.hl-yellow}.
+:::
+
+
+Veamos otro ejemplo que puedes sernos útil: imagina que tenemos [**dos muestras aleatorias de distinto tamaño**]{.hl-yellow}. La única forma en la que podemos almacenarlas juntas es con una lista pero...¿cómo hacer la media a ambas distribuciones sino podemos vectorizarlas?
+
+
+```{r}
+x <- list(rnorm(n = 1500, mean = 0, sd = 0.7),
+          rnorm(n = 2800, mean = 2, sd = 1.5))
+```
+
+
+Con `map()` y la función `mean()` dentro
+
+```{r}
+map(x, mean)
+```
+
+
+
+¿Y si quisiéramos calcular la media de sus valores al cuadrado? En este caso [**no disponemos de una función ya definida**]{.hl-red} así que tenemos dos opciones: definirla antes (con un nombre) o bien [**definir la función dentro del propio map**]{.hl-yellow}
+
+```{r}
+map(x, function(x) { mean(x^2) })
+```
+
+
+
+Una forma de [**definir la función más rápido**]{.hl-yellow} es así:
+
+```{r}
+map(x, \(x) mean(x^2))
+```
+
+
+#### map_xxx()
+
+Además de ser [**más legible y eficiente**]{.hl-yellow}, con `{purrr}` podemos [**decidir el formato de salida**]{.hl-yellow} tras la operación
+
+* salida como un [**vector numérico (decimales)**]{.hl-purple} con `map_dbl()`
+* salida como un [**vector numérico (enteros)**]{.hl-purple} con `map_int()`
+* salida como un [**vector de caracteres**]{.hl-purple} con  `map_chr()`
+* salida como un [**vector numérico lógico**]{.hl-purple} con  `map_lgl()`
+
+```{r}
+library(glue)
+map_dbl(x, mean)
+map_chr(x, function(x) { glue("Mean is {round(mean(x), 3)}") })
+map_lgl(x, function(x) { all(x < 3)})
+```
+
+
+También puede sernos útil para [**acceder a un elemento de CADA lista**]{.hl-yellow} si le pasas un [**número**]{.hl-yellow} en lugar de una función.
+
+```{r}
+c(x[[1]][3], x[[2]][3])
+map_dbl(x, 3)
+```
+
+#### pluck()
+
+También podemos hacer uso de `pluck()` para [**acceder al i-th objeto de la lista**]{.hl-yellow}.
+
+```{r}
+lista <- list("a" = starwars, "b" = billboard)
+lista |> pluck(1)
+```
+
+
+#### map2()
+
+También tenemos la opción de **generalizarlo** para poder utilizar funciones que [**necesiten dos argumentos**]{.hl-yellow} (operaciones binarias) con `map2()`. Por ejemplo, supongamos que tenemos las siguientes dos listas, y queremos que suma el vector del primer elemento de ambas entre sí, y lo mismo con el segundo
+
+```{r}
+x <- list("a" = 1:3, "b" = 4:6)
+y <- list("a" = c(-1, 4, 0), "b" = c(5, -4, -1))
+x$a + y$a
+x$b + x$b
+```
+
+
+En `map2()` introducimos las 2 listas y una **función con 2 argumentos**
+
+```{r}
+map2(x, y, function(x, y) { x + y})
+```
+
+
+
+Podemos también obtener la salida en forma de `data.frame` añadiendo `list_rbind()` o `list_cbind()`, que [**convierte una lista en una tabla**]{.hl-yellow}.
+
+```{r}
+x <- c("a", "b")
+y <- 1:2
+map2(x, y, function(x, y) { tibble(x, y) })
+map2(x, y, function(x, y) { tibble(x, y) }) |> list_rbind()
+```
+
+#### pmap()
+
+Podemos generalizarlo aún más con `pmap_xxx()` que nos permite utilizar [**múltiples argumentos (múltiples listas para funciónes multivariantes)**]{.hl-amarillo}.
+
+```{r}
+x <- list(1, 1, 1)
+y <- list(10, 20, 30)
+z <- list(100, 200, 300)
+pmap_dbl(list(x, y, z), sum)
+```
+
+#### walk()
+
+Tenemos otros tipos de iteradores que, aunque asumen entradas, no devuelven nada, como `walk()` (sólo un argumento de entrada), `walk2()` (dos argumentos) y `pwalk()` (múltiples argumentos), todos [**devuelven algo invisible**]{.hl-yellow}, sólo llaman a una función por sus [**efectos secundarios**]{.hl-yellow} en lugar de por su valor de retorno.
+
+```{r}
+list("a" = 1:3, "b" = 4:6) |>
+  map2(list("a" = 11:13, "b" = 14:16),
+       function(x, y) { x + y }) |> 
+  walk(print)
+```
+
+
+
+### 💻  Tu turno
+
+
+::: panel-tabset
+
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Define una lista de 4 elementos de distintos tipos y accede al segundo de ellos (incluiré uno que sea un tibble para que veas que en una lista cabe de todo).
+
+```{r}
+#| code-fold: true
+#| eval: false
+list_example <-
+  list("name" = "Javier", "cp" = 28019,
+       "siblings" = TRUE,
+       "marks" = tibble("maths" = c(7.5, 8, 9),
+                        "lang" = c(10, 5, 6)))
+list_example
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 From the list above, access the elements that occupy places 1 and 4 of the list defined above.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+list_example[c(1, 4)]
+
+list_example$name
+list_example$marks
+
+list_example[c("name", "marks")]
+```
+
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝  Load the `starwars` dataset from the `{dplyr}` package and access the second movie that appears in `starwars$films` (for each character). Determine which ones do not appear in more than one movie.
+
+```{r}
+second_film <- map(starwars$films, 2)
+map_lgl(second_film, is.null)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Convierte a tibble la base de datos `iris` incluida en `R base` (no necesitas ningún paquete, ya la tienes). Vamos a agrupar por species para después usar `group_split()`: nos genera una lista tal que cada elemento es la tabla para cada uno de los grupos (como un filter de cada grupo pero en un mismo objeto).
+
+```{r}
+iris_list <-
+  iris |> as_tibble() |>
+  group_by(Species) |> 
+  group_split()
+```
+
+Accede a cada variable  `Sepal.Length` para cada una de las subtablas y haz la media (nos tendría que salir un vector de medias)
+
+```{r}
+#| code-fold: true
+#| eval: false
+iris_list |> 
+  map("Sepal.Length") |> 
+  map_dbl(mean)
+```
+
+
+:::
+
+
+## 🐣 Caso práctico IV: encuesta de satisfacción
+
+
+Para este ejercicio usaremos la tabla de datos de satisfacción de pacientes en un hospital guardada en el archivo `.csv` llamada `SatisfaccionPacientes.csv`
+
+
+```{r}
+library(tidyverse)
+datos <-
+  read_csv("./datos/SatisfaccionPacientes.csv") |> 
+  # normalización de nombres de variables
+  janitor::clean_names()
+datos
+```
+
+### Pregunta 1
+
+> Aplica el código que sea necesario para determinar el tamaño muestral, el número de variables y el tipo de estas.
+
+```{r}
+#| code-fold: true
+
+# Tamaño muestral / número de observaciones
+n <- datos |> nrow()
+
+# Número de variables
+p <- datos |> ncol()
+
+# Tipo de variables
+dplyr::glimpse(datos)
+```
+
+
+### Pregunta 2
+
+> Usando tidyverse, obtén la tabla de frecuencias absolutas de la variable `genero`.
+
+```{r}
+#| code-fold: true
+tabla_freq <-
+  datos |> 
+  count(genero)
+```
+
+### Pregunta 3
+
+>  Incorpora a la tabla anterior las frecuencias relativas. ¿Podríamos calcular las frecuencias acumuladas? ¿Por qué?
+
+```{r}
+#| code-fold: true
+tabla_freq <-
+  tabla_freq |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+
+# No podemos acumuladas ya que necesitamos una jerarquía de orden
+# son cualis nominales, no ordinales
+```
+
+Haciendo uso de la tabla, **¿qué % de pacientes son mujeres?**
+
+Haz lo mismo tu solo con la variable `estado_civil` y determina el número de personas casadas (deberían ser 26).
+
+### Pregunta 4
+
+En `R` las [**variables cualitativas pueden ser tratadas como tales**]{.hl-yellow} convirtiendo una cadena de texto a lo que se conoce como [**factor**]{.hl-yellow}. Por ejemplo, supongamos que tenemos un vector de notas
+
+```{r}
+notas <- c("suspenso", "notable", "suspenso", "aprobado", "notable", "suspenso")
+notas
+```
+
+
+Para [**convertir a factor nos basta con `factor()`**]{.hl-yellow}. ¿Qué notas diferente?
+
+```{r}
+notas_fct <- factor(notas)
+notas_fct
+```
+
+
+Si te fijas ahora [**tenemos disponibles unos niveles (levels)**]{.hl-yellow}: son las posibles modalidades de nuestra variable cualitativa, el soporte, de manera que aunque borremos uno de ellos (vamos a borrar todos los aprobados), la opción sigue disponible si entrase un dato nuevo (algo así como un menú de opciones permitidas)
+
+```{r}
+notas_fct[notas_fct != "aprobado"]
+```
+
+
+
+En el caso de las [**cualitativas ordinales podemos incluso establecer una jerarquía**]{.hl-yellow}, indicando explícitamente los niveles y `ordered = TRUE`
+
+```{r}
+notas_fct_ord <- factor(notas, levels = c("aprobado", "notable", "suspenso"),
+                        ordered = TRUE)
+notas_fct_ord
+```
+
+Fíjate que ahora tenemos una [**jerarquía**]{.hl-yellow} y aunque sea cualitativa podemos buscar [**elementos <= o >= que otros**]{.hl-yellow}
+
+```{r}
+notas_fct_ord[notas_fct_ord <= "notable"]
+```
+
+> Haz que tu variable `estado_salud` sea una factor representando una cualitativa ordinal
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno", "Excelente"),
+                  ordered = TRUE))
+
+```
+
+### Pregunta 5
+
+> Calcula la tabla de frecuencias para `estado_salud` incluyendo todo lo que puedas (¿se puede ahora calcular las frecuencias acumuladas). ¿Cuántos pacientes están en un estado de salud regular o peor? (pisa: 59 personas).
+
+```{r}
+#| code-fold: true
+#| eval: false
+tabla_freq <- 
+  datos |> 
+  count(estado_salud) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs),
+         frecuencia_acum_abs = cumsum(frecuencia_abs),
+         frecuencia_acum_rel = cumsum(frecuencia_rel))
+
+datos |>
+  count(estado_salud <= "Regular")
+```
+
+
+### Pregunta 6
+
+> Calcula la media, mediana, cuartiles y desviación típica de edad y tiempo de espera. Guarda los resultados en `resumen` y expórtalo a un `resumen.csv`
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad),
+            mediana_edad = median(edad),
+            Q1_edad = quantile(edad, probs = 0.25),
+            Q3_edad = quantile(edad, probs = 0.75),
+            # tiempo espera
+            media_tiempo_espera = mean(tiempo_espera), 
+            sd_tiempo_espera = sd(tiempo_espera),
+            mediana_tiempo_espera = median(tiempo_espera),
+            Q1_tiempo_espera = quantile(tiempo_espera, probs = 0.25),
+            Q3_tiempo_espera = quantile(tiempo_espera, probs = 0.75))
+write_csv(resumen, file = "./datos/resumen.csv")
+```
+
+
+### Pregunta 7
+
+> Haz una tabla de frecuencias (absolutas) cruzada entre `genero` y `estado_salud` con tidyverse para que quede como la tabla inferior
+
+```{r}
+#| code-fold: true
+
+# Primero cuento de manera bidimensional con count(var1, var2)
+conteo_bidim <-
+  datos |>
+  count(genero, estado_salud)
+conteo_bidim
+```
+
+### Pregunta 8
+
+> Haciendo uso de la tabla anterior, ¿qué debes hacer para obtener una tabla de frecuencias bidimensional como la de abajo? (la tabla de frecuencias en formato habitual)
+
+
+```{r}
+#| code-fold: true
+# Después pivoto para que use la columna estado_salud
+# como futuros nombres de variables (pivota de vertical a horizontal)
+#   - names_from: de donde saldrán los futuros nombres de columnas
+#   - values_from: de donde sacamos los valores numéricos (en este caso n)
+#     para rellenar la tabla
+tabla_freq_abs <-
+  conteo_bidim |> pivot_wider(names_from = estado_salud, values_from = n)
+tabla_freq_abs
+```
+
+
+### Pregunta 9
+
+
+También se puede hacer en `R base` con `table()` (que además de ser más sencillo respeta la jerarquía de la ordinal). [**Moraleja: a veces R base nos facilita la vida, no lo olvidemos porque lo vas a necesitar**]{.hl-yellow }
+
+```{r}
+tabla_freq <- table(datos$genero, datos$estado_salud)
+tabla_freq
+```
+
+La tabla anterior se puede [**calcular con frecuencias relativa por filas y por columnas**]{.hl-yellow} (es decir,una que toda las filas sumen el total, 1, y otra que las columnas sumen 1) haciendo uso de `prop.table()` aplicada a la tabla anterior (si `margin = 1` normaliza por filas, si `margin = 2` por columnas).
+
+```{r}
+#| code-fold: true
+prop.table(tabla_freq, margin = 1)
+prop.table(tabla_freq, margin = 2)
+```
+
+[**Moraleja: tablas de frecuencia podemos hacerlas en tidyverse pero bidimensionales R base nos ayuda mejor. Deberemos viajar entre los dos mundos muchas veces**]{.hl-yellow}
+
+> Haciendo uso de las tablas anteriores contesta a las siguientes preguntas:
+
+* ¿Qué porcentaje de entre las mujeres tiene un buen estado de salud?
+
+* ¿Qué porcentaje de entre los hombres tiene un estado de salud regular?
+
+* ¿Qué porcentaje de los que tienen estado de salud malo son mujeres?
+
+**Clicka debajo para ver la respuesta cuando lo tengas**
+
+```{r}
+#| code-fold: true
+
+# De entre las mujeres un 45.28% tiene un buen estado de salud
+# De entre los hombres un 34.04% tiene un estado de salud regular
+# Un 33.33% de los que tienen un estado de salud malo, son mujeres
+```
+
+### Pregunta 10
+
+**Un poquito de reminder de inferencia**. Haciendo uso de la tabla de frecuencias absolutas, ejecuta el código que consideres para responder a la pregunta: ¿están estas dos variables (`estado_salud` y `genero`) asociadas? ¿Existe algún tipo de dependencia entre ellas? Hazlo considerando $\alpha = 0.05$.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Opción 1: prueba de chi-cuadrado que nos permite sacar conclusiones
+# sobre la independencia de dos variables cualitativas
+
+# chisq.test() hace el contraste haciendo uso de la tabla de frec
+chisq.test(tabla_freq)
+
+# Como el p-value = 0.2322 y alpha = 5%, no podemos rechazar la
+# hipótesis nula de independencia: no hay evidencias suficientes 
+# CON LA MUESTRA QUE TENEMOS para concluir que haya alguna asociación
+# entre género y estado de salud
+
+# Opción 2: test exacto de Fisher, especialmente útil cuando
+# las frecuencias esperadas son bajas.
+fisher.test(tabla_freq)
+# Diferente p-valor pero misma conclusión
+```
+
+
+Las funciones `chisq.test()` y `fisher.test()` pueden tomar como argumento una tabla de frecuencias ya resumida o puede tomar [**dos variables y la función ya realiza el conteo**]{.hl-yellow. Por ejemplo si hacemos `chisq.test(var1, var2)` obtenemos un objeto `htest` que dentro contiene el p-valor.
+
+```{r}
+test_chisq <- chisq.test(datos$genero, datos$estado_salud)
+names(test_chisq)
+```
+
+
+Por tanto si aplicamos la función y hacemos después `$p.value` podemos obtener **directamente el valor numérico que nos interesa**
+
+```{r}
+chisq.test(datos$genero, datos$estado_salud)$p.value
+```
+
+### Pregunta 11
+
+> ¿Cómo usar tidyverse para tener en una tabla resumen ambos p-valores?
+
+```{r}
+#| code-fold: true
+tabla_p_valores <-
+  datos |> 
+  summarise("sig_chisq" = chisq.test(genero, estado_salud)$p.value,
+            "sig_fisher" = fisher.test(genero, estado_salud)$p.value)
+```
+
+### Pregunta 12
+
+> Cálcula la matriz correlaciones de Pearson entre las variables numéricas. ¿Existe dependencia LINEAL entre la variable edad y el tiempo de espera? (recuerda: correlación de Pearson solo mide asociación lineal). Echa un vistazo al paquete `{corrr}`
+
+```{r}
+#| code-fold: true
+
+# Opción 1
+mat_cor <-
+  datos |> 
+  select(where(is.numeric)) |> 
+  cor()
+
+# Opción 2
+mat_cor <-
+  datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+
+# La correlación es de 0.0669 por lo que no parezca exista relación
+```
+
+### Pregunta 13
+
+>  Calcula en una tabla resumen la correlación y el p-valor derivado de un test de correlaciones (`cor.test()`) entre ambas variables
+
+```{r}
+#| code-fold: true
+cor_summary <-
+  datos |> 
+  summarise("cor" = cor(edad, tiempo_espera),
+            "sig_cor" = cor.test(edad, tiempo_espera)$p.value)
+# No parece existir evidencia significativa de dependencia lineal
+```
+
+### Pregunta 14
+
+> Repite todo lo anterior con las variables tiempo de espera y grado de satisfacción
+
+```{r}
+#| code-fold: true
+mat_cor <- 
+  datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+
+cor_summary <-
+  datos |> 
+  summarise("cor" = cor(grado_satisfaccion, tiempo_espera),
+            "sig_cor" = cor.test(grado_satisfaccion, tiempo_espera)$p.value)
+# Sí parece existir evidencia significativa de dependencia lineal
+# concretamente negativa: a más espera, menor satisfacción
+```
+

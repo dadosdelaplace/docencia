@@ -140,28 +140,28 @@ Se podrán modificar las fechas por saturación con otras asignaturas siempre y 
 | [10](#clase-10) | S6 | 14 oct | Tidyverse: filas | [💻](#tu-turno-10-1) [💻](#tu-turno-10-2) | [🐣](#caso-practico-10) |  |
 | [11](#clase-11) | S6 | 17 oct | Tidyverse: columnas | [💻](#tu-turno-11-1) [💻](#tu-turno-11-2) | [🐣](#caso-practico-11-1) [🐣](#caso-practico-11-2)  [🐣](#caso-practico-11-3) |  |
 | [12](#clase-12) | S7 | 21 oct | Tidyverse: resúmenes | [💻](#tu-turno-12-1) |  [🐣](#caso-practico-12-1) [🐣](#caso-practico-12-2)  |  |
+| [13](#clase-13) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2) |  |
 :::
 :::
 
 ---
 
-## Planificación (parte II) {#planificacion}
+## Planificación (parte II) {#planificacion-II}
 
 ::: column-screen-inset-right
 ::: {style="font-size:20px"}
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [13](#clase-13) | S7 | 24 oct | Joins. Import/export | [💻](#tu-turno-13-1) [💻](#tu-turno-13-2) |  [🐣](#caso-practico-13-1) [🐣](#caso-practico-13-2) |  |
-| [14-15-16](#clase-14) | S8 | 28 y 31 oct (3 clases) | Concurso | | |  |
+| [14-15-16](#clase-14) | S8 | 28 y 31 oct  | Concurso | | |  |
 | [17](#clase-17) | S9 | 4 nov | Listas. Casos reales | [💻](#tu-turno-17-1) | [🐣](#caso-practico-17-1) [🐣](#caso-practico-17-2) |  |
-| [18](#clase-18) | S9 | 7 nov | Casos reales | | |  |
+| [18](#clase-18) | S9 | 7 nov | Casos reales | | [🐣](#caso-practico-18-1) [🐣](#caso-practico-18-2) [🐣](#caso-practico-18-3)|  |
 | [19](#clase-19) | S10 | 11 nov | Entrega III | | | [🎯 25%](#clase-19) |
 | [20](#clase-20) | S10 | 14 nov | Intro al dataviz | | |  |
 | [21](#clase-21) | S11 | 18 nov | ggplot1 | | |  |
 | [22](#clase-22) | S11 | 21 nov | ggplot2 | | |  |
 | [23](#clase-23) | S12 | 25 nov | ggplot3 | | |  |
 | [24](#clase-24) | S12 | 28 nov | ggplot4 | | |  |
-| [25](#clase-25) | S13 | 2 dic | casos prácticos | | |  |
+| [25](#clase-25) | S13 | 2 dic | casos prácticos (factores) | | |  |
 | [26](#clase-26) | S13 | 5 dic | inferencia | | |  |
 | [27](#clase-27) | S14 | 9 dic | casos prácticos (r base también) | | |  |
 | [28](#clase-28) | S14 | 12 dic | sql + arrow | | |  |
@@ -10374,12 +10374,18 @@ who_select
 
 ---
 
-## 🐣 Caso práctico II: tabla en SPSS {#caso-practico-13-2}
+## 🐣 Caso práctico II: encuesta CIS {#caso-practico-13-2}
+
+[📊 Datos](https://drive.google.com/drive/folders/1HV3kAAHr4iWKvH5spsKWUwAdzWSBS8pw?usp=sharing)
+
+Vamos a poner en práctica la carga y preprocesado de un fichero generado por uno de los programas informáticos más utilizados (SPSS). El fichero contiene [**datos del barómetro del CIS (Centro de Investigaciones Sociológicas) «Percepciones sobre igualdad entre hombres y mujeres y estereotipos de género»**]{.hl-yellow} cuyo trabajo muestral se realizó del 6 al 14 de noviembre (4000 entrevistas a mayores de 16 años de ambos sexos en 1174 municipios y 50 provincias).
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-export/#caso-pr%C3%A1ctico-iii-encuesta-cis)
 
 
-
-
-# clase 14-15-16: [concurso]{.flow} {#clase-14}
+# Clase 14-15-16: [concurso]{.flow} {#clase-14}
 
 
 [**Concurso: R base vs tidyverse**]{style="color:#444442;"}
@@ -10592,7 +10598,7 @@ datos_tidy <-
 ```
 
 
-# clase 17: [listas]{.flow} {#clase-17}
+# Clase 17: [listas]{.flow} {#clase-17}
 
 
 [**Manejo de listas con paquete purrr. Ejemplos casos rales**]{style="color:#444442;"}
@@ -10792,11 +10798,23 @@ map_lgl(x, function(x) { all(x < 3)})
 ## Paquete purrr
 
 
-También puede sernos útil para [**acceder a un elemento de la lista**]{.hl-yellow} si le pasas un [**número**]{.hl-yellow} en lugar de una función.
+También puede sernos útil para [**acceder a un elemento de CADA lista**]{.hl-yellow} si le pasas un [**número**]{.hl-yellow} en lugar de una función.
 
 ```{r}
 c(x[[1]][3], x[[2]][3])
 map_dbl(x, 3)
+```
+
+---
+
+## Paquete purrr
+
+
+También podemos hacer uso de `pluck()` para [**acceder al i-th objeto de la lista**]{.hl-yellow}.
+
+```{r}
+lista <- list("a" = starwars, "b" = billboard)
+lista |> pluck(1)
 ```
 
 
@@ -10966,7 +10984,7 @@ renta_mun
 
 ---
 
-## 🐣 Caso práctico I: renta municipios
+## 🐣 Caso práctico I: renta municipios 
 
 Antes de empezar vamos a [**normalizar nombres de variables**]{.hl-yellow} haciendo uso de `clean_names()` del paquete `{janitor}`.
 
@@ -11387,9 +11405,7 @@ cor_summary <-
 
 - datos contaminación
 
-- encuesta viogen
-
-- contaminación (contam_mad)
+- accidentes tráfico
 
 
 
