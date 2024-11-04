@@ -9466,7 +9466,7 @@ We are going to **put into practice the loading and preprocessing of a file gene
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](...)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-i-cis-survey)
 
 # L8: [factors and lists]{.flow} {#clase-8}
 
@@ -10286,7 +10286,7 @@ We are going to work again with file contains data from the CIS (Centro de Inves
 
 &nbsp;
 
-Try to answer the questions posed in the [**workbook**](...)
+Try to answer the questions posed in the [**workbook**](https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-ii-cis-survey)
 
 
 # L9: [dbplyr and github]{.flow} {#clase-9}

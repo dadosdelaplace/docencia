@@ -6762,7 +6762,11 @@ predicciones |>
   theme_minimal()
 ```
 
+
+# Clase 14: [evaluación]{.flow} {#clase-14}
+
 ---
+
 
 ## Diagnosis errores
 
@@ -6941,22 +6945,214 @@ accuracy(predicciones, airpass_test)
 ```
 
 
+---
+
+## Validación cruzada
+
+Como suele ser habitual en el campo de la calibración de modelos, una opción muy habitual es la de la [**validación**]{.hl-yellow}:
+
+1. Construir distintos modelos con la información de train
+
+2. Usar los [**conjuntos de la validación para evaluar los modelos (o qué configuración de hiperparámetros)**]{.hl-yellow} y decidir cuál de ellos  es mejor
+
+3. Una vez elegido el modelo, volver a lanzarlo y evaluarlo en test
 
 ---
 
-## pendiente
+## Validación cruzada
 
-* evaluación (cross)
+Una de las formas de validación más habitual es la [**validación cruzada**]{.hl-yellow}: las observaciones del conjunto de train van [**rotando su rol**]{.hl-yellow}.
 
-* scenarios
-* acf feasts
-* box-cox
+. . .
+
+Por ejemplo, si tenemos 100 observaciones en train, podemos hacer 100 iteraciones de validación, de manera que en cada una entrenamos el modelo con 99 de ellas y otra queda reservada solo para evaluar los modelos.
+
+![](https://interactivechaos.com/sites/default/files/styles/max_800_px/public/2023-03/tutorial_ml_0237.png)
+
+---
+
+## Validación cruzada
+
+En el caso de las series temporales una estrategia habitual suele ser la siguiente:
+
+1. Descartar las primeras $n$ observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train
+
+2. Iteración i: entrenamos con las primeras $n+i$ observaciones, evaluamos con una única observación $n+i+1$. 
+
+3. Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png)
+
+
+---
+
+## Validación cruzada
+
+Fíjate que lo anterior está basado en una [**one-step forecast**]{.hl-yellow} (predicción a horizonte $h = 1$), pero quizás nuestro interés esté en ver cómo funciona nuestro método a **horizontes de predicción mayores**
+
+. . .
+
+1. Descartar las primeras $n$ observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train
+
+2. Iteración i: entrenamos con las primeras $n+i$ observaciones, evaluamos con una única observación $n+i+h$. 
+
+3. Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.
+
+---
+
+## Validación cruzada
+
+
+El ejemplo inferior es para $h = 4$.
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/cv4-1.png)
+
+---
+
+## Validación cruzada
+
+Para generar los subconjuntos vamos primero como antes a dividir nuestro dataset en train y test.
+
+```{r}
+airpass_train <-
+  airpass |> filter(year(index) < 1958)
+
+airpass_test <-
+  airpass |> filter(year(index) >= 1958)
+```
+
+---
+
+## Validación cruzada
+
+
+Tras ello vamos a [**generar los subconjuntos de validación usando trian**]{.hl-yellow}  con `stretch_tsibble()`, indicándole el número de valores iniciales que siempre estarán en train, el tamaño que queremos incrementar los sucesivos conjuntos y un identificador de cada slot
+
+Por ejemplo, vamos a reservar los 2 primeros años y vamos a avanzar a horizonte 1.
+
+```{r}
+airpass_cv <-
+  airpass_train |> 
+  stretch_tsibble(.init = 24, .step = 1, .id = "cv")
+airpass_cv
+```
+
+
+---
+
+## Validación cruzada
+
+Tras generar los slots de validación [**entrenamos los modelos con dichos datos**]{.hl-yellow}
+
+```{r}
+airpass_fit <-
+  airpass_cv |>
+  model("alisado_simple" = ETS(value ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(value ~ error("A") + trend("A") + season("N")),
+        "alisado_triple_ad" = ETS(value ~ error("A") + trend("A") + season("A")),
+        "alisado_triple_mult" = ETS(value ~ error("M") + trend("A") + season("M")))
+estimaciones <- airpass_fit |> augment()
+```
+
+---
+
+## Validación cruzada
+
+Tendremos las [**métricas para cada modelo y cada slot de cv**]{.hl-yellow} que podemos promediar
+
+```{r}
+airpass_fit |> 
+  accuracy() |> 
+  summarise(across(c(ME, RMSE, MAE, MPE, MAPE), mean), .by = .model)
+
+airpass_fit |>
+  forecast(h = 1) |> 
+  accuracy(airpass_test) |> 
+  summarise(across(c(ME, RMSE, MAE, MPE, MAPE), mean), .by = .model)
+```
 
 ---
 
 
+## Validación cruzada
 
-# Clases 14-15-16-17: [procesos estocásticos y arima]{.flow} {#clase-14}
+¿Cómo [**visualizar las métricas de validación cruzada**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+airpass_fit |>
+  accuracy() |> 
+  ggplot(aes(x = .model, y = RMSE, fill = .model, color = .model)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width = 0.25, alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+---
+
+## Validación cruzada
+
+Podemos también **visualizar las predicciones futuras** para distintos horizontes $h$ (cuando haces `airpass_fit |> forecast(h = ...) |> accuracy(airpass_test)` lo que devuelve es un promedio de su error
+
+```{r}
+#| code-fold: true
+airpass_fit |>
+  forecast(h = 12) |>
+  mutate("h" = row_number(), .by = c(.model, cv)) |>
+  accuracy(airpass_test, by = c(".model", "h")) |> 
+  ggplot(aes(x = h, y = RMSE, color = .model)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_line(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  scale_x_continuous(breaks = 1:12) +
+  theme_minimal()
+```
+
+---
+
+## Casos reales
+
+Prueba a [**ejecutar todo el proceso**]{.hl-yellow} con estas series
+
+```{r}
+datos <- tsibbledata::gafa_stock |> filter(Symbol == "GOOG")
+datos <- timeSeriesDataSets::beer_ts |> as_tsibble()
+datos <- timeSeriesDataSets::co2_ts |> as_tsibble()
+```
+
+1. Análisis y visualización descriptiva
+
+2. Determinar si/no tendencia (y de qué tipo)
+
+3. Determinar homocedasticidad/heterocedasticidad y cómo evoluciona su varianza. En caso necesario aplicar transformación.
+
+
+---
+
+## Casos reales
+
+Prueba a [**ejecutar todo el proceso**]{.hl-yellow} con estas series
+
+```{r}
+datos <- tsibbledata::gafa_stock |> filter(Symbol == "GOOG")
+datos <- timeSeriesDataSets::beer_ts |> as_tsibble()
+datos <- timeSeriesDataSets::co2_ts |> as_tsibble()
+```
+
+4. Determinar periodicidad $s$
+
+5. Realizar todos los métodos de alisado conocidos así como otros modelos que sepas de fable. Pensar ANTES de ver su resultado cómo crees que van a funcionar y por qué
+
+6. Evaluarlos en train-test
+
+7. Usa el mejor de los métodos posibles en cada datasets y ahora ajustarlo pero con distintos valores de los parámetros $\alpha$, $\beta$ y $\gamma$ y decidir los 3 mejores modelos haciendo uso de la validación cruzada
+
+
+
+
+# Clases 16-17-18-19: [procesos estocásticos y arima]{.flow} {#clase-16}
 
 ---
 

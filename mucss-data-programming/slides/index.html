@@ -1829,7 +1829,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-02"</code></pre>
+<pre><code>[1] "2024-11-03"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1839,7 +1839,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-02 21:26:28 CET"</code></pre>
+<pre><code>[1] "2024-11-03 12:59:35 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -6083,7 +6083,7 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Mas Amed…    196    NA none       blue       blue              NA male  mascu…
+1 Dexter J…    198   102 none       brown      yellow            NA male  mascu…
 2 Ratts Ty…     79    15 none       grey, blue unknown           NA male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
@@ -6129,10 +6129,10 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Rugor Na…    206    NA none       green      orange            NA male  mascu…
-2 Watto        137    NA black      blue, grey yellow            NA male  mascu…
-3 Rey           NA    NA brown      light      hazel             NA fema… femin…
-4 Jek Tono…    180   110 brown      fair       blue              NA &lt;NA&gt;  &lt;NA&gt;  
+1 Leia Org…    150    49 brown      light      brown             19 fema… femin…
+2 Yoda          66    17 white      green      brown            896 male  mascu…
+3 Biggs Da…    183    84 black      light      brown             24 male  mascu…
+4 Darth Ma…    175    80 none       red        yellow            54 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6196,7 +6196,7 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb542"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb542-1"><a href="#cb542-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 2 2 3 2 6 3 1 4 5 1</code></pre>
+<pre><code> [1] 5 3 2 4 4 5 3 6 1 2</code></pre>
 </div>
 </div>
 </div>
@@ -6208,8 +6208,8 @@ multiple of the number of rows [4]</code></pre>
 <div class="sourceCode cell-code" id="cb544"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb544-1"><a href="#cb544-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb544-2"><a href="#cb544-2"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1 1 1 1 3 2 1 1 3 5 4 1 2 1 3 1 1 1 1 1 5 1 1 1 1 5 3 1 1 1 2 3 1 1 1 3 2 3
-[39] 5 1 1 1 2 3 5 1 1 3 1 1</code></pre>
+<pre><code> [1] 1 2 1 6 1 5 1 2 1 1 3 3 2 1 2 1 2 5 2 4 1 1 3 2 2 1 2 1 2 6 5 4 2 5 1 1 1 3
+[39] 1 1 3 1 1 4 1 1 4 1 6 5</code></pre>
 </div>
 </div>
 </section>
@@ -8130,12 +8130,12 @@ dplyr 1.1.0.
 <span id="cb734-5"><a href="#cb734-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr    min     lq      mean   median
-                                y &lt;- x^2    984   1107   1204.58   1148.0
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 819508 832792 880888.77 844825.5
-     uq     max neval
-   1230    2911   500
- 850094 3565483   500</code></pre>
+                                    expr    min     lq       mean median     uq
+                                y &lt;- x^2    984   1148   1296.256   1230   1312
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 810693 848946 899617.080 860795 869856
+     max neval
+    3321   500
+ 3690287   500</code></pre>
 </div>
 </div>
 </section>
@@ -10230,21 +10230,22 @@ Not yet, we are in the 3-th iteration</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb920"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb920-1"><a href="#cb920-1"></a><span class="fu">aemet_last_obs</span>(<span class="st">"0076"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 23
+<pre><code># A tibble: 13 × 23
    idema   lon fint                 prec   alt  vmax    vv    dv   lat  dmax
    &lt;chr&gt; &lt;dbl&gt; &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 0076   2.07 2024-11-02 08:00:00   0       4  10.3   4.2    10  41.3   340
- 2 0076   2.07 2024-11-02 09:00:00   0       4  10.8   4.4    10  41.3    30
- 3 0076   2.07 2024-11-02 10:00:00   0.2     4  12.4   4.7   360  41.3    10
- 4 0076   2.07 2024-11-02 11:00:00   0       4  11.8   4.7    10  41.3    10
- 5 0076   2.07 2024-11-02 12:00:00   0       4  14.9  10.7    70  41.3    70
- 6 0076   2.07 2024-11-02 13:00:00   0.3     4  16    11.9    70  41.3    80
- 7 0076   2.07 2024-11-02 14:00:00   0       4  18    14.1    80  41.3    80
- 8 0076   2.07 2024-11-02 15:00:00   0       4  17    13.4    90  41.3    80
- 9 0076   2.07 2024-11-02 16:00:00   0       4  14.9  11.4    90  41.3    80
-10 0076   2.07 2024-11-02 17:00:00   0       4  13.4   9.9    90  41.3    80
-11 0076   2.07 2024-11-02 18:00:00   0       4  11.8   7.3    80  41.3    80
-12 0076   2.07 2024-11-02 19:00:00   0       4   9.8   6.4    80  41.3    80
+ 1 0076   2.07 2024-11-02 23:00:00   0       4   5.7   3     360  41.3   350
+ 2 0076   2.07 2024-11-03 00:00:00   0       4   5.7   3.9   360  41.3   360
+ 3 0076   2.07 2024-11-03 01:00:00   0       4   6.2   3.6    10  41.3    20
+ 4 0076   2.07 2024-11-03 02:00:00   0       4   5.1   3.8   360  41.3    10
+ 5 0076   2.07 2024-11-03 03:00:00   0       4   5.7   4.3   360  41.3   350
+ 6 0076   2.07 2024-11-03 04:00:00   0       4   6.7   4.6   360  41.3    20
+ 7 0076   2.07 2024-11-03 05:00:00   0       4   7.2   5.7   360  41.3    10
+ 8 0076   2.07 2024-11-03 06:00:00   0.2     4   7.2   5     360  41.3    20
+ 9 0076   2.07 2024-11-03 07:00:00   0       4   6.2   4.6    10  41.3    10
+10 0076   2.07 2024-11-03 08:00:00   0       4  11.3   5      30  41.3    10
+11 0076   2.07 2024-11-03 09:00:00   0.1     4  10.3   4.5    40  41.3    30
+12 0076   2.07 2024-11-03 10:00:00   9       4   6.2   3.4   290  41.3   320
+13 0076   2.07 2024-11-03 11:00:00   0.1     4  10.3   3.5   360  41.3    20
 # ℹ 13 more variables: ubi &lt;chr&gt;, pres &lt;dbl&gt;, hr &lt;dbl&gt;, stdvv &lt;dbl&gt;, ts &lt;dbl&gt;,
 #   pres_nmar &lt;dbl&gt;, tamin &lt;dbl&gt;, ta &lt;dbl&gt;, tamax &lt;dbl&gt;, tpr &lt;dbl&gt;, vis &lt;dbl&gt;,
 #   stddv &lt;dbl&gt;, inso &lt;dbl&gt;</code></pre>
@@ -10372,7 +10373,7 @@ Not yet, we are in the 3-th iteration</code></pre>
 <p><a href="https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing">📊 Data</a></p>
 <p>We are going to <strong>put into practice the loading and preprocessing of a file generated by one of the most used software (SPSS)</strong>. The file contains data from the <span class="hl-yellow"><strong>CIS (Centro de Investigaciones Sociológicas) barometer «Perceptions on equality between men and women and gender stereotypes»</strong></span> (file extension <code>.sav</code> that you have in the subfolder <code>CIS-feminism</code> inside the data folder) whose sample work was carried out from November 6 to 14 (4000 interviews of both sexes over 16 years old in 1174 municipalities and 50 provinces).</p>
 <p>&nbsp;</p>
-<p>Try to answer the questions posed in the <a href="..."><strong>workbook</strong></a></p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-i-cis-survey"><strong>workbook</strong></a></p>
 </section></section>
 <section>
 <section id="clase-8" class="title-slide slide level1 center">
@@ -10513,10 +10514,10 @@ $x2
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1] -0.0001246631
+[1] -0.02072254
 
 [[2]]
-[1] 2.005557</code></pre>
+[1] 1.996689</code></pre>
 </div>
 </div>
 </section>
@@ -10530,10 +10531,10 @@ $x2
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1] 0.4911131
+[1] 0.5091559
 
 [[2]]
-[1] 6.327786</code></pre>
+[1] 6.342829</code></pre>
 </div>
 </div>
 </section>
@@ -10549,11 +10550,11 @@ $x2
 <div class="cell">
 <div class="sourceCode cell-code" id="cb951"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb951-1"><a href="#cb951-1"></a><span class="fu">map_dbl</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.0001246631  2.0055569088</code></pre>
+<pre><code>[1] -0.02072254  1.99668851</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb953"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb953-1"><a href="#cb953-1"></a><span class="fu">map_chr</span>(x, <span class="cf">function</span>(x) { <span class="fu">glue</span>(<span class="st">"Mean is {round(mean(x), 5)}"</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Mean is -0.00012" "Mean is 2.00556" </code></pre>
+<pre><code>[1] "Mean is -0.02072" "Mean is 1.99669" </code></pre>
 </div>
 </div>
 </section>
@@ -10562,14 +10563,14 @@ $x2
 <div class="cell">
 <div class="sourceCode cell-code" id="cb955"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb955-1"><a href="#cb955-1"></a><span class="fu">c</span>(x[[<span class="dv">1</span>]][<span class="dv">3</span>], x[[<span class="dv">2</span>]][<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3591987  4.6233320</code></pre>
+<pre><code>[1]  0.1853222 -0.7344326</code></pre>
 </div>
 </div>
 <p>Also, if you pass it a <span class="hl-yellow"><strong>number</strong></span> instead of a function, it will return the <span class="hl-yellow"><strong>ith element of each list</strong></span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb957"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb957-1"><a href="#cb957-1"></a><span class="fu">map_dbl</span>(x, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.3591987  4.6233320</code></pre>
+<pre><code>[1]  0.1853222 -0.7344326</code></pre>
 </div>
 </div>
 </section>
@@ -11267,7 +11268,7 @@ Levels: Droid Others Human Gungan</code></pre>
 <p><a href="https://drive.google.com/drive/folders/18Ok6Epqcimszqguj_JTTLuSbs5Ot5Srd?usp=sharing">📊 Data</a></p>
 <p>We are going to work again with file contains data from the CIS (Centro de Investigaciones Sociológicas) barometer «Perceptions on equality between men and women and gender stereotypes» whose sample work was carried out from November 6 to 14 (4000 interviews of both sexes over 16 years old in 1174 municipalities and 50 provinces).</p>
 <p>&nbsp;</p>
-<p>Try to answer the questions posed in the <a href="..."><strong>workbook</strong></a></p>
+<p>Try to answer the questions posed in the <a href="https://javieralvarezliebana.quarto.pub/joins-import-mucss/#case-study-ii-cis-survey"><strong>workbook</strong></a></p>
 </section></section>
 <section>
 <section id="clase-9" class="title-slide slide level1 center">
