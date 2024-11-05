@@ -7090,14 +7090,10 @@ airpass_fit |>
   theme_minimal()
 ```
 
----
-
-## Validación cruzada
-
-Podemos también **visualizar las predicciones futuras** para distintos horizontes $h$ (cuando haces `airpass_fit |> forecast(h = ...) |> accuracy(airpass_test)` lo que devuelve es un promedio de su error
 
 ```{r}
-#| code-fold: true
+#| eval: false
+#| echo: false
 airpass_fit |>
   forecast(h = 12) |>
   mutate("h" = row_number(), .by = c(.model, cv)) |>
@@ -7112,9 +7108,281 @@ airpass_fit |>
 
 ---
 
+## Ejemplo real: AEMET again
+
+1. [**Cargamos**]{.hl-yellow} los datos
+
+```{r}
+#| code-fold: true
+library(readr) # de tidyverse
+retiro <- read_csv(file = "./datos/retiro_temp.csv")
+retiro
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+1. [**Convertimos a tsibble**]{.hl-yellow} los datos
+
+```{r}
+#| code-fold: true
+retiro_ts <-
+  retiro |>
+  # index: variable temporal
+  # key: si tuviéramos varias series a la vez (varias estaciones)
+  # regular = TRUE: regular time interval (para que detecte
+  # adecuadamente la periodicidad de la serie, en este caso [1D])
+  as_tsibble(index = fecha, key = NULL, regular = TRUE)
+retiro_ts
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+2. [**Preprocesamos**]{.hl-yellow} los datos. ¿Hay huecos?
+
+```{r}
+#| code-fold: true
+#| eval: false
+retiro_ts |> 
+  count(year(fecha)) |> 
+  arrange(n)
+```
+
+. . . 
+
+Vemos que, amén de los datos que faltan (lógicamente) en 2024, hay datos que faltan en 2022, así que antes [**debemos rellenar los huecos**]{.hl-yellow}: primero creando la fila (con valores vacíos) y luego rellenando la variable objetivo
+
+```{r}
+retiro_ts <-
+  retiro_ts |> 
+  fill_gaps() |> 
+  fill(tmed, .direction = "down")
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+3. [**Visualizamos**]{.hl-yellow} los datos.
+
+```{r}
+#| code-fold: true
+ggplot(retiro_ts) +
+  geom_line(aes(x = fecha, y = tmed)) +
+  theme_minimal()
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+3. [**¿Tiene tendencia?**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+ggplot(retiro_ts, aes(x = fecha, y = tmed)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+3. [**¿Tiene tendencia?**]{.hl-yellow}
+
+```{r}
+lm(data = retiro_ts, formula = tmed ~ fecha) |> 
+  summary()
+```
+
+Existe una **débil (pero significativa) tendencia positiva**
+
+
+
+---
+
+## Ejemplo real: AEMET again
+
+
+3. Determinar [**homocedasticidad/heterocedasticidad**]{.hl-yellow} y cómo evoluciona su varianza.
+
+Una primera opción es [**visualización de la dispersión**]{.hl-yellow} por periodos (por ejemplo, por meses)
+
+```{r}
+#| code-fold: true
+retiro_ts <-
+  retiro_ts |> 
+  mutate("year_month" = yearmonth(fecha))
+resumen_var <-
+  retiro_ts |>
+  index_by(year_month) |> 
+  summarise("dispersion" = sd(tmed) / mean(tmed))
+
+ggplot(resumen_var, aes(x = year_month, y = dispersion)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+
+. . .
+
+Al margen de posibles outliers: [**no hay un patrón ni tendencia en la varianza**]{.hl-yellow}
+
+---
+
+## Ejemplo real: AEMET again
+
+De hecho si realizamos el [**ajuste de un recta a la propia varianza agrupada**]{.hl-yellow} vemos que no es significativo: no hay evidencias de que exista una tendencia en la varianza.
+
+```{r}
+lm(data = resumen_var, formula = dispersion ~ year_month) |>
+  summary()
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+Recuerda que [**si tuviéramos heterocedasticidad tendríamos que aplicar algún tipo de transformación**]{.hl-yellow} a los datos, conocidas como [**transformaciones Box-Cox**]{.hl-yellow} (adaptadas por [Bickel y Doksum (1981)](https://www.tandfonline.com/doi/abs/10.1080/01621459.1981.10477649) para valores negativos):
+
+$$\begin{equation}\widetilde{X}_t  = \begin{cases}  \log(X_t) & \text{si } \lambda=0  \nonumber \\ \frac{\text{sign}(X_t)|X_t|^\lambda-1}{\lambda} & \text{en otro caso} \end{cases}\end{equation}$$
+
+. . .
+
+¿Qué $\lambda$ sería **si no tuviéramos que hacer ninguna transformación (es decir, homocedástica)**?
+
+
+---
+
+## Ejemplo real: AEMET again
+
+Para calcularlo vamos a usar `features(variable, features = ...)` del paquete `{fabletools}` (ya cargado en `{fable}`). En `features = ...` vamos a especificar la opción `guerrero` (un método para elegir el $\lambda$ óptimo)
+
+```{r}
+library(fable)
+retiro_ts |>
+  features(tmed, features = guerrero)
+```
+
+. . .
+
+Ese valor está muy cerca de $1$ lo que apoya lo anterior: salvo outliers, no tenemos heterocedasticidad.
+
+---
+
+## Ejemplo real: AEMET again
+
+
+4. [**Determinar periodicidad**]{.hl-yellow} $s$
+
+
+```{r}
+pacf(retiro_ts$tmed)
+```
+
+
+No vemos a priori estacionalidad...porque recuerda que aquí tenemos datos diarios. ¿Y si aumentamos el número de retardos?
+
+---
+
+## Ejemplo real: AEMET again
+
+
+```{r}
+pacf(retiro_ts$tmed, lag.max = 365*2)
+```
+
+Cuesta verlo pero...¿ves esa pequeña montañita en el 365?
+
+---
+
+## Ejemplo real: AEMET again
+
+
+Esto también lo podemos [**visualizar de manera conjunta**]{.hl-yellow} con `gg_tsdisplay()`
+
+```{r}
+retiro_ts |> 
+  gg_tsdisplay(y = tmed, lag = 365)
+```
+
+. . .
+
+Fíjate que además de mostrarnos un **patrón en las autocorrelaciones cada 365 valores** nos pinta la serie cada año (cada 365 valores corta una curva) y vemos que [**efectivamente comparten un patrón**]{.hl-yellow}
+
+
+
+---
+
+## Ejemplo real: AEMET again
+
+Otra forma de comprobar que efectivamente es estacional $s = 365$  es haciendo una [**diferenciación estacional de la serie**]{.hl-yellow}: a cada valor le vamos a restar su valor $s$ periodos previos. 
+
+&nbsp;
+
+La función que nos lo permite se llama `difference()` (del paquete `{tsibble}`)
+
+---
+
+## Ejemplo real: AEMET again
+
+* Si $s$ está [**mal elegido seguirá presentando ese patrón**]{.hl-red} (o uno aún más extraño)
+
+```{r}
+retiro_ts |>
+  gg_tsdisplay(difference(tmed, 123), lag = 365)
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+* Si $s$ está [**bien elegido las autocorrelaciones debería de desplomarse**]{.hl-green}
+
+```{r}
+retiro_ts |>
+  gg_tsdisplay(difference(tmed, 365), lag = 365)
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+* Si $s$ está [**bien elegido las autocorrelaciones debería de desplomarse**]{.hl-green}
+
+```{r}
+retiro_ts |>
+  gg_tsdisplay(difference(tmed, 365), lag = 365,
+               plot_type = "partial")
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+
+Todo tuyo a partir de aquí:
+
+* Separa la muestra de momento solo en train-test
+
+* Realiza todos los métodos de alisado conocidos así como otros modelos que sepas de fable PERO piensa y razona antes de ver su resultado cómo crees que van a funcionar y por qué
+
+* Evalúalos en train-test y realiza el diagnóstico de los residuos.
+
+* Usa el mejor de los métodos posibles en cada datasets pero ahora ajústalo con distintos valores de los parámetros $\alpha$, $\beta$ y $\gamma$ (cada parámetro del alisado) y decide los 3 mejores modelos haciendo uso de la validación cruzada para practicarla.
+
+---
+
+
 ## Casos reales
 
-Prueba a [**ejecutar todo el proceso**]{.hl-yellow} con estas series
+Practica para a [**ejecutar todo el proceso**]{.hl-yellow} con estas series
 
 ```{r}
 datos <- tsibbledata::gafa_stock |> filter(Symbol == "GOOG")
@@ -7122,9 +7390,9 @@ datos <- timeSeriesDataSets::beer_ts |> as_tsibble()
 datos <- timeSeriesDataSets::co2_ts |> as_tsibble()
 ```
 
-1. Análisis y visualización descriptiva
+1. Preprocesa los datos de manera adecuada
 
-2. Determinar si/no tendencia (y de qué tipo)
+2. Análisis y visualización descriptiva. Determinar si/no tendencia (y de qué tipo)
 
 3. Determinar homocedasticidad/heterocedasticidad y cómo evoluciona su varianza. En caso necesario aplicar transformación.
 

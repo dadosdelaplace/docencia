@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-04"</code></pre>
+<pre><code>[1] "2024-11-05"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-04 17:18:43 CET"</code></pre>
+<pre><code>[1] "2024-11-05 11:02:31 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -2674,11 +2674,11 @@ pesos       63   70   85   95</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
                                     expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.927    2.018266    1.968
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1363.988 1381.618 1448.263910 1394.984
+                                y &lt;- x^2    1.681    1.927    2.169638    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1358.699 1371.675 1471.452444 1389.961
        uq      max neval
-    2.050    5.658   500
- 1414.541 4603.726   500</code></pre>
+    2.173    6.437   500
+ 1418.129 5133.036   500</code></pre>
 </div>
 </div>
 </section>
@@ -4749,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t      X_t sd    
-   &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.132   sd_0.5
- 2     2  0.00427 sd_0.5
- 3     3  0.149   sd_0.5
- 4     4 -0.387   sd_0.5
- 5     5 -0.155   sd_0.5
- 6     6 -0.0166  sd_0.5
- 7     7 -0.300   sd_0.5
- 8     8 -0.539   sd_0.5
- 9     9 -0.132   sd_0.5
-10    10 -0.378   sd_0.5
+       t     X_t sd    
+   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
+ 1     1  0.0907 sd_0.5
+ 2     2  1.36   sd_0.5
+ 3     3  0.461  sd_0.5
+ 4     4  0.0850 sd_0.5
+ 5     5  0.281  sd_0.5
+ 6     6  0.133  sd_0.5
+ 7     7  0.736  sd_0.5
+ 8     8 -0.410  sd_0.5
+ 9     9 -0.730  sd_0.5
+10    10 -0.824  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5144,16 +5144,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd         X_t
    &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5 -0.0191
- 2     2 sd_0.5 -0.273 
- 3     3 sd_0.5 -0.622 
- 4     4 sd_0.5 -0.0565
- 5     5 sd_0.5 -0.672 
- 6     6 sd_0.5  0.277 
- 7     7 sd_0.5  0.295 
- 8     8 sd_0.5  0.0369
- 9     9 sd_0.5 -0.463 
-10    10 sd_0.5  0.0189
+ 1     1 sd_0.5  0.210 
+ 2     2 sd_0.5 -0.627 
+ 3     3 sd_0.5  0.432 
+ 4     4 sd_0.5  0.338 
+ 5     5 sd_0.5 -0.0913
+ 6     6 sd_0.5  0.190 
+ 7     7 sd_0.5  0.677 
+ 8     8 sd_0.5 -0.0193
+ 9     9 sd_0.5 -0.669 
+10    10 sd_0.5  0.272 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -7311,37 +7311,330 @@ No todavía, vamos por el ciclo 4</code></pre>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-283-1.png" width="960" class="r-stretch"></section>
-<section id="validación-cruzada-10" class="slide level2">
-<h2>Validación cruzada</h2>
-<p>Podemos también <strong>visualizar las predicciones futuras</strong> para distintos horizontes <span class="math inline">\(h\)</span> (cuando haces <code>airpass_fit |&gt; forecast(h = ...) |&gt; accuracy(airpass_test)</code> lo que devuelve es un promedio de su error</p>
+<section id="ejemplo-real-aemet-again" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Cargamos</strong></span> los datos</li>
+</ol>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb423"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb423-1"><a href="#cb423-1"></a>airpass_fit <span class="sc">|&gt;</span></span>
-<span id="cb423-2"><a href="#cb423-2"></a>  <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
-<span id="cb423-3"><a href="#cb423-3"></a>  <span class="fu">mutate</span>(<span class="st">"h"</span> <span class="ot">=</span> <span class="fu">row_number</span>(), <span class="at">.by =</span> <span class="fu">c</span>(.model, cv)) <span class="sc">|&gt;</span></span>
-<span id="cb423-4"><a href="#cb423-4"></a>  <span class="fu">accuracy</span>(airpass_test, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">".model"</span>, <span class="st">"h"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb423-5"><a href="#cb423-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> h, <span class="at">y =</span> RMSE, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
-<span id="cb423-6"><a href="#cb423-6"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb423-7"><a href="#cb423-7"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb423-8"><a href="#cb423-8"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
-<span id="cb423-9"><a href="#cb423-9"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb423-10"><a href="#cb423-10"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb423"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb423-1"><a href="#cb423-1"></a><span class="fu">library</span>(readr) <span class="co"># de tidyverse</span></span>
+<span id="cb423-2"><a href="#cb423-2"></a>retiro <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/retiro_temp.csv"</span>)</span>
+<span id="cb423-3"><a href="#cb423-3"></a>retiro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16,314 × 8
+   fecha      id_station nombre         provincia altitud  tmed  tmin  tmax
+   &lt;date&gt;          &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 2000-01-01       3195 MADRID, RETIRO MADRID        667   5.4   0.3  10.4
+ 2 2000-01-02       3195 MADRID, RETIRO MADRID        667   5     0.3   9.6
+ 3 2000-01-03       3195 MADRID, RETIRO MADRID        667   3.5   0.1   6.9
+ 4 2000-01-04       3195 MADRID, RETIRO MADRID        667   4.3   1.4   7.2
+ 5 2000-01-05       3195 MADRID, RETIRO MADRID        667   0.6  -0.4   1.6
+ 6 2000-01-06       3195 MADRID, RETIRO MADRID        667   3.8  -1.1   8.8
+ 7 2000-01-07       3195 MADRID, RETIRO MADRID        667   6.2   0.6  11.7
+ 8 2000-01-08       3195 MADRID, RETIRO MADRID        667   5.4  -0.1  11  
+ 9 2000-01-09       3195 MADRID, RETIRO MADRID        667   5.5   3     8  
+10 2000-01-10       3195 MADRID, RETIRO MADRID        667   4.8   1.8   7.8
+# ℹ 16,304 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-1" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Convertimos a tsibble</strong></span> los datos</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb425"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb425-1"><a href="#cb425-1"></a>retiro_ts <span class="ot">&lt;-</span></span>
+<span id="cb425-2"><a href="#cb425-2"></a>  retiro <span class="sc">|&gt;</span></span>
+<span id="cb425-3"><a href="#cb425-3"></a>  <span class="co"># index: variable temporal</span></span>
+<span id="cb425-4"><a href="#cb425-4"></a>  <span class="co"># key: si tuviéramos varias series a la vez (varias estaciones)</span></span>
+<span id="cb425-5"><a href="#cb425-5"></a>  <span class="co"># regular = TRUE: regular time interval (para que detecte</span></span>
+<span id="cb425-6"><a href="#cb425-6"></a>  <span class="co"># adecuadamente la periodicidad de la serie, en este caso [1D])</span></span>
+<span id="cb425-7"><a href="#cb425-7"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> fecha, <span class="at">key =</span> <span class="cn">NULL</span>, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb425-8"><a href="#cb425-8"></a>retiro_ts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 16,314 x 8 [1D]
+   fecha      id_station nombre         provincia altitud  tmed  tmin  tmax
+   &lt;date&gt;          &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 1980-01-01       3195 MADRID, RETIRO MADRID        667  12.5   9.7  15.3
+ 2 1980-01-02       3195 MADRID, RETIRO MADRID        667   8.4   5    11.8
+ 3 1980-01-03       3195 MADRID, RETIRO MADRID        667   5.5   1    10  
+ 4 1980-01-04       3195 MADRID, RETIRO MADRID        667   5.5   1.2   9.8
+ 5 1980-01-05       3195 MADRID, RETIRO MADRID        667   5.6   0.8  10.4
+ 6 1980-01-06       3195 MADRID, RETIRO MADRID        667   2.7   0.6   4.8
+ 7 1980-01-07       3195 MADRID, RETIRO MADRID        667   3     0.6   5.4
+ 8 1980-01-08       3195 MADRID, RETIRO MADRID        667   2.3  -2     6.6
+ 9 1980-01-09       3195 MADRID, RETIRO MADRID        667   3.8   0.8   6.8
+10 1980-01-10       3195 MADRID, RETIRO MADRID        667   5.6   1.8   9.4
+# ℹ 16,304 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-2" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="2" type="1">
+<li><span class="hl-yellow"><strong>Preprocesamos</strong></span> los datos. ¿Hay huecos?</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb427"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb427-1"><a href="#cb427-1"></a>retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb427-2"><a href="#cb427-2"></a>  <span class="fu">count</span>(<span class="fu">year</span>(fecha)) <span class="sc">|&gt;</span> </span>
+<span id="cb427-3"><a href="#cb427-3"></a>  <span class="fu">arrange</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="fragment">
+<p>Vemos que, amén de los datos que faltan (lógicamente) en 2024, hay datos que faltan en 2022, así que antes <span class="hl-yellow"><strong>debemos rellenar los huecos</strong></span>: primero creando la fila (con valores vacíos) y luego rellenando la variable objetivo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb428"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb428-1"><a href="#cb428-1"></a>retiro_ts <span class="ot">&lt;-</span></span>
+<span id="cb428-2"><a href="#cb428-2"></a>  retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb428-3"><a href="#cb428-3"></a>  <span class="fu">fill_gaps</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb428-4"><a href="#cb428-4"></a>  <span class="fu">fill</span>(tmed, <span class="at">.direction =</span> <span class="st">"down"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-3" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Visualizamos</strong></span> los datos.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb429"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb429-1"><a href="#cb429-1"></a><span class="fu">ggplot</span>(retiro_ts) <span class="sc">+</span></span>
+<span id="cb429-2"><a href="#cb429-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> tmed)) <span class="sc">+</span></span>
+<span id="cb429-3"><a href="#cb429-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-284-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-289-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-4" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>¿Tiene tendencia?</strong></span></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb430"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb430-1"><a href="#cb430-1"></a><span class="fu">ggplot</span>(retiro_ts, <span class="fu">aes</span>(<span class="at">x =</span> fecha, <span class="at">y =</span> tmed)) <span class="sc">+</span></span>
+<span id="cb430-2"><a href="#cb430-2"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb430-3"><a href="#cb430-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb430-4"><a href="#cb430-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-290-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-5" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>¿Tiene tendencia?</strong></span></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb431"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb431-1"><a href="#cb431-1"></a><span class="fu">lm</span>(<span class="at">data =</span> retiro_ts, <span class="at">formula =</span> tmed <span class="sc">~</span> fecha) <span class="sc">|&gt;</span> </span>
+<span id="cb431-2"><a href="#cb431-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tmed ~ fecha, data = retiro_ts)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-19.6320  -6.3365  -0.9928   6.5248  17.4104 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.392e+01  1.594e-01  87.307   &lt;2e-16 ***
+fecha       1.242e-04  1.254e-05   9.901   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.543 on 16313 degrees of freedom
+Multiple R-squared:  0.005974,  Adjusted R-squared:  0.005913 
+F-statistic: 98.04 on 1 and 16313 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Existe una <strong>débil (pero significativa) tendencia positiva</strong></p>
+</section>
+<section id="ejemplo-real-aemet-again-6" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="3" type="1">
+<li>Determinar <span class="hl-yellow"><strong>homocedasticidad/heterocedasticidad</strong></span> y cómo evoluciona su varianza.</li>
+</ol>
+<p>Una primera opción es <span class="hl-yellow"><strong>visualización de la dispersión</strong></span> por periodos (por ejemplo, por meses)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb433"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb433-1"><a href="#cb433-1"></a>retiro_ts <span class="ot">&lt;-</span></span>
+<span id="cb433-2"><a href="#cb433-2"></a>  retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb433-3"><a href="#cb433-3"></a>  <span class="fu">mutate</span>(<span class="st">"year_month"</span> <span class="ot">=</span> <span class="fu">yearmonth</span>(fecha))</span>
+<span id="cb433-4"><a href="#cb433-4"></a>resumen_var <span class="ot">&lt;-</span></span>
+<span id="cb433-5"><a href="#cb433-5"></a>  retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb433-6"><a href="#cb433-6"></a>  <span class="fu">index_by</span>(year_month) <span class="sc">|&gt;</span> </span>
+<span id="cb433-7"><a href="#cb433-7"></a>  <span class="fu">summarise</span>(<span class="st">"dispersion"</span> <span class="ot">=</span> <span class="fu">sd</span>(tmed) <span class="sc">/</span> <span class="fu">mean</span>(tmed))</span>
+<span id="cb433-8"><a href="#cb433-8"></a></span>
+<span id="cb433-9"><a href="#cb433-9"></a><span class="fu">ggplot</span>(resumen_var, <span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> dispersion)) <span class="sc">+</span></span>
+<span id="cb433-10"><a href="#cb433-10"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb433-11"><a href="#cb433-11"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb433-12"><a href="#cb433-12"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-292-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Al margen de posibles outliers: <span class="hl-yellow"><strong>no hay un patrón ni tendencia en la varianza</strong></span></p>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-7" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>De hecho si realizamos el <span class="hl-yellow"><strong>ajuste de un recta a la propia varianza agrupada</strong></span> vemos que no es significativo: no hay evidencias de que exista una tendencia en la varianza.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb434"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb434-1"><a href="#cb434-1"></a><span class="fu">lm</span>(<span class="at">data =</span> resumen_var, <span class="at">formula =</span> dispersion <span class="sc">~</span> year_month) <span class="sc">|&gt;</span></span>
+<span id="cb434-2"><a href="#cb434-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = dispersion ~ year_month, data = resumen_var)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.16829 -0.08274 -0.02334  0.05620  0.87227 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.448e-01  1.414e-02  17.315   &lt;2e-16 ***
+year_month  -1.808e-06  1.113e-06  -1.624    0.105    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1214 on 534 degrees of freedom
+Multiple R-squared:  0.004916,  Adjusted R-squared:  0.003053 
+F-statistic: 2.638 on 1 and 534 DF,  p-value: 0.1049</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-8" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Recuerda que <span class="hl-yellow"><strong>si tuviéramos heterocedasticidad tendríamos que aplicar algún tipo de transformación</strong></span> a los datos, conocidas como <span class="hl-yellow"><strong>transformaciones Box-Cox</strong></span> (adaptadas por <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1981.10477649">Bickel y Doksum (1981)</a> para valores negativos):</p>
+<p><span class="math display">\[\begin{equation}\widetilde{X}_t  = \begin{cases}  \log(X_t) &amp; \text{si } \lambda=0  \nonumber \\ \frac{\text{sign}(X_t)|X_t|^\lambda-1}{\lambda} &amp; \text{en otro caso} \end{cases}\end{equation}\]</span></p>
+<div class="fragment">
+<p>¿Qué <span class="math inline">\(\lambda\)</span> sería <strong>si no tuviéramos que hacer ninguna transformación (es decir, homocedástica)</strong>?</p>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-9" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Para calcularlo vamos a usar <code>features(variable, features = ...)</code> del paquete <code>{fabletools}</code> (ya cargado en <code>{fable}</code>). En <code>features = ...</code> vamos a especificar la opción <code>guerrero</code> (un método para elegir el <span class="math inline">\(\lambda\)</span> óptimo)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb436"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb436-1"><a href="#cb436-1"></a><span class="fu">library</span>(fable)</span>
+<span id="cb436-2"><a href="#cb436-2"></a>retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb436-3"><a href="#cb436-3"></a>  <span class="fu">features</span>(tmed, <span class="at">features =</span> guerrero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  lambda_guerrero
+            &lt;dbl&gt;
+1           0.922</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Ese valor está muy cerca de <span class="math inline">\(1\)</span> lo que apoya lo anterior: salvo outliers, no tenemos heterocedasticidad.</p>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-10" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ol start="4" type="1">
+<li><span class="hl-yellow"><strong>Determinar periodicidad</strong></span> <span class="math inline">\(s\)</span></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb438"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb438-1"><a href="#cb438-1"></a><span class="fu">pacf</span>(retiro_ts<span class="sc">$</span>tmed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-295-1.png" width="960" class="r-stretch"><p>No vemos a priori estacionalidad…porque recuerda que aquí tenemos datos diarios. ¿Y si aumentamos el número de retardos?</p>
+</section>
+<section id="ejemplo-real-aemet-again-11" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb439"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb439-1"><a href="#cb439-1"></a><span class="fu">pacf</span>(retiro_ts<span class="sc">$</span>tmed, <span class="at">lag.max =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-296-1.png" width="960" class="r-stretch"><p>Cuesta verlo pero…¿ves esa pequeña montañita en el 365?</p>
+</section>
+<section id="ejemplo-real-aemet-again-12" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Esto también lo podemos <span class="hl-yellow"><strong>visualizar de manera conjunta</strong></span> con <code>gg_tsdisplay()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb440"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb440-1"><a href="#cb440-1"></a>retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb440-2"><a href="#cb440-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="at">y =</span> tmed, <span class="at">lag =</span> <span class="dv">365</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-297-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Fíjate que además de mostrarnos un <strong>patrón en las autocorrelaciones cada 365 valores</strong> nos pinta la serie cada año (cada 365 valores corta una curva) y vemos que <span class="hl-yellow"><strong>efectivamente comparten un patrón</strong></span></p>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-13" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Otra forma de comprobar que efectivamente es estacional <span class="math inline">\(s = 365\)</span> es haciendo una <span class="hl-yellow"><strong>diferenciación estacional de la serie</strong></span>: a cada valor le vamos a restar su valor <span class="math inline">\(s\)</span> periodos previos.</p>
+<p>&nbsp;</p>
+<p>La función que nos lo permite se llama <code>difference()</code> (del paquete <code>{tsibble}</code>)</p>
+</section>
+<section id="ejemplo-real-aemet-again-14" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-red"><strong>mal elegido seguirá presentando ese patrón</strong></span> (o uno aún más extraño)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb441"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb441-1"><a href="#cb441-1"></a>retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb441-2"><a href="#cb441-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(tmed, <span class="dv">123</span>), <span class="at">lag =</span> <span class="dv">365</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-298-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-15" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-green"><strong>bien elegido las autocorrelaciones debería de desplomarse</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb442"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb442-1"><a href="#cb442-1"></a>retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb442-2"><a href="#cb442-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(tmed, <span class="dv">365</span>), <span class="at">lag =</span> <span class="dv">365</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-299-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-16" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-green"><strong>bien elegido las autocorrelaciones debería de desplomarse</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb443"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb443-1"><a href="#cb443-1"></a>retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb443-2"><a href="#cb443-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(tmed, <span class="dv">365</span>), <span class="at">lag =</span> <span class="dv">365</span>,</span>
+<span id="cb443-3"><a href="#cb443-3"></a>               <span class="at">plot_type =</span> <span class="st">"partial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-300-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-17" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Todo tuyo a partir de aquí:</p>
+<ul>
+<li><p>Separa la muestra de momento solo en train-test</p></li>
+<li><p>Realiza todos los métodos de alisado conocidos así como otros modelos que sepas de fable PERO piensa y razona antes de ver su resultado cómo crees que van a funcionar y por qué</p></li>
+<li><p>Evalúalos en train-test y realiza el diagnóstico de los residuos.</p></li>
+<li><p>Usa el mejor de los métodos posibles en cada datasets pero ahora ajústalo con distintos valores de los parámetros <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> (cada parámetro del alisado) y decide los 3 mejores modelos haciendo uso de la validación cruzada para practicarla.</p></li>
+</ul>
+</section>
 <section id="casos-reales" class="slide level2">
 <h2>Casos reales</h2>
-<p>Prueba a <span class="hl-yellow"><strong>ejecutar todo el proceso</strong></span> con estas series</p>
+<p>Practica para a <span class="hl-yellow"><strong>ejecutar todo el proceso</strong></span> con estas series</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb424"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb424-1"><a href="#cb424-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
-<span id="cb424-2"><a href="#cb424-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
-<span id="cb424-3"><a href="#cb424-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb444"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb444-1"><a href="#cb444-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
+<span id="cb444-2"><a href="#cb444-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb444-3"><a href="#cb444-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
-<li><p>Análisis y visualización descriptiva</p></li>
-<li><p>Determinar si/no tendencia (y de qué tipo)</p></li>
+<li><p>Preprocesa los datos de manera adecuada</p></li>
+<li><p>Análisis y visualización descriptiva. Determinar si/no tendencia (y de qué tipo)</p></li>
 <li><p>Determinar homocedasticidad/heterocedasticidad y cómo evoluciona su varianza. En caso necesario aplicar transformación.</p></li>
 </ol>
 </section>
@@ -7349,9 +7642,9 @@ No todavía, vamos por el ciclo 4</code></pre>
 <h2>Casos reales</h2>
 <p>Prueba a <span class="hl-yellow"><strong>ejecutar todo el proceso</strong></span> con estas series</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb425"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb425-1"><a href="#cb425-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
-<span id="cb425-2"><a href="#cb425-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
-<span id="cb425-3"><a href="#cb425-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb445"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb445-1"><a href="#cb445-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
+<span id="cb445-2"><a href="#cb445-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb445-3"><a href="#cb445-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li><p>Determinar periodicidad <span class="math inline">\(s\)</span></p></li>
