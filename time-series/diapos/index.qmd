@@ -7189,6 +7189,8 @@ ggplot(retiro_ts, aes(x = fecha, y = tmed)) +
   theme_minimal()
 ```
 
+(en caso de existir desde luego es **aditiva**)
+
 ---
 
 ## Ejemplo real: AEMET again
@@ -7201,7 +7203,6 @@ lm(data = retiro_ts, formula = tmed ~ fecha) |>
 ```
 
 Existe una **débil (pero significativa) tendencia positiva**
-
 
 
 ---
@@ -7262,10 +7263,11 @@ $$\begin{equation}\widetilde{X}_t  = \begin{cases}  \log(X_t) & \text{si } \lamb
 
 ## Ejemplo real: AEMET again
 
-Para calcularlo vamos a usar `features(variable, features = ...)` del paquete `{fabletools}` (ya cargado en `{fable}`). En `features = ...` vamos a especificar la opción `guerrero` (un método para elegir el $\lambda$ óptimo)
+Para calcularlo vamos a usar `features(variable, features = ...)` del paquete `{fabletools}` (ya cargado en `{fable}`). En `features = ...` vamos a especificar la opción `guerrero` (un método para elegir el $\lambda$ óptimo del paquete `{feasts}`)
 
 ```{r}
 library(fable)
+library(feasts)
 retiro_ts |>
   features(tmed, features = guerrero)
 ```
@@ -7367,15 +7369,122 @@ retiro_ts |>
 ## Ejemplo real: AEMET again
 
 
-Todo tuyo a partir de aquí:
+Una vez que tenemos que $s = 365$ vamos a [**separar la muestra de momento solo en train-test**]{.hl-yellow}, por ejemplo para evaluar cómo funcionan los modelos a 3 años vista (es decir, usando los últimos 3 años como test, en los que tenemos $h = 974$ valores)
 
-* Separa la muestra de momento solo en train-test
+```{r}
+retiro_ts_train <-
+  retiro_ts |> 
+  filter(year(fecha) < 2022)
 
-* Realiza todos los métodos de alisado conocidos así como otros modelos que sepas de fable PERO piensa y razona antes de ver su resultado cómo crees que van a funcionar y por qué
+retiro_ts_test <-
+  retiro_ts |> 
+  filter(year(fecha) >= 2022)
+```
 
-* Evalúalos en train-test y realiza el diagnóstico de los residuos.
 
-* Usa el mejor de los métodos posibles en cada datasets pero ahora ajústalo con distintos valores de los parámetros $\alpha$, $\beta$ y $\gamma$ (cada parámetro del alisado) y decide los 3 mejores modelos haciendo uso de la validación cruzada para practicarla.
+---
+
+## Ejemplo real: AEMET again
+
+Vamos a realizar los 4 [**métodos de alisado**]{.hl-yellow} disponibles (simple-doble-triple aditivo-triple multiplicativo)
+
+```{r}
+fit_retiro <-
+  # entrenamos SOLO con train
+  retiro_ts_train |> 
+   model("alisado_simple" = ETS(tmed ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(tmed ~ error("A") + trend("A") + season("N")),
+        "alisado_triple_ad" = ETS(tmed ~ error("A") + trend("A") + season("A", period = "1 year")),
+        "alisado_triple_m" = ETS(tmed ~ error("M") + trend("A") + season("M", period = "1 year")))
+```
+
+Si te fijas sale un error ya que los [**alisados en `model()` tienen una limitación**]{.hl-red}: no permite un $s$ mayor de 24
+
+
+---
+
+## Ejemplo real: AEMET again
+
+Para poder solventarlo (veremos los ARIMA para poder usarlos) de momento vamos a [**resumir la serie, realizando un resumen mensual de la temperatura**]{.hl-yellow}
+
+```{r}
+retiro_ts_monthly_train <-
+  retiro_ts_train |>
+  index_by("year_month" = yearmonth(fecha)) |>
+  summarise("tmed" = mean(tmed))
+
+retiro_ts_monthly_test <-
+  retiro_ts_test |>
+  index_by("year_month" = yearmonth(fecha)) |>
+  summarise("tmed" = mean(tmed))
+```
+
+```{r}
+# code-fold: true
+ggplot(retiro_ts_monthly_train) +
+  geom_line(aes(x = year_month, y = tmed)) +
+  theme_minimal()
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+
+```{r}
+fit_retiro <-
+  # entrenamos SOLO con train
+  retiro_ts_monthly_train |> 
+   model("alisado_simple" = ETS(tmed ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(tmed ~ error("A") + trend("A") + season("N")),
+        "alisado_triple_ad" = ETS(tmed ~ error("A") + trend("A") + season("A", period = "1 year")),
+        "alisado_triple_m" = ETS(tmed ~ error("M") + trend("A") + season("M", period = "1 year")))
+estimaciones <- fit_retiro |> augment()
+predicciones <- fit_retiro |> forecast(h = 12*2 + 8)
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(retiro_ts |>
+             index_by("year_month" = yearmonth(fecha)) |>
+             summarise("tmed" = mean(tmed)), level = NULL) +
+  geom_line(data = estimaciones, aes(x = year_month, y = .fitted, color = .model)) +
+  geom_line(data = predicciones, aes(x = year_month, y = .mean, color = .model)) +
+  scale_color_manual(values = ggthemes::colorblind_pal()(5)[-1]) +
+  theme_minimal()
+```
+
+---
+
+## Ejemplo real: AEMET again
+
+
+La evaluación numérica la haremos con `accuracy()`: el **triple aditivo funciona ligeramente mejor en train pero ligeramente peor en test**. Dado que funcionan similar y el aditivo es más simple, por principio de parsimonia, nos quedamos con el triple aditivo.
+
+```{r}
+accuracy(fit_retiro)
+accuracy(predicciones, retiro_ts_monthly_test)
+```
+
+
+---
+
+## Ejemplo real: AEMET again
+
+El [**diagnóstico de los residuos**]{.hl-yellow} (de momento solo visual, ya veremos con lso ARIMA como testar que los residuos son como los queremos, normales, etc) lo haremos con `gg_tsresiduals()` sobre el modelo "ganador"
+
+```{r}
+retiro_ts_monthly_train |> 
+   model("alisado_triple_ad" = ETS(tmed ~ error("A") + trend("A") + season("A", period = "1 year"))) |> 
+  gg_tsresiduals()
+```
+
 
 ---
 
@@ -7417,7 +7526,292 @@ datos <- timeSeriesDataSets::co2_ts |> as_tsibble()
 
 7. Usa el mejor de los métodos posibles en cada datasets y ahora ajustarlo pero con distintos valores de los parámetros $\alpha$, $\beta$ y $\gamma$ y decidir los 3 mejores modelos haciendo uso de la validación cruzada
 
+---
 
+## Casos reales: acciones de google
+
+Vamos a ilustrar el inicio de cómo trabajar con la [**serie temporal que captura el precio de cierre de las acciones de Google**]{.hl-yellow} (variable `Close` del paquete `{tsibbledata::gafa_stock}`)
+
+```{r}
+datos <- tsibbledata::gafa_stock |> filter(Symbol == "GOOG")
+datos
+```
+
+---
+
+## Acciones de google
+
+
+1. [**Preprocesa los datos**]{.hl-yellow} de manera adecuada
+
+¿Hay huecos?
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  count(year(Date)) |> 
+  arrange(n)
+```
+
+Si te fijas [**ningún año tiene 365 valores**]{.hl-red} ya que los mercados bursátiles cierran los fines de semana. 
+
+---
+
+## Acciones de google
+
+Para [**rellenar los huecos**]{.hl-yellow} vamos a usar primero `fill_gaps()` rellenando las fechas que no tenemos (con valores vacíos) y luego `fill(..., .direction = "down")` para **rellenar la variable objetivo** con los valores previos (el sábadon y domingo será el valor de cierre del viernes).
+
+```{r}
+datos  <-
+  datos |> 
+  fill_gaps() |> 
+  fill(Close, .direction = "down")
+
+datos |> 
+  count(year(Date)) |> 
+  arrange(n)
+```
+
+Si te fijas...[**¡no hecho absolutamente nada!**]{.hl-red}
+
+---
+
+## Acciones de google
+
+Si te fijas lo primero que estamos pidiendo es `fill_gaps()`: rellena huecos entre fechas. Por ejemplo, si los datos son diarios, debe buscar huecos entre días, pero para eso lo primero que tiene que saber es que la [**serie es diaria**]{.hl-yellow} y saber cómo debe rellenar huecos.
+
+. . .
+
+Si te fijas en la [**cabecera del `tsibble`**]{.hl-yellow} aparece esto:
+
+```{r}
+# A tsibble: 1,258 x 8 [!]
+# Key:       Symbol [1]
+```
+
+. . .
+
+En `Key:` no debería figurar nada (ya que no tenemos distintas series al haber filtrado una sola) pero sobre todo...en [!]` debería figurar `[1D]` [**¡pero no figura nada!**]{.hl-red}
+
+---
+
+## Acciones de google
+
+Para arreglarlo vamos a [**redefinir el objeto de serie temporal**]{.hl-yellow} indicándole dentro de `as_tsibble()` que 
+
+* `index` variable temporal
+* `key`: si tuviéramos varias series a la vez (en este caso `NULL`)
+* `regular = TRUE`: regular time interval (para que detecte adecuadamente la periodicidad de la serie, en este caso `[1D]`)
+
+```{r}
+datos <-
+  datos |>
+  as_tsibble(index = Date, key = NULL, regular = TRUE)
+datos
+```
+
+---
+
+## Acciones de google
+
+Ahora ya sí podemos [**rellenar los huecos**]{.hl-yellow} 
+
+```{r}
+datos  <-
+  datos |> 
+  fill_gaps() |> 
+  fill(Close, .direction = "down")
+
+datos |> 
+  count(year(Date)) |> 
+  arrange(n)
+```
+
+---
+
+## Acciones de google
+
+2. [**Visualizamos**]{.hl-yellow} los datos. [**¿Tiene tendencia?**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+ggplot(datos, aes(x = Date, y = Close)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+
+Parece que sí, que [**existe una tendencia positiva**]{.hl-yellow}
+
+
+---
+
+## Acciones de google
+
+```{r}
+ajuste_lineal <- lm(data = datos, formula = Close ~ Date)
+ajuste_lineal |> summary()
+```
+
+Existe una **muy fuerte tendencia positiva**. Si te fijas $R^2 = 0.9$ y los contrastes son todos apoyando rechazar la hipótesis nula así parece que tiene sentido que la [**tendencia sea lineal (es decir, ADITIVA)**]{.hl-yellow}
+
+---
+
+## Acciones de google
+
+Una forma de chequear si es aditiva o no es ver los [**errores tras ajustar tendencia**]{.hl-yellow}: no se observa ningún patrón evidente que falte por modelizar (si fuese multiplicativa se vería una tendencia todavía)
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fecha" = datos$Date, "res" = ajuste_lineal$residuals),
+       aes(x= fecha, y = res)) +
+  geom_line() +
+  theme_minimal()
+```
+
+
+---
+
+## Acciones de google
+
+3. Determinar [**homocedasticidad/heterocedasticidad**]{.hl-yellow} y cómo evoluciona su varianza.  En caso necesario aplicar transformación.
+
+Una primera opción es [**visualización de la dispersión**]{.hl-yellow} por periodos (por ejemplo, por meses)
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |> mutate("year_month" = yearmonth(Date))
+resumen_var <-
+  datos |>
+  index_by(year_month) |> 
+  summarise("dispersion" = sd(Close) / mean(Close))
+
+ggplot(resumen_var, aes(x = year_month, y = dispersion)) +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+. . .
+
+Al margen de posibles outliers: [**no hay un patrón ni tendencia en la varianza**]{.hl-yellow}
+
+---
+
+## Acciones de google
+
+De hecho si realizamos el [**ajuste de un recta a la propia varianza agrupada**]{.hl-yellow} vemos que no es significativo: no hay evidencias de que exista una varianza que cambien con el tiempo.
+
+```{r}
+lm(data = resumen_var, formula = dispersion ~ year_month) |>
+  summary()
+```
+
+
+---
+
+## Acciones de google
+
+
+4. [**Determinar periodicidad**]{.hl-yellow} $s$
+
+
+```{r}
+pacf(datos$Close)
+```
+
+
+No vemos a priori estacionalidad...porque recuerda que aquí tenemos datos diarios. ¿Y si aumentamos el número de retardos?
+
+---
+
+## Acciones de google
+
+
+```{r}
+pacf(datos$Close, lag.max = 365*3)
+```
+
+[**No se aprecia patrón estacional**]{.hl-yellow}
+
+---
+
+## Acciones de google
+
+
+Esto también lo podemos [**visualizar de manera conjunta**]{.hl-yellow} con `gg_tsdisplay()`
+
+```{r}
+datos |> 
+  gg_tsdisplay(y = Close, lag = 365)
+```
+
+. . .
+
+Fíjate que además de no mostrarnos un **patrón en las autocorrelaciones** al pedirle que la serie cada año (cada 365 valores corta una curva) y vemos que [**efectivamente no comparten ningún patrón anual**]{.hl-yellow}
+
+
+---
+
+
+
+## Acciones de google
+
+
+Otra forma de comprobar que efectivamente no es estacionales haciendo una [**diferenciación estacional de la serie**]{.hl-yellow}: a cada valor le vamos a restar su valor $s$ periodos previos. 
+
+&nbsp;
+
+La función que nos lo permite se llama `difference()` (del paquete `{tsibble}`)
+
+---
+
+## Acciones de google
+
+* Si $s$ está [**mal elegido seguirá presentando ese patrón**]{.hl-red} (o uno aún más extraño)
+
+```{r}
+datos |>
+  gg_tsdisplay(difference(Close, 30), lag_max = 365*3)
+```
+
+---
+
+## Acciones de google
+
+* Si $s$ está [**mal elegido seguirá presentando ese patrón**]{.hl-red} (o uno aún más extraño)
+
+```{r}
+datos |>
+  gg_tsdisplay(difference(Close, 180), lag_max = 365*3)
+```
+
+---
+
+## Acciones de google
+
+* Si $s$ está [**mal elegido seguirá presentando ese patrón**]{.hl-red} (o uno aún más extraño)
+
+```{r}
+datos |>
+  gg_tsdisplay(difference(Close, 365), lag_max = 365*3)
+```
+
+---
+
+## Acciones de google
+
+
+A partir de aquí todo tuyo. Piensa:
+
+* Dividir train/test
+
+* ¿Qué modelos podrían tener sentido y por qué? ¿Algún alisado? ¿Alguno de los demás vistos en `{fable}`?
+
+* ¿Cómo evaluar los modelos?
 
 
 # Clases 16-17-18-19: [procesos estocásticos y arima]{.flow} {#clase-16}

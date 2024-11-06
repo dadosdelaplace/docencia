@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-05"</code></pre>
+<pre><code>[1] "2024-11-06"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-05 11:02:31 CET"</code></pre>
+<pre><code>[1] "2024-11-06 13:32:54 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -2674,11 +2674,11 @@ pesos       63   70   85   95</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
                                     expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.927    2.169638    2.050
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1358.699 1371.675 1471.452444 1389.961
+                                y &lt;- x^2    1.722    1.968    2.555694    2.132
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1358.412 1377.046 1751.717292 1582.477
        uq      max neval
-    2.173    6.437   500
- 1418.129 5133.036   500</code></pre>
+    2.829   28.495   500
+ 1917.119 7305.134   500</code></pre>
 </div>
 </div>
 </section>
@@ -4751,16 +4751,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.0907 sd_0.5
- 2     2  1.36   sd_0.5
- 3     3  0.461  sd_0.5
- 4     4  0.0850 sd_0.5
- 5     5  0.281  sd_0.5
- 6     6  0.133  sd_0.5
- 7     7  0.736  sd_0.5
- 8     8 -0.410  sd_0.5
- 9     9 -0.730  sd_0.5
-10    10 -0.824  sd_0.5
+ 1     1  0.108  sd_0.5
+ 2     2  1.18   sd_0.5
+ 3     3 -0.119  sd_0.5
+ 4     4  0.993  sd_0.5
+ 5     5 -0.308  sd_0.5
+ 6     6 -0.378  sd_0.5
+ 7     7  0.300  sd_0.5
+ 8     8 -0.347  sd_0.5
+ 9     9  0.0902 sd_0.5
+10    10  0.487  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd         X_t
-   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.210 
- 2     2 sd_0.5 -0.627 
- 3     3 sd_0.5  0.432 
- 4     4 sd_0.5  0.338 
- 5     5 sd_0.5 -0.0913
- 6     6 sd_0.5  0.190 
- 7     7 sd_0.5  0.677 
- 8     8 sd_0.5 -0.0193
- 9     9 sd_0.5 -0.669 
-10    10 sd_0.5  0.272 
+       t sd        X_t
+   &lt;int&gt; &lt;glue&gt;  &lt;dbl&gt;
+ 1     1 sd_0.5 -0.533
+ 2     2 sd_0.5  0.860
+ 3     3 sd_0.5 -0.442
+ 4     4 sd_0.5 -0.402
+ 5     5 sd_0.5 -0.575
+ 6     6 sd_0.5 -0.514
+ 7     7 sd_0.5  0.182
+ 8     8 sd_0.5  0.390
+ 9     9 sd_0.5 -0.840
+10    10 sd_0.5  0.337
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -7429,7 +7429,8 @@ No todavía, vamos por el ciclo 4</code></pre>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-290-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-290-1.png" width="960" class="r-stretch"><p>(en caso de existir desde luego es <strong>aditiva</strong>)</p>
+</section>
 <section id="ejemplo-real-aemet-again-5" class="slide level2">
 <h2>Ejemplo real: AEMET again</h2>
 <ol start="3" type="1">
@@ -7527,11 +7528,12 @@ F-statistic: 2.638 on 1 and 534 DF,  p-value: 0.1049</code></pre>
 </section>
 <section id="ejemplo-real-aemet-again-9" class="slide level2">
 <h2>Ejemplo real: AEMET again</h2>
-<p>Para calcularlo vamos a usar <code>features(variable, features = ...)</code> del paquete <code>{fabletools}</code> (ya cargado en <code>{fable}</code>). En <code>features = ...</code> vamos a especificar la opción <code>guerrero</code> (un método para elegir el <span class="math inline">\(\lambda\)</span> óptimo)</p>
+<p>Para calcularlo vamos a usar <code>features(variable, features = ...)</code> del paquete <code>{fabletools}</code> (ya cargado en <code>{fable}</code>). En <code>features = ...</code> vamos a especificar la opción <code>guerrero</code> (un método para elegir el <span class="math inline">\(\lambda\)</span> óptimo del paquete <code>{feasts}</code>)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb436"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb436-1"><a href="#cb436-1"></a><span class="fu">library</span>(fable)</span>
-<span id="cb436-2"><a href="#cb436-2"></a>retiro_ts <span class="sc">|&gt;</span></span>
-<span id="cb436-3"><a href="#cb436-3"></a>  <span class="fu">features</span>(tmed, <span class="at">features =</span> guerrero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb436-2"><a href="#cb436-2"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb436-3"><a href="#cb436-3"></a>retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb436-4"><a href="#cb436-4"></a>  <span class="fu">features</span>(tmed, <span class="at">features =</span> guerrero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   lambda_guerrero
@@ -7616,21 +7618,127 @@ F-statistic: 2.638 on 1 and 534 DF,  p-value: 0.1049</code></pre>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-300-1.png" width="960" class="r-stretch"></section>
 <section id="ejemplo-real-aemet-again-17" class="slide level2">
 <h2>Ejemplo real: AEMET again</h2>
-<p>Todo tuyo a partir de aquí:</p>
-<ul>
-<li><p>Separa la muestra de momento solo en train-test</p></li>
-<li><p>Realiza todos los métodos de alisado conocidos así como otros modelos que sepas de fable PERO piensa y razona antes de ver su resultado cómo crees que van a funcionar y por qué</p></li>
-<li><p>Evalúalos en train-test y realiza el diagnóstico de los residuos.</p></li>
-<li><p>Usa el mejor de los métodos posibles en cada datasets pero ahora ajústalo con distintos valores de los parámetros <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> (cada parámetro del alisado) y decide los 3 mejores modelos haciendo uso de la validación cruzada para practicarla.</p></li>
-</ul>
+<p>Una vez que tenemos que <span class="math inline">\(s = 365\)</span> vamos a <span class="hl-yellow"><strong>separar la muestra de momento solo en train-test</strong></span>, por ejemplo para evaluar cómo funcionan los modelos a 3 años vista (es decir, usando los últimos 3 años como test, en los que tenemos <span class="math inline">\(h = 974\)</span> valores)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb444"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb444-1"><a href="#cb444-1"></a>retiro_ts_train <span class="ot">&lt;-</span></span>
+<span id="cb444-2"><a href="#cb444-2"></a>  retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb444-3"><a href="#cb444-3"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(fecha) <span class="sc">&lt;</span> <span class="dv">2022</span>)</span>
+<span id="cb444-4"><a href="#cb444-4"></a></span>
+<span id="cb444-5"><a href="#cb444-5"></a>retiro_ts_test <span class="ot">&lt;-</span></span>
+<span id="cb444-6"><a href="#cb444-6"></a>  retiro_ts <span class="sc">|&gt;</span> </span>
+<span id="cb444-7"><a href="#cb444-7"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(fecha) <span class="sc">&gt;=</span> <span class="dv">2022</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
+<section id="ejemplo-real-aemet-again-18" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Vamos a realizar los 4 <span class="hl-yellow"><strong>métodos de alisado</strong></span> disponibles (simple-doble-triple aditivo-triple multiplicativo)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb445"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb445-1"><a href="#cb445-1"></a>fit_retiro <span class="ot">&lt;-</span></span>
+<span id="cb445-2"><a href="#cb445-2"></a>  <span class="co"># entrenamos SOLO con train</span></span>
+<span id="cb445-3"><a href="#cb445-3"></a>  retiro_ts_train <span class="sc">|&gt;</span> </span>
+<span id="cb445-4"><a href="#cb445-4"></a>   <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb445-5"><a href="#cb445-5"></a>        <span class="st">"alisado_doble"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb445-6"><a href="#cb445-6"></a>        <span class="st">"alisado_triple_ad"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>, <span class="at">period =</span> <span class="st">"1 year"</span>)),</span>
+<span id="cb445-7"><a href="#cb445-7"></a>        <span class="st">"alisado_triple_m"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>, <span class="at">period =</span> <span class="st">"1 year"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Si te fijas sale un error ya que los <span class="hl-red"><strong>alisados en <code>model()</code> tienen una limitación</strong></span>: no permite un <span class="math inline">\(s\)</span> mayor de 24</p>
+</section>
+<section id="ejemplo-real-aemet-again-19" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>Para poder solventarlo (veremos los ARIMA para poder usarlos) de momento vamos a <span class="hl-yellow"><strong>resumir la serie, realizando un resumen mensual de la temperatura</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb446"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb446-1"><a href="#cb446-1"></a>retiro_ts_monthly_train <span class="ot">&lt;-</span></span>
+<span id="cb446-2"><a href="#cb446-2"></a>  retiro_ts_train <span class="sc">|&gt;</span></span>
+<span id="cb446-3"><a href="#cb446-3"></a>  <span class="fu">index_by</span>(<span class="st">"year_month"</span> <span class="ot">=</span> <span class="fu">yearmonth</span>(fecha)) <span class="sc">|&gt;</span></span>
+<span id="cb446-4"><a href="#cb446-4"></a>  <span class="fu">summarise</span>(<span class="st">"tmed"</span> <span class="ot">=</span> <span class="fu">mean</span>(tmed))</span>
+<span id="cb446-5"><a href="#cb446-5"></a></span>
+<span id="cb446-6"><a href="#cb446-6"></a>retiro_ts_monthly_test <span class="ot">&lt;-</span></span>
+<span id="cb446-7"><a href="#cb446-7"></a>  retiro_ts_test <span class="sc">|&gt;</span></span>
+<span id="cb446-8"><a href="#cb446-8"></a>  <span class="fu">index_by</span>(<span class="st">"year_month"</span> <span class="ot">=</span> <span class="fu">yearmonth</span>(fecha)) <span class="sc">|&gt;</span></span>
+<span id="cb446-9"><a href="#cb446-9"></a>  <span class="fu">summarise</span>(<span class="st">"tmed"</span> <span class="ot">=</span> <span class="fu">mean</span>(tmed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb447"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb447-1"><a href="#cb447-1"></a><span class="co"># code-fold: true</span></span>
+<span id="cb447-2"><a href="#cb447-2"></a><span class="fu">ggplot</span>(retiro_ts_monthly_train) <span class="sc">+</span></span>
+<span id="cb447-3"><a href="#cb447-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> tmed)) <span class="sc">+</span></span>
+<span id="cb447-4"><a href="#cb447-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-304-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-20" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb448"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb448-1"><a href="#cb448-1"></a>fit_retiro <span class="ot">&lt;-</span></span>
+<span id="cb448-2"><a href="#cb448-2"></a>  <span class="co"># entrenamos SOLO con train</span></span>
+<span id="cb448-3"><a href="#cb448-3"></a>  retiro_ts_monthly_train <span class="sc">|&gt;</span> </span>
+<span id="cb448-4"><a href="#cb448-4"></a>   <span class="fu">model</span>(<span class="st">"alisado_simple"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"N"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb448-5"><a href="#cb448-5"></a>        <span class="st">"alisado_doble"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"N"</span>)),</span>
+<span id="cb448-6"><a href="#cb448-6"></a>        <span class="st">"alisado_triple_ad"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>, <span class="at">period =</span> <span class="st">"1 year"</span>)),</span>
+<span id="cb448-7"><a href="#cb448-7"></a>        <span class="st">"alisado_triple_m"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"M"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"M"</span>, <span class="at">period =</span> <span class="st">"1 year"</span>)))</span>
+<span id="cb448-8"><a href="#cb448-8"></a>estimaciones <span class="ot">&lt;-</span> fit_retiro <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb448-9"><a href="#cb448-9"></a>predicciones <span class="ot">&lt;-</span> fit_retiro <span class="sc">|&gt;</span> <span class="fu">forecast</span>(<span class="at">h =</span> <span class="dv">12</span><span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-21" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb449"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb449-1"><a href="#cb449-1"></a>predicciones <span class="sc">|&gt;</span> </span>
+<span id="cb449-2"><a href="#cb449-2"></a>  <span class="fu">autoplot</span>(retiro_ts <span class="sc">|&gt;</span></span>
+<span id="cb449-3"><a href="#cb449-3"></a>             <span class="fu">index_by</span>(<span class="st">"year_month"</span> <span class="ot">=</span> <span class="fu">yearmonth</span>(fecha)) <span class="sc">|&gt;</span></span>
+<span id="cb449-4"><a href="#cb449-4"></a>             <span class="fu">summarise</span>(<span class="st">"tmed"</span> <span class="ot">=</span> <span class="fu">mean</span>(tmed)), <span class="at">level =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb449-5"><a href="#cb449-5"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> estimaciones, <span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> .fitted, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb449-6"><a href="#cb449-6"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> predicciones, <span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> .mean, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb449-7"><a href="#cb449-7"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> ggthemes<span class="sc">::</span><span class="fu">colorblind_pal</span>()(<span class="dv">5</span>)[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb449-8"><a href="#cb449-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-306-1.png" width="960" class="r-stretch"></section>
+<section id="ejemplo-real-aemet-again-22" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>La evaluación numérica la haremos con <code>accuracy()</code>: el <strong>triple aditivo funciona ligeramente mejor en train pero ligeramente peor en test</strong>. Dado que funcionan similar y el aditivo es más simple, por principio de parsimonia, nos quedamos con el triple aditivo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb450"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb450-1"><a href="#cb450-1"></a><span class="fu">accuracy</span>(fit_retiro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 10
+  .model            .type          ME  RMSE   MAE   MPE  MAPE  MASE RMSSE  ACF1
+  &lt;chr&gt;             &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 alisado_simple    Training  0.00644  4.08  3.43 -4.61 25.9  2.13  2.07  0.583
+2 alisado_doble     Training -0.0322   4.08  3.44 -5.01 26.1  2.14  2.08  0.581
+3 alisado_triple_ad Training -0.0190   1.42  1.13 -1.33  9.24 0.704 0.722 0.182
+4 alisado_triple_m  Training -0.0264   1.46  1.17 -1.73  9.39 0.726 0.742 0.201</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb452"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb452-1"><a href="#cb452-1"></a><span class="fu">accuracy</span>(predicciones, retiro_ts_monthly_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 10
+  .model            .type    ME  RMSE   MAE   MPE  MAPE  MASE RMSSE    ACF1
+  &lt;chr&gt;             &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1 alisado_doble     Test  7.46  10.5   8.16 30.3  40.1    NaN   NaN  0.788 
+2 alisado_simple    Test  7.93  10.9   8.48 33.6  41.5    NaN   NaN  0.784 
+3 alisado_triple_ad Test  0.872  1.58  1.33  4.46  8.70   NaN   NaN -0.0169
+4 alisado_triple_m  Test  0.654  1.40  1.17  3.88  8.12   NaN   NaN -0.0341</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-real-aemet-again-23" class="slide level2">
+<h2>Ejemplo real: AEMET again</h2>
+<p>El <span class="hl-yellow"><strong>diagnóstico de los residuos</strong></span> (de momento solo visual, ya veremos con lso ARIMA como testar que los residuos son como los queremos, normales, etc) lo haremos con <code>gg_tsresiduals()</code> sobre el modelo “ganador”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb454"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb454-1"><a href="#cb454-1"></a>retiro_ts_monthly_train <span class="sc">|&gt;</span> </span>
+<span id="cb454-2"><a href="#cb454-2"></a>   <span class="fu">model</span>(<span class="st">"alisado_triple_ad"</span> <span class="ot">=</span> <span class="fu">ETS</span>(tmed <span class="sc">~</span> <span class="fu">error</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">trend</span>(<span class="st">"A"</span>) <span class="sc">+</span> <span class="fu">season</span>(<span class="st">"A"</span>, <span class="at">period =</span> <span class="st">"1 year"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb454-3"><a href="#cb454-3"></a>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-308-1.png" width="960" class="r-stretch"></section>
 <section id="casos-reales" class="slide level2">
 <h2>Casos reales</h2>
 <p>Practica para a <span class="hl-yellow"><strong>ejecutar todo el proceso</strong></span> con estas series</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb444"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb444-1"><a href="#cb444-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
-<span id="cb444-2"><a href="#cb444-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
-<span id="cb444-3"><a href="#cb444-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb455"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb455-1"><a href="#cb455-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
+<span id="cb455-2"><a href="#cb455-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb455-3"><a href="#cb455-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li><p>Preprocesa los datos de manera adecuada</p></li>
@@ -7642,9 +7750,9 @@ F-statistic: 2.638 on 1 and 534 DF,  p-value: 0.1049</code></pre>
 <h2>Casos reales</h2>
 <p>Prueba a <span class="hl-yellow"><strong>ejecutar todo el proceso</strong></span> con estas series</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb445"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb445-1"><a href="#cb445-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
-<span id="cb445-2"><a href="#cb445-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
-<span id="cb445-3"><a href="#cb445-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb456"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb456-1"><a href="#cb456-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
+<span id="cb456-2"><a href="#cb456-2"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>beer_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span>
+<span id="cb456-3"><a href="#cb456-3"></a>datos <span class="ot">&lt;-</span> timeSeriesDataSets<span class="sc">::</span>co2_ts <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li><p>Determinar periodicidad <span class="math inline">\(s\)</span></p></li>
@@ -7652,6 +7760,332 @@ F-statistic: 2.638 on 1 and 534 DF,  p-value: 0.1049</code></pre>
 <li><p>Evaluarlos en train-test</p></li>
 <li><p>Usa el mejor de los métodos posibles en cada datasets y ahora ajustarlo pero con distintos valores de los parámetros <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> y decidir los 3 mejores modelos haciendo uso de la validación cruzada</p></li>
 </ol>
+</section>
+<section id="casos-reales-acciones-de-google" class="slide level2">
+<h2>Casos reales: acciones de google</h2>
+<p>Vamos a ilustrar el inicio de cómo trabajar con la <span class="hl-yellow"><strong>serie temporal que captura el precio de cierre de las acciones de Google</strong></span> (variable <code>Close</code> del paquete <code>{tsibbledata::gafa_stock}</code>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb457"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb457-1"><a href="#cb457-1"></a>datos <span class="ot">&lt;-</span> tsibbledata<span class="sc">::</span>gafa_stock <span class="sc">|&gt;</span> <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>)</span>
+<span id="cb457-2"><a href="#cb457-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 1,258 x 8 [!]
+# Key:       Symbol [1]
+   Symbol Date        Open  High   Low Close Adj_Close  Volume
+   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 GOOG   2014-01-02  554.  555.  551.  553.      553. 3666400
+ 2 GOOG   2014-01-03  554.  555.  549.  549.      549. 3355000
+ 3 GOOG   2014-01-06  553.  556.  550.  555.      555. 3561600
+ 4 GOOG   2014-01-07  559.  566.  557.  566.      566. 5138400
+ 5 GOOG   2014-01-08  569.  570.  563.  567.      567. 4514100
+ 6 GOOG   2014-01-09  568.  568.  559.  561.      561. 4196000
+ 7 GOOG   2014-01-10  566.  566.  557.  561.      561. 4314700
+ 8 GOOG   2014-01-13  560.  570.  555.  558.      558. 4869100
+ 9 GOOG   2014-01-14  565.  572.  560.  571.      571. 4997400
+10 GOOG   2014-01-15  573.  574.  568.  571.      571. 3925700
+# ℹ 1,248 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="acciones-de-google" class="slide level2">
+<h2>Acciones de google</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Preprocesa los datos</strong></span> de manera adecuada</li>
+</ol>
+<p>¿Hay huecos?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb459"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb459-1"><a href="#cb459-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb459-2"><a href="#cb459-2"></a>  <span class="fu">count</span>(<span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb459-3"><a href="#cb459-3"></a>  <span class="fu">arrange</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Si te fijas <span class="hl-red"><strong>ningún año tiene 365 valores</strong></span> ya que los mercados bursátiles cierran los fines de semana.</p>
+</section>
+<section id="acciones-de-google-1" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Para <span class="hl-yellow"><strong>rellenar los huecos</strong></span> vamos a usar primero <code>fill_gaps()</code> rellenando las fechas que no tenemos (con valores vacíos) y luego <code>fill(..., .direction = "down")</code> para <strong>rellenar la variable objetivo</strong> con los valores previos (el sábadon y domingo será el valor de cierre del viernes).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb460"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb460-1"><a href="#cb460-1"></a>datos  <span class="ot">&lt;-</span></span>
+<span id="cb460-2"><a href="#cb460-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb460-3"><a href="#cb460-3"></a>  <span class="fu">fill_gaps</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb460-4"><a href="#cb460-4"></a>  <span class="fu">fill</span>(Close, <span class="at">.direction =</span> <span class="st">"down"</span>)</span>
+<span id="cb460-5"><a href="#cb460-5"></a></span>
+<span id="cb460-6"><a href="#cb460-6"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb460-7"><a href="#cb460-7"></a>  <span class="fu">count</span>(<span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb460-8"><a href="#cb460-8"></a>  <span class="fu">arrange</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  `year(Date)`     n
+         &lt;dbl&gt; &lt;int&gt;
+1         2017   251
+2         2018   251
+3         2014   252
+4         2015   252
+5         2016   252</code></pre>
+</div>
+</div>
+<p>Si te fijas…<span class="hl-red"><strong>¡no hecho absolutamente nada!</strong></span></p>
+</section>
+<section id="acciones-de-google-2" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Si te fijas lo primero que estamos pidiendo es <code>fill_gaps()</code>: rellena huecos entre fechas. Por ejemplo, si los datos son diarios, debe buscar huecos entre días, pero para eso lo primero que tiene que saber es que la <span class="hl-yellow"><strong>serie es diaria</strong></span> y saber cómo debe rellenar huecos.</p>
+<div class="fragment">
+<p>Si te fijas en la <span class="hl-yellow"><strong>cabecera del <code>tsibble</code></strong></span> aparece esto:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb462"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb462-1"><a href="#cb462-1"></a><span class="co"># A tsibble: 1,258 x 8 [!]</span></span>
+<span id="cb462-2"><a href="#cb462-2"></a><span class="co"># Key:       Symbol [1]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<p>En <code>Key:</code> no debería figurar nada (ya que no tenemos distintas series al haber filtrado una sola) pero sobre todo…en [!]<code>debería figurar</code>[1D]` <span class="hl-red"><strong>¡pero no figura nada!</strong></span></p>
+</div>
+</section>
+<section id="acciones-de-google-3" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Para arreglarlo vamos a <span class="hl-yellow"><strong>redefinir el objeto de serie temporal</strong></span> indicándole dentro de <code>as_tsibble()</code> que</p>
+<ul>
+<li><code>index</code> variable temporal</li>
+<li><code>key</code>: si tuviéramos varias series a la vez (en este caso <code>NULL</code>)</li>
+<li><code>regular = TRUE</code>: regular time interval (para que detecte adecuadamente la periodicidad de la serie, en este caso <code>[1D]</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb463"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb463-1"><a href="#cb463-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb463-2"><a href="#cb463-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb463-3"><a href="#cb463-3"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> Date, <span class="at">key =</span> <span class="cn">NULL</span>, <span class="at">regular =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb463-4"><a href="#cb463-4"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 1,258 x 8 [1D]
+   Symbol Date        Open  High   Low Close Adj_Close  Volume
+   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 GOOG   2014-01-02  554.  555.  551.  553.      553. 3666400
+ 2 GOOG   2014-01-03  554.  555.  549.  549.      549. 3355000
+ 3 GOOG   2014-01-06  553.  556.  550.  555.      555. 3561600
+ 4 GOOG   2014-01-07  559.  566.  557.  566.      566. 5138400
+ 5 GOOG   2014-01-08  569.  570.  563.  567.      567. 4514100
+ 6 GOOG   2014-01-09  568.  568.  559.  561.      561. 4196000
+ 7 GOOG   2014-01-10  566.  566.  557.  561.      561. 4314700
+ 8 GOOG   2014-01-13  560.  570.  555.  558.      558. 4869100
+ 9 GOOG   2014-01-14  565.  572.  560.  571.      571. 4997400
+10 GOOG   2014-01-15  573.  574.  568.  571.      571. 3925700
+# ℹ 1,248 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="acciones-de-google-4" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Ahora ya sí podemos <span class="hl-yellow"><strong>rellenar los huecos</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb465"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb465-1"><a href="#cb465-1"></a>datos  <span class="ot">&lt;-</span></span>
+<span id="cb465-2"><a href="#cb465-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb465-3"><a href="#cb465-3"></a>  <span class="fu">fill_gaps</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb465-4"><a href="#cb465-4"></a>  <span class="fu">fill</span>(Close, <span class="at">.direction =</span> <span class="st">"down"</span>)</span>
+<span id="cb465-5"><a href="#cb465-5"></a></span>
+<span id="cb465-6"><a href="#cb465-6"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb465-7"><a href="#cb465-7"></a>  <span class="fu">count</span>(<span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb465-8"><a href="#cb465-8"></a>  <span class="fu">arrange</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  `year(Date)`     n
+         &lt;dbl&gt; &lt;int&gt;
+1         2014   364
+2         2015   365
+3         2017   365
+4         2018   365
+5         2016   366</code></pre>
+</div>
+</div>
+</section>
+<section id="acciones-de-google-5" class="slide level2">
+<h2>Acciones de google</h2>
+<ol start="2" type="1">
+<li><span class="hl-yellow"><strong>Visualizamos</strong></span> los datos. <span class="hl-yellow"><strong>¿Tiene tendencia?</strong></span></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb467"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb467-1"><a href="#cb467-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> Close)) <span class="sc">+</span></span>
+<span id="cb467-2"><a href="#cb467-2"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb467-3"><a href="#cb467-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb467-4"><a href="#cb467-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-317-1.png" width="960" class="r-stretch"><p>Parece que sí, que <span class="hl-yellow"><strong>existe una tendencia positiva</strong></span></p>
+</section>
+<section id="acciones-de-google-6" class="slide level2">
+<h2>Acciones de google</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb468"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb468-1"><a href="#cb468-1"></a>ajuste_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Close <span class="sc">~</span> Date)</span>
+<span id="cb468-2"><a href="#cb468-2"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Close ~ Date, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-162.04  -53.29  -14.68   48.75  188.99 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -5.796e+03  5.134e+01  -112.9   &lt;2e-16 ***
+Date         3.876e-01  3.021e-03   128.3   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 68 on 1823 degrees of freedom
+Multiple R-squared:  0.9003,    Adjusted R-squared:  0.9002 
+F-statistic: 1.646e+04 on 1 and 1823 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Existe una <strong>muy fuerte tendencia positiva</strong>. Si te fijas <span class="math inline">\(R^2 = 0.9\)</span> y los contrastes son todos apoyando rechazar la hipótesis nula así parece que tiene sentido que la <span class="hl-yellow"><strong>tendencia sea lineal (es decir, ADITIVA)</strong></span></p>
+</section>
+<section id="acciones-de-google-7" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Una forma de chequear si es aditiva o no es ver los <span class="hl-yellow"><strong>errores tras ajustar tendencia</strong></span>: no se observa ningún patrón evidente que falte por modelizar (si fuese multiplicativa se vería una tendencia todavía)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb470"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb470-1"><a href="#cb470-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fecha"</span> <span class="ot">=</span> datos<span class="sc">$</span>Date, <span class="st">"res"</span> <span class="ot">=</span> ajuste_lineal<span class="sc">$</span>residuals),</span>
+<span id="cb470-2"><a href="#cb470-2"></a>       <span class="fu">aes</span>(<span class="at">x=</span> fecha, <span class="at">y =</span> res)) <span class="sc">+</span></span>
+<span id="cb470-3"><a href="#cb470-3"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb470-4"><a href="#cb470-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-319-1.png" width="960" class="r-stretch"></section>
+<section id="acciones-de-google-8" class="slide level2">
+<h2>Acciones de google</h2>
+<ol start="3" type="1">
+<li>Determinar <span class="hl-yellow"><strong>homocedasticidad/heterocedasticidad</strong></span> y cómo evoluciona su varianza. En caso necesario aplicar transformación.</li>
+</ol>
+<p>Una primera opción es <span class="hl-yellow"><strong>visualización de la dispersión</strong></span> por periodos (por ejemplo, por meses)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb471"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb471-1"><a href="#cb471-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb471-2"><a href="#cb471-2"></a>  datos <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="st">"year_month"</span> <span class="ot">=</span> <span class="fu">yearmonth</span>(Date))</span>
+<span id="cb471-3"><a href="#cb471-3"></a>resumen_var <span class="ot">&lt;-</span></span>
+<span id="cb471-4"><a href="#cb471-4"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb471-5"><a href="#cb471-5"></a>  <span class="fu">index_by</span>(year_month) <span class="sc">|&gt;</span> </span>
+<span id="cb471-6"><a href="#cb471-6"></a>  <span class="fu">summarise</span>(<span class="st">"dispersion"</span> <span class="ot">=</span> <span class="fu">sd</span>(Close) <span class="sc">/</span> <span class="fu">mean</span>(Close))</span>
+<span id="cb471-7"><a href="#cb471-7"></a></span>
+<span id="cb471-8"><a href="#cb471-8"></a><span class="fu">ggplot</span>(resumen_var, <span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> dispersion)) <span class="sc">+</span></span>
+<span id="cb471-9"><a href="#cb471-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb471-10"><a href="#cb471-10"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb471-11"><a href="#cb471-11"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-320-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Al margen de posibles outliers: <span class="hl-yellow"><strong>no hay un patrón ni tendencia en la varianza</strong></span></p>
+</div>
+</section>
+<section id="acciones-de-google-9" class="slide level2">
+<h2>Acciones de google</h2>
+<p>De hecho si realizamos el <span class="hl-yellow"><strong>ajuste de un recta a la propia varianza agrupada</strong></span> vemos que no es significativo: no hay evidencias de que exista una varianza que cambien con el tiempo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb472"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb472-1"><a href="#cb472-1"></a><span class="fu">lm</span>(<span class="at">data =</span> resumen_var, <span class="at">formula =</span> dispersion <span class="sc">~</span> year_month) <span class="sc">|&gt;</span></span>
+<span id="cb472-2"><a href="#cb472-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = dispersion ~ year_month, data = resumen_var)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.015438 -0.008556 -0.003433  0.006435  0.078257 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 1.982e-02  5.878e-02   0.337    0.737
+year_month  1.864e-07  3.462e-06   0.054    0.957
+
+Residual standard error: 0.01414 on 58 degrees of freedom
+Multiple R-squared:  4.995e-05, Adjusted R-squared:  -0.01719 
+F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
+</div>
+</div>
+</section>
+<section id="acciones-de-google-10" class="slide level2">
+<h2>Acciones de google</h2>
+<ol start="4" type="1">
+<li><span class="hl-yellow"><strong>Determinar periodicidad</strong></span> <span class="math inline">\(s\)</span></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb474"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb474-1"><a href="#cb474-1"></a><span class="fu">pacf</span>(datos<span class="sc">$</span>Close)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-322-1.png" width="960" class="r-stretch"><p>No vemos a priori estacionalidad…porque recuerda que aquí tenemos datos diarios. ¿Y si aumentamos el número de retardos?</p>
+</section>
+<section id="acciones-de-google-11" class="slide level2">
+<h2>Acciones de google</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb475"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb475-1"><a href="#cb475-1"></a><span class="fu">pacf</span>(datos<span class="sc">$</span>Close, <span class="at">lag.max =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-323-1.png" width="960" class="r-stretch"><p><span class="hl-yellow"><strong>No se aprecia patrón estacional</strong></span></p>
+</section>
+<section id="acciones-de-google-12" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Esto también lo podemos <span class="hl-yellow"><strong>visualizar de manera conjunta</strong></span> con <code>gg_tsdisplay()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb476"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb476-1"><a href="#cb476-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb476-2"><a href="#cb476-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="at">y =</span> Close, <span class="at">lag =</span> <span class="dv">365</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-324-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Fíjate que además de no mostrarnos un <strong>patrón en las autocorrelaciones</strong> al pedirle que la serie cada año (cada 365 valores corta una curva) y vemos que <span class="hl-yellow"><strong>efectivamente no comparten ningún patrón anual</strong></span></p>
+</div>
+</section>
+<section id="acciones-de-google-13" class="slide level2">
+<h2>Acciones de google</h2>
+<p>Otra forma de comprobar que efectivamente no es estacionales haciendo una <span class="hl-yellow"><strong>diferenciación estacional de la serie</strong></span>: a cada valor le vamos a restar su valor <span class="math inline">\(s\)</span> periodos previos.</p>
+<p>&nbsp;</p>
+<p>La función que nos lo permite se llama <code>difference()</code> (del paquete <code>{tsibble}</code>)</p>
+</section>
+<section id="acciones-de-google-14" class="slide level2">
+<h2>Acciones de google</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-red"><strong>mal elegido seguirá presentando ese patrón</strong></span> (o uno aún más extraño)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb477"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb477-1"><a href="#cb477-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb477-2"><a href="#cb477-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(Close, <span class="dv">30</span>), <span class="at">lag_max =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-325-1.png" width="960" class="r-stretch"></section>
+<section id="acciones-de-google-15" class="slide level2">
+<h2>Acciones de google</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-red"><strong>mal elegido seguirá presentando ese patrón</strong></span> (o uno aún más extraño)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb478"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb478-1"><a href="#cb478-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb478-2"><a href="#cb478-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(Close, <span class="dv">180</span>), <span class="at">lag_max =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-326-1.png" width="960" class="r-stretch"></section>
+<section id="acciones-de-google-16" class="slide level2">
+<h2>Acciones de google</h2>
+<ul>
+<li>Si <span class="math inline">\(s\)</span> está <span class="hl-red"><strong>mal elegido seguirá presentando ese patrón</strong></span> (o uno aún más extraño)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb479"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb479-1"><a href="#cb479-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb479-2"><a href="#cb479-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="fu">difference</span>(Close, <span class="dv">365</span>), <span class="at">lag_max =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-327-1.png" width="960" class="r-stretch"></section>
+<section id="acciones-de-google-17" class="slide level2">
+<h2>Acciones de google</h2>
+<p>A partir de aquí todo tuyo. Piensa:</p>
+<ul>
+<li><p>Dividir train/test</p></li>
+<li><p>¿Qué modelos podrían tener sentido y por qué? ¿Algún alisado? ¿Alguno de los demás vistos en <code>{fable}</code>?</p></li>
+<li><p>¿Cómo evaluar los modelos?</p></li>
+</ul>
 </section></section>
 <section>
 <section id="clase-16" class="title-slide slide level1 center">
