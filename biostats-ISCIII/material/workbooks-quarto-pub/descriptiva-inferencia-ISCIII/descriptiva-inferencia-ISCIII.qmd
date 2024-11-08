@@ -1,0 +1,1254 @@
+---
+title: "Introducción a la estadística descriptiva e inferencia"
+subtitle: "Cuadernos prácticos del Máster de Bioinformática (curso 2024-2025)"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+## Estadística descriptiva univariante
+
+
+La estadística descriptiva es una rama de la estadística que se dedica a [**recolectar, organizar, presentar y analizar un conjunto de datos**]{.hl-yellow} para describir las características y comportamientos de dicho conjunto.
+
+
+Además de para conocer y entender los datos es la fase en la que [**detectaremos errores e incongruencias**]{.hl-yellow}, teniendo muchas veces que hacer una [**depuración de datos**]{.hl-yellow} para dejar la base de datos preparada para su análisis.
+
+
+### Etapas
+
+#### Fase 1: recolección
+
+La podemos hacer a través de **encuestas, experimentos, observaciones, registros**, etc. Lo más importante en esta etapa es que los datos sean representativos del fenómeno o población que se estudia.
+
+
+[**Ejemplo**]{.hl-green}: queremos llevar a cabo una [**investigación para analizar la satisfacción de los pacientes**]{.hl-yellow} con los servicios de urgencias de la red de hospitales públicos madrileños. ¿Qué muestra será más representativa?
+
+a)  Los 100 primeros pacientes que lleguen a las urgencias del Hospital 12 de Octubre.
+
+b)  Los 10 primeros pacientes que lleguen a las urgencias de todos los hospitales de la red de hospitales madrileños.
+
+c)  Seleccionamos al azar 3 hospitales del grupo 3 (hospitales de gran complejidad), grupo 2 (hospitales de complejidad intermedia) y grupo 3 (hospitales de baja complejidad) y de cada uno de ellos seleccionamos un número proporcional de pacientes según el número total de pacientes que llegan a cada hospital.
+
+
+[**Solución**]{.hl-yellow}:
+
+c)  **Seleccionamos al azar 3 hospitales del grupo 3 (hospitales de gran complejidad), grupo 2 (hospitales de complejidad intermedia) y grupo 3 (hospitales de baja complejidad) y de cada uno de ellos seleccionamos un número proporcional de pacientes según el número total de pacientes que llegan a cada hospital**.
+
+
+Con a) todas las conclusiones que saquemos del estudio serán aplicadas al Hospital 12 de Octubre. Con b) es una forma semi representativa pero válida de conseguir una muestra de forma fácil. La rama de la estadística que se dedica a estudiar esta parte del análisis se conoce como [**muestreo**]{.hl-yellow}
+
+#### Fase 2: organización y presentación
+
+Una vez recopilados los datos deben organizarse de manera que sean comprensibles y manejables. Para ello necesitaremos clasificar los datos en [**cuantitativos y cualitativos**]{.hl-yellow} y estudiar sus características según su tipo.
+
+-   [**Messy data**]{.hl-red}: datos mal organizados o desordenados (múltiples individuos en cada fila, misma variable pero separada en varias columnas, etc).
+
+-   [**Tidy data**]{.hl-green}: datos organizados y estandarizados (una variable en cada columna, un registro/individuo en cada fila y un solo valor en cada celda).
+
+La información la poder **resumir o presentar** de distintas maneras.
+
+-   [**Estadísticos o medidas**]{.hl-yellow}:
+
+    -   Medidas cualitativas: tablas de frecuencias.
+
+    -   Medidas cuantitativas: medidas numéricas de centralización y dispersión.
+
+-   [**Gráficamente**]{.hl-yellow}:
+
+    -   Medidas cualitativas: gráficos de barras, gofres, etc.
+
+    -   Medidas cuantitativas: histogramas, densidades, boxplots, etc
+
+#### Fase 3: relación entre variables
+
+Una vez hecho el estudio de cada variable por separado buscaremos [**relacionar dos variables de forma simultánea para buscar la asociación**]{.hl-yellow} entre ellas:
+
+-   [**Cuali vs cuali**]{.hl-yellow}: tablas de frecuencias --\> pruebas de Fisher y chi-cuadrado --\> interpretación de OR y RR.
+
+-   [**Cuanti vs cuanti**]{.hl-yellow}: correlación --\> test de correlaciones (o test de igualdad de distribuciones) --\> diagrmas de dispersión.
+
+-   [**Cuanti vs cuali**]{.hl-yellow}: ANOVA, biserial correlation, etc.
+
+### Conceptos básicos
+
+En estadística es fundamental entender los conceptos de [**población, muestra y variable**]{.hl-yellow}, ya que son la base para cualquier análisis estadístico.
+
+
+-   [**Población**]{.hl-yellow}
+
+La población es el **conjunto completo de elementos o individuos** que tienen una característica común y sobre los cuales se desea obtener información. En la mayoría de casos el acceso a la **totalidad de la población es inviable** por motivos económicos, legales o éticos, así que en la mayoría de situaciones las conclusiones deberemos sacarlas haciendo uso de lo que se conoce como **muestra**.
+
+
+**Ejemplo**: la diferencia entre censo y encuesta es que el primero recopila datos de todos los individuos de una población, mientras que el segundo trata de estimarlos o inferirlos a partir de una muestra representativa de la misma.
+
+
+-   [**Muestra**]{.hl-yellow}
+
+Una muestra es un subconjunto de la población que se selecciona para su análisis con el fin de hacer inferencias o generalizaciones sobre la población completa. La muestra debe ser **representativa de la población** para que las conclusiones sean válidas.
+
+#### Tipos de muestreo
+
+
+-   **Muestreo aleatorio simple**: cada miembro de la población tiene la misma probabilidad de ser seleccionado.
+
+-   **Muestreo estratificado**: la población se divide en subgrupos (estratos) y se toma una muestra de cada uno.
+
+-   **Muestreo (no aleatorio) sistemático**: se selecciona cada n-ésimo miembro de la población.
+
+-   **Muestreo (no aleatorio) por cuotas**: se seleccionan aquellos individuos que cumplan ciertas condiciones.
+
+-   **Muestreo por conveniencia**: se elige a los miembros que son más fáciles de acceder, aunque este método puede introducir sesgos.
+
+&nbsp;
+
+Veamos algunos ejemplos:
+
+* [**Ejemplo 1**]{.hl-yellow}
+
+  -   **Población**: todos los pacientes que han sido atendidos en un hospital específico durante el último año.
+
+  -   **Muestra (aleatoria simple)**: Seleccionamosseleccionamos 200 pacientes de manera aleatoria del registro de pacientes del último año. Para asegurarnos de que la muestra sea representativa, podemos usar muestreo aleatorio simple, donde cada paciente tiene la misma probabilidad de ser seleccionado.
+
+
+* [**Ejemplo 2**]{.hl-yellow}
+
+  -   **Población**: todos los estudiantes matriculados en una universidad durante el semestre actual.
+
+  -   **Muestra (aleatoria estratificada)**: seleccionamos 500 estudiantes utilizando muestreo estratificado para asegurar que diferentes subgrupos (estratos) de la población estén representados. Los estratos pueden ser facultades (mismo % de facultades representadas que en la población universitaria), género, clase social, etc.
+
+* [**Ejemplo 3**]{.hl-yellow}
+
+  -   **Población**: todas las especies de árboles en un bosque determinado.
+
+  -   **Muestra (sistemática no aleatoria)**: Sseleccionamos parcelas de muestreo de 10m x 10m dentro del bosque y contabilizamos todas las especies de árboles presentes en esas parcelas. Esto se puede hacer utilizando muestreo sistemático.
+
+
+* [**Ejemplo 4**]{.hl-yellow}
+
+  -   **Población**: todos los pacientes de covid de un hospital.
+
+  -   **Muestra (por cuotas no aleatoria)**: seleccionamos solo a las personas mayores de 65 años para realizar un estudio clínico inicial sobre los efectos secundarios de una posible vacuna de la covid-19.
+
+Estos métodos aseguran, de una manera u otra, que las muestras sean representativas de sus respectivas poblaciones, lo que permite realizar análisis precisos y confiables.
+
+####  Tipos de variables
+
+Una variable es **cualquier característica o atributo** que puede tomar diferentes valores entre los individuos de la población o muestra. Las variables pueden ser de varios tipos según su naturaleza:
+
+-   [**Cualitativas (o categóricas)**]{.hl-purple}: describen cualidades o categorías. Ejemplos:
+
+    -   Nominales: no tienen un orden intrínseco (e.g., género, estado civil).
+    -   Ordinales: tienen un orden intrínseco (e.g., niveles de satisfacción, grado académico, sano-leve-grave).
+
+
+-   [**Cuantitativas**]{.hl-purple}: describen cantidades y pueden ser medidas numéricamente. Ejemplos:
+
+    -   Discretas finitas: toman valores finitos (e.g., número de hijos, número de visitas al médico, escala de dolor).
+    -   Discretas infinitas: toman valores infinitos (o que se podrían considerar como tal) pero podemos enumerarlas y sabemos siempre el siguiente elemento (e.g., número de pelos de nuestra cabellera, número de personas que pueden entrar en una tienda en un periodo dado).
+    -   Continuas: pueden tomar cualquier valor dentro de un rango (e.g., altura, peso, tiempo de espera).
+
+
+-   [**Modalidades**]{.hl-yellow}
+
+Una modalidad es uno de los **valores** que toma una **variable dentro de una muestra**.
+
+El **conjunto de modalidades posibles** que podría haber tomado (en tu población) se suele conocer también como soporte. Algunos ejemplos en función del tipo de variables son:
+
+  -   Color de ojos (cualitativa nominal): negro, azul y marrón (3 modalidades en esa muestra de un espectro de colores más amplio que podríamos tener como soporte).
+  -   Estado del paciente (cualitativa ordinal): sano, leve y grave (3 modalidades en esa muestra de un conjunto de opciones - por ejemplo, sano, leve, grave, UCI, fallecido - que podríamos tener).
+
+
+Una modalidad es uno de los valores que toma una variable dentro de una muestra. El **conjunto de modalidades** posibles que podría haber tomado (en tu **población**) se suele conocer también como **soporte**. Algunos ejemplos en función del tipo de variables son:
+
+  -   Número de hijos (cuantitativa discreta finita): 0, 1, 2 y 3 (4 modalidades en esa muestra de un conjunto de valores posibles - de 0 a...20 hijos - que podríamos tener en la población general).
+
+  -   Temperatura anual de Madrid (cuantitativa continua): un rango de -5ºC a 45ºC (un rango continuo de valores en los que se mueve nuestra variable en la muestra (de un rango más amplio, por ejemplo desde -20ºC a 50ºC que podría moverse de manera global si tuviésemos otra muestra).
+
+Veamos algunos ejemplos: piensa en tipos de variables que se pueden medir en cada uno de los ejemplos de población y muestra que hemos estudiado.
+
+* [**Ejemplo 1**]{.hl-yellow}
+
+| Población                                                                                                              | Muestra                                                                                   | Variables                            |
+|:--------------------------------------------------|:---------------------|:-------------------------------------|
+| Todos los pacientes de un hospital de los queremos estudiar su grado de satisfcacción con la atención que han recibido | 200 pacientes seleccionados de forma aleatoria del registro de pacientes en el último año | **Cuantitativas**: **Cualitativas**: |
+
+* [**Ejemplo 1: solución**]{.hl-yellow}
+
+| Población                                                                                                              | Muestra                                                                                   | Variables                                                                                                                                                                                                                                                                                                                           |     |
+|:--------------------------------------------------|:---------------------|:------------------------------------------------|-----|
+| Todos los pacientes de un hospital de los queremos estudiar su grado de satisfcacción con la atención que han recibido | 200 pacientes seleccionados de forma aleatoria del registro de pacientes en el último año | **Cuantitativas**: edad (discreta), tiempo de espera (continua), grado de satisfacción en una escala del 0 al 10 (discreta), número de visitas en el último año (discreta). \| **Cualitativas**: género (nominal), estado civil (nominal), si viene acompañado (nominal), grado de satisfacción como bueno, regular malo (ordinal). |     |
+
+* [**Ejemplo 2**]{.hl-yellow}
+
++--------------------------------------------+----------------------------------------------+--------------------+
+| Población                                                                                                       | Muestra                                      | Variables          |
++:================================================================================================================+:=============================================+:===================+
+| Todos los estudiantes matriculados en una universidad de los que queremos estudiar las calificaciones obtenidas | 500 estudiantes de las diferentes facultades | **Cuantitativas**: |
+|                                                                                                                 |                                              |                    |
+|                                                                                                                 |                                              | **Cualitativas**:  |
++--------------------------------------------+----------------------------------------------+--------------------+
+
+* [**Ejemplo 2: solución**]{.hl-yellow}
+
+| Población                                                                                                       | Muestra                                      | Variables                                                                                                                                                                   |
+|:-------------------------------------------|:---------------------------------------------|:----------------------------------|
+| Todos los estudiantes matriculados en una universidad de los que queremos estudiar las calificaciones obtenidas | 500 estudiantes de las diferentes facultades | **Cuantitativas**: calificaciones, edad (discreta), número de veces que se ha presentado al examen (discreta). **Cualitativas**: asignaturas (nominal), facultad (nominal). |
+
+*  [**Ejemplo 3**]{.hl-yellow}
+
++-------------+------------------------------------------------------------------+--------------------+
+| Población                                                                        | Muestra                                                          | Variables          |
++:=================================================================================+:=================================================================+:===================+
+| Especies de árboles en un bosque de los que queremos estudiar su estado de salud | selección sistemática de parcelas de 10m x 10m dentro del bosque | **Cuantitativas**: |
+|                                                                                  |                                                                  |                    |
+|                                                                                  |                                                                  | **Cualitativas**:  |
++-------------+------------------------------------------------------------------+--------------------+
+
+* [**Ejemplo 3: solución**]{.hl-yellow}
+
+| Población                                                                        | Muestra                                                          | Variables                                                                                                                                                                                                    |
+|:------------|:-----------------------------------------------------------------|:-------------------------------------------------------------------|
+| Especies de árboles en un bosque de los que queremos estudiar su estado de salud | Selección sistemática de parcelas de 10m x 10m dentro del bosque | **Cuantitativas**: altura del árbol (continua), diámetro del árbol (continua), edad del árbol (discreta). **Cualitativas**: especie del árbol (nominal), estado de salud (ordinal), tipo de suelo (nominal). |
+
+### Características numéricas
+
+Nos referimos a las medidas con las que se pretende resumir y condensar la información contenida en un conjunto de datos. Las mayoría de características numéricas las mediremos en variables cuantitativas.
+
+#### Medidas de centralización
+
+Son los valores que resumen el conjunto de los datos de forma que reflejan el **centro de la distribución** de la tabla de frecuencias
+
+##### Media
+
+Es el [**valor medio o centro de gravedad**]{.hl-yellow} (el valor más cercano a todos los puntos a la vez). Es la suma de todos los valores dividida por el número total de valores.
+
+$$\bar x= \frac{\sum^n_{i=1} x_i}{n}$$
+
+
+* [**Ejemplo 1**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3. ¿Cuál es su media?
+
+$n=11$
+
+$\sum^n_{i=1} x_i = 0+1+2+0+1+1+0+0+2+2+3 = 12$
+
+$\bar x= \frac{\sum^n_{i=1} x_i}{n} = \frac{12}{11} = 1.09$ hijos
+
+```{r}
+x <- c(0, 1, 2, 0, 1, 1, 0, 0, 2, 2, 3)
+mean(x)
+```
+
+ *  [**Ejemplo 2**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3,10. ¿Cuál es su media?
+
+$\bar x= \frac{\sum^n_{i=1} x_i}{n} = \frac{22}{12} = 1.83$ hijos
+
+```{r}
+x <- c(0, 1, 2, 0, 1, 1, 0, 0, 2, 2, 3, 10)
+mean(x)
+```
+
+::: callout-warning
+## Cuidado...
+
+La media es una medida útil y ampliamente aplicada de la tendencia central, pero debe ser utilizada con precaución en conjuntos de datos que contienen valores atípicos o están distribuidos de manera asimétrica.
+:::
+
+##### Mediana
+
+Es el [**valor del medio SIEMPRE Y CUANDO ordenemos**]{.hl-yellow} los datos. Divide la distribución de frecuencias en dos partes.
+
+Para calcularla debemos realizar los siguientes pasos:
+
+1.  Ordenar los datos en orden creciente
+
+2.  Según el número de observaciones (n):
+
+    -   Si n es impar: La mediana es el valor que ocupa la posición central
+
+    -   Si n es par: La mediana es el promedio de los dos valores central
+
+*  [**Ejemplo 1: variables cuantitativas (número impar)**]{.hl-yellow}
+
+  -   Datos: 3, 1, 4, 2, 5 (n=5)
+
+  -   Ordenados: 1, 2, 3, 4, 5
+
+  -   Mediana: 3 (el tercer valor)
+
+*  [**Ejemplo 2: variables cuantitativas (número par)**]{.hl-yellow}
+
+  -   Datos: 7, 2, 4, 6 (n=4)
+
+  -   Ordenados: 2, 4, 6, 7
+
+  -   Mediana: (4 + 6) / 2 = 5
+
+*  [**Ejemplo 3: variables cualitativas (ordinales)**]{.hl-yellow}
+
+
+  -   Datos: "notable", "suspenso", "sobresaliente", "suspenso", "notable", "aprobado", "notable" (n=7).
+
+  -   Ordenados: "suspenso", "suspenso", "aprobado", "notable", "notable", "notable", "sobresaliente".
+
+  -   Mediana: "notable".
+
+::: callout-tip
+## Consejo
+
+La mediana es especialmente útil en **distribuciones asimétricas** o cuando se quiere una medida de tendencia central que no sea afectada por valores extremadamente altos o bajos.
+:::
+
+*  [**Ejemplo 4**]{.hl-yellow}:
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3. ¿Cuál es su mediana?
+
+$n=11$
+
+Ordenados: 0,0,0,0,1,1,1,2,2,2,3
+
+Mediana: Posición 6 = 1 hijo
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3)
+
+median(x)
+```
+
+*  [**Ejemplo 5**]{.hl-yellow}:
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3,10. ¿Cuál es su mediana?
+
+$n=12$
+
+Ordenados: 0,0,0,0,1,1,1,2,2,2,3,10
+
+Mediana: Posición 6 y 7 = 1 +1 /2 = 1 hijo
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3, 10)
+
+median(x)
+```
+
+##### Moda
+
+Es el valor que [**presenta la máxima frecuencia**]{.hl-yellow} y se puede calcular para **todas las variables (también) cualitativas**. Es más, es un valor que suele usarse en el análisis de variables cualitativas.
+
+1.  Unimodal:
+
+    -   Datos: "negro", "negro", "amarillo", "verde", "amarillo", "negro"
+    -   Moda: "negro" (aparece 3 veces, más que cualquier otro valor)
+
+2.  Bimodal:
+
+    -   Datos: 1, 2, 3, 3, 4, 4, 5
+    -   Modas: 3 y 4 (ambos aparecen dos veces)
+
+3.  Multimodal:
+
+    -   Datos: 2, 2, 3, 3, 4, 4, 5, 5
+    -   Modas: 2, 3, 4, y 5 (todos aparecen dos veces)
+
+4.  Sin moda:
+
+    -   Datos: 1, 2, 3, 4, 5
+    -   Moda: No hay moda (todos los valores aparecen solo una vez)
+
+*  [**Ejemplo 1**]{.hl-yellow}:
+
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3. ¿Cuál es su moda?
+
+```{r}
+#| code-fold: true
+library(tidyverse)
+datos <- tibble("x" = c(0,1,2,0,1,1,0,0,2,2,3))
+
+datos |>
+  count(x)
+```
+
+La modalidad más frecuente es 0 por lo que la moda es 0.
+
+#### Medidas de posición: cuantiles
+
+Los [**cuantiles son valores que dividen un conjunto de datos en partes iguales**]{.hl-yellow} según la distribución de los datos (de nuevo asumiento que tenemos los datos ordenados de menor a mayor). Los cuantiles son útiles para comprender la distribución y la dispersión de los datos. Existen diferentes tipos de cuantiles, cada uno con un número específico de divisiones:
+
+
+
+1.  [**Cuartiles**]{.hl-yellow}: dividen el conjunto de datos en cuatro partes iguales.
+
+    -   Primer cuartil (Q1): divide el 25% inferior de los datos del 75% superior.
+
+    -   Mediana (Q2): divide el 50% inferior del 50% superior. Es el segundo cuartil.
+
+    -   Tercer cuartil (Q3): divide el 75% inferior del 25% superior.
+
+2.  [**Deciles**]{.hl-yellow}: dividen el conjunto de datos en diez partes iguales.
+
+    -   Primer decil (D1): divide el 10% inferior del 90% superior.
+
+    -   Segundo decil (D2): divide el 20% inferior del 80% superior.
+
+    -   Y así sucesivamente hasta el noveno decil (D9), que divide el 90% inferior del 10% superior.
+
+
+3.  [**Percentiles**]{.hl-yellow}: dividen el conjunto de datos en cien partes iguales.
+
+    -   Percentil 1 (P1): divide el 1% inferior del 99% superior.
+
+    -   Percentil 2 (P2): divide el 2% inferior del 98% superior.
+
+    -   Y así sucesivamente hasta el percentil 99 (P99), que divide el 99% inferior del 1% superior.
+
+*  [**Ejemplo 1**]{.hl-yellow}:
+
+Supongamos que tenemos el siguiente conjunto de datos (que podemos ordenar): 10, 25, 4, 2, 14, 6, 18, 16, 8, 12, 20. ¿Cuáles son sus cuartiles?
+
+```{r}
+#| code-fold: true
+datos <- tibble("x" = c(10, 25, 4, 2, 14, 6, 18, 16, 8, 12, 20))
+
+datos |> 
+  reframe("cuartiles" = quantile(x))
+```
+
+#### Medidas de dispersión
+
+Medidas (solo disponibles para cuantitativas) que nos indican [**cómo de lejos o cerca están las observaciones del valor central**]{.hl-yellow} que hemos calculado, es decir cuánto se alejan de la media o mediana: nos indican el grado de dispersión de la distribución de frecuencias.
+
+##### Recorrido o rango
+
+Indica la diferencia entre el valor máximo y el valor mínimo en un conjunto de datos.
+
+* [**Ejemplo 1**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3. ¿Cuál es su recorrido?
+
+-   Valor máximo = 3
+
+-   Valor mínimo = 0
+
+-   Recorrido= 3-0 = 3
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3)
+max(x)- min(x)
+```
+
+*  [**Ejemplo 2**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3,10. ¿Cuál es su recorrido?
+
+-   Valor máximo = 10
+
+-   Valor mínimo = 0
+
+-   Recorrido= 10-0 = 10
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3, 10)
+max(x) - min(x)
+```
+
+::: callout-warning
+## Cuidado...
+
+El recorrido es útil cuando se necesita una medida rápida y simple de la dispersión, pero para análisis más detallados y robustos, se utilizan otras medidas de dispersión como la desviación estándar, la varianza o el rango intercuartílico.
+:::
+
+##### Rango Intercuatílico (IQR)
+
+Mide la [**amplitud del 50% central de un conjunto de datos**]{.hl-yellow}. Se calcula como la diferencia entre el tercer cuartil (Q3) y el primer cuartil (Q1), proporcionando una medida robusta de la variabilidad de los datos al no ser afectada por valores atípicos o extremos.
+
+$$IQR = Q_3 - Q_1$$
+
+##### Varianza
+
+Cuantifica [**cuánto varían los datos respecto a la media**]{.hl-yellow} del conjunto. Una varianza alta indica que los datos están más dispersos alrededor de la media, mientras que una varianza baja indica que los datos están más agrupados cerca de la media. [**Importante**]{.hl-green}: medimos las desviaciones al cuadrado para que no se cancelen signos.
+
+$$s^2 = \frac{\sum_{i=1}^n (x_i - \bar x)^2}{n-1}$$
+
+-   $x_i$ representa cada valor individual en el conjunto de datos.
+
+-   $\bar x$ es la media de la muestra.
+
+-   $n$ es el tamaño de la muestra.
+
+##### Desviación típica
+
+Es la raíz cuadrada de la varianza y se calcula de la siguiente manera:
+
+$$s = \sqrt {s^2} = \sqrt {\frac{\sum_{i=1}^n (x_i - \bar x)^2}{n-1}}$$
+
+La [**desviación estándar**]{.hl-yellow} se interpreta en las mismas unidades que los datos originales, lo que la hace más intuitiva que la varianza. Indica la dispersión promedio de los datos respecto a la media. Fíjate que en las **medidas de dispersión el promedio lo estamos realizando diviendo entre n-1 y no entre n**. Esto es debido a que los parámetros que hemos visto hasta ahora se conocen con un apellido: [**parámetros muestrales**]{.hl-yellow} (calculados con los datos disponibles en una muestra).
+
+El objetivo con ellos es aproximar los [**verdaderos parámetros poblacionales**]{.hl-yellow} (la media real de la población, no la que calculas con tu tabla), y el mejor estimador posible de la varianza población (se conoce como estimador insesgado, sin sesgo) es la que hemos definido dividiendo entre n-1, de ahí que todos los softwares estadísticos nos calculen dicho valor (se la conoce también como cuasivarianza).
+
+* [**Ejemplo 1**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3. ¿Cuál es su varianza y desviación típica?
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3)
+
+var(x)
+sd(x)
+```
+
+* [**Ejemplo 2**]{.hl-yellow}
+
+A los enfermeros de un centro de salud se les pregunta por el nº de hijos que tienen. Sus respuestas son 0,1,2,0,1,1,0,0,2,2,3,10. ¿Cuál es su varianza y desviación típica?
+
+```{r}
+x <- c(0,1,2,0,1,1,0,0,2,2,3, 10)
+
+var(x)
+sd(x)
+```
+
+##### Coeficiente de variación
+
+Uno de los problemas al [**comparar dispersiones**]{.hl-yellow} de dos variables diferentes es que tanto la varianza como la desviación típica [**dependen de la escala de los datos**]{.hl-red}.
+
+Esto implica que una desviación de, por ejemplo, 0.5, puede representar una dispersión pequeña (si el rango de mis datos está entre 100 y 200, por ejemplo) pero puede representar una dispersión enorme si el rango de mis datos es también pequeño (por ejemplo, datos entre 0 y 1).
+
+Para poder comparar dispersiones de variables de diferentes rangos (o incluso unidades) existe el conocido como coeficiente de variación (CV):
+
+$$CV = \frac s {|\bar x|}$$
+
+El **coeficiente de variación es siempre adimensional y positivo**.
+
+
+### Tablas de frecuencias
+
+Las variables cualitativas o cuantitativas discretas las vamos a poder [**resumir en tablas de frecuencias o de contigencia**]{.hl-yellow} donde se ordenan y estructuran los valores de una variable x de forma resumida de la siguiente manera:
+
+-   **Frecuencia absoluta de x**: nº de veces que se repite cada modalidad de x.
+
+-   **Frecuencia relativa de x**: proporción de veces que se repite cada modalidad de x.
+
+-   **Frecuencia absoluta acumulada de x**: nº de observaciones menores o iguales que cada modalidad de x (solo apto para cuantitativas o cualitativas ordinales ya que necesitamos una estructura de orden).
+
+-   **Frecuencia relativa acumulada de x**: proporción de valores menores o iguales que cada modalidad de x (solo apto para cuantitativas o cualitativas ordinales ya que necesitamos una estructura de orden).
+
+
+| Valores de la variable | Frecuecias Absolutas | Frecuencias relativas | Frecuencias Absolutas acumuladas | Frecuencias Relativas acumuladas |
+|:-----------------------|:---------------------|:----------------------|:---------------------------------|:---------------------------------|
+| $x_i$                  | $f_i$                | $p_i$                 | $F_i$                            | $P_i$                            |
+
+#### Ejemplo 1
+
+En un estudio sobre el [**grupo sanguíneo realizado con** $n = 6313$ individuos]{.hl-yellow} se obtuvo la siguiente tabla de frecuencias La variable tiene $k = 4$ modalidades (O, A, B, AB).
+
+| Valores de la variable | Frecuecias Absolutas | Frecuencias relativas | Frecuencias Absolutas acumuladas | Frecuencias Relativas acumuladas |
+|:-----------------------|:---------------------|:----------------------|:---------------------------------|:---------------------------------|
+| $x_i$                  | $f_i$                | $p_i$                 | $F_i$                            | $P_i$                            |
+| O                      | 2892                 | 2892/6313 = 0.458     | 2892                             | 0.458                            |
+| A                      | 2625                 | 1625/6313 = 0.416     | 5517                             | 0.874                            |
+| B                      | 570                  | 570/6313 = 0.09       | 6087                             | 0.964                            |
+| AB                     | 226                  | 226/6313 = 0.036      | 6313                             | 1                                |
+| TOTAL                  | 6313                 | 1                     | 6313                             | 1                                |
+
+$$\sum^k_{i=1} f_i=n$$ $$\sum^k_{i=1} p_i = 1$$
+
+
+
+¿Qué **conclusiones** sacarías al ver esta tabla?
+
+&nbsp;
+
+La gran mayoría de esta muestra tiene grupo sanguíneo O ó A con un 46% y 42% respectivamente y que los grupos B y AB son minoritarios, siendo el AB la modalidad minoritaria.
+
+#### Ejemplo 2
+
+Otro ejemplo: las edades en un grupo de $n = 25$ estudiantes universitarios
+
+| Valores de la variable | Frecuecias Absolutas | Frecuencias relativas | Frecuencias Absolutas acumuladas | Frecuencias Relativas acumuladas |
+|:-----------------------|:---------------------|:----------------------|:---------------------------------|:---------------------------------|
+| $x_i$                  | $f_i$                | $p_i$                 | $F_i$                            | $P_i$                            |
+| 18                     | 6                    | 0.24                  | 6                                | 0.24                             |
+| 19                     | 5                    | 0.20                  | 11                               | 0.44                             |
+| 20                     | 3                    | 0.12                  | 14                               | 0.56                             |
+| 21                     | 3                    | 0.12                  | 17                               | 0.68                             |
+| 22                     | 3                    | 0.12                  | 20                               | 0.80                             |
+| 23                     | 3                    | 0.12                  | 23                               | 0.92                             |
+| 24                     | 2                    | 0.08                  | 25                               | 1                                |
+| Total                  | 25                   | 1                     | 25                               | 1                                |
+
+
+Contesta a las siguientes preguntas sobre la tabla anterior:
+
+-   ¿Cuántos individuos tienen 21 años?
+
+-   ¿Qué porcentaje de individuos tiene más de 19 años?
+
+#### Ejemplo 3
+
+¿Qué pasa cuando tenemos una [**variable cuantitativa continua**]{.hl-red}?
+
+Imagina que anotamos las puntuaciones obtenidas por 100 pacientes en un test psicológico en una escala continua del 0 al 100.
+
+$x_i$: 11,42,58,25,48,18,45,35,59,29,35,2,37,68,70,31,44,84,64,82,26,42,51,29, 59,92,56,5,52,8,1,12,21,6,32,15,67,47,61,47,43,33,48,47,43,69,49,21,9,15,11,22, 29,14,31,46,19,49,51,71,52,32,51,44,58,60,43,65,73,62,3,17,39,22,40,65,30,31,16, 80,41,59,60,41,51,10,63,41,74,81,20,36,59,38,40,43,18,60,71,44.
+
+¿Tiene sentido hacer una tabla de frecuencias? ¿Nos resume la información? ¿Qué podemos hacer?
+
+
+
+| $x_i$     | $f_i$ | $p_i$ | $F_i$ | $P_i$ |
+|:----------|:------|:------|:------|:------|
+| \[0,10\]  | 8     | 0.08  | 8     | 0.08  |
+| (10,20\]  | 12    | 0.12  | 20    | 0.20  |
+| (20,30\]  | 10    | 0.1   | 30    | 0.30  |
+| (30,40\]  | 14    | 0.14  | 44    | 0.44  |
+| (40,50\]  | 21    | 0.21  | 65    | 0.65  |
+| (50,60\]  | 16    | 0.16  | 81    | 0.81  |
+| (60,70\]  | 10    | 0.10  | 91    | 0.91  |
+| (70,80\]  | 5     | 0.05  | 96    | 0.96  |
+| (80,90\]  | 3     | 0.03  | 99    | 0.99  |
+| (90,100\] | 1     | 0.01  | 100   | 1     |
+| Total     | 100   | 1     |       |       |
+
+#### Tablas de frecuencia en R
+
+Los **resúmenes numéricos** deberíamos saber hacerlos en  `R` con `datos |> summarise()` pero... [**¿y las tablas de frecuencia o contigencia (unidimensionales de momento)?**]{.hl-yellow}. Por ejemplo, vamos a realizar un [**conteo de frecuencias de la variable `hair_color`**]{.hl-yellow} de starwars. Para ello en tidyverse basta usar `count()`
+
+```{r}
+tabla_freq <- 
+  starwars |>
+  drop_na(hair_color) |> 
+  count(hair_color)
+tabla_freq
+```
+
+
+Si te fijas la [**frecuencia absoluta viene siempre como $n$**]{.hl-yellow} pero podemos **renombrarla**
+
+```{r}
+tabla_freq <-
+  tabla_freq |> 
+  rename(frec_abs = n)
+tabla_freq
+```
+
+
+A esa tabla de frecuencias podemos añadirle la [**frecuencia relativa**]{.hl-yellow} calculada como cada frecuencia absoluta dividida por el total (la suma de todos)
+
+```{r}
+tabla_freq <-
+  tabla_freq |> 
+  mutate("frec_rel" = frec_abs / sum(frec_abs))
+tabla_freq
+```
+
+
+Este proceso podemos obtenerlo de forma [**más sencilla con `R base`**]{.hl-yellow} (recuerda: funciones aplican a vectores aislados, que debes sacar de la tabla con `$` y sin tuberías) con la función `table()`
+
+```{r}
+tabla_freq <-
+ table(starwars$hair_color)
+tabla_freq
+```
+
+
+También podemos obtener en `R base` las [**frecuencias realtivas**]{.hl-yellow} aplicando `prop.table()` a la tabla de frecuencias anterior.
+
+```{r}
+prop.table(tabla_freq)
+```
+
+[**Moraleja**]{.hl-green}: no te cases de manera acérrima con una forma de hacer las cosas, ambos mundos van a ser necesarios.
+
+#### Paréntesis: sample
+
+Imagina que queremos añadir una columna nueva llamada `rol` tal que a cada persona le asignamos de manera aleatoria `"bueno"` (con probabilidad 0.45), `"malo"` (con probabilidad 0.35), `"villano"` (con probabilidad 0.2)
+
+Para [**generar experimentos aleatorios de una variable cualitativa**]{.hl-yellow} contamos con `sample(x = ..., size = ..., replace = ..., probs = ...)`:
+
+* `x = c("cruz", "cara")`: las opciones que permitimos que salgan.
+* `size = 20`: las veces que «tiramos la moneda».
+* `replace = TRUE`: si permitimos reemplazamiento (pueden salir elementos repetidos) o no (en este caso solo podríamos tirar 2 veces).
+* `prob = c(0.3, 0.7)`: las probabilidades de los posibles eventos
+
+
+En nuestro caso de ejemplo estamos tirando una **moneda trucada (más caras que cruces) 20 veces**.
+
+```{r}
+sample(x = c("cruz", "cara"), size = 20, replace = TRUE, prob = c(0.3, 0.7))
+```
+
+#### Frecuencias acumuladas
+
+Imagina que queremos añadir una columna nueva llamada `rol` tal que a cada persona le asignamos de manera aleatoria `"bueno"` (con probabilidad 0.45), `"malo"` (con probabilidad 0.35), `"villano"` (con probabilidad 0.2)
+
+Tendremos que hacer un `sample()` con las 3 opciones (y sus probabilidades) de tamaño 87 (tenemos 87 personajes).
+
+```{r}
+starwars <- 
+  starwars |> 
+  mutate("rol" = sample(x = c("bueno", "malo", "villano"), size = 87,
+                        replace = TRUE, prob = c(0.45, 0.35, 0.2)),
+         .after = name)
+starwars
+```
+
+
+Si te fijas esa variable no solo es cualitativa sino ordinal. Entre las variables cualitativas tenemos [**nominales**]{.hl-yellow} (género, sexo, estado civil, etc) y [**ordinales**]{.hl-yellow} (estado de salud, rol, etc). ¿Cómo distinguirlas? La forma que tenemos en `R` de indicarle que una variable de tipo texto (universo informático) es una cualitativa y de qué tipo (universo estadística) es haciendo uso de lo que se conoce como [**factores**]{.hl-yellow}
+
+#### Paréntesis: factores
+
+En `R` las [**variables cualitativas pueden ser tratadas como tales**]{.hl-yellow} convirtiendo una cadena de texto a lo que se conoce como [**factor**]{.hl-yellow}. Por ejemplo, supongamos que tenemos un vector de notas
+
+```{r}
+notas <- c("suspenso", "notable", "suspenso", "aprobado", "notable", "suspenso")
+notas
+```
+
+Para [**convertir a factor nos basta con `factor()`**]{.hl-yellow}. ¿Qué notas diferente?
+
+```{r}
+notas_fct <- factor(notas)
+notas_fct
+```
+
+
+Si te fijas ahora [**tenemos disponibles unos niveles (levels)**]{.hl-yellow}: son las posibles modalidades de nuestra variable cualitativa, el soporte, de manera que aunque borremos uno de ellos (vamos a borrar todos los aprobados), la opción sigue disponible si entrase un dato nuevo (algo así como un menú de opciones permitidas)
+
+```{r}
+notas_fct[notas_fct != "aprobado"]
+```
+
+
+En el caso de las [**cualitativas ordinales podemos incluso establecer una jerarquía**]{.hl-yellow}, indicando explícitamente los niveles y `ordered = TRUE`
+
+```{r}
+notas_fct_ord <- factor(notas, levels = c("aprobado", "notable", "suspenso"),
+                        ordered = TRUE)
+notas_fct_ord
+```
+
+Fíjate que ahora tenemos una [**jerarquía**]{.hl-yellow} y aunque sea cualitativa podemos buscar [**elementos \<= o \>= que otros**]{.hl-yellow}
+
+```{r}
+notas_fct_ord[notas_fct_ord <= "notable"]
+```
+
+#### Frecuencias acumuladas
+
+Volvamos a nuestro ejemplo: ¿cómo convertir nuestra nueva variable rol en una variable cualitativa ordinal (en orden de maldad)? Debemos usar el concepto de factor pero para no aislar la variable de su tabla, lo introduciremos en un `mutate()`
+
+```{r}
+starwars <-
+  starwars |> 
+  mutate("rol" = factor(rol, levels = c("bueno", "malo", "villano"),
+                        ordered = TRUE))
+```
+
+
+Cuando tenemos una variable ordinal no solo vamos a poder calcular la tabla de frecuencias absoluta y relativa...
+
+```{r}
+tabla_freq <-
+  starwars |> 
+  count(rol) |> 
+  mutate("frec_rel" = n/sum(n))
+tabla_freq
+
+# o bien
+table(starwars$rol)
+```
+
+
+...sino que al tener una [**jerarquía de orden**]{.hl-yellow} (fíjate que salen automáticamente ordenados) vamos a poder calcular las [**frecuencias acumuladas**]{.hl-yellow} con `cumsum()`
+
+```{r}
+tabla_freq <-
+  tabla_freq |>
+  mutate("frec_abs_acum" = cumsum(n),
+         "frec_rel_acum" = cumsum(frec_rel))
+tabla_freq
+
+# o bien
+cumsum(table(starwars$rol))
+cumsum(prop.table(table(starwars$rol)))
+```
+
+### 💻 Tu turno
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Para repasar lo aprendido vamos a poner todo en práctica con el dataset `SatisfaccionPacientes.csv` que tenéis subido al campus. [**¿Cómo importarlo?**]{.hl-yellow}.
+
+```{r}
+#| code-fold: true
+library(readr) # dentro de tidyverse
+# en mi caso tengo el .csv en una carpeta datos dentro del proyecto
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  # la función clean_names del paquete janitor 
+  # nos normaliza nombres de variables
+  janitor::clean_names()
+```
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Aplica el código que sea necesario para responder a estas preguntas. ¿Cuál es el tamaño muestral? ¿Cuántas variables tenemos? ¿Cuántas modalidades tenemos en la variable `estado_civil` (y cuantas observaciones en cada una)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# Tamaño muestral / número de observaciones
+n <- nrow(datos)
+
+# Número de variables
+p <- ncol(datos)
+
+# ¿Qué modalidades tenemos?
+datos |> 
+  count(estado_civil)
+```
+
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Determina el tipo de variable (cuantitativa vs. cualitativa).
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Variables cuantitativas: tiempo, grado satisfacción, número de visitas
+# Variables cualitativas: género, estado civil, estado salud
+glimpse(datos)
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝  Obten tablas de frecuencias (absoluta y relativa) en el caso de las cualitativas NOMINALES. Con ella intenta responder a las preguntas: a) ¿cuántas mujeres hay? b) ¿qué % de individuos están casados?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# no podemos calcular acumulados ya que  genero es nominal
+freq_genero <-
+  datos |> 
+  count(genero) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 53 mujeres
+
+freq_estado_civil <-
+  datos |> 
+  count(estado_civil) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 26% personas casadas
+```
+
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Convierte de manera adecuada la variable `genero` y `estado_civil` a cualitativa nominal
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_civil = factor(estado_civil),
+         genero = factor(genero))
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Calcula la media, mediana, rango intercuartílico y desviación típica de edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25))
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Repite el anterior ejercicio pero obteniendo las métricas desagregadas por sexo.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25),
+          .by = genero)
+```
+
+### [**Ejercicio 8**]{.hl-yellow}
+
+📝 Realiza un gráfico de violín para la variable `tiempo_espera` para cada género
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_violin(aes(x = genero, y = tiempo_espera, fill = genero, color = genero),
+              alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+## 🐣 Caso práctico: encuesta de satisfacción
+
+Vamos a seguir poniendo en práctica lo aprendido el dataset `SatisfaccionPacientes.csv` que tenéis subido al campus, tras haberle normalizado nombres y convertido las variables que tocaban a cualitativas nominales.
+
+
+```{r}
+library(readr) # dentro de tidyverse
+# en mi caso tengo el .csv en una carpeta datos dentro del proyecto
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  # la función clean_names del paquete janitor 
+  # nos normaliza nombres de variables
+  janitor::clean_names() |>
+  mutate(estado_civil = factor(estado_civil),
+         genero = factor(genero))
+datos
+```
+
+### Pregunta 1
+
+> Convierte de manera adecuada la variable `estado_salud` a cualitativa ORDINAL
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno", "Excelente"),
+                  ordered = TRUE))
+```
+
+### Pregunta 2
+
+> Haz uso de `table()` para calcular la tabla de frecuencias de `genero` y `estado_civil`
+
+```{r}
+#| code-fold: true
+#| eval: false
+table(datos$genero)
+table(datos$estado_civil)
+```
+
+### Pregunta 3
+
+>  Calcula la tabla de frecuencias de las ORDINALES y piensa si ahora puedes añadir algo más a la tabla de frecuencias). Tras ello usa el código más sencillo para responder a: ¿cuántas personas tienen un estado de salud regular (o peor)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+freq_estado_salud <-
+  datos |> 
+  count(estado_salud) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs),
+         frecuencia_acum_abs = cumsum(frecuencia_abs),
+         frecuencia_acum_rel = cumsum(frecuencia_rel))
+# Se ve dentro de la tabla. Hay 44+15 = 59 personas con un estado de salud malo o regular. 
+# Con código
+datos |>
+  count(estado_salud <= "Regular")
+```
+
+### Pregunta 4
+
+>  Si te fijas una de las modalidades es totalmente anecdótica (solo 1 Excelente). Sería conveniente recategorizar la categoría Excelente: siempre que detecte Excelente, lo debe recategorizar a Bueno (criterio general: las categorías deben contener al menos un 5% de los individuos de toda la muestra). Pista: mutate e if_else
+
+```{r}
+#| code-fold: true
+datos <- 
+  datos |> 
+  mutate(estado_salud  = if_else(estado_salud  == "Excelente", "Bueno", estado_salud),
+         # ojo: hay que redefinir los niveles de la cualitativa
+         # ya que ha dejado de ser factor (veremos un día el paquete forcats para esto)
+         estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno"),
+                  ordered = TRUE))
+```
+
+### Pregunta 5
+
+>  Calcula la media, mediana, rango intercuartílico y desviación típica de grado de satisfacción desagregado por sexo.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_grado_satisfaccion = mean(grado_satisfaccion),
+           sd_grado_satisfaccion = sd(grado_satisfaccion),
+           mediana_grado_satisfaccion = median(grado_satisfaccion),
+           IQR_grado_satisfaccion =
+             quantile(grado_satisfaccion, probs = 0.75) -
+             quantile(grado_satisfaccion, probs = 0.25),
+           .by = genero)
+```
+
+### Pregunta 6
+
+> Exporta los resultados anteriores (`resumen`) en un archivo `resumen.csv`. En lugar de un `read_csv()` vamos a usar `write_csv(tabla, file = "ruta")`
+
+```{r}
+#| code-fold: true
+# importado como csv
+write_csv(resumen, file = "./resumen.csv")
+```
+
+### Pregunta 7
+
+> Crear un diagrama de barras para la variable género.
+
+```{r}
+#| code-fold: true
+# Género: fíjate que por defecto `geom_bar()` cuenta y visualiza ese conteo `n`.
+ggplot(datos) +
+  geom_bar(aes(x = genero)) 
+```
+
+
+### Pregunta 8
+
+> ¿Cómo podríamos decirle que cada barra (es decir, para cada modalidad de género) sea de un color (de relleno)?
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  # dentro de aes() para que dependa de la tabla
+  geom_bar(aes(x = genero, fill = genero))
+```
+
+### Pregunta 9
+
+>  En un gráfico no solo podemos usar color como parámetro estético el color sino jugar por ejemplo con la transparencia (parámetro `alpha`). Modifica el gráfico anterior para hacer los colores un poco más transparentes.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) 
+```
+
+### Pregunta 10
+
+> Una capa muy importante en ggplot es `labs()`. Añade títulos a los ejes, leyendas, título de gráfica, subtítulo y pie de figura.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  labs(title = "Diagrama de barras de la variable género", 
+       subtitle = "Encuesta satisfacción",
+       caption = "Autor: J. Álvarez y A. Moreno",
+       x = "Categoría", y = "Frecuencia absoluta", fill = "Categoría")
+```
+
+### Pregunta 11
+
+> También podemos añadir una capa de tema: unos ajustes (fuente de letra, tamaño, colores de fondo, etc) ya predefinidos. El más "austero" pero cuco es `theme_minimal()`
+
+```{r}
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  labs(title = "Diagrama de barras de la variable género", 
+       x = "Categoría", y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+Tienes más temas en el paquete `{ggthemes}`
+
+```{r}
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  labs(title = "Diagrama de barras de la variable género", 
+       x = "Categoría", y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  ggthemes::theme_economist()
+```
+
+
+> Haz el gráfico anterior pero decidiendo tú qué colores asignas a cada género y con un tema 
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  # reminder: el relleno es fill, color para el reborde si quieres
+  scale_fill_manual(values = c("#379e98", "#eaea3e")) +
+  labs(title = "Diagrama de barras de la variable género", 
+       x = "Categoría", y = "Frecuencia absoluta",
+       fill = "Categoría") +
+ theme_minimal()
+```
+
+
+En el paquete `{ggthemes}` tienes ya algunas paletas a usar si quieres, por ejemplo para personas daltónicas `scale_fill_colorblind()`
+
+```{r}
+ggplot(datos) +
+  geom_bar(aes(x = genero, fill = genero), alpha = 0.75) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "Diagrama de barras de la variable género", 
+       x = "Categoría", y = "Frecuencia absoluta",
+       fill = "Categoría") +
+ theme_minimal()
+```
+
+### Pregunta 12
+
+> Crear desde cero un diagrama de barras, con ajustes personalizados vistos en los ejercicios anterioes, para la variable estado de salud
+
+```{r}
+#| code-fold: true
+# Estado de salud (ahora el orden importa)
+ggplot(datos) +
+  geom_bar(aes(x = estado_salud, fill = estado_salud), alpha = 0.75) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "Diagrama de barras de la variable estado salud", 
+       x = "Categoría",  y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+
+Fíjate que si **no tuviésemos la variable como cuali ordinal, las barras van por orden alfabético**, no por jerarquía real
+
+```{r}
+ggplot(datos) +
+  geom_bar(aes(x = as.character(estado_salud), fill = as.character(estado_salud)),
+           alpha = 0.75) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "Diagrama de barras de la variable estado salud", 
+       x = "Categoría",  y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+### Pregunta 13
+
+> Crea el histograma inferior para las variable edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_histogram(aes(x = edad), bins = 30, fill = "darkorange", alpha = 0.75) + 
+  labs(title = "Histograma de edad", subtitle = "Bins = 30",
+       x = "Valores", y = "Frecuencia absoluta") +
+  theme_minimal()
+
+ggplot(datos) +
+  # Define el ancho de las barras y colores
+  geom_histogram(aes(x = tiempo_espera), bins = 30, fill = "orchid", alpha = 0.75) + 
+  labs(title = "Histograma de tiempo de espera", subtitle = "Bins = 30",
+       x = "Valores", y = "Frecuencia absoluta") +
+  theme_minimal()
+```
+
+### Pregunta 14
+
+> Crea el gráfico de densidad inferior para las variable edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_density(aes(x = edad), color = "darkorange", 
+               fill = "darkorange", alpha = 0.75) + 
+  labs(title = "Gráfico de densidad de edad",
+       x = "Valores", y = "Frecuencia relativa") +
+  theme_minimal()
+
+ggplot(datos) +
+  geom_density(aes(x = tiempo_espera), color = "orchid", 
+               fill = "orchid", alpha = 0.75) + 
+  labs(title = "Gráfico de densidad de tiempo de espera",
+       x = "Valores", y = "Frecuencia relativa") +
+  theme_minimal()
+```
+
+### Pregunta 15
+
+> Crea el histograma inferior para la variable grado_satisfaccion. ¿Qué opinas?
+
+```{r}
+#| code-fold: true
+# Representación regular, no aporta ni resume
+ggplot(datos) +
+  # Define el ancho de las barras y colores
+  geom_histogram(aes(x = grado_satisfaccion), bins = 30, fill = "#308b8e", alpha = 0.75) + 
+  labs(title = "Histograma de grado de satisfacción", subtitle = "Bins = 30",
+       x = "Valores", y = "Frecuencia absoluta") +
+  theme_minimal()
+# Las **variables discretas muchas veces son mejor representadas** con una diagrama de barras
+```
+
+
+### Pregunta 16
+
+> Realiza un boxplot para edad y un boxplot para numero de visitas PERO por género (dos variables, piensa cómo)
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_boxplot(aes(y = edad), fill = "lightblue", alpha = 0.75) +  
+  labs(title = "Boxplot de edad",  y = "Edad") +
+  theme_minimal()
+
+ggplot(datos) +
+  geom_boxplot(aes(x = genero, y = tiempo_espera, fill = genero),
+               alpha = 0.75) +
+  labs(title = "Boxplot de tiempo de espera por género", 
+       x = "Género", y = "Tiempo de Espera") +
+  theme_minimal()
+```
+
+
+> Haciendo uso del gráfico anterior:
+
+a)  ¿La variable edad tiene outliers? ¿Qué edad tienen esos pacientes?
+
+b)  ¿Quién ha esperado más los hombres o las mujeres?
+
+
+En los boxplots podemos también **indicar parámetros concretos para los outliers**.
+
+```{r}
+ggplot(datos) +
+  geom_boxplot(aes(y = edad), fill = "lightblue", alpha = 0.75,
+               outlier.colour = "red", outlier.shape = 18, outlier.size = 3) +  
+  labs(title = "Boxplot de edad",  y = "Edad") +
+  theme_minimal()
+```
+
