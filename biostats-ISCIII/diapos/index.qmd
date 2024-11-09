@@ -141,8 +141,9 @@ Practicar también con los 💻 **ejercicios resueltos** de las diapositivas. Lo
 
 ## Casos prácticos: estadística descriptiva en R
 
-::: column-screen-inset-right
+:::: column-screen-inset-right
 ::: {style="font-size:25px"}
+
 | TEMA | DATASET | LINK | DIFICULTAD |
 |:---------------|:----------------|:--------:|:-----------:|
 | Intro a la visualización de datos en R | Datos de covid del ISCIII  | [Link](https://javieralvarezliebana.quarto.pub/intro-dataviz-isciii/#caso-pr%C3%A1ctico-visualizaci%C3%B3n-covid) | 🐣 |
@@ -150,8 +151,9 @@ Practicar también con los 💻 **ejercicios resueltos** de las diapositivas. Lo
 | Intro a la estadística bivariante: cuali vs cuali | Placebo vs medicamento | [Link](https://javieralvarezliebana.quarto.pub/descriptiva-inferencia-isciii/#caso-pr%C3%A1ctico-i-placebo-vs-f%C3%A1rmaco) | 🐣🐣 |
 | Intro a la estadística bivariante: cuali vs cuali | tabaco vs bronquitis | [Link](https://javieralvarezliebana.quarto.pub/descriptiva-inferencia-isciii/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco) | 🐣 |
 | Intro a la estadística bivariante: cuali vs cuali | encuesta salud mental | [Link](https://javieralvarezliebana.quarto.pub/descriptiva-inferencia-isciii/#caso-pr%C3%A1ctico-iii-salud-mental) | 🐣🐣 |
+
 :::
-:::
+::::
 
 - [👾 Recursos extras visualización](#recursos-dataviz)
 - [👾 Materiales extras visualización](#extra-dataviz)

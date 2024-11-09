@@ -1834,7 +1834,7 @@ Máster de Bioinformática • Material elaborado en colaboración con Almudena 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-09 18:11:37 CET"</code></pre>
+<pre><code>[1] "2024-11-09 18:18:04 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -3742,12 +3742,12 @@ multiple of the number of rows [4]</code></pre>
 <span id="cb380-5"><a href="#cb380-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr    min     lq       mean median
-                                y &lt;- x^2    984   1107   1411.302   1189
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 733121 752145 892422.892 761329
-       uq      max neval
-   1291.5    13366   500
- 777995.5 12107546   500</code></pre>
+                                    expr    min     lq        mean median
+                                y &lt;- x^2    943   1148    1546.274   1189
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 733736 752022 1026408.514 763174
+     uq      max neval
+   1394    43624   500
+ 808192 34336270   500</code></pre>
 </div>
 </div>
 </section>
@@ -3953,14 +3953,14 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb400"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb400-1"><a href="#cb400-1"></a><span class="fu">replicate</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]        [,2]       [,3]
-[1,]  1.1081022 -0.81737824  0.1516262
-[2,] -0.3857552 -0.52734446  0.8491043
-[3,]  0.6056974 -0.02950532 -0.5142676
-[4,]  2.1387379  1.10747364  0.6271482
-[5,] -1.3259664  0.27964232 -1.4803604
-[6,] -0.9004463 -1.14680734 -0.1829791
-[7,]  1.2161929 -0.14087720  0.4851181</code></pre>
+<pre><code>             [,1]       [,2]       [,3]
+[1,] -0.893174160  0.4368499 -0.7028790
+[2,]  1.075545271  1.3321499 -0.5339555
+[3,]  0.789533274  0.3583279  1.2517420
+[4,] -0.292036749 -0.3739926 -1.9728934
+[5,]  0.091663148  0.3703640  0.8747229
+[6,]  0.004951205  0.4449505  0.9068952
+[7,] -1.293246888 -0.4483176 -0.1437600</code></pre>
 </div>
 </div>
 </section>
@@ -9521,8 +9521,8 @@ Caused by error in `setup_params()`:
 <div class="cell">
 <div class="sourceCode cell-code" id="cb744"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb744-1"><a href="#cb744-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="st">"cruz"</span>, <span class="st">"cara"</span>), <span class="at">size =</span> <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "cara" "cruz" "cara" "cruz" "cruz" "cara" "cruz" "cara" "cara" "cruz"
-[11] "cruz" "cruz" "cara" "cruz" "cara" "cara" "cara" "cara" "cara" "cara"</code></pre>
+<pre><code> [1] "cara" "cruz" "cara" "cara" "cara" "cara" "cara" "cruz" "cara" "cruz"
+[11] "cara" "cruz" "cara" "cruz" "cara" "cara" "cruz" "cara" "cruz" "cara"</code></pre>
 </div>
 </div>
 </section>
@@ -9541,16 +9541,16 @@ Caused by error in `setup_params()`:
 <pre><code># A tibble: 87 × 15
    name      rol   height  mass hair_color skin_color eye_color birth_year sex  
    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
- 1 Luke Sky… vill…    172    77 blond      fair       blue            19   male 
+ 1 Luke Sky… malo     172    77 blond      fair       blue            19   male 
  2 C-3PO     malo     167    75 &lt;NA&gt;       gold       yellow         112   none 
- 3 R2-D2     malo      96    32 &lt;NA&gt;       white, bl… red             33   none 
- 4 Darth Va… vill…    202   136 none       white      yellow          41.9 male 
+ 3 R2-D2     bueno     96    32 &lt;NA&gt;       white, bl… red             33   none 
+ 4 Darth Va… malo     202   136 none       white      yellow          41.9 male 
  5 Leia Org… bueno    150    49 brown      light      brown           19   fema…
- 6 Owen Lars malo     178   120 brown, gr… light      blue            52   male 
+ 6 Owen Lars vill…    178   120 brown, gr… light      blue            52   male 
  7 Beru Whi… malo     165    75 brown      light      blue            47   fema…
- 8 R5-D4     malo      97    32 &lt;NA&gt;       white, red red             NA   none 
+ 8 R5-D4     bueno     97    32 &lt;NA&gt;       white, red red             NA   none 
  9 Biggs Da… bueno    183    84 black      light      brown           24   male 
-10 Obi-Wan … vill…    182    77 auburn, w… fair       blue-gray       57   male 
+10 Obi-Wan … malo     182    77 auburn, w… fair       blue-gray       57   male 
 # ℹ 77 more rows
 # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
@@ -9651,16 +9651,16 @@ Levels: aprobado &lt; notable &lt; suspenso</code></pre>
 <pre><code># A tibble: 3 × 3
   rol         n frec_rel
   &lt;ord&gt;   &lt;int&gt;    &lt;dbl&gt;
-1 bueno      31    0.356
-2 malo       34    0.391
-3 villano    22    0.253</code></pre>
+1 bueno      34    0.391
+2 malo       33    0.379
+3 villano    20    0.230</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb763"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb763-1"><a href="#cb763-1"></a><span class="co"># o bien</span></span>
 <span id="cb763-2"><a href="#cb763-2"></a><span class="fu">table</span>(starwars<span class="sc">$</span>rol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   bueno    malo villano 
-     31      34      22 </code></pre>
+     34      33      20 </code></pre>
 </div>
 </div>
 </section>
@@ -9677,20 +9677,20 @@ Levels: aprobado &lt; notable &lt; suspenso</code></pre>
 <pre><code># A tibble: 3 × 5
   rol         n frec_rel frec_abs_acum frec_rel_acum
   &lt;ord&gt;   &lt;int&gt;    &lt;dbl&gt;         &lt;int&gt;         &lt;dbl&gt;
-1 bueno      31    0.356            31         0.356
-2 malo       34    0.391            65         0.747
-3 villano    22    0.253            87         1    </code></pre>
+1 bueno      34    0.391            34         0.391
+2 malo       33    0.379            67         0.770
+3 villano    20    0.230            87         1    </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb767"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb767-1"><a href="#cb767-1"></a><span class="co"># o bien</span></span>
 <span id="cb767-2"><a href="#cb767-2"></a><span class="fu">cumsum</span>(<span class="fu">table</span>(starwars<span class="sc">$</span>rol))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  bueno    malo villano 
-     31      65      87 </code></pre>
+     34      67      87 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb769"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb769-1"><a href="#cb769-1"></a><span class="fu">cumsum</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(starwars<span class="sc">$</span>rol)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    bueno      malo   villano 
-0.3563218 0.7471264 1.0000000 </code></pre>
+0.3908046 0.7701149 1.0000000 </code></pre>
 </div>
 </div>
 </section>
@@ -11287,9 +11287,9 @@ $tipo
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
-  name           rol     height  mass hair_color
-  &lt;chr&gt;          &lt;ord&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker villano    172    77 blond     </code></pre>
+  name           rol   height  mass hair_color
+  &lt;chr&gt;          &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+1 Luke Skywalker malo     172    77 blond     </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -11304,7 +11304,7 @@ $tipo
   name               rol   height  mass hair_color
   &lt;chr&gt;              &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
 1 Beru Whitesun Lars malo     165    75 brown     
-2 R5-D4              malo      97    32 &lt;NA&gt;      
+2 R5-D4              bueno     97    32 &lt;NA&gt;      
 3 Biggs Darklighter  bueno    183    84 black     </code></pre>
 </div>
 </div>
@@ -11324,8 +11324,8 @@ $tipo
   &lt;chr&gt;      &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
 1 C-3PO      malo     167    75 &lt;NA&gt;       gold       yellow           112 none 
 2 Beru Whit… malo     165    75 brown      light      blue              47 fema…
-3 Obi-Wan K… vill…    182    77 auburn, w… fair       blue-gray         57 male 
-4 Qui-Gon J… vill…    193    89 brown      fair       blue              92 male </code></pre>
+3 Obi-Wan K… malo     182    77 auburn, w… fair       blue-gray         57 male 
+4 Qui-Gon J… malo     193    89 brown      fair       blue              92 male </code></pre>
 </div>
 </div>
 </div>
@@ -11357,10 +11357,10 @@ $tipo
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
-  name           rol     height  mass hair_color
-  &lt;chr&gt;          &lt;ord&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 Luke Skywalker villano    172    77 blond     
-2 C-3PO          malo       167    75 &lt;NA&gt;      </code></pre>
+  name           rol   height  mass hair_color
+  &lt;chr&gt;          &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+1 Luke Skywalker malo     172    77 blond     
+2 C-3PO          malo     167    75 &lt;NA&gt;      </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:&quot;50%;">
@@ -11370,10 +11370,10 @@ $tipo
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
-  name           rol     height  mass hair_color
-  &lt;chr&gt;          &lt;ord&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
-1 BB8            malo        NA    NA none      
-2 Captain Phasma villano     NA    NA none      </code></pre>
+  name           rol   height  mass hair_color
+  &lt;chr&gt;          &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+1 BB8            bueno     NA    NA none      
+2 Captain Phasma bueno     NA    NA none      </code></pre>
 </div>
 </div>
 </div>
@@ -11409,7 +11409,7 @@ $tipo
   name         rol   height  mass hair_color
   &lt;chr&gt;        &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
 1 Ratts Tyerel bueno     79    15 none      
-2 Yoda         malo      66    17 white     </code></pre>
+2 Yoda         bueno     66    17 white     </code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -11450,8 +11450,8 @@ $tipo
 <pre><code># A tibble: 2 × 15
   name       rol   height  mass hair_color skin_color eye_color birth_year sex  
   &lt;chr&gt;      &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
-1 R4-P17     bueno     96    NA none       silver, r… red, blue         NA none 
-2 Saesee Ti… malo     188    NA none       pale       orange            NA male 
+1 Eeth Koth  bueno    171    NA black      brown      brown             NA male 
+2 Arvel Cry… bueno     NA    NA brown      fair       brown             NA male 
 # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -11496,10 +11496,10 @@ $tipo
 <pre><code># A tibble: 4 × 15
   name       rol   height  mass hair_color skin_color eye_color birth_year sex  
   &lt;chr&gt;      &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
-1 Mas Amedda bueno    196  NA   none       blue       blue              NA male 
-2 Dud Bolt   vill…     94  45   none       blue, grey yellow            NA male 
-3 Luminara … bueno    170  56.2 black      yellow     blue              58 fema…
-4 Jar Jar B… bueno    196  66   none       orange     orange            52 male 
+1 Captain P… bueno     NA    NA none       none       unknown           NA fema…
+2 Watto      vill…    137    NA black      blue, grey yellow            NA male 
+3 Sly Moore  bueno    178    48 none       pale       white             NA &lt;NA&gt; 
+4 Dexter Je… bueno    198   102 none       brown      yellow            NA male 
 # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -11528,7 +11528,7 @@ $tipo
 <pre><code># A tibble: 2 × 15
   name       rol   height  mass hair_color skin_color eye_color birth_year sex  
   &lt;chr&gt;      &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
-1 Luke Skyw… vill…    172    77 blond      fair       blue              19 male 
+1 Luke Skyw… malo     172    77 blond      fair       blue              19 male 
 2 C-3PO      malo     167    75 &lt;NA&gt;       gold       yellow           112 none 
 # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
@@ -11542,8 +11542,8 @@ $tipo
 <pre><code># A tibble: 2 × 15
   name       rol   height  mass hair_color skin_color eye_color birth_year sex  
   &lt;chr&gt;      &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
-1 C-3PO      malo     167    75 &lt;NA&gt;       gold       yellow           112 none 
-2 Luke Skyw… vill…    172    77 blond      fair       blue              19 male 
+1 Luke Skyw… malo     172    77 blond      fair       blue              19 male 
+2 C-3PO      malo     167    75 &lt;NA&gt;       gold       yellow           112 none 
 # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -11636,16 +11636,16 @@ $tipo
 <pre><code># A tibble: 81 × 16
    altura  name    rol   height  mass hair_color skin_color eye_color birth_year
    &lt;chr&gt;   &lt;chr&gt;   &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
- 1 normal  Luke S… vill…    172    77 blond      fair       blue            19  
+ 1 normal  Luke S… malo     172    77 blond      fair       blue            19  
  2 normal  C-3PO   malo     167    75 &lt;NA&gt;       gold       yellow         112  
- 3 enanos  R2-D2   malo      96    32 &lt;NA&gt;       white, bl… red             33  
- 4 gigante Darth … vill…    202   136 none       white      yellow          41.9
+ 3 enanos  R2-D2   bueno     96    32 &lt;NA&gt;       white, bl… red             33  
+ 4 gigante Darth … malo     202   136 none       white      yellow          41.9
  5 bajito  Leia O… bueno    150    49 brown      light      brown           19  
- 6 normal  Owen L… malo     178   120 brown, gr… light      blue            52  
+ 6 normal  Owen L… vill…    178   120 brown, gr… light      blue            52  
  7 normal  Beru W… malo     165    75 brown      light      blue            47  
- 8 enanos  R5-D4   malo      97    32 &lt;NA&gt;       white, red red             NA  
+ 8 enanos  R5-D4   bueno     97    32 &lt;NA&gt;       white, red red             NA  
  9 alto    Biggs … bueno    183    84 black      light      brown           24  
-10 alto    Obi-Wa… vill…    182    77 auburn, w… fair       blue-gray       57  
+10 alto    Obi-Wa… malo     182    77 auburn, w… fair       blue-gray       57  
 # ℹ 71 more rows
 # ℹ 7 more variables: sex &lt;chr&gt;, gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
@@ -11674,16 +11674,16 @@ $tipo
 <pre><code># A tibble: 87 × 15
    species name    rol   height  mass hair_color skin_color eye_color birth_year
    &lt;chr&gt;   &lt;chr&gt;   &lt;ord&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
- 1 Human   Luke S… vill…    172    77 blond      fair       blue            19  
+ 1 Human   Luke S… malo     172    77 blond      fair       blue            19  
  2 Droid   C-3PO   malo     167    75 &lt;NA&gt;       gold       yellow         112  
- 3 Droid   R2-D2   malo      96    32 &lt;NA&gt;       white, bl… red             33  
- 4 Human   Darth … vill…    202   136 none       white      yellow          41.9
+ 3 Droid   R2-D2   bueno     96    32 &lt;NA&gt;       white, bl… red             33  
+ 4 Human   Darth … malo     202   136 none       white      yellow          41.9
  5 Human   Leia O… bueno    150    49 brown      light      brown           19  
- 6 Human   Owen L… malo     178   120 brown, gr… light      blue            52  
+ 6 Human   Owen L… vill…    178   120 brown, gr… light      blue            52  
  7 Human   Beru W… malo     165    75 brown      light      blue            47  
- 8 Droid   R5-D4   malo      97    32 &lt;NA&gt;       white, red red             NA  
+ 8 Droid   R5-D4   bueno     97    32 &lt;NA&gt;       white, red red             NA  
  9 Human   Biggs … bueno    183    84 black      light      brown           24  
-10 Human   Obi-Wa… vill…    182    77 auburn, w… fair       blue-gray       57  
+10 Human   Obi-Wa… malo     182    77 auburn, w… fair       blue-gray       57  
 # ℹ 77 more rows
 # ℹ 6 more variables: sex &lt;chr&gt;, gender &lt;chr&gt;, homeworld &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
