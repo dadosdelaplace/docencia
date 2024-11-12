@@ -9546,15 +9546,716 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## Correlación
+## Covarianza y correlación
+
+¿Te acuerdas de la varianza?
+
+$$s^2 = \frac{\sum_{i=1}^n (x_i - \bar x)^2}{n-1}$$
+
+Esa una medida de dispersión que nos cuantificaba [**cuánto varían los datos respecto a la media**]{.hl-yellow}.
+. . .
+
+La [**varianza es el promedio de las desviaciones al cuadrado**]{.hl-yellow} (respecto a la media), apareciendo dos veces dicha desviación: puede ser entendida como una [**medida que cuantifica la relación de una variable CONSIGO MISMA**]{.hl-yellow}
+
+. . .
+
+¿Y si quiésemos [**medir la relación de una variable X respecto a otra variable Y (en lugar de consigo misma)**]{.hl-purple}?
+
 
 ---
 
-## Biserial...
+## Covarianza y correlación
+
+$$s_{x}^{2} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2 = \overline{x^2} - \overline{x}^2 \quad \text{(varianza)}$$
+
+
+La idea detrás de la [**covarianza**]{.hl-yellow} es justo esa: sustituir una de esas desviaciones de la X por la desviación de la Y.
+
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
 
 ---
 
-## Intro regresión lineal
+## Covarianza y correlación
+
+Es importante entender algunas [**propiedades de la covarianza**]{.hl-yellow}
+
+. . .
+
+* [**Signo**]{.hl-purple}: la covarianza puede ser tanto positiva como negativa como 0: al eliminar el cuadrado de la varianza, ya no es necesario que sea positiva
+
+
+. . .
+
+* [**¿Qué cuantifica?**]{.hl-purple} La covarianza mide la [**relación LINEAL**]{.hl-red} (en torno a una recta) entre dos variables
+
+. . .
+
+* [**¿Qué dice su signo?**]{.hl-purple} El signo de la covarianza nos indicará la [**dirección de la dependencia lineal**]{.hl-yellow}: si es positiva, la relación será creciente (cuando X crece, Y crece); si es negativa, la relación será decreciente (cuando X crece, Y decrece)
+
+
+---
+
+## Covarianza y correlación
+
+Al igual que pasaba con la varianza, la [**covarianza depende de las unidades y magnitudes**]{.hl-yellow} de los datos, así que lo que haremos será [**estandarizar la covarianza**]{.hl-yellow}. Definiremos la [**coeficiente correlación lineal (de Pearson)**]{.hl-yellow} como la covarianza dividida entre el producto de las desviaciones típicas (adimensional)
+
+
+$$r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}$$
+
+. . .
+
+Tiene el [**mismo signo que la covarianza**]{.hl-yellow} (el denominador es siempre positivo) y sus [**valores siempre están entre -1 y 1**]{.hl-yellow}
+
+* más cerca de -1 o 1 → relación lineal más fuerte
+* más cerca de 0 → ausencia de relación **LINEAL**
+
+---
+
+## Covarianza y correlación
+
+![](img/correlaciones.jpg)
+
+---
+
+## Correlación lineal: sin agrupar
+
+
+Como decíamos, la idea detrás de la [**covarianza**]{.hl-yellow} es una "varianza" entre dos variales (la varianza es una covarianza de una variable consigo misma), midiendo el **promedio de lo que se desvía cada una respecto a su media**
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
+
+. . .
+
+Para calcularla en `R` basta con usar la función `cov()`
+
+```{r}
+starwars |> 
+  drop_na(mass, height) |> 
+  summarise(cov(mass, height))
+```
+
+---
+
+## Correlación lineal: sin agrupar
+
+Vamos a practicar una vez más como [**hacerlo a mano con el siguiente ejercicio**]{.hl-yellow}.
+
+---
+
+## Cor lineal: sin agrupar
+
+En la tabla inferior se han recopilado (del 2013 al 2022) la **temperatura media en el mes de abril en Madrid (variable X, en ºC)** y el **número de días (variable Y) en el que el nivel de ozono superó las 0.20 ppm (partes por millón)**
+
+* ¿Cuál fue media de días en los que se superó umbral de ozono de 0.20 ppm?
+* ¿Cuál fue media de días en los que se superó umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?
+* ¿Cuál es su covarianza?
+
+![](img/tabla-ej-covarianza-sin-agrupar.png)
+
+---
+
+
+## Correlación lineal: sin agrupar
+
+Repite el ejercicio con pocas líneas de código `R`
+
+* ¿Cuál fue la media de días en los que se superó el umbral de ozono de 0.20 ppm?
+* ¿Cuál fue la media de días en los que se superó el umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?
+* ¿Cuál es su covarianza?
+
+![](img/tabla-ej-covarianza-sin-agrupar.png)
+
+
+---
+
+
+## Correlación lineal: sin agrupar
+
+Realiza lo que consideres tanto a mano como en `R`
+
+* ¿Existe alguna **relación de dependencia entre las variables**? ¿De qué tipo? ¿Cómo de fuerte o débil es dicha relación? ¿En qué dirección es dicha relación?
+
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
+
+$$r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}$$
+
+---
+
+## Correlación lineal: sin agrupar
+
+No sé si te has fijado qué sucede cuando intentamos [**calcular la covarianza/correlación de varias variables**]{.hl-yellow}, por ejemplo vamos a calcular la (cuasi)covarianza de todas las variables numéricas de starwars.
+
+. . .
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cov()
+```
+
+. . .
+
+Podemos usar la función `cov()` sin más, fuera de un resumen, obteniendo lo que se conoce como [**matriz de (cuasi)covarianzas**]{.hl-yellow} y que tendrá un papel fundamental en estadística ya que contiene la información (= varianza) del dataset.
+
+---
+
+## Matriz de covarianzas
+
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cov()
+```
+
+Además de ser [**simétrica**]{.hl-yellow}...¿qué tenemos en la [**diagonal**]{.hl-yellow}?
+
+. . .
+
+La [**matriz de (cuasi)covarianzas**]{.hl-yellow} se denota como $\Sigma$ y sus elementos se define como $\Sigma_{ii} = s_{x_i}^{2}$ para la diagonal y $\Sigma_{ij} = \Sigma_{ji} = s_{x_i x_j}$ fuera de ella.
+
+. . .
+
+::: callout-important
+## Importante
+
+Recuerda que los softwares estadísticos nos devuelven siempre la [**cuasi covarianza**]{.hl-purple}, dividido entre $n-1$ y no entre $n$. La cuasivarianza y la cuasicovarianza son los [**mejores estimadores muestrales (insesgados)**]{.hl-yellow} de los respectivos parámetros poblaciones
+
+:::
+
+---
+
+## Matriz de correlaciones
+
+De la misma manera con `cor()` podemos [**calcular la matriz de correlaciones**]{.hl-yellow} (en este caso sin el `cuasi` ya que se cancelan denominadores)
+
+. . .
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cor()
+```
+
+. . .
+
+La [**matriz de correlaciones**]{.hl-yellow} se denota como $R$ y sus elementos se define como $r_{ii} = 1$ para la diagonal y $r_{ij} = r_{x_ix_j}$ fuera de ella, y nos proporciona la dependencia lineal entre variables ya de manera **estandarizada**.
+
+---
+
+
+## Correlación vs dependencia
+
+
+Podemos tener [**variables incorreladas**]{.hl-red}, con correlación nula, pero que [**exista dependencia entre ellas**]{.hl-green}: la covarianza/correlación [**SOLO CAPTURA relaciones lineales**]{.hl-yellow}, nada más.
+
+. . .
+
+Veamos un ejemplo sencillo con $X = \left\lbrace -1, 0, 1 \right\rbrace$ y $Y = X^2 =  \left\lbrace 1, 0, 1 \right\rbrace$. 
+
+* La media de ambas es nula
+* La media del producto es la media de $XY = \left\lbrace -1, 0, 1 \right\rbrace$, que es de nuevo nula
+* Así la covarianza $\overline{x*y} - \overline{x}*\overline{y}$ es nula a pesar de tener la mayor dependencia posible (dependencia funcional)
+
+---
+
+## Correlación vs dependencia
+
+![](img/covarianza-no-lineal.png)
+
+En relaciones no lineales como la de la imagen, la **correlación estará cercana a cero** (ya que no hay relación lineal) pero existe una [**dependencia**]{.hl-yellow}. Diremos que [**dos variables son dependientes entre sí**]{.hl-yellow} cuando existe un **patrón numérico que las relaciona**
+
+. . .
+
+* [**Independencia implica incorrelación**]{.hl-green}
+* [**Incorrelación NO implica independencia**]{.hl-red}
+
+---
+
+## Correlación vs dependencia
+
+![](img/escenarios-covarianza.png)
+
+---
+
+## Dependencia vs causalidad
+
+![](img/helados-moreno.jpg)
+
+Si $X$ e $Y$ fuesen variables dependientes (lineales o no)...[**¿implicaría que el ascenso/descenso de una provoca el ascenso/descenso de la otra?**]{.hl-yellow}
+
+. . .
+
+Imagina por ejemplo dos variables: nivel de bronceado (X) y consumo de helados (Y). ¿Son dependientes? Aparentemente sí ya que su comportamiento es similar. **¿Una causa la otra?**
+
+---
+
+## Dependencia vs causalidad
+
+![](img/helados-moreno.jpg)
+
+Diremos que dos variables tienen una [**relación causal o de causalidad**]{.hl-yellow} cuando una variable es la CAUSA del comportamiento de la otra, algo que no sabremos solo con estadística (sino con conocimiento experto, en este caso de nutricionistas y médicos)
+
+. . .
+
+[**Correlación NO IMPLICA causalidad**]{.hl-red} (al menos no tiene por qué)
+
+---
+
+## Dependencia vs causalidad
+
+
+![](img/chocolate-correlacion.jpg)
+
+
+Este fenómeno es conocido como [**correlaciones espúreas**]{.hl-yellow}, y aparece cuando dos variables presentan una [**relación matemática**]{.hl-green} pero sin [**ningún tipo de relación causal o lógica**]{.hl-red}. Puedes ver más en <https://www.tylervigen.com/spurious-correlations>
+
+---
+
+## Dependencia vs causalidad
+
+![](img/confounder.jpg)
+
+Dicho patrón matemático puede deberse al mero azar o la existencia de lo que se conoce como [**variables de confusión**]{.hl-yellow} (en el caso del helado, el verano es el que causa ambas).
+
+La rama que se dedica al [**estudio de la causalidad**]{.hl-yellow}, combinando las ramas de la **estadística, filosofía, sociología y psicología** se le conoce como [**inferencia causal**]{.hl-yellow} y es fundamental en un análisis más profunde de las relaciones entre las variables (sobre todo en campos como la economía o la sociología)
+
+---
+
+## Caso real: encuesta satisfacción
+
+Vamos a tomar de nuevo nuestros datos de satisfacción de pacientes
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+---
+
+## Caso real: encuesta satisfacción
+
+¿Cómo obtener la **matriz de correlaciones**? Lo que haremos será primero seleccionar solo las numéricas para luego aplicar `cor()`, o bien `correlate()` del paquete `{corrr}`
+
+```{r}
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+```
+
+Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$) pero `tiempo_espera` tiene una correlación negativa ($-0.586$) con `grado_satisfaccion`.
+
+---
+
+## Caso real: encuesta satisfacción
+
+Con el paquete `{corrplot}` también podemos [**visualizar la matriz de correlaciones**]{.hl-yellow} de distintas formas (el tamaño y alpha indica su magnitud en valor absoluto, el color su signo)
+
+```{r}
+datos |> 
+  select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot::corrplot()
+```
+
+---
+
+## Test de correlaciones
+
+¿Pero cómo saber que la correlación observada entre `edad` y `grado_satisfaccion` ($-0.0339$) es suficientemente pequeña para considerarse incorreladas? ¿Cómo saber si la correlación entre `tiempo_espera` y `grado_satisfaccion` ($-0.586$) es suficientemente grande para considerar que es **significativa**?
+
+. . .
+
+Con un [**contraste de correlaciones**]{.hl-yellow} haciendo uso de `cor.test()`
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+cor.test(datos$edad, datos$grado_satisfaccion)
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r}
+cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
+```
+
+:::
+::::
+
+---
+
+## Test de correlaciones
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+cor.test(datos$edad, datos$grado_satisfaccion)
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r}
+cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
+```
+
+:::
+::::
+
+En uno el p-valor es bastante alto (no rechazamos la hipótesis nula de incorrelación) y en otro el p-valor es prácticamente 0 (rechazamos la hipótesis nula ->  hay evidencias de correlación significativa).
+
+---
+
+
+## Correlación y regresión
+
+Como ya hemos mencionado la correlación nos sirve para [**cuantificar el grado de asociación entre dos variables cuantitativas**]{.hl-yellow} pero siempre asumiendo una asociación muy particular: [**solo mide asociación LINEAL**]{.hl-yellow}
+
+. . .
+
+En matemáticas LINEAL = recta, así que en realidad la correlación nos está cuantificando [**cómo se agrupan nuestra nube de puntos a un recta**]{.hl-yellow} (la conocida como recta de regresión).
+
+---
+
+## Historia de la reg
+
+> Hay una regla universal: cualquier pariente tuyo es probablemente más mediocre que tú»
+
+La [**historia de regresión**]{.hl-yellow} se remonta a **Francis Galton**, primo de Charles Darwin, que además de estadístico fue psicólogo, geógrafo y, por desgracia, el primer eugenésico (de hecho acuñó el termino)
+
+. . .
+
+También fue el primero en proponer métodos de clasificación de huellas en medicina forense e incluso se le atribuye el primer mapa meteorológico de la historia
+
+---
+
+## Regresión y Darwin
+
+Galton mostró fascinación por «El origen de la especies» de su primo. Sin embargo, [**Galton no se centraba en los mejor adaptados sino en los que él llama mediocres**]{.hl-yellow}
+
+. . .
+
+Según Galton, las sociedades estaban fomentando la mediocridad, interfiriendo en la selección natural, así que empezó a **estudiar si el talento era o no hereditario**.
+
+
+. . .
+
+¿Su conclusión? El [**talento se disipaba**]{.hl-yellow} a lo largo de las generaciones
+
+---
+
+## Regresión a la mediocridad
+
+En 1886 publicó «Regression towards mediocrity in hereditary stature», un artículo que cambiaría la estadística: fue el [**primer uso documentado de lo que hoy conocemos como recta de regresión**]{.hl-yellow} 
+
+. . .
+
+:::: columns
+::: {.column width="38%"}
+
+![](img/reg_dalton.jpg)
+
+:::
+
+::: {.column width="62%"}
+
+Galton analizó la estatura de 205 hijos y padres, observando que, de nuevo, los valores extremos se disipaban: a lo largo de las generaciones había una [**regresión (un retroceso) a la mediocridad (entendida como la media)**]{.hl-yellow} 
+
+
+:::
+::::
+
+Hijos de altos eran algo más bajitos, e hijos de bajitos eran algo más altos.
+
+---
+
+## Regresión a la mediocridad
+
+:::: columns
+::: {.column width="60%"}
+
+![](img/reg-galton-coef.jpg)
+
+:::
+
+::: {.column width="40%"}
+
+Galton no solo observó que las [**estaturas «regresaban» a un valor medio sino que lo hacían con un patrón**]{.hl-yellow}, con un factor constante de $2/3$: si los padres se desviaban $+3$ por encima de la media, los hijos se desviaban solo $(2/3)*3 = +2$ por encima de la media.
+
+:::
+::::
+
+---
+
+## Aprendizaje estadístico
+
+La regresión lineal es el modelo más simple de lo que se conoce como [**aprendizaje estadístico (Machine Learning)**]{.hl-yellow}, en concreto del conocido como [**aprendizaje supervisado**]{.hl-yellow}
+
+![](img/ml.jpg)
+
+
+---
+
+## Aprendizaje ¿supervisado?
+
+![](img/unsupervised-learning.jpg)
+
+---
+
+## Aprendizaje ¿supervisado?
+
+En el campo del Machine Learning hay principalmente dos tipos de metodologías:
+
+:::: columns
+::: {.column width="50%"}
+
+* [**Aprendizaje supervisado**]{.hl-purple}: tendremos dos tipos de variables, la [**variable dependiente (output/target)**]{.hl-yellow} que se quiere predecir/clasificar, normalmente denotada como $Y$, y las [**variables independientes (inputs) o explicativas o predictoras**]{.hl-yellow}, que contienen la información disponible. Ejemplos: regresión, knn, árboles, etc.
+ 
+
+:::
+
+::: {.column width="50%"}
+
+![](img/supervised.jpg)
+:::
+::::
+
+---
+
+## Aprendizaje ¿supervisado?
+
+En el campo del Machine Learning hay principalmente dos tipos de metodologías:
+
+:::: columns
+::: {.column width="50%"}
+
+* [**Aprendizaje no supervisado**]{.hl-purple}: no existe la distinción entre target y variables explicativas ya que [**no tenemos etiquetados los datos**]{.hl-yellow}, no sabemos a priori la respuesta correcta. El aprendizaje no supervisado [**buscará patrones**]{.hl-yellow} basados en similitudes/diferencias. Ejemplos: PCA, clustering, redes neuronales, etc.
+
+:::
+
+
+::: {.column width="50%"}
+
+![](img/unsupervised.jpg)
+
+:::
+::::
+
+---
+
+## Clasificación vs predicción
+
+Como hemos comentado, la [**regresión lineal**]{.hl-yellow} se enmarca dentro del [**predicción supervisada**]{.hl-yellow}
+
+* [**Predicción**]{.hl-purple}: la [**variable objetivo es una variable cuantitativa continua**]{.hl-yellow} (por ejemplo, precio, glucosa, peso, etc).
+
+* [**Clasificación**]{.hl-purple}: la [**variable objetivo es una variable cualitativa**]{.hl-yellow} (por ejemplo, especie de flor, ausencia/presencia de enfermedad, si/no, etc) o **cuantitativa discreta** (por ejemplo, número de accidentes). La etiqueta tomará un valor dentro del conjunto de modalidades permitidas, pudiendo ser **binaria** (si/no) o **multiclase** (A, B, C, D).
+
+&nbsp;
+
+📚 Ver «The elements of Statistical Learning» (Hastie et al., 2008)
+
+
+---
+
+## Modelo predictivo
+
+Dentro del marco de la [**predicción supervisada**]{.hl-yellow} un modelo tendrá siempre la siguiente forma:
+
+$$Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) $$
+
+* $X$ serán los [**datos**]{.hl-yellow}
+
+* $f(\cdot)$ será nuestro [**modelo**]{.hl-yellow}, es decir, el [**valor esperado de $Y$**]{.hl-yellow} con la información que tenemos.
+
+* $\mathbf{X} = \left(X_1, \ldots, X_p \right)$ serán nuestras [**predictoras o variables independientes**]{.hl-yellow}
+
+* $E \left[ \right]$ es lo que se conoce como **esperanza o media poblacional** (lo que puedes modelizar)
+
+* $\varepsilon$ será el [**error o ruido**]{.hl-yellow}, una [**variable aleatoria de media 0**]{.hl-yellow} $E \left[\varepsilon | \boldsymbol{X} = x \right] = 0$ (el error debería ser reducido a **algo aleatorio (irreducible)**).
+
+---
+
+
+## Modelo predictivo
+
+$$Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) $$
+
+
+El objetivo es intentar [**estimar dicha variable objetivo**]{.hl-yellow} minimizando al máximo el error cometido (la parte que podemos evitar).
+
+. . .
+
+El [**modelo estimado**]{.hl-yellow} se definirá como
+
+$$\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]}  = \widehat{f}\left(X_1, \ldots, X_p \right), \quad \widehat{\varepsilon} = \widehat{Y} - Y$$
+
+* $\widehat{Y}$ serán las [**estimaciones**]{.hl-yellow}, definidas como la estimación del [**valor esperado de $Y$**]{.hl-yellow} con la información que tenemos.
+
+* $\widehat{f}$ será el [**modelo estimado**]{.hl-yellow}
+
+* $\widehat{\varepsilon}$ los [**errores estimados**]{.hl-yellow} (con media muestral igual a cero).
+
+
+---
+
+## Reg. lineal univariante
+
+En el caso concreto de la [**regresión lineal univariante**]{.hl-yellow} nuestro modelo será una **simple recta**:
+
+$$E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \beta_1 X_1$$
+
+. . .
+
+Su estimación será por tanto
+
+$$\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]} = \widehat{f}(\mathbf{X}) = \widehat{\beta_0} + \widehat{\beta_1} X_1 $$
+
+* El modelo $\widehat{f}(\cdot)$ será una [**recta (lineal)**]{.hl-yellow}
+
+* El objetivo será obtener la estimación de los $\widehat{\beta}_0$ y $\widehat{\beta}_1$ tal que [**minimice lo que nos equivocamos**]{.hl-yellow}
+
+---
+
+## Lo que nos equivocamos
+
+Una manera de cuantificar lo que nuestro modelo se equivoca es lo que llamamos [**varianza residual o error cuadrático medio**]{.hl-yellow} (varianza del error), que podemos estimar como sigue (ya que la [**media muestral de los errores será cero**]{.hl-purple})
+
+$$s_{r}^{2} = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} \quad \text{promedio de errores al cuadrado}$$
+
+
+---
+
+## Método mínimos cuadrados
+
+El [**método de los mínimos cuadrados**]{.hl-yellow}, originariamente planteado a la vez por Legendre y Gauss, consiste en establecer que los [**parámetros óptimos**]{.hl-yellow} serán aquellos $\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)$ que minimicen dicha suma de cuadrados (que minimicen la varianza residual)
+
+
+$$\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}, \quad \widehat{\beta}_0  = \overline{y} - \widehat{\beta}_1 \overline{x}$$
+
+
+---
+
+## Estimación reg. univariante
+
+
+Los [**estimadores de los parámetros de una regresión lineal univariante**]{.hl-yellow} serán por tanto $\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}$ ([**pendiente de la recta**]{.hl-purple}) y $\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}$ ([**ordenada en el origen**]{.hl-purple})
+
+. . .
+
+Es importante [**distinguir lo población de lo muestral**]{.hl-yellow}
+
+* Los parámetros $\left( \beta_0, \beta_1 \right)$ son desconocidos, los [**parámetros poblacionales**]{.hl-yellow}
+
+* Los parámetros $\left( \widehat{\beta}_0, \widehat{\beta}_1 \right)$ son estimados a partir de los datos, son [**variables aleatorias**]{.hl-yellow} ya que han sido calculados en función de una muestra aleatoria $\left\lbrace \left(x_i, y_i \right) \right\rbrace_{i=1}^{n}$ de la población $\left(X, Y \right) $
+
+---
+
+## Estimación reg. univariante
+
+
+¿Cuál es su [**interpretación**]{.hl-yellow}?
+
+. . .
+
+* [**Ordenada en el origen**]{.hl-yellow}: también llamado **intercepto**, y denotado como $\beta_0$ su valor real, es el valor de $Y$ cuando $X=0$. Es decir, $\widehat{\beta}_0$ se puede interpretar como la estimación $\widehat{Y}$ cuando $X = 0$ (cuando dicha estimación tenga sentido).
+
+
+. . .
+
+* [**Pendiente**]{.hl-yellow}: denotado com $\beta_1$ su valor real, cuantifica el incremento de $Y$ cuando $X$ aumenta una unidad. Es decir, $\widehat{\beta}_1$ se puede interpretar como la variación de la **estimación $\widehat{Y}$ cuando $X$ tiene un incremento unitario**.
+
+---
+
+## Regresión en R
+
+Para hacer un [**ajuste de regresión lineal univarainte en R**]{.hl-yellow} solo necesitamos utilizar la función `lm()` (de linear model) con dos argumentos:
+
+* `data = ...`: los datos de los que queremos sacar el ajuste (sin ausentes de momento)
+* `formula = ...`: la fórmula del ajuste (y frente a x, expresado como `y ~ x`)
+
+```{r}
+datos <- 
+  starwars |>
+  drop_na(mass, height) 
+ajuste_lineal <- lm(data = datos, formula = mass ~ height)
+```
+
+---
+
+## Regresión en R
+
+Una vez realizado el ajuste podemos [**resumirlo**]{.hl-yellow} con `summary()`
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+. . .
+
+¿Qué representa cada bloque de la salida?
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Call: ...`: la orden que hemos ejecutado
+
+* `Residuals: ...`: un resumen en forma de [**cuartiles de los residuales**]{.hl-yellow}, es decir, de los [**errores**]{.hl-yellow} (fíjate que aunque la media de los errores siempre es 0, no tiene porque serlo la mediana, de hecho que no lo sea ya nos indica que normales no van a ser seguramente).
+
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+
+* `Coefficients: ...`: de momento solo nos interesa la columna [**Estimate**]{.hl-yellow} que nos da las estimaciones de los parámetros. En la fila `Intercept` siempre irá $\widehat{\beta}_0$, y el resto de filas tendrá el nombre de la variable predictora a la que multiplica el parámetro (en este caso la fila `height` corresponde a la estimación $\widehat{\beta}_1$).
+
+---
+
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+En nuestro caso particular, el [**ajuste de regresión**]{.hl-yellow} viene dado por $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X = -11.4868 + 0.6240*X$, donde $X$ es la estatura: por cada cm extra que mida un personaje, el modelo estima que el peso aumenta 0.6240 kg, y la estimación de peso para un persona que mida 0 cm es de -11.4868 kg (obviamente esta estimación mucho sentido no tiene)
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Multiple R-squared: ...` (de momento lo demás lo ignoramos): es el conocido como $R^2$ o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una [**métrica de calidad del ajuste**]{.hl-yellow} que va de 0 (peor) a 1 (mejor).
+
 
 # Clase 9: [regresión lineal]{.flow} {#reg-lineal}
 
@@ -9562,10 +10263,980 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://javier
 
 ---
 
-## pendiente...
+
+## Predicción en R
+
+Una vez estimado el modelo (sus coeficientes) podemos usarlo, bien para  [**estimar valores que el modelo conoce**]{.hl-yellow} (de los que aprendió) o para [**predecir nuevos valores**]{.hl-yellow} de los que el modelo no ha aprendido
+
+. . .
+
+Simplemente necesitamos la función `predict(modelo, nuevos_datos)`, usando como argumentos el **modelo entrenado** y un [**nuevo dataset que contenga una/s columna/s llamadas igual que nuestras variables predictores**]{.hl-yellow} con los valores de la predictora `X` para los que queremos predecir
+
+
+```{r}
+predict(ajuste_lineal,
+        tibble("height" = c(15, 81.3, 153.1, 189.3, 210.3)))
+```
+
+---
+
+## Predicción en R
+
+Podemos incluirlo todo en un tibble en el que tengamos los nuevos valores de `X` y las predicciones
+
+```{r}
+predicciones <- 
+  tibble("height" = c(15, 81.3, 153.1, 189.3, 210.3),
+         "mass_predict" = predict(ajuste_lineal, tibble(height)))
+predicciones
+```
+
+---
+
+## Rango de fiabilidad
+
+Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un **modelo extremadamente bueno**, con una bondad de ajuste $R^2 = 0.99$. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con $X = 15$ cm?
+
+. . .
+
+```{r}
+predicciones
+```
+
+Si te fijas la [**¡predicción del peso es negativa!**]{.hl-red}: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?
+
+---
+
+## Rango de fiabilidad
+
+
+![](img/rango_1.png)
+![](img/rango_2.png)
+
+Nuestro [**modelo solo puede aprender de los datos que conoce**]{.hl-yellow}: solo podremos predecir para valores nuevos de las predictoras [**dentro del rango de las predictoras con las que entrenamos**]{.hl-yellow} el modelo
+
+Da igual lo bueno que sea el modelo: las [**predicciones fuera del rango de las predictoras de entrenamiento**]{.hl-red} no serán fiables ya que el modelo no sabe lo que sucede fuera.
+
+---
+
+
+## Fases de la regresión
+
+
+Hasta ahora, dados unos datos, conocemos las siguientes fases del proceso:
+
+
+1. [**Análisis exploratorio inicial**]{.hl-yellow} tanto numérico como visualizando. ¿Son numéricas? ¿Cómo se distribuyen? ¿Hay datos atípicos o ausentes?
+
+2. [**Análisis de dependencia**]{.hl-yellow}. ¿Qué predictora correlaciona más con la objetivo $Y$? ¿Cómo se relacionan las predictoras entre sí?
+
+3. [**Formulación**]{.hl-yellow} del modelo
+
+4. [**Fase de estimación/predicción**]{.hl-yellow}. ¿Cuáles son los parámetros? ¿Cómo se interpretan?
+
+---
+
+## Caso práctico
+
+Vamos a poner en práctica lo aprendido con el dataset `wine.csv`
+
+```{r}
+datos <- read_csv(file = "./datos/wine.csv")
+datos
+```
+
+---
+
+## Caso práctico
+
+
+El conjunto de datos está formado por 27 observaciones (cosechas de vino rojo Burdeos) y 7 variables
+
+* `Year`, `Age`: año de la cosecha y número de años en barrica.
+* `Price`: precio en 1990-1991 de cada cosecha (en **escala log**)
+* `WinterRain`: lluvia (en mm) que cayó ese año en invierno.
+* `AGST`: crecimiento medio de la temperatura (en grados Celsius) durante la temporada.
+* `HarvestRain`: lluvia (en mm) que cayó ese año durante la cosecha.
+* `FrancePop`: población (miles de habitantes) de Francia.
+
+Ver más en detalles en <https://doi.org/10.1080/09332480.1995.10542468>
+
+. . .
+
+[**El objetivo: predecir el precio**]{.hl-yellow}
 
 
 ---
+
+## Fases de la regresión
+
+Pero hasta ahora no hemos pedido nada a la muestra $\left\lbrace \left( X_i, Y_i \right) \right\rbrace_{i=1}^{n}$, ¿para qué necesitaríamos [**hipótesis**]{.hl-yellow} entonces?
+
+. . .
+
+La razón es que, hasta ahora, lo único que hemos podido realizar es una [**estimación puntual (muestral)**]{.hl-yellow} de los parámetros, pero dado que dichos estimadores serán variables aleatorias, necesitaremos realizar [**inferencia estadística**]{.hl-yellow} (recuerda: los parámetros son simplemente estimaciones para esa muestra de la población).
+
+. . .
+
+Para poder cuantificar la [**variabilidad y precisión de nuestras estimaciones**]{.hl-yellow} necesitaremos que los datos cumplan ciertas [**hipótesis**]{.hl-purple}: lo interesante no es la estimación puntual de los parámetros a partir de la muestra sino lo que [**podamos inferir de ellos a la población**]{.hl-green}
+
+---
+
+## Fases de la regresión
+
+Por ello en un análisis de regresión solemos tener 3 fases más:
+
+
+5. [**Fase de diagnosis**]{.hl-yellow}. ¿Se cumplen las hipótesis para hacer inferencia?
+
+6. [**Fase de inferencia**]{.hl-yellow}. ¿Qué variabilidad tiene la estimación? ¿Hay efecto lineal significativo? 
+
+7. [**Fase de evaluación**]{.hl-yellow}:
+  - ¿Es significativo el modelo completo? [**ANOVA: análisis de la varianza**]{.hl-purple}
+  - ¿Qué % de información de la predictora explica el modelo? [**Parámetros de bondad de ajuste**]{.hl-purple} ($R^2$ por ejemplo)
+  - Otras herramientas que podemos usar: por ejemplo [**enfrentar los valores ajustados con los valores reales**]{.hl-yellow}
+  
+
+
+---
+
+## Diagnosis
+
+En el caso de la regresión lineal univariante pediremos [**4 hipótesis**]{.hl-yellow}
+
+. . .
+
+1. [**Linealidad**]{.hl-green}: el valor esperado de $Y$ es modelizable con una recta $\widehat{Y}  = \beta_0 + \beta_1 x$
+
+. . .
+
+2. [**Homocedasticidad**]{.hl-green}: el modelo no podrá explicar toda la información (a veces se equivocará por arriba y otras por abajo), pero necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2  = cte < \infty$, que no varíe según aumenta o disminuye la $X$.
+
+. . .
+
+3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
+
+. . .
+
+4. [**Independencia**]{.hl-green}: los errores $\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}$ deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán **incorrelados** ${\rm Cor}_{\varepsilon_i \varepsilon_j} = 0$ para todo $\quad i \neq j$
+
+---
+
+
+## Diagnosis
+
+
+Las 4 hipótesis se pueden [**resumir de manera teórica**]{.hl-yellow} en
+
+$$Y | \boldsymbol{X} = x \sim N \left(\beta_0 + \beta_1x, \sigma_{\varepsilon}^2 \right)$$
+
+. . .
+
+Su [**versión muestral**]{.hl-purple} sería simplemente
+
+$$y_i | \boldsymbol{X} = x_i \sim N \left(\beta_0 + \beta_1x_i, \sigma_{\varepsilon}^2 \right), \quad i=1,\ldots,n$$
+
+
+
+Para esta fase haremos uso de los paquetes `{performance}` y `{olsrr}`
+
+---
+
+## Fase de diagnosis
+
+```{r}
+ajuste_AGST <- lm(data = datos, formula = Price ~ AGST)
+
+library(performance)
+check_model(ajuste_AGST)
+```
+
+---
+
+## Diagnosis: linealidad
+
+1. [**Linealidad**]{.hl-green}: el valor esperado de $Y$ es $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x$
+
+
+```{r}
+#| code-fold: true
+check_model(ajuste_AGST)
+```
+
+Si te fijas el gráfico que se refiere a ello está [**visualizando residuales vs valores estimados**]{.hl-yellow}: está volviendo a plantear un segundo modelo de regresión donde ahora $\widehat{\varepsilon}_i = \gamma_0 + \gamma_1 \widehat{y}_i$
+
+---
+
+## Diagnosis: linealidad
+
+```{r}
+linealidad <- lm(data = tibble("fitted" = ajuste_AGST$fitted.values,
+                               "residuals" = ajuste_AGST$residuals),
+                 formula = residuals ~ fitted)
+linealidad |> summary()
+```
+
+Si te fijas [**ambos parámetros no son significativamente distintos de 0**]{.hl-green}: no presentan una tendencia en los residuos (lineal al menos)
+
+---
+
+## Diagnosis: linealidad
+
+Más adelante probaremos alguna otra cosa pero de momento nos basta con eso. También podemos [**visualizar nosotros ese scatter plot residuales vs estimaciones**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
+              "residuals" = ajuste_AGST$residuals),
+       aes(x = fitted, y = residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+---
+
+## Diagnosis: homocedasticidad
+
+2. [**Homocedasticidad**]{.hl-green}: necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$.
+
+```{r}
+check_heteroscedasticity(ajuste_AGST)
+```
+
+. . .
+
+El gráfico titulado `Homogeneity of variance` nos visualiza la raíz cuadrada del valor absoluto de los residuos estandarizados frente a las predicciones (se conoce como [**gráfico de escala-localización**]{.hl-yellow})
+
+---
+
+## Diagnosis: homocedasticidad
+
+Si visualizamos los [**residuales**]{.hl-yellow} deberían estar en torno a 0, dentro de una banda constante (varianza constante)
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("id" = 1:length(ajuste_AGST$residuals),
+              "residuals" = ajuste_AGST$residuals),
+       aes(x = id, y = residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(-10, 10)) +
+  theme_minimal()
+```
+
+---
+
+
+## Diagnosis: homocedasticidad
+
+Si visualizamos el gráfico de [**escala-localización**]{.hl-yellow} deberíamos obtener un diagrama de dispersión cuya recta de regresión saliese casi plana en torno al 1.
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
+              "sqrt_std_residuals" = sqrt(abs((ajuste_AGST$residuals - mean(ajuste_AGST$residuals)) / sd(ajuste_AGST$residuals)))),
+       aes(x = fitted, y = sqrt_std_residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(limits = c(-10, 10)) +
+  theme_minimal()
+```
+
+
+---
+
+
+## Diagnosis: normalidad
+
+3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
+
+Con la función `ols_test_normality()` del paquete `{olsrr}` podemos obtener diferentes contrastes de normalidad
+
+```{r}
+library(olsrr)
+ols_test_normality(ajuste_AGST)
+```
+
+Nos centraremos en los contrastes de `Shapiro-Wilk`, `Kolmogorov-Smirnov` y `Anderson-Darling`: [**no se rechaza normalidad**]{.hl-yellow}
+
+---
+
+## Diagnosis: normalidad
+
+Además del contraste podemos visualizar con `stat_qq()` y `stat_qq_line()` el conocido como [**Q-Q plot**]{.hl-yellow}: enfrenta los cuantiles de una muestra con los cuantiles de una normal teórica, teniendo que **obtener los puntos en torno a una recta** (especilamente en el centro).
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("residuals" = ajuste_AGST$residuals)) +
+  stat_qq(aes(sample = residuals)) +
+  stat_qq_line(aes(sample = residuals))
+```
+
+
+---
+
+## Diagnosis: independencia
+
+4. [**Independencia**]{.hl-green}: los errores $\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}$ deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán **incorrelados**
+
+$${\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j$$
+
+```{r}
+check_autocorrelation(ajuste_AGST)
+```
+
+Por último, `check_autocorrelation()` comprueba como efectivamente los [**residuales/errores son independientes**]{.hl-yellow}, haciendo un test de autocorrelación (nos tiene que salir lo contrario a una serie temporal, que el error i no depende del i-1).
+
+---
+
+## Diagnosis: independencia
+
+Otra forma de verlo es [**visualizando los residuos respecto a su versión con retardo**]{.hl-yellow} (por ejemplo, $\left(\widehat{\varepsilon}_1, \widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_{n-1} \right)$ vs $\left(\widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_n \right)$ 
+
+```{r}
+#| code-fold: true
+ggplot(tibble("lag1" = lag(ajuste_AGST$residuals),
+              "residuals" = ajuste_AGST$residuals),
+       aes(x = residuals, y = lag1)) +
+  geom_point(size = 3, alpha = 0.7) + 
+  theme_minimal()
+```
+
+---
+
+## Inferencia de los parámetros
+
+Las hipótesis nos permiten decir que los [**parámetros estimados siguen una distribución (condicionada) normal**]{.hl-yellow} de [**media el parámetro**]{.hl-purple}  a estimar y de [**varianza el conocido como standard error**]{.hl-purple}
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+. . .
+
+Por las propiedades de la normal y el teorema central del límite 
+
+$$\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)}| \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1$$
+
+---
+
+## Inferencia de los parámetros
+
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+Los $SE$ o [**standard errors**]{.hl-yellow} del modelo son
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+. . .
+
+¿Qué **propiedades** tienen estos estimadores?
+
+
+---
+
+## Inferencia de los parámetros
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+. . .
+
+* [**Insesgados**]{.hl-yellow}: ambos son [**estimadores insesgados**]{.hl-green} ya que la esperanza de la estimación es el valor a estimar. $E \left[ \widehat{\beta}_j \right] = \beta_j$
+
+. . .
+ 
+* [**Precisión vs tamaño muestral**]{.hl-yellow}: cuando $n \to \infty$, sus varianzas tienden a cero, es decir, $SE \left(\widehat{\beta}_j\right)^2 \to^{n \to \infty} 0$ ya que $n$ está dividiendo. Traducción: [**a más datos, mayor precision**]{.hl-green} (menos varianza tendrán los estimadores si repetimos la toma de muestras)
+
+
+---
+
+## Inferencia de los parámetros
+
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+. . .
+
+* [**Precisión vs var residual**]{.hl-yellow}: cuanto más grande sea la varianza del error $\sigma_{\varepsilon}^{2}$, $SE \left(\widehat{\beta}_j\right)^2$ crecerá (es decir, [**más ruido implicará más imprecisión**]{.hl-red})
+
+. . .
+
+* [**Precisión vs varianza de X**]{.hl-yellow}: cuanto más grande sea la varianza de la predictora $s_{x}^2$, $SE \left(\widehat{\beta}_j\right)^2$ decrecerá, tal que $SE \left(\widehat{\beta}_j\right)^2 \to^{s_{x}^2 \to \infty} 0$. Dicho de otra forma: cuánta [**más información (varianza) contenga nuestra tabla, mayor precisión**]{.hl-green}.
+
+. . .
+
+* [**Precisión vs media X**]{.hl-yellow}: solo afecta a la estimación de $\beta_0$, cuya [**precisión decrece cuando la media aumenta**]{.hl-red}. Esto tiene sentido ya que cuánto más grande en media sean los datos, menos fiable será la predicción para $X=0$.
+
+---
+
+## Inferencia de los parámetros
+
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+Pero tenemos un problema: la [**varianza residual poblacional**]{.hl-yellow} (varianza población del error) $\sigma_{\varepsilon}^{2}$ es [**desconocida**]{.hl-yellow}. Como suele pasar, la [**sustituiremos por un estimador (insesgado)**]{.hl-yellow} de la misma, donde $p$ es el número de variables (lo que R llama `std error` en la salida)
+
+. . .
+
+$$\widehat{\sigma_{\varepsilon}^{2}} =  \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1}\frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2$$
+
+---
+
+## Inferencia de los parámetros
+
+
+
+$$\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1$$
+
+
+¿Qué suele suceder cuando en una normal **desconocemos la varianza real y la sustituimos por su estimador insesgado**?
+
+. . .
+
+Si [**sustituimos el error standard por su estimador**]{.hl-yellow} (sustituyendo la varianza residual por su estimador insesgado), obtenemos que sigue una **t-Student**
+
+$$\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1$$
+
+donde $\widehat{SE} \left(\widehat{\beta}_0\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right]$ y $\widehat{SE} \left(\widehat{\beta}_1\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n s_{x}^2}$
+
+---
+
+## Inferencia de los parámetros
+
+
+```{r}
+ajuste_lineal <- lm(data = datos, formula = Price ~ AGST)
+ajuste_lineal |> summary()
+```
+
+* `std error`: es lo que hemos denotado como $\widehat{SE} \left(\widehat{\beta}_j\right)^2$
+
+. . .
+
+* `t value`: es el estadístico $\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}$ que hemos dicho que sigue una t-Student (fíjate que hemos puesto $\beta_j = 0$)
+
+---
+
+## Inferencia de los parámetros
+
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Pr(>|t|)`: representa un p-valor. ¿De qué contraste se te ocurre?
+
+. . .
+
+* `Residual standard error`: es el estimador insesgado de la varianza residual, que hemos denotado como $\widehat{\sigma_{\varepsilon}^{2}}$
+
+---
+
+## Inferencia de los parámetros
+
+Y si tenemos inferencia, tenemos contrastes: ¿te acuerdas de los p-valores que devuelve la tabla para cada parámetro?
+
+. . .
+
+Para cada parámetro se realiza un [**contraste de significancia**]{.hl-yellow}: ¿cuánta evidencia hay en mis datos para poder decir que el [**valor estimado de mi parámetro es distinto de 0**]{.hl-yellow}?
+
+$$H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0$$
+
+. . .
+
+El estadístico usado es el [**t value**]{.hl-yellow} que devuelve `R` definido como $\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}$ y que, [**BAJO EL SUPUESTO DE QUE LA HIPÓTESIS NULA SEA CIERTA**]{.hl-purple}, sigue una t-Student $t_{n-p-1}$
+
+---
+
+## Inferencia de los parámetros
+
+$$H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0$$
+
+Este contraste significancia en realidad **contesta a la siguiente pregunta**
+
+¿Tiene mi variable $X_j$ un [**efecto lineal SIGNIFICATIVO**]{.hl-yellow} en mi variable $Y$?
+
+. . .
+
+&nbsp;
+
+Esa pregunta puede ser respondida desde un punto de vista **frecuentista** haciendo uso de los [**p-valores**]{.hl-yellow}: si $p-value < \alpha$, se suele rechazar la nula (rechazamos que la variable no tenga efecto lineal significativo, es decir, aceptamos que sí lo tiene); en caso contrario no se suele rechazar (que **no es lo mismo que aceptarla**).
+
+---
+
+## Inferencia de los parámetros
+
+
+
+```{r}
+ajuste_AGST |> summary()
+```
+
+Si te fijas uno de los p-valores está por debajo de $\alpha = 0.05$ (**hay evidencias de que hay un efecto lineal significativo entre $X$ e $Y$**) pero el asociado al intercepto no: [**debemos eliminar dicho parámetro $\beta_0$**]{.hl-yellow} centrando la recta.
+
+---
+
+## Inferencia de los parámetros
+
+Para ello basta con añadir `-1` al inicio de la fórmula.
+
+```{r}
+ajuste_AGST <- lm(data = datos, formula = Price ~ -1 + AGST)
+ajuste_AGST |> summary()
+```
+
+
+---
+
+
+## Fase de evaluación
+
+7. [**Fase de evaluación**]{.hl-yellow}:
+  - ¿Es significativo el modelo? [**ANOVA: análisis de la varianza**]{.hl-purple}
+  - ¿Qué información de la predictora explica el modelo? [**Parámetros de bondad de ajuste**]{.hl-purple} ($R^2$ por ejemplo)
+  - ¿Qué otras métricas o herramientas podemos usar para [**cuantificar la calidad predictora de nuestro ajuste**]{.hl-purple}
+  
+. . . 
+
+Una de las herramientas más útiles para evaluar nuestro modelo es [**enfrentar los valores ajustados con los valores reales**]{.hl-yellow} (dado que los conocemos al ser aprendizaje supervisado)
+
+---
+
+## Fase de evaluación
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("y" = ajuste_lineal$model$Price, "y_est" = ajuste_lineal$fitted.values),
+       aes(x = y, y = y_est)) +
+  geom_point(size = 1.2, alpha = 0.75) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(x = "Valores reales", y = "Valores estimados")
+```
+
+En el gráfica podemos ver como los [**valores reales vs estimados**]{.hl-green} están cercanos a la diagonal: el error cometido es muy pequeño.
+
+---
+
+## Fase de evaluación
+
+Podemos considerar algunas [**métricas para cuantificar el acierto del modelo**]{.hl-yellow}
+
+. . .
+
+* [**SSE**]{.hl-red} (sum of squared errors): definido como la suma de errores al cuadrado
+
+$$SSE = \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 = \sum_{i=1}^{n} \left( Y_i - \widehat{Y}_i \right)^2$$
+Fíjate que dado que $\widehat{\sigma}_{\varepsilon} = \widehat{\sigma}_{r} = \frac{n}{n-p-1} s_{r}^{2} =  \frac{1}{n-p-1} \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2$ (el que `R` llama `Residual standard error`), tenemos que $SSE = (n-p-1)\widehat{\sigma}_{\varepsilon}$
+
+. . .
+
+* [**MSE**]{.hl-red}: media de lo anterior $MSE = s_{r}^{2} = \frac{1}{n} SSE  = \frac{1}{n} \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 = \frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}$
+
+. . .
+
+Ambas métricas nos hablan de la [**varianza del error**]{.hl-red}, es decir, de lo que el [**modelo no es capaz de explicar**]{.hl-red}
+
+---
+
+
+## Fase de evaluación
+
+
+
+* [**SSR**]{.hl-green} (regressions sum of squares): definido como la suma de las desviaciones de cada predicción a su media (al tener estimadores insesgados, la media de las estimaciones $\overline{\widehat{Y}}$ es la misma que la de la variable a estimar $\overline{Y}$)
+
+$$SSR = \sum_{i=1}^{n} \left( \overline{Y} - \widehat{Y}_i \right)^2 = \sum_{i=1}^{n} \left( \overline{\widehat{Y}}_i - \widehat{Y}_i \right)^2$$
+
+. . .
+
+
+* [**MSR**]{.hl-green}: media de lo anterior $MSR = s_{\widehat{y}}^2 = \frac{1}{n} SSR  = \frac{1}{n} \sum_{i=1}^{n} \left( \overline{Y} - \widehat{Y}_i \right)^2$
+
+. . .
+
+Ambas métricas nos hablan de la [**variación de Y en torno a la regresión**]{.hl-green}, es decir, la variación de $\overline{Y}$ que es explicada por la media condicional estimada $(Y_i|X=x_i) \sim \widehat{\beta}_0 + \widehat{\beta}_1 X_i$, cuantifica la [**información de Y explicada por el modelo**]{.hl-green}
+
+---
+
+## Fase de evaluación
+
+
+* [**SST**]{.hl-yellow} (total sum of squares): definido como la suma de las desviaciones de la variable objetivo $Y$ a su media.
+
+$$SST =  \sum_{i=1}^{n} \left( Y_i - \overline{Y} \right)^2 $$
+
+. . .
+
+* [**Varianza muestral de Y**]{.hl-yellow}: la media de lo anterior (la varianza de $Y$)
+
+$$s_{y}^2= \frac{1}{n} SST  = \frac{1}{n}\sum_{i=1}^{n} \left( Y_i - \overline{Y} \right)^2$$
+
+
+
+. . .
+
+
+Ambas métricas nos hablan de la [**variación total de Y**]{.hl-yellow}, es decir, la [**información total de nuestra variable objetivo**]{.hl-yellow}
+
+---
+
+## ANOVA
+
+Así tenemos 3 tipos de métricas:
+
+* `SST` y $s_{y}^2$: el [**total de info a explicar**]{.hl-yellow}
+
+* `SSR` y $MSR$: el [**total de info explicada por el modelo**]{.hl-green}
+
+* `SSE` y $MSE$: el [**total de info NO explicada por el modelo**]{.hl-red} (a veces se usa la raíz cuadrada del MSE, conocido como $RMSE$, o el $MAE$, tomando valor absoluto en los errores).
+
+. . .
+
+Se pueden demostrar que, [**SOLO EN EL CASO LINEAL**]{.hl-purple}, desarrollando el sumatorio $SST =  \sum_{i=1}^{n} \left( Y_i - \overline{Y} \right)^2 = \sum_{i=1}^{n} \left( \left(Y_i - \widehat{Y}_i \right) +  \left(  \widehat{Y}_i - \overline{Y} \right) \right)^2$ se llega a que
+
+[**SST**]{.hl-yellow} =  [**SSR**]{.hl-green} + [**SSE**]{.hl-red}
+
+---
+
+
+## ANOVA
+
+[**SST**]{.hl-yellow} =  [**SSR**]{.hl-green} + [**SSE**]{.hl-red}
+
+
+. . .
+
+[$s_{y^2}$]{.hl-yellow} = [$s_{\widehat{y}}^2$]{.hl-green} + [$s_{r}^2$]{.hl-red} (equivalente, [$s_{y^2}$]{.hl-yellow} = [$s_{\widehat{y}}^2$]{.hl-green} + [$\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}$]{.hl-red})
+
+. . .
+
+Esta decomposición (solo se cumple en el caso lineal) se conoce como [**ANOVA o análisis de la varianza**]{.hl-yellow} y podemos hacerlo en `R` con `aov()` o `anova()`
+
+:::: columns
+::: {.column width="45%"}
+
+```{r}
+ajuste_lineal |> aov()
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+ajuste_lineal |> anova()
+```
+
+:::
+::::
+
+---
+
+## ANOVA
+
+```{r}
+ajuste_lineal |> aov()
+```
+
+| Terms | x1 (predictora) | Residuals |
+|:---------:|:-----:|:------:|
+| Sum of Squares  | SSR   |    SSE | 
+| Deg. of Freedom  (grados libertad)  | p  |  n - p - 1 |
+
+&nbsp;
+
+`Residual standard error`: $\widehat{\sigma}_{\varepsilon}^{2}= \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2}$
+
+---
+
+## ANOVA
+
+```{r}
+ajuste_lineal |> anova()
+```
+
+|  | Df (grados) | Sum Sq | Mean Sq | F value | Pr(>F) |
+|:---------:|:-----:|:------:|:------:|:------:|:------:|
+| x1  | p  | SSR | $\frac{SSR}{p}$ | $F-value = \frac{\frac{SSR}{p}}{\frac{SSE}{n-p-1}}$ | p-valor F test
+| Residuals  | n - p - 1 | SSE | $\widehat{\sigma}_{\varepsilon}^{2} = \frac{SSE}{n-p-1}$ | | |
+
+El F-value es el estadítico  $F = \frac{\frac{SSR}{p}}{\frac{SSE}{n-p-1}} \sim F_{p, n-p-1}$ asociado al [**contraste de significación global**]{.hl-yellow}
+
+$$H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0$$
+
+---
+
+## ANOVA
+
+```{r}
+ajuste_lineal |> anova()
+```
+
+
+$$H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0$$
+
+El contraste pretende responder a: [**¿existe una dependencia lineal entre $Y$ y el CONJUNTO de predictoras?**]{.hl-yellow} (global, no parámetro a parámetro).
+
+. . .
+
+Si se [**rechaza**]{.hl-yellow} significa que [**existe al menos un predictor cuyo efecto LINEAL sobre Y es significativo**]{.hl-yellow}.
+
+. . .
+
+[**Importante**]{.hl-red}: en el caso de la reg. lineal univariante, $F-value$ y $p-value$ del ANOVA es equivalente al $t-value$ y $p-value$ del contraste de significación para $\beta_1$ (ya que...no hay más).
+
+---
+
+## Bondad de ajuste
+
+El conocido como $R^2$ o [**bondad de ajuste**]{.hl-yellow} o el [**coeficiente de determinación**]{.hl-yellow} es una forma sencilla, y relacionada con el ANOVA, para cuantificar la [**cantidad de información explicada por el modelo**]{.hl-yellow}
+
+. . .
+
+De hecho es, literal, un [**ratio de información explicada**]{.hl-yellow} (lo que `R` llama `Multiple R-squared`, ya hablaremos de su versión ajustada en regresión multivariante)
+
+$$R^2 = \text{Ratio info explicada} = \frac{SSR}{SST}$$
+
+. . .
+
+En el caso lineal, por lo visto en el ANOVA
+
+$$R^2= \frac{SSR}{SST} = \frac{SST - SSE}{SST} = 1 - \frac{SSE}{SST} = 1 - \frac{s_{r}^{2}}{s_{y}^{2}} =  1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^{2}}{s_{y}^{2}}$$
+
+. . .
+
+Por definición, la [**bondad de ajuste está entre 0 y 1**]{.hl-yellow}.
+
+---
+
+## Bondad de ajuste
+
+Solo en el [**caso de la reg lineal**]{.hl-yellow} se puede demostra que 
+
+
+$$R^2 = r_{y \widehat{y}}^2 =_{p=1} r_{x,y}^2$$
+
+. . .
+
+La bondad de ajuste tiene un [**problema importante**]{.hl-red}: no solo depende del modelo sino que también de los datos. ¿De qué depende? ¿Por qué es [**peligroso usar ciegamente $R^2$ para decidir**]{.hl-red}?
+
+
+
+---
+
+## Repitamos el proceso
+
+
+Para interiorizar lo aprendido, vamos a repetir todo el proceso con el conjunto `datos_linearreg.csv` (las variables predictoras representan diferentes variables meteorológicas y la variable objetivo `y` la temperatura media en primavera, para distintas ciudades).
+
+```{r}
+datos <- read_csv(file = "./datos/datos_linearreg.csv")
+datos
+ajuste_lineal <- lm(data = datos, formula = y ~ x1)
+```
+
+---
+
+## Bondad de ajuste
+
+$$R^2= \frac{SSR}{SST} = \frac{SST - SSE}{SST} = 1 - \frac{SSE}{SST} = 1 - \frac{s_{r}^{2}}{s_{y}^{2}} =  1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^{2}}{s_{y}^{2}}$$
+
+¿De qué depende?
+
+. . .
+
+* [**Más predictoras**]{.hl-yellow} implica que [**$R^2$ crece**]{.hl-yellow}, ¡incluso aunque dichas [**predictoras no sean significativas**]{.hl-red}! (esto lo arreglaremos con el $R^2$ ajustado en el futuro)
+
+* [**Más ruido, menor $R^2$**]{.hl-yellow}
+
+* [**Ignora si el modelo cumple las hipótesis**]{.hl-yellow}: un modelo con un alto $R^2$ puede dar predicciones nefastas.
+  
+  
+---
+
+## Predictoras vs R2
+
+Vamos a repetir pero [**añadiendo 5 y 22 variables más**]{.hl-yellow}, sin efecto lineal con $Y$.
+
+```{r}
+datos_extras <-
+  tibble("y" = datos$y, "x1" = datos$x1, "x2" = rnorm(1000), "x3" = rnorm(1000),
+         "x4" = rnorm(1000), "x5" = rnorm(1000), "x6" = rnorm(1000), "x7" = rnorm(1000),
+         "x8" = rnorm(1000), "x9" = rnorm(1000), "x10" = rnorm(1000), "x11" = rnorm(1000),
+         "x12" = rnorm(1000), "x13" = rnorm(1000), "x14" = rnorm(1000), "x15" = rnorm(1000),
+         "x16" = rnorm(1000), "x17" = rnorm(1000), "x18" = rnorm(1000), "x19" = rnorm(1000),
+         "x20" = rnorm(1000), "x21" = rnorm(1000), "x22" = rnorm(1000), "x23" = rnorm(1000))
+ajuste_6pred <- lm(data = datos_extras, formula = y ~ x1 + x2 + x3 + x4 + x5 + x6)
+ajuste_23pred <- lm(data = datos_extras, formula = y ~ .)
+compare_performance(ajuste_lineal, ajuste_6pred, ajuste_23pred)
+```
+
+Con `compare_performance()` podemos comparar métricas de modelos.
+
+---
+
+## Ruido vs R2
+
+Hemos dicho que el ruido afecta...¿qué crees que **pasará si fijamos la parte determinística y solo modificamos el ruido**? Vamos a [**simular 6 modelos**]{.hl-yellow}, con exactamente los mismos $\beta_0$ y $\beta_1$ (es decir, **mismo ajuste**) pero con diferente varianza en el ruido (supongamos que $X \sim N(3, 1.5)$).
+
+$$\text{Modelo 1: } Y = -1.2 + 3.2X + N(0, 0.25)$$
+$$\text{Modelo 2: } Y = -1.2 + 3.2X + N(0, 1)$$
+
+$$\text{Modelo 3: } Y = -1.2 + 3.2X + N(0, 1.5)$$
+
+$$\text{Modelo 4: } Y = -1.2 + 3.2X + N(0, 2)$$
+
+$$\text{Modelo 5: } Y = -1.2 + 3.2X + N(0, 4)$$
+
+
+$$\text{Modelo 6: } Y = -1.2 + 3.2X + N(0, 8)$$
+
+---
+
+## Ruido vs R2
+
+
+```{r}
+#| code-fold: true
+x <- rnorm(n = 1000, mean = 3, sd = 1.5)
+eps1 <- rnorm(n = 1000, mean = 0, sd = 0.25)
+eps2 <- rnorm(n = 1000, mean = 0, sd = 1)
+eps3 <- rnorm(n = 1000, mean = 0, sd = 1.5)
+eps4 <- rnorm(n = 1000, mean = 0, sd = 2)
+eps5 <- rnorm(n = 1000, mean = 0, sd = 4)
+eps6 <- rnorm(n = 1000, mean = 0, sd = 8)
+datos <- tibble("x" = x, "y1" = -1.2 + 3.2*x + eps1,
+                "y2" = -1.2 + 3.2*x + eps2, "y3" = -1.2 + 3.2*x + eps3,
+                "y4" = -1.2 + 3.2*x + eps4, "y5" = -1.2 + 3.2*x + eps5,
+                "y6" = -1.2 + 3.2*x + eps6)
+ajuste_1 <- lm(data = datos, formula = y1 ~ x)
+ajuste_2 <- lm(data = datos, formula = y2 ~ x)
+ajuste_3 <- lm(data = datos, formula = y3 ~ x)
+ajuste_4 <- lm(data = datos, formula = y4 ~ x)
+ajuste_5 <- lm(data = datos, formula = y5 ~ x)
+ajuste_6 <- lm(data = datos, formula = y6 ~ x)
+```
+
+```{r}
+compare_performance(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)
+```
+
+---
+
+## Ruido vs R2
+
+En todos los casos el [**ajuste debe ser (aprox) el mismo**]{.hl-yellow} ya que el modelo de regresión busca [**modelizar los efectos lineales no aleatorios**]{.hl-yellow} entre la variable objetivo y los predictores.
+
+. . .
+
+[**Moraleja**]{.hl-green}: tener un $R^2$ no implica que el modelo sea malo, ya que la [**cantidad de información no modelizable**]{.hl-yellow} puede deberse a una [**cantidad alta de ruido (algo aleatorio no predecible)**]{.hl-red}. Por ello es importante usar más herramientas que un mero coeficiente para valorar un ajuste (por ejemplo, en campos como la sociología o la economía la bondad de ajuste será generalmente bajo)
+
+
+---
+
+## Diagnosis vs R2
+
+Entonces, si tenemos un modelo con un alto $R^2$, [**¿no hace falta que cumpla las hipótesis?**]{.hl-yellow}
+
+. . .
+
+Vamos a simular un modelo que [**incumple**]{.hl-red}
+
+* Linealidad
+
+* Homocedasticidad
+
+. . .
+
+La variable predictora $x_i = 0.01 + 0.01*(i-1)$ ($i = 1,\ldots, n = 200$) será la siguiente
+
+```{r}
+x <- seq(0.01, 2, l = 200)
+```
+
+
+[**¿Cómo podríamos crear una $Y$ cuya relación con $X$ sea no lineal?**]{.hl-yellow}
+
+---
+
+## Diagnosis vs R2
+
+[**¿Cómo podríamos crear una $Y$ cuya relación con $X$ sea no lineal?**]{.hl-yellow}
+
+Tenemos muchas maneras, por ejemplo:
+
+$$Y = X + X^2 + \varepsilon, \quad \varepsilon \sim N(0, \sigma_{\varepsilon})$$
+
+$$Y = \log(X^2) - cos(X) + \varepsilon, \quad \varepsilon \sim N(0, \sigma_{\varepsilon})$$
+
+$$Y = \frac{1}{X + 1} + \varepsilon, \quad \varepsilon \sim N(0, \sigma_{\varepsilon})$$
+
+$$Y = 1 - 2X(1 + 0.25 \sin(4 \pi X)) + \varepsilon, \quad \varepsilon \sim N(0, \sigma_{\varepsilon})$$
+
+. . .
+
+Simula este último modelo (con $\sigma_{\varepsilon} = 0.5$) y realiza el ajuste
+
+---
+
+## Diagnosis vs R2
+
+```{r}
+x <- seq(0.15, 2, l = 200)
+eps <- rnorm(n = 200, sd = 0.5)
+y <- 1 - 2 * x * (1 + 0.25*sin(4 * pi * x)) + eps
+datos <- tibble("y" = y, "x" = x)
+ajuste_lineal <- lm(data = datos, formula = y ~ x)
+ajuste_lineal |> summary()
+```
+
+. . .
+
+[**¿Cómo podríamos hacer que la hipótesis de homocedasticidad no se cumpla**]{.hl-yellow}
+
+
+---
+
+## Diagnosis vs R2
+
+Vamos a considerar que la [**varianza del error no es cte, crece según aumenta x**]{.hl-yellow}
+
+$$y_i = f(x_i) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma_{\varepsilon,i}), \quad \sigma_{\varepsilon,i} = 0.25 * x_{i}^2 \quad i=1, \ldots, 200$$
+
+```{r}
+#| code-fold: true
+x <- seq(0.01, 2, l = 200)
+eps <- rnorm(n = 200, sd = 0.25 * x^2)
+y <- 1 - 2 * x * (1 + 0.25*sin(4 * pi * x)) + eps
+datos <- tibble("y" = y, "x" = x, "sigma" =  0.25 * x^2)
+ajuste_lineal <- lm(data = datos, formula = y ~ x)
+ajuste_lineal |> summary()
+```
+
+---
+
+## Diagnosis vs R2
+
+```{r}
+#| code-fold: true
+ggplot(datos, aes(x = x, y = y)) +
+  geom_point(aes(color = sigma), size = 3, alpha = 0.75) +
+  geom_smooth(method = "lm") +
+  theme_minimal()
+```
+
+Aunque el $R^2$ es bastante alto, el modelo no tiene sentido, dando [**estimaciones cada vez más erradas**]{.hl-red} según nos movemos hacia la derecha en el eje X.
+
 
 # Materiales extras {#materiales-extra}
 
