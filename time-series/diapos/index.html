@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.450">
+  <meta name="generator" content="quarto-1.3.294">
 
   <meta name="author" content="Grado en Estadística Aplicada • Javier Álvarez Liébana">
   <title>Series temporales</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg"></p>
+<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -1100,7 +1100,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1128,7 +1128,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-06"</code></pre>
+<pre><code>[1] "2024-11-12"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-06 13:32:54 CET"</code></pre>
+<pre><code>[1] "2024-11-12 13:03:15 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -1466,7 +1466,7 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
+<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
 </div>
 </div>
 </div>
@@ -1513,7 +1513,7 @@ pesos       63   70   85   95</code></pre>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb84-2"><a href="#cb84-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -2672,13 +2672,13 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-4"><a href="#cb147-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.722    1.968    2.555694    2.132
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1358.412 1377.046 1751.717292 1582.477
-       uq      max neval
-    2.829   28.495   500
- 1917.119 7305.134   500</code></pre>
+<pre><code>Unit: nanoseconds
+                                    expr     min      lq      mean  median
+                                y &lt;- x^2     900    2000    3380.4    3500
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1166200 2101950 2287119.6 2154250
+      uq     max neval cld
+    4350   10600   500  a 
+ 2292300 9582800   500   b</code></pre>
 </div>
 </div>
 </section>
@@ -4749,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t     X_t sd    
-   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.108  sd_0.5
- 2     2  1.18   sd_0.5
- 3     3 -0.119  sd_0.5
- 4     4  0.993  sd_0.5
- 5     5 -0.308  sd_0.5
- 6     6 -0.378  sd_0.5
- 7     7  0.300  sd_0.5
- 8     8 -0.347  sd_0.5
- 9     9  0.0902 sd_0.5
-10    10  0.487  sd_0.5
+       t       X_t sd    
+   &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt; 
+ 1     1  0.422    sd_0.5
+ 2     2  0.278    sd_0.5
+ 3     3 -0.318    sd_0.5
+ 4     4  0.000269 sd_0.5
+ 5     5  0.0990   sd_0.5
+ 6     6 -0.487    sd_0.5
+ 7     7  0.0553   sd_0.5
+ 8     8  0.688    sd_0.5
+ 9     9 -0.488    sd_0.5
+10    10 -0.415    sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd        X_t
-   &lt;int&gt; &lt;glue&gt;  &lt;dbl&gt;
- 1     1 sd_0.5 -0.533
- 2     2 sd_0.5  0.860
- 3     3 sd_0.5 -0.442
- 4     4 sd_0.5 -0.402
- 5     5 sd_0.5 -0.575
- 6     6 sd_0.5 -0.514
- 7     7 sd_0.5  0.182
- 8     8 sd_0.5  0.390
- 9     9 sd_0.5 -0.840
-10    10 sd_0.5  0.337
+       t sd         X_t
+   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
+ 1     1 sd_0.5  0.650 
+ 2     2 sd_0.5 -0.152 
+ 3     3 sd_0.5 -0.354 
+ 4     4 sd_0.5 -0.589 
+ 5     5 sd_0.5 -0.616 
+ 6     6 sd_0.5  0.284 
+ 7     7 sd_0.5  0.0323
+ 8     8 sd_0.5  0.327 
+ 9     9 sd_0.5 -0.421 
+10    10 sd_0.5  0.205 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -6429,18 +6429,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 864 x 6 [1M]
 # Key:       .model [6]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 854 more rows</code></pre>
 </div>
 </div>
@@ -6504,18 +6504,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        value = trend + seasonal + random
-   .model    index value trend seasonal random season_adjust
-   &lt;chr&gt;     &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
- 1 cts    1949 Jan   112   NA    -24.7   NA            137. 
- 2 cts    1949 Feb   118   NA    -36.2   NA            154. 
- 3 cts    1949 Mar   132   NA     -2.24  NA            134. 
- 4 cts    1949 Apr   129   NA     -8.04  NA            137. 
- 5 cts    1949 May   121   NA     -4.51  NA            126. 
- 6 cts    1949 Jun   135   NA     35.4   NA             99.6
- 7 cts    1949 Jul   148  127.    63.8  -42.6           84.2
- 8 cts    1949 Aug   148  127.    62.8  -42.1           85.2
- 9 cts    1949 Sep   136  128.    16.5   -8.48         119. 
-10 cts    1949 Oct   119  129.   -20.6   11.1          140. 
+   .model     index value trend seasonal random season_adjust
+   &lt;chr&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+ 1 cts    1949 ene.   112   NA    -24.7   NA            137. 
+ 2 cts    1949 feb.   118   NA    -36.2   NA            154. 
+ 3 cts    1949 mar.   132   NA     -2.24  NA            134. 
+ 4 cts    1949 abr.   129   NA     -8.04  NA            137. 
+ 5 cts    1949 may.   121   NA     -4.51  NA            126. 
+ 6 cts    1949 jun.   135   NA     35.4   NA             99.6
+ 7 cts    1949 jul.   148  127.    63.8  -42.6           84.2
+ 8 cts    1949 ago.   148  127.    62.8  -42.1           85.2
+ 9 cts    1949 sep.   136  128.    16.5   -8.48         119. 
+10 cts    1949 oct.   119  129.   -20.6   11.1          140. 
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6583,18 +6583,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        log(value) = trend + season_12 + remainder
-   .model    index `log(value)` trend season_12 remainder season_adjust
-   &lt;chr&gt;     &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
- 1 stl    1949 Jan         4.72  4.87   -0.105   -0.0448           4.82
- 2 stl    1949 Feb         4.77  4.87   -0.142    0.0408           4.91
- 3 stl    1949 Mar         4.88  4.87   -0.0118   0.0213           4.89
- 4 stl    1949 Apr         4.86  4.87   -0.0337   0.0256           4.89
- 5 stl    1949 May         4.80  4.84   -0.0261  -0.0154           4.82
- 6 stl    1949 Jun         4.91  4.81    0.106   -0.00733          4.80
- 7 stl    1949 Jul         5.00  4.79    0.220   -0.0149           4.78
- 8 stl    1949 Aug         5.00  4.80    0.221   -0.0198           4.78
- 9 stl    1949 Sep         4.91  4.81    0.0864   0.0188           4.83
-10 stl    1949 Oct         4.78  4.82   -0.0417  -0.00306          4.82
+   .model     index `log(value)` trend season_12 remainder season_adjust
+   &lt;chr&gt;      &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 stl    1949 ene.         4.72  4.87   -0.105   -0.0448           4.82
+ 2 stl    1949 feb.         4.77  4.87   -0.142    0.0408           4.91
+ 3 stl    1949 mar.         4.88  4.87   -0.0118   0.0213           4.89
+ 4 stl    1949 abr.         4.86  4.87   -0.0337   0.0256           4.89
+ 5 stl    1949 may.         4.80  4.84   -0.0261  -0.0154           4.82
+ 6 stl    1949 jun.         4.91  4.81    0.106   -0.00733          4.80
+ 7 stl    1949 jul.         5.00  4.79    0.220   -0.0149           4.78
+ 8 stl    1949 ago.         5.00  4.80    0.221   -0.0198           4.78
+ 9 stl    1949 sep.         4.91  4.81    0.0864   0.0188           4.83
+10 stl    1949 oct.         4.78  4.82   -0.0417  -0.00306          4.82
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6708,18 +6708,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 288 x 6 [1M]
 # Key:       .model [2]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 278 more rows</code></pre>
 </div>
 </div>
@@ -6776,18 +6776,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6899,18 +6899,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6957,18 +6957,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 576 x 6 [1M]
 # Key:       .model [4]
-   .model            index value .fitted    .resid    .innov
-   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
- 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
- 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
- 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
- 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
-10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
+   .model             index value .fitted    .resid    .innov
+   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
+10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
 # ℹ 566 more rows</code></pre>
 </div>
 </div>
@@ -7233,18 +7233,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 5,610 x 3 [1M]
 # Key:       cv [85]
-      index value    cv
-      &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
- 1 1949 Jan   112     1
- 2 1949 Feb   118     1
- 3 1949 Mar   132     1
- 4 1949 Apr   129     1
- 5 1949 May   121     1
- 6 1949 Jun   135     1
- 7 1949 Jul   148     1
- 8 1949 Aug   148     1
- 9 1949 Sep   136     1
-10 1949 Oct   119     1
+       index value    cv
+       &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 1949 ene.   112     1
+ 2 1949 feb.   118     1
+ 3 1949 mar.   132     1
+ 4 1949 abr.   129     1
+ 5 1949 may.   121     1
+ 6 1949 jun.   135     1
+ 7 1949 jul.   148     1
+ 8 1949 ago.   148     1
+ 9 1949 sep.   136     1
+10 1949 oct.   119     1
 # ℹ 5,600 more rows</code></pre>
 </div>
 </div>
@@ -8092,8 +8092,417 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <h1>Clases 16-17-18-19: <span class="flow">procesos estocásticos y arima</span></h1>
 
 </section>
-<section id="dasda" class="slide level2">
-<h2>dasda</h2>
+<section id="modelos-arima" class="slide level2">
+<h2>Modelos ARIMA</h2>
+<p>En los años 50 y 60 las matemáticas y la probabilidad entraron de lleno (aún más) en el campo de las series temporales, introduciendo el concepto de <span class="hl-yellow"><strong>proceso estocástico</strong></span>.</p>
+<div class="fragment">
+<p>La idea es que la serie temporal <span class="math inline">\(X_t\)</span> que observamos en un instante temporal <span class="math inline">\(t\)</span> no es más que la <span class="hl-yellow"><strong>realización de una variable aleatoria</strong></span> definida en dicho instante: el valor que observamos es un <strong>valor particular de los infinitos valores que podría haber tomado</strong>.</p>
+</div>
+<div class="fragment">
+<p>Veamos un ejemplo simulado</p>
+</div>
+</section>
+<section id="proceso-estocástico" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p>Vamos a simular la siguiente serie temporal (lo que se conoce como <span class="hl-yellow"><strong>paseo aleatorio</strong></span>: el valor anterior más una perturbación aleatoria)</p>
+<p><span class="math display">\[X_t = X_{t-1} + \varepsilon_t, \quad X_1 = 0, \quad \varepsilon \sim \mathcal{N} \left(0, \sigma^2 \right)\]</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb480"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb480-1"><a href="#cb480-1"></a>n <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb480-2"><a href="#cb480-2"></a>sigma <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb480-3"><a href="#cb480-3"></a></span>
+<span id="cb480-4"><a href="#cb480-4"></a>serie <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, n))</span>
+<span id="cb480-5"><a href="#cb480-5"></a></span>
+<span id="cb480-6"><a href="#cb480-6"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb480-7"><a href="#cb480-7"></a>  serie<span class="sc">$</span>X_t[i] <span class="ot">&lt;-</span> serie<span class="sc">$</span>X_t[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb480-8"><a href="#cb480-8"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>¿Qué <strong>patrón</strong> tendría al visualizalro?</p>
+</section>
+<section id="proceso-estocástico-1" class="slide level2">
+<h2>Proceso estocástico</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb481"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb481-1"><a href="#cb481-1"></a><span class="fu">ggplot</span>(serie) <span class="sc">+</span></span>
+<span id="cb481-2"><a href="#cb481-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
+<span id="cb481-3"><a href="#cb481-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-329-1.png" width="960" class="r-stretch"></section>
+<section id="proceso-estocástico-2" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p>Al ser <span class="hl-yellow"><strong>aleatorio</strong></span> si nosotros volviésemos a generar el proceso obtendríamos otro paseo aleatorio distinto</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb482"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb482-1"><a href="#cb482-1"></a>serie <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, n))</span>
+<span id="cb482-2"><a href="#cb482-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb482-3"><a href="#cb482-3"></a>  serie<span class="sc">$</span>X_t[i] <span class="ot">&lt;-</span> serie<span class="sc">$</span>X_t[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb482-4"><a href="#cb482-4"></a>}</span>
+<span id="cb482-5"><a href="#cb482-5"></a><span class="fu">ggplot</span>(serie) <span class="sc">+</span></span>
+<span id="cb482-6"><a href="#cb482-6"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
+<span id="cb482-7"><a href="#cb482-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-330-1.png" width="960" class="r-stretch"></section>
+<section id="proceso-estocástico-3" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p>¿Qué pasaría si yo genero <strong>50 realizaciones de dicho paseo aleatorio</strong>?</p>
+<div class="fragment">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb483"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb483-1"><a href="#cb483-1"></a>serie_total <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb483-2"><a href="#cb483-2"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>) {</span>
+<span id="cb483-3"><a href="#cb483-3"></a>  serie <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"id_serie"</span> <span class="ot">=</span> <span class="fu">as.character</span>(j), <span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, n))</span>
+<span id="cb483-4"><a href="#cb483-4"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb483-5"><a href="#cb483-5"></a>    serie<span class="sc">$</span>X_t[i] <span class="ot">&lt;-</span> serie<span class="sc">$</span>X_t[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb483-6"><a href="#cb483-6"></a>  }</span>
+<span id="cb483-7"><a href="#cb483-7"></a>  serie_total <span class="ot">&lt;-</span> </span>
+<span id="cb483-8"><a href="#cb483-8"></a>    serie_total <span class="sc">|&gt;</span> </span>
+<span id="cb483-9"><a href="#cb483-9"></a>    <span class="fu">bind_rows</span>(serie)</span>
+<span id="cb483-10"><a href="#cb483-10"></a>}</span>
+<span id="cb483-11"><a href="#cb483-11"></a><span class="fu">ggplot</span>(serie_total) <span class="sc">+</span></span>
+<span id="cb483-12"><a href="#cb483-12"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> id_serie),</span>
+<span id="cb483-13"><a href="#cb483-13"></a>            <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb483-14"><a href="#cb483-14"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb483-15"><a href="#cb483-15"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-331-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="proceso-estocástico-4" class="slide level2">
+<h2>Proceso estocástico</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb484"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb484-1"><a href="#cb484-1"></a>serie_total <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb484-2"><a href="#cb484-2"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>) {</span>
+<span id="cb484-3"><a href="#cb484-3"></a>  serie <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"id_serie"</span> <span class="ot">=</span> <span class="fu">as.character</span>(j), <span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, n))</span>
+<span id="cb484-4"><a href="#cb484-4"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb484-5"><a href="#cb484-5"></a>    serie<span class="sc">$</span>X_t[i] <span class="ot">&lt;-</span> serie<span class="sc">$</span>X_t[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb484-6"><a href="#cb484-6"></a>  }</span>
+<span id="cb484-7"><a href="#cb484-7"></a>  serie_total <span class="ot">&lt;-</span> </span>
+<span id="cb484-8"><a href="#cb484-8"></a>    serie_total <span class="sc">|&gt;</span> </span>
+<span id="cb484-9"><a href="#cb484-9"></a>    <span class="fu">bind_rows</span>(serie)</span>
+<span id="cb484-10"><a href="#cb484-10"></a>}</span>
+<span id="cb484-11"><a href="#cb484-11"></a>gg1 <span class="ot">&lt;-</span> </span>
+<span id="cb484-12"><a href="#cb484-12"></a>  <span class="fu">ggplot</span>(serie_total) <span class="sc">+</span></span>
+<span id="cb484-13"><a href="#cb484-13"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> id_serie),</span>
+<span id="cb484-14"><a href="#cb484-14"></a>            <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb484-15"><a href="#cb484-15"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>),</span>
+<span id="cb484-16"><a href="#cb484-16"></a>             <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"darkgreen"</span>,</span>
+<span id="cb484-17"><a href="#cb484-17"></a>                       <span class="st">"purple"</span>, <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb484-18"><a href="#cb484-18"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb484-19"><a href="#cb484-19"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb484-20"><a href="#cb484-20"></a></span>
+<span id="cb484-21"><a href="#cb484-21"></a>gg2 <span class="ot">&lt;-</span> </span>
+<span id="cb484-22"><a href="#cb484-22"></a>  <span class="fu">ggplot</span>(serie_total <span class="sc">|&gt;</span></span>
+<span id="cb484-23"><a href="#cb484-23"></a>           <span class="fu">select</span>(t, X_t) <span class="sc">|&gt;</span></span>
+<span id="cb484-24"><a href="#cb484-24"></a>           <span class="fu">filter</span>(t <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">250</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb484-25"><a href="#cb484-25"></a>           <span class="fu">mutate</span>(<span class="at">t =</span> <span class="fu">factor</span>(t))) <span class="sc">+</span></span>
+<span id="cb484-26"><a href="#cb484-26"></a>  ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="fu">aes</span>(<span class="at">y=</span> t, <span class="at">x =</span> X_t, <span class="at">fill =</span> t),</span>
+<span id="cb484-27"><a href="#cb484-27"></a>                                <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb484-28"><a href="#cb484-28"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"darkgreen"</span>,</span>
+<span id="cb484-29"><a href="#cb484-29"></a>                       <span class="st">"purple"</span>, <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb484-30"><a href="#cb484-30"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb484-31"><a href="#cb484-31"></a>  <span class="fu">theme_minimal</span>() </span>
+<span id="cb484-32"><a href="#cb484-32"></a></span>
+<span id="cb484-33"><a href="#cb484-33"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb484-34"><a href="#cb484-34"></a>gg1 <span class="sc">+</span> gg2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-332-1.png" width="960" class="r-stretch"><p>La <span class="hl-yellow"><strong>serie temporal que observamos no es más que una de las infinitas realizaciones</strong></span> que podría haber tomado</p>
+</section>
+<section id="proceso-estocástico-5" class="slide level2">
+<h2>Proceso estocástico</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-333-1.png" width="960" class="r-stretch"><ul>
+<li><span class="hl-yellow"><strong>Proceso estocástico</strong></span>: un conjunto de variables aleatorias <span class="math inline">\(\left\lbrace X_t \right\rbrace_{t \in T}\)</span> definidas sobre el mismo espacio de probabilidades <span class="math inline">\(\left(\Omega, \mathcal{A}, P \right)\)</span>. El conjunto de índices <span class="math inline">\(T\)</span> suele ser un <strong>espacio temporal continuo</strong>.</li>
+</ul>
+<p>En el gráfico: <span class="hl-purple"><strong>todo en su conjunto</strong></span></p>
+</section>
+<section id="proceso-estocástico-6" class="slide level2">
+<h2>Proceso estocástico</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-334-1.png" width="960" class="r-stretch"><p>Dado que <span class="math inline">\(\left\lbrace X_t \right\rbrace_{t \in T}\)</span> es un conjunto de variables aleatorias, dependientes también de un espacio temporal, tendremos que</p>
+<p><span class="math display">\[\begin{eqnarray}X: ~T \times \Omega &amp; \to &amp; S \nonumber \\  (t, \omega) &amp; \to &amp; X(t, \omega)\nonumber\end{eqnarray}\]</span></p>
+<p>donde <span class="math inline">\(S\)</span> es el espacio de estados (valores posibles que puede tomar).</p>
+</section>
+<section id="proceso-estocástico-7" class="slide level2">
+<h2>Proceso estocástico</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-335-1.png" width="960" class="r-stretch"><ul>
+<li><span class="hl-yellow"><strong>Realización o trayectoria de un proceso estocástico</strong></span>: si fijamos <span class="math inline">\(\omega \in \Omega\)</span> (una aleatoriedad), tenemos</li>
+</ul>
+<p><span class="math display">\[\begin{eqnarray}X\left(\cdot, \omega \right): ~T  &amp; \to &amp; S \nonumber \\  t &amp; \to &amp; X_t (\omega) ~ \text{ una realización}\nonumber\end{eqnarray}\]</span> En el gráfico: <span class="hl-purple"><strong>si interpretamos una sola curva y vemos su evolución en el tiempo</strong></span></p>
+</section>
+<section id="proceso-estocástico-8" class="slide level2">
+<h2>Proceso estocástico</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-336-1.png" width="960" class="r-stretch"><ul>
+<li><span class="hl-yellow"><strong>Distribucion de probabilidad a tiempo t</strong></span>: si fijamos <span class="math inline">\(t \in T\)</span></li>
+</ul>
+<p><span class="math display">\[\begin{eqnarray}X\left(t, \cdot \right): ~\Omega  &amp; \to &amp; S \nonumber \\  \omega &amp; \to &amp; X_t (\cdot) ~ \text{ una distribución aleatoria}\nonumber\end{eqnarray}\]</span></p>
+<p>En el gráfico: <span class="hl-purple"><strong>si interpretamos la distribución de todas las posibles curvas en un instante dado</strong></span></p>
+</section>
+<section id="proceso-estocástico-9" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p><span class="math display">\[\begin{eqnarray}X: ~T \times \Omega &amp; \to &amp; S \nonumber \\  (t, \omega) &amp; \to &amp; X(t, \omega)\nonumber\end{eqnarray}\]</span></p>
+<p>Dado que para cada instante <span class="math inline">\(t\)</span> tenemos una distribución de probabilidad, podremos <span class="hl-yellow"><strong>caracterizar la serie con algunos de sus parámetros poblacionales</strong></span>:</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><span class="hl-yellow"><strong>Media del proceso</strong></span>: fijado un <span class="math inline">\(t\)</span> tenemos que <span class="math inline">\(\mu_t = E \left[X_t \right]\)</span> (si es constante en el tiempo –&gt; sin tendencia)</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb485"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb485-1"><a href="#cb485-1"></a><span class="fu">ggplot</span>(serie_total) <span class="sc">+</span></span>
+<span id="cb485-2"><a href="#cb485-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> id_serie),</span>
+<span id="cb485-3"><a href="#cb485-3"></a>            <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb485-4"><a href="#cb485-4"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> serie_total <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">"mu_t"</span> <span class="ot">=</span> <span class="fu">mean</span>(X_t), <span class="at">.by =</span> t),</span>
+<span id="cb485-5"><a href="#cb485-5"></a>            <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> mu_t), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb485-6"><a href="#cb485-6"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb485-7"><a href="#cb485-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-337-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="proceso-estocástico-10" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p><span class="math display">\[\begin{eqnarray}X: ~T \times \Omega &amp; \to &amp; S \nonumber \\  (t, \omega) &amp; \to &amp; X(t, \omega)\nonumber\end{eqnarray}\]</span></p>
+<p>Dado que para cada instante <span class="math inline">\(t\)</span> tenemos una distribución de probabilidad, podremos <span class="hl-yellow"><strong>caracterizar la serie con algunos de sus parámetros poblacionales</strong></span>:</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><span class="hl-yellow"><strong>Varianza del proceso</strong></span>: fijado un <span class="math inline">\(t\)</span> tenemos que <span class="math inline">\(\sigma_{t}^{2} = Var \left[X_t \right]\)</span> (si es constante en el tiempo –&gt; homocedástica)</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb486"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb486-1"><a href="#cb486-1"></a><span class="fu">ggplot</span>(serie_total) <span class="sc">+</span></span>
+<span id="cb486-2"><a href="#cb486-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t, <span class="at">color =</span> id_serie),</span>
+<span id="cb486-3"><a href="#cb486-3"></a>            <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb486-4"><a href="#cb486-4"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> serie_total <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="st">"var_t"</span> <span class="ot">=</span> <span class="fu">sd</span>(X_t), <span class="at">.by =</span> t),</span>
+<span id="cb486-5"><a href="#cb486-5"></a>            <span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> var_t), <span class="at">linewidth =</span> <span class="fl">1.1</span>) <span class="sc">+</span></span>
+<span id="cb486-6"><a href="#cb486-6"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb486-7"><a href="#cb486-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-338-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="proceso-estocástico-11" class="slide level2">
+<h2>Proceso estocástico</h2>
+<p>Mientras que en los <span class="hl-red"><strong>modelos de descomposición y en los alisados exponencial simplemente realizamos un ajuste de una curva observada</strong></span> (sin tener en cuenta su distribución estocástica subyacente), en el momento en el que consideramos <span class="hl-yellow"><strong>modelos ARIMA</strong></span> (la serie como una realización de un conjunto de variables aleatorias correladas en el tiempo) será importante su <span class="hl-yellow"><strong>estructura de autocorrelación</strong></span>: las <span class="hl-yellow"><strong>diferentes distribuciones del proceso estocástico dependen entre sí</strong></span> para distintos <span class="math inline">\(t\)</span>.</p>
+<div class="fragment">
+<p>Dados <span class="math inline">\(t_1\)</span> y <span class="math inline">\(t_2\)</span>, llamaremos <span class="hl-yellow"><strong>función de autocovarianzas</strong></span> a</p>
+<p><span class="math display">\[\gamma_{t_1, t_2} = Cov \left( X_{t_1}, X_{t_2} \right) = E \left[\left(X_{t_1} - \mu_{t_1} \right) \left(X_{t_2} - \mu_{t_2} \right) \right]\]</span></p>
+<p>Dados <span class="math inline">\(t_1\)</span> y <span class="math inline">\(t_2\)</span>, llamaremos <span class="hl-yellow"><strong>función de autocorrelación</strong></span> a</p>
+<p><span class="math display">\[\rho_{t_1, t_2} = Cor \left( X_{t_1}, X_{t_2} \right) = \frac{\gamma_{t_1, t_2}}{\sqrt{\sigma_{t_{1}}^{2}\sigma_{t_{1}}^{2}
+}}\]</span></p>
+</div>
+</section>
+<section id="proceso-estacionario" class="slide level2">
+<h2>Proceso estacionario</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-339-1.png" width="960" class="r-stretch"><p>Todo lo anterior es sobre la base de que yo <span class="hl-yellow"><strong>pudiese generar una colección de curvas</strong></span> de manera que puedo observarlas de manera longitudinal (tiempo) o transversal (distribución probabilística a un tiempo dado).</p>
+</section>
+<section id="proceso-estacionario-1" class="slide level2">
+<h2>Proceso estacionario</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-340-1.png" width="960" class="r-stretch"><p>El <span class="hl-red"><strong>problema</strong></span> es que normalmente es <span class="hl-red"><strong>inviable obtener varias realizaciones</strong></span>: si tengo una serie temporal de las temperaturas a lo largo del año, esas temperaturas podrían haber sido otras pero no puedo volver al pasado y generar otras nuevas.</p>
+<div class="fragment">
+<p>Así la única forma de <span class="hl-yellow"><strong>estimar las características transversales (media, varianza, etc)</strong></span> de una serie haciendo uso de su evolución longitudinal es <span class="hl-gren"><strong>suponer que esas propiedades transversales (distribución) en cada instante temporal son estables</strong></span> (no varían)</p>
+</div>
+</section>
+<section id="proceso-estacionario-2" class="slide level2">
+<h2>Proceso estacionario</h2>
+<p>Por lo tanto el primer <span class="hl-yellow"><strong>requisito</strong></span> que necesitaremos para la introducción de modelos ARIMA o modelos probablísticos será el <span class="hl-yellow"><strong>concepto de estacionariedad</strong></span>: algo de la serie que <strong>no varíe con el tiempo</strong></p>
+<div class="fragment">
+<p>Diremos que <span class="math inline">\(\left\lbrace X_{t} \right\rbrace\)</span> es un <span class="hl-yellow"><strong>proceso estacionario (en el tiempo)</strong></span> cuando sus <span class="hl-yellow"><strong>propiedades no dependen del instante <span class="math inline">\(t\)</span> en el que las medimos</strong></span>. Dicho de manera informal, una serie será estacionaria cuando mire donde mire veo <em>lo mismo</em>, cuyo <span class="hl-yellow"><strong>patrón no puede ser predicho</strong></span></p>
+</div>
+<div class="fragment">
+<p>Desde un punto de vista matemático es <span class="hl-yellow"><strong>estrictamente estacionario</strong></span> si para cualquier conjunto de instantes temporales y retardo <span class="math inline">\(h &gt; 0\)</span>, tenemos que <span class="math inline">\(\left(X_{t_{1}}, \ldots, X_{t_{n}} \right)\)</span> y <span class="math inline">\(\left(X_{t_{1}+h}, \ldots, X_{t_{n}+h} \right)\)</span> tienen la <strong>misma distribución conjunta</strong>: son indistinguibles.</p>
+</div>
+</section>
+<section id="proceso-estacionario-3" class="slide level2">
+<h2>Proceso estacionario</h2>
+<p>Dado que está condición es <strong>demasiado estricta</strong> (nos obligaría a saber su distribución, si es una normal, una chi-cuadrado, etc), trabajaremos con <span class="hl-yellow"><strong>procesos débilmente estacionarios</strong></span></p>
+<ol type="1">
+<li><p><span class="hl-yellow"><strong>Media constante</strong></span>: <span class="math inline">\(\mu_{t} = \mu_{t+h} = cte\)</span> para cualquier instante <span class="math inline">\(t\)</span> y retardo <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="hl-yellow"><strong>Varianza constante</strong></span>: <span class="math inline">\(\sigma_{t}^{2} = \sigma_{t+h}^{2}\)</span> para cualquier instante <span class="math inline">\(t\)</span> y retardo <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="hl-yellow"><strong>Autocovarianzas independiente de t</strong></span>: <span class="math inline">\(\gamma_{s, t} = \gamma_{s+h, t+h} = \gamma_h\)</span> la <span class="hl-yellow"><strong>dependencia entre dos instantes solo depende de su distancia</strong></span>, al margen de en qué punto lo medimos.</p></li>
+</ol>
+</section>
+<section id="proceso-estacionario-4" class="slide level2">
+<h2>Proceso estacionario</h2>
+<p>De lo anterior se derivan algunas <span class="hl-yellow"><strong>propiedades sobre las autocorrelaciones</strong></span> (las barras que nos dibuja el acf)</p>
+<ul>
+<li>Solo nos importan los <span class="math inline">\(\gamma_h = \gamma_{t, t+h}\)</span> para cada <span class="math inline">\(h=0, 1, 2, ...\)</span>, tal que <span class="math inline">\(\gamma_h = \gamma_{-h}\)</span></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>De la misma forma <span class="math inline">\(\rho_h = \rho_{t, t+h} = \frac{\gamma_{t, t+h}}{\sigma_{t} \sigma_{t+h}} = \frac{\gamma_{t, t+h}}{\sigma^2} = \frac{\gamma_{h}}{\gamma_0}\)</span> tal que <span class="math inline">\(\rho_{h} = \rho_{-h}\)</span> y <span class="math inline">\(\rho_0 = 1\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Dado que <span class="math inline">\(\left| \rho_{h} \right| \leq 1\)</span> entonces <span class="math inline">\(\left|\gamma_h \right| = \left| \rho_h \right| * \gamma_0 \leq \gamma_0\)</span> para todo <span class="math inline">\(h\)</span> (por eso decrecen las barras del acf)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Si <span class="math inline">\(\left\lbrace X_t \right\rbrace\)</span> es un proceso estacionario entonces su diferencia <span class="math inline">\(X_{t} - X_{t-1}\)</span> también lo es.</li>
+</ul>
+</div>
+</section>
+<section id="ruido-blanco" class="slide level2">
+<h2>Ruido blanco</h2>
+<p>Uno de los <span class="hl-yellow"><strong>procesos estocásticos más importantes</strong></span> es el conocido como <span class="hl-yellow"><strong>ruido blanco</strong></span></p>
+<ol type="1">
+<li><p><span class="hl-yellow"><strong>Media 0</strong></span>: <span class="math inline">\(\mu_{t} = \mu_{t+h} = 0\)</span> para cualquier instante <span class="math inline">\(t\)</span> y retardo <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="hl-yellow"><strong>Varianza constante</strong></span>: <span class="math inline">\(\sigma_{t}^{2} = \sigma_{t+h}^{2} = \sigma \neq 0\)</span> para cualquier instante <span class="math inline">\(t\)</span> y retardo <span class="math inline">\(h\)</span>.</p></li>
+<li><p><span class="hl-yellow"><strong>Incorrelados temporalmente</strong></span>: <span class="math inline">\(\gamma_{s, t} = \gamma_{s+h, t+h} = \gamma_h = 0\)</span> si <span class="math inline">\(h\neq 0\)</span> (si <span class="math inline">\(h=0\)</span>, <span class="math inline">\(\gamma_0 = \sigma_t \neq 0\)</span>)</p></li>
+</ol>
+<div class="fragment">
+<p>Este proceso estacionario será importante ya que, <span class="hl-green"><strong>si he modelizado bien mi serie</strong></span>, el <span class="hl-yellow"><strong>residuo que queda sin explicar debería ser ruido blanco</strong></span></p>
+</div>
+</section>
+<section id="diagnóstico-de-residuos" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>Veamos un ejemplo con la serie de Google</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb487"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb487-1"><a href="#cb487-1"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb487-2"><a href="#cb487-2"></a><span class="fu">library</span>(tsibbledata)</span>
+<span id="cb487-3"><a href="#cb487-3"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb487-4"><a href="#cb487-4"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb487-5"><a href="#cb487-5"></a>google <span class="ot">&lt;-</span></span>
+<span id="cb487-6"><a href="#cb487-6"></a>  gafa_stock <span class="sc">|&gt;</span></span>
+<span id="cb487-7"><a href="#cb487-7"></a>  <span class="fu">filter</span>(Symbol <span class="sc">==</span> <span class="st">"GOOG"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb487-8"><a href="#cb487-8"></a>  <span class="fu">as_tsibble</span>(<span class="at">regular =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb487-9"><a href="#cb487-9"></a>  <span class="fu">fill_gaps</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb487-10"><a href="#cb487-10"></a>  <span class="fu">fill</span>(Close)</span>
+<span id="cb487-11"><a href="#cb487-11"></a>google</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 1,825 x 8 [1D]
+# Key:       Symbol [1]
+   Symbol Date        Open  High   Low Close Adj_Close  Volume
+   &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+ 1 GOOG   2014-01-02  554.  555.  551.  553.      553. 3666400
+ 2 GOOG   2014-01-03  554.  555.  549.  549.      549. 3355000
+ 3 GOOG   2014-01-04   NA    NA    NA   549.       NA       NA
+ 4 GOOG   2014-01-05   NA    NA    NA   549.       NA       NA
+ 5 GOOG   2014-01-06  553.  556.  550.  555.      555. 3561600
+ 6 GOOG   2014-01-07  559.  566.  557.  566.      566. 5138400
+ 7 GOOG   2014-01-08  569.  570.  563.  567.      567. 4514100
+ 8 GOOG   2014-01-09  568.  568.  559.  561.      561. 4196000
+ 9 GOOG   2014-01-10  566.  566.  557.  561.      561. 4314700
+10 GOOG   2014-01-11   NA    NA    NA   561.       NA       NA
+# ℹ 1,815 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="diagnóstico-de-residuos-1" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>Ya vimos en su momento que tiene tendencia, por lo que <span class="hl-yellow"><strong>no es un proceso estacionario</strong></span> ya que su distribución es distinta en distintos instantes temporales</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb489"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb489-1"><a href="#cb489-1"></a><span class="fu">ggplot</span>(google) <span class="sc">+</span></span>
+<span id="cb489-2"><a href="#cb489-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> Close)) <span class="sc">+</span></span>
+<span id="cb489-3"><a href="#cb489-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-342-1.png" width="960" class="r-stretch"></section>
+<section id="diagnóstico-de-residuos-2" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>Si pintamos las <span class="hl-yellow"><strong>estimaciones muestrales (insesgadsa) de las autocorrelaciones</strong></span> tenemos que <span class="hl-red"><strong>no decrecen</strong></span>, es decir, no es ruido blanco (queda algo por modelizar)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb490"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb490-1"><a href="#cb490-1"></a><span class="co"># alternativa a acf(google$Close) en forma gpglot</span></span>
+<span id="cb490-2"><a href="#cb490-2"></a>google <span class="sc">|&gt;</span></span>
+<span id="cb490-3"><a href="#cb490-3"></a>  <span class="fu">ACF</span>(Close, <span class="at">lag_max =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb490-4"><a href="#cb490-4"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb490-5"><a href="#cb490-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Google closing stock price"</span>,</span>
+<span id="cb490-6"><a href="#cb490-6"></a>       <span class="at">y =</span> <span class="st">"Estimación muestral de autocorrelaciones"</span>,</span>
+<span id="cb490-7"><a href="#cb490-7"></a>       <span class="at">x =</span> <span class="st">"Retardos"</span>) <span class="sc">+</span></span>
+<span id="cb490-8"><a href="#cb490-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-343-1.png" width="960" class="r-stretch"></section>
+<section id="diagnóstico-de-residuos-3" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>Para tener una cuantificación inferencial más rigurosa sobre si es o no ruido blanco podemos realizar el <span class="hl-yellow"><strong>test de Ljung-Box que nos contrasta si un grupo cualquiera de autocorrelaciones son diferentes de cero</strong></span> (se conoce como contrastes Portmanteau a aquellos que en lugar de probar la aleatoriedad en cada retardo distinto, prueba la aleatoriedad “en general”)</p>
+<p>Para ello usaremos <code>features()</code> con la opción <code>ljung_box</code> (ya la usamos para las transformaciones Box-Cox)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb491"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb491-1"><a href="#cb491-1"></a>google <span class="sc">|&gt;</span></span>
+<span id="cb491-2"><a href="#cb491-2"></a>  <span class="fu">features</span>(Close, ljung_box, <span class="at">lag =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Symbol lb_stat lb_pvalue
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 GOOG    17980.         0</code></pre>
+</div>
+</div>
+<p>Según el contraste hay <span class="hl-red"><strong>evidencia suficientes para rechazar que sean cero</strong></span> -&gt; no es ruido blanco</p>
+</section>
+<section id="diagnóstico-de-residuos-4" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>¿Pero qué pasa si yo <span class="hl-yellow"><strong>diferencio la serie</strong></span> (resto a cada valor su instante anterior)? Si ahora te diese dos fotos de la serie, ¿sabrías ahora <span class="hl-yellow"><strong>distinguir su instante temporal</strong></span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb493"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb493-1"><a href="#cb493-1"></a><span class="fu">ggplot</span>(google) <span class="sc">+</span></span>
+<span id="cb493-2"><a href="#cb493-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> <span class="fu">difference</span>(Close))) <span class="sc">+</span></span>
+<span id="cb493-3"><a href="#cb493-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-345-1.png" width="960" class="r-stretch"></section>
+<section id="diagnóstico-de-residuos-5" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>¡Todas se desploman!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb494"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb494-1"><a href="#cb494-1"></a><span class="co"># alternativa a acf(google$Close) en forma gpglot</span></span>
+<span id="cb494-2"><a href="#cb494-2"></a>google <span class="sc">|&gt;</span></span>
+<span id="cb494-3"><a href="#cb494-3"></a>  <span class="fu">ACF</span>(<span class="fu">difference</span>(Close), <span class="at">lag_max =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb494-4"><a href="#cb494-4"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb494-5"><a href="#cb494-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Google closing stock price"</span>,</span>
+<span id="cb494-6"><a href="#cb494-6"></a>       <span class="at">subtitle =</span> <span class="st">"Serie diferenciada"</span>,</span>
+<span id="cb494-7"><a href="#cb494-7"></a>       <span class="at">y =</span> <span class="st">"Estimación muestral de autocorrelaciones"</span>,</span>
+<span id="cb494-8"><a href="#cb494-8"></a>       <span class="at">x =</span> <span class="st">"Retardos"</span>) <span class="sc">+</span></span>
+<span id="cb494-9"><a href="#cb494-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-346-1.png" width="960" class="r-stretch"></section>
+<section id="diagnóstico-de-residuos-6" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb495"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb495-1"><a href="#cb495-1"></a>google <span class="sc">|&gt;</span></span>
+<span id="cb495-2"><a href="#cb495-2"></a>  <span class="fu">mutate</span>(<span class="at">diff_close =</span> <span class="fu">difference</span>(Close)) <span class="sc">|&gt;</span></span>
+<span id="cb495-3"><a href="#cb495-3"></a>  <span class="fu">features</span>(diff_close, ljung_box, <span class="at">lag =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  Symbol lb_stat lb_pvalue
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 GOOG      31.7  0.000442</code></pre>
+</div>
+</div>
+<p>Simplemente aplicando una diferenciación nuestro proceso se ha <span class="hl-yellow"><strong>convertido en ruido blanco</strong></span></p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Estadística Aplicada (UCM)</p>
 </div>

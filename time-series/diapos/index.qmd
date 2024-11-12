@@ -7818,8 +7818,534 @@ A partir de aquí todo tuyo. Piensa:
 
 ---
 
-## dasda
+## Modelos ARIMA
+
+En los años 50 y 60 las matemáticas y la probabilidad entraron de lleno (aún más) en el campo de las series temporales, introduciendo el concepto de [**proceso estocástico**]{.hl-yellow}.
+
+. . .
+
+La idea es que la serie temporal $X_t$ que observamos en un instante temporal $t$ no es más que la [**realización de una variable aleatoria**]{.hl-yellow} definida en dicho instante: el valor que observamos es un **valor particular de los infinitos valores que podría haber tomado**.
+
+. . .
+
+Veamos un ejemplo simulado
+
+---
+
+## Proceso estocástico
+
+Vamos a simular la siguiente serie temporal (lo que se conoce como [**paseo aleatorio**]{.hl-yellow}: el valor anterior más una perturbación aleatoria)
+
+$$X_t = X_{t-1} + \varepsilon_t, \quad X_1 = 0, \quad \varepsilon \sim \mathcal{N} \left(0, \sigma^2 \right)$$
+
+```{r}
+#| code-fold: true
+n <- 300
+sigma <- 3
+
+serie <- tibble("t" = 1:n, "X_t" = rep(0, n))
+
+for (i in 2:n) {
+  serie$X_t[i] <- serie$X_t[i - 1] + rnorm(1, 0, sigma)
+}
+```
+
+
+¿Qué **patrón** tendría al visualizalro?
+
+---
+
+## Proceso estocástico
+
+```{r}
+#| code-fold: true
+ggplot(serie) +
+  geom_line(aes(x = t, y = X_t)) +
+  theme_minimal()
+```
+
+---
+
+## Proceso estocástico
+
+Al ser [**aleatorio**]{.hl-yellow} si nosotros volviésemos a generar el proceso obtendríamos otro paseo aleatorio distinto
+
+```{r}
+#| code-fold: true
+
+serie <- tibble("t" = 1:n, "X_t" = rep(0, n))
+for (i in 2:n) {
+  serie$X_t[i] <- serie$X_t[i - 1] + rnorm(1, 0, sigma)
+}
+ggplot(serie) +
+  geom_line(aes(x = t, y = X_t)) +
+  theme_minimal()
+```
+
+---
+
+
+## Proceso estocástico
+
+¿Qué pasaría si yo genero **50 realizaciones de dicho paseo aleatorio**?
+
+. . .
+
+```{r}
+#| code-fold: true
+serie_total <- tibble()
+for (j in 1:50) {
+  serie <- tibble("id_serie" = as.character(j), "t" = 1:n, "X_t" = rep(0, n))
+  for (i in 2:n) {
+    serie$X_t[i] <- serie$X_t[i - 1] + rnorm(1, 0, sigma)
+  }
+  serie_total <- 
+    serie_total |> 
+    bind_rows(serie)
+}
+ggplot(serie_total) +
+  geom_line(aes(x = t, y = X_t, color = id_serie),
+            linewidth = 0.5) +
+  guides(color = "none") +
+  theme_minimal()
+```
+
+---
+
+## Proceso estocástico
+
+
+```{r}
+#| code-fold: true
+serie_total <- tibble()
+for (j in 1:50) {
+  serie <- tibble("id_serie" = as.character(j), "t" = 1:n, "X_t" = rep(0, n))
+  for (i in 2:n) {
+    serie$X_t[i] <- serie$X_t[i - 1] + rnorm(1, 0, sigma)
+  }
+  serie_total <- 
+    serie_total |> 
+    bind_rows(serie)
+}
+gg1 <- 
+  ggplot(serie_total) +
+  geom_line(aes(x = t, y = X_t, color = id_serie),
+            linewidth = 0.5) +
+  geom_vline(xintercept = c(50, 100, 150, 200, 250),
+             color = c("red", "orange", "darkgreen",
+                       "purple", "blue")) +
+  guides(color = "none") +
+  theme_minimal()
+
+gg2 <- 
+  ggplot(serie_total |>
+           select(t, X_t) |>
+           filter(t %in% c(50, 100, 150, 200, 250)) |>
+           mutate(t = factor(t))) +
+  ggridges::geom_density_ridges(aes(y= t, x = X_t, fill = t),
+                                alpha = 0.3) +
+  scale_fill_manual(values = c("red", "orange", "darkgreen",
+                       "purple", "blue")) +
+  coord_flip() +
+  theme_minimal() 
+
+library(patchwork)
+gg1 + gg2
+```
+
+
+La [**serie temporal que observamos no es más que una de las infinitas realizaciones**]{.hl-yellow} que podría haber tomado
+
+
+---
+
+## Proceso estocástico
+
+
+```{r}
+#| echo: false
+serie_total <- tibble()
+for (j in 1:50) {
+  serie <- tibble("id_serie" = as.character(j), "t" = 1:n, "X_t" = rep(0, n))
+  for (i in 2:n) {
+    serie$X_t[i] <- serie$X_t[i - 1] + rnorm(1, 0, sigma)
+  }
+  serie_total <- 
+    serie_total |> 
+    bind_rows(serie)
+}
+gg1 <- 
+  ggplot(serie_total) +
+  geom_line(aes(x = t, y = X_t, color = id_serie),
+            linewidth = 0.5) +
+  geom_vline(xintercept = c(50, 100, 150, 200, 250),
+             color = c("red", "orange", "darkgreen",
+                       "purple", "blue")) +
+  guides(color = "none") +
+  theme_minimal()
+
+gg2 <- 
+  ggplot(serie_total |>
+           select(t, X_t) |>
+           filter(t %in% c(50, 100, 150, 200, 250)) |>
+           mutate(t = factor(t))) +
+  ggridges::geom_density_ridges(aes(y= t, x = X_t, fill = t),
+                                alpha = 0.3) +
+  scale_fill_manual(values = c("red", "orange", "darkgreen",
+                       "purple", "blue")) +
+  coord_flip() +
+  theme_minimal() 
+
+library(patchwork)
+gg1 + gg2
+```
+
+* [**Proceso estocástico**]{.hl-yellow}: un conjunto de variables aleatorias $\left\lbrace X_t \right\rbrace_{t \in T}$ definidas sobre el mismo espacio de probabilidades $\left(\Omega, \mathcal{A}, P \right)$. El conjunto de índices $T$ suele ser un **espacio temporal continuo**.
+
+En el gráfico: [**todo en su conjunto**]{.hl-purple}
+
+
+---
+
+## Proceso estocástico
+
+
+```{r}
+#| echo: false
+gg1 + gg2
+```
+
+Dado que $\left\lbrace X_t \right\rbrace_{t \in T}$ es un conjunto de variables aleatorias, dependientes también de un espacio temporal, tendremos que
+
+$$\begin{eqnarray}X: ~T \times \Omega & \to & S \nonumber \\  (t, \omega) & \to & X(t, \omega)\nonumber\end{eqnarray}$$
+
+donde $S$ es el espacio de estados (valores posibles que puede tomar). 
+
+---
+
+## Proceso estocástico
+
+
+```{r}
+#| echo: false
+gg1 + gg2
+```
+
+
+* [**Realización o trayectoria de un proceso estocástico**]{.hl-yellow}: si fijamos $\omega \in \Omega$ (una aleatoriedad), tenemos
+
+$$\begin{eqnarray}X\left(\cdot, \omega \right): ~T  & \to & S \nonumber \\  t & \to & X_t (\omega) ~ \text{ una realización}\nonumber\end{eqnarray}$$
+En el gráfico: [**si interpretamos una sola curva y vemos su evolución en el tiempo**]{.hl-purple}
+
+---
+
+## Proceso estocástico
+
+
+```{r}
+#| echo: false
+gg1 + gg2
+```
+
+
+* [**Distribucion de probabilidad a tiempo t**]{.hl-yellow}: si fijamos $t \in T$
+
+$$\begin{eqnarray}X\left(t, \cdot \right): ~\Omega  & \to & S \nonumber \\  \omega & \to & X_t (\cdot) ~ \text{ una distribución aleatoria}\nonumber\end{eqnarray}$$
+
+En el gráfico: [**si interpretamos la distribución de todas las posibles curvas en un instante dado**]{.hl-purple}
+
+---
+
+## Proceso estocástico
+
+$$\begin{eqnarray}X: ~T \times \Omega & \to & S \nonumber \\  (t, \omega) & \to & X(t, \omega)\nonumber\end{eqnarray}$$
+
+Dado que para cada instante $t$ tenemos una distribución de probabilidad, podremos [**caracterizar la serie con algunos de sus parámetros poblacionales**]{.hl-yellow}:
 
 
 
 
+
+:::: columns
+::: {.column width="40%"}
+
+* [**Media del proceso**]{.hl-yellow}: fijado un $t$ tenemos que $\mu_t = E \left[X_t \right]$ (si es constante en el tiempo --> sin tendencia)
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| code-fold: true
+ggplot(serie_total) +
+  geom_line(aes(x = t, y = X_t, color = id_serie),
+            linewidth = 0.5) +
+  geom_line(data = serie_total |> summarise("mu_t" = mean(X_t), .by = t),
+            aes(x = t, y = mu_t), linewidth = 1.1) +
+  guides(color = "none") +
+  theme_minimal()
+```
+
+:::
+::::
+
+---
+
+## Proceso estocástico
+
+$$\begin{eqnarray}X: ~T \times \Omega & \to & S \nonumber \\  (t, \omega) & \to & X(t, \omega)\nonumber\end{eqnarray}$$
+
+Dado que para cada instante $t$ tenemos una distribución de probabilidad, podremos [**caracterizar la serie con algunos de sus parámetros poblacionales**]{.hl-yellow}:
+
+:::: columns
+::: {.column width="40%"}
+
+
+* [**Varianza del proceso**]{.hl-yellow}: fijado un $t$ tenemos que $\sigma_{t}^{2} = Var \left[X_t \right]$  (si es constante en el tiempo --> homocedástica)
+
+:::
+
+::: {.column width="60%"}
+
+
+```{r}
+#| code-fold: true
+ggplot(serie_total) +
+  geom_line(aes(x = t, y = X_t, color = id_serie),
+            linewidth = 0.5) +
+  geom_line(data = serie_total |> summarise("var_t" = sd(X_t), .by = t),
+            aes(x = t, y = var_t), linewidth = 1.1) +
+  guides(color = "none") +
+  theme_minimal()
+```
+
+:::
+::::
+
+---
+
+
+## Proceso estocástico
+
+Mientras que en los [**modelos de descomposición y en los alisados exponencial simplemente realizamos un ajuste de una curva observada**]{.hl-red} (sin tener en cuenta su distribución estocástica subyacente), en el momento en el que consideramos [**modelos ARIMA**]{.hl-yellow} (la serie como una realización de un conjunto de variables aleatorias correladas en el tiempo) será importante su [**estructura de autocorrelación**]{.hl-yellow}:  las [**diferentes distribuciones del proceso estocástico dependen entre sí**]{.hl-yellow} para distintos $t$.
+
+. . .
+
+Dados $t_1$ y $t_2$, llamaremos [**función de autocovarianzas**]{.hl-yellow} a
+
+$$\gamma_{t_1, t_2} = Cov \left( X_{t_1}, X_{t_2} \right) = E \left[\left(X_{t_1} - \mu_{t_1} \right) \left(X_{t_2} - \mu_{t_2} \right) \right]$$
+
+Dados $t_1$ y $t_2$, llamaremos [**función de autocorrelación**]{.hl-yellow} a
+
+$$\rho_{t_1, t_2} = Cor \left( X_{t_1}, X_{t_2} \right) = \frac{\gamma_{t_1, t_2}}{\sqrt{\sigma_{t_{1}}^{2}\sigma_{t_{1}}^{2}
+}}$$
+
+
+---
+
+## Proceso estacionario
+
+```{r}
+#| echo: false
+gg1 + gg2
+```
+
+
+Todo lo anterior es sobre la base de que yo [**pudiese generar una colección de curvas**]{.hl-yellow} de manera que puedo observarlas de manera longitudinal (tiempo) o transversal (distribución probabilística a un tiempo dado). 
+
+---
+
+## Proceso estacionario
+
+```{r}
+#| echo: false
+gg1 + gg2
+```
+
+El [**problema**]{.hl-red} es que normalmente es [**inviable obtener varias realizaciones**]{.hl-red}: si tengo una serie temporal de las temperaturas a lo largo del año, esas temperaturas podrían haber sido otras pero no puedo volver al pasado y generar otras nuevas.
+
+. . .
+
+Así la única forma de [**estimar las características transversales (media, varianza, etc)**]{.hl-yellow} de una serie haciendo uso de su evolución longitudinal es [**suponer que esas propiedades transversales (distribución) en cada instante temporal son estables**]{.hl-gren} (no varían)
+
+
+---
+
+## Proceso estacionario
+
+
+Por lo tanto el primer [**requisito**]{.hl-yellow} que necesitaremos para la introducción de modelos ARIMA o modelos probablísticos será el [**concepto de estacionariedad**]{.hl-yellow}: algo de la serie que **no varíe con el tiempo**
+ 
+ 
+. . .
+
+Diremos que $\left\lbrace X_{t} \right\rbrace$ es un [**proceso estacionario (en el tiempo)**]{.hl-yellow} cuando sus [**propiedades no dependen del instante $t$ en el que las medimos**]{.hl-yellow}. Dicho de manera informal, una serie será estacionaria cuando mire donde mire veo *lo mismo*, cuyo [**patrón no puede ser predicho**]{.hl-yellow}
+
+. . .
+
+Desde un punto de vista matemático es [**estrictamente estacionario**]{.hl-yellow} si para cualquier conjunto de instantes temporales y retardo $h > 0$, tenemos que $\left(X_{t_{1}}, \ldots, X_{t_{n}} \right)$ y $\left(X_{t_{1}+h}, \ldots, X_{t_{n}+h} \right)$ tienen la **misma distribución conjunta**: son indistinguibles.
+
+---
+
+## Proceso estacionario
+
+
+Dado que está condición es **demasiado estricta** (nos obligaría a saber su distribución, si es una normal, una chi-cuadrado, etc), trabajaremos con [**procesos débilmente estacionarios**]{.hl-yellow}
+
+1. [**Media constante**]{.hl-yellow}: $\mu_{t} = \mu_{t+h} = cte$ para cualquier instante $t$ y retardo $h$.
+
+2. [**Varianza constante**]{.hl-yellow}: $\sigma_{t}^{2} = \sigma_{t+h}^{2}$ para cualquier instante $t$ y retardo $h$.
+
+3. [**Autocovarianzas independiente de t**]{.hl-yellow}: $\gamma_{s, t} = \gamma_{s+h, t+h} = \gamma_h$  la [**dependencia entre dos instantes solo depende de su distancia**]{.hl-yellow}, al margen de en qué punto lo medimos.
+
+
+---
+
+## Proceso estacionario
+
+
+De lo anterior se derivan algunas [**propiedades sobre las autocorrelaciones**]{.hl-yellow} (las barras que nos dibuja el acf)
+
+
+* Solo nos importan los $\gamma_h = \gamma_{t, t+h}$ para cada $h=0, 1, 2, ...$, tal que $\gamma_h = \gamma_{-h}$
+
+. . .
+
+* De la misma forma $\rho_h = \rho_{t, t+h} = \frac{\gamma_{t, t+h}}{\sigma_{t} \sigma_{t+h}} = \frac{\gamma_{t, t+h}}{\sigma^2} = \frac{\gamma_{h}}{\gamma_0}$ tal que $\rho_{h} = \rho_{-h}$ y $\rho_0 = 1$.
+
+
+. . .
+
+
+* Dado que $\left| \rho_{h} \right| \leq 1$ entonces $\left|\gamma_h \right| = \left| \rho_h \right| * \gamma_0 \leq \gamma_0$ para todo $h$ (por eso decrecen las barras del acf)
+
+
+. . .
+
+* Si $\left\lbrace X_t \right\rbrace$ es un proceso estacionario entonces su diferencia $X_{t} - X_{t-1}$ también lo es.
+
+---
+
+## Ruido blanco
+
+Uno de los [**procesos estocásticos más importantes**]{.hl-yellow} es el conocido como [**ruido blanco**]{.hl-yellow}
+
+
+1. [**Media 0**]{.hl-yellow}: $\mu_{t} = \mu_{t+h} = 0$ para cualquier instante $t$ y retardo $h$.
+
+2. [**Varianza constante**]{.hl-yellow}: $\sigma_{t}^{2} = \sigma_{t+h}^{2} = \sigma \neq 0$ para cualquier instante $t$ y retardo $h$.
+
+3. [**Incorrelados temporalmente**]{.hl-yellow}: $\gamma_{s, t} = \gamma_{s+h, t+h} = \gamma_h = 0$ si $h\neq 0$ (si $h=0$, $\gamma_0 = \sigma_t \neq 0$)
+
+. . .
+
+Este proceso estacionario será importante ya que, [**si he modelizado bien mi serie**]{.hl-green}, el [**residuo que queda sin explicar debería ser ruido blanco**]{.hl-yellow}
+
+---
+
+## Diagnóstico de residuos
+
+Veamos un ejemplo con la serie de Google
+
+```{r}
+library(tsibble)
+library(tsibbledata)
+library(tidyverse)
+library(feasts)
+google <-
+  gafa_stock |>
+  filter(Symbol == "GOOG") |> 
+  as_tsibble(regular = TRUE) |> 
+  fill_gaps() |> 
+  fill(Close)
+google
+```
+
+---
+
+## Diagnóstico de residuos
+
+
+Ya vimos en su momento que tiene tendencia, por lo que [**no es un proceso estacionario**]{.hl-yellow} ya que su distribución es distinta en distintos instantes temporales
+
+```{r}
+ggplot(google) +
+  geom_line(aes(x = Date, y = Close)) +
+  theme_minimal()
+```
+
+---
+
+## Diagnóstico de residuos
+
+Si pintamos las [**estimaciones muestrales (insesgadsa) de las autocorrelaciones**]{.hl-yellow} tenemos que [**no decrecen**]{.hl-red}, es decir, no es ruido blanco (queda algo por modelizar)
+
+```{r}
+# alternativa a acf(google$Close) en forma gpglot
+google |>
+  ACF(Close, lag_max = 100) |>
+  autoplot() +
+  labs(title = "Google closing stock price",
+       y = "Estimación muestral de autocorrelaciones",
+       x = "Retardos") +
+  theme_minimal()
+```
+
+
+---
+
+## Diagnóstico de residuos
+
+Para tener una cuantificación inferencial más rigurosa sobre si es o no ruido blanco podemos realizar el [**test de Ljung-Box que nos contrasta si un grupo cualquiera de autocorrelaciones son diferentes de cero**]{.hl-yellow} (se conoce como contrastes Portmanteau a aquellos que en lugar de probar la aleatoriedad en cada retardo distinto, prueba la aleatoriedad "en general")
+
+Para ello usaremos  `features()` con la opción `ljung_box` (ya la usamos para las transformaciones Box-Cox)
+
+```{r}
+google |>
+  features(Close, ljung_box, lag = 10)
+```
+
+Según el contraste hay [**evidencia suficientes para rechazar que sean cero**]{.hl-red} -> no es ruido blanco
+
+---
+
+## Diagnóstico de residuos
+
+¿Pero qué pasa si yo [**diferencio la serie**]{.hl-yellow} (resto a cada valor su instante anterior)? Si ahora te diese dos fotos de la serie, ¿sabrías ahora [**distinguir su instante temporal**]{.hl-yellow}?
+
+```{r}
+ggplot(google) +
+  geom_line(aes(x = Date, y = difference(Close))) +
+  theme_minimal()
+```
+
+---
+
+## Diagnóstico de residuos
+
+¡Todas se desploman!
+
+```{r}
+# alternativa a acf(google$Close) en forma gpglot
+google |>
+  ACF(difference(Close), lag_max = 100) |>
+  autoplot() +
+  labs(title = "Google closing stock price",
+       subtitle = "Serie diferenciada",
+       y = "Estimación muestral de autocorrelaciones",
+       x = "Retardos") +
+  theme_minimal()
+```
+
+
+---
+
+## Diagnóstico de residuos
+
+```{r}
+google |>
+  mutate(diff_close = difference(Close)) |>
+  features(diff_close, ljung_box, lag = 10)
+```
+
+Simplemente aplicando una diferenciación nuestro proceso se ha [**convertido en ruido blanco**]{.hl-yellow}
