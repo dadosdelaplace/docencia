@@ -3098,6 +3098,7 @@ for (days in week_days) {
 Vamos a **combinar las estructuras condicionales y los bucles**: usando el conjunto `swiss` del paquete `{datasets}`, vamos a asignar `NA` si los valores de fertilidad son mayores de 80.
 
 ```{r}
+swiss <- datasets::swiss
 for (i in 1:nrow(swiss)) {
   
   if (swiss$Fertility[i] > 80) { 
@@ -10341,6 +10342,7 @@ Hasta ahora, dados unos datos, conocemos las siguientes fases del proceso:
 Vamos a poner en práctica lo aprendido con el dataset `wine.csv`
 
 ```{r}
+library(readr)
 datos <- read_csv(file = "./datos/wine.csv")
 datos
 ```
@@ -10364,6 +10366,11 @@ Ver más en detalles en <https://doi.org/10.1080/09332480.1995.10542468>
 . . .
 
 [**El objetivo: predecir el precio**]{.hl-yellow}
+
+
+# Clase 10: [regresión lineal]{.flow} {#reg-lineal}
+
+[**Fases de una modelización lineal**]{style="color:#444442;"}
 
 
 ---
@@ -10446,9 +10453,12 @@ Para esta fase haremos uso de los paquetes `{performance}` y `{olsrr}`
 
 ```{r}
 ajuste_AGST <- lm(data = datos, formula = Price ~ AGST)
+```
 
+```{r}
+#| eval: false
 library(performance)
-check_model(ajuste_AGST)
+performance::check_model(ajuste_AGST)
 ```
 
 ---
@@ -10459,7 +10469,7 @@ check_model(ajuste_AGST)
 
 
 ```{r}
-#| code-fold: true
+#| eval: false
 check_model(ajuste_AGST)
 ```
 
@@ -10501,7 +10511,7 @@ ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
 2. [**Homocedasticidad**]{.hl-green}: necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$.
 
 ```{r}
-check_heteroscedasticity(ajuste_AGST)
+performance::check_heteroscedasticity(ajuste_AGST)
 ```
 
 . . .
@@ -10586,7 +10596,7 @@ ggplot(tibble("residuals" = ajuste_AGST$residuals)) +
 $${\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j$$
 
 ```{r}
-check_autocorrelation(ajuste_AGST)
+performance::check_autocorrelation(ajuste_AGST)
 ```
 
 Por último, `check_autocorrelation()` comprueba como efectivamente los [**residuales/errores son independientes**]{.hl-yellow}, haciendo un test de autocorrelación (nos tiene que salir lo contrario a una serie temporal, que el error i no depende del i-1).
@@ -11078,7 +11088,7 @@ datos_extras <-
          "x20" = rnorm(1000), "x21" = rnorm(1000), "x22" = rnorm(1000), "x23" = rnorm(1000))
 ajuste_6pred <- lm(data = datos_extras, formula = y ~ x1 + x2 + x3 + x4 + x5 + x6)
 ajuste_23pred <- lm(data = datos_extras, formula = y ~ .)
-compare_performance(ajuste_lineal, ajuste_6pred, ajuste_23pred)
+performance::compare_performance(ajuste_lineal, ajuste_6pred, ajuste_23pred)
 ```
 
 Con `compare_performance()` podemos comparar métricas de modelos.
@@ -11128,7 +11138,7 @@ ajuste_6 <- lm(data = datos, formula = y6 ~ x)
 ```
 
 ```{r}
-compare_performance(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)
+performance::compare_performance(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)
 ```
 
 ---
@@ -12577,6 +12587,7 @@ library(climaemet)
 Con este paquete podemos hacer una [**búsqueda de estaciones**]{.hl-yellow} para conocer tanto su código postal como su código identificador dentro de la red AEMET
 
 ```{r}
+#| eval: false
 stations <- aemet_stations()
 stations
 ```
@@ -12588,6 +12599,7 @@ stations
 Por ejemplo, para obtener datos de la estación del aeropuerto de El Prat, Barcelona, el código a proporcionar es `«0076»`, obteniendo **datos horarios**.
 
 ```{r}
+#| eval: false
 aemet_last_obs("0076")
 ```
 
