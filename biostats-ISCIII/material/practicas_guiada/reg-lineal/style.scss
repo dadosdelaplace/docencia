@@ -1,0 +1,745 @@
+/*-- scss:defaults --*/
+
+$theme: "ath" !default;
+// Fuentes: Quicksand, KoHo, Alkatra
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400;500;600;700&family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+//
+// Color system
+//
+
+$white:    #ffffff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #373a3c !default;
+$gray-900: #212529 !default;
+$black:    #000000 !default;
+
+$blue:    #2780e3 !default;
+$indigo:  #6610f2 !default;
+$purple:  #170C3A !default;
+$pink:    #A52C60 !default;
+$red:     #CF4446 !default;
+$orange:  #EE6A24 !default;
+$light-orange:  #FB9E07 !default;
+$yellow:  #F6D645 !default;
+$green:   #118230 !default;
+$teal:    #20c997 !default;
+$cyan:    #3093CF !default;
+
+$primary:   $pink !default;
+$secondary: $gray-700 !default;
+$success:   $green !default;
+$info:      $cyan !default;
+$warning:   $orange !default;
+$danger:    $red !default;
+$light:     $gray-400 !default;
+$dark:      $black !default;
+
+// $min-contrast-ratio: 2.6 !default;
+
+// Fonts
+
+
+$font-family-sans-serif: "KoHo" !default;
+
+$headings-font-family: "Quicksand" !default;
+$headings-font-weight: 700 !default;
+
+$navbar-font-family: "Quicksand" !default;
+$toc-font-family: "Quicksand" !default;
+$footer-font-family: "Quicksand" !default;
+
+$font-size-base: 1rem !default; 
+
+// $font-size-base: 1.1rem !default; // Assumes the browser default, typically `16px`
+// $font-size-sm: $font-size-base * .875 !default;
+
+
+// Body
+$body-color: $gray-900 !default;
+
+// Links
+$link-color: #2972A8 !default;
+$link-decoration: underline !default;
+$link-weight: bold !default;
+$link-hover-color: #207864 !default;
+$link-hover-decoration: underline !default;
+
+
+// Inline code
+$code-bg: $gray-200 !default;
+$code-color: $gray-900 !default;
+
+// Code copy
+$btn-code-copy-color-active: #F8DF58 !default;
+
+// TOC
+$toc-color: $orange;
+$toc-font-size: 0.9em;
+
+// Navbar
+$navbar-bg: #1b2021 !default; // #234d6e #207178 #125258
+$navbar-fg: $white !default;
+$navbar-hl: #F8DF58 !default;
+
+// Footer
+$footer-bg: $gray-900 !default;
+$footer-fg: $gray-300 !default;
+
+/*-- scss:rules --*/
+
+$web-font-path: 'https://fonts.googleapis.com/css2?family=Alkatra:wght@400;500;600;700&family=KoHo:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Quicksand:wght@300;400;500;600;700&display=swap' !default;
+
+@if $web-font-path {
+    @import url($web-font-path);
+}
+
+@media(min-width: 1200px){h1,.h1{font-size:1.3rem}}
+
+body {
+    -webkit-font-smoothing: antialiased;
+}
+
+.rtl {
+    direction: rtl;
+}
+
+
+.home {
+    .quarto-title-banner {
+        margin-bottom: 0;
+    }
+}
+
+#title-block-header {
+    &.home {
+        margin-block-end: -1rem;
+    }
+}
+
+.home {
+    .quarto-title-banner {
+        margin-bottom: 0;
+        font-size: 2em !important;
+    }
+
+    #title-block-header {
+        margin-block-end: 0;
+    }
+}
+
+// Shrink blocks of code
+pre.text, pre.sourceCode, .cell-output pre {
+    font-size: 0.775em;
+}
+
+div.sourceCode {
+  border-radius: 0.75rem !important;
+  border: 2px solid !important;
+  border-color: #F8DF58 !important;
+}
+
+.navbar {
+    font-family: $navbar-font-family;
+}
+
+// Put all the icons in a single row in the hamburger menu
+.navbar-nav.navbar-nav-scroll.ms-auto {
+    flex-direction: row;
+}
+
+#TOC {
+    font-family: $toc-font-family;
+    padding-bottom: 0.1em;
+
+    .active {
+        font-weight: 400;
+        color: #2972A8 !important;
+    }
+
+    #toc-title {
+        font-weight: 600;
+    }
+}
+
+.sidebar nav[role="doc-toc"]>ul li a {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+#quarto-margin-sidebar {
+    .quarto-listing-category-title {
+        margin-left: 0.5em;
+    }
+
+    .quarto-listing-category {
+        font-family: $toc-font-family;
+        font-weight: 300;
+        font-size: 1em;
+        line-height: 1.1;
+        padding-left: 0.6rem;
+        margin-left: 0.5em;
+        border-left: 1px solid $gray-200;
+
+        .category {
+            padding-bottom: 0.5rem;
+        }
+
+        .active {
+            font-weight: 400;
+            color: #2972A8 !important;
+        }
+
+        .quarto-category-count {
+            font-weight: 200;
+            font-size: 0.8em;
+            color: $gray-600;
+        }
+    }
+}
+
+.nav-footer {
+    align-items: flex-start;  // Align all flex items to the top
+    flex-wrap: wrap;
+    border: 0 !important;
+    min-height: 3em;
+    font-family: $footer-font-family;
+
+    a {
+        color: #F8DF58;
+    }
+
+    .faux-block {
+        display: block;
+        padding-bottom: 0.4em;
+    }
+
+
+    // In the default Quarto template, .nav-footer-center has position: absolute 
+    // turned on, which makes the div not be a flex item
+    // This changes that so that it *is* a flex item
+    .nav-footer-center {
+        text-align: center;
+        position: inherit;
+        margin-top: 0;
+
+        @media (max-width: map-get($grid-breakpoints, md)) {
+            margin-top: 0.5em;
+            margin-bottom: 1.5em;
+        }
+    }
+
+    // When the screen is medium or smaller, make each footer chunk be 100% width 
+    // and centered; otherwise make them be 33% width and left/right/centerd
+    .nav-footer-left,
+    .nav-footer-right,
+    .nav-footer-center {
+        text-align: center;
+        width: 100%;
+        min-height: 2em;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .nav-footer-left {
+            text-align: left;
+        }
+
+        .nav-footer-right {
+            text-align: right;
+        }
+
+        .nav-footer-left,
+        .nav-footer-right,
+        .nav-footer-center {
+            flex: 1 1 33%;
+        }
+    }
+}
+
+
+#title-block-header {
+
+    .quarto-title-banner {
+        font-family: $headings-font-family;
+        padding-bottom: 10px !important;
+        padding-top: 10px !important;
+
+        .description {
+            font-size: 1.2em;
+            margin-top: 1em !important;
+        }
+    }
+}
+
+// Blog
+.blog {
+    .blog-entry {
+        display: flex;
+        flex-direction: row;
+        font-family: $headings-font-family;
+        line-height: 1.3;
+        margin-bottom: 1.5em;
+        column-gap: 1em;
+
+        .metadata {
+            flex: 0 0 8%;
+        }
+
+        .body {
+            flex: 1 1 auto;
+        }
+
+        .thumbnail {
+            flex: 0 0 25%;
+
+            img {
+                width: 100%;
+                object-fit: cover;
+                max-height: 120px;
+            }
+        }
+
+        .title {
+            font-weight: 500;
+            font-size: 1.3em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-weight: 300;
+            font-size: 1em;
+            margin-bottom: 0.3em;
+        }
+
+        .date {
+            font-weight: 300;
+            font-size: 0.85em;
+            margin-top: 0.3em;
+            text-align: right;
+        }
+
+        .post-categories {
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 0.4em;
+            column-gap: 0.4em;
+            margin: 0.5em 0;
+
+            .post-category {
+                color: $gray-600;
+                border: 1px solid $gray-500;
+                border-radius: 0.25rem;
+                text-transform: uppercase;
+                font-size: 0.65em;
+                padding: 0.15em 0.5em;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.blog-post {
+    .quarto-title .quarto-categories {
+        margin-top: 1.5em;
+
+        .quarto-category {
+            background-color: shift-color($purple, -25%);
+            border-color: shift-color($purple, -45%);
+            color: $white;
+            font-size: 0.65em;
+            opacity: 1;
+        }
+    }
+}
+
+
+// Research
+.quarto-title-block {
+    .haiku {
+        text-align: right;
+        font-family: $headings-font-family;
+        margin: 1.3em 0;
+        font-size: 1.6em;
+        font-weight: 300;
+        font-style: italic;
+    }
+
+    .quarto-title .quarto-categories {
+        padding-bottom: 0;
+        flex-wrap: wrap;
+        row-gap: 0.4em;
+    }
+
+    .project-details {
+        background-color: rgba($red, 0.1);
+        padding: 0.75em;
+        margin: 1em 0;
+    }
+
+    .quarto-title-meta-heading.manual {
+        margin-top: 2em !important;
+    }
+
+    .project-links {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    .project-link {
+        display: inline-block;
+        white-space: nowrap;
+        padding: 0 1em 0 0;
+        font-weight: bold;
+    }
+
+}
+
+.back-nav {
+    margin-bottom: 1.5em;
+}
+
+.research {
+    .back-nav a {
+        color: $white;
+    }
+    
+    .active {
+        font-weight: 400;
+        color: #2972A8 !important;
+    }
+        
+    .quarto-title .quarto-categories .quarto-category {
+        background-color: shift-color($red, -75%);
+        color: $red;
+        font-size: 0.7em;
+        opacity: 1;
+    }
+
+    .project-categories {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0.35em 0 0.35em;
+        padding-top: 0.35em;
+        padding-left: 0.5em;
+        padding-bottom: 0;
+        row-gap: 0.4em;
+        column-gap: 0.4em;
+        font-family: $headings-font-family;
+
+        .project-category {
+            padding: 0.25em 0.75em 0.25em 0em;
+            font-size: 0.7em;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.project-list {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2em;
+
+        li.project {
+            margin-bottom: 2.5em;
+            border-left: 6px solid shift-color($red, -90%);
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+    .project-content {
+        padding-left: 0.5em;
+
+        .status {
+            font-size: 1rem;
+            font-weight: 250;
+            padding: 0.2em;
+            margin-right: 0.5em;
+        }
+    }
+
+    .haiku {
+        margin: 0.4rem 0 0rem;
+        font-family: $headings-font-family;
+        font-weight: 300;
+        font-style: italic;
+        text-align: right;
+        color: $gray-600;
+        font-size: 1.1em;
+
+        @media (max-width: map-get($grid-breakpoints, md)) {
+            font-size: 0.95rem;
+        }
+    }
+
+    ul.project-links {
+        margin-bottom: 0;
+    }
+
+    .project-details-listing {
+        margin-top: 0.8em;
+        background-color: shift-color($red, -90%);
+        font-size: 0.9rem;
+
+        @media (max-width: map-get($grid-breakpoints, md)) {
+            font-size: 0.95rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 0.5em 0.5em 0.5em 1em;
+        }
+
+        .details {
+            background-color: $red;
+            padding-right: 1.5em;
+
+            a {
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
+.teaching {
+    .course-entry {
+        display: flex;
+        flex-direction: row;
+        font-family: $headings-font-family;
+        line-height: 1.3;
+        margin-bottom: 3em;
+        column-gap: 0.7em;
+
+        .body {
+            flex: 1 1 auto;
+        }
+
+        .logo {
+            flex: 0 0 140px;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .course-title {
+            font-weight: 500;
+            font-size: 1.25em;
+            margin-bottom: 0.2em;
+        }
+        
+        .course-details {
+            font-weight: 300;
+            font-size: 0.9em;
+            margin-bottom: 0.5em;
+            color: $gray-800;
+        }
+
+        .course-description {
+            font-weight: 300;
+            font-size: 1.1em;
+            margin-bottom: 0.5em;
+        }
+
+        .course-role {
+            font-weight: 500;
+        }
+
+        ul.course-semesters {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0;
+
+            li {
+                display: inline-block;
+                white-space: nowrap;
+                background-color: $orange;
+                margin: 0 0.2em 0.4em 0;
+                padding: 0.2em 0.4em;
+                font-size: 0.85em;
+                border-radius: 0.25rem;
+
+                &.no-link {
+                    background-color: $white;
+                    border: 1px solid $black;
+                }
+
+                a {
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+
+.talks {
+    .talk-entry {
+        display: flex;
+        flex-direction: row;
+        font-family: $headings-font-family;
+        line-height: 1.3;
+        margin-bottom: 1.5em;
+        column-gap: 1em;
+
+        .body {
+            flex: 1 0 80%;
+        }
+
+        .metadata {
+            flex: 1 0 20%;
+        }
+
+        .title {
+            font-weight: 500;
+            font-size: 1.2em;
+            margin-bottom: 0.2em;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-weight: 300;
+            font-size: 1em;
+            margin-bottom: 0.3em;
+        }
+
+        .date {
+            font-weight: 300;
+            font-size: 0.85em;
+            margin-top: 0.3em;
+            text-align: right;
+        }
+
+        ul.talk-links {
+            padding: 0 0.5em;
+            background-color: shift-color($light-orange, -91%);
+            margin-bottom: 0;
+
+            .talk-link {
+                display: inline-block;
+                white-space: nowrap;
+                margin: 0;
+                padding: 0.5em 1em 0.5em 0;
+                font-size: 0.85em;
+            }
+        }
+    }
+}
+
+.cv-download {
+    font-family: $headings-font-family;
+    background-color: #FFE64A;
+    border-color: #FFE64A; // FFDC00
+    color: $black;
+
+    &:hover {
+        background-color: #cf4446;
+        border-color: #cf4446;
+        color: $white;
+    }
+}
+
+// code
+.code-tools-button {
+    position: relative;
+    left: 5em;
+
+    @media (max-width: map-get($grid-breakpoints, md)) {
+        left: 0;
+    }
+}
+
+code span.fu {
+  color: #4D83BF !important; // a1ffe2 5bffcb
+  font-weight: bold !important;
+}
+
+code span.at {
+  color: #2972A8 !important; // a1ffe2
+}
+
+code span.sc {
+  color: #ffad6f !important; // a1ffe2
+}
+
+code span.st {
+  color: #f97fb8 !important; // a1ffe2
+  font-weight: bold !important;
+}
+
+code span.ot {
+  color: #30ad7e !important; // a1ffe2
+}
+
+
+code span.va {
+  color: #ffffff !important; // ffee00
+  font-weight: bold !important;
+}
+
+code span.op {
+   color: #ffad6f !important;
+}
+
+code span.kw {
+  color: #ffee00 !important; // ffad6f
+}
+
+code span.fl {
+  color: #4D83BF !important; /* #9ac9ff */
+  font-weight: bold !important;
+}
+
+// highlight
+
+.hl-yellow{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #F8DF58 35%
+  );
+}
+
+.hl-red{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #EEB0B1 35%
+  );
+}
+
+.hl-purple{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #CAB0EE 35%
+  );
+}
+
+.hl-green{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #B0EED1 35%
+  );
+}
+
+.hl-orange{
+   background: linear-gradient(
+    to bottom,
+    transparent 65%,
+    #EFD3A7 35%
+  );
+}
+

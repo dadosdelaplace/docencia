@@ -1,0 +1,308 @@
+---
+title: "Predicción de colesterol"
+format:
+  html:
+    theme: styles.scss
+    embed-resources: true
+---
+
+
+
+## Ejercicio 1
+
+> Descárgate el fichero `colesterol.csv`, muévelo a la carpeta de tu proyecto y carga el archivo. Carga antes las librerías que vayas a necesitar
+
+```{r}
+#| eval: false
+library(...)
+datos <- ...
+datos
+```
+
+## Ejercicio 2
+
+> Usa tidyverse para limpair de ausentes tu variable objetivo (colesterol)
+
+```{r}
+#| eval: false
+datos <-
+  datos |> 
+  ...(colesterol)
+datos
+```
+
+
+## Ejercicio 3
+
+> Visualiza tu variable objetivo (colesterol)
+
+```{r}
+#| eval: false
+ggplot(...) +
+  geom_...(...) +
+  theme_minimal()
+```
+
+
+## Ejercicio 4
+
+> ¿Tiene la misma distribución para cada sexo? Visualiza tu variable objetivo (colesterol) desagregada por sexos (elimina antes los ausentes en dicha variable)
+
+```{r}
+#| eval: false
+ggplot(datos |> ...) +
+  geom_boxplot(aes(...),
+               alpha = 0.7) +
+  theme_minimal()
+```
+
+## Ejercicio 5
+
+> Crea un modelo lineal con todas las variables como predictoras y visualiza lo que te sale. ¿Qué está pasando con la variable sexo?
+
+Pista: cuando queremos generar un modelo con todas las variables no es necesario escribirlas todas basta con escribirlo de la siguiente manera `formula = y ~ .`. 
+
+```{r}
+#| eval: false
+modelo <- lm(..., ...)
+modelo |> summary()
+```
+
+> Repite el modelo lineal solo usando variables numéricas como predictoras. Interpreta la salida
+
+
+```{r}
+#| eval: false
+modelo <- ...
+modelo |> summary()
+```
+
+
+## Ejercicio 6
+
+> Calcula el ANOVA para comprobar si existe al menos un $\beta$ del modelo distinto de 0. Interpreta la salida todo lo que puedas.
+
+```{r}
+#| eval: false
+modelo |> ...
+```
+
+## Ejercicio 7
+
+> ¿Por qué no podemos quitar todas las variables no significativas de golpe? Tras razonar haz uso de la función `stepAIC` del paquete `{MASS}` para seleccionar las variables del modelo de manera iterativa
+ 
+```{r}
+#| eval: false
+modelo |> ...
+```
+ 
+
+> En función del modelo final obtenido plantea tu modelo final y comprueba que todos tus parámetros sean significativos. 
+
+```{r}
+#| eval: false
+modelo <- lm(data = datos, formula = colesterol ~ ...)
+modelo |> summary()
+
+# comprueba que todos tus parámetros sean significativos
+# y quita variables si lo necesitas
+modelo <- ...
+```
+
+
+## Ejercicio 8
+
+> Comprueba las hipótesis del modelo. ¿Se cumplen todas?
+
+
+**Linealidad**
+
+- Test estadístico
+
+```{r}
+#| eval: false
+fitted_vs_res <- 
+  tibble(..., ...)
+linealidad <- lm(data = fitted_vs_res,
+                 formula = ...)
+linealidad |> summary()
+```
+
+- Comprobación gráfica
+
+```{r}
+#| eval: false
+ggplot(fitted_vs_res, ...) +
+  geom_... +
+  geom_... +
+  theme_minimal()
+```
+
+
+**Homocedasticidad**
+
+- Test estadístico
+
+```{r}
+#| eval: false
+performance::check_...(modelo)
+```
+
+
+- Comprobación gráfica
+
+```{r}
+#| eval: false
+ggplot(...,
+       aes(x = id, y = residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  theme_minimal()
+```
+
+
+**Normalidad**
+
+- Test estadístico
+
+```{r}
+#| eval: false
+library(olsrr)
+...(modelo)
+```
+
+- Comprobación gráfica
+
+```{r}
+#| eval: false
+ggplot(...) +
+  stat_...(aes(...)) +
+  stat_..._...(aes(...))
+```
+
+
+**Independencia de residuos**
+
+
+- Test estadístico
+
+```{r}
+#| eval: false
+performance::check_...(modelo)
+```
+
+- Comprobación gráfica
+
+```{r}
+#| eval: false
+lagged_res <- tibble(..., ...)
+ggplot(lagged_res, ...)+
+  geom_... + 
+  theme_minimal()
+```
+
+
+## Ejercicio 9
+
+> Evalua el modelo enfrentando los valores de tu variable objetivo frente a los valores ajustados (`modelo$fitted.values`). ¿Se ajustan bien a la recta?
+
+
+```{r}
+#| eval: false
+datos_modelo <-
+  datos |> 
+  drop_na(edad, actividad_fisica)
+ggplot(tibble(...), aes(x = y, y = y_est)) +
+  geom_... +
+  geom_...(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(x = "Valores reales", y = "Valores estimados")
+```
+
+
+## Ejercicio 10 
+
+En caso de que des tu modelo por válido interprétalo. 
+
+- ¿Que significan los $\beta$ obtenidos?
+
+- ¿Cuál es la función de la recta obtenida?
+
+- ¿Si tuvieramos un nuevo paciente con una edad de 51 años y 2 unidades de actividad física, cuál estimaríamos que sería su colesterol?
+
+
+```{r}
+#| eval: false
+modelo |> summary()
+```
+
+**Interpretación**
+
+- Intercept: ...
+
+- Predictora 1: ...
+
+- ...: ...
+
+El valor esperado de $Y$ es $\beta_0+\beta_1x_1 + ... = ... + ...*edad + ...$. Entonces si el paciente tuviera 51 años y actividad física de 2, su colesterol esperado sería de ... 
+
+```{r}
+#| eval: false
+predict(...)
+```
+
+> Haz otra predicción para un paciente de 15 años y actividad fisica de 4
+
+```{r}
+#| eval: false
+```
+
+
+
+## Ejercicio 11
+
+> ¿Cómo de fiable son las predicciones anteriores?
+
+
+
+```{r}
+#| eval: false
+modelo |> summary()
+```
+
+...
+
+> Usa el paquete `{performance}` para comparar cómo funcionaría el modelo ganador vs el modelo saturado (haz el modelo con todas las variables). Para comparar puedes usar `compare_performance(modelo1, modelo2, modelo3, ...)`
+
+```{r}
+#| eval: false
+modelo_saturado <- ...
+performance::compare_performance(modelo, modelo_saturado)
+```
+
+...
+
+> Crea 3 datasets distintos `datos_ruido_3`, `datos_ruido_7` y `datos_ruido_15` modificando tu variable colesterol para añadirle ruido aleatorio usando `rnorm(..., ..., sd = 3)`, `rnorm(..., ..., sd = 7)` y `rnorm(..., ..., sd = 15)`. Realiza el mismo ajuste que tu modelo ganador (con las mismas predictoras, ya que la parte que puedes predecir no ha cambiado) y compáralos con `compare_performance()`
+
+```{r}
+#| eval: false
+datos_ruido_3 <-
+  datos |> 
+  mutate("colesterol" = colesterol + rnorm(..., ..., sd = 3))
+datos_ruido_7 <- ...
+datos_ruido_15 <- ...
+
+modelo_ruido_3 <- ...
+modelo_ruido_7 <- ...
+modelo_ruido_15 <- ...
+
+performance::compare_performance(modelo,
+                                 ..., ..., ...)
+
+```
+
+... 
+
+
+
+
+
