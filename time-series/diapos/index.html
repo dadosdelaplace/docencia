@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-15 00:55:27 CET"</code></pre>
+<pre><code>[1] "2024-11-15 15:16:14 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -2673,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean   median
-                                y &lt;- x^2    1.681    1.968    2.244258    2.091
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1365.095 1388.363 1475.961542 1403.553
-       uq      max neval
-    2.255    7.380   500
- 1445.045 5001.754   500</code></pre>
+                                    expr      min        lq        mean
+                                y &lt;- x^2    1.722    2.2755    3.079182
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1368.908 1621.2425 2117.548976
+   median       uq       max neval
+    2.583    3.198    15.457   500
+ 1757.198 1929.870 30093.672   500</code></pre>
 </div>
 </div>
 </section>
@@ -4751,16 +4751,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.289  sd_0.5
- 2     2 -0.193  sd_0.5
- 3     3 -1.00   sd_0.5
- 4     4 -0.191  sd_0.5
- 5     5 -0.747  sd_0.5
- 6     6 -0.175  sd_0.5
- 7     7 -0.0810 sd_0.5
- 8     8  0.325  sd_0.5
- 9     9 -0.346  sd_0.5
-10    10  0.193  sd_0.5
+ 1     1  0.537  sd_0.5
+ 2     2 -1.05   sd_0.5
+ 3     3 -0.644  sd_0.5
+ 4     4  0.117  sd_0.5
+ 5     5  0.585  sd_0.5
+ 6     6 -0.788  sd_0.5
+ 7     7 -1.04   sd_0.5
+ 8     8 -0.441  sd_0.5
+ 9     9  0.109  sd_0.5
+10    10 -0.0355 sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5144,16 +5144,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd         X_t
    &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5  0.427 
- 2     2 sd_0.5  0.175 
- 3     3 sd_0.5  0.273 
- 4     4 sd_0.5 -0.967 
- 5     5 sd_0.5  0.0124
- 6     6 sd_0.5 -0.124 
- 7     7 sd_0.5 -0.393 
- 8     8 sd_0.5 -0.670 
- 9     9 sd_0.5 -0.250 
-10    10 sd_0.5  0.400 
+ 1     1 sd_0.5 -0.105 
+ 2     2 sd_0.5 -0.161 
+ 3     3 sd_0.5  0.132 
+ 4     4 sd_0.5 -0.460 
+ 5     5 sd_0.5  0.0920
+ 6     6 sd_0.5 -0.711 
+ 7     7 sd_0.5  1.27  
+ 8     8 sd_0.5  0.443 
+ 9     9 sd_0.5  0.155 
+10    10 sd_0.5  0.337 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -8506,7 +8506,7 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 </section></section>
 <section>
 <section id="clase-17" class="title-slide slide level1 center">
-<h1>Clases 17: <span class="flow">procesos estacionarios</span></h1>
+<h1>Clases 17: <span class="flow">procesos MA</span></h1>
 
 </section>
 <section id="correlogramas" class="slide level2">
@@ -8670,22 +8670,23 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <p>En las próximas clases trabajaremos siempre suponiendo que nuestros procesos ya son <span class="hl-yellow"><strong>estacionarios</strong></span>. Veremos más adelante qué hacer cuando <span class="hl-yellow"><strong>no son estacionarios en media</strong></span> o <span class="hl-yellow"><strong>en varianza</strong></span></p>
 <div class="fragment">
 <p>Un resultado importante (se conoce como Teorema de descomposición de Wald) es que <span class="hl-yellow"><strong>cualquier proceso estacionario puede transformado en un proceso lineal</strong></span> definido como</p>
-<p><span class="math display">\[X_t = \mu  + \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j} \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<p><span class="math display">\[X_t = \mu  + \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j} \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span> Un proceso lineal es por tanto la <span class="hl-yellow"><strong>combinación lineal de instantes de ruido blanco</strong></span> tal que los coeficientes sean absolutamente sumables.</p>
 </div>
 </section>
 <section id="procesos-lineales-1" class="slide level2">
 <h2>Procesos lineales</h2>
-<p><span class="math display">\[X_t = \mu + \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span> Si te fijas hay una constante inicial <span class="math inline">\(\mu\)</span> que representa la media (a largo plazo) del proceso ya que, dado que la esperanza es lineal y <span class="math inline">\(\left\lbrace \varepsilon_{t} \right\rbrace\)</span> es ruido blanco, <span class="math inline">\(E \left[ X_t \right] = \mu + \sum_{j = -\infty}^{j=\infty} \Psi_j E \left[ \varepsilon_{t-j} \right] = \mu\)</span></p>
+<p><span class="math display">\[X_t = \mu + \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span> Si te fijas hay una <span class="hl-yellow"><strong>constante inicial <span class="math inline">\(\mu\)</span> que representa la media (a largo plazo)</strong></span> del proceso ya que, dado que la esperanza es lineal y <span class="math inline">\(\left\lbrace \varepsilon_{t} \right\rbrace\)</span> es ruido blanco, entonces</p>
+<p><span class="math display">\[E \left[ X_t \right] = \mu + \sum_{j = -\infty}^{j=\infty} \Psi_j E \left[ \varepsilon_{t-j} \right] = \mu\]</span></p>
 <div class="fragment">
-<p>De ahora en adelante asumiremos que <span class="math inline">\(\mu = 0\)</span> ya que sino lo fuese basta con usar <span class="math inline">\(X_t = X_t - \mu\)</span></p>
+<p>De ahora en adelante <span class="hl-yellow"><strong>asumiremos que <span class="math inline">\(\mu = 0\)</span> (proceso centrado)</strong></span> ya que sino lo fuese basta con usar <span class="math inline">\(X_t = X_t - \mu\)</span></p>
 </div>
 </section>
 <section id="procesos-ma" class="slide level2">
 <h2>Procesos MA</h2>
-<p><span class="math display">\[X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<p><span class="math display">\[X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad  \text{proceso lineal}\]</span></p>
 <p>Uno de los tipos de procesos lineales más importantes son los conocidos como <span class="hl-yellow"><strong>procesos de medias moviles (MA)</strong></span> definidos como</p>
 <p><span class="math display">\[X_t = \varepsilon - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
-<p>donde <span class="math inline">\(q\)</span> será el <strong>orden</strong> (lo llamaremos <span class="hl-yellow"><strong>procesos de medias moviles de orden q o MA(q)</strong></span>). Si te fijas es un <strong>caso particular de proceso lineal</strong> donde todos los coeficientes son 0 salvo <span class="math inline">\(\left(-\theta_1,\ldots, -\theta_q \right)\)</span>.</p>
+<p>donde <span class="math inline">\(q\)</span> será el <strong>orden</strong> (lo llamaremos <span class="hl-yellow"><strong>procesos de medias moviles de orden q o MA(q)</strong></span>). Si te fijas es un <strong>caso particular de proceso lineal</strong> donde todos los coeficientes son 0 salvo <span class="hl-green"><strong><span class="math inline">\(\left(\Psi_0 = 1, \Psi_1 = -\theta_1,\ldots, \Psi_q = -\theta_q \right)\)</span></strong></span>.</p>
 </section>
 <section id="procesos-ma-1" class="slide level2">
 <h2>Procesos MA</h2>
@@ -8699,59 +8700,69 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <p><span class="math display">\[B \left( X_t \right) := B  X_t = X_{t-1}\]</span></p>
 <div class="fragment">
 <p>De esta forma, si queremos el <strong>retardo s</strong> de la serie basta con hacer</p>
-<p><span class="math display">\[B^s(X_t) = B^{s-1} (X_{t-1}) =  B^{s-1} \left( B X_t \right)  = B^{s-2} \left(  X_{t-2} \right)  = ... = X_{t-s}\]</span></p>
+<p><span class="math display">\[B^s(X_t) = B^{s-1} (X_{t-1})  = B^{s-2} \left(  X_{t-2} \right) = B^{s-3} \left(  X_{t-3} \right)  = ... = X_{t-s}\]</span></p>
 </div>
 </section>
 <section id="operador-de-retardos-1" class="slide level2">
 <h2>Operador de retardos</h2>
 <p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} , \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
-<p><span class="math display">\[B^s(X_t) = B^{s-1} (X_{t-1}) =  B^{s-1} \left( B X_t \right)  = B^{s-2} \left(  X_{t-2} \right)  = ... = X_{t-s}\]</span></p>
-<p>El proceso anteriormente como <span class="math inline">\(MA(q)\)</span> se puede por tanto <span class="hl-yellow"><strong>expresar en función del operador de retardos</strong></span> como</p>
+<p>El proceso anteriormente definido como <span class="math inline">\(MA(q)\)</span> se puede por tanto <span class="hl-yellow"><strong>expresar en función del operador de retardos</strong></span> como</p>
 <p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}  = \varepsilon_{t} - \theta_1 B\varepsilon_t - \ldots -  \theta_q B^{q}\varepsilon_t \nonumber \\ &amp;=&amp; \left( 1 -\theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_{q} \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber \end{eqnarray}\]</span></p>
-</section>
-<section id="operador-de-retardos-2" class="slide level2">
-<h2>Operador de retardos</h2>
-<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}  = \varepsilon_{t} - \theta_1 B\varepsilon_t - \ldots -  \theta_q B^{q}\varepsilon_t \nonumber \\ &amp;=&amp; \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_{q} \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber \end{eqnarray}\]</span></p>
-<p>Fíjate que</p>
-<p><span class="math display">\[\begin{eqnarray}\Theta_{q} \left(B \right) &amp;=&amp; \displaystyle \sum_{j=0}^{\infty} \Psi_j B^{j} \nonumber \\ \Psi_0 &amp;=&amp; 1, \nonumber \\ \Psi_j &amp;=&amp; -\theta_j, \quad j =1, \ldots,q,\nonumber \\ \Psi_j &amp;=&amp; 0, \quad j &gt; q\end{eqnarray}\]</span></p>
-<p>Dicho polinomio se le conoce como el <span class="hl-yellow"><strong>polinomio de retardos o filtro lineal de retardos de orden <span class="math inline">\(q\)</span></strong></span></p>
+<div class="fragment">
+<p>El <span class="hl-yellow"><strong>polinomio de retardos o polinomio de media móvil de orden <span class="math inline">\(q\)</span></strong></span> <span class="math inline">\(\Theta_{q} \left(B \right)\)</span> será el que defina nuestro proceso</p>
+<p><span class="math display">\[\Theta_{q} \left(B \right) = \displaystyle \sum_{j=0}^{\infty} \Psi_j B^{j}, \quad \Psi_0 = 1,~\Psi_j = -\theta_j ~(j =1, \ldots,q),\quad \Psi_j = 0 ~(j &gt; q)\]</span></p>
+</div>
 </section>
 <section id="proceso-ma" class="slide level2">
 <h2>Proceso MA</h2>
-<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}  = \varepsilon_{t} - \theta_1 B\varepsilon_t - \ldots - \theta_q B^{q}\varepsilon_t \nonumber \\ &amp;=&amp; \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber \end{eqnarray}\]</span></p>
-<p>Dale valores <span class="math inline">\(q=1, 2, 3\)</span> y escribe cómo quedaría el proceso</p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}  = \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_q \left(B \right)\varepsilon_t\]</span></p>
+<p>Dale valores <span class="math inline">\(q=1, 2, 3, 4\)</span> y escribe cómo quedaría el proceso</p>
 <div class="fragment">
 <ul>
 <li><p><strong>MA(1)</strong>: <span class="math inline">\(X_t = \Theta_1 \left(B \right)\varepsilon_t = \left(1 - \theta_1 B \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}\)</span></p></li>
 <li><p><strong>MA(2)</strong>: <span class="math inline">\(X_t = \Theta_2 \left(B \right)\varepsilon_t = \left(1 - \theta_1 B - \theta_2 B^2 \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2}\)</span></p></li>
 <li><p><strong>MA(3)</strong>: <span class="math inline">\(X_t = \Theta_3 \left(B \right)\varepsilon_t = \left(1 - \theta_1 B - \theta_2 B^2 - \theta_3 B^3 \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2} - \theta_3 \varepsilon_{t-3}\)</span></p></li>
+<li><p><strong>MA(4)</strong>: <span class="math inline">\(X_t = \Theta_4 \left(B \right)\varepsilon_t = \left(1 - \theta_1 B - \theta_2 B^2 - \theta_3 B^3 - \theta_4 B^4 \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2} - \theta_3 \varepsilon_{t-3} - \theta_4 \varepsilon_{t-4}\)</span></p></li>
 </ul>
 </div>
 </section>
 <section id="proceso-ma-1" class="slide level2">
 <h2>Proceso MA</h2>
-<p><span class="math display">\[X_t = \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber\]</span></p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}   = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
 <p><span class="hl-yellow"><strong>¿Es un proceso estacionario?</strong></span></p>
 </section>
 <section id="proceso-ma-2" class="slide level2">
 <h2>Proceso MA</h2>
-<p><span class="math display">\[X_t = \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber\]</span></p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}   = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
 <ol type="1">
-<li><span class="hl-yellow"><strong>Media</strong></span>:</li>
+<li><span class="hl-yellow"><strong>Media</strong></span>: dado que <span class="math inline">\(\left\lbrace \varepsilon_{t} \right\rbrace\)</span> es ruido blanco</li>
 </ol>
-<p><span class="math display">\[E\left[X_t \right] = \left( 1 - \theta_1  - \ldots - \theta_q \right)E\left[ \varepsilon_{t} \right] = 0  \quad \text{(o bien } \mu \text{ si no está centrado)}\]</span></p>
-<p><span class="hl-green"><strong>Media constante en el tiempo</strong></span></p>
+<p><span class="math display">\[\begin{eqnarray}E\left[X_t \right] &amp;=&amp; \left(E\left[ \varepsilon_{t} \right] - \theta_1 E\left[ \varepsilon_{t-1} \right]  - \ldots - \theta_q E\left[ \varepsilon_{t-q} \right] \right) \nonumber \\ &amp;=&amp; \left( 1 - \theta_1  - \ldots - \theta_q \right)E\left[ \varepsilon_{t} \right] = 0  \quad \text{(o bien } \mu \text{ si no está centrado)}\end{eqnarray}\]</span></p>
+<div class="fragment">
+<p><span class="hl-green"><strong>✅ Media constante en el tiempo</strong></span></p>
+</div>
 </section>
 <section id="proceso-ma-3" class="slide level2">
 <h2>Proceso MA</h2>
-<p><span class="math display">\[X_t = \left( 1 - \theta_1 B - \ldots - \theta_q B^{q} \right)\varepsilon_t = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber\]</span></p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}   = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
 <ol start="2" type="1">
-<li><span class="hl-yellow"><strong>Varianza</strong></span>:</li>
+<li><span class="hl-yellow"><strong>Varianza</strong></span>: dado que <span class="math inline">\(\left\lbrace \varepsilon_{t} \right\rbrace\)</span> es ruido blanco</li>
 </ol>
-<p><span class="math display">\[Var\left[X_t \right] = \left(1 + \theta_{1}^{2} + \ldots + \theta_{q}^2  \right) \sigma_{\varepsilon}^2 = cte \quad \text{¿pero finita?}\]</span></p>
+<p><span class="math display">\[\begin{eqnarray}Var\left[X_t \right] &amp;=&amp; \left(Var\left[\varepsilon_{t}\right] + \theta_{1}^{2} Var\left[\varepsilon_{t-1}\right] + \ldots + \theta_{q}^2  Var\left[\varepsilon_{t-1}\right] \right)  \nonumber \\ &amp;=&amp; \left(1 + \theta_{1}^{2} + \ldots + \theta_{q}^2  \right) \sigma_{\varepsilon}^2 = cte \quad \text{¿pero finita?}\end{eqnarray}\]</span></p>
 <div class="fragment">
 <p><span class="math display">\[\left(1 + \theta_{1}^{2} + \ldots + \theta_{q}^2  \right)  &lt; \infty \iff q &lt; \infty \quad \text{y además} \quad \left| \theta_j \right| &lt; \infty\]</span></p>
-<p><span class="hl-green"><strong>Varianza constante (y finita) en el tiempo</strong></span></p>
+<p><span class="hl-green"><strong>✅ Varianza constante (y finita) en el tiempo</strong></span></p>
+</div>
+</section>
+<section id="proceso-ma-4" class="slide level2">
+<h2>Proceso MA</h2>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}   = \Theta_q \left(B \right)\varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Autocovarianzas</strong></span>:</li>
+</ol>
+<p><span class="math display">\[\begin{eqnarray}\gamma_h &amp;=&amp; Cov \left( X_t, X_{t+h} \right) = E \left[ \left( \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}\right) \left( \varepsilon_{t+h} - \theta_1 \varepsilon_{t+h-1} - \ldots - \theta_q \varepsilon_{t+h-q}\right)  \right] \nonumber \\ &amp;=&amp; E \left[ \varepsilon_t \varepsilon_{t+h} \right]  - \theta_1 E \left[ \varepsilon_{t}  \varepsilon_{t+h-1} \right] - \ldots  - \theta_q E \left[ \varepsilon_{t}  \varepsilon_{t+h-q} \right] \nonumber \\ &amp;-&amp; \theta_1 E \left[ \varepsilon_{t-1} \varepsilon_{t+h} \right]  + \theta_{1}^2 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-1} \right] + \ldots  + \theta_1\theta_q E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-q} \right] \nonumber \\ &amp; &amp; ... \nonumber \\ &amp;-&amp; \theta_q E \left[ \varepsilon_{t-q} \varepsilon_{t+h} \right]  + \theta_{1}\theta_{q} E \left[ \varepsilon_{t-q}  \varepsilon_{t+h-1} \right] + \ldots  + \theta_{q}^{2} E \left[ \varepsilon_{t-q}  \varepsilon_{t+h-q} \right]\end{eqnarray}\]</span></p>
+<div class="fragment">
+<p>Para verlo más sencillo analicemos primero <span class="hl-yellow"><strong>los casos particulares <span class="math inline">\(q=1\)</span> y <span class="math inline">\(q=2\)</span></strong></span></p>
 </div>
 </section>
 <section id="ma1" class="slide level2">
@@ -8762,9 +8773,9 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 </ol>
 <p><span class="math display">\[\begin{eqnarray}\gamma_h &amp;=&amp; Cov \left( X_t, X_{t+h} \right) = E \left[ \left( \varepsilon_t - \theta_1 \varepsilon_{t-1}\right) \left( \varepsilon_{t+h} - \theta_1 \varepsilon_{t+h-1}\right)\right] \nonumber \\ &amp;=&amp; E \left[ \varepsilon_t \varepsilon_{t+h} \right]  - \theta_1 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h} \right] - \theta_1 E \left[ \varepsilon_{t}  \varepsilon_{t+h-1} \right] + \theta_{1}^2 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-1} \right]\end{eqnarray}\]</span></p>
 <ul>
-<li><p><span class="math inline">\(h = 0\)</span> -&gt; <span class="math inline">\(\gamma_0 = \sigma^2 + \theta_{1}^2 \sigma^2 = \left(1 + \theta_{1}^2 \right) \sigma^2\)</span></p></li>
-<li><p><span class="math inline">\(h = 1\)</span> -&gt; <span class="math inline">\(\gamma_1 = -\theta_1 \sigma^2\)</span></p></li>
-<li><p><span class="math inline">\(h &gt; 1\)</span> -&gt; <span class="math inline">\(\gamma_h = 0\)</span></p></li>
+<li><p><span class="hl-purple"><strong><span class="math inline">\(h = 0\)</span></strong></span> –&gt; <span class="math inline">\(\gamma_0 = E \left[ \varepsilon_t \varepsilon_t \right] + \theta_{1}^ 2E \left[ \varepsilon_{t-1} \varepsilon_{t-1} \right] = \sigma^2 + \theta_{1}^2 \sigma^2 = \left(1 + \theta_{1}^2 \right) \sigma^2\)</span></p></li>
+<li><p><span class="hl-purple"><strong><span class="math inline">\(h = 1\)</span></strong></span> –&gt; <span class="math inline">\(\gamma_1 = -\theta_1 \sigma^2\)</span></p></li>
+<li><p><span class="hl-purple"><strong><span class="math inline">\(h &gt; 1\)</span></strong></span> –&gt; <span class="math inline">\(\gamma_h = 0\)</span></p></li>
 </ul>
 </section>
 <section id="ma1-1" class="slide level2">
@@ -8773,28 +8784,13 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <ol start="3" type="1">
 <li><span class="hl-yellow"><strong>Autocorrelaciones</strong></span>:</li>
 </ol>
-<p><span class="math display">\[\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} \frac{\gamma_h}{\gamma_0} = 1 \quad &amp; &amp;h = 0, \nonumber \\ \frac{\gamma_1}{\gamma_0} = \frac{-\theta_1 \sigma^2}{\left(1 + \theta_{1}^2 \right) \sigma^2} = \frac{-\theta_1}{1 + \theta_{1}^2}\quad &amp; &amp;h = 1, \nonumber \\ 0  \quad &amp; &amp;h &gt; 1\end{cases}\end{eqnarray}\]</span></p>
-<p>Fíjate que el <span class="hl-yellow"><strong>signo de <span class="math inline">\(\rho_h\)</span> depende del signo de <span class="math inline">\(\theta_1\)</span></strong></span> y que a partir de <span class="math inline">\(h\)</span> las autocorrelaaciones son 0 (se dice que es <span class="hl-yellow"><strong>q-correlacionado</strong></span>)</p>
+<p><span class="math display">\[\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} \frac{\gamma_0}{\gamma_0} = 1 \quad &amp; &amp;h = 0, \nonumber \\ \frac{\gamma_1}{\gamma_0} = \frac{-\theta_1 \sigma^2}{\left(1 + \theta_{1}^2 \right) \sigma^2} = \frac{-\theta_1}{1 + \theta_{1}^2}\quad &amp; &amp;h = 1, \nonumber \\ 0  \quad &amp; &amp;h &gt; 1\end{cases}\end{eqnarray}\]</span></p>
+<p>Fíjate que el <span class="hl-yellow"><strong>signo de <span class="math inline">\(\rho_h\)</span> será el contrario al signo de <span class="math inline">\(\theta_1\)</span></strong></span> y que, a partir de <span class="math inline">\(q\)</span>, las autocorrelaciones son 0 (se dice que es <span class="hl-yellow"><strong>q-correlacionado</strong></span>)</p>
 </section>
 <section id="ma1-2" class="slide level2">
 <h2>MA(1)</h2>
-<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco con var } \sigma^2 \nonumber\]</span></p>
-<p>Si te fijas tenemos que <span class="math inline">\(\varepsilon_t = X_t + \theta_1 \varepsilon_{t-1}\)</span> por lo que sustituyendo tenemos que</p>
-<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t + \theta_1 \left( X_{t-1} + \theta_1 \varepsilon_{t-2} \right) = \varepsilon_t + \theta_1  X_{t-1} + \theta_{1}^2 \varepsilon_{t-2} \nonumber \\ &amp;=&amp; \varepsilon_t + \theta_1  X_{t-1} + \theta_{1}^2 X_{t-1} + \theta_{1}^{3} \varepsilon_{t-3}\nonumber \\ &amp;=&amp; \varepsilon_{t} + \sum_{j=0}^{\infty} \theta_{1}^{j} X_{t-j}\end{eqnarray}\]</span></p>
-<div class="fragment">
-<p>Parece lógico <span class="hl-yellow"><strong>asumir que los valores más cercanos influyan más que los valores más retardados</strong></span> por lo que <span class="math inline">\(\left| \theta_{1}\right|^{j}\)</span> debe disminuir con el retardo, es decir, <span class="hl-yellow"><strong>necesitamos que <span class="math inline">\(\left| \theta_{1}\right| &lt; 1\)</span></strong></span></p>
-</div>
-</section>
-<section id="condición-de-invertibilidad" class="slide level2">
-<h2>Condición de invertibilidad</h2>
-<p>Dicha condición <span class="math inline">\(\left| \theta_{1}\right| &lt; 1\)</span> se la conoce como <span class="hl-yellow"><strong>condición de invertibilidad</strong></span> ya que nos permite expresar los errores en función de <span class="math inline">\(X_t\)</span> tal que</p>
-<p><span class="math display">\[ \varepsilon_{t} = X_t + \theta_1 \varepsilon_{t-1} = X_t + \theta_1 \left( X_{t-1} + \theta_1 \varepsilon_{t-2} \right) = \ldots = \sum_{j=0}^{\infty} \theta_{1}^{j}X_{t-j} \]</span> . . .</p>
-<p>Dicha serie solo convergerá si <span class="math inline">\(\sum_{j=0}^{\infty} \theta_{1}^{j} &lt; \infty\)</span>, es decir, si y solo sí <span class="math inline">\(\left| \theta_1 \right| &lt; 1\)</span></p>
-</section>
-<section id="ma1-3" class="slide level2">
-<h2>MA(1)</h2>
-<p>Diseña una función para simular <span class="math inline">\(n\)</span> trayectorias de un <span class="math inline">\(MA(1)\)</span> en función de <span class="math inline">\(\left(n,~\sigma,~\theta_1, \varepsilon_1\right)\)</span></p>
-<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco con var } \sigma^2 \nonumber\]</span></p>
+<p><span class="hl-yellow"><strong>💻 Diseña una función</strong></span> para simular <span class="math inline">\(n\)</span> trayectorias de un <span class="math inline">\(MA(1)\)</span> en función de <span class="math inline">\(\left(n,~\sigma,~\theta_1, \varepsilon_1\right)\)</span></p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco con varianza } \sigma^2 \nonumber\]</span></p>
 <div class="cell">
 <details>
 <summary>Código</summary>
@@ -8810,9 +8806,9 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 </details>
 </div>
 </section>
-<section id="ma1-4" class="slide level2">
+<section id="ma1-3" class="slide level2">
 <h2>MA(1)</h2>
-<p>Aplícala para <span class="math inline">\(n = 300\)</span>, <span class="math inline">\(\sigma = 3\)</span>, <span class="math inline">\(\varepsilon_1 = 0\)</span> y <span class="math inline">\(\theta_1 = (-0.3, 1.5)\)</span></p>
+<p>💻 <span class="hl-yellow"><strong>Aplica dicha función</strong></span> para <span class="math inline">\(n = 300\)</span>, <span class="math inline">\(\sigma = 3\)</span>, <span class="math inline">\(\varepsilon_1 = 0\)</span> y <span class="math inline">\(\theta_1 = (-0.3, -1.5)\)</span></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
@@ -8833,9 +8829,9 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <details>
 <summary>Código</summary>
 <div class="sourceCode cell-code" id="cb507"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb507-1"><a href="#cb507-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
-<span id="cb507-2"><a href="#cb507-2"></a><span class="fu">ggplot</span>(<span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="fl">1.5</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb507-2"><a href="#cb507-2"></a><span class="fu">ggplot</span>(<span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb507-3"><a href="#cb507-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
-<span id="cb507-4"><a href="#cb507-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MA(1) con theta_1 = 0.3 y sigma = 3"</span>) <span class="sc">+</span></span>
+<span id="cb507-4"><a href="#cb507-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MA(1) con theta_1 = -1.5 y sigma = 3"</span>) <span class="sc">+</span></span>
 <span id="cb507-5"><a href="#cb507-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
@@ -8844,59 +8840,96 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="ma1-5" class="slide level2">
-<h2>MA(1)</h2>
-<p>El primer ejemplo simulado que se cumplían las <strong>condiciones de intertibilidad</strong>, <span class="hl-yellow"><strong>¿qué forma tiene su función de autocorrelaciones?</strong></span></p>
 <div class="fragment">
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb508"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb508-1"><a href="#cb508-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
-<span id="cb508-2"><a href="#cb508-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>)</span>
-<span id="cb508-3"><a href="#cb508-3"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb508-4"><a href="#cb508-4"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb508-5"><a href="#cb508-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb508-6"><a href="#cb508-6"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
-<span id="cb508-7"><a href="#cb508-7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb508-8"><a href="#cb508-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb508-9"><a href="#cb508-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-361-1.png" width="960"></p>
-</div>
-</div>
+<p>¿Te has fijado en que <span class="hl-yellow"><strong>cuando <span class="math inline">\(\theta_1 = -1.5\)</span> la serie explota</strong></span>?</p>
 </div>
 </section>
-<section id="ma1-6" class="slide level2">
+<section id="ma1-4" class="slide level2">
 <h2>MA(1)</h2>
-<p>Usaremos la <span class="hl-yellow"><strong>función de autocorrelaciones (ACF)</strong></span> para determinar si se trata de un <span class="hl-yellow"><strong>proceso MA(1): si a partir de la primera las correlaciones caen drásticamente</strong></span> (q-correlacionado)</p>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb509"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb509-1"><a href="#cb509-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
-<span id="cb509-2"><a href="#cb509-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>)</span>
-<span id="cb509-3"><a href="#cb509-3"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb509-4"><a href="#cb509-4"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb509-5"><a href="#cb509-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb509-6"><a href="#cb509-6"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
-<span id="cb509-7"><a href="#cb509-7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb509-8"><a href="#cb509-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb509-9"><a href="#cb509-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-362-1.png" width="960" class="r-stretch"></section>
-<section id="ma1-7" class="slide level2">
-<h2>MA(1)</h2>
-<p>Recuerda que estamos visualizando las <span class="hl-yellow"><strong>estimaciones muestrales</strong></span> por lo que cuanto más aumente <span class="math inline">\(\theta_1\)</span> más lenta será la caída.</p>
+<p>💻 <span class="hl-yellow"><strong>Calcula las ACF de ambas series</strong></span></p>
+<div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
 <details>
 <summary>Código</summary>
+<div class="sourceCode cell-code" id="cb508"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb508-1"><a href="#cb508-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb508-2"><a href="#cb508-2"></a><span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb508-3"><a href="#cb508-3"></a>  <span class="fu">ACF</span>(X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb508-4"><a href="#cb508-4"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb508-5"><a href="#cb508-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MA(1) con theta_1 = -0.3 y sigma = 3"</span>) <span class="sc">+</span></span>
+<span id="cb508-6"><a href="#cb508-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-361-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb509"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb509-1"><a href="#cb509-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb509-2"><a href="#cb509-2"></a><span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.5</span>, <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb509-3"><a href="#cb509-3"></a>  <span class="fu">ACF</span>(X_t) <span class="sc">|&gt;</span> </span>
+<span id="cb509-4"><a href="#cb509-4"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb509-5"><a href="#cb509-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"MA(1) con theta_1 = -1.5 y sigma = 3"</span>) <span class="sc">+</span></span>
+<span id="cb509-6"><a href="#cb509-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-362-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<p>¿Te has fijado en que <span class="hl-yellow"><strong>cuando el MA(1) no es explosivo las correlaciones caen a partir de <span class="math inline">\(q\)</span></strong></span> (q-correlacionado poblacionalmente aunque a nivel muestral puedan caer algunas todavía fuera de la banda de significación)?</p>
+</div>
+</section>
+<section id="ma1-5" class="slide level2">
+<h2>MA(1)</h2>
+<p><span class="hl-red"><strong>¿Por qué en función de <span class="math inline">\(\theta_1\)</span> el proceso es explosivo?</strong></span></p>
+<div class="fragment">
+<p>Si te fijas, dado que <span class="math inline">\(X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}\)</span>, tenemos entonces que <span class="math inline">\(\varepsilon_t = X_t + \theta_1 \varepsilon_{t-1}\)</span> por lo que sustituyendo tenemos que</p>
+<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t + \theta_1  \varepsilon_{t-1} = \varepsilon_t + \theta_1 \left( X_{t-1} + \theta_1 \varepsilon_{t-2} \right) = \varepsilon_t + \theta_1  X_{t-1} + \theta_{1}^2 \varepsilon_{t-2} \nonumber \\ &amp;=&amp; \varepsilon_t + \theta_1  X_{t-1} + \theta_{1}^2 X_{t-2} + \theta_{1}^{3} \varepsilon_{t-3} = ... \nonumber \\ &amp;=&amp; \varepsilon_{t} + \sum_{j=0}^{\infty} \theta_{1}^{j} X_{t-j}\end{eqnarray}\]</span></p>
+</div>
+<div class="fragment">
+<p>El <strong>futuro</strong> de la serie acaba siendo modelizado con el último error y una ponderación del pasado, y dado que parece razonable <span class="hl-yellow"><strong>asumir que los valores más cercanos influyan más que los valores más lejanos</strong></span> los pesos <span class="math inline">\(\left| \theta_{1}\right|^{j}\)</span> deben disminuir con el retardo: <span class="hl-yellow"><strong>necesitamos que <span class="math inline">\(\left| \theta_{1}\right| &lt; 1\)</span></strong></span></p>
+</div>
+</section>
+<section id="condición-de-invertibilidad" class="slide level2">
+<h2>Condición de invertibilidad</h2>
+<p>Esta <span class="hl-yellow"><strong>condición de invertibilidad</strong></span> será fundamental en los procesos MA ya que, aunque la función de autocorrelación será importante, tenemos un <span class="hl-red"><strong>problema de identificación</strong></span>: dada una función de autocorrelación <span class="hl-red"><strong>no existe un único proceso asociado</strong></span></p>
+<div class="fragment">
+<p>Hagamos un ejercicio rápido con dos <span class="math inline">\(MA(1)\)</span> distintos</p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad X_t = \varepsilon_t - \frac{1}{\theta_1} \varepsilon_{t-1}\]</span> ¿Cuáles son sus autocorrelaciones?</p>
+</div>
+</section>
+<section id="condición-de-invertibilidad-1" class="slide level2">
+<h2>Condición de invertibilidad</h2>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad X_t = \varepsilon_t - \frac{1}{\theta_1} \varepsilon_{t-1}\]</span></p>
+<p>En el primer caso</p>
+<p><span class="math display">\[\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad &amp; &amp;h = 0, \nonumber \\  \frac{-\theta_1}{1 + \theta_{1}^2}\quad &amp; &amp;h = 1, \nonumber\end{cases}\end{eqnarray}\]</span></p>
+<div class="fragment">
+<p>En el segundo caso</p>
+<p><span class="math display">\[\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad &amp; &amp;h = 0, \nonumber \\  \frac{-\frac{1}{\theta_1}}{1 + \frac{1}{\theta_1^2}} = \frac{-\frac{\theta_{1}^{2}}{\theta_1}}{\theta_{1}^{2} + \frac{\theta_{1}^{2}}{\theta_1^2}} = \frac{-\theta_1}{1 + \theta_{1}^{2}}\quad &amp; &amp;h = 1 \nonumber\end{cases}\end{eqnarray}\]</span></p>
+<p><strong>¡Es la misma!</strong></p>
+</div>
+</section>
+<section id="condición-de-invertibilidad-2" class="slide level2">
+<h2>Condición de invertibilidad</h2>
+<p>Dicha condición <span class="math inline">\(\left| \theta_{1}\right| &lt; 1\)</span> además nos permitirá <span class="hl-yellow"><strong>expresar los errores en función de <span class="math inline">\(X_t\)</span></strong></span> tal que</p>
+<p><span class="math display">\[ \varepsilon_{t} = X_t + \theta_1 \varepsilon_{t-1} = X_t + \theta_1 \left( X_{t-1} + \theta_1 \varepsilon_{t-2} \right) = \ldots = \sum_{j=0}^{\infty} \theta_{1}^{j}X_{t-j} \]</span></p>
+<p>Dicha serie solo convergerá si <span class="math inline">\(\sum_{j=0}^{\infty} \theta_{1}^{j} &lt; \infty\)</span>, es decir, si y solo sí <span class="hl-yellow"><strong><span class="math inline">\(\left| \theta_1 \right| &lt; 1\)</span></strong></span></p>
+<p>&nbsp;</p>
+<p>En el primero ejemplo simulado se cumplían las condiciones de invertibilidad, en la segunda no.</p>
+</section>
+<section id="ma1-6" class="slide level2">
+<h2>MA(1)</h2>
+<p>Volvamos a ver <span class="hl-yellow"><strong>qué forma tiene la función de autocorrelaciones</strong></span> del primer ejemplo simulado donde se cumplían las <strong>condiciones de intertibilidad</strong></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
 <div class="sourceCode cell-code" id="cb510"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb510-1"><a href="#cb510-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
-<span id="cb510-2"><a href="#cb510-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.7</span>, <span class="dv">0</span>)</span>
+<span id="cb510-2"><a href="#cb510-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>)</span>
 <span id="cb510-3"><a href="#cb510-3"></a><span class="fu">library</span>(feasts)</span>
 <span id="cb510-4"><a href="#cb510-4"></a>datos <span class="sc">|&gt;</span> </span>
 <span id="cb510-5"><a href="#cb510-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
@@ -8905,26 +8938,48 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <span id="cb510-8"><a href="#cb510-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb510-9"><a href="#cb510-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-363-1.png" width="960" class="r-stretch"><p>Usaremos la <span class="hl-yellow"><strong>función de autocorrelaciones (ACF)</strong></span> para determinar si se trata de un <span class="hl-yellow"><strong>proceso MA(1): si a partir de la primera las correlaciones caen drásticamente</strong></span> (q-correlacionado), es probable que el proceso sea un <span class="math inline">\(MA(1)\)</span></p>
+</section>
+<section id="ma1-7" class="slide level2">
+<h2>MA(1)</h2>
+<p>Recuerda que estamos visualizando las <span class="hl-yellow"><strong>estimaciones muestrales</strong></span> por lo que cuanto más aumente <span class="math inline">\(\theta_1\)</span> más lenta será la caída (si <span class="math inline">\(\theta_1 &gt; 0\)</span> las autocorrelaciones irán cambiando de signo).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb511"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb511-1"><a href="#cb511-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb511-2"><a href="#cb511-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="sc">-</span><span class="fl">0.9</span>, <span class="dv">0</span>)</span>
+<span id="cb511-3"><a href="#cb511-3"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb511-4"><a href="#cb511-4"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb511-5"><a href="#cb511-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb511-6"><a href="#cb511-6"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb511-7"><a href="#cb511-7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb511-8"><a href="#cb511-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb511-9"><a href="#cb511-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-363-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-364-1.png" width="960"></p>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb511"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb511-1"><a href="#cb511-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
-<span id="cb511-2"><a href="#cb511-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="fl">0.7</span>, <span class="dv">0</span>)</span>
-<span id="cb511-3"><a href="#cb511-3"></a><span class="fu">library</span>(feasts)</span>
-<span id="cb511-4"><a href="#cb511-4"></a>datos <span class="sc">|&gt;</span> </span>
-<span id="cb511-5"><a href="#cb511-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">20</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb511-6"><a href="#cb511-6"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
-<span id="cb511-7"><a href="#cb511-7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb511-8"><a href="#cb511-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb511-9"><a href="#cb511-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb512"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb512-1"><a href="#cb512-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb512-2"><a href="#cb512-2"></a>datos <span class="ot">&lt;-</span> <span class="fu">MA_1_simul</span>(<span class="dv">300</span>, <span class="dv">3</span>, <span class="fl">0.9</span>, <span class="dv">0</span>)</span>
+<span id="cb512-3"><a href="#cb512-3"></a><span class="fu">library</span>(feasts)</span>
+<span id="cb512-4"><a href="#cb512-4"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb512-5"><a href="#cb512-5"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb512-6"><a href="#cb512-6"></a>  <span class="fu">autoplot</span>() <span class="sc">+</span></span>
+<span id="cb512-7"><a href="#cb512-7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb512-8"><a href="#cb512-8"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb512-9"><a href="#cb512-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-364-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-365-1.png" width="960"></p>
 </div>
 </div>
 </div>
@@ -8941,13 +8996,13 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <li><p>diseña una función para simular un MA(2)</p></li>
 <li><p>simula varios y observa sus ACF</p></li>
 </ul>
-</section>
-<section class="slide level2">
-
+</section></section>
+<section id="clase-18" class="title-slide slide level1 center">
+<h1>Clases 18: <span class="flow">procesos MA</span></h1>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Estadística Aplicada (UCM)</p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
