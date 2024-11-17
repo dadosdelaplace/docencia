@@ -8563,7 +8563,7 @@ $$X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = 
 
 Uno de los tipos de procesos lineales más importantes son los conocidos como [**procesos de medias moviles (MA)**]{.hl-yellow} definidos como
 
-$$X_t = \varepsilon - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+$$X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
 
 donde $q$ será el **orden** (lo llamaremos [**procesos de medias moviles de orden q o MA(q)**]{.hl-yellow}). Si te fijas es un **caso particular de proceso lineal** donde todos los coeficientes son 0 salvo [**$\left(\Psi_0 = 1, \Psi_1 = -\theta_1,\ldots, \Psi_q = -\theta_q \right)$**]{.hl-green}.
 
@@ -8962,3 +8962,10 @@ $$\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad & &
 * simula varios y observa sus ACF
 
 # Clases 18: [procesos MA]{.flow} {#clase-18}
+
+
+
+
+
+
+

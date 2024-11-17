@@ -9763,6 +9763,7 @@ library(climaemet)
 Con este paquete podemos hacer una [**búsqueda de estaciones**]{.hl-yellow} para conocer tanto su código postal como su código identificador dentro de la red AEMET
 
 ```{r}
+#| eval: false
 stations <- aemet_stations()
 stations
 ```
@@ -9774,6 +9775,7 @@ stations
 Por ejemplo, para obtener datos de la estación del aeropuerto de El Prat, Barcelona, el código a proporcionar es `«0076»`, obteniendo **datos horarios**.
 
 ```{r}
+#| eval: false
 aemet_last_obs("0076")
 ```
 
@@ -9904,6 +9906,3768 @@ who_select
 
 pendiente de subir
 
-Distribución de la renta neta per cápita (renta_municipio_data) por municipio (municipios) en España en el año 2019
 
-¿brexit?
+# Clase 16: intro a dataviz {#clase-16}
+
+
+[**Empieza la fantasía: visualización de datos**]{style="color:#444442;"}
+
+---
+
+
+## Dataviz: historia
+
+
+La aparición de gráficos estadísticos es [**relativamente reciente en la ciencia**]{.hl-yellow} ya que hasta la Edad Media la única visualización estaba en los [**mapas**]{.hl-yellow}. [^1] Las propias palabras _chart_ y _cartography_ derivan del mismo origen latino, _charta_, aunque el primer uso de coordenadas viene de los egipcios. [^2] [^3]
+
+. . .
+
+:::: columns
+::: {.column width="55%"}
+
+No es hasta la Edad Media, cuando la [**navegación y la astronomía**]{.hl-yellow} empezaban a tomar relevancia, cuando aparece la primera gráfica (no propiamente estadística), del **movimiento cíclico de los planetas** (siglos X y XI)
+
+:::
+
+::: {.column width="45%"}
+![](img/dataviz_historico_1.png){width="370"}
+:::
+::::
+ 
+
+[^1]: [«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla](http://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf)
+
+[^2]: [«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social & Behavioral Sciences](https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf)
+
+[^3]: [«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)](https://www.jstor.org/stable/2683467)]
+
+
+---
+
+## Primer gráfico estadístico
+
+La mayoría de expertos, como Tufte [^5] [^6], consideran este gráfico casi longitudinal como la [**primera visualización de datos**]{.hl-yellow} de la historia, hecha por **Van Langren** en 1644, representando la [**distancia entre Toledo y Roma**]{.hl-yellow}.
+
+
+```{r}
+#| echo: false
+knitr::include_graphics("./img/longitud_dataviz.jpg")
+``` 
+
+```{r}
+#| echo: false
+knitr::include_graphics("./img/dataviz_historico_3.jpeg")
+``` 
+
+
+[^5]: [«Visual explanations: images and quantities, evidence and narrative» de E. Tufte](https://archive.org/details/visualexplanatio00tuft)
+
+[^6]: [«PowerPoint is evil» de E. Tufte](https://www.wired.com/2003/09/ppt2/)
+
+---
+
+## ¿Qué es una dataviz?
+
+
+¿Es una gráfica estadística? ¿Por qué sí o por qué no?
+
+
+![](img/cuadro_dataviz.jpg)
+
+
+. . .
+
+No hay [**ninguna INFORMACIÓN**]{.hl-red} representada
+
+
+---
+
+## ¿Qué es una dataviz?
+
+
+¿Es una gráfica estadística? ¿Por qué sí o por qué no?
+
+![](img/horoscopo_dataviz.jpg)
+
+. . .
+
+No hay [**ningún PROCESO DE MEDIDA**]{.hl-red} representado, no cuantifica nada (real).
+
+
+---
+
+## ¿Qué es una dataviz?
+
+¿Es una gráfica estadística? ¿Por qué sí o por qué no?
+
+![](img/celsius_dataviz.jpg)
+
+. . .
+
+No hay [**ningún DATO**]{.hl-red} representado en él, es una magnitud física teórica, no un dato (medido empíricamente o simulado).
+
+
+---
+
+## ¿Qué es una dataviz?
+
+Esas mismas preguntas se hizo **Joaquín Sevilla** [^1], proporcionando [**3 requisitos**]{.hl-yellow}:
+
+. . .
+
+1. Que se base en el esquema de composición de [**eje métrico**]{.hl-yellow} (proceso de medida): debe [**medir algo**]{.hl-yellow}.
+
+. . .
+
+2. Debe incluir [**información estadística (datos)**]{.hl-yellow}
+
+. . .
+ 
+3. La  [**relación de representatividad**]{.hl-yellow} debe ser [**reversible**]{.hl-purple}: los datos deberían poder «recuperarse» a partir de la gráfica .
+
+
+
+[^1]: [«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla](http://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf)
+
+---
+
+## Vizfails
+
+::: columns
+::: {.column width="55%"}
+![](img/persona_dataviz.jpg)
+:::
+
+::: {.column width="45%"}
+* La figura elegida (persona caminando) sin relación con lo visualizado: [**mala metáfora**]{.hl-red}.
+
+* Los [**sectores señalados sin relación con el ítem**]{.hl-red} a representar, lo que dificulta su interpretación.
+
+* Los [**colores sin codificar**]{.hl-red}: no dan información de ningún tipo.
+
+* Las [**formas irregulares impiden la comparación**]{.hl-red} de las áreas (amén de que la suma total supera el 100%).
+
+* **Sin fuente**
+
+:::
+::::
+
+
+---
+
+## Vizfails
+
+![](img/viz_fail_covid.jpg)
+
+---
+
+## Vizfails
+
+![](img/viz_fail_uk.jpg)
+
+---
+
+## La importancia del CONTEXTO
+
+Una **buena idea** puede estar mal ejecutada: la forma de llevarla a cabo es importante
+
+![](img/semaforos.jpg)
+
+---
+
+## Dataviz: historia
+
+En el siglo XVII hubo un boom de la estadística al empezar a aplicarse en [**demografía**]{.hl-yellow}. Uno de los autores más importantes fue [**J. Graunt**]{.hl-purple}, autor de «Natural and Political Observations Made upon the Bills of Mortality» (1662), estimando la población de Londres con las [**primeras tablas de natalidad y mortalidad**]{.hl-yellow}.
+
+. . .
+
+::: columns
+::: {.column width="50%"}
+
+Son precisamente las tablas de Graunt las que usó [**Christiaan Huygens**]{.hl-yellow} para generar la [**primera gráfica de densidad**]{.hl-yellow} de una distribución continua (esperanza de vida vs edad).
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE,  out.width = "100%", fig.align = "center", fig.cap = "Primera función de densidad, extraída de https://omeka.lehigh.edu/exhibits/show/data_visualization/vital_statistics/huygen"}
+knitr::include_graphics("./img/primera_densidad.jpg")
+``` 
+
+:::
+::::
+
+---
+
+## Gráficos de Playfair
+
+La figura que cambió el dataviz fue, sin lugar a dudas, el economista y político [**William Playfair (1759-1823)**]{.hl-yellow}, publicando en 1786 el **«Atlas político y comercial»** [^11] [^12] con 44 gráficas (43 series temporales y el diagrama de barras más famoso de la historia).
+
+::: columns
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "70%", fig.align = "center", fig.cap = "Extraídas de Funkhouser y Walker (1935)"}
+knitr::include_graphics("./img/playfair_1.jpg")
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "25%", fig.align = "center", fig.cap = "Extraídas de Funkhouser y Walker (1935)"}
+knitr::include_graphics("./img/playfair_2.jpg")
+``` 
+
+:::
+::::
+
+[^10]: [«Atlas político y comercial» de William Playfair (1786)](https://www.amazon.es/Playfairs-Commercial-Political-Statistical-Breviary/dp/0521855543)
+
+[^11]: [«Playfair and his charts» de H. Gray Funkhouser and  Helen M. Walker (1935)](https://www.jstor.org/stable/45366440)
+
+---
+
+## Gráficos de Playfair
+
+Playfair es además el autor del [**gráfico de barras más famoso**]{.hl-yellow} (no fue el primero pero sí quien lo hizo _mainstream_).
+
+::: columns
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "90%", fig.align = "center", fig.cap = "Gráficas de Playfair de importaciones (barras grises) y exportaciones (negras) de Escocia en 1781, extraídas de la wikipedia."}
+knitr::include_graphics("./img/playfair_5.jpg")
+``` 
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = FALSE, out.width = "90%", fig.align = "center", fig.cap = "Primer diagrama de barras (P. Buache y G. de L’Isle), visualizando los niveles del Sena (1732 - 1766), extraída de https://friendly.github.io/HistDataVis"}
+knitr::include_graphics("./img/playfair_6.jpg")
+``` 
+:::
+::::
+
+
+---
+
+## Mapas de Minard
+
+Otro pionero en [**combinar visualizaciones**]{.hl-yellow} fue Minard, autor del famoso «Carte figurative des pertes successives en hommes de l'Armée Française dans la campagne de Russie 1812-1813», según Tufte [**«el mejor gráfico estadístico jamás dibujado»**]{.hl-yellow}, publicado en 1869 sobre la desastrosa campaña rusa de Napoleón en 1812 (3 variables en un gráfico bidimensional)
+
+```{r echo = FALSE, out.width = "60%", fig.align = "center", fig.cap = "Extraída de https://friendly.github.io/HistDataVis."}
+knitr::include_graphics("./img/minard_2.png")
+```
+
+---
+
+## Primer scatter plot
+
+Según J. Sevilla, se considera al astrónomo británico **John Frederick William Herschel** el autor del [**primer diagrama de dispersión o scatterplot**]{.hl-yellow} en 1833, visualizando el movimiento de la estrella doble Virginis (tiempo en el eje horizontal, posición angular en el eje vertical)
+
+
+```{r echo = FALSE, out.width = "35%", fig.align = "center", fig.cap = "Extraído de https://friendly.github.io/HistDataVis."}
+knitr::include_graphics("./img/herschel.jpg")
+``` 
+
+---
+
+
+## Florence Nigthingale
+
+::: columns
+::: {.column width="65%"}
+
+
+* El 21 de octubre de 1854 [**Florence Nigthingale**]{.hl-yellow} fue enviada para mejorar las **condiciones sanitarias** de los soldados británicos en la guerra de Crimea. 
+
+* A su regreso demostró que los [**soldados fallecían por las condiciones sanitarias**]{.hl-yellow}. Nigthingale es la creadora del famoso [**diagrama de rosa**]{.hl-yellow}, visualizando tres variables a la vez y su estacionalidad.
+
+* El 8 de febrero de 1955, The Times la describió como la **«ángel guardián» de los hospitales**, y acabó siendo conocida como [**«The Lady with the Lamp»**]{.hl-yellow} tras un poema de H. W. Longfellow (1857).
+
+* Años después se convirtió en la [**primera mujer en la Royal Statistical Society**]{.hl-yellow}.
+
+:::
+
+::: {.column width="35%"}
+
+```{r echo = FALSE, out.width = "95%", fig.align = "center"}
+knitr::include_graphics("./img/the_lady_with_the_lamp.png")
+``` 
+
+:::
+::::
+
+---
+
+## Diagrama de rosa
+
+Florence Nigthingale es la creadora del famoso [**diagrama de rosa**]{.hl-yellow}, permitiendo pintar [**tres variables a la vez y su estacionalidad**]{.hl-yellow}: **tiempo** (cada **gajo** es un mes), **nº de muertes** (**área** del gajo) y **causa** de la muerte (**color** del gajo: azules enfermedades infecciosas, rojas por heridas, negras otras causas).
+
+
+```{r echo = FALSE, out.width = "75%", fig.align = "center"}
+knitr::include_graphics("./img/rosa_nightingale.jpg")
+``` 
+
+---
+
+
+## Recursos de dataviz
+
+
+📚 [«The Functional Art: an introduction to information graphics and visualization» de Alberto Cairo](https://www.amazon.es/Functional-Art-Voices-That-Matter/dp/0321834739)
+
+
+📚 [«Gramática de las gráficas: pistas para mejorar las representaciones de datos» de Joaquín Sevilla](https://academica-e.unavarra.es/bitstream/handle/2454/15785/Gram%C3%A1tica.pdf)
+
+
+📚 [«A Brief History of Visualization» de Friendly et al. (2008)](https://www.researchgate.net/publication/226400313_A_Brief_History_of_Data_Visualization)
+
+📚 [«Quantitative Graphics in Statistics: A Brief History» de James R. Beniger y Dorothy L. Robyn. The American Statistician (1978)](https://www.jstor.org/stable/2683467)]
+
+📚 [«Presentation Graphics» de Leland Wilkinson. International Encyclopedia of the Social & Behavioral Sciences](https://www.cs.uic.edu/~wilkinson/Publications/iesbs.pdf)
+
+📚 [«The Grammar of Graphics» de Leland Wilkinson](https://www.amazon.es/Grammar-Graphics-Statistics-Computing/dp/0387245448)
+
+
+📚 [«The Minard System: The Graphical Works of Charles-Joseph Minard» de Sandra Rendgen](https://www.amazon.es/gp/product/1616896337/ref=sw_img_1?smid=A1AT7YVPFBWXBL&psc=1)
+
+📚 [«The Visual Display of Quantitative Information» de E. W. Tufte](https://www.amazon.es/Visual-Display-Quantitative-Information/dp/0961392142)
+
+---
+
+## Dataviz en R: ggplot2
+
+:::: columns
+::: {.column width="50%"}
+
+El paquete `{ggplot2}` se basa en la idea de Wilkinson en [**«Grammar of graphics»**]{.hl-yellow}: dotar a los gráficos de una gramática propia. Una de las principales fortalezas de `R` es la [**visualización**]{.hl-yellow} con `{ggplot2}`.
+
+```{r}
+library(ggplot2)
+```
+
+La [**visualización de datos**]{.hl-yellow} debería ser una parte fundamental de todo análisis de datos. No es solo una cuestión estética.
+:::
+
+::: {.column width="50%"}
+![](img/telling_dataviz.jpg){width="400"}
+:::
+::::
+
+---
+
+## Dataviz en R: ggplot2
+
+La filosofía detrás de `{ggplot2}` es entender los [**gráficos como parte del flujo**]{.hl-yellow} de trabajo, dotándoles de una [**gramática**]{.hl-yellow}. El objetivo es empezar con un lienzo en blanco e ir [**añadiendo capas a tu gráfico**]{.hl-yellow}. La ventaja de `{ggplot2}` es poder [**mapear atributos estéticos**]{.hl-purple} (color, forma, tamaño) de objetos geométricos (puntos, barras, líneas) en función de los datos.
+
+&nbsp;
+
+
+La **documentación** del paquete puedes consultarla en <https://ggplot2-book.org/introduction.html> 
+
+![](img/grammar_ggplot2.jpg)
+
+
+---
+
+## Dataviz en R: ggplot2
+
+![](img/tarta_ggplot2.png)
+
+---
+
+## Dataviz en R: ggplot2
+
+:::: columns
+::: {.column width="40%"}
+![](img/tarta_recortada_ggplot2.jpg)
+:::
+
+::: {.column width="60%"}
+Un gráfico se podrá componer de [**capas**]{.hl-yellow}
+
+* [**Datos (data)**]{.hl-purple}
+* [**Mapeado (aesthetics)**]{.hl-purple} de elementos estéticos: ejes, color, forma, etc (en función de los datos)
+* [**Geometría (geom)**]{.hl-purple}: puntos, líneas, barras, polígonos, etc.
+* [**Componer gráficas (facet)**]{.hl-purple}
+* [**Transformaciones (stat)**]{.hl-purple}: ordenar, resumir, etc.
+* [**Coordenadas (coord)**]{.hl-purple}: coordenadas cartesianas, polares, grids, etc.
+* [**Temas (theme)**]{.hl-purple}: fuente, tamaño de letra, subtítulos, captions, leyenda, ejes, etc.
+
+:::
+::::
+
+---
+
+## Primer intento: scatter plot
+
+Veamos un **primer intento** para entender la filosofía ggplot. Imagina que queremos dibujar un [**scatter plot**]{.hl-yellow} (diagrama de dispersión de puntos). Para ello vamos a usar el conjunto de datos `gapminder`, del paquete homónimo: un fichero con **datos de esperanzas de vida, poblaciones y renta per cápita** de distintos países en distintos momentos temporales.
+
+```{r}
+library(gapminder)
+gapminder
+```
+
+---
+
+## Primer intento: scatter plot
+
+El fichero consta de 1704 registros y 6 variables: `country`, `continent`, `year`, `lifeExp` (esperanza de vida), `pop` (población)  y `gdpPercap` (renta per cápita).
+
+```{r}
+glimpse(gapminder)
+```
+
+Para empezar con algo sencillo [**filtraremos solo los datos de 2007**]{.hl-yellow}
+
+```{r}
+gapminder_2007 <-
+  gapminder |>
+  filter(year == 2007) |> 
+  drop_na(gdpPercap, lifeExp, pop)
+```
+
+---
+
+
+## Ingredientes: (x, y)
+
+
+¿Qué [**elementos necesitamos**]{.hl-yellow} para realizar un diagrama de puntos? Para [**iniciar el lienzo**]{.hl-pùrple} necesitamos una base de datos y dos variables a representar.
+
+. . .
+
+:::: columns
+::: {.column width="45%"}
+
+* [**Datos (data)**]{.hl-yellow}: conjunto `gapminder_2007`.
+
+* [**Mapeado**]{.hl-yellow}: indicar dentro de `aes()` (aesthetics) las variables en cada coordenada. Todo [**dentro de aes() será mapeado de los datos**]{.hl-purple}.
+
+```{r}
+#| eval: false
+ggplot(data = gapminder_2007,
+       aes(x = gdpPercap, y = pop))
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = pop))
+```
+
+:::
+::::
+
+---
+
+
+## Primera geometría: geom_point()
+
+:::: columns
+::: {.column width="45%"}
+
+* [**Geometría (geom)**]{.hl-yellow}: optaremos por **puntos** usando `geom_point()`.  En este caso las **variables deben ser cuantitativas continuas**.
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(x = gdpPercap, y = pop)) +
+  geom_point()
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(x = gdpPercap, y = pop)) +
+  geom_point()
+```
+
+:::
+::::
+
+---
+
+## Rol de los ejes: (x, y)
+
+
+:::: columns
+::: {.column width="45%"}
+
+Vamos a profundizar en ese mapeado: ¿cómo [**cambiar el rol**]{.hl-yellow} de los ejes (población en el eje X y renta per cápita en el eje Y)? 
+
+* **Eje X**: población (variable `pop`)
+* **Eje Y**: renta per cápita (variable `gdpPercap`)
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = pop)) +
+  geom_point() 
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop)) +
+  geom_point() 
+```
+:::
+::::
+
+---
+
+## Rol de los ejes: (x, y)
+
+
+:::: columns
+::: {.column width="45%"}
+
+¿Y un scatter plot con **esperanza de vida** en eje X frente a **renta per cápita**?
+
+
+* **Eje X**: esperanza de vida (variable `lifeExp`)
+* **Eje Y**: renta per cápita (variable `gdpPercap`)
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point()
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point()
+```
+
+:::
+::::
+
+---
+
+## Color, size, shape: fijos
+
+Dentro de `geom_point()` tenemos varios argumentos a usar:
+
+* `na.rm = ...`: si queremos que nos quite ausentes.
+
+* `color = ...`: color (si tiene dimensión, color del contorno)
+
+* `fill = ...`: color del relleno.
+
+. . .
+
+:::: columns
+::: {.column width="45%"}
+
+Empezaremos por un [**color fijo**]{.hl-yellow}, por ejemplo `"red"` (existen otros como `"blue"`, `"black"`, `"yellow"`, etc)
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red")
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red")
+```
+
+:::
+::::
+
+
+---
+
+
+## Color, size, shape: fijos
+
+:::: columns
+::: {.column width="45%"}
+
+* `size = ...`: tamaño  de la geometría (en este caso el [**tamaño de los puntos**]{.hl-yellow}), cuanto mayor sea el número, mayor será el tamaño de la geometría.
+
+  
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", size = 7) 
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", size = 7)
+```
+
+:::
+::::
+
+---
+
+## Color, size, shape: fijos
+
+
+:::: columns
+::: {.column width="45%"}
+
+* `alpha = ...`: grado de opacidad del color (1 totalmente opaco, 0 totalmente transparente)
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", size = 7,
+             alpha = 0.4)
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", size = 7, alpha = 0.4)
+```
+
+:::
+::::
+
+---
+
+## Color, size, shape: fijos
+
+
+:::: columns
+::: {.column width="45%"}
+
+* `shape = ...`: forma de la geometría, en este caso del «punto» (ver todas las opciones en `vignette("ggplot2-specs")`)
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red",
+             fill = "black",
+             size = 7,
+             alpha = 0.4,
+             shape = 23)
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", fill = "black",
+             size = 7, alpha = 0.4, shape = 23)
+```
+
+:::
+::::
+
+---
+
+## Color, size, shape: fijos
+
+
+:::: columns
+::: {.column width="45%"}
+
+* `stroke = ...`: tamaño del contorno
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", size = 7,
+             alpha = 0.4, stroke = 3)
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "red", alpha = 0.4,
+             size = 7, stroke = 3)
+```
+
+:::
+::::
+
+
+---
+
+## Color, size, shape: fijos
+
+
+:::: columns
+::: {.column width="45%"}
+
+Los colores también podemos asignárselos por su **código hexadecimal**, consultando en <https://htmlcolorcodes.com/es/>, eligiendo el color que queramos. El código hexadecimal siempre comenzará con `#`
+
+
+```{r}
+#| eval: false
+# Color en hexadecimal
+# https://htmlcolorcodes.com/es/
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "#A02B85",
+             alpha = 0.4, size = 7) 
+```
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(color = "#A02B85", alpha = 0.4, size = 7)
+```
+
+:::
+::::
+
+  
+---
+
+## Mapeado estético: aes()
+
+
+Hasta ahora los **atributos estéticos** se los hemos pasado fijos y [**constantes**]{.hl-yellow}.  Pero la verdadera potencia y versatilidad de `ggplot` es que podemos [**mapear los atributos estéticos en función de los datos**]{.hl-yellow} en `aes()` para que dependan de variables de los datos.
+
+. . .
+
+:::: columns
+::: {.column width="45%"}
+
+Por ejemplo, vamos a asignar un [**color a cada dato en función de su continente**]{.hl-yellow} con `aes(color = continent)`
+
+```{r}
+#| eval: false
+# Tamaño fijo
+# Color por continentes
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent)) +
+  geom_point(size = 7)
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp, color = continent)) +
+  geom_point(size = 5)
+```
+
+:::
+::::
+
+---
+
+## Mapeado estético: aes()
+
+
+:::: columns
+::: {.column width="50%"}
+  
+Podemos combinarlo con lo que hemos hecho anteriormente:
+
+* [**color**]{.hl-yellow} en función del [**continente**]{.hl-purple}.
+
+* [**tamaño**]{.hl-yellow} en función de la [**población**]{.hl-purple}.
+
+* [**transparencia**]{.hl-yellow} la fijamos [**constante**]{.hl-purple} del 50%.
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent, size = pop)) +
+  geom_point(alpha = 0.7)
+```
+
+A este scatter plot particular se le conoce **BUBBLE CHART**
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent, size = pop)) +
+  geom_point(alpha = 0.7)
+```
+
+:::
+::::
+
+
+
+---
+
+## Visualización multivariante
+  
+Reflexionemos sobre el gráfico anterior:
+
+* **color** en función del **continente**.
+* **tamaño** en función de la **población**
+* **transparencia** fija del 50%
+
+&nbsp;
+
+Usando los datos hemos conseguido dibujar en un [**gráfico bidimensional 4 variables** ]{.hl-yellow}: `lifeExp` y `gdpPercap` en los ejes , `continent` como color y `pop` como tamaño de la geometría, con muy pocas líneas de código.
+
+---
+
+## Etiquetas sencillas: labs()
+
+Podemos [**personalizar de manera sencilla**]{.hl-yellow}  haciendo uso de la capa `labs()`:
+
+:::: columns
+::: {.column width="43%"}
+
+* `title, subtitle`:  título/subtítulo
+* `caption`: pie de gráfica
+* `x, y`: nombres de los ejes
+* `size, color, fill, ...`: nombre en la leyenda de las variables que codifiquen los distintos atributos
+
+
+:::
+
+::: {.column width="57%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Esperanza de vida",
+       y = "Renta per cápita",
+       title = "Primer ggplot",
+       caption = "J. Álvarez Liébana",
+       color = "continente",
+       size = "población")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita",
+       title = "Primer ggplot", subtitle = "Datos de gapminder",
+       caption = "J. Álvarez Liébana", color = "continente", size = "población")
+```
+
+
+---
+
+## Eliminar de la leyenda
+
+Podemos eliminar variables de la leyenda con `guides(atributo = "none")`
+
+:::: columns
+
+::: {.column width="45%"}
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, 
+           x = lifeExp,
+           color = continent, 
+           size = pop)) +
+  geom_point(alpha = 0.7) +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida",
+       y = "Renta per cápita",
+       title = "Primer ggplot",
+       caption = "J. Álvarez Liébana",
+       color = "continente")
+```
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida",
+       y = "Renta per cápita",
+       title = "Primer ggplot",
+       caption = "J. Álvarez Liébana",
+       color = "continente")
+```
+
+:::
+::::
+
+
+---
+
+## Escalas (scale): colores
+
+
+Una de las capas más importantes es la [**capa de escalas (personalizar)**]{.hl-yellow} ya que dentro de `aes()` solo le indicamos qué variable mapeamos pero no sus ajustes.
+
+&nbsp;
+
+Por ejemplo, con `scale_color_...()` y `scale_fill_...()` podremos [**personalizar qué colores usar**]{.hl-yellow}. 
+
+---
+
+## Escalas (scale): colores
+
+
+:::: columns
+
+::: {.column width="50%"}
+
+Con `scale_color_manual()` podemos indicar manualmente una [**paleta**]{.hl-yellow} (<https://htmlcolorcodes.com/>)
+
+
+         
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+pal <- c("#A02B85", "#2DE86B", "#4FB2CA", "#E8DA2D", "#E84C2D")
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = pal) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita",
+       title = "Primer ggplot", caption = "J. Álvarez Liébana",
+       color = "continente")
+```
+
+:::
+::::
+      
+```{r}
+#| eval: false
+pal <- c("#A02B85", "#2DE86B", "#4FB2CA", "#E8DA2D", "#E84C2D")
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = pal) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+---
+
+## Escalas (scale): colores
+
+
+Otra opción es elegir alguna de las [**paletas de colores diseñadas**]{.hl-yellow} en el paquete `{ggthemes}`:
+
+:::: columns
+
+::: {.column width="40%"}
+
+* `scale_color_economist()`: paleta de colores basada en los colores de **The Economist**.
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+library(ggthemes)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_economist() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_economist() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+---
+
+## Escalas (scale): colores
+
+Otra opción es elegir alguna de las [**paletas de colores diseñadas**]{.hl-yellow} en el paquete `{ggthemes}`:
+
+:::: columns
+
+::: {.column width="40%"}
+
+
+* `scale_color_colorblind()`: paleta de colores basada en los colores de  [**daltónicos/as**]{.hl-yellow}.
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+library(ggthemes)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+
+---
+
+## Escalas (scale): colores
+
+
+Incluso cargar [**paletas de colores diseñadas en base a películas o arte**]{.hl-yellow}
+
+
+:::: columns
+
+::: {.column width="44%"}
+
+* [**películas**]{.hl-yellow}: paquete `{harrypotter}` (repositorio de Github `aljrico/harrypotter`) usando `scale_color_hp_d()`.
+
+
+```{r echo = FALSE,  out.width = "20%", fig.align = "center", fig.cap = "Paleta basada en la casa Ravenclaw"}
+knitr::include_graphics("https://raw.githubusercontent.com/aljrico/harrypotter/master/readme_raw_files/palettes/ravenclaw.png")
+``` 
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+library(harrypotter)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_hp_d(option = "ravenclaw")+
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+devtools::install_github(repo = "aljrico/harrypotter") 
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  harrypotter::scale_color_hp_d(option = "ravenclaw")+
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+---
+
+## Escalas (scale): colores
+
+Incluso cargar [**paletas de colores diseñadas en base a películas o arte**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* [**cuadros**]{.hl-yellow}: paquete `{MetBrewer}` (repositorio de Github `BlakeRMills/MetBrewer`) usando `scale_colour_manual(values = met.brewer(...))`.
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+library(MetBrewer)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = met.brewer("Monet")) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+devtools::install_github(repo = "BlakeRMills/MetBrewer") 
+library(MetBrewer)
+
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = met.brewer("Monet")) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+---
+
+
+## Escalas (scale): colores
+
+Incluso cargar [**paletas de colores diseñadas en base a películas o arte**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* [**discos**]{.hl-yellow}: paquete `{peRReo}` (repositorio de Github `jbgb13/peRReo`) usando `scale_colour_manual(values = latin_palette())`.
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+library(peRReo)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = latin_palette("rosalia")) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+devtools::install_github(repo = "jbgb13/peRReo") 
+library(peRReo)
+
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_manual(values = latin_palette("rosalia")) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+---
+
+## Esclas (scale): colores
+
+Incluso cargar [**paletas de colores diseñadas en base a películas o arte**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* [**discos**]{.hl-yellow}: paquete `{taylor}` usando `scale_color_taylor_d(album = ...)` para usar paletas de álbumes de Taylor Swift.
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+library(taylor)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_taylor_d(album = "Speak Now") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+library(taylor)
+ggplot(gapminder_2007,
+       aes(y = gdpPercap, x = lifeExp,
+           color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_color_taylor_d(album = "Speak Now") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+
+# Clase 17: ggplot1 {#clase-17}
+
+
+---
+
+
+## scale: colores continuos
+
+Ya vimos como definir paletas de colores pero si te fijas la [**variable que codifica el color era cualitativa o discreta**]{.hl-yellow}, ¿y si la variable que codifica  [**color fuese cuantitativa numérica**]{.hl-yellow}?
+
+. . .
+
+Existen unas [**paletas de colores conocidas como ColorBrewer**]{.hl-yellow} pudiendo definirse de manera **secuencial**, **divergente** o de manera **cualitativa** (ver info en <https://colorbrewer2.org>)
+
+```{r}
+RColorBrewer::brewer.pal.info
+```
+
+---
+
+## scale: colores continuos
+
+Con `RColorBrewer::brewer.pal()` podemos obtener el vector de n colores para una paleta dada, por ejemplo la **paleta divergente** `RdYlBu`
+
+```{r}
+RColorBrewer::brewer.pal(n = 5, name = "RdYlBu")
+```
+
+. . .
+
+Con `RColorBrewer::display.brewer.pal()` podemos **visualizar los colores** de dicha paleta
+
+```{r}
+RColorBrewer::display.brewer.pal(n = 10, name = "RdYlBu")
+```
+
+---
+
+
+## scale: colores continuos
+
+Un ejemplo de **paleta secuencial** es `PuBuGn`
+
+
+```{r}
+RColorBrewer::display.brewer.pal(n = 8, name = "PuBuGn")
+```
+
+---
+
+## scale: colores continuos
+
+
+Un ejemplo de **paleta cualitativa** es `Pastel1`
+
+```{r}
+RColorBrewer::display.brewer.pal(n = 8, name = "Pastel1")
+```
+
+
+---
+
+
+## scale: colores continuos
+
+:::: columns
+
+::: {.column width="45%"}
+
+Para incluirlo podemos usar `scale_color_brewer()` o bien `scale_color_distiller()` si queremos crear una **escala continua** (interpolando entre los colores)
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.7, size = 3) +
+  scale_color_distiller(palette = "RdYlBu") +
+  guides(size = "none") +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.7, size = 3) +
+  scale_color_distiller(palette = "RdYlBu") +
+  guides(size = "none") +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+
+---
+
+## scale: gradiente de color
+
+También podemos crear [**gradientes de color personalizados**]{.hl-yellow} con `scale_color_gradient()`, `scale_fill_gradient()`, `scale_color_gradient2()`, `scale_fill_gradient2()`
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Vamos a usar `scale_color_gradient2(low = ..., mid = ..., high = ..., midpoint = ...)` indicándole el color más bajo y el más alto, pero también el de en medio (y el valor numérico al que queremos asociarlo)
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.7, size = 3) +
+  scale_color_gradient2(low = "#825598", mid = "#9dd0c1", high = "#d93535", midpoint = 60) +
+  guides(size = "none") +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.7, size = 3) +
+  scale_color_gradient2(low = "#825598", mid = "#9dd0c1",
+                        high = "#d93535", midpoint = 60) +
+  guides(size = "none") +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+
+---
+
+## Escalas (scale): ejes
+
+La **misma idea** que usamos para personalizar colores la podemos aplicar para, por ejemplo, [**personalizar los ejes**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="47%"}
+
+Vamos a [**personalizar las marcas del eje x**]{.hl-yellow} con `scale_x_continuous(breaks = ...)` para tener marcas cada 10 unidades.
+
+
+:::
+
+::: {.column width="53%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  scale_x_continuous(breaks = seq(30, 90, by = 10)) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  scale_x_continuous(breaks = seq(30, 90, by = 10)) +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente")
+```
+
+
+---
+
+## Escalas (scale): ejes
+
+Vamos a profundizar un poco dentro de nuestro scatter plot en  [**escalas**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* ¿Cómo [**fijar límites en los ejes**]{.hl-purple}? En `scale_x_continuous()` y `scale_y_continuous()`, además de "saltos" podemos indicar límites con `limits = ...`
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(limits = c(50, 70),
+                     breaks = seq(50, 70, by = 5)) +
+  scale_y_continuous(limits = c(1000, 18000),
+                      breaks = seq(0, 18000, by = 1000)) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(limits = c(50, 70), breaks = seq(50, 70, by = 5)) +
+  scale_y_continuous(limits = c(1000, 18000), breaks = seq(0, 18000, by = 1000)) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## Escalas (scale): ejes
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+* ¿Cómo [**etiquetar las unidades de los ejes**]{.hl-purple}? Haciendo uso del paquete `{scales}` podemos añadir [**prefijos/sufijos**]{.hl-yellow} con `labels = label_number(...)`
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+library(scales)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(limits = c(50, 70), breaks = seq(50, 70, by = 5),
+                     labels = label_number(suffix = " años")) +
+  scale_y_continuous(limits = c(1000, 18000), breaks = seq(0, 18000, by = 1000),
+                     labels = label_number(suffix = " $")) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+library(scales)
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(limits = c(50, 70), breaks = seq(50, 70, by = 5),
+                     labels = label_number(suffix = " años")) +
+  scale_y_continuous(limits = c(1000, 18000), breaks = seq(0, 18000, by = 1000),
+                     labels = label_number(suffix = " $")) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## Escalas (scale): otros
+
+Vamos a profundizar un poco dentro de nuestro scatter plot en  [**escalas**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* ¿Cómo [**cambiar los ajustes de tamaño, alpha, etc**]{.hl-purple}? Igual que tenemos `scale_x_...()` o `scale_color_...()`, tenemos también `scale_size_...()` y `scale_alpha_...()`
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(aes(alpha = pop)) +
+  scale_size(range = c(4, 12)) +
+  scale_alpha(range = c(0.1, 0.95)) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none", alpha = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(aes(alpha = pop)) +
+  scale_size(range = c(4, 12)) +
+  scale_alpha(range = c(0.1, 0.5)) +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none", alpha = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## Escalas (scale): ejes
+
+Vamos a profundizar un poco dentro de nuestro scatter plot en  [**escalas**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+* ¿Cómo [**cambiar la escala (relación) lineal entre los ejes**]{.hl-purple}? Con `scale_x_sqrt()` o `scale_x_log10()` podemos cambiar la escala de los ejes.
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_y_log10() +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_y_log10() +
+  ggthemes::scale_color_colorblind() +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+---
+
+## theme: capa de temas
+
+En `{ggplot2}` vamos a poder [**personalizar todo el gráfico**]{.hl-yellow} incluido definir nuestro [**propio tema estético**]{.hl-yellow} haciendo uso de las capas `theme_...()`
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Por ejemplo, vamos a usar `theme_minimal()` para tener un tema "austero" y minimalista (aprenderemos a definir cada detalle).
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(breaks = seq(35, 85, by = 10)) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.7) +
+  scale_x_continuous(breaks = seq(35, 85, by = 10)) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## coord: capa de coordenadas
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+
+Además de escalas tenemos una [**capa de coordenadas**]{.hl-yellow} con `coord_...` para indicar si queremos un sistema cartesiano, coordenadas polares (`coord_polar()`), si queremos coordenadas iguales (`coord_equal()`) o invertir su rol (`coord_flip()`)
+
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.8, size = 3) +
+  scale_x_log10() +
+  scale_color_gradient2(low = "#E92745", mid = "#F4ED5B", high = "#56B1F7", midpoint = 60) +
+  coord_flip() +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = pop, color = lifeExp)) +
+  geom_point(alpha = 0.8, size = 3) +
+  scale_x_log10() +
+  scale_color_gradient2(low = "#E92745", mid = "#F4ED5B", high = "#56B1F7", midpoint = 60) +
+  coord_flip() +
+  labs(x = "Población", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "esperanza de vida") +
+  theme_minimal()
+```
+
+
+---
+
+## stats: capa estadística
+
+Una capa también importante es la [**capa de estadísticas**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="45%"}
+
+
+* `stat_smooth()`: visualiza un [**ajuste suavizado**]{.hl-yellow} de los datos (reg. lineal, glm, loess, gam, etc). Con `stat_smooth(method = "lm")` una recta de regresión. También con `geom_smooth(method = "lm")`
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, linewidth = 1.5) +
+  scale_y_log10() +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+:::
+::::
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, linewidth = 1.5) +
+  scale_y_log10() +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## stats: capa estadística
+
+:::: columns
+
+::: {.column width="45%"}
+
+Fíjate que si usas en la [**primera capa parámetros estéticos**]{.hl-yellow} se acaban [**heredando a capas posteriores**]{.hl-purple}, en concreto al ajuste visualizado.
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, linewidth = 1.5) +
+  scale_y_log10() +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+:::
+::::
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, linewidth = 1.5) +
+  scale_y_log10() +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+---
+
+
+## stats: capa estadística
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Dentro de `stat_smooth()` podemos especificarle otro [**ajuste polinómico**]{.hl-yellow} dándole expresión en `formula = ...`, por ejemplo un **polinomio de grado 5** `formula = y ~ x + I(x^2) + I(x^3) + I(x^4) + I(x^5)`
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3) + I(x^4) + I(x^5),
+              color = "firebrick", se = FALSE, linewidth = 1.2) +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+:::
+::::
+
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp)) +
+  geom_point(aes(color = continent, size = pop), alpha = 0.8) +
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2) + I(x^3) + I(x^4) + I(x^5),
+              color = "firebrick", se = FALSE, linewidth = 1.2) +
+  guides(size = "none") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+---
+
+## stats: capa estadística
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Con `stat_summary()` podemos incluso añadir [**estadísticas por grupos**]{.hl-yellow}, como la media o mediana.
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder, aes(y = gdpPercap, x = year)) +
+  geom_point(size = 1.7, alpha = 0.2) +
+  stat_summary(fun = "mean", size = 0.4, color = "coral") + 
+  stat_summary(fun = "median", size = 0.4, color = "darkcyan") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+
+```{r}
+#| eval: false
+ggplot(gapminder, aes(y = gdpPercap, x = year)) +
+  geom_point(size = 1.7, alpha = 0.2) +
+  stat_summary(fun = "mean", size = 0.4, color = "coral") + 
+  stat_summary(fun = "median", size = 0.4, color = "darkcyan") +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+---
+
+## facet: composición
+
+Por último la capa `facet_()`: podemos [**desagregar los gráficos (facetar)**]{.hl-yellow} por grupos, equivalente al `group_by()` en tidyverse.
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Por ejemplo, vamos a crear un [**gráfico por continente**]{.hl-yellow}, mostrando todos los gráficos a la vez (pero por separado) con `facet_wrap(~continent)`.
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent)+
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent) +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## Componiendo (facet)
+
+También podemos [**desagregar los gráficos (facetar)**]{.hl-yellow} por grupos, equivalente al `group_by()` en tidyverse.
+
+:::: columns
+
+::: {.column width="45%"}
+
+Por defecto las escalas en los ejes son compartidas. Si queremos que la [**escala de los ejes**]{.hl-yellow} vaya por libre debemos usar `scales = "free_x"`, `scales = "free_y"` o `scales = "free"`
+
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent, scales = "free") +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent, scales = "free") +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+---
+
+## Componiendo (facet)
+
+También podemos [**desagregar los gráficos (facetar)**]{.hl-yellow} por grupos, equivalente al `group_by()` en tidyverse.
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Con `nrow = ...` y `ncol = ...` podemos especificar cuantas columnas y filas tenemos en la cuadrícula de gráficas
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent, scales = "free", nrow = 3) +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder_2007, aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.75) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~continent, scales = "free", nrow = 3) +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+
+---
+
+## Componiendo (facet)
+
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+También le podemos pasar dos argumentos (variables) para formar un [**grid de gráficas**]{.hl-yellow} con `facet_grid(var1 ~ var2)`
+
+:::
+
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+ggplot(gapminder |> filter(year >= 1962), aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  facet_grid(continent ~ year, scales = "free") +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(gapminder |> filter(year >= 1962), aes(y = gdpPercap, x = lifeExp, size = pop, color = continent)) +
+  geom_point(alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  facet_grid(continent ~ year, scales = "free") +
+  guides(size = "none") +
+  labs(x = "Esperanza de vida", y = "Renta per cápita", title = "Primer ggplot",
+       caption = "J. Álvarez Liébana", color = "continente") +
+  theme_minimal()
+```
+
+
+
+
+# Clase 18: ggplot2 {#clase-18}
+
+
+---
+
+## Variables continuas
+
+Hemos aprendido a realizar uno de los gráficos más famosos, un [**diagrama de dispersión**]{.hl-yellow}, pero...¿qué propiedades deben cumplir las variables?
+
+. . .
+
+Para visualizar dos variables con un [**diagrama de dispersión**]{.hl-yellow} es necesario que ambas sean [**variables numéricas continuas**]{.hl-purple}
+
+. . .
+
+¿Se te ocurre algúna gráfico básico para [**variables discretas**]{.hl-yellow}?
+
+---
+
+
+## Cualis: barras
+
+
+¿Y si tengo [**variables discretas o cualitativas**]{.hl-yellow}?
+
+. . .
+
+Vamos a usar el ya conocido conjunto `starwars` para visualizar en un [**diagrama de barras**]{.hl-yellow}: vamos a representar la [**frecuencia**]{.hl-yellow} de una [**variable cualitativa**]{.hl-yellow} como es `sex`.
+
+```{r}
+starwars |>  
+  count(sex)
+```
+
+
+---
+
+## Cualis: barras
+
+La ventaja de ggplot es que, al trabajar por [**capas**]{.hl-yellow},  todo lo que hemos aprendido nos sirve: solo tenemos que [**cambiar la geometría**]{.hl-purple}.
+
+:::: columns
+
+::: {.column width="40%"}
+
+En este caso para realizar un [**diagrama de barras**]{.hl-yellow} usaremos `geom_bar()` en lugar de `geom_point()`, indicando [**solo la variable de grupo**]{.hl-purple} con `x = sex` (ggplot hará solo el recuento)
+
+:::
+
+::: {.column width="60%"}
+
+
+```{r}
+#| echo: false
+ggplot(starwars, aes(x = sex)) +
+  geom_bar() +
+  theme_minimal()
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+ggplot(starwars, aes(x = sex)) +
+  geom_bar()
+  theme_minimal()
+```
+
+
+---
+
+## Cualis: barras
+
+:::: columns
+
+::: {.column width="40%"}
+
+
+Podemos aplicar lo aprendido sobre [**colores para codificar**]{.hl-yellow} la información, en este caso vamos a usar las paletas ya cargadas en `scale_color_colorblind()` del paquete `{ggthemes}`
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+library(ggthemes)
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(color = sex), alpha = 0.5) + 
+  scale_color_colorblind() +
+  theme_minimal()
+```
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+library(ggthemes)
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(color = sex), alpha = 0.5) + 
+  scale_color_colorblind() +
+  theme_minimal()
+```
+
+
+
+---
+
+
+## Cualis: barras
+
+:::: columns
+
+::: {.column width="40%"}
+
+Fíjate que ahora [**solo nos ha coloreado el contorno**]{.hl-red}: en otras geometrías, como las barras, será importante distinguir entre `color` y `fill`
+
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  theme_minimal()
+```
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  theme_minimal()
+```
+
+
+---
+
+## Cualis: barras
+
+
+
+
+:::: columns
+
+::: {.column width="40%"}
+
+Podemos [**personalizar el gráfico**]{.hl-yellow} haciendo uso de las opciones ya vistas, por ejemplo, con escalas en ejes, títulos de las variables, leyendas, etc
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  labs(x = "sexo", y = "frecuencia absoluta",
+       fill = "sexo",
+       title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana") +
+  theme_minimal()
+```
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana") +
+  theme_minimal()
+```
+
+
+---
+
+
+## Cualis: barras
+
+
+
+
+:::: columns
+
+::: {.column width="40%"}
+
+Para cambiar el rol de los ejes, generando un diagrama de [**barras horizontales**]{.hl-yellow}, podemos dejar el gráfico igual y luego simplemente hacer `coord_flip()`
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo",
+       title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana") +
+  theme_minimal()
+```
+
+:::
+
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana") +
+  theme_minimal()
+```
+
+
+
+---
+
+## Paréntesis: temas
+
+
+Vamos a hacer un paréntesis y aprender a [**personalizar más nuestras gráficas**]{.hl-yellow}
+
+:::: columns
+
+::: {.column width="55%"}
+
+* `theme_set(theme_minimal())` fija tema base
+
+* `theme_update(...)` personaliza parámetros.
+
+Por ejemplo, en `plot.title` vamos a indicarle el [**tamaño y negrita**]{.hl-yellow} en el título, dentro de `element_text()`
+
+:::
+
+
+::: {.column width="45%"}
+
+```{r}
+#| echo: false
+theme_set(theme_minimal())
+theme_update(plot.title = element_text(size = 25, face = "bold"))
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+theme_set(theme_minimal())
+theme_update(plot.title = element_text(size = 25, face = "bold"))
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente", caption = "J. Álvarez Liébana")
+```
+
+
+---
+
+## Paréntesis: temas
+
+:::: columns
+
+::: {.column width="40%"}
+
+Podemos hacer lo mismo con otros textos con `plot.subtitle` o `plot.caption`
+
+:::
+
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+theme_set(theme_minimal())
+theme_update(
+  plot.title =
+    element_text(size = 25, face = "bold"),
+  plot.subtitle = element_text(size = 13),
+  plot.caption = element_text(size = 9))
+
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo",
+       title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+theme_set(theme_minimal())
+theme_update(
+  plot.title =
+    element_text(size = 25, face = "bold"),
+  plot.subtitle = element_text(size = 13),
+  plot.caption = element_text(size = 9))
+```
+
+
+---
+
+## Paréntesis: temas
+
+:::: columns
+
+::: {.column width="50%"}
+
+Vamos incluso a [**elegir fuente o el color**]{.hl-yellow}
+
+* `sysfonts::font_add_google()`: le indicaremos la tipografía de <https://fonts.google.com/>
+
+* `showtext_auto()` del paquete `{showtext}` nos permite su uso.
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+library(showtext)
+library(sysfonts)
+font_add_google(name = "Roboto")
+showtext_auto()
+theme_set(theme_minimal(base_family = "Roboto")) 
+
+# Configurar tema
+theme_update(
+  plot.title = element_text(color = "#C34539", face = "bold", size = 33),
+  plot.subtitle = element_text(color = "#3E6FCB", face = "bold", size = 21),
+  axis.title.x = element_text(size = 19),
+  axis.title.y = element_text(size = 19))
+
+starwars |> 
+  drop_na(sex) |> 
+  ggplot(aes(x = sex)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  scale_y_continuous(breaks = seq(0, 70, by = 10)) +
+  coord_flip() +
+  labs(x = "sexo", y = "frecuencia absoluta", fill = "sexo",
+       title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+:::
+::::
+
+```{r}
+#| eval: false
+library(showtext)
+library(sysfonts)
+font_add_google(name = "Roboto")
+showtext_auto()
+theme_set(theme_minimal(base_family = "Roboto")) 
+
+# Configurar tema
+theme_update(
+  plot.title = element_text(color = "#C34539", face = "bold", size = 33),
+  plot.subtitle = element_text(color = "#3E6FCB", face = "bold", size = 21),
+  axis.title.x = element_text(size = 19),
+  axis.title.y = element_text(size = 19))
+```
+
+---
+
+## Cualis: barras apiladas
+
+¿Podríamos visualizar [**dos variables discretas/cualis a la vez**]{.hl-yellow}?
+
+. . .
+
+:::: columns
+
+::: {.column width="40%"}
+
+Podemos incluir una en `x = ...` y otra en `fill = ...`, de manera que [**por defecto nos visualiza barras apiladas**]{.hl-yellow}, por ejemplo, para ver el reparto de sexos entre humanos y no humanos.
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia absoluta", fill = "sexo",  title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+ 
+:::
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+---
+
+## Cualis: barras solapas
+
+:::: columns
+
+::: {.column width="40%"}
+
+Con `position = "dodge2"` visualizamos las barras sin apilar, solapadas una al lado de otra
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5,
+           position = "dodge2") + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia absoluta", fill = "sexo",
+       title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+ 
+:::
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5, position = "dodge2") + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+---
+
+## Cualis: barras fill
+
+
+:::: columns
+
+::: {.column width="40%"}
+
+Con `position = "fill"` visualizamos las barras en forma de [**frecuencia relativa**]{.hl-yellow}, con las barras de la misma altura para facilitar la comparativa.
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5, position = "fill") + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia relativa", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+ 
+:::
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |> 
+  mutate(Human = species == "Human") |> 
+  ggplot(aes(x = Human)) +
+  geom_bar(aes(fill = sex), alpha = 0.5,  position = "fill") + 
+  scale_fill_colorblind() +
+  labs(x = "¿Humanos?", y = "frecuencia relativa", fill = "sexo", title = "Primer diagrama de barras",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+       caption = "J. Álvarez Liébana")
+```
+
+---
+
+
+## Paréntesis: factores
+
+En el caso de las [**variables cualitativas**]{.hl-yellow}, llamaremos  **niveles o modalidades** a los **diferentes valores** que pueden tomar estos datos. Por ejemplo, en el caso de la variable `sex` del conjunto `starwars`, tenemos 4 niveles permitidos: `female`, `hermaphroditic`, `male` y `none` (amén de datos ausentes).
+
+```{r}
+starwars |> count(sex)
+```
+
+
+---
+
+## Paréntesis: factores
+
+Este tipo de variables se conocen en `R` como [**factores**]{.hl-yellow}. Y el paquete fundamental para tratarlos es `{forcats}` (del entorno `{tidyverse}`). 
+
+
+![](./img/factors.jpg)
+
+---
+
+## Paréntesis: factores
+
+Este paquete nos permite fijar los [**niveles**]{.hl-yellow} (guardados internamente como `levels`) que toma una determinada variable categórica, dándoles un [**tratamiento diferente a las cadena de texto normales**]{.hl-yellow}.
+
+. . .
+
+Veamos un ejempo sencillo definiendo una variable `estado` que tome los valores `"sano"`, `"leve"` y `"grave"` de la siguiente manera.
+
+```{r}
+estado <-
+  c("leve", "grave", "sano", "sano", "leve", "sano", "sano", "grave",
+    "grave", "leve", "grave", "sano", "sano")
+estado
+```
+
+La variable `estado` actualmente es de [**tipo texto**]{.hl-yellow}, de tipo `chr`, algo que podemos comprobar con `class(estado)`.
+
+```{r}
+class(estado)
+```
+
+---
+
+## Paréntesis: factores
+
+Desde un punto de vista estadístico y computacional, para `R` esta variable ahora mismo sería equivalente una variable de nombres. Pero estadísticamente [**no es lo mismo una variable con nombres**]{.hl-yellow} (que identifican muchas veces el registro) que una variable categórica como estado que [**solo puede tomar esos 3 niveles**]{.hl-yellow}. ¿Cómo [**convertir a factor**]{.hl-yellow}?
+
+. . .
+
+Haciendo uso de la función `as_factor()` del paquete `{forcats}`.
+
+```{r}
+library(tidyverse)
+estado_fct <- tibble(paciente = 1:length(estado),
+                     estado = as_factor(estado))
+estado_fct
+```
+
+---
+
+## Paréntesis: factores
+
+
+No solo ha cambiado la clase de la variable sino que ahora, debajo del valor guardado, nos aparece la frase `Levels: grave leve sano`: son las [**modalidades o niveles**]{.hl-yellow} de nuestra cualitativa. 
+
+&nbsp;
+
+Imagina que ese día en el hospital no tuviésemos a **nadie en estado grave**: aunque ese día nuestra variable no tome dicho valor, el estado `grave` es un [**nivel permitido en la base de datos**]{.hl-yellow}, así que aunque lo eliminemos, por ser un factor, el nivel permanece (no lo tenemos ahora pero es un nivel permitido).
+
+
+```{r}
+estado_fct |> 
+  filter(estado %in% c("sano", "leve")) |> 
+  pull(estado)
+```
+
+---
+
+## Paréntesis: factores
+
+
+Con `factor()` podemos [**especificar explícitamente**]{.hl-yellow} los nombres de las modalidades, incluso si son nominales u [**ordinales**]{.hl-yellow}
+
+```{r}
+estado_fct <-
+  tibble(paciente = 1:length(estado),
+         estado = factor(estado, ordered = TRUE))
+estado_fct |> pull(estado)
+```
+
+---
+
+## Paréntesis: factores
+
+
+Con  `levels = ...` podemos indicarle explícitamente el [**orden de las modalidades**]{.hl-yellow}
+
+```{r}
+estado_fct <-
+  tibble(paciente = 1:length(estado),
+         estado = factor(estado,
+                         levels = c("sano", "leve", "grave"),
+                         ordered = TRUE))
+estado_fct |> pull(estado)
+```
+
+
+
+---
+
+## Paréntesis: factores
+
+
+:::: columns
+
+::: {.column width="50%"}
+
+Si queremos indicarle que [**elimine un nivel no usado**]{.hl-yellow} en ese momento (y que queremos excluir de la definición) podemos hacerlo con `fct_drop()`
+
+:::
+
+
+::: {.column width="50%"}
+
+![](img/drop_factor.jpg)
+
+:::
+::::
+
+```{r}
+estado_fct |> 
+  filter(estado %in% c("sano", "leve")) |> 
+  mutate(estado = fct_drop(estado)) |> 
+  pull(estado)
+```
+
+---
+
+## Paréntesis: factores
+
+:::: columns
+
+::: {.column width="50%"}
+
+Al igual que podemos eliminar niveles podemos [**ampliar los niveles existentes**]{.hl-yellow} (aunque no existan datos de ese nivel en ese momento) con `fct_expand()`
+
+:::
+
+::: {.column width="50%"}
+
+![](./img/factor_expand.jpg)
+
+:::
+::::
+
+```{r}
+estado_fct |> 
+  mutate(estado = fct_expand(estado, c("UCI", "fallecido"))) |> 
+  pull(estado)
+```
+
+---
+
+## Paréntesis: factores
+
+:::: columns
+
+::: {.column width="50%"}
+
+Además con `fct_explicit_na()` podemos [**asignar un nivel a los valores**]{.hl-yellow} para que sea incluido dicho nivel en los análisis y visualizaciones.
+
+:::
+
+::: {.column width="50%"}
+
+![](./img/factor_explicit.jpg)
+
+:::
+::::
+
+```{r}
+fct_explicit_na(factor(c("a", "b", NA)))
+```
+
+---
+
+## Paréntesis: factores
+
+
+Incluso una vez definidos podemos [**reordenar los níveles**]{.hl-yellow} con `fct_relevel()`
+
+
+```{r}
+estado_fct_expand <- 
+  estado_fct |> 
+  mutate(estado = fct_expand(estado, c("UCI", "fallecido"))) |> 
+  pull(estado)
+
+estado_fct_expand |>
+  fct_relevel(c("fallecido", "leve", "sano", "grave", "UCI"))
+  
+```
+
+
+---
+
+## Paréntesis: factores
+
+:::: columns
+
+::: {.column width="50%"}
+
+Esta forma de trabajar con variables cualitativas nos permite dar una [**definición teórica**]{.hl-yellow} de nuestra base de datos, pudiendo incluso contar valores que aún no existen (pero que podrían), haciendo uso de `fct_count()`
+
+:::
+
+::: {.column width="50%"}
+
+![](./img/fct_count.jpg)
+
+:::
+::::
+
+```{r}
+estado_fct |> 
+  mutate(estado = fct_expand(estado, c("UCI", "fallecido"))) |> 
+  pull(estado) |> 
+  fct_count()
+```
+
+
+---
+
+## Paréntesis: factores
+
+
+Los níveles también podemos [**ordenarlos por frecuencia**]{.hl-yellow} con `fct_infreq()`
+
+```{r}
+estado_fct |> 
+  mutate(estado = fct_infreq(estado)) |> 
+  pull(estado) |> 
+  fct_count()
+```
+
+---
+
+## Paréntesis: factores
+
+
+A veces querremos [**agrupar niveles**]{.hl-yellow}, por ejemplo, no permitiendo niveles que [**no sucedan un mínimo de veces**]{.hl-yellow} con `fct_lump_min(.., min = ..)` (las observaciones que no lo cumplan irán a un **nivel genérico** llamado `Other`, aunque se puede cambiar con el argumento `other_level`). 
+
+:::: columns
+
+::: {.column width="50%"}
+
+
+```{r}
+estado_fct |> 
+  pull(estado) |> 
+  fct_lump_min(min = 4)
+```
+
+:::
+
+::: {.column width="50%"}
+
+
+```{r}
+estado_fct |> 
+  pull(estado) |> 
+  fct_lump_min(min = 4,
+               other_level = "otros")
+```
+
+:::
+::::
+
+---
+
+## Paréntesis: factores
+
+
+Podemos hacer algo equivalente pero en función de su [**frecuencia relativa**]{.hl-yellow} con `fct_lump_prop()`.
+
+
+```{r}
+estado_fct |> 
+  pull(estado) |> 
+  fct_lump_prop(prop = 0.4,
+                other_level = "otros")
+```
+
+---
+
+
+## Paréntesis: factores
+
+Esto lo podemos aplicar a nuestros conjuntos de datos para [**recategorizar variables**]{.hl-yellow} de forma muy rápida.
+
+```{r}
+starwars |> 
+  drop_na(species) |> 
+  mutate(species =
+           fct_lump_min(species, min = 3,
+                        other_level = "Otras")) |> 
+  count(species)
+```
+
+---
+
+## Paréntesis: factores
+
+Con `fct_reorder()` podemos también indicar que queremos [**ordenar los factores**]{.hl-yellow} en función de una función aplicada a otra variable.
+
+
+```{r}
+starwars_factor <- 
+  starwars |> 
+  drop_na(height, species) |> 
+  mutate(species =
+           fct_lump_min(species, min = 3,
+                        other_level = "Otras"))
+```
+
+:::: columns
+
+::: {.column width="50%"}
+
+```{r}
+starwars_factor |> pull(species)
+```
+
+:::
+
+
+
+::: {.column width="50%"}
+
+```{r}
+starwars_factor |>
+  mutate(species = fct_reorder(species, height, mean)) |> 
+  pull(species)
+```
+
+:::
+::::
+
+
+---
+
+
+## Cualis: barras ordenadas
+
+:::: columns
+
+::: {.column width="40%"}
+
+Haciendo uso de los que sabemos [**sobre factores**]{.hl-yellow} podemos indicarle que nos [**ordene las columnas de manera personalizada**]{.hl-purple} definiendo la variable cuali como un factor.
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(sex) |> mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = sex)) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo",
+         title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+:::
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = sex)) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+         
+---
+
+
+
+## Cualis: barras ordenadas
+
+:::: columns
+
+::: {.column width="40%"}
+
+También podemos indicarle que nos [**ordene las columnas de mayor a menor frecuencia**]{.hl-yellow} usando simplemente `fct_infreq()`
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(sex) |> mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = fct_infreq(sex))) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo",
+         title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+:::
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+    drop_na(sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = fct_infreq(sex))) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+
+---
+
+
+## Cualis: barras ordenadas
+
+:::: columns
+
+::: {.column width="40%"}
+
+Para [**invertir el orden de los factores**]{.hl-yellow} basta usar `fct_rev()`
+
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(sex) |> mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = fct_rev(fct_infreq(sex)))) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo",
+         title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+:::
+::::
+
+```{r}
+#| eval: false
+starwars |> 
+    drop_na(sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |> 
+    ggplot(aes(x = fct_rev(fct_infreq(sex)))) +
+    geom_bar(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "frecuencia absoluta", fill = "sexo", title = "Primer diagrama de barras",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+
+
+---
+
+## Cualis: geom_col()
+
+La capa `geom_bar()` está solo pensada para [**conteos de variables discretas o cualitativas**]{.hl-yellow}. ¿Y si queremos visualizar en el peso por sexo?
+
+. . .
+
+:::: columns
+
+::: {.column width="45%"}
+
+Usaremos `geom_col()` (ahora si necesitamos `x,y`)
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(mass, sex) |>
+    ggplot(aes(x = sex, y = mass)) +
+    geom_col(aes(fill = sex), alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso", fill = "sexo", title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+:::
+
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(mass, sex) |>
+  ggplot(aes(x = sex, y = mass)) +
+  geom_col(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  labs(x = "Sexo", y = "Peso", fill = "sexo", title = "Primer diagrama de columnas",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente", caption = "J. Álvarez Liébana")
+```
+
+
+---
+
+## Cualis: geom_col()
+
+
+Fíjate que [**por defecto**]{.hl-red} lo que hace es [**sumar la variable continua**]{.hl-yellow}. ¿Cómo pedir que visualice, por ejemplo, la [**media por grupos**]{.hl-purple}?
+
+. . .
+
+:::: columns
+
+::: {.column width="45%"}
+
+La forma más inmediata es hacer un `geom_col()` pero en lugar de a la tabla original a un resumen de la misma.
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+starwars |> 
+  drop_na(mass, sex) |> 
+  summarise(mean_mass = mean(mass), .by = sex) |> 
+  ggplot(aes(x = sex, y = mean_mass)) +
+  geom_col(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  labs(x = "Sexo", y = "Peso (medio)", fill = "sexo", title = "Primer diagrama de columnas",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente", caption = "J. Álvarez Liébana")
+```
+
+:::
+
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+  drop_na(mass, sex) |> 
+  summarise(mean_mass = mean(mass), .by = sex) |> 
+  ggplot(aes(x = sex, y = mean_mass)) +
+  geom_col(aes(fill = sex), alpha = 0.5) + 
+  scale_fill_colorblind() +
+  labs(x = "Sexo", y = "Peso (medio)", fill = "sexo", title = "Primer diagrama de columnas",
+       subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente", caption = "J. Álvarez Liébana")
+```
+
+
+---
+
+## Cualis: geom_col()
+
+
+
+:::: columns
+
+::: {.column width="45%"}
+
+Otra opción es no usar la capa geométrica sino la capa estadística, con `stat_summary()` e indicándole la función a visualizar y el geometría
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass, fill = sex)) +
+    stat_summary(geom = "col", fun = mean, alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (medio)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+:::
+
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass, fill = sex)) +
+    stat_summary(geom = "col", fun = mean, alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (medio)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+
+---
+
+## Cualis: geom_col()
+
+:::: columns
+
+::: {.column width="45%"}
+
+Fíjate que ambas formas nos permiten visualizar cualquier otro estadístico, por ejempo, la mediana
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass, fill = sex)) +
+    stat_summary(geom = "col", fun = median, alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (mediana)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+:::
+
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass, fill = sex)) +
+    stat_summary(geom = "col", fun = median, alpha = 0.5) + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (mediana)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+---
+
+
+## Cualis: geom_col()
+
+:::: columns
+
+::: {.column width="45%"}
+
+La última opción es volver a nuestra conocida `geom_bar()`, indicándole `stat = "summary", fun = "mean"`, por ejemplo (por defecto `stat = "count"`) con ahora sí dos variables
+
+:::
+
+::: {.column width="55%"}
+
+```{r}
+#| echo: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass)) +
+    geom_bar(aes(fill = sex), alpha = 0.5,
+             stat = "summary", fun = "mean") + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (media)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+:::
+
+::::
+
+
+```{r}
+#| eval: false
+starwars |> 
+    drop_na(mass, sex) |>
+  mutate(sex = factor(sex, levels = c("female", "male", "hermaphroditic", "none"))) |>
+    ggplot(aes(x = sex, y = mass)) +
+    geom_bar(aes(fill = sex), alpha = 0.5,
+             stat = "summary", fun = "mean") + 
+    scale_fill_colorblind() +
+    labs(x = "Sexo", y = "Peso (media)", fill = "sexo",
+         title = "Primer diagrama de columnas",
+         subtitle = "Sexos: femenino, masculino, hemafrodita, ninguno y ausente",
+         caption = "J. Álvarez Liébana")
+```
+
+---
+
+## Imitando a Nightingale
+
+Vamos a intentar replicar el [**famoso gráfico de rosa o diagrama de área polar de Florence Nightingale**]{.hl-yellow}, cargando los datos de `{HistData}`. Los datos representan, por meses, las diferentes causas de mortalidad de los soldados ingleses en la Guerra de Crimea (busca en la ayuda para saber qué es cada cosa)
+
+```{r}
+library(HistData)
+datos <- as_tibble(Nightingale)
+```
+
+![](./img/rosa_nightingale.jpg)
+
+---
+
+
+## Imitando a Nightingale
+
+1. Filtra solo las variables relativas a fecha y las relativadas a tasas de mortalidad (por cada 1000 habitantes), aquellas que acaban por `".rate"`. Tras ello prepara los datos de manera adecuada para su visualización (todo en castellano)
+
+```{r}
+#| code-fold: true
+datos_filtrados <-
+  datos |> 
+  select(Date:Year, contains("rate")) |> 
+  pivot_longer(cols = contains("rate"),
+               names_to = "causa",
+               values_to = "tasa") |> 
+  rename(fecha = Date, mes = Month, anno = Year) |> 
+  mutate(causa =
+           case_when(causa == "Disease.rate" ~ "infecciosas",
+                     causa == "Wounds.rate" ~ "heridas",
+                     TRUE ~ "otras"))
+datos_filtrados
+```
+
+---
+
+## Imitando a Nightingale
+
+2. Realiza las transformaciones en los datos que consideres y replica el gráfico.
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+datos_filtrados <-
+  datos_filtrados |>
+  mutate(periodo =
+           ifelse(fecha >= "1855-04-01", "Abril 1855 - Marzo 1856", "Abril 1854 - Marzo 1855"),
+         periodo =
+           factor(periodo,
+                  levels = c("Abril 1854 - Marzo 1855", "Abril 1855 - Marzo 1856"),
+                  ordered = TRUE))
+
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+
+
+---
+
+## Imitando a Nightingale
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos_filtrados <-
+  datos_filtrados |>
+  mutate(periodo = ifelse(fecha >= "1855-04-01", "Abril 1855 - Marzo 1856", "Abril 1854 - Marzo 1855"),
+         periodo =
+           factor(periodo, levels = c("Abril 1854 - Marzo 1855", "Abril 1855 - Marzo 1856"),
+                  ordered = TRUE))
+
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+
+        
+---
+
+## Imitando a Nightingale
+
+3. Nuestros datos abarcan dos periodos: de abril 1854 a marzo 1855, y de abril 1855 a marzo 1856. Realiza los cambios necesarios  para obtener el siguiente gráfico.
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+datos_filtrados <-
+  datos_filtrados |>
+  mutate(periodo = ifelse(fecha >= "1855-04-01", "Abril 1855 - Marzo 1856", "Abril 1854 - Marzo 1855"),
+         periodo =
+           factor(periodo, levels = c("Abril 1854 - Marzo 1855", "Abril 1855 - Marzo 1856"),
+                  ordered = TRUE),
+         mes = fct_relevel(mes, "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+                           "Dec", "Jan", "Feb", "Mar"))
+
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos_filtrados <-
+  datos_filtrados |>
+  mutate(periodo = ifelse(fecha >= "1855-04-01", "Abril 1855 - Marzo 1856", "Abril 1854 - Marzo 1855"),
+         periodo =
+           factor(periodo, levels = c("Abril 1854 - Marzo 1855", "Abril 1855 - Marzo 1856"),
+                  ordered = TRUE),
+         mes = fct_relevel(mes, "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
+                           "Dec", "Jan", "Feb", "Mar"))
+
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+
+---
+
+## Imitando a Nightingale
+
+
+4. Piensa que cambio hemos realizado en el siguiente gráfico. ¿Qué se ha cambiado en las coordenadas? ¿Tenemos alguna capa que pueda ayudarnos a realizarlo? Investiga
+
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+
+5. Ahora mismo se notan mucho las diferencias entre gajos. ¿Cómo podríamos reducir esa diferencia? ¿Qué tipo de cambio deberíamos realizar (qué tipo de capa usar)?
+
+
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  scale_y_sqrt() +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+theme_set(theme_minimal())
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  scale_y_sqrt() +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+
+6. Dado que en el gráfico original no hay marcas en el eje Y, vamos **eliminar el eje Y** (sin título, sin textos, sin marcas). ¿Qué habría que cambiar? Investiga en `theme()` Situa además la leyenda en la parte inferior
+
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+theme_set(theme_minimal())
+theme_update(axis.title.y = element_blank(),
+             axis.text.y = element_blank(),
+             axis.ticks.y = element_blank(),
+             legend.position = "bottom")
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  scale_y_sqrt() +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+```{r}
+#| code-fold: true
+#| eval: false
+theme_set(theme_minimal())
+theme_update(axis.title.y = element_blank(),
+             axis.text.y = element_blank(),
+             axis.ticks.y = element_blank(),
+             legend.position = "bottom")
+```
+
+
+---
+
+## Imitando a Nightingale
+
+7. Para que sea más legible vamos a **reducir el tamaño de las etiquetas de los meses** y vamos a darle **etiquetas correctas a los meses** (July en lugar de Jul, December en lugar de Dec, etc).
+
+
+```{r}
+#| code-fold: true
+#| echo: false
+#| fig-width: 11
+theme_set(theme_minimal())
+theme_update(axis.title.y = element_blank(), axis.text.y = element_blank(),
+             axis.ticks.y = element_blank(), axis.text.x = element_text(size = 6, face = "bold"),
+             legend.position = "bottom")
+
+ggplot(datos_filtrados, aes(x = mes, y = tasa, fill = causa)) + 
+  geom_col(alpha = 0.85) +
+  scale_fill_manual(values = c("#e3aeae", "#a5acb0", "#594b4a")) +
+  coord_polar() +
+  scale_y_sqrt() +
+  scale_x_discrete(labels =
+                     c("JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+                       "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE")) +
+  facet_wrap(~periodo) +
+  labs(fill = "Causas", title = "Causas de mortalidad",
+       subtitle = "Periodos: Abril 1854 - Marzo 1855 y Abril 1855 - Marzo 1856",
+       caption = "Autor: J. Álvarez Liébana | Data: {HistData}")
+```
+
+---
+
+## Imitando a Nightingale
+
+```{r}
+#| code-fold: true
+#| eval: false
+theme_set(theme_minimal())
+theme_update(axis.title.y = element_blank(), axis.text.y = element_blank(),
+             axis.ticks.y = element_blank(), axis.text.x = element_text(size = 6, face = "bold"),
+             legend.position = "bottom")
+
+... + 
+  scale_x_discrete(labels =
+                     c("JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+                       "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE"))
+```
+
+
+
+---
+
+## 🐣 Caso práctico I: gapminder
+
+Usa el dataset `gapminder` y visualiza en un gráfico la media de la variable `gdpPercap` por continente y año mediante un diagrama de barras en 3 formas:
+
+* barras solapadas
+* barras apiladas
+* barras fill
+
+---
+
+## 🐣 Caso práctico II
+
+El objetivo es analizar un conjunto de datos que contiene las respuestas a las pregunta [**«¿Qué probabilidad (%) asignarías al término (entre otros) ...**]{.hl-yellow}
+
+* **«almost no chance»**
+* **«probable»**
+* **«almost certainly»**
+
+...con el objetivo de [**comprender cómo la gente percibe el vocabulario**]{.hl-yellow} de la probabilidad.
+
+```{r}
+datos <-
+  read_csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv")
+datos
+```
+
+---
+
+## 🐣 Caso práctico II
+
+```{r}
+datos <-
+  read_csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv")
+datos
+```
+
+Solo haciendo uso de los gráficos aprendidos hasta ahora, ¿cómo visualizarías dicho dataset? Realiza las tranformaciones que consideres para una correcta preparación de los datos.
+

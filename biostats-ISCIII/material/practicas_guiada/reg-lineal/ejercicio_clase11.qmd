@@ -13,9 +13,8 @@ format:
 > Descárgate el fichero `colesterol.csv`, muévelo a la carpeta de tu proyecto y carga el archivo. Carga antes las librerías que vayas a necesitar
 
 ```{r}
-#| eval: false
-library(...)
-datos <- ...
+library(readr)
+datos <- read_csv(file = "./colesterol.csv")
 datos
 ```
 
@@ -24,10 +23,10 @@ datos
 > Usa tidyverse para limpair de ausentes tu variable objetivo (colesterol)
 
 ```{r}
-#| eval: false
+library(tidyverse)
 datos <-
   datos |> 
-  ...(colesterol)
+  drop_na(colesterol)
 datos
 ```
 
@@ -72,8 +71,7 @@ modelo |> summary()
 
 
 ```{r}
-#| eval: false
-modelo <- ...
+modelo <- lm(data = datos, formula = colesterol ~ edad + actividad_fisica)
 modelo |> summary()
 ```
 
@@ -246,8 +244,8 @@ modelo |> summary()
 El valor esperado de $Y$ es $\beta_0+\beta_1x_1 + ... = ... + ...*edad + ...$. Entonces si el paciente tuviera 51 años y actividad física de 2, su colesterol esperado sería de ... 
 
 ```{r}
-#| eval: false
-predict(...)
+predict(modelo, tibble("edad" = c(51, 15),
+                       "actividad_fisica" = c(2, 4)))
 ```
 
 > Haz otra predicción para un paciente de 15 años y actividad fisica de 4
@@ -275,7 +273,7 @@ modelo |> summary()
 
 ```{r}
 #| eval: false
-modelo_saturado <- ...
+modelo_saturado <- lm(data = datos, formula = colesterol ~ .)
 performance::compare_performance(modelo, modelo_saturado)
 ```
 
@@ -287,16 +285,29 @@ performance::compare_performance(modelo, modelo_saturado)
 #| eval: false
 datos_ruido_3 <-
   datos |> 
-  mutate("colesterol" = colesterol + rnorm(..., ..., sd = 3))
-datos_ruido_7 <- ...
-datos_ruido_15 <- ...
+  mutate("colesterol" = colesterol + rnorm(n = nrow(datos), mean = 0, sd = 3))
+datos_ruido_7 <-
+  datos |> 
+  mutate("colesterol" = colesterol + rnorm(n = nrow(datos), mean = 0, sd = 7))
+datos_ruido_15 <-
+  datos |> 
+  mutate("colesterol" = colesterol + rnorm(n = nrow(datos), mean = 0, sd = 15))
+datos_ruido_25 <-
+  datos |> 
+  mutate("colesterol" = colesterol + rnorm(n = nrow(datos), mean = 0, sd = 25))
 
-modelo_ruido_3 <- ...
-modelo_ruido_7 <- ...
-modelo_ruido_15 <- ...
+modelo_ruido_3 <- lm(data = datos_ruido_3,
+                    formula = colesterol ~ edad + actividad_fisica)
+modelo_ruido_7 <- lm(data = datos_ruido_7,
+                    formula = colesterol ~ edad + actividad_fisica)
+modelo_ruido_15 <- lm(data = datos_ruido_15,
+                    formula = colesterol ~ edad + actividad_fisica)
+modelo_ruido_25 <- lm(data = datos_ruido_25,
+                    formula = colesterol ~ edad + actividad_fisica)
 
 performance::compare_performance(modelo,
-                                 ..., ..., ...)
+                                 modelo_ruido_3, modelo_ruido_7,
+                                 modelo_ruido_15, modelo_ruido_25)
 
 ```
 

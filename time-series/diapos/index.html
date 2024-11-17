@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-15"</code></pre>
+<pre><code>[1] "2024-11-17"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-15 15:16:14 CET"</code></pre>
+<pre><code>[1] "2024-11-17 22:08:01 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -2673,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min        lq        mean
-                                y &lt;- x^2    1.722    2.2755    3.079182
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1368.908 1621.2425 2117.548976
-   median       uq       max neval
-    2.583    3.198    15.457   500
- 1757.198 1929.870 30093.672   500</code></pre>
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.927    2.174722    2.050
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1361.569 1382.622 1531.750488 1407.715
+       uq      max neval
+    2.214   12.218   500
+ 1480.818 4990.356   500</code></pre>
 </div>
 </div>
 </section>
@@ -4749,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t     X_t sd    
-   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1  0.537  sd_0.5
- 2     2 -1.05   sd_0.5
- 3     3 -0.644  sd_0.5
- 4     4  0.117  sd_0.5
- 5     5  0.585  sd_0.5
- 6     6 -0.788  sd_0.5
- 7     7 -1.04   sd_0.5
- 8     8 -0.441  sd_0.5
- 9     9  0.109  sd_0.5
-10    10 -0.0355 sd_0.5
+       t    X_t sd    
+   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; 
+ 1     1 -0.108 sd_0.5
+ 2     2 -1.13  sd_0.5
+ 3     3 -0.102 sd_0.5
+ 4     4 -0.438 sd_0.5
+ 5     5 -0.808 sd_0.5
+ 6     6 -0.667 sd_0.5
+ 7     7 -0.334 sd_0.5
+ 8     8  0.658 sd_0.5
+ 9     9  0.600 sd_0.5
+10    10  0.218 sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd         X_t
-   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5 -0.105 
- 2     2 sd_0.5 -0.161 
- 3     3 sd_0.5  0.132 
- 4     4 sd_0.5 -0.460 
- 5     5 sd_0.5  0.0920
- 6     6 sd_0.5 -0.711 
- 7     7 sd_0.5  1.27  
- 8     8 sd_0.5  0.443 
- 9     9 sd_0.5  0.155 
-10    10 sd_0.5  0.337 
+       t sd          X_t
+   &lt;int&gt; &lt;glue&gt;    &lt;dbl&gt;
+ 1     1 sd_0.5  0.136  
+ 2     2 sd_0.5 -0.705  
+ 3     3 sd_0.5  0.00306
+ 4     4 sd_0.5 -0.519  
+ 5     5 sd_0.5 -0.758  
+ 6     6 sd_0.5 -0.301  
+ 7     7 sd_0.5  0.658  
+ 8     8 sd_0.5 -0.339  
+ 9     9 sd_0.5  0.240  
+10    10 sd_0.5 -0.0384 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -8685,7 +8685,7 @@ F-statistic: 0.002897 on 1 and 58 DF,  p-value: 0.9573</code></pre>
 <h2>Procesos MA</h2>
 <p><span class="math display">\[X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad  \text{proceso lineal}\]</span></p>
 <p>Uno de los tipos de procesos lineales más importantes son los conocidos como <span class="hl-yellow"><strong>procesos de medias moviles (MA)</strong></span> definidos como</p>
-<p><span class="math display">\[X_t = \varepsilon - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<p><span class="math display">\[X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \quad q \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
 <p>donde <span class="math inline">\(q\)</span> será el <strong>orden</strong> (lo llamaremos <span class="hl-yellow"><strong>procesos de medias moviles de orden q o MA(q)</strong></span>). Si te fijas es un <strong>caso particular de proceso lineal</strong> donde todos los coeficientes son 0 salvo <span class="hl-green"><strong><span class="math inline">\(\left(\Psi_0 = 1, \Psi_1 = -\theta_1,\ldots, \Psi_q = -\theta_q \right)\)</span></strong></span>.</p>
 </section>
 <section id="procesos-ma-1" class="slide level2">
