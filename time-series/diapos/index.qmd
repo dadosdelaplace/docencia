@@ -8726,9 +8726,11 @@ $$X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsil
 #| code-fold: true
 MA_1_simul <- function(n, sigma, theta_1, eps_1) {
   
+  
+  eps <- c(eps_1, rnorm(n = n - 1, mean = 0, sd = sigma))
   X_t <- eps_1
   for (i in 2:n) {
-    X_t[i] <- rnorm(1, mean = 0, sd = sigma) - theta_1*X_t[i - 1]
+    X_t[i] <- eps[i] - theta_1*eps[i - 1]
   }
   ts <- tibble("t" = 1:n, "X_t" = X_t) |> as_tsibble(index = t)
   return(ts)
@@ -8811,7 +8813,7 @@ MA_1_simul(300, 3, -1.5, 0) |>
 :::
 ::::
 
-¿Te has fijado en que [**cuando el MA(1) no es explosivo las correlaciones caen a partir de $q$**]{.hl-yellow} (q-correlacionado poblacionalmente aunque a nivel muestral puedan caer algunas todavía fuera de la banda de significación)?
+¿Te has fijado en que [**las correlaciones caen a partir de $q$**]{.hl-yellow} (q-correlacionado poblacionalmente aunque a nivel muestral puedan caer algunas todavía fuera de la banda de significación)?
 
 ---
 
@@ -8962,6 +8964,845 @@ $$\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad & &
 * simula varios y observa sus ACF
 
 # Clases 18: [procesos MA]{.flow} {#clase-18}
+
+---
+
+## MA(2)
+
+
+$$X_t =  \Theta_2 \left(B \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber$$
+
+Hagamos de nuevo el ejercicio de calcular las [**autocovarianzas**]{.hl-yellow}:
+
+$$\begin{eqnarray}\gamma_h &=& Cov \left( X_t, X_{t+h} \right) = E \left[ \left( \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2}\right) \left( \varepsilon_{t+h} - \theta_1 \varepsilon_{t+h-1} - \theta_2 \varepsilon_{t+h-2}\right)\right] \nonumber \\ &=& E \left[ \varepsilon_t \varepsilon_{t+h} \right]  - \theta_1 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h} \right] - \theta_1 E \left[ \varepsilon_{t}  \varepsilon_{t+h-1} \right] + \theta_{1}^2 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-1} \right] \nonumber \\ &-&  \theta_2 E \left[ \varepsilon_{t-2}  \varepsilon_{t+h} \right] + \theta_1 \theta_2 E \left[ \varepsilon_{t-2}  \varepsilon_{t+h-1} \right] + \theta_{2}^2 E \left[ \varepsilon_{t-2}  \varepsilon_{t-h-2} \right]  \nonumber \\ &-& \theta_2 E \left[ \varepsilon_{t}  \varepsilon_{t+h-2} \right] + \theta_1 \theta_2 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-2} \right]  \end{eqnarray}$$
+
+* $h = 0$ -> $\gamma_0 = \sigma^2 + \theta_{1}^2 \sigma^2  + \theta_{2}^2 \sigma^2 = \left(1 + \theta_{1}^2  + \theta_{2}^2 \right) \sigma^2$
+
+* $h = 1$ -> $\gamma_1 = -\theta_1 \sigma^2 + \theta_1 \theta_2 \sigma^2$
+
+* $h = 2$ -> $\gamma_2 = -\theta_2 \sigma^2$
+
+* $h > 2$ -> $\gamma_h = 0$
+
+---
+
+## MA(2)
+
+
+$$X_t =  \Theta_2 \left(B \right)\varepsilon_t = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \theta_2 \varepsilon_{t-2}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco} \nonumber$$
+
+Por tanto las [**autocorrelaciones**]{.hl-yellow} serán:
+
+$$\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} \frac{\gamma_h}{\gamma_0} = 1 \quad & &h = 0, \nonumber \\ \frac{\gamma_1}{\gamma_0} = \frac{-\theta_1 \sigma^2 + \theta_1 \theta_2 \sigma^2}{ \left(1 + \theta_{1}^2  + \theta_{2}^2 \right) \sigma^2} = \frac{-\theta_1  + \theta_1 \theta_2 }{1 + \theta_{1}^2  + \theta_{2}^2}\quad & &h = 1, \nonumber \\ \frac{\gamma_2}{\gamma_0} = \frac{-\theta_2 \sigma^2}{ \left(1 + \theta_{1}^2  + \theta_{2}^2 \right) \sigma^2} = \frac{-\theta_2}{1 + \theta_{1}^2  + \theta_{2}^2}\quad & &h = 2 \nonumber \\ 0  \quad & &h > 2\end{cases}\end{eqnarray}$$
+
+. . .
+
+[**¿Cómo generalizarlo a MA(q)?**]{.hl-yellow}
+
+
+---
+
+## MA(q)
+
+
+$$\begin{eqnarray}\gamma_h &=& Cov \left( X_t, X_{t+h} \right) = E \left[ \left( \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}\right) \left( \varepsilon_{t+h} - \theta_1 \varepsilon_{t+h-1} - \ldots - \theta_q \varepsilon_{t+h-q}\right)  \right] \nonumber \\ &=& E \left[ \varepsilon_t \varepsilon_{t+h} \right]  - \theta_1 E \left[ \varepsilon_{t}  \varepsilon_{t+h-1} \right] - \ldots  - \theta_q E \left[ \varepsilon_{t}  \varepsilon_{t+h-q} \right] \nonumber \\ &-& \theta_1 E \left[ \varepsilon_{t-1} \varepsilon_{t+h} \right]  + \theta_{1}^2 E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-1} \right] + \ldots  + \theta_1\theta_q E \left[ \varepsilon_{t-1}  \varepsilon_{t+h-q} \right] \nonumber \\ & & ... \nonumber \\ &-& \theta_q E \left[ \varepsilon_{t-q} \varepsilon_{t+h} \right]  + \theta_{1}\theta_{q} E \left[ \varepsilon_{t-q}  \varepsilon_{t+h-1} \right] + \ldots  + \theta_{q}^{2} E \left[ \varepsilon_{t-q}  \varepsilon_{t+h-q} \right]\end{eqnarray}$$
+
+$$\begin{eqnarray}\gamma_h = \begin{cases} \sigma^2 + \theta_{1}^{2}\sigma^2  +  \ldots + \theta_{q}^{2}\sigma^2\quad & &h = 0, \nonumber \\  - \theta_1 \sigma^2 + \theta_1 \theta_2 \sigma^2 + \ldots + \theta_{q-1} \theta_{q} \sigma^2 \quad & &h = 1, \nonumber \\ -\theta_2 \sigma^2 + \theta_1 \theta_3 \sigma^2 + \ldots + \theta_{q-2} \theta_{q} \sigma^2\quad & &h = 2, \nonumber \\  -\theta_3 \sigma^2 + \theta_1 \theta_{4} \sigma^2 +  \ldots +  \theta_{q-3} \theta_{q} \sigma^2 \quad & &h =3\nonumber \end{cases}\end{eqnarray}$$
+
+---
+
+
+## MA(q)
+
+De manera general las [**autocovarianzas de un MA(q)**]{.hl-yellow} son las siguientes
+
+$$\begin{eqnarray}\gamma_h = \begin{cases} \left(1 + \theta_{1}^{2} + \ldots + \theta_{q}^{2} \right)\sigma^2  \quad & &h = 0, \nonumber \\  \left(-\theta_h + \sum_{j = 1}^{q-h} \theta_{j}  \theta_{j + h} \right) \sigma^2  & &h = 1, \ldots,q \nonumber \\ 0  \quad & &h > q\nonumber \end{cases}\end{eqnarray}$$
+
+$$\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad & &h = 0, \nonumber \\  \frac{\left(-\theta_h + \sum_{j = 1}^{q-h} \theta_{j}  \theta_{j + h} \right)}{\left(1 + \theta_{1}^{2} + \ldots + \theta_{q}^{2} \right)} & &h = 1, \ldots,q \nonumber \\ 0  \quad & &h > q\nonumber \end{cases}\end{eqnarray}$$
+
+---
+
+## MA(q): invertibilidad
+
+¿Qué [**condiciones de invertibilidad**]{.hl-yellow} necesitamos?
+
+. . .
+
+Como antes vamos a intentar poner los errores en función de $X_t$
+
+$$\begin{eqnarray}\varepsilon_{t} &=& X_t + \theta_1 \varepsilon_{t-1} + \ldots +  \theta_q \varepsilon_{t-q} \nonumber \\ &=& X_t + \theta_1 \left( X_{t-1} + \theta_1 \varepsilon_{t-2} + \ldots + \theta_q \varepsilon_{t-q-1} \right) +\theta_2 \varepsilon_{t-2}  + \ldots +  \theta_q \varepsilon_{t-q} \nonumber \\ &=& X_t + \theta_1 X_{t-1} + \theta_{1}^{2} \varepsilon_{t-2} + \ldots + \theta_1\theta_q \varepsilon_{t-q-1} \nonumber \\ & & + \theta_2 \varepsilon_{t-2}  + \ldots +  \theta_q \varepsilon_{t-q} \nonumber \\ &=& X_t + \theta_1 X_{t-1} + \theta_{1}^{2} \left( X_{t-2} + \theta_1 \varepsilon_{t-3} + \ldots + \theta_q \varepsilon_{t-q-2} \right) + \ldots + \theta_1\theta_q \varepsilon_{t-q-1}\nonumber \\ & & + \theta_2 \left( X_{t-2} + \theta_1 \varepsilon_{t-3} + \ldots + \theta_q \varepsilon_{t-q-2} \right)  + \ldots +  \theta_q \varepsilon_{t-q} \nonumber \\ &=& \ldots = \sum_{j=0}^{\infty} \pi_j X_{t-j} \end{eqnarray}$$
+
+---
+
+## MA(q): invertibilidad
+
+
+Diremos que un [**proceso MA(q) es invertible**]{.hl-yellow} si
+
+$$\varepsilon_{t} = \sum_{j=0}^{\infty} \pi_j X_{t-j} = \Pi \left(B \right) X_t, \quad  \Pi \left(B \right) = \sum_{j=0}^{\infty} \pi_j B^j = 1 + \pi_1 B + \pi_2 B^2 + ...$$
+
+
+Dado que por definición $X_t = \Theta_q (B) \varepsilon_t$ entonces 
+
+$$\varepsilon_{t}  = \Pi \left(B \right) \Theta_q (B) \varepsilon_t$$
+
+por lo que los [**coeficientes de $\Pi (B)$ se determinarán**]{.hl-yellow} tal que $\Pi \left(B \right) \Theta_q (B) = 1$.
+
+---
+
+## MA(q): invertibilidad
+
+Si $\Pi \left(B \right) \Theta_q (B) = 1$, entonces $\Pi (B) = \Theta_{q}^{-1} (B)$.
+
+Es decir, dicho polinomio $\Theta_{q}(B)$ tiene que ser por tanto invertible. Se puede demostrar como un [**proceso MA(q) es invertible**]{.hl-yellow} si y solo si las raíces de
+
+$$\Theta_{q}(z) = 1 - \theta_1 z - \ldots - \theta_q z^q = 0$$
+
+son (en módulo) mayores que la unidad ($\left| z \right| > 1$). 
+
+---
+
+## MA(q) invertibilidad
+
+El paquete `{pracma}` nos permite [**determinar las raíces de un polinomio con la función `roots()`**]{.hl-yellow} introduciendo los coeficientes del polinomio de más grado a menos.
+
+Por ejemplo si queremos calcular las raíces de $-z^3 +2 z^2 +1.5* z - 2$ 
+
+```{r}
+pracma::roots(c(-1, 2, 1.5, -2))
+```
+
+. . .
+
+Si queremos definir un $MA(q)$, por ejemplo, $X_t = \varepsilon_t - 0.2 \varepsilon_{t-1} + 0.5 \varepsilon_{t-2}$, y ver [**si cumple las condiciones de invertibilidad**]{.hl-yellow} basta con meter los **paramétros de antiguo a reciente y cambiando el signo**
+
+```{r}
+pracma::roots(c(-0.5, 0.2, 1))
+```
+
+--- 
+
+## MA(q)
+
+[**💻 Diseña una función**]{.hl-yellow} para simular $n$ trayectorias de un $MA(q)$ en función de $q$, $n$, $\sigma$, $\left(\theta_1,~\theta_2, \ldots, ~\theta_q\right)$ y  $\left(\varepsilon_1, \ldots, \varepsilon_q\right)$
+
+```{r}
+#| code-fold: true
+MA_q_simul <- function(q, n, sigma, theta, eps_0) {
+  
+  X_t <- eps_0
+  eps <- c(eps_0, rnorm(n = n - q, mean = 0, sd = sigma))
+  for (i in (q + 1):n) {
+    X_t[i] <- eps[i] - sum(theta * eps[(i - 1):(i - q)])
+  } 
+  ts <- tibble("t" = 1:n, "X_t" = X_t) |> as_tsibble(index = t)
+  return(ts)
+}
+```
+
+
+---
+
+## MA(q)
+
+💻 [**Aplica dicha función**]{.hl-yellow} para simular un $MA(2)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1, \varepsilon_2 \right) = 0$ y $\left(\theta_1, ~ \theta_2 \right) = (-0.3, 0.5)$
+
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+ggplot(MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2))) +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+El proceso tiene que cumplir las condiciones de invertibilidad ya que parece estacionario. ¿Cuánto valen sus raíces?
+
+---
+
+## MA(q)
+
+```{r}
+pracma::roots(c(0.5, -0.3, 1))
+Mod(pracma::roots(c(0.5, -0.3, 1)))
+```
+
+Las [**raíces pueden ser complejas, lo importante es que su módulo sea mayor que 1**]{.hl-yellow}
+
+
+---
+
+## MA(q)
+
+💻 [**Aplica dicha función**]{.hl-yellow} para simular un $MA(3)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1,~\varepsilon_2, ~\varepsilon_3 \right) = 0$ y $\left(\theta_1, ~ \theta_2, ~\theta_3 \right) = (0.8, 0.4, -0.9)$
+
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+ggplot(MA_q_simul(3, 300, 3, theta = c(0.8, 0.4, -0.9), eps = rep(0, 3))) +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "MA(2) con theta_1 = 0.8, theta_2 = 0.4, theta_3 = -0.9 y sigma = 3") +
+  theme_minimal()
+```
+
+¿Por qué es explosivo?
+
+. . .
+
+```{r}
+Mod(pracma::roots(c(-0.9, 0.4, 0.8, 1)))
+```
+
+---
+
+## MA(q)
+
+💻 [**Calcula las ACF de ambas series**]{.hl-yellow}
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+  ACF(X_t) |> 
+  autoplot() +
+  labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+MA_q_simul(3, 300, 3, theta = c(0.8, 0.4, -0.9), eps = rep(0, 3)) |> 
+  ACF(X_t) |> 
+  autoplot() +
+  labs(title = "MA(3) con theta_1 = 0.8, theta_2 = 0.4, theta_3 = -0.9 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+::::
+
+
+# Clases 19: [procesos AR]{.flow} {#clase-19}
+
+---
+
+## Modelos AR
+
+Hasta ahora hemos visto solo procesos cuya dependencia se contruye [**promediando los errores pasados**]{.hl-yellow}. ¿Y si hacemos «lo mismo» pero [**promediando el pasado de la serie**]{.hl-yellow}?
+
+. . .
+
+Dado que la idea es hacer una **regresión con su propio pasado**, a estos modelos se conoce como [**procesos autorregresivos (AR)**]{.hl-yellow} 
+
+
+$$X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p} + \varepsilon_t, \quad p \geq 1, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+donde $p$ será el **orden autorregresivo** (lo llamaremos [**procesos autorregresivos de orden p o AR(p)**]{.hl-yellow}).
+
+---
+
+## Modelos MA vs AR
+
+
+Simplemente por fijar conceptos, estos son los dos modelos
+
+
+:::: columns
+::: {.column width="50%"}
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \nonumber \\ &=& \varepsilon_t - \sum_{j=1}^{q} \theta_j \varepsilon_{t-j} \quad q \geq 1, \quad \quad \text{MA(q)}\end{eqnarray}$$
+:::
+
+::: {.column width="50%"}
+
+$$\begin{eqnarray}X_t &=& \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + \varepsilon_t \nonumber \\ &=&  \varepsilon_{t} + \sum_{i=1}\phi_i X_{t-i}, \quad p \geq 1, \quad \quad \text{AR(p)}\end{eqnarray}$$
+:::
+::::
+
+. . .
+
+De la misma forma podemos hacer uso del [**operador de retardos**]{.hl-yellow} (ahora $\Phi_p(B)$)
+
+$$X_t =  \phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + \varepsilon_t \quad \Rightarrow \quad \Phi_p \left(B \right)X_t = \varepsilon_t, \quad \Phi_p(B) = 1 - \phi_1B - \ldots - \phi_p B^p \quad $$
+
+. . .
+
+
+:::: columns
+::: {.column width="50%"}
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \nonumber \\ &=& \Theta_q (B) \varepsilon_t \quad \quad \text{MA(q)} \end{eqnarray}$$
+:::
+
+::: {.column width="50%"}
+
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t + \phi_1 X_{t-1} + \ldots + \phi_q X_{t-q} \nonumber \\ \Phi_p (B)X_t &=&  \varepsilon_t \quad \quad \text{AR(p)} \end{eqnarray}$$
+
+:::
+::::
+
+
+---
+
+## Proceso AR
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t + \phi_1 X_{t-1} + \ldots + \phi_q X_{t-q} \nonumber \\ \Phi_p (B)X_t &=&  \varepsilon_t \quad \quad \text{AR(p)} \end{eqnarray}$$
+
+Dale valores $p=1, 2, 3, 4$ y escribe cómo quedaría el proceso
+
+. . .
+
+* **AR(1)**: $\Phi_1 \left(B \right)X_t  = \varepsilon_t \Rightarrow \left(1 - \phi_1 B \right)X_t = \varepsilon_t \Rightarrow X_t = \phi_1 X_{t-1} + \varepsilon_t$
+
+* **AR(2)**: $\Phi_2 \left(B \right)X_t  = \varepsilon_t \Rightarrow \left(1 - \phi_1 B - \phi_2 B^2 \right)X_t = \varepsilon_t \Rightarrow X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \varepsilon_t$
+
+* **AR(3)**: $\Phi_3 \left(B \right)X_t  = \varepsilon_t \Rightarrow \left(1 - \phi_1 B - \phi_2 B^2 - \phi_3 B^3  \right)X_t = \varepsilon_t \Rightarrow X_t = \phi_1 X_{t-1} + \phi_2 X_{t-2} + \phi_3 X_{t-3} + \varepsilon_t$
+
+
+---
+
+## AR(p)
+
+[**💻 Diseña una función**]{.hl-yellow} para simular $n$ trayectorias de un $AR(p)$ en función de $p$, $n$, $\sigma$, $\left(\phi_1,~\phi_2, \ldots, ~\phi_p\right)$ y  $\left(X_1, \ldots, X_p\right)$
+
+```{r}
+#| code-fold: true
+AR_p_simul <- function(p, n, sigma, phi, X) {
+  
+  X_t <- X
+  for (i in (p + 1):n) {
+    X_t[i] <-
+      sum(phi * X_t[(i - 1):(i-p)]) + rnorm(1, mean = 0, sd = sigma)
+  } 
+  ts <- tibble("t" = 1:n, "X_t" = X_t) |> as_tsibble(index = t)
+  return(ts)
+}
+```
+
+---
+
+## AR(p)
+
+💻 [**Aplica dicha función**]{.hl-yellow} para simular un $AR(2)$ con $n = 300$, $\sigma = 3$, $\left(X_1, X_2 \right) = 0$ y $\left(\phi_1, ~ \phi_2 \right) = (-0.3, 0.5)$
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+  ggplot() +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "AR(2) con phi_1 = -0.3, phi_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+
+---
+
+## AR(p)
+
+💻 [**Aplica la función MA_q**]{.hl-yellow} para simular un $MA(2)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1, \varepsilon_2 \right) = 0$ y $\left(\theta_1, ~ \theta_2 \right) = (-0.3, 0.5)$. Compara ambos procesos (**mismos parámetros**)
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+  ggplot() +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+  ggplot() +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "AR(2) con phi_1 = -0.3, phi_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+::::
+
+. . .
+
+Ambos [**parecen algo impredible y aleatorio y ¡no es cierto!**]{.hl-red}, simplemente son estacionarios (pero una parte de su comportamiento podemos predecirlo).
+
+---
+
+## MA/AR vs ruido blanco
+
+De hecho en ambos casos al [**realizar el contraste de ruido blanco**]{.hl-yellow} de Ljung-Box obtenemos p-valores menores que 0.05 ==> [**rechazamos la hipótesis nula de ruido blanco**]{.hl-green}
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+set.seed(1234567)
+MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+  features(X_t, ljung_box)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+set.seed(1234567)
+AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+  features(X_t, ljung_box)
+```
+
+:::
+::::
+
+Algo que no pasa si realmente tenemos ruido blanco.
+
+```{r}
+set.seed(1234567)
+tibble("t" = 1:300, "X_t" = rnorm(n = 300, mean = 0, sd = 3)) |> 
+  as_tsibble(index = t) |> 
+  features(X_t, ljung_box)
+```
+
+---
+
+## AR(1)
+
+[**¿Es estacionario?**]{.hl-yellow}
+
+. . . 
+
+Vamos a empezar por AR(1)
+
+$$X_t = \phi_1 X_{t-1}  + \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+$$\begin{eqnarray}X_t &=& \phi_1 X_{t-1} +  \varepsilon_t = \phi_1 \left(\phi_1 X_{t-2} +  \varepsilon_{t-1} \right) + \varepsilon_t = \phi_{1}^2 X_{t-2} + \phi_{1}\varepsilon_{t-1}   + \varepsilon_t \nonumber \\ &=& \phi_{1}^2 \left( \phi_1 X_{t-3} +  \varepsilon_{t-2}\right) + \phi_{1}\varepsilon_{t-1}   + \varepsilon_t =\phi_{1}^3 X_{t-3} + \phi_{1}^{2}\varepsilon_{t-2} + \phi_{1}\varepsilon_{t-1}  + \varepsilon_t  \nonumber \\ &=& \ldots = \sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t-j} \end{eqnarray}$$
+
+
+. . .
+
+1. [**Media**]{.hl-yellow}: $E\left[X_t \right] = \sum_{j=0}^{\infty} \phi_{1}^j E\left[ \varepsilon_{t} \right] = 0$
+
+2. [**Varianza**]{.hl-yellow}: $Var\left[X_t \right] = \sum_{j=0}^{\infty} \phi_{1}^{2j} Var\left[ \varepsilon_{t} \right] = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2j} = \sigma^2 \frac{1}{1 - \phi_{1}^2}$ 
+
+---
+
+## AR(1)
+
+3. [**Autocovarianzas**]{.hl-yellow}: teniendo en cuenta que $\left\lbrace \varepsilon_t \right\rbrace$ es ruido blanco (¡e incorrelado con $X_t$!)
+
+$$\begin{eqnarray}\gamma_h &=& Cov\left[X_t, X_{t+h} \right] = E \left[\sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t-j} * \sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t+h-j} \right]\nonumber \\  &=& E \left[\left(\varepsilon_{t} + \phi_{1} \varepsilon_{t-1} + \phi_{1}^2 \varepsilon_{t-2} + \ldots \right) \left(\varepsilon_{t+h} + \phi_{1} \varepsilon_{t+h-1} + \phi_{1}^2 \varepsilon_{t+h-2} + \ldots \right) \right] \nonumber \\  &=&\begin{cases}  \sigma^2 \frac{1}{1 - \phi_{1}^2} \quad h = 0, \\ \phi_1 E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{3}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{5}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+1}= \sigma^2 \frac{\phi_1}{1 - \phi_{1}^2} \quad h = 1, \\ \phi_{1}^{2} E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{4}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{6}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+2}= \sigma^2 \frac{\phi_{1}^2}{1 - \phi_{1}^2} \quad h = 2 \end{cases}  \nonumber \\ &=& \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+h}= \sigma^2 \frac{\phi_{1}^h}{1 - \phi_{1}^2}\end{eqnarray}$$
+
+
+---
+
+
+3. [**Autocorrelaciones**]{.hl-yellow}: 
+
+$$\begin{eqnarray}\rho_h &=& \frac{\gamma_h}{\gamma_0} = \frac{\sigma^2 \frac{\phi_{1}^h}{1 - \phi_{1}^2}}{\sigma^2 \frac{1}{1 - \phi_{1}^2}} = \phi_{1}^h\end{eqnarray}$$
+
+lo cual [**implica que $\left| \rho_1 \right| < 1$**]{.hl-yellow} (ya que las correlaciones deberían ser menores que 1 en valor absoluto y **decrecientes**).
+
+&nbsp;
+
+Fíjate que ahora las [**autocorrelaciones $\rho_h$ no decaen a 0**]{.hl-purple}
+
+---
+
+## AR(1)
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+set.seed(1234567)
+MA_q_simul(q = 1, n = 5000, sigma = 1, theta = c(0.75), eps = c(0)) |> 
+  ACF(X_t, lag_max = 50)  |> 
+  autoplot() +
+  labs(title = "MA(1) con theta_1 = 0.75 y sigma = 1") +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+set.seed(1234567)
+AR_p_simul(p = 1, n = 5000, sigma = 1, phi = c(0.75), X = c(0)) |> 
+  ACF(X_t, lag_max = 50)  |> 
+  autoplot() +
+  labs(title = "AR(1) con phi_1 = 0.75 y sigma = 1") +
+  theme_minimal()
+```
+
+:::
+::::
+
+¡La [**función ACF nunca va a anularse por completo!**]{.hl-red}, de hecho tardará mucho en caer dentro de la banda de incorrelación.
+
+---
+
+
+
+## AR(p)
+
+En general
+
+$$X_t = \phi_1 X_{t-1}  + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p}  + \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+$$\begin{eqnarray}X_t &=& \phi_1 X_{t-1} + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p}  + \varepsilon_t \nonumber \\ &=& \phi_1 \left(\phi_1 X_{t-2} + \ldots + \phi_p X_{t-p-1} + \varepsilon_{t-1} \right)  +  \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p} +\varepsilon_t \nonumber \\ &=&  \left(\phi_{1}^{2} + \phi_2 \right) X_{t-2} + \left(\phi_1 \phi_2 + \phi_3 \right) X_{t-3} + \left(\phi_1 \phi_2 + \phi_3 \right) X_{t-3}+\left(\phi_1 \phi_3 + \phi_4 \right) X_{t-4} \nonumber \\ && + \ldots  +\left(\phi_1 \phi_{p-1} + \phi_{p} \right) X_{t-p} + \phi_1 \phi_{p} X_{t-p-1} + \phi_1 \varepsilon_{t-1} + \varepsilon_t   \nonumber \\ \ &=&  \ldots =^{¿?} \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j} \quad \text{(proceso MA(}\infty\text{))} \end{eqnarray}$$
+
+. . .
+
+Diremos  que un proceso $AR(p)$, definido como $\Phi_p (B)X_t = \varepsilon_t$, es un [**proceso estacionario (o causal) si admite la representación $MA(\infty)$**]**]{.hl-yellow} anterior, tal que
+
+$$X_t = \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j} = \Psi (B) \varepsilon_t, \quad \Psi (B) = \sum_{j=0}^{\infty} \psi_j B^j, \quad \sum_{j=0}^{\infty} \left| \psi_j \right| < \infty, ~\psi_0 = 1$$
+
+. . .
+
+Al igual que antes, dado que $\Phi_p X_t = \varepsilon_t$, los [**coeficientes de $\Psi (B)$ se determinarán**]{.hl-yellow} tal que $ \Phi_p \Psi \left(B \right) = 1$.
+
+---
+
+## AR(p): invertibilidad
+
+Si $\Phi_p (B) \Psi \left(B \right)  = 1$, entonces $\Psi (B) = \Phi_{p}^{-1} (B)$.
+
+Es decir, dicho polinomio $\Phi_{p}(B)$ **tiene que ser de nuevo invertible**. Se puede demostrar como un [**proceso AR(p) es invertible**]{.hl-yellow} si y solo si las raíces de
+
+$$\Phi_{p}(z) = 1 - \phi_1 z - \ldots - \phi_p z^p = 0$$
+
+son (en módulo) mayores que la unidad ($\left| z \right| > 1$). 
+
+
+---
+
+## AR(p)
+
+Bajo dichas [**condiciones de estacionariedad**]{.hl-yellow}
+
+
+1. [**Media**]{.hl-yellow}: $E\left[X_t \right] = \sum_{j=0}^{\infty} \psi_j E\left[ \varepsilon_{t-j} \right] = 0$
+
+2. [**Varianza**]{.hl-yellow}: $Var\left[X_t \right] = \sum_{j=0}^{\infty} \psi_{j}^2 Var\left[ \varepsilon_{t-j} \right] = \sigma^2 \sum_{j=0}^{\infty} \psi_{j}^2 = cte < \infty$ (ya que $\sum_{j=0}^{\infty} \left| \psi_{j} \right| < \infty$)
+
+3. [**Autocovarianzas**]{.hl-yellow}: multiplicando la ecuación por $X_{t-h}$ tenemos que
+
+$$\begin{eqnarray}\gamma_h &=& E \left[X_{t-h}X_t \right]= E \left[X_{t-h} \left(\phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + \varepsilon_{t} \right) \right] \nonumber \\ &=& \phi_1 E \left[X_{t-h}  X_{t-1} \right] + \ldots + \phi_p E \left[X_{t-h} X_{t-p} \right] + E \left[X_{t-h} \varepsilon_{t}  \right]\ \nonumber \\ &=& \phi_1 \gamma_{h-1} + \ldots + \phi_p \gamma_{h-p} \quad h \geq 0 \end{eqnarray}$$
+
+. . .
+
+3. [**Autocorrelaciones**]{.hl-yellow}: 
+
+$$\begin{eqnarray}\rho_h &=& \frac{\gamma_h}{\gamma_0} =  \phi_1 \frac{\gamma_{h-1}}{\gamma_0} + \ldots + \phi_p \frac{\gamma_{h-p}}{\gamma_0} = \phi_1 \rho_{h-1}  + \ldots + \phi_p \rho_{h-p} \quad h \geq 1 \nonumber \\ \Phi_p (B) \rho_h &=& 0 \end{eqnarray}$$
+Como vemos la estructura es más compleja ahora, de hecho deberíamos hacer un proceso iterativo complicado, pero lo que [**no sucede es que caigan a 0**]{.hl-yellow}
+
+---
+
+## Ecuaciones Yule-Walker
+
+Si nos fijamos en las primeras $p$ autocorrelaciones tenemos un [**sistema de ecuaciones conocido como ecuaciones de Yule-Walker**]{.hl-yellow}
+
+$$\begin{eqnarray}\rho_1 &=&  \phi_1   +  \phi_2 \rho_1  + \ldots + \phi_p \rho_{p-1} \nonumber \\ \rho_2 &=&  \phi_1 \rho_{1} +  \phi_2 + \ldots + \phi_p \rho_{p-2} \nonumber \\ \vdots & & \quad \vdots \quad  \quad \vdots  \quad \quad \vdots \quad \quad \quad \vdots \nonumber \\  \rho_p &=&  \phi_1 \rho_{p-1} +  \phi_2 \rho_{p-2}  + \ldots + \phi_p \end{eqnarray}$$
+
+---
+
+## AR(p)
+
+💻 [**Aplica la función `AR_p`**]{.hl-yellow} para simular un $AR(2)$ con $n = 1000$, $\sigma = 3$, $\left(X_1, X_2 \right) = 0$ y $\left(\phi_1, ~ \phi_2 \right) = (0.3, 0.5)$
+
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+ggplot(AR_p_simul(p = 2, 1000, 3, phi = c(0.3, 0.5), X = rep(0, 2))) +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "AR(2) con phi_1 = 0.3, phi_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+
+```{r}
+pracma::roots(c(0.5, 0.3, 1))
+Mod(pracma::roots(c(0.5, 0.3, 1)))
+```
+
+---
+
+## AR(p)
+
+```{r}
+set.seed(1234567)
+AR_p_simul(p = 2, 1000, 3, phi = c(0.3, 0.5), X = rep(0, 2)) |> 
+  ACF(X_t, lag_max = 50) |> 
+  autoplot() +
+  labs(title = "AR(2) con phi_1 = 0.3, phi_2 = 0.5 y sigma = 3") +
+  theme_minimal()
+```
+
+---
+
+## Función de autocorrelación parcial
+
+Es obvio que en el caso de los procesos $MA(q)$ la [**función ACF nos permite su identificación**]{.hl-yelow} pero [**no así en el caso de los procesos $AR(p)$**]{.hl-red}
+
+**¿Cómo caracterizarlos? ¿Qué diferencia a un AR(1) de un AR(2)**
+
+. . .
+
+* AR(1): $X_t$ y $X_{t-2}$ están relacionados indirectamente  ya que $X_t = \phi_1X_{t-1} + \varepsilon_{t} = \phi_{1}^2 X_{t-2} + \phi_{1} \varepsilon_{t-1} + \varepsilon_t$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
+
+* AR(2): sin embargo aquí $X_t$ y $X_{t-2}$ **sí están relacionados directamente** ya que $X_t = \phi_1X_{t-1} + \phi_2 X_{t-2} + \varepsilon_{t}$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
+
+. . .
+
+Dicho de otra forma: en el caso de los $AR(1)$, [**si conocemos $X_{t-1}$, el valor de $X_{t-2}$ es irrelevante**]{.hl-yellow} (algo que no sucede en los $AR(2)$). Si yo pudiese calcular la [**autocorrelación entre $X_t$ y $X_{t-2}$ ELIMINANDO el efecto**]{.hl-green} de $X_{t-1}$, tendría que observar como dicho valor es nulo.
+
+
+---
+
+## Función de autocorrelación parcial
+
+[**¿Cómo eliminar de $X_{t+k}$ el efecto de $X_{t+1},\ldots,X_{t+k-1}$**?]{.hl-yellow}
+
+. . .
+
+En lugar de calular $\rho_h = Cor[X_t, X_{t+h}]$ calcularemos
+
+$$\alpha_h = Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}]$$
+
+. . .
+
+Dicho [**efecto lo estimaremos calculando el mejor predictor lineal óptimo**]{.hl-yellow} de $X_t$ y $X_{t+h}$ en función de los retardos entre ellas $\left(X_{t+1}, \ldots, X_{t+h-1} \right)$
+
+$$\begin{eqnarray}\widetilde{X}_t &=& efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)} = \beta_1 X_{t+1} + \ldots +\beta_{t+h-1} X_{t+h-1} \quad \text{reg lineal} \nonumber \\ \widetilde{X}_{t+h} &=& efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)} = \delta_1 X_{t+1} + \ldots +\delta_{t+h-1} X_{t+h-1} \quad \text{reg lineal} \end{eqnarray}$$
+
+---
+
+## Función de autocorrelación parcial
+
+De esta forma tendremos que
+
+$$\begin{eqnarray}\alpha_h &=& Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}] \nonumber \\ &=& \begin{cases} \rho_1 \quad & & h = 1, \\ \frac{Cov \left( X_t -  \widetilde{X}_t, X_{t+h} - \widetilde{X}_{t+h} \right)}{\sqrt{Var \left[ X_t -  \widetilde{X}_t \right] Var \left[X_{t+h} - \widetilde{X}_{t+h} \right]}} \quad & &h > 1\end{cases} \end{eqnarray}$$
+
+y se demuestra que $\alpha_p = \phi_p$ y $\alpha_h = 0$ para $h > p$.
+
+---
+
+## PACF: AR vs MA
+
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+set.seed(12345)
+MA_q_simul(q = 2, n = 300, sigma = 3, theta = c(-0.3, 0.4), eps = rnorm(n = 2, sd = 3)) |>
+  PACF(X_t, lag_max = 40)  |> 
+  autoplot() +
+  labs(title = "MA(1) con theta_1 = -0.3, theta_2 = 0.4 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+set.seed(12345)
+AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.4), X = rnorm(n = 2, sd = 3)) |>
+  PACF(X_t, lag_max = 40)  |> 
+  autoplot() +
+  labs(title = "AR(1) con phi_1 = -0.3, phi_2 = 0.4 y sigma = 3") +
+  theme_minimal()
+```
+
+:::
+::::
+
+* En el caso de los procesos $MA(q)$: las [**autocorrelaciones parciales caen exponencialmente sin patrón**]{.hl-yellow}
+
+* En el caso de los procesos $AR(p)$: las [**autocorrelaciones son aprox 0 a partir de $p$ y la correlación correspondiente a $p$ se sale de manera evidente**]{.hl-yellow}
+
+
+---
+
+
+## MA/AR en fable
+
+[**¿Cómo predecir un MA o AR en fable?**]{.hl-yellow}
+
+Lo primero que haremos será generar un proceso $AR(2)$ y **dividir en train y test**
+
+```{r}
+set.seed(1234567)
+datos <-
+  AR_p_simul(p = 2, n = 300, sigma = 1,
+             phi = c(-0.3, 0.5), X = c(0, 0)) 
+
+train <- datos |> slice(1:280)
+test <- datos |> slice(281:300)
+```
+
+---
+
+## MA/AR en fable
+
+Tras ello vamos a aplicar en `model()`  el **alisado simple y doble**, y los [**modelos AR y MA haciendo uso de la función `ARIMA()`**]{.hl-yellow} (basta con indicar la media  y los órdenes p y q en la función `pdq()`)
+
+```{r}
+fit_arima <- 
+  train |> 
+  model("alisado_simple" = ETS(X_t ~ error("A") + trend("N") + season("N")),
+        "alisado_doble" = ETS(X_t ~ error("A") + trend("A") + season("N")),
+        # AR(1)
+        "AR1" = ARIMA(X_t ~ 0 + pdq(1, 0, 0)),
+        # AR(2)
+        "AR2" = ARIMA(X_t ~ 0 + pdq(2, 0, 0)),
+        # MA(1)
+        "MA1" = ARIMA(X_t ~ 0 + pdq(0, 0, 1)),
+        # MA(2)
+        "MA2" = ARIMA(X_t ~ 0 + pdq(0, 0, 2)))
+```
+
+---
+
+## MA/AR en fable
+
+Como antes podemos usar `augment()` para las **estimaciones** y `forecast()` para **extraer las predicciones**
+
+```{r}
+estimaciones <- fit_arima |> augment()
+predicciones <- fit_arima |> forecast(h = 20)
+```
+
+---
+
+## MA/AR en fable
+
+Y con `autoplot()` pintamos los modelos.
+
+```{r}
+#| code-fold: true
+predicciones |> 
+  autoplot(datos, level = NULL) +
+  geom_line(data = estimaciones,
+            aes(x = t, y = .fitted, color = .model), linewidth = 0.75) +
+  theme_minimal()
+```
+
+
+---
+
+## MA/AR en fable
+
+Con `accuracy()` vamos a obtener la [**calidad de cada modelo**]{.hl-yellow}
+
+```{r}
+fit_arima |>
+  accuracy() |> 
+  bind_rows(predicciones |> accuracy(test))
+```
+
+---
+
+## MA/AR en fable
+
+Tanto en train como en test el [**mejor modelo es el AR(2)**]{.hl-yellow} (lógico ya que los datos los hemos generado así)
+
+```{r}
+fit_arima |>
+  accuracy() |> 
+  bind_rows(predicciones |> accuracy(test)) |> 
+  slice_min(RMSE,n = 1, by = .type)
+```
+
+---
+
+## MA/AR en fable
+
+Vamos entonces a [**repetir el proceso solo con dicho modelo**]{.hl-yellow}. Además con `report()` vamos a poder obtener las [**estimación de los coeficientes**]{.hl-yellow} ($-0.3198$ y $0.4557$, bastante preciso)
+
+```{r}
+fit_arima <- 
+  train |> 
+  model("AR2" = ARIMA(X_t ~ 0 + pdq(2, 0, 0)))
+estimaciones <- fit_arima |> augment()
+predicciones <- fit_arima |> forecast(h = 20)
+report(fit_arima)
+```
+
+---
+
+## MA/AR en fable
+
+Tras el proceso, para asegurarnos de que aunque sea el mejor modelo lo que [**nos queda sin explicar (residuo) sea ruido blanco**]{.hl-yellow} vamos a aplicar el **test de Ljung-Box**.
+
+```{r}
+# antes de modelizar
+datos |> 
+  features(X_t, ljung_box)
+
+# después (a los errores)
+estimaciones |> 
+  features(.innov, ljung_box)
+```
+
+---
+
+## MA/AR en fable
+
+Por último [**visualizamos el diagnóstico de los residuos**]{.hl-yellow}
+
+```{r}
+fit_arima |> 
+  gg_tsresiduals()
+```
+
+
+# Clases 20: [procesos ARMA]{.flow} {#clase-20}
+
+
+## Ajuste automático
+
+- dejar libre p y q
+- mirar acf/pcf
+
+---
+
+- ARMA
+
+# Clases 21: [procesos ARIMA]{.flow} {#clase-21}
+
+
+- Box-Cox para ARIMA
+
+---
+
+# Clases 22: [procesos SARIMA]{.flow} {#clase-22}
 
 
 
