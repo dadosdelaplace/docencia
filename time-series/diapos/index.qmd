@@ -1,5 +1,5 @@
 ---
-title: "Series temporales"
+title: "SeriAs temporales"
 subtitle: "Análisis de series temporales en R"
 title-slide-attributes:
   data-background-image: img/time-series.jpg
@@ -8836,13 +8836,14 @@ El **futuro** de la serie acaba siendo modelizado con el último error y una pon
 
 ## Condición de invertibilidad
 
-Esta [**condición de invertibilidad**]{.hl-yellow} será fundamental en los procesos MA ya que, aunque la función de autocorrelación será importante, tenemos un [**problema de identificación**]{.hl-red}: dada una función de autocorrelación [**no existe un único proceso asociado**]{.hl-red}
+Esta [**condición (veremos porque se llama de invertibilidad)**]{.hl-yellow} será fundamental en los procesos MA ya que, aunque la función de autocorrelación será importante, tenemos un [**problema de identificación**]{.hl-red}: dada una función de autocorrelación [**no existe un único proceso asociado**]{.hl-red}
 
 . . .
 
 Hagamos un ejercicio rápido con dos $MA(1)$ distintos
 
 $$X_t = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad X_t = \varepsilon_t - \frac{1}{\theta_1} \varepsilon_{t-1}$$
+
 ¿Cuáles son sus autocorrelaciones? 
 
 ---
@@ -8891,7 +8892,7 @@ set.seed(1234567)
 datos <- MA_1_simul(300, 3, -0.3, 0)
 library(feasts)
 datos |> 
-  ACF(X_t, lag_max = 20) |> 
+  ACF(X_t, lag_max = 30) |> 
   autoplot() +
   scale_y_continuous(limits = c(-1, 1)) +
   scale_x_continuous(breaks = seq(0, 20, by = 1)) +
@@ -9024,7 +9025,7 @@ $$\begin{eqnarray}\rho_h = \frac{\gamma_h}{\gamma_0} = \begin{cases} 1 \quad & &
 
 ## MA(q): invertibilidad
 
-¿Qué [**condiciones de invertibilidad**]{.hl-yellow} necesitamos?
+¿Qué [**condiciones**]{.hl-yellow} necesitamos?
 
 . . .
 
@@ -9088,10 +9089,10 @@ pracma::roots(c(-0.5, 0.2, 1))
 
 ```{r}
 #| code-fold: true
-MA_q_simul <- function(q, n, sigma, theta, eps_0) {
+MA_q_simul <- function(q, n, sigma, theta, eps_q) {
   
-  X_t <- eps_0
-  eps <- c(eps_0, rnorm(n = n - q, mean = 0, sd = sigma))
+  X_t <- eps_q
+  eps <- c(eps_q, rnorm(n = n - q, mean = 0, sd = sigma))
   for (i in (q + 1):n) {
     X_t[i] <- eps[i] - sum(theta * eps[(i - 1):(i - q)])
   } 
@@ -9103,77 +9104,314 @@ MA_q_simul <- function(q, n, sigma, theta, eps_0) {
 
 ---
 
+
 ## MA(q)
 
-💻 [**Aplica dicha función**]{.hl-yellow} para simular un $MA(2)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1, \varepsilon_2 \right) = 0$ y $\left(\theta_1, ~ \theta_2 \right) = (-0.3, 0.5)$
+💻 [**Aplica dicha función**]{.hl-yellow} para simular un $MA(1)$ con $n = 10000$, $\sigma = 1$, $\varepsilon_1 = 0$ y $\theta_1 = -0.7$, y visualiza el proceso
 
 
 ```{r}
 #| code-fold: true
 set.seed(1234567)
-ggplot(MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2))) +
+ggplot(MA_q_simul(1, 10000, 1, theta = -0.7, eps = rep(0, 1))) +
   geom_line(aes(x = t, y = X_t)) +
-  labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
+  labs(title = "MA(1) con theta_1 = -0.7 y sigma = 1") +
   theme_minimal()
 ```
 
-El proceso tiene que cumplir las condiciones de invertibilidad ya que parece estacionario. ¿Cuánto valen sus raíces?
-
 ---
 
-## MA(q)
+## MA en fable
+
+Parece impredecible pero...¡no!
+
+. . .
+
+Vamos a realizar el **proceso completo con el MA(1) anteriormente generado**
 
 ```{r}
-pracma::roots(c(0.5, -0.3, 1))
-Mod(pracma::roots(c(0.5, -0.3, 1)))
+set.seed(1234567)
+datos <- MA_q_simul(1, 10000, 1, theta = -0.7, eps = rep(0, 1))
 ```
 
-Las [**raíces pueden ser complejas, lo importante es que su módulo sea mayor que 1**]{.hl-yellow}
+1. ¿Es ya [**ruido blanco**]{.hl-yellow}?
+
+```{r}
+library(feasts)
+datos |> 
+  features(X_t, ljung_box)
+```
+
+[**Rechazamos la hipótesis nula: no es ruido blanco**]{.hl-red} --> seguimos
+
+---
+
+## MA en fable
+
+
+2. ¿Es un [**proceso estacionario**]{.hl-yellow}?
+
+Para ello aplicaremos el conocido como [**Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test**]{.hl-yellow} (Kwiatkowski et al., 1992)] incluyendo `unitroot_kpss` en `features()`. En dicho test su **hipótesis nula es que el proceso es estacionario** (cualquier p-valor por encima de 0.1 te lo trunca a 0.1)
+
+```{r}
+# install.packages("urca")
+datos |> 
+  features(X_t, unitroot_kpss)
+```
+
+
+[**No rechazamos la hipótesis nula de estacionariedad**]{.hl-green} --> seguimos (no hay que aplicar transformaciones).
+
+---
+
+
+## MA en fable
+
+
+3. ¿Cómo son las [**autocorrelaciones (ACF)**]{.hl-yellow} para determinar el $q$ adecuado?
+
+```{r}
+datos |> 
+  ACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+La **primera autocorrelación que sale de la banda** (y además muy evidente) es la primera --> ¿será $q=1$? (recuerda que el número de $\rho_h$ no nulas nos caracteriza un MA)
 
 
 ---
 
+## MA en fable
+
+
+4. Realizamos el [**ajuste ARIMA**]{.hl-yellow}. De momento solo estamos en el final, la parte $MA(q)$ pero el proceso final se denota como $ARIMA(p, d, q)$. Para indicarle los índices usamos dentro de `ARIMA(var_objetivo ~ pdq()` la función `pdq()` (de momento los demás 0)
+
+```{r}
+fit <- 
+  datos |> 
+  model("MA_1" = ARIMA(X_t ~ pdq(0, 0, 1)))
+estimaciones <- fit |> augment()
+estimaciones
+```
+
+
+---
+
+## MA en fable
+
+
+5. ¿Cómo han quedado los [**residuos**]{.hl-yellow}?
+
+
+Normales, sin patrón longitudinal y todas las ACF dentro de la banda
+
+```{r}
+fit |> 
+  gg_tsresiduals()
+```
+
+---
+
+## MA en fable
+
+
+5. ¿Cómo han quedado los [**residuos**]{.hl-yellow}?
+
+
+[**Todas las ACF dentro de la banda**]{.hl-green}
+
+```{r}
+estimaciones |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+---
+
+## MA en fable
+
+
+6. ¿El [**residuo es ruido blanco**]{.hl-yellow}?
+
+
+[**No se rechaza la hipótesis nula de ruido blanco**]{.hl-green} --> hemos terminado. Podemos ver la [**estimación de $\theta_1$**]{.hl-yellow} haciendo `report()` del modelo (los parámetros tienen el signo cambiado a nuestra ecuación)
+
+```{r}
+estimaciones |> 
+  features(.resid, ljung_box)
+
+report(fit)
+```
+
+
+---
+
+## Unicidad del modelo
+
+[**Importante**]{.hl-red}: un proceso MA(1) podría ser ajustado también con un MA(q) CON $q > 1$ ya que basta con que poner el resto de coeficientes a 0 (fíjate en la estimación que nos devuelve el `report()`) --> [**principio de parsimonia: el modelo más sencillo**]{.hl-yellow}
+
+```{r}
+fit <- 
+  datos |> 
+  model("MA_4" = ARIMA(X_t ~ pdq(0, 0, 4)))
+estimaciones <- fit |> augment()
+estimaciones |> 
+  features(.resid, ljung_box)
+report(fit)
+```
+
+
+---
+
+
 ## MA(q)
 
-💻 [**Aplica dicha función**]{.hl-yellow} para simular un $MA(3)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1,~\varepsilon_2, ~\varepsilon_3 \right) = 0$ y $\left(\theta_1, ~ \theta_2, ~\theta_3 \right) = (0.8, 0.4, -0.9)$
+💻 [**Aplica dicha función de simulación**]{.hl-yellow} para simular un $MA(4)$ con $n = 10000$, $\sigma = 1$, $\left(\varepsilon_1, \varepsilon_2, \varepsilon_3, \varepsilon_4 \right) = 0$ y $\left(\theta_1, ~ \theta_2,~ \theta_3,~ \theta_4 \right) = (-0.75, -0.9, 0.9, -0.7)$
 
 
 ```{r}
 #| code-fold: true
 set.seed(1234567)
-ggplot(MA_q_simul(3, 300, 3, theta = c(0.8, 0.4, -0.9), eps = rep(0, 3))) +
+ggplot(MA_q_simul(4, 10000, 1, theta = c(-0.75, -0.9, 0.9, -0.7), eps = rep(0, 4))) +
   geom_line(aes(x = t, y = X_t)) +
-  labs(title = "MA(2) con theta_1 = 0.8, theta_2 = 0.4, theta_3 = -0.9 y sigma = 3") +
+  labs(title = "MA(2) con theta_1 = -0.75, theta_2 = -0.9, theta_3 = 0.9 y theta_4 = -0.7 y sigma = 1") +
   theme_minimal()
-```
-
-¿Por qué es explosivo?
-
-. . .
-
-```{r}
-Mod(pracma::roots(c(-0.9, 0.4, 0.8, 1)))
 ```
 
 ---
 
 ## MA(q)
 
-💻 [**Calcula las ACF de ambas series**]{.hl-yellow}
+Vamos a realizar el **proceso completo con el MA(2) anteriormente generado**
+
+```{r}
+set.seed(1234567)
+datos <- MA_q_simul(4, 10000, 1, theta = c(-0.75, -0.9, 0.9, -0.7), eps = rep(0, 4))
+```
+
+1. ¿Es ya [**ruido blanco**]{.hl-yellow}?
+
+```{r}
+datos |> 
+  features(X_t, ljung_box)
+```
+
+[**Problema**]{.hl-red} --> se supone que no debería ser ruido blanco y cuando pasamos el contraste **no nos rechaza la hipótesis nula**. ¿Por qué?
+
+
+---
+
+## MA(q)
+
+[**Recuerda**]{.hl-yellow}: el proceso [**tiene que cumplir las condiciones de invertibilidad**]{.hl-yellow} 
+
+```{r}
+Mod(pracma::roots(c(-rev(c(-0.75, -0.9, 0.9, -0.7)), 1)))
+```
+
+
+
+---
+
+## MA(q)
+
+
+💻 [**Aplica dicha función de simulación**]{.hl-yellow} para simular un $MA(4)$ con $n = 10000$, $\sigma = 1$, $\left(\varepsilon_1, \varepsilon_2, \varepsilon_3, \varepsilon_4 \right) = 0$ y $\left(\theta_1, ~ \theta_2,~ \theta_3,~ \theta_4 \right) = (-0.1, 0.2, 0.1, 0.3)$ y comprueba que se cumple las condiciones de invertibilidad
+
+
+```{r}
+#| code-fold: true
+Mod(pracma::roots(c(-rev(c(-0.1, 0.2, 0.1, 0.3)), 1)))
+
+set.seed(1234567)
+ggplot(MA_q_simul(4, 10000, 1, theta = c(-0.1, 0.2, 0.1, 0.3), eps = rep(0, 4))) +
+  geom_line(aes(x = t, y = X_t)) +
+  labs(title = "MA(2) con theta_1 = -0.2, theta_2 = 0.2, theta_3 = 0.1 y theta_4 = 0.3 y sigma = 1") +
+  theme_minimal()
+```
+
+---
+
+## MA en fable
+
+Vamos a realizar el **proceso completo con el MA(4) anteriormente generado**
+
+```{r}
+set.seed(1234567)
+datos <- MA_q_simul(4, 10000, 1, theta = c(-0.1, 0.2, 0.1, 0.3), eps = rep(0, 4))
+```
+
+1. ¿Es ya [**ruido blanco**]{.hl-yellow}?
+
+```{r}
+datos |> 
+  features(X_t, ljung_box)
+```
+
+[**Rechazamos la hipótesis nula: no es ruido blanco**]{.hl-red} --> seguimos
 
 . . .
+
+2. ¿Es un [**proceso estacionario**]{.hl-yellow}?
+
+
+```{r}
+# install.packages("urca")
+datos |> 
+  features(X_t, unitroot_kpss)
+```
+
+
+[**No rechazamos la hipótesis nula de estacionariedad**]{.hl-green} --> seguimos (no hay que aplicar transformaciones).
+
+---
+
+
+## MA en fable
+
+
+3. ¿Cómo son las [**autocorrelaciones (ACF)**]{.hl-yellow} para determinar el $q$ adecuado?
+
+```{r}
+datos |> 
+  ACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+Ahora las **cuatro primeras autocorrelación se salen de la banda** (y además muy evidente) pero también un poco la quinta  --> ¿será $q=4$ o $q=5$? 
+
+
+---
+
+## MA en fable
+
+
+4. Realizamos los dos [**ajustes ARIMA**]{.hl-yellow}. 
+
+```{r}
+fit_4 <- 
+  datos |> model("MA_4" = ARIMA(X_t ~ pdq(0, 0, 4)))
+fit_5 <- 
+  datos |> model("MA_5" = ARIMA(X_t ~ pdq(0, 0, 5)))
+estimaciones_4 <- fit_4 |> augment()
+estimaciones_5 <- fit_5 |> augment()
+```
+
+. . .
+
+5. ¿Cómo son las [**autocorrelaciones de los residuos**]{.hl-yellow}?
+
+
+[**En ambos casos las ACF dentro de la banda**]{.hl-green}
 
 :::: columns
 ::: {.column width="50%"}
 
 ```{r}
 #| code-fold: true
-set.seed(1234567)
-MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
-  ACF(X_t) |> 
-  autoplot() +
-  labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
-  theme_minimal()
+estimaciones_4 |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
 ```
 
 :::
@@ -9182,16 +9420,35 @@ MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |>
 
 ```{r}
 #| code-fold: true
-set.seed(1234567)
-MA_q_simul(3, 300, 3, theta = c(0.8, 0.4, -0.9), eps = rep(0, 3)) |> 
-  ACF(X_t) |> 
-  autoplot() +
-  labs(title = "MA(3) con theta_1 = 0.8, theta_2 = 0.4, theta_3 = -0.9 y sigma = 3") +
-  theme_minimal()
+estimaciones_5 |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
 ```
 
 :::
 ::::
+
+---
+
+## MA en fable
+
+
+6. ¿Los [**residuos son ruido blanco**]{.hl-yellow}?
+
+
+```{r}
+estimaciones_4 |> 
+  features(.resid, ljung_box)
+estimaciones_5 |> 
+  features(.resid, ljung_box)
+report(fit_4)
+```
+
+
+[**No se rechaza la hipótesis nula de ruido blanco en ningún caso**]{.hl-green} --> nos quedamos con el modelo más sencillo (MA(4)). Podemos ver la [**estimación de $\theta_1$**]{.hl-yellow} haciendo `report()` del modelo (de hecho si lo hacemos con `fit_5` en realidad es un MA(5) con el último muy pequeño).
+
+
+
 
 
 # Clases 19: [procesos AR]{.flow} {#clase-19}
@@ -9313,7 +9570,7 @@ AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |>
 
 ## AR(p)
 
-💻 [**Aplica la función MA_q**]{.hl-yellow} para simular un $MA(2)$ con $n = 300$, $\sigma = 3$, $\left(\varepsilon_1, \varepsilon_2 \right) = 0$ y $\left(\theta_1, ~ \theta_2 \right) = (-0.3, 0.5)$. Compara ambos procesos (**mismos parámetros**)
+💻 [**Aplica la función MA_q**]{.hl-yellow} para simular un $MA(2)$ con $n = 10000$, $\sigma = 3$, $\left(\varepsilon_1, \varepsilon_2 \right) = 0$ y $\left(\theta_1, ~ \theta_2 \right) = (-0.3, 0.5)$. Compara ambos procesos (**mismos parámetros**)
 
 :::: columns
 ::: {.column width="50%"}
@@ -9321,7 +9578,7 @@ AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |>
 ```{r}
 #| code-fold: true
 set.seed(1234567)
-MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+MA_q_simul(2, 10000, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
   ggplot() +
   geom_line(aes(x = t, y = X_t)) +
   labs(title = "MA(2) con theta_1 = -0.3, theta_2 = 0.5 y sigma = 3") +
@@ -9335,7 +9592,7 @@ MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |>
 ```{r}
 #| code-fold: true
 set.seed(1234567)
-AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+AR_p_simul(p = 2, n = 10000, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
   ggplot() +
   geom_line(aes(x = t, y = X_t)) +
   labs(title = "AR(2) con phi_1 = -0.3, phi_2 = 0.5 y sigma = 3") +
@@ -9353,14 +9610,14 @@ Ambos [**parecen algo impredible y aleatorio y ¡no es cierto!**]{.hl-red}, simp
 
 ## MA/AR vs ruido blanco
 
-De hecho en ambos casos al [**realizar el contraste de ruido blanco**]{.hl-yellow} de Ljung-Box obtenemos p-valores menores que 0.05 ==> [**rechazamos la hipótesis nula de ruido blanco**]{.hl-green}
+De hecho en ambos casos al [**realizar el contraste de ruido blanco**]{.hl-yellow} de Ljung-Box obtenemos p-valores menores que 0.05 ==> [**rechazamos la hipótesis nula de ruido blanco**]{.hl-red}
 
 :::: columns
 ::: {.column width="50%"}
 
 ```{r}
 set.seed(1234567)
-MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+MA_q_simul(2, 10000, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
   features(X_t, ljung_box)
 ```
 
@@ -9370,27 +9627,45 @@ MA_q_simul(2, 300, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |>
 
 ```{r}
 set.seed(1234567)
-AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+AR_p_simul(p = 2, n = 10000, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
   features(X_t, ljung_box)
 ```
 
 :::
 ::::
 
-Algo que no pasa si realmente tenemos ruido blanco.
+. . .
+
+Pero [**sí son estacionarios**]{.hl-green}
+
+:::: columns
+::: {.column width="50%"}
 
 ```{r}
 set.seed(1234567)
-tibble("t" = 1:300, "X_t" = rnorm(n = 300, mean = 0, sd = 3)) |> 
-  as_tsibble(index = t) |> 
-  features(X_t, ljung_box)
+MA_q_simul(2, 10000, 3, theta = c(-0.3, 0.5), eps = rep(0, 2)) |> 
+  features(X_t, unitroot_kpss)
 ```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+set.seed(1234567)
+AR_p_simul(p = 2, n = 10000, sigma = 3, phi = c(-0.3, 0.5), X = c(0, 0)) |> 
+  features(X_t, unitroot_kpss)
+```
+
+:::
+::::
+
 
 ---
 
 ## AR(1)
 
-[**¿Es estacionario?**]{.hl-yellow}
+[**¿Cómo demostrar que es estacionario?**]{.hl-yellow}
 
 . . . 
 
@@ -9413,7 +9688,7 @@ $$\begin{eqnarray}X_t &=& \phi_1 X_{t-1} +  \varepsilon_t = \phi_1 \left(\phi_1 
 
 3. [**Autocovarianzas**]{.hl-yellow}: teniendo en cuenta que $\left\lbrace \varepsilon_t \right\rbrace$ es ruido blanco (¡e incorrelado con $X_t$!)
 
-$$\begin{eqnarray}\gamma_h &=& Cov\left[X_t, X_{t+h} \right] = E \left[\sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t-j} * \sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t+h-j} \right]\nonumber \\  &=& E \left[\left(\varepsilon_{t} + \phi_{1} \varepsilon_{t-1} + \phi_{1}^2 \varepsilon_{t-2} + \ldots \right) \left(\varepsilon_{t+h} + \phi_{1} \varepsilon_{t+h-1} + \phi_{1}^2 \varepsilon_{t+h-2} + \ldots \right) \right] \nonumber \\  &=&\begin{cases}  \sigma^2 \frac{1}{1 - \phi_{1}^2} \quad h = 0, \\ \phi_1 E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{3}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{5}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+1}= \sigma^2 \frac{\phi_1}{1 - \phi_{1}^2} \quad h = 1, \\ \phi_{1}^{2} E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{4}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{6}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+2}= \sigma^2 \frac{\phi_{1}^2}{1 - \phi_{1}^2} \quad h = 2 \end{cases}  \nonumber \\ &=& \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+h}= \sigma^2 \frac{\phi_{1}^h}{1 - \phi_{1}^2}\end{eqnarray}$$
+$$\begin{eqnarray}\gamma_h &=& Cov\left[X_t, X_{t+h} \right] = E \left[\sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t-j} * \sum_{j=0}^{\infty} \phi_{1}^j \varepsilon_{t+h-j} \right]\nonumber \\  &=& E \left[\left(\varepsilon_{t} + \phi_{1} \varepsilon_{t-1} + \phi_{1}^2 \varepsilon_{t-2} + \ldots \right) \left(\varepsilon_{t+h} + \phi_{1} \varepsilon_{t+h-1} + \phi_{1}^2 \varepsilon_{t+h-2} + \ldots \right) \right] \nonumber \\  &=&\begin{cases}  \sigma^2 \frac{1}{1 - \phi_{1}^2} \quad h = 0, \\ \phi_1 E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{3}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{5}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+1}= \sigma^2 \frac{\phi_1}{1 - \phi_{1}^2} \quad h = 1, \\ \phi_{1}^{2} E \left[\varepsilon_{t}\varepsilon_{t} \right] + \phi_{1}^{4}E \left[\varepsilon_{t-1}\varepsilon_{t-1} \right] + \phi_{1}^{6}E \left[\varepsilon_{t-2}\varepsilon_{t-2} \right] + \ldots = \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+2}= \sigma^2 \frac{\phi_{1}^2}{1 - \phi_{1}^2} \quad h = 2 \\ ... \quad h > 2 \end{cases}  \nonumber \\ &=& \sigma^2 \sum_{j=0}^{\infty} \phi_{1}^{2*j+h}= \sigma^2 \frac{\phi_{1}^h}{1 - \phi_{1}^2}\end{eqnarray}$$
 
 
 ---
@@ -9427,7 +9702,7 @@ lo cual [**implica que $\left| \rho_1 \right| < 1$**]{.hl-yellow} (ya que las co
 
 &nbsp;
 
-Fíjate que ahora las [**autocorrelaciones $\rho_h$ no decaen a 0**]{.hl-purple}
+Fíjate que ahora las [**autocorrelaciones $\rho_h$ NO decaen a 0**]{.hl-purple}
 
 ---
 
@@ -9438,8 +9713,8 @@ Fíjate que ahora las [**autocorrelaciones $\rho_h$ no decaen a 0**]{.hl-purple}
 
 ```{r}
 set.seed(1234567)
-MA_q_simul(q = 1, n = 5000, sigma = 1, theta = c(0.75), eps = c(0)) |> 
-  ACF(X_t, lag_max = 50)  |> 
+MA_q_simul(q = 1, n = 10000, sigma = 1, theta = c(0.75), eps = c(0)) |> 
+  ACF(X_t, lag_max = 30)  |> 
   autoplot() +
   labs(title = "MA(1) con theta_1 = 0.75 y sigma = 1") +
   theme_minimal()
@@ -9451,8 +9726,8 @@ MA_q_simul(q = 1, n = 5000, sigma = 1, theta = c(0.75), eps = c(0)) |>
 
 ```{r}
 set.seed(1234567)
-AR_p_simul(p = 1, n = 5000, sigma = 1, phi = c(0.75), X = c(0)) |> 
-  ACF(X_t, lag_max = 50)  |> 
+AR_p_simul(p = 1, n = 10000, sigma = 1, phi = c(0.75), X = c(0)) |> 
+  ACF(X_t, lag_max = 30)  |> 
   autoplot() +
   labs(title = "AR(1) con phi_1 = 0.75 y sigma = 1") +
   theme_minimal()
@@ -9465,19 +9740,34 @@ AR_p_simul(p = 1, n = 5000, sigma = 1, phi = c(0.75), X = c(0)) |>
 
 ---
 
+## AR(1)
+
+Fíjate además que dado  que $\rho_h = \phi_{1}^{h}$, [**decrecen de manera exponencial con razón $\phi_1$**]{.hl-yellow} (si aumentamos $\phi_1$ tarda mucho más en caer)
+
+
+```{r}
+set.seed(1234567)
+AR_p_simul(p = 1, n = 10000, sigma = 1, phi = c(0.9), X = c(0)) |> 
+  ACF(X_t, lag_max = 30)  |> 
+  autoplot()
+```
+
+
+
+---
+
+
 
 
 ## AR(p)
 
-En general
-
-$$X_t = \phi_1 X_{t-1}  + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p}  + \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+En general $X_t = \phi_1 X_{t-1}  + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p}  + \varepsilon_t$
 
 $$\begin{eqnarray}X_t &=& \phi_1 X_{t-1} + \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p}  + \varepsilon_t \nonumber \\ &=& \phi_1 \left(\phi_1 X_{t-2} + \ldots + \phi_p X_{t-p-1} + \varepsilon_{t-1} \right)  +  \phi_2 X_{t-2} + \ldots + \phi_p X_{t-p} +\varepsilon_t \nonumber \\ &=&  \left(\phi_{1}^{2} + \phi_2 \right) X_{t-2} + \left(\phi_1 \phi_2 + \phi_3 \right) X_{t-3} + \left(\phi_1 \phi_2 + \phi_3 \right) X_{t-3}+\left(\phi_1 \phi_3 + \phi_4 \right) X_{t-4} \nonumber \\ && + \ldots  +\left(\phi_1 \phi_{p-1} + \phi_{p} \right) X_{t-p} + \phi_1 \phi_{p} X_{t-p-1} + \phi_1 \varepsilon_{t-1} + \varepsilon_t   \nonumber \\ \ &=&  \ldots =^{¿?} \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j} \quad \text{(proceso MA(}\infty\text{))} \end{eqnarray}$$
 
 . . .
 
-Diremos  que un proceso $AR(p)$, definido como $\Phi_p (B)X_t = \varepsilon_t$, es un [**proceso estacionario (o causal) si admite la representación $MA(\infty)$**]**]{.hl-yellow} anterior, tal que
+Diremos  que un proceso $AR(p)$, definido como $\Phi_p (B)X_t = \varepsilon_t$, es un [**proceso estacionario (o causal) si admite la representación $MA(\infty)$**]{.hl-yellow} anterior, tal que
 
 $$X_t = \sum_{j=0}^{\infty} \psi_j \varepsilon_{t-j} = \Psi (B) \varepsilon_t, \quad \Psi (B) = \sum_{j=0}^{\infty} \psi_j B^j, \quad \sum_{j=0}^{\infty} \left| \psi_j \right| < \infty, ~\psi_0 = 1$$
 
@@ -9513,7 +9803,9 @@ Bajo dichas [**condiciones de estacionariedad**]{.hl-yellow}
 
 $$\begin{eqnarray}\gamma_h &=& E \left[X_{t-h}X_t \right]= E \left[X_{t-h} \left(\phi_1 X_{t-1} + \ldots + \phi_p X_{t-p} + \varepsilon_{t} \right) \right] \nonumber \\ &=& \phi_1 E \left[X_{t-h}  X_{t-1} \right] + \ldots + \phi_p E \left[X_{t-h} X_{t-p} \right] + E \left[X_{t-h} \varepsilon_{t}  \right]\ \nonumber \\ &=& \phi_1 \gamma_{h-1} + \ldots + \phi_p \gamma_{h-p} \quad h \geq 0 \end{eqnarray}$$
 
-. . .
+---
+
+## AR(p)
 
 3. [**Autocorrelaciones**]{.hl-yellow}: 
 
@@ -9565,17 +9857,19 @@ AR_p_simul(p = 2, 1000, 3, phi = c(0.3, 0.5), X = rep(0, 2)) |>
 
 ---
 
-## Función de autocorrelación parcial
+## Autocorrelación parcial
 
 Es obvio que en el caso de los procesos $MA(q)$ la [**función ACF nos permite su identificación**]{.hl-yelow} pero [**no así en el caso de los procesos $AR(p)$**]{.hl-red}
 
-**¿Cómo caracterizarlos? ¿Qué diferencia a un AR(1) de un AR(2)**
+¿Cómo caracterizarlos? [**¿Qué diferencia a un AR(1) de un AR(2)?**]{.hl-yellow}
 
 . . .
 
-* AR(1): $X_t$ y $X_{t-2}$ están relacionados indirectamente  ya que $X_t = \phi_1X_{t-1} + \varepsilon_{t} = \phi_{1}^2 X_{t-2} + \phi_{1} \varepsilon_{t-1} + \varepsilon_t$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
+* **AR(1)**: $X_t$ y $X_{t-2}$ están relacionados indirectamente  ya que $X_t = \phi_1X_{t-1} + \varepsilon_{t} = \phi_{1}^2 X_{t-2} + \phi_{1} \varepsilon_{t-1} + \varepsilon_t$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
 
-* AR(2): sin embargo aquí $X_t$ y $X_{t-2}$ **sí están relacionados directamente** ya que $X_t = \phi_1X_{t-1} + \phi_2 X_{t-2} + \varepsilon_{t}$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
+. . .
+
+* **AR(2)**: sin embargo aquí $X_t$ y $X_{t-2}$ **sí están relacionados directamente** ya que $X_t = \phi_1X_{t-1} + \phi_2 X_{t-2} + \varepsilon_{t}$ pero dado que $\left| \phi_1 \right| < 1$ es una relación que se va diluyendo
 
 . . .
 
@@ -9584,7 +9878,7 @@ Dicho de otra forma: en el caso de los $AR(1)$, [**si conocemos $X_{t-1}$, el va
 
 ---
 
-## Función de autocorrelación parcial
+## Autocorrelación parcial
 
 [**¿Cómo eliminar de $X_{t+k}$ el efecto de $X_{t+1},\ldots,X_{t+k-1}$**?]{.hl-yellow}
 
@@ -9594,7 +9888,13 @@ En lugar de calular $\rho_h = Cor[X_t, X_{t+h}]$ calcularemos
 
 $$\alpha_h = Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}]$$
 
-. . .
+la [**correlación de $X_t$ vs $X_{t+h}$ pero quitando el efecto de los retardos intermedios**]{.hl-yellow}
+
+---
+
+## Autocorrelación parcial
+
+$$\alpha_h = Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}]$$
 
 Dicho [**efecto lo estimaremos calculando el mejor predictor lineal óptimo**]{.hl-yellow} de $X_t$ y $X_{t+h}$ en función de los retardos entre ellas $\left(X_{t+1}, \ldots, X_{t+h-1} \right)$
 
@@ -9602,7 +9902,7 @@ $$\begin{eqnarray}\widetilde{X}_t &=& efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t
 
 ---
 
-## Función de autocorrelación parcial
+## Autocorrelación parcial
 
 De esta forma tendremos que
 
@@ -9620,10 +9920,10 @@ y se demuestra que $\alpha_p = \phi_p$ y $\alpha_h = 0$ para $h > p$.
 
 ```{r}
 set.seed(12345)
-MA_q_simul(q = 2, n = 300, sigma = 3, theta = c(-0.3, 0.4), eps = rnorm(n = 2, sd = 3)) |>
-  PACF(X_t, lag_max = 40)  |> 
+MA_q_simul(q = 2, n = 10000, sigma = 1, theta = c(-0.3, 0.4), eps = rnorm(n = 2, sd = 1)) |>
+  PACF(X_t, lag_max = 30)  |> 
   autoplot() +
-  labs(title = "MA(1) con theta_1 = -0.3, theta_2 = 0.4 y sigma = 3") +
+  labs(title = "MA(1) con theta_1 = -0.3, theta_2 = 0.4 y sigma = 1") +
   theme_minimal()
 ```
 
@@ -9633,19 +9933,19 @@ MA_q_simul(q = 2, n = 300, sigma = 3, theta = c(-0.3, 0.4), eps = rnorm(n = 2, s
 
 ```{r}
 set.seed(12345)
-AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.4), X = rnorm(n = 2, sd = 3)) |>
-  PACF(X_t, lag_max = 40)  |> 
+AR_p_simul(p = 2, n = 10000, sigma = 1, phi = c(-0.3, 0.4), X = rnorm(n = 2, sd = 1)) |>
+  PACF(X_t, lag_max = 30)  |> 
   autoplot() +
-  labs(title = "AR(1) con phi_1 = -0.3, phi_2 = 0.4 y sigma = 3") +
+  labs(title = "AR(1) con phi_1 = -0.3, phi_2 = 0.4 y sigma = 1") +
   theme_minimal()
 ```
 
 :::
 ::::
 
-* En el caso de los procesos $MA(q)$: las [**autocorrelaciones parciales caen exponencialmente sin patrón**]{.hl-yellow}
+* **procesos $MA(q)$**: las [**autocorrelaciones parciales caen exponencialmente**]{.hl-yellow}
 
-* En el caso de los procesos $AR(p)$: las [**autocorrelaciones son aprox 0 a partir de $p$ y la correlación correspondiente a $p$ se sale de manera evidente**]{.hl-yellow}
+* **procesos $AR(p)$**: las [**autocorrelaciones son aprox 0 a partir de $p$ y la correlación correspondiente a $p$ se sale de manera evidente**]{.hl-yellow}
 
 
 ---
@@ -9655,16 +9955,16 @@ AR_p_simul(p = 2, n = 300, sigma = 3, phi = c(-0.3, 0.4), X = rnorm(n = 2, sd = 
 
 [**¿Cómo predecir un MA o AR en fable?**]{.hl-yellow}
 
-Lo primero que haremos será generar un proceso $AR(2)$ y **dividir en train y test**
+Lo primero que haremos será generar un proceso $AR(3)$ y **dividir en train y test**
 
 ```{r}
 set.seed(1234567)
 datos <-
-  AR_p_simul(p = 2, n = 300, sigma = 1,
-             phi = c(-0.3, 0.5), X = c(0, 0)) 
+  AR_p_simul(p = 3, n = 1000, sigma = 3,
+             phi = c(-0.2, -0.3, 0.4), X = c(0, 0, 0)) 
 
-train <- datos |> slice(1:280)
-test <- datos |> slice(281:300)
+train <- datos |> slice(1:950)
+test <- datos |> slice(951:1000)
 ```
 
 ---
@@ -9678,14 +9978,14 @@ fit_arima <-
   train |> 
   model("alisado_simple" = ETS(X_t ~ error("A") + trend("N") + season("N")),
         "alisado_doble" = ETS(X_t ~ error("A") + trend("A") + season("N")),
-        # AR(1)
+        # AR
         "AR1" = ARIMA(X_t ~ 0 + pdq(1, 0, 0)),
-        # AR(2)
         "AR2" = ARIMA(X_t ~ 0 + pdq(2, 0, 0)),
+        "AR3" = ARIMA(X_t ~ 0 + pdq(3, 0, 0)),
         # MA(1)
         "MA1" = ARIMA(X_t ~ 0 + pdq(0, 0, 1)),
-        # MA(2)
-        "MA2" = ARIMA(X_t ~ 0 + pdq(0, 0, 2)))
+        "MA2" = ARIMA(X_t ~ 0 + pdq(0, 0, 2)),
+        "MA3" = ARIMA(X_t ~ 0 + pdq(0, 0, 3)))
 ```
 
 ---
@@ -9696,7 +9996,7 @@ Como antes podemos usar `augment()` para las **estimaciones** y `forecast()` par
 
 ```{r}
 estimaciones <- fit_arima |> augment()
-predicciones <- fit_arima |> forecast(h = 20)
+predicciones <- fit_arima |> forecast(h = 50)
 ```
 
 ---
@@ -9731,7 +10031,7 @@ fit_arima |>
 
 ## MA/AR en fable
 
-Tanto en train como en test el [**mejor modelo es el AR(2)**]{.hl-yellow} (lógico ya que los datos los hemos generado así)
+Tanto en train como en test el [**mejor modelo es el AR(3)**]{.hl-yellow} (lógico ya que los datos los hemos generado así)
 
 ```{r}
 fit_arima |>
@@ -9744,14 +10044,14 @@ fit_arima |>
 
 ## MA/AR en fable
 
-Vamos entonces a [**repetir el proceso solo con dicho modelo**]{.hl-yellow}. Además con `report()` vamos a poder obtener las [**estimación de los coeficientes**]{.hl-yellow} ($-0.3198$ y $0.4557$, bastante preciso)
+Vamos entonces a [**repetir el proceso solo con dicho modelo**]{.hl-yellow}. Además con `report()` vamos a poder obtener las [**estimación de los coeficientes**]{.hl-yellow} ($0.1914$, $0.3162$ y $-0.4154$, bastante preciso)
 
 ```{r}
 fit_arima <- 
   train |> 
-  model("AR2" = ARIMA(X_t ~ 0 + pdq(2, 0, 0)))
+  model("AR3" = ARIMA(X_t ~ 0 + pdq(3, 0, 0)))
 estimaciones <- fit_arima |> augment()
-predicciones <- fit_arima |> forecast(h = 20)
+predicciones <- fit_arima |> forecast(h = 50)
 report(fit_arima)
 ```
 
@@ -9791,9 +10091,10 @@ fit_arima |>
 - dejar libre p y q
 - mirar acf/pcf
 
----
-
 - ARMA
+
+- validacion
+
 
 # Clases 21: [procesos ARIMA]{.flow} {#clase-21}
 
