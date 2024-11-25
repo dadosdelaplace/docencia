@@ -1,5 +1,5 @@
 ---
-title: "SeriAs temporales"
+title: "Series temporales"
 subtitle: "Análisis de series temporales en R"
 title-slide-attributes:
   data-background-image: img/time-series.jpg
@@ -9908,7 +9908,7 @@ De esta forma tendremos que
 
 $$\begin{eqnarray}\alpha_h &=& Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}] \nonumber \\ &=& \begin{cases} \rho_1 \quad & & h = 1, \\ \frac{Cov \left( X_t -  \widetilde{X}_t, X_{t+h} - \widetilde{X}_{t+h} \right)}{\sqrt{Var \left[ X_t -  \widetilde{X}_t \right] Var \left[X_{t+h} - \widetilde{X}_{t+h} \right]}} \quad & &h > 1\end{cases} \end{eqnarray}$$
 
-y se demuestra que $\alpha_p = \phi_p$ y $\alpha_h = 0$ para $h > p$.
+y [**se demuestra que $\alpha_p = \phi_p$ y $\alpha_h = 0$ para $h > p$**]{.hl-yellow}. Este truncamiento a partir de $h > p$ no se da en un $MA(q)$ ya que se puede entender como un $AR(\infty)$.
 
 ---
 
@@ -10085,15 +10085,863 @@ fit_arima |>
 
 # Clases 20: [procesos ARMA]{.flow} {#clase-20}
 
+---
+
+
+## Modelos MA vs AR
+
+
+Simplemente por fijar conceptos, estos son los dos modelos que hemos visto hasta ahora haciendo uso del [**operador de retardos**]{.hl-yellow}
+
+:::: columns
+::: {.column width="50%"}
+
+[**MA(q)**]{.hl-purple}
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \nonumber \\ &=&\Theta_q (B) \varepsilon_t \nonumber \\ 0 &=&1 - \theta_1 z - \ldots - \theta_q z^q  \quad \text{raíces  } \left| z \right| > 1 \end{eqnarray}$$
+:::
+
+::: {.column width="50%"}
+
+[**AR(p)**]{.hl-green}
+
+$$\begin{eqnarray}X_t &=& \varepsilon_t + \phi_1 X_{t-1} + \ldots + \phi_q X_{t-q},  \nonumber \\  \Phi_p (B)X_t &=&  \varepsilon_t \nonumber \\ 0 &=&1 - \phi_1 z - \ldots - \phi_q z^q  \quad \text{raíces  } \left| z \right| > 1 \end{eqnarray}$$
+
+:::
+::::
+
+* [**Función de autocorrelaciones (ACF)**]{.hl-yellow}: en su versión teórica, $\rho_h = 0$ a partir de $h > q$ para los MA(q).
+
+
+* [**Función de autocorrelaciones parciales (PACF)**]{.hl-yellow}: en su versión teórica, $\alpha_h = 0$ a partir de $h > p$ para los AR(p).
+
+---
+
+## Procesos ARMA
+
+
+Como dijimos al inicio los procesos MA eran un [**caso particular de lo que se conoce como procesos lineales**]{.hl-yellow}
+
+
+$$X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| < \infty, \quad  \text{proceso lineal}$$
+
+. . .
+
+* [**MA(q)**]{.hl-yellow}: $\Psi_0 = 1$ y $\Psi_j = 0$ para todo $j \geq q$
+
+* [**AR(p)**]{.hl-yellow}: $\Psi_0 = 1$ y $\Psi_j = 0$ para todo $j <0$, tal que $\Phi_p(B) \Psi(B) = 1$ (se imponen condiciones en el decrecimiento de los coeficientes)
+
+. . .
+
+Los [**procesos ARMA**]{.hl-yellow} intentarán combinar ambas propiedades para poder representar nuestros procesos con órdenes $p$ y $q$ bajos.
+
+---
+
+## Procesos ARMA
+
+Diremos que $\left\lbrace X_t \right\rbrace_{t}$ es un [**proceso (mixto) autorregresivo-media móvil de orden $(p,q)$, denotado como $ARMA(p,q)$**]{.hl-yellow} si
+
+
+$$X_t - \phi_1 X_{t-1} - \ldots - \phi_p X_{t-p} = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+donde $p \geq 1$ será el **orden autorregresivo** y $q \geq 1$ será el **orden de medias móvil**
+
+. . .
+
+Usando el **polinomio de retardos**, podemos [**redefinir un ARMA(p, q)**]{.hl-yellow} como
+
+$$\Phi_p (B)X_t  = \Theta_q (B) \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+tal que si $\Phi_p (B)=1$ es un proceso puro MA(q) y si $\Theta_q (B)=1$ es un proceso puro AR(p). 
+
+---
+
+## Procesos ARMA
+ 
+Dado que $\Phi_p (B)$ y $\Theta_q (B)$ son polinomios, ambos **pueden ser expresados en función de sus raíces** tal que
+
+$$\Phi_p (B) = \left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right), \quad \Theta_q (B) = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right)$$
+
+tal que
+
+$$\left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t$$
+
+. . .
+
+[**¿Qué tienen que cumplir esas raíces?**]{.hl-yellow}
+ 
+ 
+---
+
+## Procesos ARMA
+
+
+$$\left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t$$
+
+Deben de ser diferentes: los [**polinomios $\Phi_p (B)$ y $\Theta_q (B)$ no pueden tener raíces comunes**]{.hl-yellow} ya que si tuviesen, por ejemplo, $\lambda_1 = \delta_1$, entonces podríamos cancelar en ambos lados
+
+$$\left( 1- \lambda_2 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_2 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t$$
+teniendo una [**sobreparametrización ya que en realidad el proceso sería ARMA(p-1, q-1)**]{.hl-yellow}.
+
+
+---
+
+## Procesos ARMA
+
+
+$$\Phi_p (B)X_t  = \Theta_q (B) \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+Además vamos a pedir las [**dos condiciones que hemos visto anteriormente**]{.hl-yellow}
+
+* [**ARMA invertible**]{.hl-green}: pediremos que las [**raíces del polinomio $\Theta_q (B)$**]{.hl-yellow} tengan sus raíces fuera del círculo unidad.
+
+* [**ARMA causal (estacionario)**]{.hl-green}: pediremos que las [**raíces del polinomio $\Phi_p(B)$**]{.hl-yellow} tengan sus raíces fuera del círculo unidad.
+
+---
+
+## Procesos ARMA
+
+Bajo dichas condiciones estos procesos se pueden [**re-expresar tanto como $AR(\infty)$ como $MA(\infty)$**]{.hl-yellow}. Veamos un **ejemplo con un ARMA(1, 1)**
+
+$$X_t - \phi_1 X_{t-1}  = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}$$
+
+. . .
+
+[**Condiciones de invertibilidad y estacionalidad**]{.hl-yellow}: $\left| \phi_1 \right| < 1$ y $\left| \theta_1 \right| < 1$
+
+. . .
+
+Tenemos por tanto que $\Phi_1 (B) X_t = \Theta_1 (B)\varepsilon_t$.
+
+---
+
+## Procesos ARMA
+
+Bajo condiciones de estacionariedad  $X_t = \Pi(B) \varepsilon_t$, entonces
+
+$$\left( 1 - \phi_1 B \right) \Pi(B) = \left( 1 - \theta_1 B \right) \quad  \Rightarrow \quad \left( 1 - \phi_1 B \right) \left( \pi_0 + \pi_1 B + \pi_2 B^2 - \ldots \right)  = \left( 1 - \theta_1 B \right)$$
+
+**Igualando ambos lados** tenemos que 
+
+$$\pi_0 - \left( \phi_1 \pi_0 - \pi_1 \right)B - \left(\phi_1 \pi_1 -\pi_2 \right)B^2 + \ldots = 1 - \theta_1B$$
+$$\pi_0 = 1, \quad \pi_1 = \theta_1 -\phi_1, \quad \pi_j = \phi_{1}^{j-1} \left(\theta_1 -\phi_1 \right), ~j > 1 $$
+
+. . .
+
+Bajo condiciones de invertibilidad  $X_t = \Psi(B) \varepsilon_t$, entonces
+
+
+$$\psi_0 = 1, \quad \psi_1 = \theta_1 -\phi_1, \quad \psi_j = \theta_{1}^{j-1} \left(\phi_1 - \theta_1 \right), ~j > 1 $$
+
+---
+
+## Procesos ARMA
+
+[**¿Es estacionario?**]{.hl-yellow}
+
+. . .
+
+Bajo condiciones de invertibilidad  $X_t = \Psi(B) \varepsilon_t$
+
+1. [**Media**]{.hl-yellow}: $E\left[X_t \right] = \sum_{j=0}^{\infty} \psi_{j} E\left[ \varepsilon_{t} \right] = 0$
+
+2. [**Varianza**]{.hl-yellow}: $Var \left[X_t \right] = \sum_{j=0}^{\infty} \psi_{j}^{2} Var\left[ \varepsilon_{t-j} \right] = \sigma^2 \sum_{j=0}^{\infty} \psi_{j}^{2}$ 
+
+---
+
+## Procesos ARMA
+
+[**¿Es estacionario?**]{.hl-yellow}
+
+
+3. [**Autocovarianzas y autocorrelaciones**]{.hl-yellow}:
+
+$$\begin{eqnarray}\gamma_h &=& Cov\left[X_t, X_{t+h}\right] = E\left[X_t, X_{t+h}\right] = E \left[ \left(\sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t-j} \right) \left( \sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t+h-j} \right) \right] \nonumber \\ &=& \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h}, \nonumber \\ \rho_h &=& Cor\left[X_t, X_{t+h}\right] =\begin{cases} 1 \quad & h & = 0 \\ \frac{\sum_{j=0}^{\infty} \psi_j \psi_{j+h}}{\sum_{j=0}^{\infty} \psi_{j}^2 } \quad &h& \geq 1 \end{cases} \end{eqnarray}$$ 
+
+[**No caen a 0**]{.hl-yellow}
+
+---
+
+## Procesos ARMA
+
+[**Veamos un ejemplo con el ARMA(1, 1)**]{.hl-yellow}
+
+
+3. [**Autocovarianzas**]{.hl-yellow}:
+
+$$\begin{eqnarray}\gamma_h &=& Cov\left[X_t, X_{t+h}\right] = E\left[X_t, X_{t+h}\right] = E \left[ \left(\sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t-j} \right) \left( \sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t+h-j} \right) \right] \nonumber \\ &=& \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h} = \sigma^2 \left( \psi_0 \psi_{h} +\sum_{j=1}^{\infty} \theta_{1}^{j-1} \left(\phi_1 - \theta_1 \right) \theta_{1}^{j+h-1} \left(\phi_1 - \theta_1 \right) \right)\nonumber \\ &=&  \begin{cases} \sigma^2 \left( 1 +\sum_{j=1}^{\infty} \theta_{1}^{2(j-1)} \left(\phi_1 - \theta_1 \right)^2 \right) = \sigma^2 \left( 1 + \frac{\left(\phi_1 - \theta_1 \right)^2 }{1 - \theta_{1}^{2}} \right) \quad & & h = 0, \\ \sigma^2 \left(  \left(\phi_1 - \theta_1 \right) +\sum_{j=1}^{\infty} \theta_{1}^{j-1}  \theta_{1}^{j} \left(\phi_1 - \theta_1 \right)^2 \right) =  \sigma^2 \left( \left(\phi_1 - \theta_1 \right) + \frac{\theta_1 \left(\phi_1 - \theta_1 \right)^2}{1 - \theta_{1}^2} \right) & & h = 1, \\ \sigma^2 \left( \theta_{1}^{h-1} \left(\phi_1 - \theta_1 \right) +  \theta_{1}^{h-1}\sum_{j=1}^{\infty} \theta_{1}^{j-1}  \theta_{1}^{j} \left(\phi_1 - \theta_1 \right)^2 \right) =   \theta_{1}^{h-1} \gamma_1 & & h >1 \\ \end{cases}\end{eqnarray}$$ 
+
+---
+
+## Procesos ARMA
+
+[**Veamos un ejemplo con el ARMA(1, 1)**]{.hl-yellow}
+
+
+3. [**Autocorrelaciones**]{.hl-yellow}:
+
+$$\begin{eqnarray}\rho_h &=& \frac{\gamma_h}{\gamma_0} =    \theta_{1}^{h-1}  \frac{ \left( 1 - \theta_1 \phi_1 \right) \left(\phi_1 - \theta_1 \right)}{1 + \phi_{1}^2-2 \theta_1 \phi_1} \neq 0 \quad h\geq 1 \end{eqnarray}$$ 
+
+---
+
+## Procesos ARMA
+
+[**💻 Diseña una función**]{.hl-yellow} para simular $n$ trayectorias de un $ARMA(p, q)$ en función de $p$, $q$, $n$, $\sigma$, $\left(\phi_1, \ldots, \phi_p\right)$,  $\left(X_1, \ldots, X_{max(p,q)}\right)$, $\left(\theta_1, \ldots,\theta_q\right)$,  $\left(\varepsilon_1, \ldots, \varepsilon_q\right)$
+
+```{r}
+#| code-fold: true
+ARMA_p_q_simul <- function(p, q, n, sigma, phi, theta, X, eps) {
+  
+  X_t <- X
+  eps <- c(eps, rnorm(n - q, mean = 0, sd = sigma))
+  for (i in (max(p, q) + 1):n) {
+    X_t[i] <-
+      sum(phi * X_t[(i - 1):(i-p)]) +
+      rnorm(1, mean = 0, sd = sigma) -
+      sum(theta * eps[(i - 1):(i-q)]) 
+  } 
+  ts <- tibble("t" = 1:n, "X_t" = X_t) |> as_tsibble(index = t)
+  return(ts)
+}
+```
+
+---
+
+## Procesos ARMA
+
+[**💻 Aplica dicha función**]{.hl-yellow} para simular y visualizar $n = 10000$ trayectorias de un $ARMA(2, 1)$ con $\sigma = 1.5$, $\phi = \left(-0.2, 0.7\right)$,  $\theta = 0.8$, $\left(X_1, X_{2}\right) \sim N\left(0, \sigma = 1.5 \right)$ y $\varepsilon_1 = 0$
+
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+ARMA_2_1 <- 
+  ARMA_p_q_simul(p = 2, q = 1, n = 10000, sigma = 1.5,
+                 phi = c(-0.2, 0.7), theta = 0.8, 
+                 X = rnorm(n = 2, mean = 0, sd = 1.5), eps = 0)
+ggplot(ARMA_2_1) +
+  geom_line(aes(x = t, y = X_t)) +
+  theme_minimal()
+```
+
+
+---
+
+
+## Función arima.sim
+
+
+También podemos hacer uso a partir de ahora de la [**función `arima.sim()` para simular procesos ARMA**]{.hl-yellow}
+
+```{r}
+X_t <- arima.sim(n = 10000, list(ar = c(-0.2, 0.7), ma = 0.8), sd = 1.5)
+ARMA_2_1 <- tibble("t" = 1:10000, "X_t" = X_t) |> as_tsibble(index = t)
+```
+
+```{r}
+#| code-fold: true
+ggplot(ARMA_2_1) +
+  geom_line(aes(x = t, y = X_t)) +
+  theme_minimal()
+```
+
+
+---
+
+## ARMA en fable
+
+
+1. ¿Es ya [**ruido blanco**]{.hl-yellow}?
+
+```{r}
+ARMA_2_1 |> 
+  features(X_t, ljung_box)
+```
+
+[**Rechazamos la hipótesis nula: no es ruido blanco**]{.hl-red} --> seguimos
+
+. . .
+
+2. ¿Es un [**proceso estacionario**]{.hl-yellow}?
+
+
+```{r}
+ARMA_2_1 |> 
+  features(X_t, unitroot_kpss)
+```
+
+
+[**No rechazamos la hipótesis nula de estacionariedad**]{.hl-green} --> seguimos (no hay que aplicar transformaciones).
+
+---
+
+## ARMA en fable
+
+3. ¿Cómo son las [**autocorrelaciones (ACF)**]{.hl-yellow}?
+
+
+```{r}
+#| code-fold: true
+ARMA_2_1 |> 
+  ACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+
+Las [**autocorrelaciones decrecen exponencialmente debido a la parte autorregresiva**]{.hl-yellow}
+
+---
+
+
+## ARMA en fable
+
+3. ¿Cómo son las [**autocorrelaciones parciales (PACF)**]{.hl-yellow}?
+
+
+```{r}
+#| code-fold: true
+ARMA_2_1 |> 
+  PACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+
+Las [**autocorrelaciones parciales también decrecen exponencialmente debido a la parte de medias móviles**]{.hl-yellow}
+
+. . .
+
+[**¡No vamos a poder identificar (p, q) con ellas salvo que tratemos primero una de las partes!**]{.hl-red}
+
+
+---
+
+## ARMA en fable
+
+```{r}
+#| code-fold: true
+ARMA_2_1 |> 
+  gg_tsdisplay(plot_type = "partial")
+```
+
+Claramente se salen las primeras de cada gráfica así que el primer paso será [**modelizar un ARMA(1, 1)**]{.hl-yellow}
+
+
+---
+
+## ARMA en fable
+
+```{r}
+fit <-
+  ARMA_2_1 |> 
+  model("ARMA_1_1" = ARIMA(X_t ~ pdq(1, 0, 1)))
+estimaciones <- fit |> augment()
+```
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  PACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+::::
+
+Vemos que [**a pesar de descender en magnitud siguen sin decaer lo suficiente**]{.hl-red} -> aumentamos el orden (del MA por ejemplo)
+
+---
+
+## ARMA en fable
+
+```{r}
+fit <-
+  ARMA_2_1 |> 
+  model("ARMA_1_2" = ARIMA(X_t ~ pdq(1, 0, 2)))
+estimaciones <- fit |> augment()
+```
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  PACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+::::
+
+No parece el adecuado --> ¿y ARMA(2, 1)?
+
+---
+
+## ARMA en fable
+
+```{r}
+fit <-
+  ARMA_2_1 |> 
+  model("ARMA_2_1" = ARIMA(X_t ~ pdq(2, 0, 1)))
+estimaciones <- fit |> augment()
+```
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  PACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+::::
+
+¡Por fin!
+
+---
+
+## ARMA en fable
+
+Efectivamente los [**residuos son ruido blanco**]{.hl-yellow}
+
+```{r}
+estimaciones |> 
+  features(.resid, ljung_box)
+```
+
+
+
+---
 
 ## Ajuste automático
 
-- dejar libre p y q
-- mirar acf/pcf
+Dado que este proceso puede ser farragoso podemos con `ARIMA()` realizar un [**ajuste automático**]{.hl-yellow} dejando libre los órdenes e indicándole el $p$ inicial con el que buscar, el $q$ final y la [**métrica para elegir el mejor modelo (BIC penaliza modelos complejos y es consistente)**]{.hl-yellow}
 
-- ARMA
+```{r}
+fit <-
+  ARMA_2_1 |> 
+  model("ARMA" = ARIMA(X_t ~ pdq(p_init = 1, q_init = 1), ic = "bic"))
+report(fit)
+```
 
-- validacion
+---
+
+## Ajuste automático
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/ARMAgridsearch-1.png)
+
+Por defecto este [**ajuste automático se realiza haciendo uso del algoritmo Hyndman-Khandakar**]{.hl-yellow} que lo realiza stepwise y greedy: empezando por la esquina superior de modelos, selecciona el mejor según la métrica dada; tras ello **busca en su entorno** (moviendo y restado 1 p y q); si encuentro alguno mejor, cambia automáticamente.
+
+---
+
+## Ajuste automático
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/ARMAgridsearch-1.png)
+
+* si `ARIMA(..., greedy = FALSE)`: evalua todo el entorno, no se cambia al primero que encuentre mejor
+
+* si `ARIMA(..., stepwise = FALSE)`: evalua un grid más amplio de modeos
+
+
+---
+
+## Ajuste automático
+
+También puedes [**indicarle un vector concreto de $p$ y $q$ a probar**]{.hl-yellow}
+
+```{r}
+fit <-
+  ARMA_2_1 |> 
+  model("ARMA" = ARIMA(X_t ~ pdq(p = 0:4, q = 0:4), ic = "bic"))
+report(fit)
+```
+
+
+---
+
+
+## Validación cruzada
+
+Como suele ser habitual en el campo de la [**calibración de modelos**]{.hl-yellow}, una opción muy habitual es la de la [**validación**]{.hl-yellow}:
+
+1. Construir distintos modelos con la información de train
+
+2. Usar los [**conjuntos de la validación para evaluar los modelos (o qué configuración de hiperparámetros)**]{.hl-yellow} y decidir cuál de ellos  es mejor
+
+3. Una vez elegido el modelo, volver a lanzarlo y evaluarlo en test
+
+---
+
+## Validación cruzada
+
+Una de las formas de validación más habitual es la [**validación cruzada**]{.hl-yellow}: las observaciones del conjunto de train van [**rotando su rol**]{.hl-yellow}.
+
+. . .
+
+Por ejemplo, si tenemos 100 observaciones en train, podemos hacer 100 iteraciones de validación, de manera que en cada una entrenamos el modelo con 99 de ellas y otra queda reservada solo para evaluar los modelos.
+
+![](https://interactivechaos.com/sites/default/files/styles/max_800_px/public/2023-03/tutorial_ml_0237.png)
+
+---
+
+## Validación cruzada
+
+En el **caso de las series temporales** una estrategia habitual suele ser la siguiente:
+
+1. Descartar las primeras $n$ observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train
+
+2. **Iteración i**: entrenamos con las primeras $n+i$ observaciones, evaluamos con una única observación $n+i+1$. 
+
+3. Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png)
+
+
+---
+
+## Validación cruzada
+
+Fíjate que lo anterior está basado en una [**one-step forecast**]{.hl-yellow} (predicción a horizonte $h = 1$), pero quizás nuestro interés esté en ver cómo funciona nuestro método a **horizontes de predicción mayores**
+
+. . .
+
+1. Descartar las primeras $n$ observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train
+
+2. **Iteración i**: entrenamos con las primeras $n+i$ observaciones, evaluamos con una única observación $n+i+h$. 
+
+3. Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.
+
+---
+
+## Validación cruzada
+
+
+El ejemplo inferior es para $h = 4$.
+
+![](https://otexts.com/fpp3/fpp_files/figure-html/cv4-1.png)
+
+---
+
+## Validación cruzada
+
+Vamos a generar un ARMA(2, 3) con la [**función `arima.sim()` para simular procesos ARMA**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+set.seed(1234567)
+X_t <- arima.sim(n = 2500, list(ar = c(-0.2, 0.4), ma = c(0.6, -0.5, 0.7)), sd = 5)
+ARMA_2_3 <- tibble("t" = 1:2500, "X_t" = X_t) |> as_tsibble(index = t)
+ARMA_2_3
+```
+
+---
+
+## Validación cruzada
+
+```{r}
+#| code-fold: true
+ggplot(ARMA_2_3) +
+  geom_line(aes(x = t, y = X_t)) +
+  theme_minimal()
+```
+
+---
+
+## Validación cruzada
+
+
+
+1. ¿Es ya [**ruido blanco**]{.hl-yellow}?
+
+```{r}
+ARMA_2_3 |> 
+  features(X_t, ljung_box)
+```
+
+[**Rechazamos la hipótesis nula: no es ruido blanco**]{.hl-red} --> seguimos
+
+. . .
+
+2. ¿Es un [**proceso estacionario**]{.hl-yellow}?
+
+
+```{r}
+ARMA_2_3 |> 
+  features(X_t, unitroot_kpss)
+```
+
+
+[**No rechazamos la hipótesis nula de estacionariedad**]{.hl-green} --> seguimos (no hay que aplicar transformaciones).
+
+---
+
+## Validación cruzada
+
+3. ¿Cómo son las [**autocorrelaciones (ACF)**]{.hl-yellow}?
+
+
+```{r}
+#| code-fold: true
+ARMA_2_3 |> 
+  ACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+
+Las [**autocorrelaciones decrecen exponencialmente**]{.hl-yellow} -> existe parte autorregresiva
+
+---
+
+
+## Validación cruzada
+
+3. ¿Cómo son las [**autocorrelaciones parciales (PACF)**]{.hl-yellow}?
+
+
+```{r}
+#| code-fold: true
+ARMA_2_3 |> 
+  PACF(X_t, lag_max = 30) |> 
+  autoplot()
+```
+
+
+Las [**autocorrelaciones parciales también decrecen exponencialmente**]{.hl-yellow} -> existe parte de medias móviles
+
+
+---
+
+## Validación cruzada
+
+```{r}
+#| code-fold: true
+ARMA_2_3 |> 
+  gg_tsdisplay(plot_type = "partial")
+```
+
+Claramente se salen las primeras de cada gráfica así que el primer paso será [**modelizar un ARMA(1, 1)**]{.hl-yellow}
+
+
+---
+
+## Validación cruzada
+
+Vamos a [**dividir primero nuestros datos en train (90%) vs test (10%)**]{.hl-yellow}
+
+```{r}
+train <-
+  ARMA_2_3 |> slice(1:450)
+
+test <-
+  ARMA_2_3 |> slice(451:500)
+```
+
+---
+
+## Validación cruzada
+
+
+Tras ello vamos a [**generar los subconjuntos de validación usando trian**]{.hl-yellow}  con `stretch_tsibble()`, indicándole el número de valores iniciales que siempre estarán en train, el tamaño que queremos incrementar los sucesivos conjuntos y un identificador de cada slot
+
+Por ejemplo, vamos a **reservar los 350 primeros valores** y vamos a avanzar a horizonte 1 (es decir, 100 slots de validación)
+
+```{r}
+data_cv <-
+  train |> 
+  stretch_tsibble(.init = 350, .step = 1, .id = "cv")
+data_cv
+```
+
+
+---
+
+## Validación cruzada
+
+Tras generar los slots de validación [**entrenamos los modelos con dichos datos**]{.hl-yellow}. Vamos a probar los siguientes modelos:
+
+* $ARMA(1, 1)$
+* $ARMA(2, 2)$
+* $ARMA(p, q)$ automático stepwise greedy
+* $ARMA(p, q)$ automático stepwise no greedy
+* $ARMA(p, q)$ automático no stepwise
+
+---
+
+## Validación cruzada
+
+* $ARMA(1, 1)$
+* $ARMA(2, 2)$
+* $ARMA(p, q)$ automático stepwise greedy
+* $ARMA(p, q)$ automático stepwise no greedy
+* $ARMA(p, q)$ automático no stepwise
+
+```{r}
+fit <-
+  data_cv |>
+  model("ARMA_11" = ARIMA(X_t ~ pdq(p = 1, d = 0, q = 1), ic = "bic"),
+        "ARMA_22" = ARIMA(X_t ~ pdq(p = 2, d = 0, q = 2), ic = "bic"),
+        "ARMA_stepwise_greedy" = 
+          ARIMA(X_t ~ pdq(p_init = 1, d = 0, q_init = 1), ic = "bic"),
+        "ARMA_stepwise" = 
+          ARIMA(X_t ~ pdq(p_init = 1, d = 0, q_init = 1), ic = "bic", greedy = FALSE),
+        "ARMA" = 
+          ARIMA(X_t ~ pdq(p_init = 1, d = 0, q_init = 1), ic = "bic", greedy = FALSE, stepwise = FALSE))
+estimaciones <- fit |> augment()
+```
+
+---
+
+## Validación cruzada
+
+Tendremos las [**métricas para cada modelo y cada slot de cv**]{.hl-yellow} que podemos promediar
+
+```{r}
+resumen_eval_cv <-
+  fit |> 
+  accuracy() |> 
+  summarise(across(c(ME, RMSE, MAE, MPE, MAPE), mean), .by = .model)
+resumen_eval_cv 
+```
+
+---
+
+
+## Validación cruzada
+
+¿Cómo [**visualizar las métricas de validación cruzada**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+fit |>
+  accuracy() |> 
+  ggplot(aes(x = .model, y = RMSE, fill = .model, color = .model)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(width = 0.25, alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+Si te fijas los [**mejores son el ARMA (completo) y el ARMA stepwise (pero no greedy)**]{.hl-green}: aunque tardan más los resultados son mejores. Fíjate que en el caso de los greedy tenemos un gap en la calidad según hacía la dirección a la que haya decidido orientarse: [**a veces llega al mejor pero no siempre**]{.hl-red}
+
+
+
+---
+
+## Validación cruzada
+
+Dado que los [**mejores son el ARMA (completo) y el ARMA stepwise (pero no greedy)**]{.hl-green} de manera similar, optaremos por este último ya que es más rápido.
+
+```{r}
+fit <-
+  train |>
+  model("ARMA_stepwise" = 
+          ARIMA(X_t ~ pdq(p_init = 1, d = 0, q_init = 1), ic = "bic",
+                greedy = FALSE))
+estimaciones <- fit |> augment()
+report(fit)
+```
+
+Nada mal: nuestros datos generados bajo un ARMA(2, 3) han sido **modelizados con un ARMA(2, 3)**.
+
+---
+
+## Raíces
+
+```{r}
+gg_arma(fit)
+```
+
+Además las raíces de los polinomios asociados caen fueran del círculo unidad
+
+---
+
+## Diagnóstico de residuos
+
+```{r}
+fit |>  gg_tsresiduals()
+```
+
+---
+
+## Diagnóstico de residuos
+
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  ACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| code-fold: true
+estimaciones |> 
+  PACF(.resid, lag_max = 30) |> 
+  autoplot()
+```
+
+:::
+::::
+
+[**Todas las autocorrelaciones dentro de la banda**]{.hl-green} 
+
+---
+
+## Diagnóstico de residuos
+
+Efectivamente los [**residuos son ruido blanco**]{.hl-yellow}
+
+```{r}
+estimaciones |> 
+  features(.resid, ljung_box)
+```
+
 
 
 # Clases 21: [procesos ARIMA]{.flow} {#clase-21}

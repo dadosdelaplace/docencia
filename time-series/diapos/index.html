@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.294">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Grado en Estadística Aplicada • Javier Álvarez Liébana">
   <title>Series temporales</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
+<p><img data-src="img/me.jpeg"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -1100,7 +1100,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1128,7 +1128,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-22"</code></pre>
+<pre><code>[1] "2024-11-25"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-11-22 15:22:02 CET"</code></pre>
+<pre><code>[1] "2024-11-25 12:15:33 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -1466,7 +1466,7 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1513,7 +1513,7 @@ pesos       63   70   85   95</code></pre>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb84-2"><a href="#cb84-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -2673,12 +2673,12 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: nanoseconds
-                                    expr     min      lq    mean  median
-                                y &lt;- x^2     800     900    1409    1400
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1092800 1135450 1234932 1155800
-      uq     max neval cld
-    1600    5000   500  a 
- 1194250 7569200   500   b</code></pre>
+                                    expr    min     lq       mean median     uq
+                                y &lt;- x^2    984   1148   1304.374   1189   1312
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 787405 802288 868020.430 819467 838532
+     max neval
+   13817   500
+ 5594655   500</code></pre>
 </div>
 </div>
 </section>
@@ -4751,16 +4751,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 2,000 × 3
        t     X_t sd    
    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.0576 sd_0.5
- 2     2 -0.301  sd_0.5
- 3     3 -0.479  sd_0.5
- 4     4 -0.0240 sd_0.5
- 5     5  0.329  sd_0.5
- 6     6 -0.121  sd_0.5
- 7     7 -0.214  sd_0.5
- 8     8 -0.0404 sd_0.5
- 9     9 -0.0571 sd_0.5
-10    10 -0.248  sd_0.5
+ 1     1 -0.737  sd_0.5
+ 2     2  0.431  sd_0.5
+ 3     3  0.316  sd_0.5
+ 4     4  0.486  sd_0.5
+ 5     5  0.111  sd_0.5
+ 6     6  0.0858 sd_0.5
+ 7     7 -0.147  sd_0.5
+ 8     8  0.555  sd_0.5
+ 9     9 -0.244  sd_0.5
+10    10  0.904  sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5142,18 +5142,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb323-12"><a href="#cb323-12"></a><span class="fu">ts_error</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 200 × 3
-       t sd          X_t
-   &lt;int&gt; &lt;glue&gt;    &lt;dbl&gt;
- 1     1 sd_0.5 -0.467  
- 2     2 sd_0.5  0.00203
- 3     3 sd_0.5  0.320  
- 4     4 sd_0.5 -0.0789 
- 5     5 sd_0.5  0.109  
- 6     6 sd_0.5 -1.20   
- 7     7 sd_0.5 -0.413  
- 8     8 sd_0.5 -1.67   
- 9     9 sd_0.5 -0.213  
-10    10 sd_0.5  0.749  
+       t sd         X_t
+   &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
+ 1     1 sd_0.5  0.421 
+ 2     2 sd_0.5  0.549 
+ 3     3 sd_0.5  0.260 
+ 4     4 sd_0.5 -0.259 
+ 5     5 sd_0.5 -0.0638
+ 6     6 sd_0.5 -0.251 
+ 7     7 sd_0.5  0.586 
+ 8     8 sd_0.5  0.895 
+ 9     9 sd_0.5  1.03  
+10    10 sd_0.5 -0.457 
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -6429,18 +6429,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 864 x 6 [1M]
 # Key:       .model [6]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 854 more rows</code></pre>
 </div>
 </div>
@@ -6504,18 +6504,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        value = trend + seasonal + random
-   .model     index value trend seasonal random season_adjust
-   &lt;chr&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
- 1 cts    1949 ene.   112   NA    -24.7   NA            137. 
- 2 cts    1949 feb.   118   NA    -36.2   NA            154. 
- 3 cts    1949 mar.   132   NA     -2.24  NA            134. 
- 4 cts    1949 abr.   129   NA     -8.04  NA            137. 
- 5 cts    1949 may.   121   NA     -4.51  NA            126. 
- 6 cts    1949 jun.   135   NA     35.4   NA             99.6
- 7 cts    1949 jul.   148  127.    63.8  -42.6           84.2
- 8 cts    1949 ago.   148  127.    62.8  -42.1           85.2
- 9 cts    1949 sep.   136  128.    16.5   -8.48         119. 
-10 cts    1949 oct.   119  129.   -20.6   11.1          140. 
+   .model    index value trend seasonal random season_adjust
+   &lt;chr&gt;     &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+ 1 cts    1949 Jan   112   NA    -24.7   NA            137. 
+ 2 cts    1949 Feb   118   NA    -36.2   NA            154. 
+ 3 cts    1949 Mar   132   NA     -2.24  NA            134. 
+ 4 cts    1949 Apr   129   NA     -8.04  NA            137. 
+ 5 cts    1949 May   121   NA     -4.51  NA            126. 
+ 6 cts    1949 Jun   135   NA     35.4   NA             99.6
+ 7 cts    1949 Jul   148  127.    63.8  -42.6           84.2
+ 8 cts    1949 Aug   148  127.    62.8  -42.1           85.2
+ 9 cts    1949 Sep   136  128.    16.5   -8.48         119. 
+10 cts    1949 Oct   119  129.   -20.6   11.1          140. 
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6583,18 +6583,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        log(value) = trend + season_12 + remainder
-   .model     index `log(value)` trend season_12 remainder season_adjust
-   &lt;chr&gt;      &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
- 1 stl    1949 ene.         4.72  4.87   -0.105   -0.0448           4.82
- 2 stl    1949 feb.         4.77  4.87   -0.142    0.0408           4.91
- 3 stl    1949 mar.         4.88  4.87   -0.0118   0.0213           4.89
- 4 stl    1949 abr.         4.86  4.87   -0.0337   0.0256           4.89
- 5 stl    1949 may.         4.80  4.84   -0.0261  -0.0154           4.82
- 6 stl    1949 jun.         4.91  4.81    0.106   -0.00733          4.80
- 7 stl    1949 jul.         5.00  4.79    0.220   -0.0149           4.78
- 8 stl    1949 ago.         5.00  4.80    0.221   -0.0198           4.78
- 9 stl    1949 sep.         4.91  4.81    0.0864   0.0188           4.83
-10 stl    1949 oct.         4.78  4.82   -0.0417  -0.00306          4.82
+   .model    index `log(value)` trend season_12 remainder season_adjust
+   &lt;chr&gt;     &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 stl    1949 Jan         4.72  4.87   -0.105   -0.0448           4.82
+ 2 stl    1949 Feb         4.77  4.87   -0.142    0.0408           4.91
+ 3 stl    1949 Mar         4.88  4.87   -0.0118   0.0213           4.89
+ 4 stl    1949 Apr         4.86  4.87   -0.0337   0.0256           4.89
+ 5 stl    1949 May         4.80  4.84   -0.0261  -0.0154           4.82
+ 6 stl    1949 Jun         4.91  4.81    0.106   -0.00733          4.80
+ 7 stl    1949 Jul         5.00  4.79    0.220   -0.0149           4.78
+ 8 stl    1949 Aug         5.00  4.80    0.221   -0.0198           4.78
+ 9 stl    1949 Sep         4.91  4.81    0.0864   0.0188           4.83
+10 stl    1949 Oct         4.78  4.82   -0.0417  -0.00306          4.82
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6708,18 +6708,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 288 x 6 [1M]
 # Key:       .model [2]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 278 more rows</code></pre>
 </div>
 </div>
@@ -6776,18 +6776,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6899,18 +6899,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6957,18 +6957,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 576 x 6 [1M]
 # Key:       .model [4]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 566 more rows</code></pre>
 </div>
 </div>
@@ -7233,18 +7233,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 5,610 x 3 [1M]
 # Key:       cv [85]
-       index value    cv
-       &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
- 1 1949 ene.   112     1
- 2 1949 feb.   118     1
- 3 1949 mar.   132     1
- 4 1949 abr.   129     1
- 5 1949 may.   121     1
- 6 1949 jun.   135     1
- 7 1949 jul.   148     1
- 8 1949 ago.   148     1
- 9 1949 sep.   136     1
-10 1949 oct.   119     1
+      index value    cv
+      &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 1949 Jan   112     1
+ 2 1949 Feb   118     1
+ 3 1949 Mar   132     1
+ 4 1949 Apr   129     1
+ 5 1949 May   121     1
+ 6 1949 Jun   135     1
+ 7 1949 Jul   148     1
+ 8 1949 Aug   148     1
+ 9 1949 Sep   136     1
+10 1949 Oct   119     1
 # ℹ 5,600 more rows</code></pre>
 </div>
 </div>
@@ -9869,7 +9869,7 @@ AIC=28250.93   AICc=28250.93   BIC=28286.98</code></pre>
 <h2>Autocorrelación parcial</h2>
 <p>De esta forma tendremos que</p>
 <p><span class="math display">\[\begin{eqnarray}\alpha_h &amp;=&amp; Cor[X_t - efecto_{X_t~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}, X_{t+h} - efecto_{X_{t+h}~vs~\left(X_{t+1}, \ldots, X_{t+h-1} \right)}] \nonumber \\ &amp;=&amp; \begin{cases} \rho_1 \quad &amp; &amp; h = 1, \\ \frac{Cov \left( X_t -  \widetilde{X}_t, X_{t+h} - \widetilde{X}_{t+h} \right)}{\sqrt{Var \left[ X_t -  \widetilde{X}_t \right] Var \left[X_{t+h} - \widetilde{X}_{t+h} \right]}} \quad &amp; &amp;h &gt; 1\end{cases} \end{eqnarray}\]</span></p>
-<p>y se demuestra que <span class="math inline">\(\alpha_p = \phi_p\)</span> y <span class="math inline">\(\alpha_h = 0\)</span> para <span class="math inline">\(h &gt; p\)</span>.</p>
+<p>y <span class="hl-yellow"><strong>se demuestra que <span class="math inline">\(\alpha_p = \phi_p\)</span> y <span class="math inline">\(\alpha_h = 0\)</span> para <span class="math inline">\(h &gt; p\)</span></strong></span>. Este truncamiento a partir de <span class="math inline">\(h &gt; p\)</span> no se da en un <span class="math inline">\(MA(q)\)</span> ya que se puede entender como un <span class="math inline">\(AR(\infty)\)</span>.</p>
 </section>
 <section id="pacf-ar-vs-ma" class="slide level2">
 <h2>PACF: AR vs MA</h2>
@@ -10069,19 +10069,808 @@ AIC=4761.96   AICc=4762   BIC=4781.38</code></pre>
 <h1>Clases 20: <span class="flow">procesos ARMA</span></h1>
 
 </section>
-<section id="ajuste-automático" class="slide level2">
-<h2>Ajuste automático</h2>
+<section id="modelos-ma-vs-ar-1" class="slide level2">
+<h2>Modelos MA vs AR</h2>
+<p>Simplemente por fijar conceptos, estos son los dos modelos que hemos visto hasta ahora haciendo uso del <span class="hl-yellow"><strong>operador de retardos</strong></span></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="hl-purple"><strong>MA(q)</strong></span></p>
+<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q} \nonumber \\ &amp;=&amp;\Theta_q (B) \varepsilon_t \nonumber \\ 0 &amp;=&amp;1 - \theta_1 z - \ldots - \theta_q z^q  \quad \text{raíces  } \left| z \right| &gt; 1 \end{eqnarray}\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><span class="hl-green"><strong>AR(p)</strong></span></p>
+<p><span class="math display">\[\begin{eqnarray}X_t &amp;=&amp; \varepsilon_t + \phi_1 X_{t-1} + \ldots + \phi_q X_{t-q},  \nonumber \\  \Phi_p (B)X_t &amp;=&amp;  \varepsilon_t \nonumber \\ 0 &amp;=&amp;1 - \phi_1 z - \ldots - \phi_q z^q  \quad \text{raíces  } \left| z \right| &gt; 1 \end{eqnarray}\]</span></p>
+</div>
+</div>
 <ul>
-<li>dejar libre p y q</li>
-<li>mirar acf/pcf</li>
+<li><p><span class="hl-yellow"><strong>Función de autocorrelaciones (ACF)</strong></span>: en su versión teórica, <span class="math inline">\(\rho_h = 0\)</span> a partir de <span class="math inline">\(h &gt; q\)</span> para los MA(q).</p></li>
+<li><p><span class="hl-yellow"><strong>Función de autocorrelaciones parciales (PACF)</strong></span>: en su versión teórica, <span class="math inline">\(\alpha_h = 0\)</span> a partir de <span class="math inline">\(h &gt; p\)</span> para los AR(p).</p></li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="procesos-arma" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p>Como dijimos al inicio los procesos MA eran un <span class="hl-yellow"><strong>caso particular de lo que se conoce como procesos lineales</strong></span></p>
+<p><span class="math display">\[X_t = \sum_{j = -\infty}^{j=\infty} \Psi_j \varepsilon_{t-j}, \quad \sum_{j = -\infty}^{j=\infty} \left| \Psi_j \right| &lt; \infty, \quad  \text{proceso lineal}\]</span></p>
+<div class="fragment">
 <ul>
-<li><p>ARMA</p></li>
-<li><p>validacion</p></li>
+<li><p><span class="hl-yellow"><strong>MA(q)</strong></span>: <span class="math inline">\(\Psi_0 = 1\)</span> y <span class="math inline">\(\Psi_j = 0\)</span> para todo <span class="math inline">\(j \geq q\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>AR(p)</strong></span>: <span class="math inline">\(\Psi_0 = 1\)</span> y <span class="math inline">\(\Psi_j = 0\)</span> para todo <span class="math inline">\(j &lt;0\)</span>, tal que <span class="math inline">\(\Phi_p(B) \Psi(B) = 1\)</span> (se imponen condiciones en el decrecimiento de los coeficientes)</p></li>
 </ul>
+</div>
+<div class="fragment">
+<p>Los <span class="hl-yellow"><strong>procesos ARMA</strong></span> intentarán combinar ambas propiedades para poder representar nuestros procesos con órdenes <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> bajos.</p>
+</div>
+</section>
+<section id="procesos-arma-1" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p>Diremos que <span class="math inline">\(\left\lbrace X_t \right\rbrace_{t}\)</span> es un <span class="hl-yellow"><strong>proceso (mixto) autorregresivo-media móvil de orden <span class="math inline">\((p,q)\)</span>, denotado como <span class="math inline">\(ARMA(p,q)\)</span></strong></span> si</p>
+<p><span class="math display">\[X_t - \phi_1 X_{t-1} - \ldots - \phi_p X_{t-p} = \varepsilon_t - \theta_1 \varepsilon_{t-1} - \ldots - \theta_q \varepsilon_{t-q}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<p>donde <span class="math inline">\(p \geq 1\)</span> será el <strong>orden autorregresivo</strong> y <span class="math inline">\(q \geq 1\)</span> será el <strong>orden de medias móvil</strong></p>
+<div class="fragment">
+<p>Usando el <strong>polinomio de retardos</strong>, podemos <span class="hl-yellow"><strong>redefinir un ARMA(p, q)</strong></span> como</p>
+<p><span class="math display">\[\Phi_p (B)X_t  = \Theta_q (B) \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span> tal que si <span class="math inline">\(\Phi_p (B)=1\)</span> es un proceso puro MA(q) y si <span class="math inline">\(\Theta_q (B)=1\)</span> es un proceso puro AR(p).</p>
+</div>
+</section>
+<section id="procesos-arma-2" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p>Dado que <span class="math inline">\(\Phi_p (B)\)</span> y <span class="math inline">\(\Theta_q (B)\)</span> son polinomios, ambos <strong>pueden ser expresados en función de sus raíces</strong> tal que</p>
+<p><span class="math display">\[\Phi_p (B) = \left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right), \quad \Theta_q (B) = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right)\]</span></p>
+<p>tal que</p>
+<p><span class="math display">\[\left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t\]</span></p>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>¿Qué tienen que cumplir esas raíces?</strong></span></p>
+</div>
+</section>
+<section id="procesos-arma-3" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="math display">\[\left( 1- \lambda_1 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_1 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t\]</span></p>
+<p>Deben de ser diferentes: los <span class="hl-yellow"><strong>polinomios <span class="math inline">\(\Phi_p (B)\)</span> y <span class="math inline">\(\Theta_q (B)\)</span> no pueden tener raíces comunes</strong></span> ya que si tuviesen, por ejemplo, <span class="math inline">\(\lambda_1 = \delta_1\)</span>, entonces podríamos cancelar en ambos lados</p>
+<p><span class="math display">\[\left( 1- \lambda_2 B\right) \ldots \left( 1- \lambda_p B\right)X_t  = \left( 1- \delta_2 B\right) \ldots \left( 1- \delta_q B\right) \varepsilon_t\]</span> teniendo una <span class="hl-yellow"><strong>sobreparametrización ya que en realidad el proceso sería ARMA(p-1, q-1)</strong></span>.</p>
+</section>
+<section id="procesos-arma-4" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="math display">\[\Phi_p (B)X_t  = \Theta_q (B) \varepsilon_t, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<p>Además vamos a pedir las <span class="hl-yellow"><strong>dos condiciones que hemos visto anteriormente</strong></span></p>
+<ul>
+<li><p><span class="hl-green"><strong>ARMA invertible</strong></span>: pediremos que las <span class="hl-yellow"><strong>raíces del polinomio <span class="math inline">\(\Theta_q (B)\)</span></strong></span> tengan sus raíces fuera del círculo unidad.</p></li>
+<li><p><span class="hl-green"><strong>ARMA causal (estacionario)</strong></span>: pediremos que las <span class="hl-yellow"><strong>raíces del polinomio <span class="math inline">\(\Phi_p(B)\)</span></strong></span> tengan sus raíces fuera del círculo unidad.</p></li>
+</ul>
+</section>
+<section id="procesos-arma-5" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p>Bajo dichas condiciones estos procesos se pueden <span class="hl-yellow"><strong>re-expresar tanto como <span class="math inline">\(AR(\infty)\)</span> como <span class="math inline">\(MA(\infty)\)</span></strong></span>. Veamos un <strong>ejemplo con un ARMA(1, 1)</strong></p>
+<p><span class="math display">\[X_t - \phi_1 X_{t-1}  = \varepsilon_t - \theta_1 \varepsilon_{t-1}, \quad \left\lbrace \varepsilon_{t} \right\rbrace \text{ ruido blanco}\]</span></p>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>Condiciones de invertibilidad y estacionalidad</strong></span>: <span class="math inline">\(\left| \phi_1 \right| &lt; 1\)</span> y <span class="math inline">\(\left| \theta_1 \right| &lt; 1\)</span></p>
+</div>
+<div class="fragment">
+<p>Tenemos por tanto que <span class="math inline">\(\Phi_1 (B) X_t = \Theta_1 (B)\varepsilon_t\)</span>.</p>
+</div>
+</section>
+<section id="procesos-arma-6" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p>Bajo condiciones de estacionariedad <span class="math inline">\(X_t = \Pi(B) \varepsilon_t\)</span>, entonces</p>
+<p><span class="math display">\[\left( 1 - \phi_1 B \right) \Pi(B) = \left( 1 - \theta_1 B \right) \quad  \Rightarrow \quad \left( 1 - \phi_1 B \right) \left( \pi_0 + \pi_1 B + \pi_2 B^2 - \ldots \right)  = \left( 1 - \theta_1 B \right)\]</span></p>
+<p><strong>Igualando ambos lados</strong> tenemos que</p>
+<p><span class="math display">\[\pi_0 - \left( \phi_1 \pi_0 - \pi_1 \right)B - \left(\phi_1 \pi_1 -\pi_2 \right)B^2 + \ldots = 1 - \theta_1B\]</span> <span class="math display">\[\pi_0 = 1, \quad \pi_1 = \theta_1 -\phi_1, \quad \pi_j = \phi_{1}^{j-1} \left(\theta_1 -\phi_1 \right), ~j &gt; 1 \]</span></p>
+<div class="fragment">
+<p>Bajo condiciones de invertibilidad <span class="math inline">\(X_t = \Psi(B) \varepsilon_t\)</span>, entonces</p>
+<p><span class="math display">\[\psi_0 = 1, \quad \psi_1 = \theta_1 -\phi_1, \quad \psi_j = \theta_{1}^{j-1} \left(\phi_1 - \theta_1 \right), ~j &gt; 1 \]</span></p>
+</div>
+</section>
+<section id="procesos-arma-7" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>¿Es estacionario?</strong></span></p>
+<div class="fragment">
+<p>Bajo condiciones de invertibilidad <span class="math inline">\(X_t = \Psi(B) \varepsilon_t\)</span></p>
+<ol type="1">
+<li><p><span class="hl-yellow"><strong>Media</strong></span>: <span class="math inline">\(E\left[X_t \right] = \sum_{j=0}^{\infty} \psi_{j} E\left[ \varepsilon_{t} \right] = 0\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>Varianza</strong></span>: <span class="math inline">\(Var \left[X_t \right] = \sum_{j=0}^{\infty} \psi_{j}^{2} Var\left[ \varepsilon_{t-j} \right] = \sigma^2 \sum_{j=0}^{\infty} \psi_{j}^{2}\)</span></p></li>
+</ol>
+</div>
+</section>
+<section id="procesos-arma-8" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>¿Es estacionario?</strong></span></p>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Autocovarianzas y autocorrelaciones</strong></span>:</li>
+</ol>
+<p><span class="math display">\[\begin{eqnarray}\gamma_h &amp;=&amp; Cov\left[X_t, X_{t+h}\right] = E\left[X_t, X_{t+h}\right] = E \left[ \left(\sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t-j} \right) \left( \sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t+h-j} \right) \right] \nonumber \\ &amp;=&amp; \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h}, \nonumber \\ \rho_h &amp;=&amp; Cor\left[X_t, X_{t+h}\right] =\begin{cases} 1 \quad &amp; h &amp; = 0 \\ \frac{\sum_{j=0}^{\infty} \psi_j \psi_{j+h}}{\sum_{j=0}^{\infty} \psi_{j}^2 } \quad &amp;h&amp; \geq 1 \end{cases} \end{eqnarray}\]</span></p>
+<p><span class="hl-yellow"><strong>No caen a 0</strong></span></p>
+</section>
+<section id="procesos-arma-9" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>Veamos un ejemplo con el ARMA(1, 1)</strong></span></p>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Autocovarianzas</strong></span>:</li>
+</ol>
+<p><span class="math display">\[\begin{eqnarray}\gamma_h &amp;=&amp; Cov\left[X_t, X_{t+h}\right] = E\left[X_t, X_{t+h}\right] = E \left[ \left(\sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t-j} \right) \left( \sum_{j=0}^{\infty} \psi_{j} \varepsilon_{t+h-j} \right) \right] \nonumber \\ &amp;=&amp; \sigma^2 \sum_{j=0}^{\infty} \psi_j \psi_{j+h} = \sigma^2 \left( \psi_0 \psi_{h} +\sum_{j=1}^{\infty} \theta_{1}^{j-1} \left(\phi_1 - \theta_1 \right) \theta_{1}^{j+h-1} \left(\phi_1 - \theta_1 \right) \right)\nonumber \\ &amp;=&amp;  \begin{cases} \sigma^2 \left( 1 +\sum_{j=1}^{\infty} \theta_{1}^{2(j-1)} \left(\phi_1 - \theta_1 \right)^2 \right) = \sigma^2 \left( 1 + \frac{\left(\phi_1 - \theta_1 \right)^2 }{1 - \theta_{1}^{2}} \right) \quad &amp; &amp; h = 0, \\ \sigma^2 \left(  \left(\phi_1 - \theta_1 \right) +\sum_{j=1}^{\infty} \theta_{1}^{j-1}  \theta_{1}^{j} \left(\phi_1 - \theta_1 \right)^2 \right) =  \sigma^2 \left( \left(\phi_1 - \theta_1 \right) + \frac{\theta_1 \left(\phi_1 - \theta_1 \right)^2}{1 - \theta_{1}^2} \right) &amp; &amp; h = 1, \\ \sigma^2 \left( \theta_{1}^{h-1} \left(\phi_1 - \theta_1 \right) +  \theta_{1}^{h-1}\sum_{j=1}^{\infty} \theta_{1}^{j-1}  \theta_{1}^{j} \left(\phi_1 - \theta_1 \right)^2 \right) =   \theta_{1}^{h-1} \gamma_1 &amp; &amp; h &gt;1 \\ \end{cases}\end{eqnarray}\]</span></p>
+</section>
+<section id="procesos-arma-10" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>Veamos un ejemplo con el ARMA(1, 1)</strong></span></p>
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Autocorrelaciones</strong></span>:</li>
+</ol>
+<p><span class="math display">\[\begin{eqnarray}\rho_h &amp;=&amp; \frac{\gamma_h}{\gamma_0} =    \theta_{1}^{h-1}  \frac{ \left( 1 - \theta_1 \phi_1 \right) \left(\phi_1 - \theta_1 \right)}{1 + \phi_{1}^2-2 \theta_1 \phi_1} \neq 0 \quad h\geq 1 \end{eqnarray}\]</span></p>
+</section>
+<section id="procesos-arma-11" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>💻 Diseña una función</strong></span> para simular <span class="math inline">\(n\)</span> trayectorias de un <span class="math inline">\(ARMA(p, q)\)</span> en función de <span class="math inline">\(p\)</span>, <span class="math inline">\(q\)</span>, <span class="math inline">\(n\)</span>, <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\left(\phi_1, \ldots, \phi_p\right)\)</span>, <span class="math inline">\(\left(X_1, \ldots, X_{max(p,q)}\right)\)</span>, <span class="math inline">\(\left(\theta_1, \ldots,\theta_q\right)\)</span>, <span class="math inline">\(\left(\varepsilon_1, \ldots, \varepsilon_q\right)\)</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb599"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb599-1"><a href="#cb599-1"></a>ARMA_p_q_simul <span class="ot">&lt;-</span> <span class="cf">function</span>(p, q, n, sigma, phi, theta, X, eps) {</span>
+<span id="cb599-2"><a href="#cb599-2"></a>  </span>
+<span id="cb599-3"><a href="#cb599-3"></a>  X_t <span class="ot">&lt;-</span> X</span>
+<span id="cb599-4"><a href="#cb599-4"></a>  eps <span class="ot">&lt;-</span> <span class="fu">c</span>(eps, <span class="fu">rnorm</span>(n <span class="sc">-</span> q, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma))</span>
+<span id="cb599-5"><a href="#cb599-5"></a>  <span class="cf">for</span> (i <span class="cf">in</span> (<span class="fu">max</span>(p, q) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n) {</span>
+<span id="cb599-6"><a href="#cb599-6"></a>    X_t[i] <span class="ot">&lt;-</span></span>
+<span id="cb599-7"><a href="#cb599-7"></a>      <span class="fu">sum</span>(phi <span class="sc">*</span> X_t[(i <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span>(i<span class="sc">-</span>p)]) <span class="sc">+</span></span>
+<span id="cb599-8"><a href="#cb599-8"></a>      <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma) <span class="sc">-</span></span>
+<span id="cb599-9"><a href="#cb599-9"></a>      <span class="fu">sum</span>(theta <span class="sc">*</span> eps[(i <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">:</span>(i<span class="sc">-</span>q)]) </span>
+<span id="cb599-10"><a href="#cb599-10"></a>  } </span>
+<span id="cb599-11"><a href="#cb599-11"></a>  ts <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n, <span class="st">"X_t"</span> <span class="ot">=</span> X_t) <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span>
+<span id="cb599-12"><a href="#cb599-12"></a>  <span class="fu">return</span>(ts)</span>
+<span id="cb599-13"><a href="#cb599-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="procesos-arma-12" class="slide level2">
+<h2>Procesos ARMA</h2>
+<p><span class="hl-yellow"><strong>💻 Aplica dicha función</strong></span> para simular y visualizar <span class="math inline">\(n = 10000\)</span> trayectorias de un <span class="math inline">\(ARMA(2, 1)\)</span> con <span class="math inline">\(\sigma = 1.5\)</span>, <span class="math inline">\(\phi = \left(-0.2, 0.7\right)\)</span>, <span class="math inline">\(\theta = 0.8\)</span>, <span class="math inline">\(\left(X_1, X_{2}\right) \sim N\left(0, \sigma = 1.5 \right)\)</span> y <span class="math inline">\(\varepsilon_1 = 0\)</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb600"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb600-1"><a href="#cb600-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb600-2"><a href="#cb600-2"></a>ARMA_2_1 <span class="ot">&lt;-</span> </span>
+<span id="cb600-3"><a href="#cb600-3"></a>  <span class="fu">ARMA_p_q_simul</span>(<span class="at">p =</span> <span class="dv">2</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">n =</span> <span class="dv">10000</span>, <span class="at">sigma =</span> <span class="fl">1.5</span>,</span>
+<span id="cb600-4"><a href="#cb600-4"></a>                 <span class="at">phi =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.7</span>), <span class="at">theta =</span> <span class="fl">0.8</span>, </span>
+<span id="cb600-5"><a href="#cb600-5"></a>                 <span class="at">X =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">1.5</span>), <span class="at">eps =</span> <span class="dv">0</span>)</span>
+<span id="cb600-6"><a href="#cb600-6"></a><span class="fu">ggplot</span>(ARMA_2_1) <span class="sc">+</span></span>
+<span id="cb600-7"><a href="#cb600-7"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
+<span id="cb600-8"><a href="#cb600-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-418-1.png" width="960" class="r-stretch"></section>
+<section id="función-arima.sim" class="slide level2">
+<h2>Función arima.sim</h2>
+<p>También podemos hacer uso a partir de ahora de la <span class="hl-yellow"><strong>función <code>arima.sim()</code> para simular procesos ARMA</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb601"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb601-1"><a href="#cb601-1"></a>X_t <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="fu">list</span>(<span class="at">ar =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.7</span>), <span class="at">ma =</span> <span class="fl">0.8</span>), <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb601-2"><a href="#cb601-2"></a>ARMA_2_1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>, <span class="st">"X_t"</span> <span class="ot">=</span> X_t) <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb602"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb602-1"><a href="#cb602-1"></a><span class="fu">ggplot</span>(ARMA_2_1) <span class="sc">+</span></span>
+<span id="cb602-2"><a href="#cb602-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
+<span id="cb602-3"><a href="#cb602-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-420-1.png" width="960" class="r-stretch"></section>
+<section id="arma-en-fable" class="slide level2">
+<h2>ARMA en fable</h2>
+<ol type="1">
+<li>¿Es ya <span class="hl-yellow"><strong>ruido blanco</strong></span>?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb603"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb603-1"><a href="#cb603-1"></a>ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb603-2"><a href="#cb603-2"></a>  <span class="fu">features</span>(X_t, ljung_box)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lb_stat lb_pvalue
+    &lt;dbl&gt;     &lt;dbl&gt;
+1   4261.         0</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>Rechazamos la hipótesis nula: no es ruido blanco</strong></span> –&gt; seguimos</p>
+<div class="fragment">
+<ol start="2" type="1">
+<li>¿Es un <span class="hl-yellow"><strong>proceso estacionario</strong></span>?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb605"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb605-1"><a href="#cb605-1"></a>ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb605-2"><a href="#cb605-2"></a>  <span class="fu">features</span>(X_t, unitroot_kpss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  kpss_stat kpss_pvalue
+      &lt;dbl&gt;       &lt;dbl&gt;
+1     0.197         0.1</code></pre>
+</div>
+</div>
+<p><span class="hl-green"><strong>No rechazamos la hipótesis nula de estacionariedad</strong></span> –&gt; seguimos (no hay que aplicar transformaciones).</p>
+</div>
+</section>
+<section id="arma-en-fable-1" class="slide level2">
+<h2>ARMA en fable</h2>
+<ol start="3" type="1">
+<li>¿Cómo son las <span class="hl-yellow"><strong>autocorrelaciones (ACF)</strong></span>?</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb607"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb607-1"><a href="#cb607-1"></a>ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb607-2"><a href="#cb607-2"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb607-3"><a href="#cb607-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-423-1.png" width="960" class="r-stretch"><p>Las <span class="hl-yellow"><strong>autocorrelaciones decrecen exponencialmente debido a la parte autorregresiva</strong></span></p>
+</section>
+<section id="arma-en-fable-2" class="slide level2">
+<h2>ARMA en fable</h2>
+<ol start="3" type="1">
+<li>¿Cómo son las <span class="hl-yellow"><strong>autocorrelaciones parciales (PACF)</strong></span>?</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb608"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb608-1"><a href="#cb608-1"></a>ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb608-2"><a href="#cb608-2"></a>  <span class="fu">PACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb608-3"><a href="#cb608-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-424-1.png" width="960" class="r-stretch"><p>Las <span class="hl-yellow"><strong>autocorrelaciones parciales también decrecen exponencialmente debido a la parte de medias móviles</strong></span></p>
+<div class="fragment">
+<p><span class="hl-red"><strong>¡No vamos a poder identificar (p, q) con ellas salvo que tratemos primero una de las partes!</strong></span></p>
+</div>
+</section>
+<section id="arma-en-fable-3" class="slide level2">
+<h2>ARMA en fable</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb609"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb609-1"><a href="#cb609-1"></a>ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb609-2"><a href="#cb609-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="at">plot_type =</span> <span class="st">"partial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-425-1.png" width="960" class="r-stretch"><p>Claramente se salen las primeras de cada gráfica así que el primer paso será <span class="hl-yellow"><strong>modelizar un ARMA(1, 1)</strong></span></p>
+</section>
+<section id="arma-en-fable-4" class="slide level2">
+<h2>ARMA en fable</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb610"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb610-1"><a href="#cb610-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb610-2"><a href="#cb610-2"></a>  ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb610-3"><a href="#cb610-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA_1_1"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb610-4"><a href="#cb610-4"></a>estimaciones <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb611"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb611-1"><a href="#cb611-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb611-2"><a href="#cb611-2"></a>  <span class="fu">ACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb611-3"><a href="#cb611-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-427-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb612"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb612-1"><a href="#cb612-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb612-2"><a href="#cb612-2"></a>  <span class="fu">PACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb612-3"><a href="#cb612-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-428-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<p>Vemos que <span class="hl-red"><strong>a pesar de descender en magnitud siguen sin decaer lo suficiente</strong></span> -&gt; aumentamos el orden (del MA por ejemplo)</p>
+</section>
+<section id="arma-en-fable-5" class="slide level2">
+<h2>ARMA en fable</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb613"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb613-1"><a href="#cb613-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb613-2"><a href="#cb613-2"></a>  ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb613-3"><a href="#cb613-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA_1_2"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>)))</span>
+<span id="cb613-4"><a href="#cb613-4"></a>estimaciones <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb614"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb614-1"><a href="#cb614-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb614-2"><a href="#cb614-2"></a>  <span class="fu">ACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb614-3"><a href="#cb614-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-430-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb615"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb615-1"><a href="#cb615-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb615-2"><a href="#cb615-2"></a>  <span class="fu">PACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb615-3"><a href="#cb615-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-431-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<p>No parece el adecuado –&gt; ¿y ARMA(2, 1)?</p>
+</section>
+<section id="arma-en-fable-6" class="slide level2">
+<h2>ARMA en fable</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb616"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb616-1"><a href="#cb616-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb616-2"><a href="#cb616-2"></a>  ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb616-3"><a href="#cb616-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA_2_1"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb616-4"><a href="#cb616-4"></a>estimaciones <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb617"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb617-1"><a href="#cb617-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb617-2"><a href="#cb617-2"></a>  <span class="fu">ACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb617-3"><a href="#cb617-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-433-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb618"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb618-1"><a href="#cb618-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb618-2"><a href="#cb618-2"></a>  <span class="fu">PACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb618-3"><a href="#cb618-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-434-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<p>¡Por fin!</p>
+</section>
+<section id="arma-en-fable-7" class="slide level2">
+<h2>ARMA en fable</h2>
+<p>Efectivamente los <span class="hl-yellow"><strong>residuos son ruido blanco</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb619"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb619-1"><a href="#cb619-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb619-2"><a href="#cb619-2"></a>  <span class="fu">features</span>(.resid, ljung_box)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model   lb_stat lb_pvalue
+  &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+1 ARMA_2_1  0.0401     0.841</code></pre>
+</div>
+</div>
+</section>
+<section id="ajuste-automático" class="slide level2">
+<h2>Ajuste automático</h2>
+<p>Dado que este proceso puede ser farragoso podemos con <code>ARIMA()</code> realizar un <span class="hl-yellow"><strong>ajuste automático</strong></span> dejando libre los órdenes e indicándole el <span class="math inline">\(p\)</span> inicial con el que buscar, el <span class="math inline">\(q\)</span> final y la <span class="hl-yellow"><strong>métrica para elegir el mejor modelo (BIC penaliza modelos complejos y es consistente)</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb621"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb621-1"><a href="#cb621-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb621-2"><a href="#cb621-2"></a>  ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb621-3"><a href="#cb621-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p_init =</span> <span class="dv">1</span>, <span class="at">q_init =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>))</span>
+<span id="cb621-4"><a href="#cb621-4"></a><span class="fu">report</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: X_t 
+Model: ARIMA(2,0,1) 
+
+Coefficients:
+          ar1     ar2     ma1
+      -0.1942  0.7077  0.7952
+s.e.   0.0093  0.0073  0.0102
+
+sigma^2 estimated as 2.289:  log likelihood=-18329.08
+AIC=36666.17   AICc=36666.17   BIC=36695.01</code></pre>
+</div>
+</div>
+</section>
+<section id="ajuste-automático-1" class="slide level2">
+<h2>Ajuste automático</h2>
+
+<img data-src="https://otexts.com/fpp3/fpp_files/figure-html/ARMAgridsearch-1.png" class="r-stretch"><p>Por defecto este <span class="hl-yellow"><strong>ajuste automático se realiza haciendo uso del algoritmo Hyndman-Khandakar</strong></span> que lo realiza stepwise y greedy: empezando por la esquina superior de modelos, selecciona el mejor según la métrica dada; tras ello <strong>busca en su entorno</strong> (moviendo y restado 1 p y q); si encuentro alguno mejor, cambia automáticamente.</p>
+</section>
+<section id="ajuste-automático-2" class="slide level2">
+<h2>Ajuste automático</h2>
+
+<img data-src="https://otexts.com/fpp3/fpp_files/figure-html/ARMAgridsearch-1.png" class="r-stretch"><ul>
+<li><p>si <code>ARIMA(..., greedy = FALSE)</code>: evalua todo el entorno, no se cambia al primero que encuentre mejor</p></li>
+<li><p>si <code>ARIMA(..., stepwise = FALSE)</code>: evalua un grid más amplio de modeos</p></li>
+</ul>
+</section>
+<section id="ajuste-automático-3" class="slide level2">
+<h2>Ajuste automático</h2>
+<p>También puedes <span class="hl-yellow"><strong>indicarle un vector concreto de <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> a probar</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb623"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb623-1"><a href="#cb623-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb623-2"><a href="#cb623-2"></a>  ARMA_2_1 <span class="sc">|&gt;</span> </span>
+<span id="cb623-3"><a href="#cb623-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">q =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">ic =</span> <span class="st">"bic"</span>))</span>
+<span id="cb623-4"><a href="#cb623-4"></a><span class="fu">report</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: X_t 
+Model: ARIMA(2,0,1) 
+
+Coefficients:
+          ar1     ar2     ma1
+      -0.1942  0.7077  0.7952
+s.e.   0.0093  0.0073  0.0102
+
+sigma^2 estimated as 2.289:  log likelihood=-18329.08
+AIC=36666.17   AICc=36666.17   BIC=36695.01</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-cruzada-10" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Como suele ser habitual en el campo de la <span class="hl-yellow"><strong>calibración de modelos</strong></span>, una opción muy habitual es la de la <span class="hl-yellow"><strong>validación</strong></span>:</p>
+<ol type="1">
+<li><p>Construir distintos modelos con la información de train</p></li>
+<li><p>Usar los <span class="hl-yellow"><strong>conjuntos de la validación para evaluar los modelos (o qué configuración de hiperparámetros)</strong></span> y decidir cuál de ellos es mejor</p></li>
+<li><p>Una vez elegido el modelo, volver a lanzarlo y evaluarlo en test</p></li>
+</ol>
+</section>
+<section id="validación-cruzada-11" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Una de las formas de validación más habitual es la <span class="hl-yellow"><strong>validación cruzada</strong></span>: las observaciones del conjunto de train van <span class="hl-yellow"><strong>rotando su rol</strong></span>.</p>
+<div class="fragment">
+<p>Por ejemplo, si tenemos 100 observaciones en train, podemos hacer 100 iteraciones de validación, de manera que en cada una entrenamos el modelo con 99 de ellas y otra queda reservada solo para evaluar los modelos.</p>
+<p><img data-src="https://interactivechaos.com/sites/default/files/styles/max_800_px/public/2023-03/tutorial_ml_0237.png"></p>
+</div>
+</section>
+<section id="validación-cruzada-12" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>En el <strong>caso de las series temporales</strong> una estrategia habitual suele ser la siguiente:</p>
+<ol type="1">
+<li><p>Descartar las primeras <span class="math inline">\(n\)</span> observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train</p></li>
+<li><p><strong>Iteración i</strong>: entrenamos con las primeras <span class="math inline">\(n+i\)</span> observaciones, evaluamos con una única observación <span class="math inline">\(n+i+1\)</span>.</p></li>
+<li><p>Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.</p></li>
+</ol>
+
+<img data-src="https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png" class="r-stretch"></section>
+<section id="validación-cruzada-13" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Fíjate que lo anterior está basado en una <span class="hl-yellow"><strong>one-step forecast</strong></span> (predicción a horizonte <span class="math inline">\(h = 1\)</span>), pero quizás nuestro interés esté en ver cómo funciona nuestro método a <strong>horizontes de predicción mayores</strong></p>
+<div class="fragment">
+<ol type="1">
+<li><p>Descartar las primeras <span class="math inline">\(n\)</span> observaciones para validación: habrá un conjunto mínimo que siempre formará parte de train</p></li>
+<li><p><strong>Iteración i</strong>: entrenamos con las primeras <span class="math inline">\(n+i\)</span> observaciones, evaluamos con una única observación <span class="math inline">\(n+i+h\)</span>.</p></li>
+<li><p>Realizamos el promedio de las métricas de evaluación obtenidas de los conjuntos de validación.</p></li>
+</ol>
+</div>
+</section>
+<section id="validación-cruzada-14" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>El ejemplo inferior es para <span class="math inline">\(h = 4\)</span>.</p>
+
+<img data-src="https://otexts.com/fpp3/fpp_files/figure-html/cv4-1.png" class="r-stretch"></section>
+<section id="validación-cruzada-15" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Vamos a generar un ARMA(2, 3) con la <span class="hl-yellow"><strong>función <code>arima.sim()</code> para simular procesos ARMA</strong></span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb625"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb625-1"><a href="#cb625-1"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb625-2"><a href="#cb625-2"></a>X_t <span class="ot">&lt;-</span> <span class="fu">arima.sim</span>(<span class="at">n =</span> <span class="dv">2500</span>, <span class="fu">list</span>(<span class="at">ar =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.4</span>), <span class="at">ma =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.7</span>)), <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb625-3"><a href="#cb625-3"></a>ARMA_2_3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2500</span>, <span class="st">"X_t"</span> <span class="ot">=</span> X_t) <span class="sc">|&gt;</span> <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span>
+<span id="cb625-4"><a href="#cb625-4"></a>ARMA_2_3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 2,500 x 2 [1]
+       t     X_t
+   &lt;int&gt;   &lt;dbl&gt;
+ 1     1 -10.8  
+ 2     2   9.81 
+ 3     3  -5.61 
+ 4     4  -2.16 
+ 5     5  -2.20 
+ 6     6   6.12 
+ 7     7  -9.27 
+ 8     8   1.50 
+ 9     9  -1.96 
+10    10  -0.712
+# ℹ 2,490 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-cruzada-16" class="slide level2">
+<h2>Validación cruzada</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb627"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb627-1"><a href="#cb627-1"></a><span class="fu">ggplot</span>(ARMA_2_3) <span class="sc">+</span></span>
+<span id="cb627-2"><a href="#cb627-2"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> t, <span class="at">y =</span> X_t)) <span class="sc">+</span></span>
+<span id="cb627-3"><a href="#cb627-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-439-1.png" width="960" class="r-stretch"></section>
+<section id="validación-cruzada-17" class="slide level2">
+<h2>Validación cruzada</h2>
+<ol type="1">
+<li>¿Es ya <span class="hl-yellow"><strong>ruido blanco</strong></span>?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb628"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb628-1"><a href="#cb628-1"></a>ARMA_2_3 <span class="sc">|&gt;</span> </span>
+<span id="cb628-2"><a href="#cb628-2"></a>  <span class="fu">features</span>(X_t, ljung_box)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lb_stat lb_pvalue
+    &lt;dbl&gt;     &lt;dbl&gt;
+1    46.8  8.03e-12</code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>Rechazamos la hipótesis nula: no es ruido blanco</strong></span> –&gt; seguimos</p>
+<div class="fragment">
+<ol start="2" type="1">
+<li>¿Es un <span class="hl-yellow"><strong>proceso estacionario</strong></span>?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb630"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb630-1"><a href="#cb630-1"></a>ARMA_2_3 <span class="sc">|&gt;</span> </span>
+<span id="cb630-2"><a href="#cb630-2"></a>  <span class="fu">features</span>(X_t, unitroot_kpss)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  kpss_stat kpss_pvalue
+      &lt;dbl&gt;       &lt;dbl&gt;
+1    0.0257         0.1</code></pre>
+</div>
+</div>
+<p><span class="hl-green"><strong>No rechazamos la hipótesis nula de estacionariedad</strong></span> –&gt; seguimos (no hay que aplicar transformaciones).</p>
+</div>
+</section>
+<section id="validación-cruzada-18" class="slide level2">
+<h2>Validación cruzada</h2>
+<ol start="3" type="1">
+<li>¿Cómo son las <span class="hl-yellow"><strong>autocorrelaciones (ACF)</strong></span>?</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb632"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb632-1"><a href="#cb632-1"></a>ARMA_2_3 <span class="sc">|&gt;</span> </span>
+<span id="cb632-2"><a href="#cb632-2"></a>  <span class="fu">ACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb632-3"><a href="#cb632-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-442-1.png" width="960" class="r-stretch"><p>Las <span class="hl-yellow"><strong>autocorrelaciones decrecen exponencialmente</strong></span> -&gt; existe parte autorregresiva</p>
+</section>
+<section id="validación-cruzada-19" class="slide level2">
+<h2>Validación cruzada</h2>
+<ol start="3" type="1">
+<li>¿Cómo son las <span class="hl-yellow"><strong>autocorrelaciones parciales (PACF)</strong></span>?</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb633"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb633-1"><a href="#cb633-1"></a>ARMA_2_3 <span class="sc">|&gt;</span> </span>
+<span id="cb633-2"><a href="#cb633-2"></a>  <span class="fu">PACF</span>(X_t, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb633-3"><a href="#cb633-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-443-1.png" width="960" class="r-stretch"><p>Las <span class="hl-yellow"><strong>autocorrelaciones parciales también decrecen exponencialmente</strong></span> -&gt; existe parte de medias móviles</p>
+</section>
+<section id="validación-cruzada-20" class="slide level2">
+<h2>Validación cruzada</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb634"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb634-1"><a href="#cb634-1"></a>ARMA_2_3 <span class="sc">|&gt;</span> </span>
+<span id="cb634-2"><a href="#cb634-2"></a>  <span class="fu">gg_tsdisplay</span>(<span class="at">plot_type =</span> <span class="st">"partial"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-444-1.png" width="960" class="r-stretch"><p>Claramente se salen las primeras de cada gráfica así que el primer paso será <span class="hl-yellow"><strong>modelizar un ARMA(1, 1)</strong></span></p>
+</section>
+<section id="validación-cruzada-21" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Vamos a <span class="hl-yellow"><strong>dividir primero nuestros datos en train (90%) vs test (10%)</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb635"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb635-1"><a href="#cb635-1"></a>train <span class="ot">&lt;-</span></span>
+<span id="cb635-2"><a href="#cb635-2"></a>  ARMA_2_3 <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">450</span>)</span>
+<span id="cb635-3"><a href="#cb635-3"></a></span>
+<span id="cb635-4"><a href="#cb635-4"></a>test <span class="ot">&lt;-</span></span>
+<span id="cb635-5"><a href="#cb635-5"></a>  ARMA_2_3 <span class="sc">|&gt;</span> <span class="fu">slice</span>(<span class="dv">451</span><span class="sc">:</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="validación-cruzada-22" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Tras ello vamos a <span class="hl-yellow"><strong>generar los subconjuntos de validación usando trian</strong></span> con <code>stretch_tsibble()</code>, indicándole el número de valores iniciales que siempre estarán en train, el tamaño que queremos incrementar los sucesivos conjuntos y un identificador de cada slot</p>
+<p>Por ejemplo, vamos a <strong>reservar los 350 primeros valores</strong> y vamos a avanzar a horizonte 1 (es decir, 100 slots de validación)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb636"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb636-1"><a href="#cb636-1"></a>data_cv <span class="ot">&lt;-</span></span>
+<span id="cb636-2"><a href="#cb636-2"></a>  train <span class="sc">|&gt;</span> </span>
+<span id="cb636-3"><a href="#cb636-3"></a>  <span class="fu">stretch_tsibble</span>(<span class="at">.init =</span> <span class="dv">350</span>, <span class="at">.step =</span> <span class="dv">1</span>, <span class="at">.id =</span> <span class="st">"cv"</span>)</span>
+<span id="cb636-4"><a href="#cb636-4"></a>data_cv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tsibble: 40,400 x 3 [1]
+# Key:       cv [101]
+       t     X_t    cv
+   &lt;int&gt;   &lt;dbl&gt; &lt;int&gt;
+ 1     1 -10.8       1
+ 2     2   9.81      1
+ 3     3  -5.61      1
+ 4     4  -2.16      1
+ 5     5  -2.20      1
+ 6     6   6.12      1
+ 7     7  -9.27      1
+ 8     8   1.50      1
+ 9     9  -1.96      1
+10    10  -0.712     1
+# ℹ 40,390 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-cruzada-23" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Tras generar los slots de validación <span class="hl-yellow"><strong>entrenamos los modelos con dichos datos</strong></span>. Vamos a probar los siguientes modelos:</p>
+<ul>
+<li><span class="math inline">\(ARMA(1, 1)\)</span></li>
+<li><span class="math inline">\(ARMA(2, 2)\)</span></li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático stepwise greedy</li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático stepwise no greedy</li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático no stepwise</li>
+</ul>
+</section>
+<section id="validación-cruzada-24" class="slide level2">
+<h2>Validación cruzada</h2>
+<ul>
+<li><span class="math inline">\(ARMA(1, 1)\)</span></li>
+<li><span class="math inline">\(ARMA(2, 2)\)</span></li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático stepwise greedy</li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático stepwise no greedy</li>
+<li><span class="math inline">\(ARMA(p, q)\)</span> automático no stepwise</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb638"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb638-1"><a href="#cb638-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb638-2"><a href="#cb638-2"></a>  data_cv <span class="sc">|&gt;</span></span>
+<span id="cb638-3"><a href="#cb638-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA_11"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>),</span>
+<span id="cb638-4"><a href="#cb638-4"></a>        <span class="st">"ARMA_22"</span> <span class="ot">=</span> <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p =</span> <span class="dv">2</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q =</span> <span class="dv">2</span>), <span class="at">ic =</span> <span class="st">"bic"</span>),</span>
+<span id="cb638-5"><a href="#cb638-5"></a>        <span class="st">"ARMA_stepwise_greedy"</span> <span class="ot">=</span> </span>
+<span id="cb638-6"><a href="#cb638-6"></a>          <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p_init =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q_init =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>),</span>
+<span id="cb638-7"><a href="#cb638-7"></a>        <span class="st">"ARMA_stepwise"</span> <span class="ot">=</span> </span>
+<span id="cb638-8"><a href="#cb638-8"></a>          <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p_init =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q_init =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>, <span class="at">greedy =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb638-9"><a href="#cb638-9"></a>        <span class="st">"ARMA"</span> <span class="ot">=</span> </span>
+<span id="cb638-10"><a href="#cb638-10"></a>          <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p_init =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q_init =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>, <span class="at">greedy =</span> <span class="cn">FALSE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb638-11"><a href="#cb638-11"></a>estimaciones <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="validación-cruzada-25" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Tendremos las <span class="hl-yellow"><strong>métricas para cada modelo y cada slot de cv</strong></span> que podemos promediar</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb639"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb639-1"><a href="#cb639-1"></a>resumen_eval_cv <span class="ot">&lt;-</span></span>
+<span id="cb639-2"><a href="#cb639-2"></a>  fit <span class="sc">|&gt;</span> </span>
+<span id="cb639-3"><a href="#cb639-3"></a>  <span class="fu">accuracy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb639-4"><a href="#cb639-4"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">c</span>(ME, RMSE, MAE, MPE, MAPE), mean), <span class="at">.by =</span> .model)</span>
+<span id="cb639-5"><a href="#cb639-5"></a>resumen_eval_cv </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  .model                   ME  RMSE   MAE   MPE  MAPE
+  &lt;chr&gt;                 &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 ARMA_11              0.0706  7.71  6.10  97.2  142.
+2 ARMA_22              0.0366  6.77  5.41 135.   244.
+3 ARMA_stepwise_greedy 0.0363  6.77  5.41 134.   243.
+4 ARMA_stepwise        0.0363  6.77  5.41 134.   243.
+5 ARMA                 0.0363  6.77  5.41 134.   243.</code></pre>
+</div>
+</div>
+</section>
+<section id="validación-cruzada-26" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>¿Cómo <span class="hl-yellow"><strong>visualizar las métricas de validación cruzada</strong></span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb641"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb641-1"><a href="#cb641-1"></a>fit <span class="sc">|&gt;</span></span>
+<span id="cb641-2"><a href="#cb641-2"></a>  <span class="fu">accuracy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb641-3"><a href="#cb641-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .model, <span class="at">y =</span> RMSE, <span class="at">fill =</span> .model, <span class="at">color =</span> .model)) <span class="sc">+</span></span>
+<span id="cb641-4"><a href="#cb641-4"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb641-5"><a href="#cb641-5"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.25</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb641-6"><a href="#cb641-6"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb641-7"><a href="#cb641-7"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb641-8"><a href="#cb641-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-449-1.png" width="960" class="r-stretch"><p>Si te fijas los <span class="hl-green"><strong>mejores son el ARMA (completo) y el ARMA stepwise (pero no greedy)</strong></span>: aunque tardan más los resultados son mejores. Fíjate que en el caso de los greedy tenemos un gap en la calidad según hacía la dirección a la que haya decidido orientarse: <span class="hl-red"><strong>a veces llega al mejor pero no siempre</strong></span></p>
+</section>
+<section id="validación-cruzada-27" class="slide level2">
+<h2>Validación cruzada</h2>
+<p>Dado que los <span class="hl-green"><strong>mejores son el ARMA (completo) y el ARMA stepwise (pero no greedy)</strong></span> de manera similar, optaremos por este último ya que es más rápido.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb642"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb642-1"><a href="#cb642-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb642-2"><a href="#cb642-2"></a>  train <span class="sc">|&gt;</span></span>
+<span id="cb642-3"><a href="#cb642-3"></a>  <span class="fu">model</span>(<span class="st">"ARMA_stepwise"</span> <span class="ot">=</span> </span>
+<span id="cb642-4"><a href="#cb642-4"></a>          <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="fu">pdq</span>(<span class="at">p_init =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q_init =</span> <span class="dv">1</span>), <span class="at">ic =</span> <span class="st">"bic"</span>,</span>
+<span id="cb642-5"><a href="#cb642-5"></a>                <span class="at">greedy =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb642-6"><a href="#cb642-6"></a>estimaciones <span class="ot">&lt;-</span> fit <span class="sc">|&gt;</span> <span class="fu">augment</span>()</span>
+<span id="cb642-7"><a href="#cb642-7"></a><span class="fu">report</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: X_t 
+Model: ARIMA(1,0,2) 
+
+Coefficients:
+         ar1      ma1     ma2
+      0.5579  -0.8022  0.5873
+s.e.  0.0647   0.0561  0.0383
+
+sigma^2 estimated as 44.85:  log likelihood=-1493.19
+AIC=2994.39   AICc=2994.48   BIC=3010.83</code></pre>
+</div>
+</div>
+<p>Nada mal: nuestros datos generados bajo un ARMA(2, 3) han sido <strong>modelizados con un ARMA(2, 3)</strong>.</p>
+</section>
+<section id="raíces" class="slide level2">
+<h2>Raíces</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb644"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb644-1"><a href="#cb644-1"></a><span class="fu">gg_arma</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-451-1.png" width="960" class="r-stretch"><p>Además las raíces de los polinomios asociados caen fueran del círculo unidad</p>
+</section>
+<section id="diagnóstico-de-residuos-7" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb645"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb645-1"><a href="#cb645-1"></a>fit <span class="sc">|&gt;</span>  <span class="fu">gg_tsresiduals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-452-1.png" width="960" class="r-stretch"></section>
+<section id="diagnóstico-de-residuos-8" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb646"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb646-1"><a href="#cb646-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb646-2"><a href="#cb646-2"></a>  <span class="fu">ACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb646-3"><a href="#cb646-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-453-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb647"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb647-1"><a href="#cb647-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb647-2"><a href="#cb647-2"></a>  <span class="fu">PACF</span>(.resid, <span class="at">lag_max =</span> <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb647-3"><a href="#cb647-3"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-454-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<p><span class="hl-green"><strong>Todas las autocorrelaciones dentro de la banda</strong></span></p>
+</section>
+<section id="diagnóstico-de-residuos-9" class="slide level2">
+<h2>Diagnóstico de residuos</h2>
+<p>Efectivamente los <span class="hl-yellow"><strong>residuos son ruido blanco</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb648"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb648-1"><a href="#cb648-1"></a>estimaciones <span class="sc">|&gt;</span> </span>
+<span id="cb648-2"><a href="#cb648-2"></a>  <span class="fu">features</span>(.resid, ljung_box)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .model         lb_stat lb_pvalue
+  &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+1 ARMA_stepwise 0.000240     0.988</code></pre>
+</div>
+</div>
 </section></section>
 <section>
 <section id="clase-21" class="title-slide slide level1 center">
