@@ -8,7 +8,7 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.294">
+  <meta name="generator" content="quarto-1.3.450">
 
   <meta name="author" content="Grado en Estadística Aplicada • Javier Álvarez Liébana">
   <title>Series temporales</title>
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -414,7 +414,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta). <span class="hl-green"><strong>Tutorías (curso 2024-2025)</strong></span>: …</p>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><img data-src="img/me.jpeg" class="quarto-discovered-preview-image"></p>
+<p><img data-src="img/me.jpeg"></p>
 </div><div class="column" style="width:70%;">
 <div>
 <ul>
@@ -1100,7 +1100,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 <p>Las fechas <span class="hl-red"><strong>NO pueden ser texto</strong></span>: debemos convertir la cadena de texto a fecha.</p>
@@ -1128,7 +1128,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># ¡no es una fecha, es un texto!</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>fecha_char <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in fecha_char + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in fecha_char + 1: non-numeric argument to binary operator</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">class</span>(fecha_char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1191,7 +1191,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-12-03"</code></pre>
+<pre><code>[1] "2024-12-09"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1201,7 +1201,7 @@ Grado en Estadística Aplicada • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-12-03 11:52:53 CET"</code></pre>
+<pre><code>[1] "2024-12-09 19:22:45 CET"</code></pre>
 </div>
 </div>
 </div>
@@ -1466,7 +1466,7 @@ pesos       63   70   85   95</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>matriz <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in matriz + 1: argumento no-numérico para operador binario</code></pre>
+<pre><code>Error in matriz + 1: non-numeric argument to binary operator</code></pre>
 </div>
 </div>
 </div>
@@ -1513,7 +1513,7 @@ pesos       63   70   85   95</code></pre>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">data.frame</span>(<span class="st">"estatura"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">1.7</span>, <span class="fl">1.8</span>, <span class="fl">1.6</span>), <span class="st">"peso"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">75</span>, <span class="dv">70</span>),</span>
 <span id="cb84-2"><a href="#cb84-2"></a>           <span class="st">"IMC"</span> <span class="ot">=</span> peso <span class="sc">/</span> (estatura<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : objeto 'peso' no encontrado</code></pre>
+<pre><code>Error in data.frame(estatura = c(1.7, 1.8, 1.6), peso = c(80, 75, 70), : object 'peso' not found</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -2672,13 +2672,13 @@ pesos       63   70   85   95</code></pre>
 <span id="cb147-4"><a href="#cb147-4"></a>               <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) { y[i] <span class="ot">&lt;-</span> x[i]<span class="sc">^</span><span class="dv">2</span> },</span>
 <span id="cb147-5"><a href="#cb147-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Unit: nanoseconds
-                                    expr     min      lq      mean  median
-                                y &lt;- x^2     800    1000    1690.2    1500
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1153000 1205250 1353097.4 1245400
-      uq     max neval cld
-    2100    8300   500  a 
- 1332600 9180800   500   b</code></pre>
+<pre><code>Unit: microseconds
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.927    2.041144    1.968
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1358.371 1373.172 1447.217426 1383.176
+       uq      max neval
+    2.091    5.125   500
+ 1401.113 8067.529   500</code></pre>
 </div>
 </div>
 </section>
@@ -4749,18 +4749,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <span id="cb308-5"><a href="#cb308-5"></a>datos_tidy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,000 × 3
-       t     X_t sd    
-   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt; 
- 1     1 -0.167  sd_0.5
- 2     2 -1.13   sd_0.5
- 3     3  0.351  sd_0.5
- 4     4 -0.635  sd_0.5
- 5     5  0.119  sd_0.5
- 6     6 -0.344  sd_0.5
- 7     7  0.372  sd_0.5
- 8     8  0.0487 sd_0.5
- 9     9  0.943  sd_0.5
-10    10 -0.0687 sd_0.5
+       t    X_t sd    
+   &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; 
+ 1     1 -0.380 sd_0.5
+ 2     2  0.673 sd_0.5
+ 3     3 -1.03  sd_0.5
+ 4     4  0.748 sd_0.5
+ 5     5 -0.967 sd_0.5
+ 6     6  0.379 sd_0.5
+ 7     7  0.321 sd_0.5
+ 8     8 -0.142 sd_0.5
+ 9     9  0.214 sd_0.5
+10    10 -0.325 sd_0.5
 # ℹ 1,990 more rows</code></pre>
 </div>
 </div>
@@ -5144,16 +5144,16 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A tibble: 200 × 3
        t sd         X_t
    &lt;int&gt; &lt;glue&gt;   &lt;dbl&gt;
- 1     1 sd_0.5 -0.464 
- 2     2 sd_0.5 -0.388 
- 3     3 sd_0.5 -0.555 
- 4     4 sd_0.5 -0.521 
- 5     5 sd_0.5  0.0885
- 6     6 sd_0.5 -0.315 
- 7     7 sd_0.5  0.143 
- 8     8 sd_0.5 -0.631 
- 9     9 sd_0.5 -0.348 
-10    10 sd_0.5  1.07  
+ 1     1 sd_0.5  0.103 
+ 2     2 sd_0.5 -0.159 
+ 3     3 sd_0.5 -0.813 
+ 4     4 sd_0.5 -0.243 
+ 5     5 sd_0.5  0.953 
+ 6     6 sd_0.5 -0.0278
+ 7     7 sd_0.5 -1.17  
+ 8     8 sd_0.5 -0.0846
+ 9     9 sd_0.5  0.192 
+10    10 sd_0.5  0.0498
 # ℹ 190 more rows</code></pre>
 </div>
 </div>
@@ -6429,18 +6429,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 864 x 6 [1M]
 # Key:       .model [6]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 854 more rows</code></pre>
 </div>
 </div>
@@ -6504,18 +6504,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        value = trend + seasonal + random
-   .model     index value trend seasonal random season_adjust
-   &lt;chr&gt;      &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
- 1 cts    1949 ene.   112   NA    -24.7   NA            137. 
- 2 cts    1949 feb.   118   NA    -36.2   NA            154. 
- 3 cts    1949 mar.   132   NA     -2.24  NA            134. 
- 4 cts    1949 abr.   129   NA     -8.04  NA            137. 
- 5 cts    1949 may.   121   NA     -4.51  NA            126. 
- 6 cts    1949 jun.   135   NA     35.4   NA             99.6
- 7 cts    1949 jul.   148  127.    63.8  -42.6           84.2
- 8 cts    1949 ago.   148  127.    62.8  -42.1           85.2
- 9 cts    1949 sep.   136  128.    16.5   -8.48         119. 
-10 cts    1949 oct.   119  129.   -20.6   11.1          140. 
+   .model    index value trend seasonal random season_adjust
+   &lt;chr&gt;     &lt;mth&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;         &lt;dbl&gt;
+ 1 cts    1949 Jan   112   NA    -24.7   NA            137. 
+ 2 cts    1949 Feb   118   NA    -36.2   NA            154. 
+ 3 cts    1949 Mar   132   NA     -2.24  NA            134. 
+ 4 cts    1949 Apr   129   NA     -8.04  NA            137. 
+ 5 cts    1949 May   121   NA     -4.51  NA            126. 
+ 6 cts    1949 Jun   135   NA     35.4   NA             99.6
+ 7 cts    1949 Jul   148  127.    63.8  -42.6           84.2
+ 8 cts    1949 Aug   148  127.    62.8  -42.1           85.2
+ 9 cts    1949 Sep   136  128.    16.5   -8.48         119. 
+10 cts    1949 Oct   119  129.   -20.6   11.1          140. 
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6583,18 +6583,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <pre><code># A dable: 144 x 7 [1M]
 # Key:     .model [1]
 # :        log(value) = trend + season_12 + remainder
-   .model     index `log(value)` trend season_12 remainder season_adjust
-   &lt;chr&gt;      &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
- 1 stl    1949 ene.         4.72  4.87   -0.105   -0.0448           4.82
- 2 stl    1949 feb.         4.77  4.87   -0.142    0.0408           4.91
- 3 stl    1949 mar.         4.88  4.87   -0.0118   0.0213           4.89
- 4 stl    1949 abr.         4.86  4.87   -0.0337   0.0256           4.89
- 5 stl    1949 may.         4.80  4.84   -0.0261  -0.0154           4.82
- 6 stl    1949 jun.         4.91  4.81    0.106   -0.00733          4.80
- 7 stl    1949 jul.         5.00  4.79    0.220   -0.0149           4.78
- 8 stl    1949 ago.         5.00  4.80    0.221   -0.0198           4.78
- 9 stl    1949 sep.         4.91  4.81    0.0864   0.0188           4.83
-10 stl    1949 oct.         4.78  4.82   -0.0417  -0.00306          4.82
+   .model    index `log(value)` trend season_12 remainder season_adjust
+   &lt;chr&gt;     &lt;mth&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 stl    1949 Jan         4.72  4.87   -0.105   -0.0448           4.82
+ 2 stl    1949 Feb         4.77  4.87   -0.142    0.0408           4.91
+ 3 stl    1949 Mar         4.88  4.87   -0.0118   0.0213           4.89
+ 4 stl    1949 Apr         4.86  4.87   -0.0337   0.0256           4.89
+ 5 stl    1949 May         4.80  4.84   -0.0261  -0.0154           4.82
+ 6 stl    1949 Jun         4.91  4.81    0.106   -0.00733          4.80
+ 7 stl    1949 Jul         5.00  4.79    0.220   -0.0149           4.78
+ 8 stl    1949 Aug         5.00  4.80    0.221   -0.0198           4.78
+ 9 stl    1949 Sep         4.91  4.81    0.0864   0.0188           4.83
+10 stl    1949 Oct         4.78  4.82   -0.0417  -0.00306          4.82
 # ℹ 134 more rows</code></pre>
 </div>
 </div>
@@ -6708,18 +6708,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 288 x 6 [1M]
 # Key:       .model [2]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 278 more rows</code></pre>
 </div>
 </div>
@@ -6776,18 +6776,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6899,18 +6899,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 432 x 6 [1M]
 # Key:       .model [3]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 422 more rows</code></pre>
 </div>
 </div>
@@ -6957,18 +6957,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 576 x 6 [1M]
 # Key:       .model [4]
-   .model             index value .fitted    .resid    .innov
-   &lt;chr&gt;              &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 alisado_simple 1949 ene.   112    112.  -0.0948   -0.0948 
- 2 alisado_simple 1949 feb.   118    112.   6.00      6.00   
- 3 alisado_simple 1949 mar.   132    118.  14.0      14.0    
- 4 alisado_simple 1949 abr.   129    132.  -3.00     -3.00   
- 5 alisado_simple 1949 may.   121    129.  -8.00     -8.00   
- 6 alisado_simple 1949 jun.   135    121.  14.0      14.0    
- 7 alisado_simple 1949 jul.   148    135.  13.0      13.0    
- 8 alisado_simple 1949 ago.   148    148.   0.00130   0.00130
- 9 alisado_simple 1949 sep.   136    148. -12.0     -12.0    
-10 alisado_simple 1949 oct.   119    136. -17.0     -17.0    
+   .model            index value .fitted    .resid    .innov
+   &lt;chr&gt;             &lt;mth&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 alisado_simple 1949 Jan   112    112.  -0.0948   -0.0948 
+ 2 alisado_simple 1949 Feb   118    112.   6.00      6.00   
+ 3 alisado_simple 1949 Mar   132    118.  14.0      14.0    
+ 4 alisado_simple 1949 Apr   129    132.  -3.00     -3.00   
+ 5 alisado_simple 1949 May   121    129.  -8.00     -8.00   
+ 6 alisado_simple 1949 Jun   135    121.  14.0      14.0    
+ 7 alisado_simple 1949 Jul   148    135.  13.0      13.0    
+ 8 alisado_simple 1949 Aug   148    148.   0.00130   0.00130
+ 9 alisado_simple 1949 Sep   136    148. -12.0     -12.0    
+10 alisado_simple 1949 Oct   119    136. -17.0     -17.0    
 # ℹ 566 more rows</code></pre>
 </div>
 </div>
@@ -7233,18 +7233,18 @@ No todavía, vamos por el ciclo 4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tsibble: 5,610 x 3 [1M]
 # Key:       cv [85]
-       index value    cv
-       &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
- 1 1949 ene.   112     1
- 2 1949 feb.   118     1
- 3 1949 mar.   132     1
- 4 1949 abr.   129     1
- 5 1949 may.   121     1
- 6 1949 jun.   135     1
- 7 1949 jul.   148     1
- 8 1949 ago.   148     1
- 9 1949 sep.   136     1
-10 1949 oct.   119     1
+      index value    cv
+      &lt;mth&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 1949 Jan   112     1
+ 2 1949 Feb   118     1
+ 3 1949 Mar   132     1
+ 4 1949 Apr   129     1
+ 5 1949 May   121     1
+ 6 1949 Jun   135     1
+ 7 1949 Jul   148     1
+ 8 1949 Aug   148     1
+ 9 1949 Sep   136     1
+10 1949 Oct   119     1
 # ℹ 5,600 more rows</code></pre>
 </div>
 </div>
@@ -11069,8 +11069,300 @@ AIC=2994.39   AICc=2994.48   BIC=3010.83</code></pre>
 <h1>Clase 22: <span class="flow">procesos SARIMA</span></h1>
 
 </section>
-<section id="section" class="slide level2">
-<h2>…</h2>
+<section id="procesos-sarima" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Como hemos dicho un <span class="hl-yellow"><strong>proceso mixto ARIMA(p, d, q)</strong></span> es definido como</p>
+<p><span class="math display">\[\left(1 - \phi_1 B - \ldots - \phi_p B^p \right) \left( 1 - B \right)^d X_t = \left(1 - \theta_1 B - \ldots - \theta_q B^q \right)  \varepsilon_t\]</span> que de manera compacta puede ser definido como</p>
+<p><span class="math display">\[\Phi_p(B) \nabla^d X_t = \Phi_p(B) \left(1 - B \right)^d X_t = \Theta_q(B) \varepsilon_t\]</span></p>
+<div class="fragment">
+<p>Si además no fuese estacionario en varianza, amplicando una <span class="hl-yellow"><strong>transformación Box-Cox</strong></span>, tendríamos finalmente</p>
+<p><span class="math display">\[\Phi_p(B) \nabla^d X_{t}^{\lambda} = \Phi_p(B) \left(1 - B \right)^d X_{t}^{\lambda} = \Theta_q(B) \varepsilon_t\]</span></p>
+</div>
+</section>
+<section id="procesos-sarima-1" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Este enfoque es suficientemente flexible para <span class="hl-yellow"><strong>modelizar procesos no estacionarios (pero que lo pueden ser tras diferenciar y aplicar una transformación)</strong></span> pero sin estacionalidad. ¿Cómo incluirla?</p>
+<div class="fragment">
+<p>Para entenderlo vamos a empezar con lo que se conoce como <span class="hl-yellow"><strong>procesos estacionales puros</strong></span>, procesos donde solo hay una componente estacional y nada más. Por ejemplo, pensemos en la ecuación de un AR(1)</p>
+<p><span class="math display">\[X_t - \phi_1 X_{t-1} = (1 - \phi_1 B) X_t = \Phi_1(B)X_t = \varepsilon_t\]</span> ¿Cómo hacerlo puramente estacional?</p>
+</div>
+</section>
+<section id="procesos-sarima-2" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p><span class="math display">\[X_t - \phi_1 X_{t-1} = (1 - \phi_1 B) X_t = \Phi_1(B)X_t = \varepsilon_t\]</span> En un contexto <strong>puramente estacional</strong>, el <strong>concepto «dato anterior»</strong> no es el dato que corresponde al instante previo <span class="math inline">\(t-1\)</span> sino al <strong>dato que corresponde al periodo estacional previo</strong>. Si tenemos una estacionalidad de <strong>periodo <span class="math inline">\(s\)</span></strong> entonces <span class="hl-yellow"><strong>retroceder estacionalmente 1 periodo es <span class="math inline">\(X_{t-s}\)</span></strong></span>.</p>
+<div class="fragment">
+<p>Por denotaremos como <span class="math inline">\(AR(1)_s\)</span> un <span class="hl-yellow"><strong>proceso autorregresivo puramente estacional de periodo s y orden 1</strong></span> al proceso</p>
+<p><span class="math display">\[X_t - \widetilde{\phi}_1 X_{t-s} = (1 - \widetilde{\phi}_1 B^s) X_t = \widetilde{\Phi}_1(B^s)X_t = \varepsilon_t\]</span></p>
+<p>ya que <span class="math inline">\(X_{t-s} = B X_{t-s+1} = B^2 X_{t-s+2} = \ldots = B^s X_{t}\)</span></p>
+</div>
+</section>
+<section id="procesos-sarima-3" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>De la misma manera podremos definir un <span class="hl-yellow"><strong>proceso autorregresivo puramente estacional de periodo s y orden P</strong></span> al proceso</p>
+<p><span class="math display">\[\left(X_t - \widetilde{\phi}_1 X_{t-s} - \ldots - \widetilde{\phi}_P X_{t-sP} \right) = (1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) X_t = \widetilde{\Phi}_P(B^s)X_t = \varepsilon_t\]</span></p>
+<div class="fragment">
+<p>Y también podremos definir un <span class="hl-yellow"><strong>proceso de medias móviles puramente estacional de periodo s y orden Q</strong></span> al proceso</p>
+<p><span class="math display">\[X_t = \left(\varepsilon_t - \widetilde{\theta}_1 \varepsilon_{t-s} - \ldots - \widetilde{\theta}_Q \varepsilon_{t-sQ} \right) = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t\]</span></p>
+</div>
+</section>
+<section id="procesos-sarima-4" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p><span class="hl-yellow"><strong>¿Cómo simularlos?</strong></span> Para ello vamos a definir un <span class="math inline">\(AR(1)_{s = 12}\)</span> con <span class="math inline">\(\widetilde{\phi}_1 = 0.8\)</span>. Para ello vamos a hacer uso del paquete <code>{astsa}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb660"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb660-1"><a href="#cb660-1"></a><span class="co"># install.packages("astsa")</span></span>
+<span id="cb660-2"><a href="#cb660-2"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb660-3"><a href="#cb660-3"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb660-4"><a href="#cb660-4"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb660-5"><a href="#cb660-5"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb660-6"><a href="#cb660-6"></a>SAR_1 <span class="ot">&lt;-</span></span>
+<span id="cb660-7"><a href="#cb660-7"></a>  <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb660-8"><a href="#cb660-8"></a>         <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">sarima.sim</span>(<span class="at">n =</span> n, <span class="at">sar =</span> <span class="fl">0.8</span>, <span class="at">S =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb660-9"><a href="#cb660-9"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>¿Qué forma tendrán las <strong>autocorrelaciones</strong>?</p>
+</section>
+<section id="procesos-sarima-5" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-467-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-468-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>ACF</strong></span>: en el caso de un AR(1) las correlaciones descendían a 0 asintóticamente; en el caso de un <span class="math inline">\(AR(1)_s\)</span> dicho <span class="hl-yellow"><strong>comportamiento asintótico solo sucede en las correlaciones múltiplos de s</strong></span></p></li>
+<li><p><span class="hl-yellow"><strong>PACF</strong></span>: en el caso de un AR(1) las correlaciones a partir de la primera caían a 0 drásticamente; en el caso de un <span class="math inline">\(AR(1)_s\)</span> <span class="hl-yellow"><strong>decaen drásticamente a 0 pero a partir de la correlación <span class="math inline">\(\rho_s\)</span></strong></span>.</p></li>
+</ul>
+</section>
+<section id="procesos-sarima-6" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Vamos ahora a simular un <span class="math inline">\(AR(2)_{s = 12}\)</span> con <span class="math inline">\(\widetilde{\phi}_1 = 0.5\)</span> y <span class="math inline">\(\widetilde{\phi}_2 = -0.8\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb661"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb661-1"><a href="#cb661-1"></a><span class="co"># install.packages("astsa")</span></span>
+<span id="cb661-2"><a href="#cb661-2"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb661-3"><a href="#cb661-3"></a><span class="fu">library</span>(tsibble)</span>
+<span id="cb661-4"><a href="#cb661-4"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb661-5"><a href="#cb661-5"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb661-6"><a href="#cb661-6"></a>SAR_2 <span class="ot">&lt;-</span></span>
+<span id="cb661-7"><a href="#cb661-7"></a>  <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb661-8"><a href="#cb661-8"></a>         <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">sarima.sim</span>(<span class="at">n =</span> n, <span class="at">sar =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">S =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb661-9"><a href="#cb661-9"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>¿Cómo <strong>comprobar ahora que los coeficientes son válidos</strong>?</p>
+<div class="fragment">
+<p>Fíjate que ahora al ser estacional los coeficientes afectan a <span class="math inline">\(B^{24}\)</span> y <span class="math inline">\(B^{12}\)</span> solo así que debo meter 0’s en medio.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb662"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb662-1"><a href="#cb662-1"></a><span class="fu">all</span>(<span class="fu">Mod</span>(pracma<span class="sc">::</span><span class="fu">roots</span>(<span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">11</span>), <span class="sc">-</span><span class="fl">0.5</span>, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">11</span>), <span class="dv">1</span>))) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="procesos-sarima-7" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-471-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-472-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>ACF</strong></span>: en el caso de un AR(2) las correlaciones descendían a 0 asintóticamente; en el caso de un <span class="math inline">\(AR(2)_s\)</span> dicho comportamiento sucede PERO solo en las <strong>correlaciones múltiplos de s</strong>.</p></li>
+<li><p><span class="hl-yellow"><strong>PACF</strong></span>: en el caso de un AR(2) las correlaciones a partir de la segunda caían a 0 drásticamente; en el caso de un <span class="math inline">\(AR(1)_s\)</span> dicho comportamiento sucede PERO a partir de la <strong>correlación <span class="math inline">\(\rho_s\)</span></strong>.</p></li>
+</ul>
+</section>
+<section id="procesos-sarima-8" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p><span class="hl-yellow"><strong>💻 Te toca</strong></span>: simula distintos procesos <span class="math inline">\(MA\)</span> puramente estacionales y «adivina» la forma de sus ACF/PACF antes de comprobarlo</p>
+</section>
+<section id="procesos-sarima-9" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Como pasa en los procesos ordinarios, en el caso de <strong>procesos puramente estacionales</strong> también podremos juntar ambas parte y definir un <span class="hl-yellow"><strong>proceso mixto autorregresivo de medias móviles puramente estacional de periodo s</strong></span> al proceso <span class="math inline">\(ARMA(P, Q)_s\)</span> definido como</p>
+<p><span class="math display">\[(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP})X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t\]</span></p>
+<p><span class="math display">\[ \widetilde{\Phi}_P(B^s) X_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t\]</span></p>
+</section>
+<section id="procesos-sarima-10" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Vamos ahora a simular un <span class="math inline">\(ARMA(2, 3)_{s = 12}\)</span> con <span class="math inline">\(\widetilde{\phi}_1 = 0.5\)</span> y <span class="math inline">\(\widetilde{\phi}_2 = -0.8\)</span>, y <span class="math inline">\(\widetilde{\theta}_1 = -0.2\)</span> <span class="math inline">\(\widetilde{\theta}_2 = 0.5\)</span> y <span class="math inline">\(\widetilde{\theta}_3 = -0.6\)</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb664"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb664-1"><a href="#cb664-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb664-2"><a href="#cb664-2"></a>SARMA_23 <span class="ot">&lt;-</span></span>
+<span id="cb664-3"><a href="#cb664-3"></a>  <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb664-4"><a href="#cb664-4"></a>         <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">sarima.sim</span>(<span class="at">n =</span> n, <span class="at">sar =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.8</span>),</span>
+<span id="cb664-5"><a href="#cb664-5"></a>                            <span class="at">sma =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.6</span>), <span class="at">S =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb664-6"><a href="#cb664-6"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="procesos-sarima-11" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-474-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-475-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>ACF</strong></span>: en el caso de un AR(2) las correlaciones descendían a 0 asintóticamente; en el caso de un <span class="math inline">\(AR(2)_s\)</span> dicho comportamiento sucede PERO solo en las <strong>correlaciones múltiplos de s</strong>.</p></li>
+<li><p><span class="hl-yellow"><strong>PACF</strong></span>: en el caso de un AR(2) las correlaciones a partir de la segunda caían a 0 drásticamente; en el caso de un <span class="math inline">\(AR(1)_s\)</span> dicho comportamiento sucede PERO a partir de la <strong>correlación <span class="math inline">\(\rho_s\)</span></strong>.</p></li>
+</ul>
+</section>
+<section id="diferencias-estacionales" class="slide level2">
+<h2>Diferencias estacionales</h2>
+<p>Como pasa en los procesos ordinarios, en el caso de <strong>procesos puramente estacionales</strong> también podremos tener que el proceso <span class="hl-red"><strong>no sea estacionario en media</strong></span> por lo que podremos definir un <span class="hl-yellow"><strong>proceso mixto autorregresivo de medias móviles puramente estacional de periodo s con D diferencias</strong></span> al proceso <span class="math inline">\(ARIMA(P, D, Q)_s\)</span> definido como un proceso <span class="math inline">\(ARMA(P, Q)_s\)</span> tras <span class="math inline">\(D\)</span> diferencias estacionales</p>
+<p><span class="math display">\[(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left(1 -B^s \right)^{D} X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t\]</span></p>
+<p><span class="math display">\[ \widetilde{\Phi}_P(B^s) \left(1 -B^s \right)^{D}X_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t\]</span></p>
+<div class="fragment">
+<p>Fíjate que ahora, si <span class="math inline">\(D=1\)</span>, <span class="math inline">\(\left(1 -B^s \right)^{D}X_t = X_t - X_{t-s}\)</span> (es una <span class="hl-yellow"><strong>diferencia estacional</strong></span>)</p>
+</div>
+</section>
+<section id="diferencias-estacionales-1" class="slide level2">
+<h2>Diferencias estacionales</h2>
+<p><span class="math display">\[(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left(1 -B^s \right)^{D} X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t\]</span></p>
+<p><span class="math display">\[ \widetilde{\Phi}_P(B^s) \left(1 -B^s \right)^{D}X_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t\]</span></p>
+<ul>
+<li>Para comprobar si es necesario aplicar <strong>diferencias ordinarias</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb665"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb665-1"><a href="#cb665-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">features</span>(X_t, unitroot_ndiffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Para comprobar si es necesario aplicar <strong>diferencias estacionales</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb666"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb666-1"><a href="#cb666-1"></a>datos <span class="sc">|&gt;</span> <span class="fu">features</span>(X_t, unitroot_nsdiffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="diferencias-estacionales-2" class="slide level2">
+<h2>Diferencias estacionales</h2>
+<p>Vamos ahora a simular un <span class="math inline">\(SARIMA(0, 2, 0)_{s = 12}\)</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb667"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb667-1"><a href="#cb667-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb667-2"><a href="#cb667-2"></a>SARIMA_020 <span class="ot">&lt;-</span></span>
+<span id="cb667-3"><a href="#cb667-3"></a>  <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb667-4"><a href="#cb667-4"></a>         <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">sarima.sim</span>(<span class="at">n =</span> n, <span class="at">D =</span> <span class="dv">2</span>, <span class="at">S =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb667-5"><a href="#cb667-5"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="diferencias-estacionales-3" class="slide level2">
+<h2>Diferencias estacionales</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-479-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-480-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li><span class="hl-yellow"><strong>ACF</strong></span>: en el caso de un ARIMA(0, 2, 0) las correlaciones tenían tendencia sin decaer a 0; en el caso de un <span class="math inline">\(SARIMA(0, 2, 0)_s\)</span> dicho comportamiento sucede en general PERO sobre todo en las <strong>correlaciones múltiplos de s</strong>.</li>
+</ul>
+</section>
+<section id="procesos-sarima-12" class="slide level2">
+<h2>Procesos SARIMA</h2>
+<p>Para terminar, vamos a <span class="hl-yellow"><strong>juntar ambas partes (ordinaria y estacional)</strong></span>: definiremos un <span class="hl-yellow"><strong>proceso mixto autorregresivo integrado de medias móviles con componentes estacionales de periodo s</strong></span> al proceso <span class="math inline">\(SARIMA(p, d, q) \times (P, D, Q)_s\)</span> definido como</p>
+<p><span class="math display">\[\begin{eqnarray}&amp; &amp;(1 - \phi_1 B - \ldots - \phi_p B^{p})(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left( 1 - B^s \right)^D \left( 1 - B \right)^d  X_t = \nonumber \\ &amp; &amp; (1 - \theta_1 B - \ldots - \theta_q B^{q}) (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t \end{eqnarray}\]</span></p>
+<p><span class="math display">\[ \Phi_p(B) \widetilde{\Phi}_P(B^s) \nabla_{s}^D \nabla^d X_t= \Theta_q(B)  \widetilde{\Theta}_Q(B^s) \varepsilon_t\]</span> tal que aplicando <span class="math inline">\(d\)</span> diferencias ordinarias y <span class="math inline">\(D\)</span> estacionales tenemos un proceso <span class="math inline">\(SARMA(p, q) \times (P, Q)_s\)</span>.</p>
+</section>
+<section id="modelización-en-fable" class="slide level2">
+<h2>Modelización en fable</h2>
+<p>Vamos ahora a simular un <span class="math inline">\(ARIMA(2, 1, 3)_{s = 12}\)</span> con <span class="math inline">\(\widetilde{\phi}_1 = 0.5\)</span> y <span class="math inline">\(\widetilde{\phi}_2 = -0.8\)</span>, y <span class="math inline">\(\widetilde{\theta}_1 = -0.2\)</span> <span class="math inline">\(\widetilde{\theta}_2 = 0.5\)</span> y <span class="math inline">\(\widetilde{\theta}_3 = -0.6\)</span>. Tras ello vamos a realizar el ajusta en fable.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb668"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb668-1"><a href="#cb668-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb668-2"><a href="#cb668-2"></a><span class="fu">set.seed</span>(<span class="dv">1234567</span>)</span>
+<span id="cb668-3"><a href="#cb668-3"></a>SARMA_213 <span class="ot">&lt;-</span></span>
+<span id="cb668-4"><a href="#cb668-4"></a>  <span class="fu">tibble</span>(<span class="st">"t"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb668-5"><a href="#cb668-5"></a>         <span class="st">"X_t"</span> <span class="ot">=</span> <span class="fu">sarima.sim</span>(<span class="at">n =</span> n, <span class="at">ar =</span> <span class="fl">0.5</span>, <span class="at">ma =</span> <span class="sc">-</span><span class="fl">0.9</span>, <span class="at">d =</span> <span class="dv">2</span>,</span>
+<span id="cb668-6"><a href="#cb668-6"></a>                            <span class="at">sar =</span> <span class="sc">-</span><span class="fl">0.7</span>, <span class="at">sma =</span> <span class="fl">0.8</span>, <span class="at">D =</span> <span class="dv">1</span>,</span>
+<span id="cb668-7"><a href="#cb668-7"></a>                            <span class="at">S =</span> <span class="dv">12</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb668-8"><a href="#cb668-8"></a>  <span class="fu">as_tsibble</span>(<span class="at">index =</span> t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="fragment">
+<p>Lo primero es comprobar ya no solo <span class="hl-yellow"><strong>si hay que aplicar una diferencia ordinaria sino si hace falta aplicar diferencias estacionales</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb669"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb669-1"><a href="#cb669-1"></a>SARMA_213 <span class="sc">|&gt;</span> </span>
+<span id="cb669-2"><a href="#cb669-2"></a>  <span class="fu">features</span>(X_t, unitroot_ndiffs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  ndiffs
+   &lt;int&gt;
+1      2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb671"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb671-1"><a href="#cb671-1"></a>SARMA_213 <span class="sc">|&gt;</span> </span>
+<span id="cb671-2"><a href="#cb671-2"></a>  <span class="fu">features</span>(X_t, unitroot_nsdiffs, <span class="at">.period =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  nsdiffs
+    &lt;int&gt;
+1       0</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="modelización-en-fable-1" class="slide level2">
+<h2>Modelización en fable</h2>
+<p>Tras ello ajustamos en <code>fable</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb673"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb673-1"><a href="#cb673-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb673-2"><a href="#cb673-2"></a>  SARMA_213 <span class="sc">|&gt;</span> </span>
+<span id="cb673-3"><a href="#cb673-3"></a>  <span class="fu">model</span>(<span class="st">"SARIMA"</span> <span class="ot">=</span></span>
+<span id="cb673-4"><a href="#cb673-4"></a>          <span class="fu">ARIMA</span>(X_t <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> <span class="fu">pdq</span>(<span class="at">p =</span> <span class="dv">0</span>, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">q =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb673-5"><a href="#cb673-5"></a>                  <span class="fu">PDQ</span>(<span class="at">P_init =</span> <span class="dv">1</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q_init =</span> <span class="dv">1</span>,</span>
+<span id="cb673-6"><a href="#cb673-6"></a>                      <span class="at">period =</span> <span class="dv">12</span>),</span>
+<span id="cb673-7"><a href="#cb673-7"></a>                <span class="at">greedy =</span> <span class="cn">FALSE</span>, <span class="at">stepwise =</span> <span class="cn">FALSE</span>, <span class="at">ic =</span> <span class="st">"bic"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>ajustar en fable puramente estacionarios</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section>
+<section class="slide level2">
+
 </section></section>
 <section id="clase-23" class="title-slide slide level1 center">
 <h1>Clase 23: <span class="flow">ejemplos</span></h1>

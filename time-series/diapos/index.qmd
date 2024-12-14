@@ -11242,7 +11242,413 @@ datos |> features(X_t, unitroot_ndiffs)
 
 ---
 
-## ...
+## Procesos SARIMA
+
+Como hemos dicho un [**proceso mixto ARIMA(p, d, q)**]{.hl-yellow} es definido como
+
+$$\left(1 - \phi_1 B - \ldots - \phi_p B^p \right) \left( 1 - B \right)^d X_t = \left(1 - \theta_1 B - \ldots - \theta_q B^q \right)  \varepsilon_t$$
+que de manera compacta puede ser definido como 
+
+$$\Phi_p(B) \nabla^d X_t = \Phi_p(B) \left(1 - B \right)^d X_t = \Theta_q(B) \varepsilon_t$$
+
+. . .
+
+
+Si además no fuese estacionario en varianza, amplicando una [**transformación Box-Cox**]{.hl-yellow}, tendríamos finalmente
+
+$$\Phi_p(B) \nabla^d X_{t}^{\lambda} = \Phi_p(B) \left(1 - B \right)^d X_{t}^{\lambda} = \Theta_q(B) \varepsilon_t$$
+
+---
+
+## Procesos SARIMA
+
+Este enfoque es suficientemente flexible para [**modelizar procesos no estacionarios (pero que lo pueden ser tras diferenciar y aplicar una transformación)**]{.hl-yellow} pero sin estacionalidad. ¿Cómo incluirla?
+
+. . .
+
+
+Para entenderlo vamos a empezar con lo que se conoce como [**procesos estacionales puros**]{.hl-yellow}, procesos donde solo hay una componente estacional y nada más. Por ejemplo, pensemos en la ecuación de un AR(1)
+
+$$X_t - \phi_1 X_{t-1} = (1 - \phi_1 B) X_t = \Phi_1(B)X_t = \varepsilon_t$$
+¿Cómo hacerlo puramente estacional?
+
+---
+
+## Procesos SARIMA
+
+$$X_t - \phi_1 X_{t-1} = (1 - \phi_1 B) X_t = \Phi_1(B)X_t = \varepsilon_t$$
+En un contexto **puramente estacional**, el **concepto «dato anterior»** no es el dato que corresponde al instante previo $t-1$ sino al **dato que corresponde al periodo estacional previo**. Si tenemos una estacionalidad de **periodo $s$** entonces [**retroceder estacionalmente 1 periodo es $X_{t-s}$**]{.hl-yellow}.
+
+. . .
+
+Por denotaremos como $AR(1)_s$ un [**proceso autorregresivo puramente estacional de periodo s y orden 1**]{.hl-yellow} al proceso
+
+$$X_t - \widetilde{\phi}_1 X_{t-s} = (1 - \widetilde{\phi}_1 B^s) X_t = \widetilde{\Phi}_1(B^s)X_t = \varepsilon_t$$
+
+ya que $X_{t-s} = B X_{t-s+1} = B^2 X_{t-s+2} = \ldots = B^s X_{t}$
+
+---
+
+## Procesos SARIMA
+
+De la misma manera podremos definir un [**proceso autorregresivo puramente estacional de periodo s y orden P**]{.hl-yellow} al proceso
+
+$$\left(X_t - \widetilde{\phi}_1 X_{t-s} - \ldots - \widetilde{\phi}_P X_{t-sP} \right) = (1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) X_t = \widetilde{\Phi}_P(B^s)X_t = \varepsilon_t$$
+
+. . .
+
+
+Y también podremos definir un [**proceso de medias móviles puramente estacional de periodo s y orden Q**]{.hl-yellow} al proceso
+
+$$X_t = \left(\varepsilon_t - \widetilde{\theta}_1 \varepsilon_{t-s} - \ldots - \widetilde{\theta}_Q \varepsilon_{t-sQ} \right) = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t$$
+
+---
+
+## Procesos SARIMA
+
+[**¿Cómo simularlos?**]{.hl-yellow} Para ello vamos a definir un $AR(1)_{s = 12}$ con $\widetilde{\phi}_1 = 0.8$. Para ello vamos a hacer uso del paquete `{astsa}`
+
+```{r}
+# install.packages("astsa")
+library(astsa)
+library(tsibble)
+library(tibble)
+n <- 10000
+SAR_1 <-
+  tibble("t" = 1:n,
+         "X_t" = sarima.sim(n = n, sar = 0.8, S = 12, sd = 1.5)) |> 
+  as_tsibble(index = t)
+```
+
+¿Qué forma tendrán las **autocorrelaciones**?
+
+---
+
+## Procesos SARIMA
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+library(feasts)
+SAR_1 |> 
+  ACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+library(feasts)
+SAR_1 |> 
+  PACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::::
+
+* [**ACF**]{.hl-yellow}: en el caso de un AR(1) las correlaciones descendían a 0 asintóticamente; en el caso de un $AR(1)_s$ dicho [**comportamiento asintótico solo sucede en las correlaciones múltiplos de s**]{.hl-yellow}
+
+* [**PACF**]{.hl-yellow}: en el caso de un AR(1) las correlaciones a partir de la primera caían a 0 drásticamente; en el caso de un $AR(1)_s$ [**decaen drásticamente a 0 pero a partir de la correlación $\rho_s$**]{.hl-yellow}.
+
+
+---
+
+## Procesos SARIMA
+
+Vamos ahora a simular un $AR(2)_{s = 12}$ con $\widetilde{\phi}_1 = 0.5$ y $\widetilde{\phi}_2 = -0.8$. 
+
+```{r}
+# install.packages("astsa")
+library(astsa)
+library(tsibble)
+library(tibble)
+n <- 10000
+SAR_2 <-
+  tibble("t" = 1:n,
+         "X_t" = sarima.sim(n = n, sar = c(0.5, -0.8), S = 12, sd = 1.5)) |> 
+  as_tsibble(index = t)
+```
+
+¿Cómo **comprobar ahora que los coeficientes son válidos**?
+
+. . .
+
+Fíjate que ahora al ser estacional los coeficientes afectan a $B^{24}$ y $B^{12}$ solo así que debo meter 0's en medio.
+
+```{r}
+all(Mod(pracma::roots(c(0.8, rep(0, 11), -0.5, rep(0, 11), 1))) > 1)
+```
+
+---
+
+## Procesos SARIMA
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+library(feasts)
+SAR_2 |> 
+  ACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+library(feasts)
+SAR_2 |> 
+  PACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::::
+
+* [**ACF**]{.hl-yellow}: en el caso de un AR(2) las correlaciones descendían a 0 asintóticamente; en el caso de un $AR(2)_s$ dicho 
+[**comportamiento asintótico solo sucede en las correlaciones múltiplos de s**]{.hl-yellow}
+
+
+* [**PACF**]{.hl-yellow}: en el caso de un AR(2) las correlaciones a partir de $\rho_{2}$ caían a 0 drásticamente; en el caso de un $AR(2)_s$ [**decaen drásticamente a 0 pero a partir de la correlación $\rho_{2*s}$**]{.hl-yellow}.
+
+
+
+---
+
+## Procesos SARIMA
+
+[**💻 Te toca**]{.hl-yellow}: simula distintos procesos $MA$ puramente estacionales y «adivina» la forma de sus ACF/PACF antes de comprobarlo
+
+---
+
+## Procesos SARIMA
+
+Como pasa en los procesos ordinarios, en el caso de **procesos puramente estacionales** también podremos juntar ambas parte y definir un [**proceso mixto autorregresivo de medias móviles puramente estacional de periodo s**]{.hl-yellow} al proceso $ARMA(P, Q)_s$ definido como
+
+$$(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP})X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t$$
+
+$$ \widetilde{\Phi}_P(B^s) X_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t$$
+
+---
+
+## Procesos SARIMA
+
+Vamos ahora a simular un $ARMA(2, 3)_{s = 12}$ con $\widetilde{\phi}_1 = 0.5$ y $\widetilde{\phi}_2 = -0.8$, y $\widetilde{\theta}_1 = -0.2$ $\widetilde{\theta}_2 = 0.5$ y $\widetilde{\theta}_3 = -0.6$
+
+```{r}
+#| code-fold: true
+n <- 10000
+SARMA_23 <-
+  tibble("t" = 1:n,
+         "X_t" = sarima.sim(n = n, sar = c(0.5, -0.8),
+                            sma = c(-0.2, 0.5, -0.6), S = 12, sd = 1.5)) |> 
+  as_tsibble(index = t)
+```
+
+---
+
+## Procesos SARIMA
+
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+SARMA_23 |> 
+  ACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+SARMA_23 |> 
+  PACF(X_t, lag_max = 60) |> 
+  autoplot()
+```
+
+:::
+
+::::
+
+
+
+---
+
+## Diferencias estacionales
+
+Como pasa en los procesos ordinarios, en el caso de **procesos puramente estacionales** también podremos tener que el proceso [**no sea estacionario en media**]{.hl-red} por lo que podremos definir un [**proceso mixto autorregresivo de medias móviles puramente estacional de periodo s con D diferencias**]{.hl-yellow} al proceso $ARIMA(P, D, Q)_s$ definido como un proceso $ARMA(P, Q)_s$ tras $D$ diferencias estacionales
+
+$$(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left(1 -B^s \right)^{D} X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t$$
+
+$$ \widetilde{\Phi}_P(B^s) \left(1 -B^s \right)^{D}X_t= \widetilde{\Phi}_P(B^s) \nabla_{s}^{D}X_t =  \widetilde{\Theta}_Q(B^s) \varepsilon_t$$
+
+. . .
+
+Fíjate que ahora, si $D=1$, $\left(1 -B^s \right)^{D}X_t = X_t - X_{t-s}$ (es una [**diferencia estacional**]{.hl-yellow})
+
+---
+
+## Diferencias estacionales
+
+
+$$(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left(1 -B^s \right)^{D} X_t = (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t$$
+
+$$ \widetilde{\Phi}_P(B^s) \left(1 -B^s \right)^{D}X_t= \widetilde{\Theta}_Q(B^s) \varepsilon_t$$
+
+* Para comprobar si es necesario aplicar **diferencias ordinarias**
+
+
+```{r}
+#| eval: false
+datos |> features(X_t, unitroot_ndiffs)
+```
+
+* Para comprobar si es necesario aplicar **diferencias estacionales**
+
+
+```{r}
+#| eval: false
+datos |> features(X_t, unitroot_nsdiffs)
+```
+
+---
+
+## Diferencias estacionales
+
+Vamos ahora a simular un $SARIMA(0, 2, 0)_{s = 12}$
+
+```{r}
+#| code-fold: true
+n <- 10000
+SARIMA_020 <-
+  tibble("t" = 1:n,
+         "X_t" = sarima.sim(n = n, D = 2, S = 12, sd = 1.5)) |> 
+  as_tsibble(index = t)
+```
+
+---
+
+## Diferencias estacionales
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+SARIMA_020 |> 
+  ACF(X_t, lag_max = 200) |> 
+  autoplot()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+SARIMA_020 |> 
+  PACF(X_t, lag_max = 200) |> 
+  autoplot()
+```
+
+:::
+
+::::
+
+* [**ACF**]{.hl-yellow}: en el caso de un ARIMA(0, 2, 0) las correlaciones tenían tendencia sin decaer a 0; en el caso de un $SARIMA(0, 2, 0)_s$ dicho comportamiento sucede en general PERO sobre todo en las **correlaciones múltiplos de s**.
+
+
+---
+
+## Procesos SARIMA
+
+Para terminar, vamos a [**juntar ambas partes (ordinaria y estacional)**]{.hl-yellow}: definiremos un [**proceso mixto autorregresivo integrado de medias móviles con componentes estacionales de periodo s**]{.hl-yellow} al proceso $SARIMA(p, d, q) \times (P, D, Q)_s$ definido como
+
+$$\begin{eqnarray}& &(1 - \phi_1 B - \ldots - \phi_p B^{p})(1 - \widetilde{\phi}_1 B^s - \ldots - \widetilde{\phi}_P B^{sP}) \left( 1 - B^s \right)^D \left( 1 - B \right)^d  X_t = \nonumber \\ & & (1 - \theta_1 B - \ldots - \theta_q B^{q}) (1 - \widetilde{\theta}_1 B^s - \ldots - \widetilde{\theta}_Q B^{sQ}) \varepsilon_t \end{eqnarray}$$
+
+$$ \Phi_p(B) \widetilde{\Phi}_P(B^s) \nabla_{s}^D \nabla^d X_t= \Theta_q(B)  \widetilde{\Theta}_Q(B^s) \varepsilon_t$$
+tal que aplicando $d$ diferencias ordinarias y $D$ estacionales tenemos un proceso $SARMA(p, q) \times (P, Q)_s$.
+
+---
+
+## Modelización en fable
+
+Vamos ahora a simular un $ARIMA(2, 1, 3)_{s = 12}$ con $\widetilde{\phi}_1 = 0.5$ y $\widetilde{\phi}_2 = -0.8$, y $\widetilde{\theta}_1 = -0.2$ $\widetilde{\theta}_2 = 0.5$ y $\widetilde{\theta}_3 = -0.6$. Tras ello vamos a realizar el ajusta en fable.
+
+```{r}
+#| code-fold: true
+n <- 5000
+set.seed(1234567)
+SARMA_213 <-
+  tibble("t" = 1:n,
+         "X_t" = sarima.sim(n = n, ar = 0.5, ma = -0.9, d = 2,
+                            sar = -0.7, sma = 0.8, D = 1,
+                            S = 12, sd = 1)) |> 
+  as_tsibble(index = t)
+```
+
+. . .
+
+1. Comprobamos  [**si hay que aplicar alguna diferencia ordinaria **]{.hl-yellow}
+
+```{r}
+SARMA_213 |> 
+  features(X_t, unitroot_ndiffs)
+```
+
+. . .
+ 
+2. Si hace falta, **aplicamos las diferencias ordinarias**, y tras ello comprobamos  [**si hay que aplicar alguna diferencia estacional**]{.hl-yellow}
+
+```{r}
+SARMA_213 |> 
+  features(difference(X_t, 2), unitroot_nsdiffs, .period = 12)
+```
+
+---
+
+
+## Modelización en fable
+
+Tras ello ajustamos en `fable`
+
+```{r}
+fit <-
+  SARMA_213 |> 
+  model("SARIMA" =
+          ARIMA(X_t ~ 0 + pdq(p_init = 1, d = 0:2, q_init = 1) +
+                  PDQ(P_init = 1, D = 0:2, Q_init = 1,
+                      period = 12),
+                greedy = FALSE, ic = "bic"))
+```
+
+
+- ajustar en fable puramente estacionarios
+
+
+---
+
+
+
+
+---
 
 # Clase 23: [ejemplos]{.flow} {#clase-23}
 
