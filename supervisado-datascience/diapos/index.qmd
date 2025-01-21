@@ -1,0 +1,2005 @@
+---
+title: "Aprendizaje Supervisado I"
+subtitle: "Métodos de predicción lineal"
+title-slide-attributes:
+  data-background-image: img/data-science-2.jpeg
+  data-background-size: cover
+  data-background-opacity: "0.2"
+author: "Grado en Ciencia de Datos Aplicada • curso 2024-2025"
+affiliation: Facultad de Estudios Estadísticos (UCM)
+lang: es
+language: custom_lang.yml
+format: 
+  revealjs:
+    theme: [default, style.scss]
+    chalkboard: true
+    multiplex: true
+    menu:
+      side: left
+      width: normal
+    footer: "[<strong>Javier Álvarez Liébana</strong>](...) • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025"
+    slide-number: c/t
+execute:
+  echo: true
+---
+
+# Empieza lo bueno...empieza la modelización
+
+[**Vamos a juntar las piezas del puzzle para hacer «magia»**]{style="color:#444442;"}
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+---
+
+## ¡Buenas!
+
+[**Correo**]{.hl-green}: **<javalv09@ucm.es>**. [**Despacho**]{.hl-green}: 722 (3ª planta).
+
+::: columns
+::: {.column width="30%"}
+![](img/me.jpeg)
+:::
+
+::: {.column width="70%"}
+::: incremental
+-   [**Javier Álvarez Liébana**]{.hl-yellow}, de Carabanchel (Bajo).
+
+-   Licenciado en Matemáticas (UCM). [**Doctorado en estadística**]{.hl-yellow} (UGR).
+
+-   Encargado de la [**visualización y análisis de datos covid**]{.hl-yellow} del Principado de Asturias (2021-2022).
+
+-   Miembro de la [**Sociedad Española de Estadística e IO**]{.hl-yellow} y la [**Real Sociedad Matemática Española**]{.hl-yellow}.
+:::
+:::
+:::
+
+. . .
+
+Actualmente, [**investigador y docente en la Facultad de Estadística de la UCM**]{.hl-yellow}. Divulgando por [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
+
+
+---
+
+## Objetivos
+
+::: columns
+::: {.column width="37%"}
+![](https://assets-global.website-files.com/6092cb6b4ac959f39728dd26/6188a97fa499b5fbfe410417_target%20(1).png)
+:::
+
+::: {.column width="63%"}
+::: incremental
+- Empezar a [**relacionar asignaturas**]{.hl-yellow} como matemáticas, inferencia y R.
+
+- Aprender los fundamentos del [**aprendizaje estadístico**]{.hl-yellow} (ahora llamado Machine Learning o data science)
+
+- Pasar de los descriptivo a lo predictivo: [**construir nuestros primeros modelos**]{.hl-yellow}
+
+- Entender en profundidad el contexto de la [**predicción lineal**]{.hl-yellow}.
+
+
+:::
+:::
+:::
+
+---
+
+## Evaluación
+
+-   [**Asistencia**]{.hl-yellow}. Se [**valorará muy positivamente**]{.hl-purple} la participación. 
+
+. . .
+
+- [**Evaluación continua**]{.hl-yellow}: 1 **examen teórico a papel** (30%) y **3 entregas R en clase** (10%-25%-35%).
+  
+. . .
+
+- [**Examen final**]{.hl-yellow}:
+  - [**Más de 7 de continua**]{.hl-purple} -> podrás decidir **peso del final entre 0% y 100%**.
+  - [**Entre 6 y 7 de continua**]{.hl-purple} -> decidir **peso del final entre un 30% y un 100%**.
+  - [**Entre 5 y 6 de continua**]{.hl-purple} ->**peso del final entre un 50% y un 100%**.
+  - [**Entre 3.5 y 5 de continua**]{.hl-purple} -> **peso del final entre un 70% y un 100%**.
+  - [**Por debajo de 3.5 de continua**]{.hl-purple} -> **peso del final del 100%**.
+  
+Para que haga [**media el final**]{.hl-red} debes de sacar más de un 3 sobre 10.
+
+---
+
+## Planificación
+
+
+* [**Entrega I (10%)**]{.hl-yellow}: 6 de febrero.
+
+* [**Entrega II (25%)**]{.hl-yellow}: 15 o 22 de abril.
+
+* [**Teórico con papel y boli (30%)**]{.hl-yellow}: 8 de mayo.
+
+* [**Entrega III (35%)**]{.hl-yellow}: 13 de mayo.
+
+
+---
+
+## Materiales
+
+* [**Diapositivas**]{.hl-yellow}: las diapositivas que usaremos en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos>** 
+
+En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools` (consejo: no lo hagas hasta el final del curso ya que irán modificándose)
+  
+&nbsp;
+
+* [**Material**]{.hl-yellow}: [**scripts de cada tema**](https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/material) y materiales extras
+
+* [**Resúmenes de paquetes**]{.hl-yellow}: [**chuletas de los paquetes**](https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/fichas%20paquetes) en formato .pdf
+
+---
+
+
+## Requisitos
+
+Para el curso los únicos requisitos serán:
+
+1.  [**Conexión a internet**]{.hl-yellow} (para la descarga de algunos datos y paquetes).
+
+2.  [**Instalar R y RStudio**]{.hl-yellow}: la descarga la haremos (gratuitamente) desde <https://cran.r-project.org/> y  <https://posit.co/download/rstudio-desktop/>
+
+3. Se darán por asumido conocimientos aprendidos de [**R base, tidyverse y ggplot**]{.hl-yellow}
+
+4. Se darán por asumido conocimientos aprendidos de [**Quarto, diapositivas en Quarto y Github**]{.hl-yellow}. Para las entregas [**SOLO SE VALORARÁ**]{.hl-purple} la salida html correspondiente.
+
+5. [**Recomendable**]{.hl-yellow}: saber usar la calculadora en modo estadístico.
+
+
+---
+
+## Planificación  {#planificacion}
+
+::: column-screen-inset-right
+::: {style="font-size:20px"}
+|  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
+|:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
+| [1](#clase-1) | S1 | 23 ene | Repaso descriptiva | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) | [🐣](#caso-practico-1-1) [🐣](#caso-practico-1-2) [🐣](#caso-practico-1-3) [🐣](#caso-practico-1-4)  |  | 
+| [2](#clase-2) | S2 | 28 ene | Medidas de asociación | ... |  |  | 
+| [3](#clase-3) | S2 | 30 ene | Análisis de la varianza | ... |  |  | 
+| [4](#clase-4) | S3 | 4 feb | Análisis de la varianza | ... |  |  | 
+| [5](#clase-5) | S3 | 6 feb | Entrega I  | ... |  | [🎯 10%](#clase-5)  | 
+:::
+:::
+
+
+
+# Clase 1: repaso {#clase-1}
+
+[**Objetivo de la predicción lineal. Concepto de linealidad. Repaso de estadística descriptiva (23 de enero de 2025)**]{style="color:#444442;"}
+
+
+
+---
+
+## ¿Qué es predecir?
+
+En esta asignatura vamos a tratar principalmente lo que se conoce en el aprendizaje estadístico como [**predicción (continua)**]{.hl-yellow}
+
+. . .
+
+Dada una [**variable objetivo (variable dependiente)**]{.hl-yellow}, y con la información aportada por un conjunto de [**variables predictoras (covariables)**]{.hl-yellow}, el objetivo será obtener una estimación/predicción lo «mejor posible» haciendo uso de un
+
+&nbsp;
+
+
+[**modelo supervisado**]{.hl-yellow} de [**predicción**]{.hl-purple} [**lineal**]{.hl-green} (conocido como regresión lineal)
+
+
+---
+
+
+## Ciencia de Datos
+
+
+La [**ciencia de datos**]{.hl-yellow} es precisamente la rama que integra las matemáticas, la estadística, la probabilidad, el Machine Learning e incluso el Big Data
+
+![](img/stats-ml.jpg)
+
+---
+
+
+## ¿Modelo supervisado?
+
+
+[**modelo supervisado**]{.hl-yellow} de predicción lineal
+
+&nbsp;
+
+En esta asignatura veremos el modelo más simple de lo que se conoce como [**aprendizaje estadístico (Machine Learning)**]{.hl-yellow}, en concreto del conocido como [**aprendizaje supervisado**]{.hl-yellow}
+
+![](img/ml.jpg)
+
+
+---
+
+
+## Aprendizaje ¿supervisado?
+
+![](img/unsupervised-learning.jpg)
+
+---
+
+## Aprendizaje ¿supervisado?
+
+En el campo del Machine Learning hay principalmente dos tipos de modelos:
+
+:::: columns
+::: {.column width="50%"}
+
+* [**Aprendizaje supervisado**]{.hl-yellow}: tendremos dos tipos de variables, la [**variable dependiente (output/target)**]{.hl-yellow} que se quiere predecir/clasificar, normalmente denotada como $Y$, y las [**variables independientes (inputs) o explicativas o predictoras**]{.hl-yellow}, que contienen la información disponible. Ejemplos: regresión, knn, árboles, etc.
+ 
+
+:::
+
+::: {.column width="50%"}
+
+![](img/supervised.jpg)
+:::
+::::
+
+---
+
+## Aprendizaje ¿supervisado?
+
+En el campo del Machine Learning hay principalmente dos tipos de modelos:
+
+:::: columns
+::: {.column width="50%"}
+
+* [**Aprendizaje no supervisado**]{.hl-yellow}: no existe la distinción entre target y variables explicativas ya que [**no tenemos etiquetados los datos**]{.hl-yellow}, no sabemos a priori la respuesta correcta. El aprendizaje no supervisado [**buscará patrones**]{.hl-yellow} basados en similitudes/diferencias. Ejemplos: PCA, clustering, redes neuronales, etc.
+
+:::
+
+
+::: {.column width="50%"}
+
+![](img/unsupervised.jpg)
+
+:::
+::::
+
+---
+
+## Modelo predictivo
+
+Dentro del marco de un [**modelo de predicción supervisada**]{.hl-yellow} tendrá siempre la siguiente forma:
+
+$$Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) $$
+
+* $\mathbf{X}$ serán los [**datos**]{.hl-yellow}
+
+* $f(\cdot)$ será nuestro [**modelo**]{.hl-yellow}, es decir, el [**valor esperado de $Y$**]{.hl-yellow} (con la información que tenemos $\mathbf{X}$).
+
+* $\mathbf{X} = \left(X_1, \ldots, X_p \right)$ serán nuestras [**predictoras o variables independientes**]{.hl-yellow}
+
+* $\varepsilon$ será el [**error o ruido**]{.hl-yellow}, una [**variable aleatoria de media 0**]{.hl-yellow} $E \left[\varepsilon | \boldsymbol{X} = x \right] = 0$ (el error debería ser reducido a **algo aleatorio (irreducible)**, aunque en estadística SIEMPRE nos vamos a equivocar).
+
+
+
+---
+
+
+## Clasificación vs predicción
+
+modelo supervisado de [**predicción**]{.hl-purple} lineal
+
+&nbsp;
+
+La **regresión lineal** se enmarca dentro del [**predicción**]{.hl-purple} supervisada
+
+* [**Predicción**]{.hl-purple}: la [**variable objetivo es una variable cuantitativa continua**]{.hl-purple} (por ejemplo, precio, glucosa, peso, etc).
+
+* [**Clasificación**]{.hl-purple}: la [**variable objetivo es una variable cualitativa**]{.hl-purple} (por ejemplo, especie de flor, ausencia/presencia de enfermedad, si/no, etc) o **cuantitativa discreta** (por ejemplo, número de accidentes). La etiqueta tomará un valor dentro del conjunto de modalidades permitidas, pudiendo ser **binaria** (si/no) o **multiclase** (A, B, C, D).
+
+&nbsp;
+
+📚 Ver «The elements of Statistical Learning» (Hastie et al., 2008)
+
+---
+
+## ¿Qué es predecir?
+
+
+modelo de [**predicción**]{.hl-purple} lineal
+
+
+&nbsp;
+
+Es importante que - de momento - distingamos dos conceptos:
+
+* [**Estimación**]{.hl-purple}: el modelo aprende de unos datos e intenta estimar dichos valores que ha usado.
+* [**Predicción**]{.hl-purple}: el modelo aprende de unos datos e intenta estimar valores que el **modelo no conoce**.
+
+Más adelante los llamaremos «predicción en train» y «predicción en test»
+
+---
+
+## ¿Qué es la linealidad?
+
+
+modelo de predicción [**lineal**]{.hl-green}
+
+&nbsp;
+
+En matemáticas decimos que una función $f(x)$ es [**lineal**]{.hl-green} cuando se cumple:
+
+* [**Propiedad aditiva**]{.hl-green}: $f(x + y) = f(x) + f(y)$
+
+* [**Propiedad homogénea**]{.hl-green}: $f(k*x) = k*f(x)$ (donde $k$ es una constante en $\mathbb{R}$).
+
+Ambas se pueden resumir en $f(a*x + b*y) = a*f(x) + b*f(y)$
+
+. . .
+
+En estadística llamamos [**modelo de predicción lineal**]{.hl-yellow} a un modelo que usa la información de covariables $X_1, X_2, \ldots, X_p$, de manera que su información siempre [**se relacionen entre sí con sumas y restas**]{.hl-yellow}.
+
+- [**Ejemplos lineales**]{.hl-green}: $y = 2*x_1 - 3$ o  $y = 4 - \frac{x_1}{2} + 3*x_2$
+
+- [**Ejemplos no lineales**]{.hl-red}: $y = 2*\frac{1}{x_1}$ o  $y = 4 - x_{1}^{2} - x_2$ o $y = ln(x_1) + cos(x_2)$
+
+
+
+---
+
+
+## Repaso descriptiva
+
+
+La estadística descriptiva es una rama de la estadística que se dedica a [**recolectar, organizar, presentar y analizar un conjunto de datos**]{.hl-yellow} para describir las características y comportamientos de dicho conjunto.
+
+&nbsp;
+
+Además de para conocer y entender los datos es la fase en la que [**detectaremos errores e incongruencias**]{.hl-yellow}, teniendo muchas veces que hacer una [**depuración de datos**]{.hl-yellow}
+
+---
+
+## Recolección
+
+La podemos hacer a través de **encuestas, experimentos, observaciones, registros**, etc. Lo más importante en esta etapa es que los datos sean representativos del fenómeno o población que se estudia. La rama de la estadística que se dedica a estudiar esta parte del análisis se conoce como [**muestreo**]{.hl-yellow}, y es fundamental para evitar sesgos en la muestra.
+
+
+![](https://sketchplanations.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fsketchplanations%2Ff2fdb7cb-f126-4897-ad78-4fd11c743172_SP%2B723%2B-%2BSampling%2Bbias.png%3Fauto%3Dcompress%2Cformat&w=828&q=75)
+
+---
+
+## Conceptos básicos
+
+En estadística es fundamental entender los conceptos de [**población, muestra y variable**]{.hl-yellow}, ya que son la base para cualquier análisis estadístico.
+
+. . .
+
+-   [**Población**]{.hl-yellow}
+
+La población es el **conjunto completo de elementos o individuos** sobre los cuales se desea obtener información. En la mayoría de casos el acceso a la **totalidad de la población es inviable** por motivos económicos, legales o éticos, así que en la mayoría de situaciones las conclusiones deberemos sacarlas haciendo uso de una **muestra**.
+
+. . .
+
+**Ejemplo**: la diferencia entre censo y encuesta es que el primero recopila datos de todos los individuos de una población, mientras que el segundo trata de estimarlos o inferirlos a partir de una muestra representativa de la misma.
+
+---
+
+## Conceptos básicos
+
+[**Muestra**]{.hl-yellow}: subconjunto de la población que se selecciona para su análisis con el fin de hacer inferencias o generalizaciones sobre la población completa. La muestra debe ser **representativa de la población**.
+
+-   **Muestreo aleatorio simple**: cada miembro de la población tiene la misma probabilidad de ser seleccionado.
+
+-   **Muestreo estratificado**: la población se divide en subgrupos (estratos) y se toma una muestra de cada uno.
+
+-   **Muestreo (no aleatorio) sistemático**: se selecciona cada n-ésimo miembro de la población.
+
+-   **Muestreo (no aleatorio) por cuotas**: se seleccionan aquellos individuos que cumplan ciertas condiciones.
+
+-   **Muestreo por conveniencia**: se elige a los miembros que son más fáciles de acceder, aunque este método puede introducir sesgos.
+
+---
+
+## Sesgos en el muestreo
+
+![](img/sampling-bias.jpg)
+
+. . .
+
+[**Sesgo de selección**]{.hl-yellow}: aparece cuando no se tiene en cuenta la forma en la que se han recogido los datos.
+
+---
+
+
+## Sesgos en el muestreo
+
+
+![](img/dewey.jpg)
+
+El ejemplo más famoso es el caso [**«Dewey defeats Truman» (Dewer derrota a Truman)**]{.hl-yellow}, el titular con el que abrió el Chicago Tribune en 1948, el mismo día en el que Truman ganó al repúblicano Dewer en las elecciones de 1948: sin esperar a los resultados, se basaron en una encuesta telefónica (sin contar con el sesgo que, en aquella época, solo la clase alta tenía teléfono).
+
+---
+
+
+
+## Sesgos en el muestreo
+
+![](img/superviviente.jpg)
+
+¿Dónde reforzarías los aviones?
+
+---
+
+## Sesgos en el muestreo
+
+![](img/superviviente.jpg)
+
+
+
+El [**sesgo del superviviente**]{.hl-yellow} (un tipo de sesgo de selección) aparece cuando se toma una muestra de un fenómeno ignorando si los individuos elegidos tienen las mismas opciones respecto al mismo.
+
+
+---
+
+
+## Conceptos básicos
+
+[**Variable**]{.hl-yellow}: **cualquier característica o atributo** que puede tomar diferentes valores entre los individuos de la población o muestra. Las variables pueden ser de varios tipos según su naturaleza:
+
+-   [**Cualitativas (o categóricas)**]{.hl-purple}: describen cualidades o categorías. Ejemplos:
+
+    -   Nominales: no tienen un orden intrínseco (e.g., género, estado civil, religión, etc).
+    -   Ordinales: tienen un orden intrínseco (e.g., niveles de satisfacción, grado académico, sano-leve-grave, tramo etario, tramo de ingresos, etc).
+
+---
+
+## Conceptos básicos
+
+[**Variable**]{.hl-yellow}: **cualquier característica o atributo** que puede tomar diferentes valores entre los individuos de la población o muestra. Las variables pueden ser de varios tipos según su naturaleza:
+
+-   [**Cuantitativas**]{.hl-purple}: describen cantidades y pueden ser medidas numéricamente. Ejemplos:
+
+    -   Discretas finitas: toman valores finitos (e.g., número de hijos, número de visitas al médico, escala de dolor).
+    -   Discretas infinitas: toman valores infinitos (o que se podrían considerar como tal) pero podemos enumerarlas y sabemos siempre el siguiente elemento (e.g., número de pelos de nuestra cabellera, número de personas que pueden entrar en una tienda en un periodo dado).
+    -   Continuas: pueden tomar cualquier valor dentro de un rango (e.g., altura, peso, tiempo de espera).
+
+---
+
+## Conceptos básicos
+
+[**Modalidades**]{.hl-yellow}: uno de los **posibles valores** que toma una **variable dentro de una muestra**. El **conjunto de modalidades posibles** que podría haber tomado (en tu población) se suele conocer también como soporte. Algunos ejemplos en función del tipo de variables son:
+
+-  **Cualitativa nominal (color de ojos)**: negro, azul y marrón (3 modalidades en esa muestra de un espectro de colores más amplio que podríamos tener como soporte).
+
+- **Cualitativa ordinal (estado del paciente)**: sano, leve y grave (3 modalidades en esa muestra de un conjunto de opciones - por ejemplo, sano, leve, grave, UCI, fallecido - que podríamos tener).
+
+
+---
+
+## Repaso: continua vs discreta
+
+![](img/vitro-fuego-discretas.jpg)
+
+
+
+---
+
+## Repaso: medidas de centralización
+
+* [**Media**]{.hl-yellow}: dada una muestra $\boldsymbol{x} =\left(x_1, \ldots, x_n \right)$, la media muestral $\overline{x}$ se define como la **suma de todos los valores dividida por el tamaño muestral**
+
+$$\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+
+. . .
+
+[**Geométricamente**]{.hl-purple}: es el **valor «más cercano» de todos los datos a la vez** (minimiza las distancias al cuadrado)
+
+---
+
+## Media muestral
+
+
+[**VENTAJAS**]{.hl-green}
+
+* Fácil de calcular y entender
+* Fácil y eficiente de programar
+* Siempre existe (para cuantitativas)
+
+. . .
+
+[**DESVENTAJAS**]{.hl-red}
+
+* No es un valor de los datos (la media de {1, 2, 3, 4} es 2.5)
+* **Poco robusta** (valores atípicos le afectan mucho)
+* Solo se puede definir para variables cuantitativas
+
+
+---
+
+## Repaso: medidas de centralización
+
+* [**Mediana**]{.hl-yellow}: dada una muestra $\boldsymbol{x} =\left(x_1, \ldots, x_n \right)$, la mediana muestral se define como el **valor que es mayor o igual que al menos el 50%**, y menor igual que al menos el 50% de los datos
+
+$$Me_{x} = \arg \min_{x_i} \left\lbrace F_i > 0.5 \right\rbrace, \quad Me_x = e_{i-1} + \frac{0.5 - F_{i-1}}{F_i - F_{i-1} }a_i$$
+
+La mediana es el [**valor de en medio**]{.hl-purple} si ordenamos los datos (y si se pueden ordenar...)
+
+---
+
+## Mediana muestral
+
+
+[**VENTAJAS**]{.hl-green}
+
+* Suele ser un valor de la muestra
+* Un poco más robusta que la media
+
+
+. . .
+
+[**DESVENTAJAS**]{.hl-red}
+
+* Muy ineficiente (requiere un algoritmo de ordenación)
+* Solo definida para  cuantitativas o cualitativas ordinales
+
+---
+
+
+## Repaso: medidas de centralización
+
+* [**Moda**]{.hl-yellow}: dada una muestra $\boldsymbol{x} =\left(x_1, \ldots, x_n \right)$, la moda muestral se define como el **valor o valores más repetidos** (en caso de que existan).
+
+$$Mo_x = \arg \max_{x_i} f_i, \quad Mo_x = e_{i-1} + \frac{d_i - d_{i-1}}{\left(d_i - d_{i-1} \right) + \left(d_i - d_{i+1} \right)}a_i$$
+
+
+. . .
+
+[**Gráficamente**]{.hl-purple}: representa el «pico» de un diagrama de barras o un histograma
+
+---
+
+## Moda muestral
+
+
+[**VENTAJAS**]{.hl-green}
+
+* Es un valor de la muestra
+* Muy robusta
+* **Se puede calcular para cualquier** cuanti o cuali
+
+
+
+. . .
+
+[**DESVENTAJAS**]{.hl-red}
+
+* No siempre existe (amodal) y pueden existir varias (bimodal, trimodal, etc)
+* Poco usada en inferencia
+
+
+---
+
+## Repaso: medidas de centralización
+
+![](img/ine-salarios-oculto.jpg)
+
+**¿Cuál es la mediana, la media y la moda?**
+
+---
+
+## Repaso: medidas de centralización
+
+![](img/ine-salarios.jpg)
+
+---
+
+## Repaso: medidas de dispersión
+
+![](img/iker-jimenez.jpg)
+
+¿Qué tiene que ver la imagen con la dispersión?
+
+
+---
+
+## Repaso: medidas de dispersión
+
+![](img/extremos.jpg)
+
+El cambio climático no solo es porque aumente la [**temperatura media (centralización)**]{.hl-yellow} sino por la aparición cada vez más frecuente de fenómenos extremos 
+
+
+Aumento de la [**variabilidad**]{.hl-yellow} → aumento de la [**DISPERSIÓN**]{.hl-yellow}
+
+---
+
+## Repaso: medidas de dispersión
+
+[**¿Cómo medir lo que se alejan los datos de la media?**]{.hl-yellow}
+
+. . .
+
+![](img/primera-idea-varianza.jpg)
+
+Una **primera idea** podría ser [**medir la distancia de cada dato al centro**]{.hl-yellow}, es decir, restar cada dato de la media, y después realizar su promedio.
+
+---
+
+![](img/wait-for-it.jpg)
+
+---
+
+## Repaso: medidas de dispersión
+
+Imagina que tenemos la siguiente muestra $X = \left\lbrace -5, -3, -1, 0, 1, 3, 5 \right\rbrace$.
+
+**¿Cuánto vale la media?**
+
+. . .
+
+La media vale 0 y la distancia a ella es...la propia muestra $\left\lbrace -5, -3, -1, 0, 1, 3, 5 \right\rbrace$. **¿Cuál es el promedio de dichas distancias?**
+
+. . .
+
+Pues...de nuevo vale 0.
+
+. . .
+
+Si la dispersión es 0...[**¿no hay dispersión?**]{.hl-red} ¿No debería de dar 0 solo cuando los datos sean constantes?
+
+---
+
+## Repaso: medidas de dispersión
+
+Para **evitar que se cancelen** los signos lo que haremos será calcular el [**promedio PERO de las distancias al cuadrado**]{.hl-yellow}, la conocida como [**varianza**]{.hl-yellow}
+
+$$s_{x}^{2} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2 = \overline{x^2} - \overline{x}^2 $$
+
+. . .
+
+
+::: callout-warning
+# Cuidado
+
+Tomar el valor absoluto (para evitar que se cancelen los signos) suele ser una mala idea en matemáticas (no es derivable como función).
+:::
+
+---
+
+## Repaso: medidas de dispersión
+
+
+[**Problema**]{.hl-red}: si los datos están en metros, la varianza estará en...metros cuadrados
+
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+
+¿Tiene sentido medir la dispersión de nuestra estatura en baldosas?
+
+:::
+
+::: {.column width="50%"}
+
+![](img/albert-rivera.jpg)
+:::
+
+::::
+
+---
+
+## Repaso: medidas de dispersión
+
+Para tener una [**medida de dispersión en las unidades de los datos**]{.hl-yellow} calcularemos la [**desviación típica**]{.hl-yellow}, como la raíz cuadrada de la varianza
+
+$$s_{x} = \sqrt{s_{x}^{2}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2} = \sqrt{\overline{x^2} - \overline{x}^2}$$
+
+
+---
+
+## Repaso: medidas de dispersión
+
+Todavía tenemos un pequeño problema.
+
+Imagina que queremos **comparar la dispersión de dos conjuntos** de datos, estaturas de personas y diámetros de núcleos de células. Y Supongamos que las medias son 170 cm y 5 micrómetros, y la desviación típica de 1 cm y 1.5 micrómetros.
+
+[**¿Qué conjunto de datos es más disperso?**]{.hl-yellow}
+
+. . .
+
+Para tener una  **medida de dispersión adimensional** definiremos el [**coeficiente de variación**]{.hl-yellow} 
+
+$$CV_{x} = \frac{s_{x}}{\left| \overline{x} \right|}$$
+
+---
+
+## Repaso: medidas de localización
+
+Las [**medidas de posición o localización**]{.hl-yellow} nos localizan los datos, siendo valores que **nos dividen un conjunto ordenado** en subconjuntos del mismo tamaño (ejemplo: mediana es percentil 50).
+
+* **Percentil**: valores $P_{\alpha}$ del conjunto ordenado que dejan por debajo, al menos, el $\alpha$% de datos y $\alpha$% por encima.       
+* **Decil**: valores $D_{\alpha}$ que dividen los datos en 10 partes iguales.
+
+* **Cuartil**: valores $C_{\alpha}$ o $q_{\alpha}$ que dividen los datos en 4 partes iguales.
+
+---
+
+## Repaso: covarianza y correlación
+
+[**¿Qué es en realidad la varianza?**]{.hl-yellow}
+
+. . .
+
+La [**varianza es el promedio de las desviaciones al cuadrado**]{.hl-yellow} (respecto a la media), apareciendo dos veces dicha desviación: puede ser entendida como una [**medida que cuantifica la relación de una variable CONSIGO MISMA**]{.hl-yellow}
+
+. . .
+
+¿Y si quiésemos medir la [**RELACIÓN/ASOCIACIÓN de una variable X respecto a otra variable Y (en lugar de consigo misma)**]{.hl-yellow}?
+
+
+---
+
+## Repaso: covarianza y correlación
+
+$$s_{x}^{2} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2 = \overline{x^2} - \overline{x}^2 \quad \text{(varianza)}$$
+
+
+La idea detrás de la [**covarianza**]{.hl-yellow} es justo esa: sustituir una de esas desviaciones de la X por la desviación de la Y.
+
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
+
+---
+
+## Repaso: covarianza y correlación
+
+Es importante entender algunas [**propiedades de la covarianza**]{.hl-yellow}
+
+. . .
+
+* [**Signo**]{.hl-purple}: la covarianza puede ser tanto positiva como negativa como 0: al eliminar el cuadrado de la varianza, ya no es necesario que sea positiva
+
+
+. . .
+
+* [**¿Qué cuantifica?**]{.hl-purple} La covarianza mide la [**asociación LINEAL**]{.hl-red} (en torno a una recta) entre dos variables [**CONTINUAS**]{.hl-red}
+
+. . .
+
+* [**¿Qué dice su signo?**]{.hl-purple} El signo de la covarianza nos indicará la [**dirección de la dependencia lineal**]{.hl-yellow}: si es positiva, la relación será creciente (cuando X crece, Y crece); si es negativa, la relación será decreciente (cuando X crece, Y decrece)
+
+
+---
+
+## Repaso: covarianza y correlación
+
+Al igual que pasaba con la varianza, la [**covarianza depende de las unidades y magnitudes**]{.hl-yellow} de los datos, así que lo que haremos será [**estandarizar la covarianza**]{.hl-yellow}. Definiremos la [**coeficiente correlación lineal (de Pearson)**]{.hl-yellow} como la covarianza dividida entre el producto de las desviaciones típicas (adimensional)
+
+
+$$r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}$$
+
+. . .
+
+Tiene el [**mismo signo que la covarianza**]{.hl-yellow} (el denominador es siempre positivo) y sus [**valores siempre están entre -1 y 1**]{.hl-yellow}
+
+* más cerca de -1 o 1 → relación lineal más fuerte
+* más cerca de 0 → ausencia de relación **LINEAL**
+
+---
+
+## Repaso: covarianza y correlación
+
+![](img/correlaciones.jpg)
+
+
+---
+
+## 🐣 Caso práctico I: anscombe {#caso-practico-1-1}
+
+En el paquete `{datasets}` se encuentra el dataset conocido como [**cuarteto de Anscombe**]{.hl-yellow}, un dataset que cuenta con 4 conjuntos de datos.
+
+```{r}
+anscombe_tb <- as_tibble(datasets::anscombe)
+anscombe_tb
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe)
+
+
+# Clase 2: asociación entre variables {#clase-2}
+
+[**Causalidad vs dependencia. Asociación continua vs continua, cualitativa vs cualitativa (28 de enero de 2025)**]{style="color:#444442;"}
+
+
+---
+
+
+## Estadística bivariante
+
+Todo lo que hemos hecho con una variable podemos hacerlo también de manera [**bivariante**]{.hl-yellow} considerando dos variables.
+
+. . .
+
+Uno de los principales objetivos de la estadística bivariante es [**determinar si existe relación o dependencia entre dos variables**]{.hl-yellow}, es decir, cuando un cambio en el valor de una de ellas se asocia a un cambio en el de la otra (una [**dependencia estadística no implica un efecto causal**]{.hl-red}).
+
+. . .
+
+La situación contraria, es decir, la ausencia de relación, se denomina [**independencia**]{.hl-yellow}.
+
+
+---
+
+## Tipos de análisis posibles
+
+Una primera aproximación al estudio de dos variables será [**clasificar el tipo de análisis**]{.hl-yellow}
+
+- [**Cuali vs cuali**]{.hl-yellow}:
+  - **Resumen**: tablas de contigencia (frecuencia cruzada).
+  - **Inferencia**: prueba $\chi^2$ de independencia o test de Fisher.
+  - **Gráficos**: barras apiladas, gofres, gráficos de «flujo».
+
+---
+
+## Tipos de análisis posibles
+
+Una primera aproximación al estudio de dos variables será [**clasificar el tipo de análisis**]{.hl-yellow}
+
+
+- [**Cuani vs cuanti**]{.hl-yellow}:
+  - **Resumen**: covarianza y correlación.
+  - **Inferencia**: test de correlación (relación lineal) y test de Kolmogorov-Smirnov (¿ambas distribuciones son iguales?). Test de igualdad de medias o igualdad de varianzas
+  - **Gráficos**: diagrama de dispersión, correlogramas, heatmaps.
+
+---
+
+## Tipos de análisis posibles
+
+Una primera aproximación al estudio de dos variables será [**clasificar el tipo de análisis**]{.hl-yellow}
+
+
+- [**Cuanti vs cuali**]{.hl-yellow}:
+  - **Resumen**: medidas de centralización/dispersión/posición de la cuanti desagregado por los grupos de la cuali.
+  - **Inferencia**: ANOVA (una vía, dos vías, ...). Test de igualdad de medias o igualdad de varianzas (desagregada por grupos)
+  - **Gráficos**: boxplots, gráficos de violín (desagregados por grupos)
+
+
+---
+
+## Repaso: inferencia
+
+¿Pero que era eso de la [**inferencia estadística**]{.hl-yellow}? Es un conjunto de métodos y técnicas que permite [**inferir conclusiones sobre una población a partir de una muestra**]{.hl-yellow} de datos.
+
+. . .
+
+Su propósito es utilizar la información muestral para estimar características de la población, probar hipótesis y realizar predicciones, basado en el cálculo de [**estadísticos**]{.hl-yellow}
+
+-   [**Parámetro**]{.hl-yellow}: medida que describe una característica de la **población** (ejemplo: la media poblacional $\mu$ de la estatura de las mujeres en España).
+
+-   [**Estadístico**]{.hl-yellow}: medida que describe una característica de la **muestra** (ejemplo: la media muestral $\overline{x}$ de un conjunto de 100 mujeres).
+
+---
+
+## Repaso: inferencia
+
+Haciendo uso de **estadísticos que aproximen una correcta estimación de los parámetros**, los [**contraste de hipótesis**]{.hl-yellow} son procedimientos estadísticos para [**tomar decisiones sobre la validez de una afirmación acerca de una población**]{.hl-yellow} en función de los datos muestrales.
+
+. . .
+
+La idea es muy parecido a un **juicio**: con las pruebas (muestra) el jurado (estadístico) deben decidir sobre tu culpabilidad real (población), pudiendo ser declarado **culpable** o **no culpable**.
+
+. . .
+
+Este proceso implica formula
+
+-   [**Hipótesis nula** $H_0$]{.hl-yellow}: es una afirmación generalmente representa una **posición de no efecto o no diferencia** (ejemplo: entras siendo no culpable a un juicio)
+
+-   [**Hipótesis alternativa** $H_0$]{.hl-yellow}: es una afirmación que [**se acepta si se rechaza la hipótesis nula**]{.hl-yellow}. Representa un efecto o diferencia (ejemplo: culpable)
+
+---
+
+## Repaso: inferencia
+
+-   [**Hipótesis nula** $H_0$]{.hl-yellow}: es una afirmación generalmente representa una **posición de no efecto o no diferencia** (ejemplo: entras siendo no culpable a un juicio)
+
+-   [**Hipótesis alternativa** $H_1$]{.hl-yellow}: es una afirmación que [**se acepta si se rechaza la hipótesis nula**]{.hl-yellow}. Representa un efecto o diferencia (ejemplo: culpable)
+
+La idea es similar a la del juicio: solo vamos a [**rechazar $H_0$ (es decir, aceptar $H_1$) si hay MUCHAS EVIDENCIAS en la muestra**]{.hl-yellow} (solo se condena culpable a una persona si hay muchas evidencias que demuestran su culpabilidad, pero el acusado no tiene que demostrar su inocencia).
+
+. . .
+
+Llamaremos [**nivel de significancia** $\alpha$]{.hl-yellow} a la probabilidad de [**rechazar la hipótesis nula cuando es verdadera**]{.hl-red} (condenar a un inocente, conocido como **error tipo I**. Normalmente $\alpha = 0.05$ aunque se pueden usar otros valores como 0.01 o 0.10 (a decidir ANTES de realizar el contraste.)
+
+
+
+---
+
+## p valor
+
+El conocido como [**p-valor**]{.hl-yellow} es uno de los conceptos más importantes en estadística pero también peor usados. Puedes ver toda una revisión de qué significa y qué no en <https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/>
+
+. . .
+
+Podemos definir el [**p-valor**]{.hl-yellow} como un valor continuo que nos mide la [**compatibilidad de los datos observados con el modelo e hipótesis asumidas**]{.hl-yellow}: 1 indica compatibilidad perfecta y 0 incompatibilidad completa.
+
+* [**No repesenta la probabilidad de que la hipótesis nula sea cierta**]{.hl-red}: el propio p-valor se calcula ASUMIENDO que lo es.
+
+* [**No representa la probabilidad de que, por azar, se produzca nada**]{.hl-red}
+
+---
+
+## Asociación cuali vs cuali
+
+Una vez visto conceptos básicos de inferencia vamos a empezar por un [**análisis bivariante de dos variables cualitativas**]{.hl-yellow}
+
+. . .
+
+El primer paso siempre será intentar resumir la información mediante el uso de [**tablas de contigencia**]{.hl-yellow}, en este caso bidimensionales.
+
+. . .
+
+¿Cómo lo harías con **tidyverse**? ¿Y con **R base**?
+
+---
+
+## Tablas de contigencia
+
+Vamos a tomar la base de datos `SatisfaccionPacientes.csv` que captura datos de una encuesta de satisfacción de pacientes en un hospital
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+---
+
+## Tablas de contigencia
+
+Para calcular una [**tabla bidimensional de frecuencias**]{.hl-yellow} en tidyverse basta con **indicar dos variables en `count()`**
+
+```{r}
+datos |>
+  count(genero, estado_civil)
+```
+
+---
+
+## Tablas de contigencia
+
+Lo habitual es mostrar esta tabla como una [**tabla con m filas y n columnas**]{.hl-yellow}, siendo $m$ el número de modalidades distintas de la primera variable (en este caso $m=2$, femenino y masculino) y $n$ el número de modalidades distintas de la segunda variable (en este caso $n = 4$). 
+
+¿Cómo hacer que la variable `estado_civil` pivote para pasar de estar en vertical a estar «en horizontal»? (echa un repaso a la parte de tidy data)
+
+. . .
+
+```{r}
+datos |>
+  count(genero, estado_civil) |> 
+  pivot_wider(names_from = estado_civil, values_from = n)
+```
+
+---
+
+## Tablas de contigencia
+
+
+Esto se puede hacer **mucho más sencillo de nuevo en `R base`** con `table()`
+
+
+```{r}
+table(datos$genero, datos$estado_civil)
+```
+
+---
+
+## Tablas de contigencia
+
+
+Fíjate que ahora podemos [**normalizar las frecuencias de 3 formas**]{.hl-yellow}: respecto al total de los datos, por filas (`margin = 1`) o por columnas (`margin = 2`).
+
+```{r}
+prop.table(table(datos$genero, datos$estado_civil))
+prop.table(table(datos$genero, datos$estado_civil), margin = 1)
+prop.table(table(datos$genero, datos$estado_civil), margin = 2)
+
+```
+
+---
+
+## Tablas de contigencia
+
+Haciendo uso de las tablas anteriores intenta responder a las siguientes preguntas:
+
+a) ¿Qué cantidad de pacientes mujeres están solteras?
+
+b) ¿Qué porcentaje, de entre los pacientes hombres, están viudos?
+
+c) ¿Qué porcentaje, de entre los que están divorciados, son mujeres?
+
+d) ¿Qué porcentaje (del total de pacientes) son hombres solteros?
+
+
+```{r}
+#| code-fold: true
+# a) 22 mujeres
+# b) 8.51%
+# c) 57.89%
+# d) 20%
+```
+
+
+---
+
+## Tablas de contigencia
+
+Puedes incluso visualizar dichas cantidades con `geom_tile()` indicándole que el relleno dependa del conteo `n`
+
+```{r}
+datos |>
+  count(genero, estado_civil) |>
+  ggplot() +
+  geom_tile(aes(x = genero, y = estado_civil, fill = n)) +
+  theme_minimal()
+```
+
+---
+
+## 💻 Tu turno {#tu-turno-2-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+Para repasar lo aprendido vamos a poner todo en práctica con el dataset `SatisfaccionPacientes.csv`. 
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+```
+
+
+📝 Aplica el código que sea necesario para responder a estas preguntas. ¿Cuál es el tamaño muestral? ¿Cuántas variables tenemos? ¿Cuántas modalidades tenemos en la variable `estado_civil` (y cuantas observaciones en cada una)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Tamaño muestral / número de observaciones
+n <- nrow(datos)
+
+# Número de variables
+p <- ncol(datos)
+
+# ¿Qué modalidades tenemos?
+datos |>  count(estado_civil)
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Determina el tipo de variable (cuantitativa vs. cualitativa).
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Variables cuantitativas: tiempo, grado satisfacción, número de visitas
+# Variables cualitativas: género, estado civil, estado salud
+glimpse(datos)
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝  Obten tablas de frecuencias (absoluta y relativa) en el caso de las cualitativas NOMINALES. Con ella intenta responder a las preguntas: a) ¿cuántas mujeres hay? b) ¿qué % de individuos están casados?
+
+```{r}
+#| code-fold: true
+#| eval: false
+# no podemos calcular acumulados ya que genero es nominal
+datos |>  count(genero) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 53 mujeres
+
+datos |> count(estado_civil) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 26% personas casadas
+```
+
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Convierte de manera adecuada la variable `genero` y `estado_civil` a cualitativa nominal
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_civil = factor(estado_civil),
+         genero = factor(genero))
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Calcula la media, mediana, rango intercuartílico y desviación típica de edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25))
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+📝 Repite el anterior ejercicio pero obteniendo las métricas desagregadas por sexo.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25),
+          .by = genero)
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Realiza un gráfico de violín para la variable `tiempo_espera` para cada género
+
+```{r}
+#| code-fold: true
+#| eval: false
+ggplot(datos) +
+  geom_violin(aes(x = genero, y = tiempo_espera, fill = genero, color = genero),
+              alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+:::
+
+---
+
+## 🐣 Caso práctico I: encuesta de satisfacción {#caso-practico-2-1}
+
+Vamos a seguir poniendo en práctica lo aprendido el dataset `SatisfaccionPacientes.csv`
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
+
+
+---
+
+## Asociación cuali vs cuali
+
+Esas tablas de frecuencia serán las que usen los [**diferentes contrastes de asociación cuali vs cuali**]{.hl-yellow} para decidir si hay o no dependencia.
+
+&nbsp;
+
+El contraste más conocido es la conocida como [**prueba de $\chi^2$ (chi-cuadrado)**]{.hl-yellow}: dada una tabla de contigencia entre dos cualitativas, el contraste [**compara dicha tabla con la que deberíamos obtener bajo la hipótesis nula de independencia**]{.hl-yellow}
+
+Vamos a hacerlo con nuestras variables `genero` y `estado_civil`
+
+---
+
+## Prueba chi-cuadrado
+
+$$H_0:~\text{genero y estado civil son independientes}$$
+
+$$H_1:~\text{genero y estado civil son dependientes}$$
+
+```{r}
+table(datos$genero, datos$estado_civil)
+```
+
+. . .
+
+[**Si la hipótesis nula fuese cierta**]{.hl-yellow}, ¿qué esperaríamos?
+
+---
+
+## Prueba chi-cuadrado
+
+1. Elegimos uno de los factores y calculamos su **proporción en la tabla general** (53% vs 47% en este caso)
+
+```{r}
+prop.table(table(datos$genero))
+```
+
+. . .
+
+2. Calculamos la **tabla de contigencia**  de ambas variables obteniendo lo que denotaremos como [**frecuencias observadas $O_{ij}$**]{.hl-yellow}
+
+```{r}
+table(datos$genero, datos$estado_civil)
+```
+
+---
+
+## Prueba chi-cuadrado
+
+
+3. **Si ambas variables fuesen independientes**, en cada columna tendríamos que tener **porcentajes parecidos a cuando lo hacemos sin desagregar** (53% mujeres y 47% hombres). Es decir, del total de casados (26) deberíamos tener $8.48$ mujeres y $7.52$ hombres; del total de divorciados (19) deberíamos tener $10.07$ mujeres y $8.93$ hombres; y así sucesivamente. Estas frecuencias las denotaremos como [**frecuencias esperadas $E_{ij}$**]{.hl-yellow}
+
+$$E_{ij} = \frac{\text{suma fila i * suma fila j}}{\text{total}}$$
+
+
+---
+
+## Prueba chi-cuadrado
+
+
+4. [**Resumimos lo que se desvía una de otra**]{.hl-yellow} mediante el [**estadístico chi-cuadrado**]{.hl-yellow}:
+
+$$\begin{eqnarray}\chi^2 &=& \sum_{i,j} \frac{\left(O_{ij} - E_{ij} \right)^2}{E_{ij}} = \frac{(13.78 - 11)^2}{13.78} + \frac{(12.22 - 15)^2}{12.22} \nonumber \\
+&+& \frac{(10.07 - 11)^2}{10.07} + \ldots + \frac{(6.11 - 4)^2}{6.11} = 2.75731\end{eqnarray}$$
+
+. . .
+
+
+5. Calculamos [**cómo de extremo es el valor del estadístico si la hipótesis nula fuese cierta**]{.hl-yellow}, proporcionándonos un **p-valor**.
+
+---
+
+## Prueba chi-cuadrado
+
+Este proceso podemos hacerlo directamente aplicando `chisq.test()`, indicándole las variables (o su tabla de frecuencias)
+
+```{r}
+contraste <- chisq.test(datos$genero, datos$estado_civil)
+```
+
+* `...$statistic`: tenemos guardado el valor del estadístico
+
+```{r}
+contraste$statistic
+```
+
+* `...$observed`: tenemos guardada la tabla de frecuencias observada
+
+```{r}
+contraste$observed
+```
+
+---
+
+## Prueba chi-cuadrado
+
+
+* `...$expected`: tenemos guardada la tabla de frecuencias esperada
+
+```{r}
+contraste$expected
+```
+
+* `...$p.value`: tenemos guardado el p-valor.
+
+```{r}
+contraste$p.value
+```
+
+---
+
+## Prueba chi-cuadrado
+
+
+¿Cómo [**interpretar el contraste**]{.hl-yellow}?
+
+```{r}
+contraste
+```
+
+Como $p.value = 0.4306 > \alpha = 0.05$, no podemos rechazar la hipótesis nula: [**no hay evidencias suficientes en la muestra para concluir que haya dependencia**]{.hl-yellow}.
+
+---
+
+## Prueba de Fisher
+
+Otra alternativa es el [**test exacto de Fisher**]{.hl-yellow}, una prueba estadística utilizada para [**determinar si hay una asociación significativa entre dos variables cualitativas**]{.hl-yellow} especialmente útil cuando las frecuencias esperadas son bajas y tenemos dos grupos en cada cualitativa (la tabla de frecuencias es $2 \times 2$).
+
+&nbsp;
+
+Como **curiosidad** dicha prueba nació cuando Fisher trataba de comprobar si una compañera, Muriel Birstol, era capaz de detectar en un té con leche si se había añadido primero el té o la leche en su taza (y del experiemnto del que nació la regla del $\alpha = 5%$).
+
+. . .
+
+Para aplicarlo nos basta con usar `fisher.test()`.
+
+```{r}
+fisher.test(datos$genero, datos$estado_civil)
+```
+
+---
+
+## Prueba de Fisher
+
+Como hemos dicho es especialmente útil cuando tenemos solo 2 modalidades en cada cualitativa ya que nos proporciona [**métricas de asociación**]{.hl-yellow}
+
+Veamos un ejemplo con la tabla `placebo_medicamento.csv`
+
+```{r}
+datos_placebo <- read_csv(file = "./datos/placebo_medicamento.csv")
+datos_placebo
+```
+
+---
+
+## Prueba de Fisher
+
+
+```{r}
+fisher.test(datos_placebo$observado, datos_placebo$grupo_tratamiento)
+```
+
+Si te fijas ahora nos devuelve además un [**contraste de lo que se conoce como odds ratio (OR: razón de probabilidades)**]{.hl-yellow}
+
+`alternative hypothesis: true odds ratio is not equal to 1`
+
+
+---
+
+## Métricas de asociación
+
+```{r}
+table(datos_placebo$observado, datos_placebo$grupo_tratamiento)
+```
+
+La interpretación de [**Odds ratio (OR)**]{.hl-yellow} es cuantificar la [**asociación entre dos variables respecto a una asociación espúrea**]{.hl-yellow} ¿Cuánto [**mejoran los que tomaron medicamento respecto a una posible mejora basal**]{.hl-yellow} (aleatoria) del placebo?
+
+* [**Ratio de mejora en tratados**]{.hl-purple}: $13/3 = 4.33333$
+* [**Ratio de mejora en placebo**]{.hl-purple}: $6/11 = 0.54545$
+
+$$OR = \frac{13/3}{6/11} = \frac{13*11}{6*3} = 7.94$$
+
+Los pacientes sometidos a tratamiento mejoran 7.9 veces más si el placebo mejorase por azar.
+
+---
+
+## Métricas de asociación
+
+```{r}
+table(datos_placebo$observado, datos_placebo$grupo_tratamiento)
+```
+
+Otra de las métricas habituales es la conocida como [**razón de prevalencias (Risk Ratio, RR)**]{.hl-yellow} que nos proporciona un [**ratio entre la probabilidad de prevalencia**]{.hl-yellow} de un evento en dos grupos.
+
+
+* [**Prevalencia de mejora en tratados**]{.hl-purple}: $13/(3+13) = 0.8125$
+* [**Prevalencia de mejora en placebo**]{.hl-purple}: $6/(11+6) = 0.35294$
+
+$$RR = \frac{13/(3+13)}{6/(11+6)} = \frac{13*11}{6*3} = 2.30208$$
+Los pacientes sometidos a tratamiento tienen más del doble de «riesgo» de mejorar que los pacientes con placebo.
+
+---
+
+## Métricas de asociación
+
+Ambas métricas podemos estimarlas también con el paquete `{epitools}`
+
+```{r}
+library(epitools)
+OR <- oddsratio(datos_placebo$observado, datos_placebo$grupo_tratamiento)
+OR$measure
+```
+
+* Si $OR = 1$ no hay asociación entre las variables.
+* Si $OR > 1$ hay una asociación positiva, es decir, la exposición está asociada con un mayor riesgo.
+* Si $OR < 1$ hay una asociación negativa, es decir, la exposición está asociada con un menor riesgo.
+
+
+---
+
+## Métricas de asociación
+
+
+```{r}
+RR <- riskratio(datos_placebo$observado, datos_placebo$grupo_tratamiento)
+RR$measure
+```
+
+
+* Si $RR = 1$ no hay diferencias en el riesgo entre los grupos.
+* Si $RR > 1$ el grupo expuesto (en este caso medicado) tiene mayor riesgo (en este caso de mejorar)
+* Si $RR < 1$ el grupo expuesto tiene menor riesgo.
+
+---
+
+## Gráficos de barras
+
+Volvamos al ejemplo de encuesta de satisfacción: vamos a intentar relacionar las dos variables cualitativas `genero` y `estado_civil` para **complementar el análisis numérico realizado** (amén del `geom_tile()` que hemos hecho para visualizar la tabla de frecuencias)
+
+. . .
+
+Sabemos realizar un diagrama de barras de cada una por separado, [**¿cómo incluir la información de ambas con `geom_bar()`**]{.hl-yellow}
+
+. . .
+
+Piensa cómo hacerlo recordando que `geom_bar()` solo admite una coordenada `x = ...` o `y = ...`. ¿Cómo incluir la info de otra variable que no sea en `x` o `y`?
+
+---
+
+## Gráficos de barras
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = estado_civil, fill = genero), alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  labs(x = "Estado civil", y = "Frec. absolutas",
+       fill = "Género") +
+  theme_minimal()
+```
+
+---
+
+## Gráficos de barras
+
+La función `geom_bar()` nos permite jugar un poco con el tipo de barras, que por defecto las muestra `stacked` (apiladas). Dicho ajuste podemos **cambiarlo con el argumento `position`**: si `position = "dodge"` las muestra de [**manera agrupada una detrás de otra**]{.hl-yellow}.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = estado_civil, fill = genero),
+           position = "dodge", alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  labs(x = "Estado civil", y = "Frec. absolutas",
+       fill = "Género") +
+  theme_minimal()
+```
+
+---
+
+## Gráficos de barras
+
+La mejor opción para visualizar si hay asociación es que **cada barra de estado civil representa el total y nos muestre el % de cada sexo** en cada una: si fuesen independientes, el reparto por sexo en cada barra debería ser similar. Lo haremos con `position = "fill"`
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(x = estado_civil, fill = genero),
+           position = "fill", alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  labs(x = "Estado civil", y = "Frec. relativas",
+       fill = "Género") +
+  theme_minimal()
+```
+
+
+---
+
+## Gráficos de barras
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_bar(aes(y = estado_civil, fill = genero),
+           position = "fill", alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  labs(x = "Estado civil", y = "Frec. relativas",
+       fill = "Género") +
+  theme_minimal()
+```
+
+
+---
+
+## 💻 Tu turno {#tu-turno-2-2}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+📝 Carga el fichero `placebo_medicamento_completo.csv` donde tenemos guardado los niveles de colesterol antes y después de un tratamiento: a 76 personas se les dio un medicamento para bajarlo y a 24 personas placebo.
+
+```{r}
+#| code-fold: true
+datos <- read_csv(file = "./datos/placebo_medicamento_completo.csv")
+```
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Añade una nueva variable dicotómica a los datos que nos guarde `mejora` si el paciente mejoró tras el tratamiento y `no mejora` en caso negativo
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |> 
+  mutate("mejora" = if_else(colesterol_post <= colesterol_pre, "mejora",
+                            "no mejora"))
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Visualiza ambas variables (`mejora` y `tratamiento`) a la vez con un diagrama de barras de manera que podamos observar indicios de una posible independencia o dependencia entre ambas. Hazlo antes a papel y boli si lo necesitas
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# así pintaríamos en cada barra de tratamiento los mejora o no mejora
+ggplot(datos) +
+  geom_bar(aes(x = tratamiento, fill = mejora), alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+
+# pero dado que tienes más tratados que del grupo control
+# no permite comparar bien así que igualamos las barras
+# para que cada barra sea el 100% de su categoría
+ggplot(datos) +
+  geom_bar(aes(x = tratamiento, fill = mejora), alpha = 0.6,
+           position = "fill") +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+
+# Parece evidente visualmente que hay una diferencia entre mejora y no mejora
+# en cada barra
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Calcula la tabla de frecuencias absoluta y relativa que consideres necesarias para responder a las siguientes preguntas:
+
+a) ¿Cuántas personas de las tratadas con medicamento no mejoraron?
+
+b) ¿Qué de personas del total del estudio acabaron mejorando habiendo tomando placebo?
+
+c) ¿Qué % de personas tomó medicamentos entre los que no mejoraron?
+
+d) ¿Qué % de personas de los que tomaron medicamento mejoraron?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table(datos$tratamiento, datos$mejora)
+prop.table(table(datos$tratamiento, datos$mejora))
+prop.table(table(datos$tratamiento, datos$mejora), margin = 1)
+prop.table(table(datos$tratamiento, datos$mejora), margin = 2)
+# 9 personas de las tratadas con medicamento no mejoraron
+# 9% del total de personas mejoraron y tomaron placebo
+# 37% de los que no mejoraron habían tomado la medicación
+# 88.1% de los que tomaron medicamento mejoraron
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 Para confirmar y cuantificar las evidencias que ya tenemos, vamos a realizar un contraste de hipótesis. Realiza la prueba de chi-cuadrado e interpreta el resultado con $\alpha = 0.05$.
+
+```{r}
+#| code-fold: true
+#| eval: false
+chisq.test(datos$tratamiento, datos$mejora)
+# Dado que p-value = 1.654e-06 << alpha --> debemos rechazar la hipótesis nula -->
+# hay evidencias suficientes para afirmar que hay relación de dependencia
+```
+
+### [**Ejercicio 6**]{.hl-yellow}
+
+
+> Realiza la prueba de chi-cuadrado y Fisher e incluye los p-valores en una tabla resumen haciendo uso de tidyverse. Exporta a un `.csv` dicha tabla resumen
+
+```{r}
+#| code-fold: true
+resumen_pvalores <-
+  datos |> 
+  summarise("sig_chisq" = chisq.test(datos$tratamiento, datos$mejora)$p.value,
+            "sig_fisher" = fisher.test(datos$tratamiento, datos$mejora)$p.value)
+write_csv(resumen_pvalores, file = "./datos/resumen_pvalores.csv")
+```
+
+### [**Ejercicio 7**]{.hl-yellow}
+
+📝 Realiza la prueba de Fisher y mira la salida completa. Interpreta la salida, no solo del contraste sino de los odd ratio.
+
+```{r}
+#| code-fold: true
+fisher.test(datos$tratamiento, datos$mejora)
+
+# OR estimado es de 11.95 --> al ser mayor que 1 implica que
+# hay una asociación positiva entre las variables
+# hay 12 veces más opciones de que te baje el colesterol si tomas el
+# medicamento respecto a una posible mejora aleatoria (porque sí).
+```
+
+:::
+
+---
+
+
+## 🐣 Caso práctico II: bronquitis y tabaco {#caso-practico-2-2}
+
+Vamos a cargar el archivo de datos `fumadores.csv` donde tenemos datos de 96 pacientes sobre sí o fuman y quienes han desarrollado o no bronquitis.
+
+```{r}
+datos <- read_csv(file = "./datos/fumadores.csv")
+datos
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco)
+
+
+---
+
+
+## 🐣 Caso práctico III: salud mental {#caso-practico-2-3}
+
+Esta la base de datos `datos_salud_mental.csv` tenemos información recopilada de 100 pacientes que acuden a un centro de salud mental. Se quiere realizar un estudio para ver el **impacto que tienen distintas características sobre la ansiedad y depresión** en estos 100 pacientes. Los datos incluyen una variedad de variables relacionadas con la salud mental, así como características demográficas y de estilo de vida.
+
+```{r}
+datos <-
+  read_csv(file = "./datos/datos_salud_mental.csv") |> 
+  janitor::clean_names()
+```
+
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental)
+
+
+---
+
+## Asociación cuanti vs cuanti
+
+
+Como decíamos, la idea detrás de la [**covarianza**]{.hl-yellow} es una "varianza" entre dos variales (la varianza es una covarianza de una variable consigo misma), midiendo el **promedio de lo que se desvía cada una respecto a su media**
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
+
+. . .
+
+Para calcularla en `R` basta con usar la función `cov()`
+
+```{r}
+starwars |> 
+  drop_na(mass, height) |> 
+  summarise(cov(mass, height))
+```
+
+---
+
+## Correlación lineal
+
+Vamos a practicar una vez más como [**hacerlo a mano con el siguiente ejercicio**]{.hl-yellow}.
+
+---
+
+## Correlación lineal
+
+En la tabla inferior se han recopilado (del 2013 al 2022) la **temperatura media en el mes de abril en Madrid (variable X, en ºC)** y el **número de días (variable Y) en el que el nivel de ozono superó las 0.20 ppm (partes por millón)**
+
+* ¿Cuál fue media de días en los que se superó umbral de ozono de 0.20 ppm?
+* ¿Cuál fue media de días en los que se superó umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?
+* ¿Cuál es su covarianza?
+
+![](img/tabla-ej-covarianza-sin-agrupar.png)
+
+---
+
+
+## Correlación lineal
+
+Repite el ejercicio con pocas líneas de código `R`
+
+* ¿Cuál fue la media de días en los que se superó el umbral de ozono de 0.20 ppm?
+* ¿Cuál fue la media de días en los que se superó el umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?
+* ¿Cuál es su covarianza?
+
+![](img/tabla-ej-covarianza-sin-agrupar.png)
+
+
+---
+
+
+## Correlación lineal
+Realiza lo que consideres tanto a mano como en `R`
+
+* ¿Existe alguna **relación de dependencia entre las variables**? ¿De qué tipo? ¿Cómo de fuerte o débil es dicha relación? ¿En qué dirección es dicha relación?
+
+
+$$s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}$$
+
+$$r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}$$
+
+---
+
+## Correlación lineal
+
+No sé si te has fijado qué sucede cuando intentamos [**calcular la covarianza/correlación de varias variables**]{.hl-yellow}, por ejemplo vamos a calcular la (cuasi)covarianza de todas las variables numéricas de starwars.
+
+. . .
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cov()
+```
+
+. . .
+
+Podemos usar la función `cov()` sin más, fuera de un resumen, obteniendo lo que se conoce como [**matriz de (cuasi)covarianzas**]{.hl-yellow} y que tendrá un papel fundamental en estadística ya que contiene la información (= varianza) del dataset.
+
+---
+
+## Matriz de covarianzas
+
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cov()
+```
+
+Además de ser [**simétrica**]{.hl-yellow}...¿qué tenemos en la [**diagonal**]{.hl-yellow}?
+
+. . .
+
+La [**matriz de (cuasi)covarianzas**]{.hl-yellow} se denota como $\Sigma$ y sus elementos se define como $\Sigma_{ii} = s_{x_i}^{2}$ para la diagonal y $\Sigma_{ij} = \Sigma_{ji} = s_{x_i x_j}$ fuera de ella.
+
+. . .
+
+::: callout-important
+## Importante
+
+Recuerda que los softwares estadísticos nos devuelven siempre la [**cuasi covarianza**]{.hl-purple}, dividido entre $n-1$ y no entre $n$. La cuasivarianza y la cuasicovarianza son los [**mejores estimadores muestrales (insesgados)**]{.hl-yellow} de los respectivos parámetros poblaciones
+
+:::
+
+---
+
+## Matriz de correlaciones
+
+De la misma manera con `cor()` podemos [**calcular la matriz de correlaciones**]{.hl-yellow} (en este caso sin el `cuasi` ya que se cancelan denominadores)
+
+. . .
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |>
+  cor()
+```
+
+. . .
+
+La [**matriz de correlaciones**]{.hl-yellow} se denota como $R$ y sus elementos se define como $r_{ii} = 1$ para la diagonal y $r_{ij} = r_{x_ix_j}$ fuera de ella, y nos proporciona la dependencia lineal entre variables ya de manera **estandarizada**.
+
+---
+
+## Matriz de correlaciones
+
+[**¿Se te ocurre alguna manera de calcular la matriz de correlaciones a partir de la de covarianzas?**]{.hl-yellow}
+
+
+
+---
+
+## Correlación vs dependencia
+
+
+Podemos tener [**variables incorreladas**]{.hl-red}, con correlación nula, pero que [**exista dependencia entre ellas**]{.hl-green}: la covarianza/correlación [**SOLO CAPTURA relaciones lineales**]{.hl-yellow}, nada más.
+
+. . .
+
+Veamos un ejemplo sencillo con $X = \left\lbrace -1, 0, 1 \right\rbrace$ y $Y = X^2 =  \left\lbrace 1, 0, 1 \right\rbrace$. 
+
+* La media de ambas es nula
+* La media del producto es la media de $XY = \left\lbrace -1, 0, 1 \right\rbrace$, que es de nuevo nula
+* Así la covarianza $\overline{x*y} - \overline{x}*\overline{y}$ es nula a pesar de tener la mayor dependencia posible (dependencia funcional)
+
+---
+
+## Correlación vs dependencia
+
+![](img/covarianza-no-lineal.png)
+
+En relaciones no lineales como la de la imagen, la **correlación estará cercana a cero** (ya que no hay relación lineal) pero existe una [**dependencia**]{.hl-yellow}. Diremos que [**dos variables son dependientes entre sí**]{.hl-yellow} cuando existe un **patrón numérico que las relaciona**
+
+. . .
+
+* [**Independencia implica incorrelación**]{.hl-green}
+* [**Incorrelación NO implica independencia**]{.hl-red}
+
+---
+
+## Correlación vs dependencia
+
+![](img/escenarios-covarianza.png)
+
+---
+
+
+## Test de correlaciones
+
+¿Pero cómo saber que la correlación observada es suficientemente pequeña para considerarse incorreladas?
+
+. . .
+
+Con un [**contraste de correlaciones**]{.hl-yellow} haciendo uso de `cor.test()`
+
+
+```{r}
+cor.test(starwars$mass, starwars$height)
+```
+
+
+---
+
+## Otras correlaciones
+
+La [**correlación de Pearson**]{.hl-yellow} asume que las [**variables están distribuidas normalmente**]{.hl-green}, en caso de existir asociación tienen una relación lineal y no tienen valores atípicos.
+
+. . .
+
+Por ello existen dos alternativas: [**correlación de Spearman**]{.hl-yellow} y [**correlación de Kendall**]{.hl-yellow} 
+
+---
+
+## Correlación de Spearman
+
+El [**coeficiente de correlación de Spearman**]{hl-yellow} cuantifica de manera no paramétrica la interdependencia entre dos variables aleatorias (tanto continuas como discretas). Cuantifica el [**grado de asociación monótona entre dos variables ordinales o continuas**]{.hl-yellow} 
+
+$$\rho =1-\frac{6\sum D^{2}}{n (n^{2}-1)}$$
+
+donde $D$ es la diferencia entre los correspondientes estadísticos de orden de $x - y$.
+
+```{r}
+starwars |> 
+  select(where(is.numeric)) |> 
+  drop_na() |> 
+  cor(method = "spearman")
+```
+
+
+---
+
+## Tau de Kendall
+
+
+El [**coeficiente de correlación de rango de Kendall**]{.hl-yellow} ($\tau$ de Kendall) cuantifica la [**asociación ordinal de variables cualitativas**]{.hl-yellow} de manera no paramétrica. 
+
+. . .
+
+Dados $\left(x_1, y_1\right), \ldots, \left(x_n, y_n\right)$ un conjunto de observaciones, se dice  que $\left(x_{i},y_{i}\right)$ y $\left(x_{j},y_{j}\right)$ (con $i < j$) son un [**par concordante**]{.hl-yellow} si el orden de clasificación coincide ($x_i < x_j,~y_i < y_j$ o bien $x_j < x_i,~y_j < y_i$) 
+
+$$\tau =\frac{\text{n pares concordantes} - \text{n pares discordantes}}{n \choose 2}$$
+
+
+---
+
+## 💻 Tu turno {#tu-turno-2-3}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+### [**Ejercicio 1**]{.hl-yellow}
+
+Vamos a tomar de nuevo nuestros datos de satisfacción de pacientes
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+📝 Obtén la matriz de correlaciones haciendo uso de `cor()`. Luego haz uso de `correlate()` del paquete `{corrr}`
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  select(where(is.numeric)) |> 
+  cor()
+
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+```
+
+
+
+### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Analiza y argumenta, en función de los resultados anteriores, la asociación entre `edad` y `grado_satisfaccion`, y entre `tiempo_espera` y `grado_satisfaccion`
+
+```{r}
+#| code-fold: true
+# Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$) pero `tiempo_espera` tiene una correlación negativa ($-0.586$) con `grado_satisfaccion`.
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
+
+📝 Con el paquete `{corrplot}` visualiza la matriz de correlaciones
+
+```{r}
+#| code-fold: true
+datos |> 
+  select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot::corrplot(method = "square")
+```
+
+### [**Ejercicio 4**]{.hl-yellow}
+
+📝 Investiga el paquete `{GGally}` y a función `ggpairs()` para visualizar las correlaciones de todas las variables (salvo `id`)
+
+```{r}
+#| code-fold: true
+library(GGally)
+ggpairs(datos |> select(-id)) +
+  theme_minimal()
+
+# cuali vs cuali: pictogramas (con rectángulos)
+# cuanti vs cuanti: scatter plot
+# cuanti vs cuali: boxplot desagregados
+# variable vs sí misma: densidad
+```
+
+### [**Ejercicio 5**]{.hl-yellow}
+
+📝 ¿Cómo saber que la correlación observada entre `edad` y `grado_satisfaccion` ($-0.0339$) es suficientemente pequeña para considerarse incorreladas? ¿Cómo saber si la correlación entre `tiempo_espera` y `grado_satisfaccion` ($-0.586$) es suficientemente grande para considerar que es **significativa**?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+cor.test(datos$edad, datos$grado_satisfaccion)
+cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
+
+# En uno el p-valor es bastante alto (**no rechazamos la hipótesis nula de incorrelación**) y en otro el p-valor es prácticamente 0 (rechazamos la hipótesis nula ->  **hay evidencias de correlación significativa**).
+```
+
+
+:::
+
+
+
+# Clase 3: análisis de la varianza {#clase-3}
+
+[**Asociación cuali vs cuanti: análisis de la varianza  (30 de enero de 2025)**]{style="color:#444442;"}
+
+---
+
+## ...
+
+# Clase 4: análisis de la varianza {#clase-4}
+
+[**Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)**]{style="color:#444442;"}
+
+---
+
+## ...
+
+
+
+
+

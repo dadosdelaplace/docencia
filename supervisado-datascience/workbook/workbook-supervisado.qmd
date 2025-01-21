@@ -1,0 +1,626 @@
+---
+title: "Aprendizaje supervisado: modelos lineales"
+subtitle: "Workbooks de la asignatura Aprendizaje Supervisado I"
+author: "Javier Álvarez Liébana"
+format:
+  html:
+    theme: [default, style.scss]
+    toc: true
+    toc-title: Índice
+    toc-depth: 5
+    toc-location: left
+    number-sections: true
+embed-resources: true
+execute: 
+  echo: true
+---
+
+```{r}
+#| echo: false
+setwd(dir = getwd())
+```
+
+## Clase 1
+
+### 🐣 Caso práctico I: anscombe
+
+
+En el paquete `{datasets}` se encuentra el dataset conocido como [**cuarteto de Anscombe**]{.hl-yellow}, un dataset que cuenta con 4 conjuntos de datos, cada uno de ellos cuenta con 11 observaciones de una variable x y otra y.
+
+```{r}
+library(tidyverse)
+anscombe_tb <- as_tibble(datasets::anscombe)
+anscombe_tb
+```
+
+
+#### Pregunta 1
+
+
+> Convierte a tidy data. Debes acabar con un dataset de 44 filas (11 valores para cada dataset) y 3 columnas (dataset, x e y)
+
+```{r}
+#| code-fold: true
+anscombe_x <- 
+  anscombe_tb |>
+  pivot_longer(cols = x1:x4, names_to = "dataset", values_to = "x",
+               names_prefix = "x") |>
+  select(-contains("y"))
+
+anscombe_y <- 
+  anscombe_tb |>
+  pivot_longer(cols = y1:y4, names_to = "dataset", values_to = "y",
+               names_prefix = "y") |>
+  select(-contains("x"))
+
+anscombe_tidy <-
+  anscombe_x |>
+  mutate("y" = anscombe_y$y)
+anscombe_tidy
+```
+
+#### Pregunta 2
+
+
+> Calcula la media, varianza, desv. típica de x e y en cada dataset por separado
+
+```{r}
+#| code-fold: true
+#| eval: false
+anscombe_tidy |> 
+  summarise(mean_x = mean(x), mean_y = mean(y),
+            var_x = var(x), var_y = var(y),
+            sd_x = sd(x), sd_y = sd(y),
+            .by = dataset)
+```
+
+#### Pregunta 3
+
+
+> Calcula la covarianza y correlación entre x e y en cada dataset
+
+```{r}
+#| code-fold: true
+#| eval: false
+anscombe_tidy |> 
+  summarise(cov = cov(x, y), cor = cor(x, y),
+            .by = dataset)
+```
+
+
+#### Pregunta 4
+
+
+> Si te fijas todos los datasets tienen los mismos momentos muestrales ... ¿serán el mismo dataset desordenado? Visualiza los 4 datasets en el mismo gráfico mediante un diagrama de dispersión con su ajuste de regresión
+
+```{r}
+#| code-fold: true
+ggplot(anscombe_tidy, aes(x = x, y = y, color = dataset)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggthemes::scale_color_colorblind() +
+  facet_wrap(~dataset) +
+  theme_minimal()
+```
+
+ Por suerte o por desgracia **no todo son matemáticas**: antes de pensar que modelo es mejor para nuestros datos, es importantísimo realizar un **análisis exploratorio** de los mismos (incluyendo visualización)
+
+
+#### Pregunta 5
+
+
+> Podemos visualizarlo de manera aún más extrema con el dataset `datasaurus_dozen` del paquete `{datasauRus}` (ver más en <https://www.research.autodesk.com/publications/same-stats-different-graphs/>). Calcula de nuevo, para cada dataset, media, varianza, desv. típica, covarianza y correlación
+
+```{r}
+#| code-fold: true
+#| eval: false
+library(datasauRus)
+datasaurus_dozen |>
+  summarise(mean_x = mean(x), mean_y = mean(y),
+            var_x = var(x), var_y = var(y),
+            sd_x = sd(x), sd_y = sd(y),
+            cov = cov(x, y), cor = cor(x, y), .by = dataset)
+```
+
+#### Pregunta 6
+
+> Elimina el dataset `"wide_lines"` y visualiza los 12 datasets restantes mediante un diagrama de dispersión (con su ajuste de regresión)
+
+```{r}
+#| code-fold: true
+library(datasauRus)
+ggplot(datasaurus_dozen |> filter(dataset != "wide_lines"),
+       aes(x = x, y = y, color = dataset)) +
+  geom_point(size = 2.5, alpha = 0.75) +
+  geom_smooth(method = "lm", se = FALSE)  +
+  facet_wrap(~dataset, ncol = 3) +
+  theme_minimal()
+```
+
+
+## Clase 2
+
+### 🐣 Caso práctico I: encuesta de satisfacción
+
+Vamos a seguir poniendo en práctica lo aprendido el dataset `SatisfaccionPacientes.csv`
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names() |>
+  mutate(estado_civil = factor(estado_civil),
+         genero = factor(genero))
+datos
+```
+
+#### Pregunta 1
+
+> Convierte de manera adecuada la variable `estado_salud` a cualitativa ORDINAL
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |>
+  mutate(estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno", "Excelente"),
+                  ordered = TRUE))
+```
+
+#### Pregunta 2
+
+> Haz uso de `table()` para calcular la tabla de frecuencias de `genero` y `estado_civil`
+
+```{r}
+#| code-fold: true
+#| eval: false
+table(datos$genero)
+table(datos$estado_civil)
+```
+
+####  Pregunta 3
+
+>  Calcula la tabla de frecuencias de las ORDINALES y piensa si ahora puedes añadir algo más a la tabla de frecuencias). Tras ello usa el código más sencillo para responder a: ¿cuántas personas tienen un estado de salud regular (o peor)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+freq_estado_salud <-
+  datos |> 
+  count(estado_salud) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs),
+         frecuencia_acum_abs = cumsum(frecuencia_abs),
+         frecuencia_acum_rel = cumsum(frecuencia_rel))
+# Se ve dentro de la tabla. Hay 44+15 = 59 personas con un estado de salud malo o regular. 
+# Con código
+datos |>
+  count(estado_salud <= "Regular")
+```
+
+####  Pregunta 4
+
+>  Si te fijas una de las modalidades es totalmente anecdótica (solo 1 Excelente). Sería conveniente recategorizar la categoría Excelente: siempre que detecte Excelente, lo debe recategorizar a Bueno (criterio general: las categorías deben contener al menos un 5% de los individuos de toda la muestra).
+
+```{r}
+#| code-fold: true
+datos <- 
+  datos |> 
+  mutate(estado_salud  = if_else(estado_salud  == "Excelente", "Bueno", estado_salud),
+         # ojo: hay que redefinir los niveles de la cualitativa
+         # ya que ha dejado de ser factor (veremos un día el paquete forcats para esto)
+         estado_salud =
+           factor(estado_salud, levels = c("Malo", "Regular", "Bueno"),
+                  ordered = TRUE))
+```
+
+####  Pregunta 5
+
+>  Calcula la media, mediana, rango intercuartílico y desviación típica de grado de satisfacción desagregado por sexo.
+
+```{r}
+#| code-fold: true
+resumen <-
+  datos |>
+  summarise(media_grado_satisfaccion = mean(grado_satisfaccion),
+           sd_grado_satisfaccion = sd(grado_satisfaccion),
+           mediana_grado_satisfaccion = median(grado_satisfaccion),
+           IQR_grado_satisfaccion =
+             quantile(grado_satisfaccion, probs = 0.75) -
+             quantile(grado_satisfaccion, probs = 0.25),
+           .by = genero)
+```
+
+####  Pregunta 6
+
+> Exporta los resultados anteriores (`resumen`) en un archivo `resumen.csv`. En lugar de un `read_csv()` vamos a usar `write_csv(tabla, file = "ruta")`
+
+```{r}
+#| code-fold: true
+# importado como csv
+write_csv(resumen, file = "./resumen.csv")
+```
+
+#### Pregunta 7
+
+> Crear un diagrama de barras para la variable género. ¿Cómo podríamos decirle que cada barra (es decir, para cada modalidad de género) sea de un color (de relleno)?
+
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  # dentro de aes() para que dependa de la tabla
+  geom_bar(aes(x = genero, fill = genero))
+```
+
+
+#### Pregunta 8
+
+> Crear desde cero un diagrama de barras, con ajustes personalizados para la variable estado de salud
+
+```{r}
+#| code-fold: true
+# Estado de salud (ahora el orden importa)
+ggplot(datos) +
+  geom_bar(aes(x = estado_salud, fill = estado_salud), alpha = 0.75) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "Diagrama de barras de la variable estado salud", 
+       x = "Categoría",  y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+
+Fíjate que si **no tuviésemos la variable como cuali ordinal, las barras van por orden alfabético**, no por jerarquía real
+
+```{r}
+ggplot(datos) +
+  geom_bar(aes(x = as.character(estado_salud), fill = as.character(estado_salud)),
+           alpha = 0.75) +
+  ggthemes::scale_fill_colorblind() +
+  labs(title = "Diagrama de barras de la variable estado salud", 
+       x = "Categoría",  y = "Frecuencia absoluta",
+       fill = "Categoría") +
+  theme_minimal() 
+```
+
+#### Pregunta 9
+
+> Crea el histograma inferior para las variable edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_histogram(aes(x = edad), bins = 30, fill = "darkorange", alpha = 0.75) + 
+  labs(title = "Histograma de edad", subtitle = "Bins = 30",
+       x = "Valores", y = "Frecuencia absoluta") +
+  theme_minimal()
+
+ggplot(datos) +
+  # Define el ancho de las barras y colores
+  geom_histogram(aes(x = tiempo_espera), bins = 30, fill = "orchid", alpha = 0.75) + 
+  labs(title = "Histograma de tiempo de espera", subtitle = "Bins = 30",
+       x = "Valores", y = "Frecuencia absoluta") +
+  theme_minimal()
+```
+
+#### Pregunta 10
+
+> Crea el gráfico de densidad inferior para las variable edad y tiempo de espera.
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_density(aes(x = edad), color = "darkorange", 
+               fill = "darkorange", alpha = 0.75) + 
+  labs(title = "Gráfico de densidad de edad",
+       x = "Valores", y = "Frecuencia relativa") +
+  theme_minimal()
+
+ggplot(datos) +
+  geom_density(aes(x = tiempo_espera), color = "orchid", 
+               fill = "orchid", alpha = 0.75) + 
+  labs(title = "Gráfico de densidad de tiempo de espera",
+       x = "Valores", y = "Frecuencia relativa") +
+  theme_minimal()
+```
+
+
+
+#### Pregunta 11
+
+> Realiza un boxplot para edad y un boxplot para numero de visitas PERO por género (dos variables, piensa cómo)
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_boxplot(aes(y = edad), fill = "lightblue", alpha = 0.75) +  
+  labs(title = "Boxplot de edad",  y = "Edad") +
+  theme_minimal()
+
+ggplot(datos) +
+  geom_boxplot(aes(x = genero, y = tiempo_espera, fill = genero),
+               alpha = 0.75) +
+  labs(title = "Boxplot de tiempo de espera por género", 
+       x = "Género", y = "Tiempo de Espera") +
+  theme_minimal()
+```
+
+
+> Haciendo uso del gráfico anterior:
+
+a)  ¿La variable edad tiene outliers? ¿Qué edad tienen esos pacientes?
+
+b)  ¿Quién ha esperado más los hombres o las mujeres?
+
+
+### 🐣 Caso práctico II: bronquitis y tabaco
+
+
+Vamos a cargar el archivo de datos `fumadores.csv` donde tenemos datos de 96 pacientes sobre sí o fuman y quienes han desarrollado o no bronquitis.
+
+```{r}
+datos <- read_csv(file = "./datos/fumadores.csv")
+datos
+```
+
+
+#### Pregunta 1
+
+> Realiza la tabla de contigencia de manera absoluta y relativa y responde a las siguientes preguntas
+
+a) ¿Cuántas personas fumaoras tienen bronquitis?
+
+b) ¿Qué % de los fumadores está sano?
+
+c) ¿Qué % del total son a la vez no fumadores y enfermos de bronquitis?
+
+d) ¿Qué % de los enfermos son fumadores?
+
+```{r}
+#| code-fold: true
+#| eval: false
+table(datos$fumador, datos$estado)
+prop.table(table(datos$fumador, datos$estado))
+prop.table(table(datos$fumador, datos$estado), margin = 1)
+prop.table(table(datos$fumador, datos$estado), margin = 2)
+# a) 32 personas
+# b) 38.46%
+# c) 16%
+# d) 61.53%
+```
+
+#### Pregunta 2
+
+> Visualiza ambas variables (`fumador` y `estado`) a la vez de manera adecuada que nos permita comparar
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+ggplot(datos) +
+  geom_bar(aes(x = fumador, fill = estado), alpha = 0.6, position = "fill") +
+  labs(x = "fumador", y = "Frec relativa", fill = "Estado") +
+  theme_minimal()
+```
+
+#### Pregunta 3
+
+> ¿Existen evidencias en la muestra de una asociación entre ambas variables?
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  summarise("sig_chisq" = chisq.test(datos$fumador, datos$estado)$p.value,
+            "sig_fisher" = fisher.test(datos$fumador, datos$estado)$p.value)
+# p-valor < alpha --> hay evidencias para rechazar la hip nula
+# hay evidencias (no muy fuertes, quizás aumentar tamaño muestral?) de
+# que las variables son dependientes y existe una asociación
+```
+
+
+#### Pregunta 4
+
+> Si hubiera asociación, cuantifica la fuerza de dicha asociación (y el sentido) y calcula el riesgo relativo de los fumadores a contraer bronquitis (respecto a no fumadores)
+
+```{r}
+#| code-fold: true
+#| eval: false
+fisher.test(datos$fumador, datos$estado)
+# OR estimado = 0.3611 ==> piensa que tenemos no fumar primero y luego fumar ==>
+# 1/0.3611 = 2.769316 > 1 ==> hay una asociación positiva entre fumar y tener 
+# bronquitis 
+# La bronquitis en pacientes que fuman es 2.77 veces más frecuente
+# que en los pacientes que no fuman
+
+# RR ratio
+a <- 32  # Expuestos con evento
+b <- 16  # Expuestos sin evento
+c <- 20  # No expuestos con evento
+d <- 28  # No expuestos sin evento
+
+RR <- (a / (a + b)) / (c / (c + d))
+# El grupo que fuma tiene un riesgo 1.6 veces mayor de que desarrollar bronquitis en comparación con el grupo que no fuma.
+```
+
+
+
+### 🐣 Caso práctico III: salud mental
+
+Esta la base de datos `datos_salud_mental.csv` tenemos información recopilada de 100 pacientes que acuden a un centro de salud mental. Se quiere realizar un estudio para ver el **impacto que tienen distintas características sobre la ansiedad y depresión** en estos 100 pacientes. Los datos incluyen una variedad de variables relacionadas con la salud mental, así como características demográficas y de estilo de vida.
+
+```{r}
+datos <-
+  read_csv(file = "./datos/datos_salud_mental.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+
+Las variables son:
+
+* `id`: identificador único del paciente.
+* `edad`: edad del paciente en años.
+* `Genero`: género del paciente.
+* `ansiedad`: nivel de ansiedad del paciente en una escala del 1 al 10.
+* `depresión`: nivel de depresión del paciente en una escala del 1 al 10.
+* `sesiones_terapia`: número de sesiones de terapia asistidas en el último año.
+* `actividad_fisica`: número de días a la semana que el paciente realiza actividad física.
+* `horas_sueno`: número de horas promedio de sueño por noche.
+* `uso_drogas_recreativas`: indicador de si el paciente ha usado drogas recreativas en el último año.
+* `tipo_drogas`: tipo de drogas que ha consumido el paciente.
+
+
+#### Pregunta 1
+
+> ¿De qué tipo es cada variable? Convierte las que consideres a cualis nominales y a cualis ordinales, y si hay alguna variable que deba ser lógica
+
+```{r}
+#| code-fold: true
+# id: en realidad esto tendría ser un factor (un texto) ya que no cuenta nada
+# Cuantitativas: edad, horas_sueno
+# Cualitativas nominales: genero, tipo_drogas
+# Cuanitativas discretas: sesiones_terapia y actividad_fisica
+# Cuantitativas discretas pero que deberíamos tratarlas como cualis ordinales
+# ya que son escalas: ansiedad, depresión
+# Binarias (cualis ordinales muy concretas): uso_drogas_recreativas
+datos <-
+  datos |> 
+  mutate("id" = as.character(id),
+         "genero" = factor(genero), "tipo_drogas" = factor(tipo_drogas),
+         "ansiedad" = factor(ansiedad, levels = as.character(1:10), ordered = TRUE),
+         "depresion" = factor(depresion, levels = as.character(1:10), ordered = TRUE),
+         "uso_drogas_recreativas" = (uso_drogas_recreativas == "Si"))
+```
+
+
+#### Pregunta 2
+
+> Calcula la tabla de frecuencias absolutas y relativas de género.
+
+```{r}
+#| code-fold: true
+tabla_freq_abs <- table(datos$genero)
+tabla_freq_rel <- prop.table(tabla_freq_abs)
+```
+
+
+#### Pregunta 3
+
+> Calcula la media de las 4 variables cuantitativas que tenemos desagregado por género. Exporta dicho resumen en un `.csv`
+
+```{r}
+#| code-fold: true
+resumen <- 
+  datos |> 
+  drop_na(where(is.numeric)) |> 
+  summarise(across(where(is.numeric), mean), .by = genero)
+write_csv(resumen, file = "./datos/resumen.csv")
+```
+
+#### Pregunta 4
+
+> Calcula la tabla de contigencia de las variables ansiedad vs genero. Calcula otra para ansiedad vs depresion. Usa `useNA = "always"` como argumento para incluir los `NA`
+
+```{r}
+#| code-fold: true
+tabla_freq_genero_ansiedad <- table(datos$genero, datos$ansiedad, useNA = "always")
+tabla_freq_depresion_ansiedad <- table(datos$depresion, datos$ansiedad, useNA = "always")
+```
+
+
+#### Pregunta 5
+
+> Realiza un gráfico adecuado para la variable `edad`. Piensa como adaptarlo para tenerlo desagregado por `genero`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+# Densidades
+ggplot(datos) +
+  geom_density(aes(x = edad), fill = "#459191", alpha = 0.4) +
+  labs(x = "Edad (años)", y = "Densidad (frec relativa)") +
+  theme_minimal()
+
+library(ggridges)
+ggplot(datos) +
+  geom_density_ridges(aes(x = edad, y = genero, fill = genero), alpha = 0.4) +
+  ggthemes::scale_fill_colorblind() +
+  labs(x = "Edad (años)", y = "Sexo", fill = "Género") +
+  theme_minimal()
+
+# Histograma (mala idea con pocos datos)
+ggplot(datos) +
+  geom_histogram(aes(x = edad), bins = 15, fill = "#459191", alpha = 0.4) +
+  labs(x = "Edad (años)", y = "Frec absoluta") +
+  theme_minimal()
+ggplot(datos) +
+    geom_histogram(aes(x = edad, fill = genero), bins = 15, alpha = 0.25) +
+    labs(x = "Edad (años)", y = "Frec absoluta") +
+    theme_minimal()
+
+# Boxplot
+ggplot(datos) +
+  geom_boxplot(aes(y = edad), fill = "#459191", alpha = 0.4,
+               outlier.size = 3, outlier.alpha = 0.9,
+               outlier.color = "#991293", outlier.shape = 18) +
+  labs(y = "Edad") +
+  theme_minimal()
+
+ggplot(datos, aes(x = genero, y = edad, fill = genero, color = genero)) +
+  geom_boxplot(alpha = 0.4, outlier.size = 3, outlier.alpha = 0.9,
+               outlier.color = "#991293", outlier.shape = 18) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  guides(color = "none") +
+  labs(x = "Género", y = "Edad", fill = "Género") +
+  theme_minimal()
+```
+
+#### Pregunta 6
+
+> Realiza un gráfico adecuado para visualizar a la vez depresión y ansiedad.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# fíjate que aunque sean números, dado que son variables discretas
+# de una escala, no permite una correcta visualización un diagrama
+# de dispersión ya que hay muchos puntos iguales que se solapan
+ggplot(datos) + 
+  geom_point(aes(x = depresion, y = ansiedad)) +
+  theme_minimal()
+
+# una opción: se ve un patrón (tipo "recta ascedente")
+ggplot(datos |> count(depresion, ansiedad)) + 
+  geom_point(aes(x = depresion, y = ansiedad, color = n, size = n)) +
+  scale_color_viridis_c() +
+  guides(size = "none") +
+  theme_minimal()
+```
+
+
+#### Pregunta 7
+
+>  ¿Existe asociación entre genero y uso de drogas? ¿Y entre depresión y ansiedad? Cuantifica la respuesta todo lo que puedas.
+
+```{r}
+#| code-fold: true
+resumen_p_valores_1 <-
+  datos |> 
+  summarise("sig_chisq" = chisq.test(datos$genero, datos$uso_drogas_recreativas)$p.value,
+            "sig_fisher" = fisher.test(datos$genero, datos$uso_drogas_recreativas)$p.value)
+# p-valores >> alpha --> no evidencias para rechazar la independencia -->
+# no hay evidencias para afirmar la dependencia
+
+# con tantas categorías Fisher no funciona
+chisq.test(datos$depresion, datos$ansiedad)
+# p-valores << alpha --> sí hay evidencias para rechazar la independencia -->
+# sí hay evidencias para afirmar la dependencia
+```
+
+
+
+

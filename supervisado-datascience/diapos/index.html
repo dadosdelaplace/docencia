@@ -1,0 +1,2688 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.450">
+
+  <meta name="author" content="Grado en Ciencia de Datos Aplicada • curso 2024-2025">
+  <title>Aprendizaje Supervisado I</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="img/data-science-2.jpeg" data-background-opacity="0.2" data-background-size="cover" class="quarto-title-block center">
+  <h1 class="title">Aprendizaje Supervisado I</h1>
+  <p class="subtitle">Métodos de predicción lineal</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Grado en Ciencia de Datos Aplicada • curso 2024-2025 
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section id="empieza-lo-buenoempieza-la-modelización" class="title-slide slide level1 center">
+<h1>Empieza lo bueno…empieza la modelización</h1>
+<p><span style="color:#444442;"><strong>Vamos a juntar las piezas del puzzle para hacer «magia»</strong></span></p>
+</section>
+<section id="buenas" class="slide level2">
+<h2>¡Buenas!</h2>
+<p><span class="hl-green"><strong>Correo</strong></span>: <strong><a href="mailto:javalv09@ucm.es" class="email">javalv09@ucm.es</a></strong>. <span class="hl-green"><strong>Despacho</strong></span>: 722 (3ª planta).</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="img/me.jpeg"></p>
+</div><div class="column" style="width:70%;">
+<div>
+<ul>
+<li class="fragment"><p><span class="hl-yellow"><strong>Javier Álvarez Liébana</strong></span>, de Carabanchel (Bajo).</p></li>
+<li class="fragment"><p>Licenciado en Matemáticas (UCM). <span class="hl-yellow"><strong>Doctorado en estadística</strong></span> (UGR).</p></li>
+<li class="fragment"><p>Encargado de la <span class="hl-yellow"><strong>visualización y análisis de datos covid</strong></span> del Principado de Asturias (2021-2022).</p></li>
+<li class="fragment"><p>Miembro de la <span class="hl-yellow"><strong>Sociedad Española de Estadística e IO</strong></span> y la <span class="hl-yellow"><strong>Real Sociedad Matemática Española</strong></span>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Actualmente, <span class="hl-yellow"><strong>investigador y docente en la Facultad de Estadística de la UCM</strong></span>. Divulgando por <a href="https://twitter.com/dadosdelaplace"><strong>Twitter</strong></a> e <a href="https://instagram.com/javieralvarezliebana"><strong>Instagram</strong></a></p>
+</div>
+</section>
+<section id="objetivos" class="slide level2">
+<h2>Objetivos</h2>
+<div class="columns">
+<div class="column" style="width:37%;">
+<p><img data-src="https://assets-global.website-files.com/6092cb6b4ac959f39728dd26/6188a97fa499b5fbfe410417_target%20(1).png"></p>
+</div><div class="column" style="width:63%;">
+<div>
+<ul>
+<li class="fragment"><p>Empezar a <span class="hl-yellow"><strong>relacionar asignaturas</strong></span> como matemáticas, inferencia y R.</p></li>
+<li class="fragment"><p>Aprender los fundamentos del <span class="hl-yellow"><strong>aprendizaje estadístico</strong></span> (ahora llamado Machine Learning o data science)</p></li>
+<li class="fragment"><p>Pasar de los descriptivo a lo predictivo: <span class="hl-yellow"><strong>construir nuestros primeros modelos</strong></span></p></li>
+<li class="fragment"><p>Entender en profundidad el contexto de la <span class="hl-yellow"><strong>predicción lineal</strong></span>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluación" class="slide level2">
+<h2>Evaluación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Asistencia</strong></span>. Se <span class="hl-purple"><strong>valorará muy positivamente</strong></span> la participación.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Evaluación continua</strong></span>: 1 <strong>examen teórico a papel</strong> (30%) y <strong>3 entregas R en clase</strong> (10%-25%-35%).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Examen final</strong></span>:
+<ul>
+<li><span class="hl-purple"><strong>Más de 7 de continua</strong></span> -&gt; podrás decidir <strong>peso del final entre 0% y 100%</strong>.</li>
+<li><span class="hl-purple"><strong>Entre 6 y 7 de continua</strong></span> -&gt; decidir <strong>peso del final entre un 30% y un 100%</strong>.</li>
+<li><span class="hl-purple"><strong>Entre 5 y 6 de continua</strong></span> -&gt;<strong>peso del final entre un 50% y un 100%</strong>.</li>
+<li><span class="hl-purple"><strong>Entre 3.5 y 5 de continua</strong></span> -&gt; <strong>peso del final entre un 70% y un 100%</strong>.</li>
+<li><span class="hl-purple"><strong>Por debajo de 3.5 de continua</strong></span> -&gt; <strong>peso del final del 100%</strong>.</li>
+</ul></li>
+</ul>
+<p>Para que haga <span class="hl-red"><strong>media el final</strong></span> debes de sacar más de un 3 sobre 10.</p>
+</div>
+</section>
+<section id="planificación" class="slide level2">
+<h2>Planificación</h2>
+<ul>
+<li><p><span class="hl-yellow"><strong>Entrega I (10%)</strong></span>: 6 de febrero.</p></li>
+<li><p><span class="hl-yellow"><strong>Entrega II (25%)</strong></span>: 15 o 22 de abril.</p></li>
+<li><p><span class="hl-yellow"><strong>Teórico con papel y boli (30%)</strong></span>: 8 de mayo.</p></li>
+<li><p><span class="hl-yellow"><strong>Entrega III (35%)</strong></span>: 13 de mayo.</p></li>
+</ul>
+</section>
+<section id="materiales" class="slide level2">
+<h2>Materiales</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Diapositivas</strong></span>: las diapositivas que usaremos en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en <strong><a href="https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos" class="uri">https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos</a></strong></li>
+</ul>
+<p>En el menú de las diapositivas (abajo a la izquierda) tienes una <span class="hl-yellow"><strong>opción para descargarlas en pdf</strong></span> en <code>Tools</code> (consejo: no lo hagas hasta el final del curso ya que irán modificándose)</p>
+<p>&nbsp;</p>
+<ul>
+<li><p><span class="hl-yellow"><strong>Material</strong></span>: <a href="https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/material"><strong>scripts de cada tema</strong></a> y materiales extras</p></li>
+<li><p><span class="hl-yellow"><strong>Resúmenes de paquetes</strong></span>: <a href="https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/fichas%20paquetes"><strong>chuletas de los paquetes</strong></a> en formato .pdf</p></li>
+</ul>
+</section>
+<section id="requisitos" class="slide level2">
+<h2>Requisitos</h2>
+<p>Para el curso los únicos requisitos serán:</p>
+<ol type="1">
+<li><p><span class="hl-yellow"><strong>Conexión a internet</strong></span> (para la descarga de algunos datos y paquetes).</p></li>
+<li><p><span class="hl-yellow"><strong>Instalar R y RStudio</strong></span>: la descarga la haremos (gratuitamente) desde <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a> y <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></p></li>
+<li><p>Se darán por asumido conocimientos aprendidos de <span class="hl-yellow"><strong>R base, tidyverse y ggplot</strong></span></p></li>
+<li><p>Se darán por asumido conocimientos aprendidos de <span class="hl-yellow"><strong>Quarto, diapositivas en Quarto y Github</strong></span>. Para las entregas <span class="hl-purple"><strong>SOLO SE VALORARÁ</strong></span> la salida html correspondiente.</p></li>
+<li><p><span class="hl-yellow"><strong>Recomendable</strong></span>: saber usar la calculadora en modo estadístico.</p></li>
+</ol>
+</section>
+<section id="planificacion" class="slide level2">
+<h2>Planificación</h2>
+<div class="column-screen-inset-right">
+<div style="font-size:20px">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">CLASE</th>
+<th style="text-align: center;">SEMANA</th>
+<th style="text-align: center;">FECHAS</th>
+<th style="text-align: center;">TOPIC</th>
+<th style="text-align: center;">EJ.</th>
+<th style="text-align: center;">WORKBOOK</th>
+<th style="text-align: center;">ENTREGA</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><a href="#/clase-1">1</a></td>
+<td style="text-align: center;">S1</td>
+<td style="text-align: center;">23 ene</td>
+<td style="text-align: center;">Repaso descriptiva</td>
+<td style="text-align: center;"><a href="#/tu-turno-1-1">💻</a> <a href="#/tu-turno-1-2">💻</a> <a href="#/tu-turno-1-3">💻</a></td>
+<td style="text-align: center;"><a href="#/caso-practico-1-1">🐣</a> <a href="#/caso-practico-1-2">🐣</a> <a href="#/caso-practico-1-3">🐣</a> <a href="#/caso-practico-1-4">🐣</a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#/clase-2">2</a></td>
+<td style="text-align: center;">S2</td>
+<td style="text-align: center;">28 ene</td>
+<td style="text-align: center;">Medidas de asociación</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#/clase-3">3</a></td>
+<td style="text-align: center;">S2</td>
+<td style="text-align: center;">30 ene</td>
+<td style="text-align: center;">Análisis de la varianza</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#/clase-4">4</a></td>
+<td style="text-align: center;">S3</td>
+<td style="text-align: center;">4 feb</td>
+<td style="text-align: center;">Análisis de la varianza</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#/clase-5">5</a></td>
+<td style="text-align: center;">S3</td>
+<td style="text-align: center;">6 feb</td>
+<td style="text-align: center;">Entrega I</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><a href="#/clase-5">🎯 10%</a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section></section>
+<section>
+<section id="clase-1" class="title-slide slide level1 center">
+<h1>Clase 1: repaso</h1>
+<p><span style="color:#444442;"><strong>Objetivo de la predicción lineal. Concepto de linealidad. Repaso de estadística descriptiva (23 de enero de 2025)</strong></span></p>
+</section>
+<section id="qué-es-predecir" class="slide level2">
+<h2>¿Qué es predecir?</h2>
+<p>En esta asignatura vamos a tratar principalmente lo que se conoce en el aprendizaje estadístico como <span class="hl-yellow"><strong>predicción (continua)</strong></span></p>
+<div class="fragment">
+<p>Dada una <span class="hl-yellow"><strong>variable objetivo (variable dependiente)</strong></span>, y con la información aportada por un conjunto de <span class="hl-yellow"><strong>variables predictoras (covariables)</strong></span>, el objetivo será obtener una estimación/predicción lo «mejor posible» haciendo uso de un</p>
+<p>&nbsp;</p>
+<p><span class="hl-yellow"><strong>modelo supervisado</strong></span> de <span class="hl-purple"><strong>predicción</strong></span> <span class="hl-green"><strong>lineal</strong></span> (conocido como regresión lineal)</p>
+</div>
+</section>
+<section id="ciencia-de-datos" class="slide level2">
+<h2>Ciencia de Datos</h2>
+<p>La <span class="hl-yellow"><strong>ciencia de datos</strong></span> es precisamente la rama que integra las matemáticas, la estadística, la probabilidad, el Machine Learning e incluso el Big Data</p>
+
+<img data-src="img/stats-ml.jpg" class="r-stretch"></section>
+<section id="modelo-supervisado" class="slide level2">
+<h2>¿Modelo supervisado?</h2>
+<p><span class="hl-yellow"><strong>modelo supervisado</strong></span> de predicción lineal</p>
+<p>&nbsp;</p>
+<p>En esta asignatura veremos el modelo más simple de lo que se conoce como <span class="hl-yellow"><strong>aprendizaje estadístico (Machine Learning)</strong></span>, en concreto del conocido como <span class="hl-yellow"><strong>aprendizaje supervisado</strong></span></p>
+
+<img data-src="img/ml.jpg" class="r-stretch"></section>
+<section id="aprendizaje-supervisado" class="slide level2">
+<h2>Aprendizaje ¿supervisado?</h2>
+
+<img data-src="img/unsupervised-learning.jpg" class="r-stretch"></section>
+<section id="aprendizaje-supervisado-1" class="slide level2">
+<h2>Aprendizaje ¿supervisado?</h2>
+<p>En el campo del Machine Learning hay principalmente dos tipos de modelos:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><span class="hl-yellow"><strong>Aprendizaje supervisado</strong></span>: tendremos dos tipos de variables, la <span class="hl-yellow"><strong>variable dependiente (output/target)</strong></span> que se quiere predecir/clasificar, normalmente denotada como <span class="math inline">\(Y\)</span>, y las <span class="hl-yellow"><strong>variables independientes (inputs) o explicativas o predictoras</strong></span>, que contienen la información disponible. Ejemplos: regresión, knn, árboles, etc.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/supervised.jpg"></p>
+</div>
+</div>
+</section>
+<section id="aprendizaje-supervisado-2" class="slide level2">
+<h2>Aprendizaje ¿supervisado?</h2>
+<p>En el campo del Machine Learning hay principalmente dos tipos de modelos:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><span class="hl-yellow"><strong>Aprendizaje no supervisado</strong></span>: no existe la distinción entre target y variables explicativas ya que <span class="hl-yellow"><strong>no tenemos etiquetados los datos</strong></span>, no sabemos a priori la respuesta correcta. El aprendizaje no supervisado <span class="hl-yellow"><strong>buscará patrones</strong></span> basados en similitudes/diferencias. Ejemplos: PCA, clustering, redes neuronales, etc.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/unsupervised.jpg"></p>
+</div>
+</div>
+</section>
+<section id="modelo-predictivo" class="slide level2">
+<h2>Modelo predictivo</h2>
+<p>Dentro del marco de un <span class="hl-yellow"><strong>modelo de predicción supervisada</strong></span> tendrá siempre la siguiente forma:</p>
+<p><span class="math display">\[Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) \]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{X}\)</span> serán los <span class="hl-yellow"><strong>datos</strong></span></p></li>
+<li><p><span class="math inline">\(f(\cdot)\)</span> será nuestro <span class="hl-yellow"><strong>modelo</strong></span>, es decir, el <span class="hl-yellow"><strong>valor esperado de <span class="math inline">\(Y\)</span></strong></span> (con la información que tenemos <span class="math inline">\(\mathbf{X}\)</span>).</p></li>
+<li><p><span class="math inline">\(\mathbf{X} = \left(X_1, \ldots, X_p \right)\)</span> serán nuestras <span class="hl-yellow"><strong>predictoras o variables independientes</strong></span></p></li>
+<li><p><span class="math inline">\(\varepsilon\)</span> será el <span class="hl-yellow"><strong>error o ruido</strong></span>, una <span class="hl-yellow"><strong>variable aleatoria de media 0</strong></span> <span class="math inline">\(E \left[\varepsilon | \boldsymbol{X} = x \right] = 0\)</span> (el error debería ser reducido a <strong>algo aleatorio (irreducible)</strong>, aunque en estadística SIEMPRE nos vamos a equivocar).</p></li>
+</ul>
+</section>
+<section id="clasificación-vs-predicción" class="slide level2">
+<h2>Clasificación vs predicción</h2>
+<p>modelo supervisado de <span class="hl-purple"><strong>predicción</strong></span> lineal</p>
+<p>&nbsp;</p>
+<p>La <strong>regresión lineal</strong> se enmarca dentro del <span class="hl-purple"><strong>predicción</strong></span> supervisada</p>
+<ul>
+<li><p><span class="hl-purple"><strong>Predicción</strong></span>: la <span class="hl-purple"><strong>variable objetivo es una variable cuantitativa continua</strong></span> (por ejemplo, precio, glucosa, peso, etc).</p></li>
+<li><p><span class="hl-purple"><strong>Clasificación</strong></span>: la <span class="hl-purple"><strong>variable objetivo es una variable cualitativa</strong></span> (por ejemplo, especie de flor, ausencia/presencia de enfermedad, si/no, etc) o <strong>cuantitativa discreta</strong> (por ejemplo, número de accidentes). La etiqueta tomará un valor dentro del conjunto de modalidades permitidas, pudiendo ser <strong>binaria</strong> (si/no) o <strong>multiclase</strong> (A, B, C, D).</p></li>
+</ul>
+<p>&nbsp;</p>
+<p>📚 Ver «The elements of Statistical Learning» (Hastie et al., 2008)</p>
+</section>
+<section id="qué-es-predecir-1" class="slide level2">
+<h2>¿Qué es predecir?</h2>
+<p>modelo de <span class="hl-purple"><strong>predicción</strong></span> lineal</p>
+<p>&nbsp;</p>
+<p>Es importante que - de momento - distingamos dos conceptos:</p>
+<ul>
+<li><span class="hl-purple"><strong>Estimación</strong></span>: el modelo aprende de unos datos e intenta estimar dichos valores que ha usado.</li>
+<li><span class="hl-purple"><strong>Predicción</strong></span>: el modelo aprende de unos datos e intenta estimar valores que el <strong>modelo no conoce</strong>.</li>
+</ul>
+<p>Más adelante los llamaremos «predicción en train» y «predicción en test»</p>
+</section>
+<section id="qué-es-la-linealidad" class="slide level2">
+<h2>¿Qué es la linealidad?</h2>
+<p>modelo de predicción <span class="hl-green"><strong>lineal</strong></span></p>
+<p>&nbsp;</p>
+<p>En matemáticas decimos que una función <span class="math inline">\(f(x)\)</span> es <span class="hl-green"><strong>lineal</strong></span> cuando se cumple:</p>
+<ul>
+<li><p><span class="hl-green"><strong>Propiedad aditiva</strong></span>: <span class="math inline">\(f(x + y) = f(x) + f(y)\)</span></p></li>
+<li><p><span class="hl-green"><strong>Propiedad homogénea</strong></span>: <span class="math inline">\(f(k*x) = k*f(x)\)</span> (donde <span class="math inline">\(k\)</span> es una constante en <span class="math inline">\(\mathbb{R}\)</span>).</p></li>
+</ul>
+<p>Ambas se pueden resumir en <span class="math inline">\(f(a*x + b*y) = a*f(x) + b*f(y)\)</span></p>
+<div class="fragment">
+<p>En estadística llamamos <span class="hl-yellow"><strong>modelo de predicción lineal</strong></span> a un modelo que usa la información de covariables <span class="math inline">\(X_1, X_2, \ldots, X_p\)</span>, de manera que su información siempre <span class="hl-yellow"><strong>se relacionen entre sí con sumas y restas</strong></span>.</p>
+<ul>
+<li><p><span class="hl-green"><strong>Ejemplos lineales</strong></span>: <span class="math inline">\(y = 2*x_1 - 3\)</span> o <span class="math inline">\(y = 4 - \frac{x_1}{2} + 3*x_2\)</span></p></li>
+<li><p><span class="hl-red"><strong>Ejemplos no lineales</strong></span>: <span class="math inline">\(y = 2*\frac{1}{x_1}\)</span> o <span class="math inline">\(y = 4 - x_{1}^{2} - x_2\)</span> o <span class="math inline">\(y = ln(x_1) + cos(x_2)\)</span></p></li>
+</ul>
+</div>
+</section>
+<section id="repaso-descriptiva" class="slide level2">
+<h2>Repaso descriptiva</h2>
+<p>La estadística descriptiva es una rama de la estadística que se dedica a <span class="hl-yellow"><strong>recolectar, organizar, presentar y analizar un conjunto de datos</strong></span> para describir las características y comportamientos de dicho conjunto.</p>
+<p>&nbsp;</p>
+<p>Además de para conocer y entender los datos es la fase en la que <span class="hl-yellow"><strong>detectaremos errores e incongruencias</strong></span>, teniendo muchas veces que hacer una <span class="hl-yellow"><strong>depuración de datos</strong></span></p>
+</section>
+<section id="recolección" class="slide level2">
+<h2>Recolección</h2>
+<p>La podemos hacer a través de <strong>encuestas, experimentos, observaciones, registros</strong>, etc. Lo más importante en esta etapa es que los datos sean representativos del fenómeno o población que se estudia. La rama de la estadística que se dedica a estudiar esta parte del análisis se conoce como <span class="hl-yellow"><strong>muestreo</strong></span>, y es fundamental para evitar sesgos en la muestra.</p>
+
+<img data-src="https://sketchplanations.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fsketchplanations%2Ff2fdb7cb-f126-4897-ad78-4fd11c743172_SP%2B723%2B-%2BSampling%2Bbias.png%3Fauto%3Dcompress%2Cformat&amp;w=828&amp;q=75" class="r-stretch"></section>
+<section id="conceptos-básicos" class="slide level2">
+<h2>Conceptos básicos</h2>
+<p>En estadística es fundamental entender los conceptos de <span class="hl-yellow"><strong>población, muestra y variable</strong></span>, ya que son la base para cualquier análisis estadístico.</p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Población</strong></span></li>
+</ul>
+<p>La población es el <strong>conjunto completo de elementos o individuos</strong> sobre los cuales se desea obtener información. En la mayoría de casos el acceso a la <strong>totalidad de la población es inviable</strong> por motivos económicos, legales o éticos, así que en la mayoría de situaciones las conclusiones deberemos sacarlas haciendo uso de una <strong>muestra</strong>.</p>
+</div>
+<div class="fragment">
+<p><strong>Ejemplo</strong>: la diferencia entre censo y encuesta es que el primero recopila datos de todos los individuos de una población, mientras que el segundo trata de estimarlos o inferirlos a partir de una muestra representativa de la misma.</p>
+</div>
+</section>
+<section id="conceptos-básicos-1" class="slide level2">
+<h2>Conceptos básicos</h2>
+<p><span class="hl-yellow"><strong>Muestra</strong></span>: subconjunto de la población que se selecciona para su análisis con el fin de hacer inferencias o generalizaciones sobre la población completa. La muestra debe ser <strong>representativa de la población</strong>.</p>
+<ul>
+<li><p><strong>Muestreo aleatorio simple</strong>: cada miembro de la población tiene la misma probabilidad de ser seleccionado.</p></li>
+<li><p><strong>Muestreo estratificado</strong>: la población se divide en subgrupos (estratos) y se toma una muestra de cada uno.</p></li>
+<li><p><strong>Muestreo (no aleatorio) sistemático</strong>: se selecciona cada n-ésimo miembro de la población.</p></li>
+<li><p><strong>Muestreo (no aleatorio) por cuotas</strong>: se seleccionan aquellos individuos que cumplan ciertas condiciones.</p></li>
+<li><p><strong>Muestreo por conveniencia</strong>: se elige a los miembros que son más fáciles de acceder, aunque este método puede introducir sesgos.</p></li>
+</ul>
+</section>
+<section id="sesgos-en-el-muestreo" class="slide level2">
+<h2>Sesgos en el muestreo</h2>
+
+<img data-src="img/sampling-bias.jpg" class="r-stretch"><div class="fragment">
+<p><span class="hl-yellow"><strong>Sesgo de selección</strong></span>: aparece cuando no se tiene en cuenta la forma en la que se han recogido los datos.</p>
+</div>
+</section>
+<section id="sesgos-en-el-muestreo-1" class="slide level2">
+<h2>Sesgos en el muestreo</h2>
+
+<img data-src="img/dewey.jpg" class="r-stretch"><p>El ejemplo más famoso es el caso <span class="hl-yellow"><strong>«Dewey defeats Truman» (Dewer derrota a Truman)</strong></span>, el titular con el que abrió el Chicago Tribune en 1948, el mismo día en el que Truman ganó al repúblicano Dewer en las elecciones de 1948: sin esperar a los resultados, se basaron en una encuesta telefónica (sin contar con el sesgo que, en aquella época, solo la clase alta tenía teléfono).</p>
+</section>
+<section id="sesgos-en-el-muestreo-2" class="slide level2">
+<h2>Sesgos en el muestreo</h2>
+
+<img data-src="img/superviviente.jpg" class="r-stretch"><p>¿Dónde reforzarías los aviones?</p>
+</section>
+<section id="sesgos-en-el-muestreo-3" class="slide level2">
+<h2>Sesgos en el muestreo</h2>
+
+<img data-src="img/superviviente.jpg" class="r-stretch"><p>El <span class="hl-yellow"><strong>sesgo del superviviente</strong></span> (un tipo de sesgo de selección) aparece cuando se toma una muestra de un fenómeno ignorando si los individuos elegidos tienen las mismas opciones respecto al mismo.</p>
+</section>
+<section id="conceptos-básicos-2" class="slide level2">
+<h2>Conceptos básicos</h2>
+<p><span class="hl-yellow"><strong>Variable</strong></span>: <strong>cualquier característica o atributo</strong> que puede tomar diferentes valores entre los individuos de la población o muestra. Las variables pueden ser de varios tipos según su naturaleza:</p>
+<ul>
+<li><p><span class="hl-purple"><strong>Cualitativas (o categóricas)</strong></span>: describen cualidades o categorías. Ejemplos:</p>
+<ul>
+<li>Nominales: no tienen un orden intrínseco (e.g., género, estado civil, religión, etc).</li>
+<li>Ordinales: tienen un orden intrínseco (e.g., niveles de satisfacción, grado académico, sano-leve-grave, tramo etario, tramo de ingresos, etc).</li>
+</ul></li>
+</ul>
+</section>
+<section id="conceptos-básicos-3" class="slide level2">
+<h2>Conceptos básicos</h2>
+<p><span class="hl-yellow"><strong>Variable</strong></span>: <strong>cualquier característica o atributo</strong> que puede tomar diferentes valores entre los individuos de la población o muestra. Las variables pueden ser de varios tipos según su naturaleza:</p>
+<ul>
+<li><p><span class="hl-purple"><strong>Cuantitativas</strong></span>: describen cantidades y pueden ser medidas numéricamente. Ejemplos:</p>
+<ul>
+<li>Discretas finitas: toman valores finitos (e.g., número de hijos, número de visitas al médico, escala de dolor).</li>
+<li>Discretas infinitas: toman valores infinitos (o que se podrían considerar como tal) pero podemos enumerarlas y sabemos siempre el siguiente elemento (e.g., número de pelos de nuestra cabellera, número de personas que pueden entrar en una tienda en un periodo dado).</li>
+<li>Continuas: pueden tomar cualquier valor dentro de un rango (e.g., altura, peso, tiempo de espera).</li>
+</ul></li>
+</ul>
+</section>
+<section id="conceptos-básicos-4" class="slide level2">
+<h2>Conceptos básicos</h2>
+<p><span class="hl-yellow"><strong>Modalidades</strong></span>: uno de los <strong>posibles valores</strong> que toma una <strong>variable dentro de una muestra</strong>. El <strong>conjunto de modalidades posibles</strong> que podría haber tomado (en tu población) se suele conocer también como soporte. Algunos ejemplos en función del tipo de variables son:</p>
+<ul>
+<li><p><strong>Cualitativa nominal (color de ojos)</strong>: negro, azul y marrón (3 modalidades en esa muestra de un espectro de colores más amplio que podríamos tener como soporte).</p></li>
+<li><p><strong>Cualitativa ordinal (estado del paciente)</strong>: sano, leve y grave (3 modalidades en esa muestra de un conjunto de opciones - por ejemplo, sano, leve, grave, UCI, fallecido - que podríamos tener).</p></li>
+</ul>
+</section>
+<section id="repaso-continua-vs-discreta" class="slide level2">
+<h2>Repaso: continua vs discreta</h2>
+
+<img data-src="img/vitro-fuego-discretas.jpg" class="r-stretch"></section>
+<section id="repaso-medidas-de-centralización" class="slide level2">
+<h2>Repaso: medidas de centralización</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Media</strong></span>: dada una muestra <span class="math inline">\(\boldsymbol{x} =\left(x_1, \ldots, x_n \right)\)</span>, la media muestral <span class="math inline">\(\overline{x}\)</span> se define como la <strong>suma de todos los valores dividida por el tamaño muestral</strong></li>
+</ul>
+<p><span class="math display">\[\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i\]</span></p>
+<div class="fragment">
+<p><span class="hl-purple"><strong>Geométricamente</strong></span>: es el <strong>valor «más cercano» de todos los datos a la vez</strong> (minimiza las distancias al cuadrado)</p>
+</div>
+</section>
+<section id="media-muestral" class="slide level2">
+<h2>Media muestral</h2>
+<p><span class="hl-green"><strong>VENTAJAS</strong></span></p>
+<ul>
+<li>Fácil de calcular y entender</li>
+<li>Fácil y eficiente de programar</li>
+<li>Siempre existe (para cuantitativas)</li>
+</ul>
+<div class="fragment">
+<p><span class="hl-red"><strong>DESVENTAJAS</strong></span></p>
+<ul>
+<li>No es un valor de los datos (la media de {1, 2, 3, 4} es 2.5)</li>
+<li><strong>Poco robusta</strong> (valores atípicos le afectan mucho)</li>
+<li>Solo se puede definir para variables cuantitativas</li>
+</ul>
+</div>
+</section>
+<section id="repaso-medidas-de-centralización-1" class="slide level2">
+<h2>Repaso: medidas de centralización</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Mediana</strong></span>: dada una muestra <span class="math inline">\(\boldsymbol{x} =\left(x_1, \ldots, x_n \right)\)</span>, la mediana muestral se define como el <strong>valor que es mayor o igual que al menos el 50%</strong>, y menor igual que al menos el 50% de los datos</li>
+</ul>
+<p><span class="math display">\[Me_{x} = \arg \min_{x_i} \left\lbrace F_i &gt; 0.5 \right\rbrace, \quad Me_x = e_{i-1} + \frac{0.5 - F_{i-1}}{F_i - F_{i-1} }a_i\]</span></p>
+<p>La mediana es el <span class="hl-purple"><strong>valor de en medio</strong></span> si ordenamos los datos (y si se pueden ordenar…)</p>
+</section>
+<section id="mediana-muestral" class="slide level2">
+<h2>Mediana muestral</h2>
+<p><span class="hl-green"><strong>VENTAJAS</strong></span></p>
+<ul>
+<li>Suele ser un valor de la muestra</li>
+<li>Un poco más robusta que la media</li>
+</ul>
+<div class="fragment">
+<p><span class="hl-red"><strong>DESVENTAJAS</strong></span></p>
+<ul>
+<li>Muy ineficiente (requiere un algoritmo de ordenación)</li>
+<li>Solo definida para cuantitativas o cualitativas ordinales</li>
+</ul>
+</div>
+</section>
+<section id="repaso-medidas-de-centralización-2" class="slide level2">
+<h2>Repaso: medidas de centralización</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Moda</strong></span>: dada una muestra <span class="math inline">\(\boldsymbol{x} =\left(x_1, \ldots, x_n \right)\)</span>, la moda muestral se define como el <strong>valor o valores más repetidos</strong> (en caso de que existan).</li>
+</ul>
+<p><span class="math display">\[Mo_x = \arg \max_{x_i} f_i, \quad Mo_x = e_{i-1} + \frac{d_i - d_{i-1}}{\left(d_i - d_{i-1} \right) + \left(d_i - d_{i+1} \right)}a_i\]</span></p>
+<div class="fragment">
+<p><span class="hl-purple"><strong>Gráficamente</strong></span>: representa el «pico» de un diagrama de barras o un histograma</p>
+</div>
+</section>
+<section id="moda-muestral" class="slide level2">
+<h2>Moda muestral</h2>
+<p><span class="hl-green"><strong>VENTAJAS</strong></span></p>
+<ul>
+<li>Es un valor de la muestra</li>
+<li>Muy robusta</li>
+<li><strong>Se puede calcular para cualquier</strong> cuanti o cuali</li>
+</ul>
+<div class="fragment">
+<p><span class="hl-red"><strong>DESVENTAJAS</strong></span></p>
+<ul>
+<li>No siempre existe (amodal) y pueden existir varias (bimodal, trimodal, etc)</li>
+<li>Poco usada en inferencia</li>
+</ul>
+</div>
+</section>
+<section id="repaso-medidas-de-centralización-3" class="slide level2">
+<h2>Repaso: medidas de centralización</h2>
+
+<img data-src="img/ine-salarios-oculto.jpg" class="r-stretch"><p><strong>¿Cuál es la mediana, la media y la moda?</strong></p>
+</section>
+<section id="repaso-medidas-de-centralización-4" class="slide level2">
+<h2>Repaso: medidas de centralización</h2>
+
+<img data-src="img/ine-salarios.jpg" class="r-stretch"></section>
+<section id="repaso-medidas-de-dispersión" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+
+<img data-src="img/iker-jimenez.jpg" class="r-stretch"><p>¿Qué tiene que ver la imagen con la dispersión?</p>
+</section>
+<section id="repaso-medidas-de-dispersión-1" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+
+<img data-src="img/extremos.jpg" class="r-stretch"><p>El cambio climático no solo es porque aumente la <span class="hl-yellow"><strong>temperatura media (centralización)</strong></span> sino por la aparición cada vez más frecuente de fenómenos extremos</p>
+<p>Aumento de la <span class="hl-yellow"><strong>variabilidad</strong></span> → aumento de la <span class="hl-yellow"><strong>DISPERSIÓN</strong></span></p>
+</section>
+<section id="repaso-medidas-de-dispersión-2" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p><span class="hl-yellow"><strong>¿Cómo medir lo que se alejan los datos de la media?</strong></span></p>
+<div class="fragment">
+<p><img data-src="img/primera-idea-varianza.jpg"></p>
+<p>Una <strong>primera idea</strong> podría ser <span class="hl-yellow"><strong>medir la distancia de cada dato al centro</strong></span>, es decir, restar cada dato de la media, y después realizar su promedio.</p>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="img/wait-for-it.jpg" class="r-stretch"></section>
+<section id="repaso-medidas-de-dispersión-3" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p>Imagina que tenemos la siguiente muestra <span class="math inline">\(X = \left\lbrace -5, -3, -1, 0, 1, 3, 5 \right\rbrace\)</span>.</p>
+<p><strong>¿Cuánto vale la media?</strong></p>
+<div class="fragment">
+<p>La media vale 0 y la distancia a ella es…la propia muestra <span class="math inline">\(\left\lbrace -5, -3, -1, 0, 1, 3, 5 \right\rbrace\)</span>. <strong>¿Cuál es el promedio de dichas distancias?</strong></p>
+</div>
+<div class="fragment">
+<p>Pues…de nuevo vale 0.</p>
+</div>
+<div class="fragment">
+<p>Si la dispersión es 0…<span class="hl-red"><strong>¿no hay dispersión?</strong></span> ¿No debería de dar 0 solo cuando los datos sean constantes?</p>
+</div>
+</section>
+<section id="repaso-medidas-de-dispersión-4" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p>Para <strong>evitar que se cancelen</strong> los signos lo que haremos será calcular el <span class="hl-yellow"><strong>promedio PERO de las distancias al cuadrado</strong></span>, la conocida como <span class="hl-yellow"><strong>varianza</strong></span></p>
+<p><span class="math display">\[s_{x}^{2} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2 = \overline{x^2} - \overline{x}^2 \]</span></p>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Cuidado</strong></p>
+</div>
+<div class="callout-content">
+<p>Tomar el valor absoluto (para evitar que se cancelen los signos) suele ser una mala idea en matemáticas (no es derivable como función).</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="repaso-medidas-de-dispersión-5" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p><span class="hl-red"><strong>Problema</strong></span>: si los datos están en metros, la varianza estará en…metros cuadrados</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>¿Tiene sentido medir la dispersión de nuestra estatura en baldosas?</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/albert-rivera.jpg"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="repaso-medidas-de-dispersión-6" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p>Para tener una <span class="hl-yellow"><strong>medida de dispersión en las unidades de los datos</strong></span> calcularemos la <span class="hl-yellow"><strong>desviación típica</strong></span>, como la raíz cuadrada de la varianza</p>
+<p><span class="math display">\[s_{x} = \sqrt{s_{x}^{2}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2} = \sqrt{\overline{x^2} - \overline{x}^2}\]</span></p>
+</section>
+<section id="repaso-medidas-de-dispersión-7" class="slide level2">
+<h2>Repaso: medidas de dispersión</h2>
+<p>Todavía tenemos un pequeño problema.</p>
+<p>Imagina que queremos <strong>comparar la dispersión de dos conjuntos</strong> de datos, estaturas de personas y diámetros de núcleos de células. Y Supongamos que las medias son 170 cm y 5 micrómetros, y la desviación típica de 1 cm y 1.5 micrómetros.</p>
+<p><span class="hl-yellow"><strong>¿Qué conjunto de datos es más disperso?</strong></span></p>
+<div class="fragment">
+<p>Para tener una <strong>medida de dispersión adimensional</strong> definiremos el <span class="hl-yellow"><strong>coeficiente de variación</strong></span></p>
+<p><span class="math display">\[CV_{x} = \frac{s_{x}}{\left| \overline{x} \right|}\]</span></p>
+</div>
+</section>
+<section id="repaso-medidas-de-localización" class="slide level2">
+<h2>Repaso: medidas de localización</h2>
+<p>Las <span class="hl-yellow"><strong>medidas de posición o localización</strong></span> nos localizan los datos, siendo valores que <strong>nos dividen un conjunto ordenado</strong> en subconjuntos del mismo tamaño (ejemplo: mediana es percentil 50).</p>
+<ul>
+<li><p><strong>Percentil</strong>: valores <span class="math inline">\(P_{\alpha}\)</span> del conjunto ordenado que dejan por debajo, al menos, el <span class="math inline">\(\alpha\)</span>% de datos y <span class="math inline">\(\alpha\)</span>% por encima.<br>
+</p></li>
+<li><p><strong>Decil</strong>: valores <span class="math inline">\(D_{\alpha}\)</span> que dividen los datos en 10 partes iguales.</p></li>
+<li><p><strong>Cuartil</strong>: valores <span class="math inline">\(C_{\alpha}\)</span> o <span class="math inline">\(q_{\alpha}\)</span> que dividen los datos en 4 partes iguales.</p></li>
+</ul>
+</section>
+<section id="repaso-covarianza-y-correlación" class="slide level2">
+<h2>Repaso: covarianza y correlación</h2>
+<p><span class="hl-yellow"><strong>¿Qué es en realidad la varianza?</strong></span></p>
+<div class="fragment">
+<p>La <span class="hl-yellow"><strong>varianza es el promedio de las desviaciones al cuadrado</strong></span> (respecto a la media), apareciendo dos veces dicha desviación: puede ser entendida como una <span class="hl-yellow"><strong>medida que cuantifica la relación de una variable CONSIGO MISMA</strong></span></p>
+</div>
+<div class="fragment">
+<p>¿Y si quiésemos medir la <span class="hl-yellow"><strong>RELACIÓN/ASOCIACIÓN de una variable X respecto a otra variable Y (en lugar de consigo misma)</strong></span>?</p>
+</div>
+</section>
+<section id="repaso-covarianza-y-correlación-1" class="slide level2">
+<h2>Repaso: covarianza y correlación</h2>
+<p><span class="math display">\[s_{x}^{2} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)^2 = \overline{x^2} - \overline{x}^2 \quad \text{(varianza)}\]</span></p>
+<p>La idea detrás de la <span class="hl-yellow"><strong>covarianza</strong></span> es justo esa: sustituir una de esas desviaciones de la X por la desviación de la Y.</p>
+<p><span class="math display">\[s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}\]</span></p>
+</section>
+<section id="repaso-covarianza-y-correlación-2" class="slide level2">
+<h2>Repaso: covarianza y correlación</h2>
+<p>Es importante entender algunas <span class="hl-yellow"><strong>propiedades de la covarianza</strong></span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-purple"><strong>Signo</strong></span>: la covarianza puede ser tanto positiva como negativa como 0: al eliminar el cuadrado de la varianza, ya no es necesario que sea positiva</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-purple"><strong>¿Qué cuantifica?</strong></span> La covarianza mide la <span class="hl-red"><strong>asociación LINEAL</strong></span> (en torno a una recta) entre dos variables <span class="hl-red"><strong>CONTINUAS</strong></span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-purple"><strong>¿Qué dice su signo?</strong></span> El signo de la covarianza nos indicará la <span class="hl-yellow"><strong>dirección de la dependencia lineal</strong></span>: si es positiva, la relación será creciente (cuando X crece, Y crece); si es negativa, la relación será decreciente (cuando X crece, Y decrece)</li>
+</ul>
+</div>
+</section>
+<section id="repaso-covarianza-y-correlación-3" class="slide level2">
+<h2>Repaso: covarianza y correlación</h2>
+<p>Al igual que pasaba con la varianza, la <span class="hl-yellow"><strong>covarianza depende de las unidades y magnitudes</strong></span> de los datos, así que lo que haremos será <span class="hl-yellow"><strong>estandarizar la covarianza</strong></span>. Definiremos la <span class="hl-yellow"><strong>coeficiente correlación lineal (de Pearson)</strong></span> como la covarianza dividida entre el producto de las desviaciones típicas (adimensional)</p>
+<p><span class="math display">\[r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}\]</span></p>
+<div class="fragment">
+<p>Tiene el <span class="hl-yellow"><strong>mismo signo que la covarianza</strong></span> (el denominador es siempre positivo) y sus <span class="hl-yellow"><strong>valores siempre están entre -1 y 1</strong></span></p>
+<ul>
+<li>más cerca de -1 o 1 → relación lineal más fuerte</li>
+<li>más cerca de 0 → ausencia de relación <strong>LINEAL</strong></li>
+</ul>
+</div>
+</section>
+<section id="repaso-covarianza-y-correlación-4" class="slide level2">
+<h2>Repaso: covarianza y correlación</h2>
+
+<img data-src="img/correlaciones.jpg" class="r-stretch"></section>
+<section id="caso-practico-1-1" class="slide level2">
+<h2>🐣 Caso práctico I: anscombe</h2>
+<p>En el paquete <code>{datasets}</code> se encuentra el dataset conocido como <span class="hl-yellow"><strong>cuarteto de Anscombe</strong></span>, un dataset que cuenta con 4 conjuntos de datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>anscombe_tb <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(datasets<span class="sc">::</span>anscombe)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>anscombe_tb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 8
+      x1    x2    x3    x4    y1    y2    y3    y4
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1    10    10    10     8  8.04  9.14  7.46  6.58
+ 2     8     8     8     8  6.95  8.14  6.77  5.76
+ 3    13    13    13     8  7.58  8.74 12.7   7.71
+ 4     9     9     9     8  8.81  8.77  7.11  8.84
+ 5    11    11    11     8  8.33  9.26  7.81  8.47
+ 6    14    14    14     8  9.96  8.1   8.84  7.04
+ 7     6     6     6     8  7.24  6.13  6.08  5.25
+ 8     4     4     4    19  4.26  3.1   5.39 12.5 
+ 9    12    12    12     8 10.8   9.13  8.15  5.56
+10     7     7     7     8  4.82  7.26  6.42  7.91
+11     5     5     5     8  5.68  4.74  5.73  6.89</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe"><strong>workbook</strong></a></p>
+</section></section>
+<section>
+<section id="clase-2" class="title-slide slide level1 center">
+<h1>Clase 2: asociación entre variables</h1>
+<p><span style="color:#444442;"><strong>Causalidad vs dependencia. Asociación continua vs continua, cualitativa vs cualitativa (28 de enero de 2025)</strong></span></p>
+</section>
+<section id="estadística-bivariante" class="slide level2">
+<h2>Estadística bivariante</h2>
+<p>Todo lo que hemos hecho con una variable podemos hacerlo también de manera <span class="hl-yellow"><strong>bivariante</strong></span> considerando dos variables.</p>
+<div class="fragment">
+<p>Uno de los principales objetivos de la estadística bivariante es <span class="hl-yellow"><strong>determinar si existe relación o dependencia entre dos variables</strong></span>, es decir, cuando un cambio en el valor de una de ellas se asocia a un cambio en el de la otra (una <span class="hl-red"><strong>dependencia estadística no implica un efecto causal</strong></span>).</p>
+</div>
+<div class="fragment">
+<p>La situación contraria, es decir, la ausencia de relación, se denomina <span class="hl-yellow"><strong>independencia</strong></span>.</p>
+</div>
+</section>
+<section id="tipos-de-análisis-posibles" class="slide level2">
+<h2>Tipos de análisis posibles</h2>
+<p>Una primera aproximación al estudio de dos variables será <span class="hl-yellow"><strong>clasificar el tipo de análisis</strong></span></p>
+<ul>
+<li><span class="hl-yellow"><strong>Cuali vs cuali</strong></span>:
+<ul>
+<li><strong>Resumen</strong>: tablas de contigencia (frecuencia cruzada).</li>
+<li><strong>Inferencia</strong>: prueba <span class="math inline">\(\chi^2\)</span> de independencia o test de Fisher.</li>
+<li><strong>Gráficos</strong>: barras apiladas, gofres, gráficos de «flujo».</li>
+</ul></li>
+</ul>
+</section>
+<section id="tipos-de-análisis-posibles-1" class="slide level2">
+<h2>Tipos de análisis posibles</h2>
+<p>Una primera aproximación al estudio de dos variables será <span class="hl-yellow"><strong>clasificar el tipo de análisis</strong></span></p>
+<ul>
+<li><span class="hl-yellow"><strong>Cuani vs cuanti</strong></span>:
+<ul>
+<li><strong>Resumen</strong>: covarianza y correlación.</li>
+<li><strong>Inferencia</strong>: test de correlación (relación lineal) y test de Kolmogorov-Smirnov (¿ambas distribuciones son iguales?). Test de igualdad de medias o igualdad de varianzas</li>
+<li><strong>Gráficos</strong>: diagrama de dispersión, correlogramas, heatmaps.</li>
+</ul></li>
+</ul>
+</section>
+<section id="tipos-de-análisis-posibles-2" class="slide level2">
+<h2>Tipos de análisis posibles</h2>
+<p>Una primera aproximación al estudio de dos variables será <span class="hl-yellow"><strong>clasificar el tipo de análisis</strong></span></p>
+<ul>
+<li><span class="hl-yellow"><strong>Cuanti vs cuali</strong></span>:
+<ul>
+<li><strong>Resumen</strong>: medidas de centralización/dispersión/posición de la cuanti desagregado por los grupos de la cuali.</li>
+<li><strong>Inferencia</strong>: ANOVA (una vía, dos vías, …). Test de igualdad de medias o igualdad de varianzas (desagregada por grupos)</li>
+<li><strong>Gráficos</strong>: boxplots, gráficos de violín (desagregados por grupos)</li>
+</ul></li>
+</ul>
+</section>
+<section id="repaso-inferencia" class="slide level2">
+<h2>Repaso: inferencia</h2>
+<p>¿Pero que era eso de la <span class="hl-yellow"><strong>inferencia estadística</strong></span>? Es un conjunto de métodos y técnicas que permite <span class="hl-yellow"><strong>inferir conclusiones sobre una población a partir de una muestra</strong></span> de datos.</p>
+<div class="fragment">
+<p>Su propósito es utilizar la información muestral para estimar características de la población, probar hipótesis y realizar predicciones, basado en el cálculo de <span class="hl-yellow"><strong>estadísticos</strong></span></p>
+<ul>
+<li><p><span class="hl-yellow"><strong>Parámetro</strong></span>: medida que describe una característica de la <strong>población</strong> (ejemplo: la media poblacional <span class="math inline">\(\mu\)</span> de la estatura de las mujeres en España).</p></li>
+<li><p><span class="hl-yellow"><strong>Estadístico</strong></span>: medida que describe una característica de la <strong>muestra</strong> (ejemplo: la media muestral <span class="math inline">\(\overline{x}\)</span> de un conjunto de 100 mujeres).</p></li>
+</ul>
+</div>
+</section>
+<section id="repaso-inferencia-1" class="slide level2">
+<h2>Repaso: inferencia</h2>
+<p>Haciendo uso de <strong>estadísticos que aproximen una correcta estimación de los parámetros</strong>, los <span class="hl-yellow"><strong>contraste de hipótesis</strong></span> son procedimientos estadísticos para <span class="hl-yellow"><strong>tomar decisiones sobre la validez de una afirmación acerca de una población</strong></span> en función de los datos muestrales.</p>
+<div class="fragment">
+<p>La idea es muy parecido a un <strong>juicio</strong>: con las pruebas (muestra) el jurado (estadístico) deben decidir sobre tu culpabilidad real (población), pudiendo ser declarado <strong>culpable</strong> o <strong>no culpable</strong>.</p>
+</div>
+<div class="fragment">
+<p>Este proceso implica formula</p>
+<ul>
+<li><p><span class="hl-yellow"><strong>Hipótesis nula</strong> <span class="math inline">\(H_0\)</span></span>: es una afirmación generalmente representa una <strong>posición de no efecto o no diferencia</strong> (ejemplo: entras siendo no culpable a un juicio)</p></li>
+<li><p><span class="hl-yellow"><strong>Hipótesis alternativa</strong> <span class="math inline">\(H_0\)</span></span>: es una afirmación que <span class="hl-yellow"><strong>se acepta si se rechaza la hipótesis nula</strong></span>. Representa un efecto o diferencia (ejemplo: culpable)</p></li>
+</ul>
+</div>
+</section>
+<section id="repaso-inferencia-2" class="slide level2">
+<h2>Repaso: inferencia</h2>
+<ul>
+<li><p><span class="hl-yellow"><strong>Hipótesis nula</strong> <span class="math inline">\(H_0\)</span></span>: es una afirmación generalmente representa una <strong>posición de no efecto o no diferencia</strong> (ejemplo: entras siendo no culpable a un juicio)</p></li>
+<li><p><span class="hl-yellow"><strong>Hipótesis alternativa</strong> <span class="math inline">\(H_1\)</span></span>: es una afirmación que <span class="hl-yellow"><strong>se acepta si se rechaza la hipótesis nula</strong></span>. Representa un efecto o diferencia (ejemplo: culpable)</p></li>
+</ul>
+<p>La idea es similar a la del juicio: solo vamos a <span class="hl-yellow"><strong>rechazar <span class="math inline">\(H_0\)</span> (es decir, aceptar <span class="math inline">\(H_1\)</span>) si hay MUCHAS EVIDENCIAS en la muestra</strong></span> (solo se condena culpable a una persona si hay muchas evidencias que demuestran su culpabilidad, pero el acusado no tiene que demostrar su inocencia).</p>
+<div class="fragment">
+<p>Llamaremos <span class="hl-yellow"><strong>nivel de significancia</strong> <span class="math inline">\(\alpha\)</span></span> a la probabilidad de <span class="hl-red"><strong>rechazar la hipótesis nula cuando es verdadera</strong></span> (condenar a un inocente, conocido como <strong>error tipo I</strong>. Normalmente <span class="math inline">\(\alpha = 0.05\)</span> aunque se pueden usar otros valores como 0.01 o 0.10 (a decidir ANTES de realizar el contraste.)</p>
+</div>
+</section>
+<section id="p-valor" class="slide level2">
+<h2>p valor</h2>
+<p>El conocido como <span class="hl-yellow"><strong>p-valor</strong></span> es uno de los conceptos más importantes en estadística pero también peor usados. Puedes ver toda una revisión de qué significa y qué no en <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/" class="uri">https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/</a></p>
+<div class="fragment">
+<p>Podemos definir el <span class="hl-yellow"><strong>p-valor</strong></span> como un valor continuo que nos mide la <span class="hl-yellow"><strong>compatibilidad de los datos observados con el modelo e hipótesis asumidas</strong></span>: 1 indica compatibilidad perfecta y 0 incompatibilidad completa.</p>
+<ul>
+<li><p><span class="hl-red"><strong>No repesenta la probabilidad de que la hipótesis nula sea cierta</strong></span>: el propio p-valor se calcula ASUMIENDO que lo es.</p></li>
+<li><p><span class="hl-red"><strong>No representa la probabilidad de que, por azar, se produzca nada</strong></span></p></li>
+</ul>
+</div>
+</section>
+<section id="asociación-cuali-vs-cuali" class="slide level2">
+<h2>Asociación cuali vs cuali</h2>
+<p>Una vez visto conceptos básicos de inferencia vamos a empezar por un <span class="hl-yellow"><strong>análisis bivariante de dos variables cualitativas</strong></span></p>
+<div class="fragment">
+<p>El primer paso siempre será intentar resumir la información mediante el uso de <span class="hl-yellow"><strong>tablas de contigencia</strong></span>, en este caso bidimensionales.</p>
+</div>
+<div class="fragment">
+<p>¿Cómo lo harías con <strong>tidyverse</strong>? ¿Y con <strong>R base</strong>?</p>
+</div>
+</section>
+<section id="tablas-de-contigencia" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Vamos a tomar la base de datos <code>SatisfaccionPacientes.csv</code> que captura datos de una encuesta de satisfacción de pacientes en un hospital</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/SatisfaccionPacientes.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb3-5"><a href="#cb3-5"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 8
+      id  edad genero    estado_civil tiempo_espera grado_satisfaccion
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                &lt;dbl&gt;              &lt;dbl&gt;
+ 1     1    60 Masculino Casado                  28                  8
+ 2     2    44 Femenino  Soltero                 22                  8
+ 3     3    43 Masculino Soltero                  8                  9
+ 4     4    32 Masculino Soltero                 21                  8
+ 5     5    66 Masculino Divorciado               7                 10
+ 6     6    43 Masculino Divorciado              20                  8
+ 7     7    54 Masculino Casado                  18                  6
+ 8     8    55 Masculino Soltero                 29                  6
+ 9     9    56 Masculino Viudo                   17                  9
+10    10    34 Femenino  Casado                  34                  8
+# ℹ 90 more rows
+# ℹ 2 more variables: numero_visitas &lt;dbl&gt;, estado_salud &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="tablas-de-contigencia-1" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Para calcular una <span class="hl-yellow"><strong>tabla bidimensional de frecuencias</strong></span> en tidyverse basta con <strong>indicar dos variables en <code>count()</code></strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">count</span>(genero, estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  genero    estado_civil     n
+  &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;
+1 Femenino  Casado          11
+2 Femenino  Divorciado      11
+3 Femenino  Soltero         22
+4 Femenino  Viudo            9
+5 Masculino Casado          15
+6 Masculino Divorciado       8
+7 Masculino Soltero         20
+8 Masculino Viudo            4</code></pre>
+</div>
+</div>
+</section>
+<section id="tablas-de-contigencia-2" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Lo habitual es mostrar esta tabla como una <span class="hl-yellow"><strong>tabla con m filas y n columnas</strong></span>, siendo <span class="math inline">\(m\)</span> el número de modalidades distintas de la primera variable (en este caso <span class="math inline">\(m=2\)</span>, femenino y masculino) y <span class="math inline">\(n\)</span> el número de modalidades distintas de la segunda variable (en este caso <span class="math inline">\(n = 4\)</span>).</p>
+<p>¿Cómo hacer que la variable <code>estado_civil</code> pivote para pasar de estar en vertical a estar «en horizontal»? (echa un repaso a la parte de tidy data)</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">count</span>(genero, estado_civil) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> estado_civil, <span class="at">values_from =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  genero    Casado Divorciado Soltero Viudo
+  &lt;chr&gt;      &lt;int&gt;      &lt;int&gt;   &lt;int&gt; &lt;int&gt;
+1 Femenino      11         11      22     9
+2 Masculino     15          8      20     4</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="tablas-de-contigencia-3" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Esto se puede hacer <strong>mucho más sencillo de nuevo en <code>R base</code></strong> con <code>table()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            Casado Divorciado Soltero Viudo
+  Femenino      11         11      22     9
+  Masculino     15          8      20     4</code></pre>
+</div>
+</div>
+</section>
+<section id="tablas-de-contigencia-4" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Fíjate que ahora podemos <span class="hl-yellow"><strong>normalizar las frecuencias de 3 formas</strong></span>: respecto al total de los datos, por filas (<code>margin = 1</code>) o por columnas (<code>margin = 2</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            Casado Divorciado Soltero Viudo
+  Femenino    0.11       0.11    0.22  0.09
+  Masculino   0.15       0.08    0.20  0.04</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil), <span class="at">margin =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+                Casado Divorciado    Soltero      Viudo
+  Femenino  0.20754717 0.20754717 0.41509434 0.16981132
+  Masculino 0.31914894 0.17021277 0.42553191 0.08510638</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil), <span class="at">margin =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+               Casado Divorciado   Soltero     Viudo
+  Femenino  0.4230769  0.5789474 0.5238095 0.6923077
+  Masculino 0.5769231  0.4210526 0.4761905 0.3076923</code></pre>
+</div>
+</div>
+</section>
+<section id="tablas-de-contigencia-5" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Haciendo uso de las tablas anteriores intenta responder a las siguientes preguntas:</p>
+<ol type="a">
+<li><p>¿Qué cantidad de pacientes mujeres están solteras?</p></li>
+<li><p>¿Qué porcentaje, de entre los pacientes hombres, están viudos?</p></li>
+<li><p>¿Qué porcentaje, de entre los que están divorciados, son mujeres?</p></li>
+<li><p>¿Qué porcentaje (del total de pacientes) son hombres solteros?</p></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># a) 22 mujeres</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co"># b) 8.51%</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="co"># c) 57.89%</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># d) 20%</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="tablas-de-contigencia-6" class="slide level2">
+<h2>Tablas de contigencia</h2>
+<p>Puedes incluso visualizar dichas cantidades con <code>geom_tile()</code> indicándole que el relleno dependa del conteo <code>n</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">count</span>(genero, estado_civil) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">x =</span> genero, <span class="at">y =</span> estado_civil, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-2-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li><a href="#tabset-1-2"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li><a href="#tabset-1-3"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li><a href="#tabset-1-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li><a href="#tabset-1-5"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li><li><a href="#tabset-1-6"><span class="hl-yellow"><strong>Ejercicio 6</strong></span></a></li><li><a href="#tabset-1-7"><span class="hl-yellow"><strong>Ejercicio 7</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Para repasar lo aprendido vamos a poner todo en práctica con el dataset <code>SatisfaccionPacientes.csv</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/SatisfaccionPacientes.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>📝 Aplica el código que sea necesario para responder a estas preguntas. ¿Cuál es el tamaño muestral? ¿Cuántas variables tenemos? ¿Cuántas modalidades tenemos en la variable <code>estado_civil</code> (y cuantas observaciones en cada una)?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Tamaño muestral / número de observaciones</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos)</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co"># Número de variables</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(datos)</span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co"># ¿Qué modalidades tenemos?</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>datos <span class="sc">|&gt;</span>  <span class="fu">count</span>(estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-2">
+<p>📝 Determina el tipo de variable (cuantitativa vs.&nbsp;cualitativa).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Variables cuantitativas: tiempo, grado satisfacción, número de visitas</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co"># Variables cualitativas: género, estado civil, estado salud</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">glimpse</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-3">
+<p>📝 Obten tablas de frecuencias (absoluta y relativa) en el caso de las cualitativas NOMINALES. Con ella intenta responder a las preguntas: a) ¿cuántas mujeres hay? b) ¿qué % de individuos están casados?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># no podemos calcular acumulados ya que genero es nominal</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>datos <span class="sc">|&gt;</span>  <span class="fu">count</span>(genero) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">rename</span>(<span class="at">frecuencia_abs =</span> n) <span class="sc">|&gt;</span> </span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">mutate</span>(<span class="at">frecuencia_rel =</span> frecuencia_abs<span class="sc">/</span><span class="fu">sum</span>(frecuencia_abs))</span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co"># Hay 53 mujeres</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a></span>
+<span id="cb22-7"><a href="#cb22-7"></a>datos <span class="sc">|&gt;</span> <span class="fu">count</span>(estado_civil) <span class="sc">|&gt;</span> </span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="fu">rename</span>(<span class="at">frecuencia_abs =</span> n) <span class="sc">|&gt;</span> </span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">mutate</span>(<span class="at">frecuencia_rel =</span> frecuencia_abs<span class="sc">/</span><span class="fu">sum</span>(frecuencia_abs))</span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co"># Hay 26% personas casadas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-4">
+<p>📝 Convierte de manera adecuada la variable <code>genero</code> y <code>estado_civil</code> a cualitativa nominal</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">mutate</span>(<span class="at">estado_civil =</span> <span class="fu">factor</span>(estado_civil),</span>
+<span id="cb23-4"><a href="#cb23-4"></a>         <span class="at">genero =</span> <span class="fu">factor</span>(genero))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-5">
+<p>📝 Calcula la media, mediana, rango intercuartílico y desviación típica de edad y tiempo de espera.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>resumen <span class="ot">&lt;-</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">summarise</span>(<span class="at">media_edad =</span> <span class="fu">mean</span>(edad), <span class="at">sd_edad =</span> <span class="fu">sd</span>(edad), <span class="at">mediana_edad =</span> <span class="fu">median</span>(edad),</span>
+<span id="cb24-4"><a href="#cb24-4"></a>           <span class="at">IQR_edad =</span> <span class="fu">quantile</span>(edad, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(edad, <span class="at">probs =</span> <span class="fl">0.25</span>),</span>
+<span id="cb24-5"><a href="#cb24-5"></a>           <span class="co"># tiempo espera</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>           <span class="at">media_tiempo_espera =</span> <span class="fu">mean</span>(tiempo_espera), <span class="at">sd_tiempo_espera =</span> <span class="fu">sd</span>(tiempo_espera),</span>
+<span id="cb24-7"><a href="#cb24-7"></a>           <span class="at">mediana_tiempo_espera =</span> <span class="fu">median</span>(tiempo_espera),</span>
+<span id="cb24-8"><a href="#cb24-8"></a>           <span class="at">IQR_tiempo_espera =</span> <span class="fu">quantile</span>(tiempo_espera, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(tiempo_espera, <span class="at">probs =</span> <span class="fl">0.25</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-6">
+<p>📝 Repite el anterior ejercicio pero obteniendo las métricas desagregadas por sexo.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>resumen <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">summarise</span>(<span class="at">media_edad =</span> <span class="fu">mean</span>(edad), <span class="at">sd_edad =</span> <span class="fu">sd</span>(edad), <span class="at">mediana_edad =</span> <span class="fu">median</span>(edad),</span>
+<span id="cb25-4"><a href="#cb25-4"></a>           <span class="at">IQR_edad =</span> <span class="fu">quantile</span>(edad, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(edad, <span class="at">probs =</span> <span class="fl">0.25</span>),</span>
+<span id="cb25-5"><a href="#cb25-5"></a>           <span class="co"># tiempo espera</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>           <span class="at">media_tiempo_espera =</span> <span class="fu">mean</span>(tiempo_espera), <span class="at">sd_tiempo_espera =</span> <span class="fu">sd</span>(tiempo_espera),</span>
+<span id="cb25-7"><a href="#cb25-7"></a>           <span class="at">mediana_tiempo_espera =</span> <span class="fu">median</span>(tiempo_espera),</span>
+<span id="cb25-8"><a href="#cb25-8"></a>           <span class="at">IQR_tiempo_espera =</span> <span class="fu">quantile</span>(tiempo_espera, <span class="at">probs =</span> <span class="fl">0.75</span>) <span class="sc">-</span> <span class="fu">quantile</span>(tiempo_espera, <span class="at">probs =</span> <span class="fl">0.25</span>),</span>
+<span id="cb25-9"><a href="#cb25-9"></a>          <span class="at">.by =</span> genero)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-7">
+<p>📝 Realiza un gráfico de violín para la variable <code>tiempo_espera</code> para cada género</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> genero, <span class="at">y =</span> tiempo_espera, <span class="at">fill =</span> genero, <span class="at">color =</span> genero),</span>
+<span id="cb26-3"><a href="#cb26-3"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="caso-practico-2-1" class="slide level2">
+<h2>🐣 Caso práctico I: encuesta de satisfacción</h2>
+<p>Vamos a seguir poniendo en práctica lo aprendido el dataset <code>SatisfaccionPacientes.csv</code></p>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n"><strong>workbook</strong></a></p>
+</section>
+<section id="asociación-cuali-vs-cuali-1" class="slide level2">
+<h2>Asociación cuali vs cuali</h2>
+<p>Esas tablas de frecuencia serán las que usen los <span class="hl-yellow"><strong>diferentes contrastes de asociación cuali vs cuali</strong></span> para decidir si hay o no dependencia.</p>
+<p>&nbsp;</p>
+<p>El contraste más conocido es la conocida como <span class="hl-yellow"><strong>prueba de <span class="math inline">\(\chi^2\)</span> (chi-cuadrado)</strong></span>: dada una tabla de contigencia entre dos cualitativas, el contraste <span class="hl-yellow"><strong>compara dicha tabla con la que deberíamos obtener bajo la hipótesis nula de independencia</strong></span></p>
+<p>Vamos a hacerlo con nuestras variables <code>genero</code> y <code>estado_civil</code></p>
+</section>
+<section id="prueba-chi-cuadrado" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<p><span class="math display">\[H_0:~\text{genero y estado civil son independientes}\]</span></p>
+<p><span class="math display">\[H_1:~\text{genero y estado civil son dependientes}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            Casado Divorciado Soltero Viudo
+  Femenino      11         11      22     9
+  Masculino     15          8      20     4</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>Si la hipótesis nula fuese cierta</strong></span>, ¿qué esperaríamos?</p>
+</div>
+</section>
+<section id="prueba-chi-cuadrado-1" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<ol type="1">
+<li>Elegimos uno de los factores y calculamos su <strong>proporción en la tabla general</strong> (53% vs 47% en este caso)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>genero))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Femenino Masculino 
+     0.53      0.47 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Calculamos la <strong>tabla de contigencia</strong> de ambas variables obteniendo lo que denotaremos como <span class="hl-yellow"><strong>frecuencias observadas <span class="math inline">\(O_{ij}\)</span></strong></span></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            Casado Divorciado Soltero Viudo
+  Femenino      11         11      22     9
+  Masculino     15          8      20     4</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-chi-cuadrado-2" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<ol start="3" type="1">
+<li><strong>Si ambas variables fuesen independientes</strong>, en cada columna tendríamos que tener <strong>porcentajes parecidos a cuando lo hacemos sin desagregar</strong> (53% mujeres y 47% hombres). Es decir, del total de casados (26) deberíamos tener <span class="math inline">\(8.48\)</span> mujeres y <span class="math inline">\(7.52\)</span> hombres; del total de divorciados (19) deberíamos tener <span class="math inline">\(10.07\)</span> mujeres y <span class="math inline">\(8.93\)</span> hombres; y así sucesivamente. Estas frecuencias las denotaremos como <span class="hl-yellow"><strong>frecuencias esperadas <span class="math inline">\(E_{ij}\)</span></strong></span></li>
+</ol>
+<p><span class="math display">\[E_{ij} = \frac{\text{suma fila i * suma fila j}}{\text{total}}\]</span></p>
+</section>
+<section id="prueba-chi-cuadrado-3" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<ol start="4" type="1">
+<li><span class="hl-yellow"><strong>Resumimos lo que se desvía una de otra</strong></span> mediante el <span class="hl-yellow"><strong>estadístico chi-cuadrado</strong></span>:</li>
+</ol>
+<p><span class="math display">\[\begin{eqnarray}\chi^2 &amp;=&amp; \sum_{i,j} \frac{\left(O_{ij} - E_{ij} \right)^2}{E_{ij}} = \frac{(13.78 - 11)^2}{13.78} + \frac{(12.22 - 15)^2}{12.22} \nonumber \\
+&amp;+&amp; \frac{(10.07 - 11)^2}{10.07} + \ldots + \frac{(6.11 - 4)^2}{6.11} = 2.75731\end{eqnarray}\]</span></p>
+<div class="fragment">
+<ol start="5" type="1">
+<li>Calculamos <span class="hl-yellow"><strong>cómo de extremo es el valor del estadístico si la hipótesis nula fuese cierta</strong></span>, proporcionándonos un <strong>p-valor</strong>.</li>
+</ol>
+</div>
+</section>
+<section id="prueba-chi-cuadrado-4" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<p>Este proceso podemos hacerlo directamente aplicando <code>chisq.test()</code>, indicándole las variables (o su tabla de frecuencias)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>contraste <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>...$statistic</code>: tenemos guardado el valor del estadístico</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>contraste<span class="sc">$</span>statistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X-squared 
+  2.75731 </code></pre>
+</div>
+</div>
+<ul>
+<li><code>...$observed</code>: tenemos guardada la tabla de frecuencias observada</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>contraste<span class="sc">$</span>observed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            datos$estado_civil
+datos$genero Casado Divorciado Soltero Viudo
+   Femenino      11         11      22     9
+   Masculino     15          8      20     4</code></pre>
+</div>
+</div>
+</section>
+<section id="prueba-chi-cuadrado-5" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<ul>
+<li><code>...$expected</code>: tenemos guardada la tabla de frecuencias esperada</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>contraste<span class="sc">$</span>expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            datos$estado_civil
+datos$genero Casado Divorciado Soltero Viudo
+   Femenino   13.78      10.07   22.26  6.89
+   Masculino  12.22       8.93   19.74  6.11</code></pre>
+</div>
+</div>
+<ul>
+<li><code>...$p.value</code>: tenemos guardado el p-valor.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>contraste<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4305757</code></pre>
+</div>
+</div>
+</section>
+<section id="prueba-chi-cuadrado-6" class="slide level2">
+<h2>Prueba chi-cuadrado</h2>
+<p>¿Cómo <span class="hl-yellow"><strong>interpretar el contraste</strong></span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>contraste</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  datos$genero and datos$estado_civil
+X-squared = 2.7573, df = 3, p-value = 0.4306</code></pre>
+</div>
+</div>
+<p>Como <span class="math inline">\(p.value = 0.4306 &gt; \alpha = 0.05\)</span>, no podemos rechazar la hipótesis nula: <span class="hl-yellow"><strong>no hay evidencias suficientes en la muestra para concluir que haya dependencia</strong></span>.</p>
+</section>
+<section id="prueba-de-fisher" class="slide level2">
+<h2>Prueba de Fisher</h2>
+<p>Otra alternativa es el <span class="hl-yellow"><strong>test exacto de Fisher</strong></span>, una prueba estadística utilizada para <span class="hl-yellow"><strong>determinar si hay una asociación significativa entre dos variables cualitativas</strong></span> especialmente útil cuando las frecuencias esperadas son bajas y tenemos dos grupos en cada cualitativa (la tabla de frecuencias es <span class="math inline">\(2 \times 2\)</span>).</p>
+<p>&nbsp;</p>
+<p>Como <strong>curiosidad</strong> dicha prueba nació cuando Fisher trataba de comprobar si una compañera, Muriel Birstol, era capaz de detectar en un té con leche si se había añadido primero el té o la leche en su taza (y del experiemnto del que nació la regla del <span class="math inline">\(\alpha = 5%\)</span>).</p>
+<div class="fragment">
+<p>Para aplicarlo nos basta con usar <code>fisher.test()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">fisher.test</span>(datos<span class="sc">$</span>genero, datos<span class="sc">$</span>estado_civil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  datos$genero and datos$estado_civil
+p-value = 0.4462
+alternative hypothesis: two.sided</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-de-fisher-1" class="slide level2">
+<h2>Prueba de Fisher</h2>
+<p>Como hemos dicho es especialmente útil cuando tenemos solo 2 modalidades en cada cualitativa ya que nos proporciona <span class="hl-yellow"><strong>métricas de asociación</strong></span></p>
+<p>Veamos un ejemplo con la tabla <code>placebo_medicamento.csv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>datos_placebo <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/placebo_medicamento.csv"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2"></a>datos_placebo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33 × 3
+   id_paciente grupo_tratamiento observado
+         &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;    
+ 1           1 medicamento       mejora   
+ 2           2 medicamento       mejora   
+ 3           3 medicamento       mejora   
+ 4           4 medicamento       mejora   
+ 5           5 medicamento       mejora   
+ 6           6 medicamento       mejora   
+ 7           7 medicamento       mejora   
+ 8           8 medicamento       mejora   
+ 9           9 medicamento       mejora   
+10          10 medicamento       mejora   
+# ℹ 23 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="prueba-de-fisher-2" class="slide level2">
+<h2>Prueba de Fisher</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">fisher.test</span>(datos_placebo<span class="sc">$</span>observado, datos_placebo<span class="sc">$</span>grupo_tratamiento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  datos_placebo$observado and datos_placebo$grupo_tratamiento
+p-value = 0.01336
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  1.308438 57.326435
+sample estimates:
+odds ratio 
+  7.386906 </code></pre>
+</div>
+</div>
+<p>Si te fijas ahora nos devuelve además un <span class="hl-yellow"><strong>contraste de lo que se conoce como odds ratio (OR: razón de probabilidades)</strong></span></p>
+<p><code>alternative hypothesis: true odds ratio is not equal to 1</code></p>
+</section>
+<section id="métricas-de-asociación" class="slide level2">
+<h2>Métricas de asociación</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">table</span>(datos_placebo<span class="sc">$</span>observado, datos_placebo<span class="sc">$</span>grupo_tratamiento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            medicamento placebo
+  mejora             13       6
+  no mejora           3      11</code></pre>
+</div>
+</div>
+<p>La interpretación de <span class="hl-yellow"><strong>Odds ratio (OR)</strong></span> es cuantificar la <span class="hl-yellow"><strong>asociación entre dos variables respecto a una asociación espúrea</strong></span> ¿Cuánto <span class="hl-yellow"><strong>mejoran los que tomaron medicamento respecto a una posible mejora basal</strong></span> (aleatoria) del placebo?</p>
+<ul>
+<li><span class="hl-purple"><strong>Ratio de mejora en tratados</strong></span>: <span class="math inline">\(13/3 = 4.33333\)</span></li>
+<li><span class="hl-purple"><strong>Ratio de mejora en placebo</strong></span>: <span class="math inline">\(6/11 = 0.54545\)</span></li>
+</ul>
+<p><span class="math display">\[OR = \frac{13/3}{6/11} = \frac{13*11}{6*3} = 7.94\]</span></p>
+<p>Los pacientes sometidos a tratamiento mejoran 7.9 veces más si el placebo mejorase por azar.</p>
+</section>
+<section id="métricas-de-asociación-1" class="slide level2">
+<h2>Métricas de asociación</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">table</span>(datos_placebo<span class="sc">$</span>observado, datos_placebo<span class="sc">$</span>grupo_tratamiento)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           
+            medicamento placebo
+  mejora             13       6
+  no mejora           3      11</code></pre>
+</div>
+</div>
+<p>Otra de las métricas habituales es la conocida como <span class="hl-yellow"><strong>razón de prevalencias (Risk Ratio, RR)</strong></span> que nos proporciona un <span class="hl-yellow"><strong>ratio entre la probabilidad de prevalencia</strong></span> de un evento en dos grupos.</p>
+<ul>
+<li><span class="hl-purple"><strong>Prevalencia de mejora en tratados</strong></span>: <span class="math inline">\(13/(3+13) = 0.8125\)</span></li>
+<li><span class="hl-purple"><strong>Prevalencia de mejora en placebo</strong></span>: <span class="math inline">\(6/(11+6) = 0.35294\)</span></li>
+</ul>
+<p><span class="math display">\[RR = \frac{13/(3+13)}{6/(11+6)} = \frac{13*11}{6*3} = 2.30208\]</span> Los pacientes sometidos a tratamiento tienen más del doble de «riesgo» de mejorar que los pacientes con placebo.</p>
+</section>
+<section id="métricas-de-asociación-2" class="slide level2">
+<h2>Métricas de asociación</h2>
+<p>Ambas métricas podemos estimarlas también con el paquete <code>{epitools}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">library</span>(epitools)</span>
+<span id="cb54-2"><a href="#cb54-2"></a>OR <span class="ot">&lt;-</span> <span class="fu">oddsratio</span>(datos_placebo<span class="sc">$</span>observado, datos_placebo<span class="sc">$</span>grupo_tratamiento)</span>
+<span id="cb54-3"><a href="#cb54-3"></a>OR<span class="sc">$</span>measure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           odds ratio with 95% C.I.
+Predictor   estimate    lower    upper
+  mejora    1.000000       NA       NA
+  no mejora 7.201088 1.553915 44.13078</code></pre>
+</div>
+</div>
+<ul>
+<li>Si <span class="math inline">\(OR = 1\)</span> no hay asociación entre las variables.</li>
+<li>Si <span class="math inline">\(OR &gt; 1\)</span> hay una asociación positiva, es decir, la exposición está asociada con un mayor riesgo.</li>
+<li>Si <span class="math inline">\(OR &lt; 1\)</span> hay una asociación negativa, es decir, la exposición está asociada con un menor riesgo.</li>
+</ul>
+</section>
+<section id="métricas-de-asociación-3" class="slide level2">
+<h2>Métricas de asociación</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>RR <span class="ot">&lt;-</span> <span class="fu">riskratio</span>(datos_placebo<span class="sc">$</span>observado, datos_placebo<span class="sc">$</span>grupo_tratamiento)</span>
+<span id="cb56-2"><a href="#cb56-2"></a>RR<span class="sc">$</span>measure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           risk ratio with 95% C.I.
+Predictor   estimate    lower    upper
+  mejora    1.000000       NA       NA
+  no mejora 2.488095 1.215737 5.092068</code></pre>
+</div>
+</div>
+<ul>
+<li>Si <span class="math inline">\(RR = 1\)</span> no hay diferencias en el riesgo entre los grupos.</li>
+<li>Si <span class="math inline">\(RR &gt; 1\)</span> el grupo expuesto (en este caso medicado) tiene mayor riesgo (en este caso de mejorar)</li>
+<li>Si <span class="math inline">\(RR &lt; 1\)</span> el grupo expuesto tiene menor riesgo.</li>
+</ul>
+</section>
+<section id="gráficos-de-barras" class="slide level2">
+<h2>Gráficos de barras</h2>
+<p>Volvamos al ejemplo de encuesta de satisfacción: vamos a intentar relacionar las dos variables cualitativas <code>genero</code> y <code>estado_civil</code> para <strong>complementar el análisis numérico realizado</strong> (amén del <code>geom_tile()</code> que hemos hecho para visualizar la tabla de frecuencias)</p>
+<div class="fragment">
+<p>Sabemos realizar un diagrama de barras de cada una por separado, <span class="hl-yellow"><strong>¿cómo incluir la información de ambas con <code>geom_bar()</code></strong></span></p>
+</div>
+<div class="fragment">
+<p>Piensa cómo hacerlo recordando que <code>geom_bar()</code> solo admite una coordenada <code>x = ...</code> o <code>y = ...</code>. ¿Cómo incluir la info de otra variable que no sea en <code>x</code> o <code>y</code>?</p>
+</div>
+</section>
+<section id="gráficos-de-barras-1" class="slide level2">
+<h2>Gráficos de barras</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> estado_civil, <span class="at">fill =</span> genero), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Estado civil"</span>, <span class="at">y =</span> <span class="st">"Frec. absolutas"</span>,</span>
+<span id="cb58-5"><a href="#cb58-5"></a>       <span class="at">fill =</span> <span class="st">"Género"</span>) <span class="sc">+</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-34-1.png" width="960" class="r-stretch"></section>
+<section id="gráficos-de-barras-2" class="slide level2">
+<h2>Gráficos de barras</h2>
+<p>La función <code>geom_bar()</code> nos permite jugar un poco con el tipo de barras, que por defecto las muestra <code>stacked</code> (apiladas). Dicho ajuste podemos <strong>cambiarlo con el argumento <code>position</code></strong>: si <code>position = "dodge"</code> las muestra de <span class="hl-yellow"><strong>manera agrupada una detrás de otra</strong></span>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> estado_civil, <span class="at">fill =</span> genero),</span>
+<span id="cb59-3"><a href="#cb59-3"></a>           <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Estado civil"</span>, <span class="at">y =</span> <span class="st">"Frec. absolutas"</span>,</span>
+<span id="cb59-6"><a href="#cb59-6"></a>       <span class="at">fill =</span> <span class="st">"Género"</span>) <span class="sc">+</span></span>
+<span id="cb59-7"><a href="#cb59-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section>
+<section id="gráficos-de-barras-3" class="slide level2">
+<h2>Gráficos de barras</h2>
+<p>La mejor opción para visualizar si hay asociación es que <strong>cada barra de estado civil representa el total y nos muestre el % de cada sexo</strong> en cada una: si fuesen independientes, el reparto por sexo en cada barra debería ser similar. Lo haremos con <code>position = "fill"</code></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> estado_civil, <span class="at">fill =</span> genero),</span>
+<span id="cb60-3"><a href="#cb60-3"></a>           <span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Estado civil"</span>, <span class="at">y =</span> <span class="st">"Frec. relativas"</span>,</span>
+<span id="cb60-6"><a href="#cb60-6"></a>       <span class="at">fill =</span> <span class="st">"Género"</span>) <span class="sc">+</span></span>
+<span id="cb60-7"><a href="#cb60-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-36-1.png" width="960" class="r-stretch"></section>
+<section id="gráficos-de-barras-4" class="slide level2">
+<h2>Gráficos de barras</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> estado_civil, <span class="at">fill =</span> genero),</span>
+<span id="cb61-3"><a href="#cb61-3"></a>           <span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb61-4"><a href="#cb61-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb61-5"><a href="#cb61-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Estado civil"</span>, <span class="at">y =</span> <span class="st">"Frec. relativas"</span>,</span>
+<span id="cb61-6"><a href="#cb61-6"></a>       <span class="at">fill =</span> <span class="st">"Género"</span>) <span class="sc">+</span></span>
+<span id="cb61-7"><a href="#cb61-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-37-1.png" width="960" class="r-stretch"></section>
+<section id="tu-turno-2-2" class="slide level2">
+<h2>💻 Tu turno</h2>
+<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li><a href="#tabset-2-2"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li><a href="#tabset-2-3"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li><a href="#tabset-2-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li><a href="#tabset-2-5"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li><li><a href="#tabset-2-6"><span class="hl-yellow"><strong>Ejercicio 6</strong></span></a></li><li><a href="#tabset-2-7"><span class="hl-yellow"><strong>Ejercicio 7</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<p>📝 Carga el fichero <code>placebo_medicamento_completo.csv</code> donde tenemos guardado los niveles de colesterol antes y después de un tratamiento: a 76 personas se les dio un medicamento para bajarlo y a 24 personas placebo.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/placebo_medicamento_completo.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-2">
+<p>📝 Añade una nueva variable dicotómica a los datos que nos guarde <code>mejora</code> si el paciente mejoró tras el tratamiento y <code>no mejora</code> en caso negativo</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">mutate</span>(<span class="st">"mejora"</span> <span class="ot">=</span> <span class="fu">if_else</span>(colesterol_post <span class="sc">&lt;=</span> colesterol_pre, <span class="st">"mejora"</span>,</span>
+<span id="cb63-4"><a href="#cb63-4"></a>                            <span class="st">"no mejora"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-3">
+<p>📝 Visualiza ambas variables (<code>mejora</code> y <code>tratamiento</code>) a la vez con un diagrama de barras de manera que podamos observar indicios de una posible independencia o dependencia entre ambas. Hazlo antes a papel y boli si lo necesitas</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co"># así pintaríamos en cada barra de tratamiento los mejora o no mejora</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> tratamiento, <span class="at">fill =</span> mejora), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb64-4"><a href="#cb64-4"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb64-5"><a href="#cb64-5"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb64-6"><a href="#cb64-6"></a></span>
+<span id="cb64-7"><a href="#cb64-7"></a><span class="co"># pero dado que tienes más tratados que del grupo control</span></span>
+<span id="cb64-8"><a href="#cb64-8"></a><span class="co"># no permite comparar bien así que igualamos las barras</span></span>
+<span id="cb64-9"><a href="#cb64-9"></a><span class="co"># para que cada barra sea el 100% de su categoría</span></span>
+<span id="cb64-10"><a href="#cb64-10"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb64-11"><a href="#cb64-11"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> tratamiento, <span class="at">fill =</span> mejora), <span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb64-12"><a href="#cb64-12"></a>           <span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb64-13"><a href="#cb64-13"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_fill_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb64-14"><a href="#cb64-14"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb64-15"><a href="#cb64-15"></a></span>
+<span id="cb64-16"><a href="#cb64-16"></a><span class="co"># Parece evidente visualmente que hay una diferencia entre mejora y no mejora</span></span>
+<span id="cb64-17"><a href="#cb64-17"></a><span class="co"># en cada barra</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-4">
+<p>📝 Calcula la tabla de frecuencias absoluta y relativa que consideres necesarias para responder a las siguientes preguntas:</p>
+<ol type="a">
+<li><p>¿Cuántas personas de las tratadas con medicamento no mejoraron?</p></li>
+<li><p>¿Qué de personas del total del estudio acabaron mejorando habiendo tomando placebo?</p></li>
+<li><p>¿Qué % de personas tomó medicamentos entre los que no mejoraron?</p></li>
+<li><p>¿Qué % de personas de los que tomaron medicamento mejoraron?</p></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora)</span>
+<span id="cb65-2"><a href="#cb65-2"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora))</span>
+<span id="cb65-3"><a href="#cb65-3"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora), <span class="at">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb65-4"><a href="#cb65-4"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora), <span class="at">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb65-5"><a href="#cb65-5"></a><span class="co"># 9 personas de las tratadas con medicamento no mejoraron</span></span>
+<span id="cb65-6"><a href="#cb65-6"></a><span class="co"># 9% del total de personas mejoraron y tomaron placebo</span></span>
+<span id="cb65-7"><a href="#cb65-7"></a><span class="co"># 37% de los que no mejoraron habían tomado la medicación</span></span>
+<span id="cb65-8"><a href="#cb65-8"></a><span class="co"># 88.1% de los que tomaron medicamento mejoraron</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-5">
+<p>📝 Para confirmar y cuantificar las evidencias que ya tenemos, vamos a realizar un contraste de hipótesis. Realiza la prueba de chi-cuadrado e interpreta el resultado con <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">chisq.test</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora)</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="co"># Dado que p-value = 1.654e-06 &lt;&lt; alpha --&gt; debemos rechazar la hipótesis nula --&gt;</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a><span class="co"># hay evidencias suficientes para afirmar que hay relación de dependencia</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-6">
+<blockquote>
+<p>Realiza la prueba de chi-cuadrado y Fisher e incluye los p-valores en una tabla resumen haciendo uso de tidyverse. Exporta a un <code>.csv</code> dicha tabla resumen</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>resumen_pvalores <span class="ot">&lt;-</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">summarise</span>(<span class="st">"sig_chisq"</span> <span class="ot">=</span> <span class="fu">chisq.test</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora)<span class="sc">$</span>p.value,</span>
+<span id="cb67-4"><a href="#cb67-4"></a>            <span class="st">"sig_fisher"</span> <span class="ot">=</span> <span class="fu">fisher.test</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora)<span class="sc">$</span>p.value)</span>
+<span id="cb67-5"><a href="#cb67-5"></a><span class="fu">write_csv</span>(resumen_pvalores, <span class="at">file =</span> <span class="st">"./datos/resumen_pvalores.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-2-7">
+<p>📝 Realiza la prueba de Fisher y mira la salida completa. Interpreta la salida, no solo del contraste sino de los odd ratio.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">fisher.test</span>(datos<span class="sc">$</span>tratamiento, datos<span class="sc">$</span>mejora)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  datos$tratamiento and datos$mejora
+p-value = 2.519e-06
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  3.722458 42.096028
+sample estimates:
+odds ratio 
+  11.95213 </code></pre>
+</div>
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="co"># OR estimado es de 11.95 --&gt; al ser mayor que 1 implica que</span></span>
+<span id="cb70-2"><a href="#cb70-2"></a><span class="co"># hay una asociación positiva entre las variables</span></span>
+<span id="cb70-3"><a href="#cb70-3"></a><span class="co"># hay 12 veces más opciones de que te baje el colesterol si tomas el</span></span>
+<span id="cb70-4"><a href="#cb70-4"></a><span class="co"># medicamento respecto a una posible mejora aleatoria (porque sí).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="caso-practico-2-2" class="slide level2">
+<h2>🐣 Caso práctico II: bronquitis y tabaco</h2>
+<p>Vamos a cargar el archivo de datos <code>fumadores.csv</code> donde tenemos datos de 96 pacientes sobre sí o fuman y quienes han desarrollado o no bronquitis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/fumadores.csv"</span>)</span>
+<span id="cb71-2"><a href="#cb71-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 96 × 3
+      id fumador estado    
+   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;     
+ 1     1 sí      bronquitis
+ 2     2 sí      bronquitis
+ 3     3 sí      bronquitis
+ 4     4 sí      bronquitis
+ 5     5 sí      bronquitis
+ 6     6 sí      bronquitis
+ 7     7 sí      bronquitis
+ 8     8 sí      bronquitis
+ 9     9 sí      bronquitis
+10    10 sí      bronquitis
+# ℹ 86 more rows</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco"><strong>workbook</strong></a></p>
+</section>
+<section id="caso-practico-2-3" class="slide level2">
+<h2>🐣 Caso práctico III: salud mental</h2>
+<p>Esta la base de datos <code>datos_salud_mental.csv</code> tenemos información recopilada de 100 pacientes que acuden a un centro de salud mental. Se quiere realizar un estudio para ver el <strong>impacto que tienen distintas características sobre la ansiedad y depresión</strong> en estos 100 pacientes. Los datos incluyen una variedad de variables relacionadas con la salud mental, así como características demográficas y de estilo de vida.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/datos_salud_mental.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb73-3"><a href="#cb73-3"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental"><strong>workbook</strong></a></p>
+</section>
+<section id="asociación-cuanti-vs-cuanti" class="slide level2">
+<h2>Asociación cuanti vs cuanti</h2>
+<p>Como decíamos, la idea detrás de la <span class="hl-yellow"><strong>covarianza</strong></span> es una “varianza” entre dos variales (la varianza es una covarianza de una variable consigo misma), midiendo el <strong>promedio de lo que se desvía cada una respecto a su media</strong></p>
+<p><span class="math display">\[s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}\]</span></p>
+<div class="fragment">
+<p>Para calcularla en <code>R</code> basta con usar la función <code>cov()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">drop_na</span>(mass, height) <span class="sc">|&gt;</span> </span>
+<span id="cb74-3"><a href="#cb74-3"></a>  <span class="fu">summarise</span>(<span class="fu">cov</span>(mass, height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  `cov(mass, height)`
+                &lt;dbl&gt;
+1                788.</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="correlación-lineal" class="slide level2">
+<h2>Correlación lineal</h2>
+<p>Vamos a practicar una vez más como <span class="hl-yellow"><strong>hacerlo a mano con el siguiente ejercicio</strong></span>.</p>
+</section>
+<section id="correlación-lineal-1" class="slide level2">
+<h2>Correlación lineal</h2>
+<p>En la tabla inferior se han recopilado (del 2013 al 2022) la <strong>temperatura media en el mes de abril en Madrid (variable X, en ºC)</strong> y el <strong>número de días (variable Y) en el que el nivel de ozono superó las 0.20 ppm (partes por millón)</strong></p>
+<ul>
+<li>¿Cuál fue media de días en los que se superó umbral de ozono de 0.20 ppm?</li>
+<li>¿Cuál fue media de días en los que se superó umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?</li>
+<li>¿Cuál es su covarianza?</li>
+</ul>
+
+<img data-src="img/tabla-ej-covarianza-sin-agrupar.png" class="r-stretch"></section>
+<section id="correlación-lineal-2" class="slide level2">
+<h2>Correlación lineal</h2>
+<p>Repite el ejercicio con pocas líneas de código <code>R</code></p>
+<ul>
+<li>¿Cuál fue la media de días en los que se superó el umbral de ozono de 0.20 ppm?</li>
+<li>¿Cuál fue la media de días en los que se superó el umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?</li>
+<li>¿Cuál es su covarianza?</li>
+</ul>
+
+<img data-src="img/tabla-ej-covarianza-sin-agrupar.png" class="r-stretch"></section>
+<section id="correlación-lineal-3" class="slide level2">
+<h2>Correlación lineal</h2>
+<p>Realiza lo que consideres tanto a mano como en <code>R</code></p>
+<ul>
+<li>¿Existe alguna <strong>relación de dependencia entre las variables</strong>? ¿De qué tipo? ¿Cómo de fuerte o débil es dicha relación? ¿En qué dirección es dicha relación?</li>
+</ul>
+<p><span class="math display">\[s_{xy} = \frac{1}{n} \sum_{i=1}^{n} \left(x_i - \overline{x} \right)\left(y_i - \overline{y} \right) = \overline{x*y} - \overline{x}*\overline{y}\]</span></p>
+<p><span class="math display">\[r_{xy} = \rho_{xy} = \frac{s_{xy}}{s_x s_y}\]</span></p>
+</section>
+<section id="correlación-lineal-4" class="slide level2">
+<h2>Correlación lineal</h2>
+<p>No sé si te has fijado qué sucede cuando intentamos <span class="hl-yellow"><strong>calcular la covarianza/correlación de varias variables</strong></span>, por ejemplo vamos a calcular la (cuasi)covarianza de todas las variables numéricas de starwars.</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb76-2"><a href="#cb76-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb76-3"><a href="#cb76-3"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb76-4"><a href="#cb76-4"></a>  <span class="fu">cov</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               height       mass birth_year
+height       957.3802   676.8867   -2164.10
+mass         676.8867 46313.2034   17402.55
+birth_year -2164.1002 17402.5466   28603.04</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Podemos usar la función <code>cov()</code> sin más, fuera de un resumen, obteniendo lo que se conoce como <span class="hl-yellow"><strong>matriz de (cuasi)covarianzas</strong></span> y que tendrá un papel fundamental en estadística ya que contiene la información (= varianza) del dataset.</p>
+</div>
+</section>
+<section id="matriz-de-covarianzas" class="slide level2">
+<h2>Matriz de covarianzas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb78-2"><a href="#cb78-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb78-3"><a href="#cb78-3"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb78-4"><a href="#cb78-4"></a>  <span class="fu">cov</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               height       mass birth_year
+height       957.3802   676.8867   -2164.10
+mass         676.8867 46313.2034   17402.55
+birth_year -2164.1002 17402.5466   28603.04</code></pre>
+</div>
+</div>
+<p>Además de ser <span class="hl-yellow"><strong>simétrica</strong></span>…¿qué tenemos en la <span class="hl-yellow"><strong>diagonal</strong></span>?</p>
+<div class="fragment">
+<p>La <span class="hl-yellow"><strong>matriz de (cuasi)covarianzas</strong></span> se denota como <span class="math inline">\(\Sigma\)</span> y sus elementos se define como <span class="math inline">\(\Sigma_{ii} = s_{x_i}^{2}\)</span> para la diagonal y <span class="math inline">\(\Sigma_{ij} = \Sigma_{ji} = s_{x_i x_j}\)</span> fuera de ella.</p>
+</div>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Importante</strong></p>
+</div>
+<div class="callout-content">
+<p>Recuerda que los softwares estadísticos nos devuelven siempre la <span class="hl-purple"><strong>cuasi covarianza</strong></span>, dividido entre <span class="math inline">\(n-1\)</span> y no entre <span class="math inline">\(n\)</span>. La cuasivarianza y la cuasicovarianza son los <span class="hl-yellow"><strong>mejores estimadores muestrales (insesgados)</strong></span> de los respectivos parámetros poblaciones</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="matriz-de-correlaciones" class="slide level2">
+<h2>Matriz de correlaciones</h2>
+<p>De la misma manera con <code>cor()</code> podemos <span class="hl-yellow"><strong>calcular la matriz de correlaciones</strong></span> (en este caso sin el <code>cuasi</code> ya que se cancelan denominadores)</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb80-2"><a href="#cb80-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb80-3"><a href="#cb80-3"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb80-4"><a href="#cb80-4"></a>  <span class="fu">cor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               height      mass birth_year
+height      1.0000000 0.1016533 -0.4135510
+mass        0.1016533 1.0000000  0.4781391
+birth_year -0.4135510 0.4781391  1.0000000</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>La <span class="hl-yellow"><strong>matriz de correlaciones</strong></span> se denota como <span class="math inline">\(R\)</span> y sus elementos se define como <span class="math inline">\(r_{ii} = 1\)</span> para la diagonal y <span class="math inline">\(r_{ij} = r_{x_ix_j}\)</span> fuera de ella, y nos proporciona la dependencia lineal entre variables ya de manera <strong>estandarizada</strong>.</p>
+</div>
+</section>
+<section id="matriz-de-correlaciones-1" class="slide level2">
+<h2>Matriz de correlaciones</h2>
+<p><span class="hl-yellow"><strong>¿Se te ocurre alguna manera de calcular la matriz de correlaciones a partir de la de covarianzas?</strong></span></p>
+</section>
+<section id="correlación-vs-dependencia" class="slide level2">
+<h2>Correlación vs dependencia</h2>
+<p>Podemos tener <span class="hl-red"><strong>variables incorreladas</strong></span>, con correlación nula, pero que <span class="hl-green"><strong>exista dependencia entre ellas</strong></span>: la covarianza/correlación <span class="hl-yellow"><strong>SOLO CAPTURA relaciones lineales</strong></span>, nada más.</p>
+<div class="fragment">
+<p>Veamos un ejemplo sencillo con <span class="math inline">\(X = \left\lbrace -1, 0, 1 \right\rbrace\)</span> y <span class="math inline">\(Y = X^2 = \left\lbrace 1, 0, 1 \right\rbrace\)</span>.</p>
+<ul>
+<li>La media de ambas es nula</li>
+<li>La media del producto es la media de <span class="math inline">\(XY = \left\lbrace -1, 0, 1 \right\rbrace\)</span>, que es de nuevo nula</li>
+<li>Así la covarianza <span class="math inline">\(\overline{x*y} - \overline{x}*\overline{y}\)</span> es nula a pesar de tener la mayor dependencia posible (dependencia funcional)</li>
+</ul>
+</div>
+</section>
+<section id="correlación-vs-dependencia-1" class="slide level2">
+<h2>Correlación vs dependencia</h2>
+
+<img data-src="img/covarianza-no-lineal.png" class="r-stretch"><p>En relaciones no lineales como la de la imagen, la <strong>correlación estará cercana a cero</strong> (ya que no hay relación lineal) pero existe una <span class="hl-yellow"><strong>dependencia</strong></span>. Diremos que <span class="hl-yellow"><strong>dos variables son dependientes entre sí</strong></span> cuando existe un <strong>patrón numérico que las relaciona</strong></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-green"><strong>Independencia implica incorrelación</strong></span></li>
+<li><span class="hl-red"><strong>Incorrelación NO implica independencia</strong></span></li>
+</ul>
+</div>
+</section>
+<section id="correlación-vs-dependencia-2" class="slide level2">
+<h2>Correlación vs dependencia</h2>
+
+<img data-src="img/escenarios-covarianza.png" class="r-stretch"></section>
+<section id="test-de-correlaciones" class="slide level2">
+<h2>Test de correlaciones</h2>
+<p>¿Pero cómo saber que la correlación observada es suficientemente pequeña para considerarse incorreladas?</p>
+<div class="fragment">
+<p>Con un <span class="hl-yellow"><strong>contraste de correlaciones</strong></span> haciendo uso de <code>cor.test()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">cor.test</span>(starwars<span class="sc">$</span>mass, starwars<span class="sc">$</span>height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  starwars$mass and starwars$height
+t = 0.99653, df = 57, p-value = 0.3232
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.1295651  0.3743950
+sample estimates:
+     cor 
+0.130859 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="otras-correlaciones" class="slide level2">
+<h2>Otras correlaciones</h2>
+<p>La <span class="hl-yellow"><strong>correlación de Pearson</strong></span> asume que las <span class="hl-green"><strong>variables están distribuidas normalmente</strong></span>, en caso de existir asociación tienen una relación lineal y no tienen valores atípicos.</p>
+<div class="fragment">
+<p>Por ello existen dos alternativas: <span class="hl-yellow"><strong>correlación de Spearman</strong></span> y <span class="hl-yellow"><strong>correlación de Kendall</strong></span></p>
+</div>
+</section>
+<section id="correlación-de-spearman" class="slide level2">
+<h2>Correlación de Spearman</h2>
+<p>El [<strong>coeficiente de correlación de Spearman</strong>]{hl-yellow} cuantifica de manera no paramétrica la interdependencia entre dos variables aleatorias (tanto continuas como discretas). Cuantifica el <span class="hl-yellow"><strong>grado de asociación monótona entre dos variables ordinales o continuas</strong></span></p>
+<p><span class="math display">\[\rho =1-\frac{6\sum D^{2}}{n (n^{2}-1)}\]</span></p>
+<p>donde <span class="math inline">\(D\)</span> es la diferencia entre los correspondientes estadísticos de orden de <span class="math inline">\(x - y\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>starwars <span class="sc">|&gt;</span> </span>
+<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb84-3"><a href="#cb84-3"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb84-4"><a href="#cb84-4"></a>  <span class="fu">cor</span>(<span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             height      mass birth_year
+height     1.000000 0.6899000  0.1725850
+mass       0.689900 1.0000000  0.1476468
+birth_year 0.172585 0.1476468  1.0000000</code></pre>
+</div>
+</div>
+</section>
+<section id="tau-de-kendall" class="slide level2">
+<h2>Tau de Kendall</h2>
+<p>El <span class="hl-yellow"><strong>coeficiente de correlación de rango de Kendall</strong></span> (<span class="math inline">\(\tau\)</span> de Kendall) cuantifica la <span class="hl-yellow"><strong>asociación ordinal de variables cualitativas</strong></span> de manera no paramétrica.</p>
+<div class="fragment">
+<p>Dados <span class="math inline">\(\left(x_1, y_1\right), \ldots, \left(x_n, y_n\right)\)</span> un conjunto de observaciones, se dice que <span class="math inline">\(\left(x_{i},y_{i}\right)\)</span> y <span class="math inline">\(\left(x_{j},y_{j}\right)\)</span> (con <span class="math inline">\(i &lt; j\)</span>) son un <span class="hl-yellow"><strong>par concordante</strong></span> si el orden de clasificación coincide (<span class="math inline">\(x_i &lt; x_j,~y_i &lt; y_j\)</span> o bien <span class="math inline">\(x_j &lt; x_i,~y_j &lt; y_i\)</span>)</p>
+<p><span class="math display">\[\tau =\frac{\text{n pares concordantes} - \text{n pares discordantes}}{n \choose 2}\]</span></p>
+</div>
+</section>
+<section id="tu-turno-2-3" class="slide level2">
+<h2>💻 Tu turno</h2>
+<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1"><span class="hl-yellow"><strong>Ejercicio 1</strong></span></a></li><li><a href="#tabset-3-2"><span class="hl-yellow"><strong>Ejercicio 2</strong></span></a></li><li><a href="#tabset-3-3"><span class="hl-yellow"><strong>Ejercicio 3</strong></span></a></li><li><a href="#tabset-3-4"><span class="hl-yellow"><strong>Ejercicio 4</strong></span></a></li><li><a href="#tabset-3-5"><span class="hl-yellow"><strong>Ejercicio 5</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<p>Vamos a tomar de nuevo nuestros datos de satisfacción de pacientes</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb86-2"><a href="#cb86-2"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb86-3"><a href="#cb86-3"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/SatisfaccionPacientes.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb86-4"><a href="#cb86-4"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb86-5"><a href="#cb86-5"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 8
+      id  edad genero    estado_civil tiempo_espera grado_satisfaccion
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                &lt;dbl&gt;              &lt;dbl&gt;
+ 1     1    60 Masculino Casado                  28                  8
+ 2     2    44 Femenino  Soltero                 22                  8
+ 3     3    43 Masculino Soltero                  8                  9
+ 4     4    32 Masculino Soltero                 21                  8
+ 5     5    66 Masculino Divorciado               7                 10
+ 6     6    43 Masculino Divorciado              20                  8
+ 7     7    54 Masculino Casado                  18                  6
+ 8     8    55 Masculino Soltero                 29                  6
+ 9     9    56 Masculino Viudo                   17                  9
+10    10    34 Femenino  Casado                  34                  8
+# ℹ 90 more rows
+# ℹ 2 more variables: numero_visitas &lt;dbl&gt;, estado_salud &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>📝 Obtén la matriz de correlaciones haciendo uso de <code>cor()</code>. Luego haz uso de <code>correlate()</code> del paquete <code>{corrr}</code></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb88-3"><a href="#cb88-3"></a>  <span class="fu">cor</span>()</span>
+<span id="cb88-4"><a href="#cb88-4"></a></span>
+<span id="cb88-5"><a href="#cb88-5"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb88-6"><a href="#cb88-6"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb88-7"><a href="#cb88-7"></a>  corrr<span class="sc">::</span><span class="fu">correlate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-3-2">
+<p>📝 Analiza y argumenta, en función de los resultados anteriores, la asociación entre <code>edad</code> y <code>grado_satisfaccion</code>, y entre <code>tiempo_espera</code> y <code>grado_satisfaccion</code></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="co"># Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$) pero `tiempo_espera` tiene una correlación negativa ($-0.586$) con `grado_satisfaccion`.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-3-3">
+<p>📝 Con el paquete <code>{corrplot}</code> visualiza la matriz de correlaciones</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">|&gt;</span> </span>
+<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb90-4"><a href="#cb90-4"></a>  corrplot<span class="sc">::</span><span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"square"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-56-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-3-4">
+<p>📝 Investiga el paquete <code>{GGally}</code> y a función <code>ggpairs()</code> para visualizar las correlaciones de todas las variables (salvo <code>id</code>)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb91-2"><a href="#cb91-2"></a><span class="fu">ggpairs</span>(datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>id)) <span class="sc">+</span></span>
+<span id="cb91-3"><a href="#cb91-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-57-1.png" width="960"></p>
+</div>
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="co"># cuali vs cuali: pictogramas (con rectángulos)</span></span>
+<span id="cb92-2"><a href="#cb92-2"></a><span class="co"># cuanti vs cuanti: scatter plot</span></span>
+<span id="cb92-3"><a href="#cb92-3"></a><span class="co"># cuanti vs cuali: boxplot desagregados</span></span>
+<span id="cb92-4"><a href="#cb92-4"></a><span class="co"># variable vs sí misma: densidad</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-3-5">
+<p>📝 ¿Cómo saber que la correlación observada entre <code>edad</code> y <code>grado_satisfaccion</code> (<span class="math inline">\(-0.0339\)</span>) es suficientemente pequeña para considerarse incorreladas? ¿Cómo saber si la correlación entre <code>tiempo_espera</code> y <code>grado_satisfaccion</code> (<span class="math inline">\(-0.586\)</span>) es suficientemente grande para considerar que es <strong>significativa</strong>?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a><span class="fu">cor.test</span>(datos<span class="sc">$</span>edad, datos<span class="sc">$</span>grado_satisfaccion)</span>
+<span id="cb93-2"><a href="#cb93-2"></a><span class="fu">cor.test</span>(datos<span class="sc">$</span>tiempo_espera, datos<span class="sc">$</span>grado_satisfaccion)</span>
+<span id="cb93-3"><a href="#cb93-3"></a></span>
+<span id="cb93-4"><a href="#cb93-4"></a><span class="co"># En uno el p-valor es bastante alto (**no rechazamos la hipótesis nula de incorrelación**) y en otro el p-valor es prácticamente 0 (rechazamos la hipótesis nula -&gt;  **hay evidencias de correlación significativa**).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="clase-3" class="title-slide slide level1 center">
+<h1>Clase 3: análisis de la varianza</h1>
+<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (30 de enero de 2025)</strong></span></p>
+</section>
+<section id="section" class="slide level2">
+<h2>…</h2>
+</section></section>
+<section>
+<section id="clase-4" class="title-slide slide level1 center">
+<h1>Clase 4: análisis de la varianza</h1>
+<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)</strong></span></p>
+</section>
+<section id="section-1" class="slide level2">
+<h2>…</h2>
+<div class="footer footer-default">
+<p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
+  <script src="index_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"width":"normal"},
+'chalkboard': {"buttons":true},
+'multiplex': {"secret":null,"id":"a4a720a36804eebb","url":"https://reveal-multiplex.glitch.me/"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
