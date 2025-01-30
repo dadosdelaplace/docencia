@@ -582,6 +582,7 @@ $$Mo_x = \arg \max_{x_i} f_i, \quad Mo_x = e_{i-1} + \frac{d_i - d_{i-1}}{\left(
 
 ---
 
+
 ## Repaso: medidas de centralización
 
 ![](img/ine-salarios-oculto.jpg)
@@ -627,6 +628,9 @@ Aumento de la [**variabilidad**]{.hl-yellow} → aumento de la [**DISPERSIÓN**]
 Una **primera idea** podría ser [**medir la distancia de cada dato al centro**]{.hl-yellow}, es decir, restar cada dato de la media, y después realizar su promedio.
 
 ---
+
+
+## Wait for it
 
 ![](img/wait-for-it.jpg)
 
@@ -1852,19 +1856,90 @@ cor.test(starwars$mass, starwars$height)
 
 ---
 
-## Otras correlaciones
+## Correlación de rango
 
-La [**correlación de Pearson**]{.hl-yellow} asume que las [**variables están distribuidas normalmente**]{.hl-green}, en caso de existir asociación tienen una relación lineal y no tienen valores atípicos.
+La [**correlación (lineal) de Pearson**]{.hl-yellow} asume que las [**variables están distribuidas normalmente**]{.hl-green}, en caso de existir asociación tienen una relación lineal y no tienen valores atípicos.
 
 . . .
 
-Por ello existen dos alternativas: [**correlación de Spearman**]{.hl-yellow} y [**correlación de Kendall**]{.hl-yellow} 
+
+Esto significa que [**ANTES de aplicar un test de correlación**]{.hl-yellow} deberíamos de **comprobar que ambas están distribuidas normalmente**
 
 ---
 
+## Contraste de normalidad
+
+1. Antes de nada debemos de eliminar los pares con datos ausentres
+
+```{r}
+starwars_sin_NA <- starwars |> drop_na(mass, height)
+```
+
+. . .
+
+2. Tras ello podemos chequearlo de manera visual
+
+:::: columns
+::: {.column width="50%"}
+
+```{r}
+ggplot(starwars) +
+  geom_density(aes(x = height)) +
+  theme_minimal() 
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(starwars) +
+  geom_density(aes(x = mass)) +
+  theme_minimal() 
+```
+
+:::
+
+::::
+
+Obviamente ninguna de las dos aparenta ser Gaussiana (por asimetría y por outliers)
+
+---
+
+## Contraste de normalidad
+
+
+3. También podemos cotejarlo mediante una [**prueba de inferencia no parámetrica contastando la normalidad**]{.hl-yellow}
+
+```{r}
+library(performance)
+
+# check_normality realiza el Shapiro test
+check_normality(starwars_sin_NA$height)
+check_normality(starwars_sin_NA$mass)
+```
+
+. . .
+
+No deberíamos aplicar (al menos no interpretar) el test de correlaciones
+
+---
+
+## Correlación de rango
+
+
+Por ello existen dos alternativas: [**correlación de Spearman**]{.hl-yellow} y [**correlación de Kendall**]{.hl-yellow} 
+
+&nbsp;
+
+Ambos coeficientes cuantifican no una mera **correlación lineal** sino una [**correlación de rango**]{.hl-yellow}: cuantifica la **relación entre los distintos rankings** de dos variables cuando se ordenan.
+
+---
+
+
 ## Correlación de Spearman
 
-El [**coeficiente de correlación de Spearman**]{hl-yellow} cuantifica de manera no paramétrica la interdependencia entre dos variables aleatorias (tanto continuas como discretas). Cuantifica el [**grado de asociación monótona entre dos variables ordinales o continuas**]{.hl-yellow} 
+El [**coeficiente de correlación de Spearman**]{hl-yellow} cuantifica de manera **no paramétrica** la interdependencia entre dos variables aleatorias (tanto continuas como discretas). Cuantifica el [**grado de asociación monótona entre dos variables ordinales o continuas**]{.hl-yellow} 
 
 $$\rho =1-\frac{6\sum D^{2}}{n (n^{2}-1)}$$
 
@@ -1872,24 +1947,49 @@ donde $D$ es la diferencia entre los correspondientes estadísticos de orden de 
 
 ```{r}
 starwars |> 
-  select(where(is.numeric)) |> 
+  select(mass, height) |> 
   drop_na() |> 
   cor(method = "spearman")
+cor.test(starwars$mass, starwars$height, method = "spearman")
 ```
 
+---
+
+## Correlación de Spearman
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Spearman_fig1.svg/600px-Spearman_fig1.svg.png)
 
 ---
 
 ## Tau de Kendall
 
 
-El [**coeficiente de correlación de rango de Kendall**]{.hl-yellow} ($\tau$ de Kendall) cuantifica la [**asociación ordinal de variables cualitativas**]{.hl-yellow} de manera no paramétrica. 
-
-. . .
+El [**coeficiente de correlación de Kendall**]{.hl-yellow} ($\tau$ de Kendall) cuantifica la [**asociación ordinal de variables cualitativas ordinales (o cuantis)**]{.hl-yellow} de manera no paramétrica. 
 
 Dados $\left(x_1, y_1\right), \ldots, \left(x_n, y_n\right)$ un conjunto de observaciones, se dice  que $\left(x_{i},y_{i}\right)$ y $\left(x_{j},y_{j}\right)$ (con $i < j$) son un [**par concordante**]{.hl-yellow} si el orden de clasificación coincide ($x_i < x_j,~y_i < y_j$ o bien $x_j < x_i,~y_j < y_i$) 
 
 $$\tau =\frac{\text{n pares concordantes} - \text{n pares discordantes}}{n \choose 2}$$
+
+El coeficiente de Kendall suele usarse solo cuando $n$ es pequeño y hay muchos empates (ver [usos](https://pubmed.ncbi.nlm.nih.gov/10221741/))
+
+```{r}
+starwars |> 
+  select(mass, height) |> 
+  drop_na() |> 
+  cor(method = "kendall")
+cor.test(starwars$mass, starwars$height, method = "kendall")
+```
+
+---
+
+## Correlación general
+
+Kendall demostró en 1970 que tanto $\tau$ de Kendall como $\rho$ de Spearman son casos particulares de un [**coeficiente de correlación general**]{.hl-yellow}.
+
+Si tenemos $n$ observaciones, para cada par $\left(x_i, y_j \right)$ podemos definir $a_{ij}$ como un ranking en la variable $x$ de ambas observaciones ($a_{ij} > 0$ si $x_i > y_j$) y $b_{ij}$ como un ranking en la variable $y$  ($b_{ij} > 0$ si $x_i > y_j$), entonces
+
+$$\Gamma = \frac{\sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}b_{ij}}{\sqrt {\left( \sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}^{2} \right) \left( \sum_{i=1}^{n}\sum_{j=1}^{n}b_{ij}^{2} \right)}}$$
+
 
 
 ---
@@ -1911,7 +2011,7 @@ datos <-
 datos
 ```
 
-📝 Obtén la matriz de correlaciones haciendo uso de `cor()`. Luego haz uso de `correlate()` del paquete `{corrr}`
+📝 Obtén la matriz de correlaciones de Pearson haciendo uso de `cor()`. Luego haz uso de `correlate()` del paquete `{corrr}`
 
 ```{r}
 #| code-fold: true
@@ -1925,18 +2025,33 @@ datos |>
   corrr::correlate()
 ```
 
-
-
 ### [**Ejercicio 2**]{.hl-yellow}
+
+📝 Obtén la matriz de correlaciones con kendall y spearman
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate(method = "spearman")
+
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate(method = "kendall")
+```
+
+### [**Ejercicio 3**]{.hl-yellow}
 
 📝 Analiza y argumenta, en función de los resultados anteriores, la asociación entre `edad` y `grado_satisfaccion`, y entre `tiempo_espera` y `grado_satisfaccion`
 
 ```{r}
 #| code-fold: true
-# Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$) pero `tiempo_espera` tiene una correlación negativa ($-0.586$) con `grado_satisfaccion`.
+# Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$ según Pearson) pero `tiempo_espera` tiene una correlación negativa ($-0.586$ según Pearson) con `grado_satisfaccion`.
 ```
 
-### [**Ejercicio 3**]{.hl-yellow}
+### [**Ejercicio 4**]{.hl-yellow}
 
 📝 Con el paquete `{corrplot}` visualiza la matriz de correlaciones
 
@@ -1948,7 +2063,7 @@ datos |>
   corrplot::corrplot(method = "square")
 ```
 
-### [**Ejercicio 4**]{.hl-yellow}
+### [**Ejercicio 5**]{.hl-yellow}
 
 📝 Investiga el paquete `{GGally}` y a función `ggpairs()` para visualizar las correlaciones de todas las variables (salvo `id`)
 
@@ -1964,7 +2079,7 @@ ggpairs(datos |> select(-id)) +
 # variable vs sí misma: densidad
 ```
 
-### [**Ejercicio 5**]{.hl-yellow}
+### [**Ejercicio 6**]{.hl-yellow}
 
 📝 ¿Cómo saber que la correlación observada entre `edad` y `grado_satisfaccion` ($-0.0339$) es suficientemente pequeña para considerarse incorreladas? ¿Cómo saber si la correlación entre `tiempo_espera` y `grado_satisfaccion` ($-0.586$) es suficientemente grande para considerar que es **significativa**?
 
@@ -1976,6 +2091,12 @@ cor.test(datos$edad, datos$grado_satisfaccion)
 cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
 
 # En uno el p-valor es bastante alto (**no rechazamos la hipótesis nula de incorrelación**) y en otro el p-valor es prácticamente 0 (rechazamos la hipótesis nula ->  **hay evidencias de correlación significativa**).
+
+# Ninguna de las 3 es normal así que lo apropiado sería
+# contrastar la correlación de rango
+performance::check_normality(datos$edad)
+performance::check_normality(datos$grado_satisfaccion)
+performance::check_normality(datos$tiempo_espera)
 ```
 
 
@@ -1989,7 +2110,682 @@ cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
 
 ---
 
-## ...
+## Cuanti vs cuali
+
+Ya conocemos herramientas básicas para analizar la dependencia entre dos variables:
+
+* [**Cuali vs cuali**]{.hl-yellow}: test de Fisher o prueba de $\chi^2$, tablas de contigencia, diagramas de barras.
+
+* [**Cuanti vs cuanti**]{.hl-yellow}: correlaciones y test de correlaciones lineal (Pearson),  correlaciones y test de correlaciones de rango (Spearman y Kendall), diagramas de dispersión.
+
+¿Pero qué sucede con la [**asociación cuali vs cuanti**]{.hl-red}?
+
+---
+
+## Cuanti vs cuali
+ 
+Imagina que tenemos **$n$ estudiantes** de los que disponemos sus **notas $y_{ij}$** para $j=1,2$ asignaturas alumnos (datos en `notas_1factor_2cat.csv`)
+
+```{r}
+datos <- read_csv(file = "./datos/notas_1factor_2cat.csv")
+datos
+```
+
+&nbsp;
+
+¿Existe [**dependencia entre la nota y la variable asignatura (cualitativa)**]{.hl-yellow}? ¿Son [**similares (en promedio) entre las asignaturas**]{.hl-green} o hay una de las dos más sencilla?
+
+
+---
+
+## Análisis de la varianza
+
+Disponemos de 
+
+* [**Variable continua**]{.hl-yellow}: notas de $n$ estudiantes denotadas como $y_{ij}$, con $i=1,\ldots, n$.
+
+* [**Variable cualitativa o factor**]{.hl-yellow}: dos asignaturas $j=1,2$
+
+El objetivo es ver la posible [**asociación entre la variable objetivo y el factor**]{.hl-yellow}, es decir, determinar si existe un **efecto del factor sobre el valor esperado de la variable continua**.
+
+. . .
+
+A eso se le conoce como [**análisis de la varianza (ANOVA) o análisis factorial**]{.hl-yellow}, desarrollada por R. Fisher en 1930, y empezaremos por el ejemplo más sencillo de **un factor** (una sola variable cualitativa).
+
+---
+
+## ANOVA: un factor
+
+¿Cómo [**conceptualizar matemáticamente un modelo que asuma que todas las asignaturas tienen medias similares**]{.hl-yellow}?
+
+. . .
+
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \quad \text{perturbación aleatoria}$$
+
+
+donde [**$\mu_j$ representa la media de los estudiantes en la asignatura $j$**]{.hl-yellow} y la [**perturbación $\varepsilon_{ij}$ representa la desviación**]{.hl-purple} de la nota en la asignatura $j$ del estudiante $i$ (representan la variabilidad intrínseca del EXPERIMENTO).
+
+
+
+---
+
+## ANOVA: un factor
+
+
+Esas perturbaciones vamos a asumir que cumplen una serie de [**hipótesis**]{.hl-green}
+
+
+1. [**Promedio nulo**]{.hl-green}: $E[\varepsilon_{ij}] = 0$ para todo $i,j$ (las desviaciones positivas se compensan con las negativas)
+
+. . .
+
+2. [**Varianza constante (homocedasticidad)**]{.hl-green}: $V[\varepsilon_{ij}] = cte = \sigma^2$ para todo $i,j$ (las desviaciones respecto a la media de la asignatura son iguales)
+
+. . .
+
+3. [**Normalidad**]{.hl-green}: $\varepsilon_{ij} \sim N$
+
+. . . 
+
+4. [**Incorrelación**]{.hl-green}: al ser normales esto automáticamente implica que son [**independientes**]{.hl-green} (conocer la desviación de un estudiante no nos da información sobre otro: el **orden de recolección no afecta a los resultados**)
+
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2) \quad \Rightarrow \quad  y_{ij} \sim N(\mu_j, \sigma^2)$$
+
+---
+
+## ANOVA: un factor
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2) \quad  \Rightarrow \quad  y_{ij} \sim N(\mu_j, \sigma^2)$$
+
+Los [**esimadores insesgados**]{.hl-yellow} de dichos parámetros poblacionales $\left(\mu_j, \sigma^2 \right)$ son
+
+* [**Media**]{.hl-yellow}: $\hat{\mu}_{j} =  \overline{y}_j$, lo que implica que $\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j$.
+
+* [**Varianza**]{.hl-yellow}: 
+
+
+$$\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2$$
+
+es decir, el [**promedio de las desviaciones al cuadrado respecto a la media de cada grupo**]{.hl-purple} (también expresado como media ponderada de cada variabilidad), donde $s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$ representa la varianza de cada grupo.
+
+---
+
+## ANOVA: un factor
+
+$$\hat{\sigma}^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2, \quad  s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$$
+
+
+Sin embargo, dado que cada $\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2$ son **independientes entre sí** y siguen una $\chi^{2}_{n_j - 1}$ (la suma de normales al cuadrado es una $\chi^2$), tenemos que
+
+$$n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2$$
+
+. . .
+
+Es decir: $\hat{\sigma}^2$ [**no es un estimador insesgado**]{.hl-red} de $\sigma^2$ así que usaremos la conocida como [**varianza residual (estimada)**]{.hl-yellow}
+
+$$\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2$$
+
+
+
+---
+
+## ANOVA: un factor
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
+
+¿Qué contraste deberíamos plantear si queremos [**comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)**]{.hl-yellow}?
+
+. . .
+
+$$H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}$$
+
+La  [**hipótesis nula**]{.hl-green} es que las [**diferencias (variabilidad) entre notas en las distintas asignaturas**]{.hl-yellow} se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática)
+
+---
+
+## ANOVA: un factor
+
+Vamos a visualizar las dos distribuciones
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+    geom_density(aes(x = notas, color = asignatura, fill = asignatura),
+                 alpha = 0.5) +
+   geom_point(aes(x = notas, y = 0, color = asignatura),
+              size = 1.7, alpha = 0.85) +
+    MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+    MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+    theme_minimal()
+```
+
+Aunque la distribución B está más desplazada a la izquierda, la **nota más alta es de la asignatura B**. ¿Es suficiente para decir que **A distinto de B**?
+
+---
+
+
+## ANOVA: un factor
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
+
+$$H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}$$
+
+En el caso de que **solo tengamos dos grupos** la solución es fácil: basta con hacer un [**contraste de medias conocido como prueba t**]{.hl-yellow}
+
+```{r}
+t.test(datos |> filter(asignatura == "A") |> pull(notas),
+       datos |> filter(asignatura == "B") |> pull(notas))
+```
+
+---
+
+
+## ANOVA: un factor
+
+¿Pero qué pasaría si [**en lugar de dos asignaturas tuviésemos 6 asignaturas**]{.hl-yellow}?
+
+. . .
+
+El [**problema de hacer contrastes 2 a 2**]{.hl-red} es que tendríamos que hacer ${6 \choose 2} = 15$ comparaciones (1-1, 1-2, ..., 1-6, 2-3, ..., 5-6).
+
+. . .
+
+No solo son muchos contrastes sino que si cada contraste se hace con una **probabilidad individual de error tipo I** de $\alpha = 0.05$, y suponiendo que todas las comparaciones fuesen independientes, la [**probabilidad de que se verifiquen las 15 igualdades de manera conjunta**]{.hl-yellow} ya no es de 0.95 sino $0.95^{15} = 0.463$: **si hacemos muchos contrastes es muy probable que, por azar, alguno salga significativo** (aunque realmente no haya diferencia en las medias)
+
+
+---
+
+## Corrección de Bonferroni
+
+Un paréntesis: para solventar el [**problema de las comparaciones múltiples**]{.hl-red} un solución habitual (la más sencilla aunque no siempre la mejor) es lo que se conoce como [**corrección de Bonferroni**]{.hl-yellow}
+
+. . .
+
+Sea $A_i$ el suceso "se rechaza la igualdad de medias de la comparación i" (que sucede con probabilidad $\alpha$ si la hipótesis nula es cierta). Y sea $B = \bigcup_i A_i$ el suceso de rechazar alguna de las comparaciones (es decir, no todas son iguales). Entonces, si tenemos $c$ comparaciones
+
+$$P(B) = P(\bigcup_i A_i) \leq \sum_i P(A_i) = c \alpha := \alpha_T$$
+
+
+. . .
+
+Si queremos que ese **$\alpha_T$ conjunto sea (al menos) de 0.05**, necesitamos que cada $\alpha$ individual sea $\alpha = \alpha_T/c$ (en nuestro ejemplo $\alpha = 0.00333$, demasiado pequeño si $c$ crece), o lo que es lo mismo $p-valor_{j}^{adj} = c*p-value_j $
+
+---
+
+## ANOVA: un factor
+
+No solo existe un [**problema de comparaciones múltiples**]{.hl-red} sino que, además, ¡no lo necesitamos!
+
+. . .
+
+Nosotros (de momento) **no queremos saber cuál de las asignaturas tiene más o menos nota** media sino simplemente contestar a la pregunta: ¿todas tienen la misma nota media o [**existe un efecto entre la asignatura y la nota**]{.hl-yellow}?
+
+. . .
+
+Y para responder a dicha pregunta [**no necesitamos chequear 2 a 2**]{.hl-red}: basta con que [**encontremos una que no sea igual**]{.hl-yellow}
+
+
+
+---
+
+## ANOVA: un factor
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
+
+La idea es que [**no necesitamos comparar 2 a 2**]{.hl-red}. Si tenemos $c$ grupos sabemos que [**las medias $\mu_j$ ($j=1,\ldots,c$) nunca van a ser exactamente iguales**]{.hl-yellow} aunque el grupo no afecte, debido a la variabilidad intrínseca del experimento $\varepsilon_{ij}$
+
+. . .
+
+¿Es esa [**variabilidad entre las estimaciones muestrales de las medias**]{.hl-yellow} (varianza ENTRE grupos, debida a estar en un grupo u otro) significativamente superior a la [**variabilidad promedio (intrínseca) de los grupos**]{.hl-purple} (varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)?
+
+
+
+---
+
+## ANOVA: un factor
+
+Si la [**hipótesis nula fuese cierta**]{.hl-green} (todas las observaciones vienen de la misma población con misma varianza y media), la [**varianza entre grupos (explicada por el grupo) sería la misma que la varianza promedio dentro de los grupos**]{.hl-yellow}: según se alejen las medias de los grupos, la primera se incrementará pero la segunda permanecerá constante.
+
+
+:::: columns
+::: {.column width="50%"}
+
+
+![](./img/anova-1.png)
+
+
+:::
+::: {.column width="50%"}
+
+![](./img/anova-2.png)
+
+
+:::
+::::
+
+---
+
+## ANOVA: un factor
+
+$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
+
+¿Cómo calcular la [**varianza explicada**]{.hl-red} por la variable de grupo (la variabilidad de las medias de cada grupo) y la [**varianza no explicada**]{.hl-purple} por el grupo (el promedio de las varianzas dentro de cada grupo, intrínseca a los datos)?
+
+. . .
+
+
+La [**variabilidad total (SST o VT)**]{.hl-green} de la variable $y$ se define como
+
+$$SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2$$
+
+
+---
+
+## ANOVA: un factor
+
+
+$$SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2$$
+
+A continuación **añadimos y restamos dentro del paréntesis la misma cantidad** (la media muestral de cada grupo $\overline{y}_j$, estimación insesgada de $\mu_j$)
+
+
+$$\begin{eqnarray}\color{green}{SST} &=& \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &=& \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &=& \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
+\end{eqnarray}$$
+
+
+---
+
+## ANOVA: un factor
+
+
+El [**segundo término**]{.hl-red} es en realidad la [**variabilidad (ponderada) de las medias de los grupos**]{.hl-red} (cómo fluctua la media entre los grupos)
+
+
+$$\color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \sum_{j=1}^{c}  \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2  }$$
+
+ya que
+
+$$\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \frac{1}{n}\sum_{l}^{n} y_{l} = \overline{y}$$
+
+Es la [**variabilidad explicada por los grupos**]{.hl-red} (variabilidad - de la media - ENTRE grupos).
+
+---
+
+## ANOVA: un factor
+
+
+El [**primer término**]{.hl-purple} es en realidad la [**media de la variabilidad $s_{j}^2$ DENTRO de cada grupo**]{.hl-purple} (el promedio de la variabilidad intragrupo)
+
+
+$$\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2$$
+
+lo que hemos denominado antes $\hat{\sigma}^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j}  \hat{\varepsilon_{ij}}^2$ que se relaciona con la [**varianza residual (estimada)**]{.hl-purple} como $\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$.
+
+
+Es la [**variabilidad NO explicada (residual) por el factor**]{.hl-purple} (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo)
+
+---
+
+## ANOVA: un factor
+
+Por tanto, dado que el modelo es lineal, la [**variabilidad o información total**]{.hl-yellow} se puede descomponer como [**varianza explicada**]{.hl-red} (VE o suma cuadrados explicada - SSE) más [**varianza no explicada**]{.hl-purple} (VR o suma cuadrados residuales - SSR)
+
+
+$$SST = SSE + SSR, \quad VT = VE + VR$$
+
+$$VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$$
+
+
+Así el objetivo será construir un **estadístico** para cuantificar si $VE$ se aleja mucho de $VR$ o no. 
+
+---
+
+## ANOVA: un factor
+
+Se puede **demostrar** como 
+
+$$\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c} \quad \Rightarrow \quad F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} = \frac{\hat{s}_{e}^2}{\frac{n*VR}{n-c}} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}$$
+
+usando que el cociente (ponderado por sus grados de libertad) de dos $\chi^2$ sigue una distribución conocida, calculando lo que se conoce como [**estadístico F**]{.hl-yellow}. 
+
+. . .
+
+Si te fijas
+
+* $\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2$ es la [**varianza explicada (estimada)**]{.hl-red} calculada como una cuasivarianza ponderada.
+
+* $\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}$ es la [**varianza residual (estimada)**]{.hl-purple} mencionada anteriormente
+
+
+
+---
+
+
+## ANOVA: un factor
+
+Vamos a ver el ejemplo en `R` haciendo uso de la función `aov()`
+
+* `data = ...`: la base de datos
+* `formula = ...`: indicado como `var_objetivo ~ factor` (donde `~` representa un "vs")
+* `|> summary()`: para obtener un resumen
+
+```{r}
+aov(data = datos, formula = notas ~ asignatura) |> summary()
+```
+
+---
+
+## ANOVA: un factor
+
+
+```{r}
+aov(data = datos, formula = notas ~ asignatura) |> summary()
+```
+
+Si [**analizamos por filas**]{.hl-yellow} tenemos
+
+* `asignatura`: la parte correspondiente la [**variabilidad explicada o entre grupos**]{.hl-red}
+
+* `Residuals`: la parte correspondiente la [**variabilidad no explicada o intra grupos**]{.hl-purple}
+
+
+---
+
+## ANOVA: un factor
+
+
+```{r}
+aov(data = datos, formula = notas ~ asignatura) |> summary()
+```
+
+
+* `Df`: degrees of freedom (grados de libertad), definidos como $c-1$ para $SSE/VE$ (ya que $\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}$) y $n-c$ (ya que $\frac{SSR}{\sigma^2} \sim \chi^2_{n-c}$). 
+
+* `Sum Sq`: sum of squares (suma de cuadrados), es decir, $SSE$ y $SSR$.
+
+* `Mean Sq`: mean of squares (media de la suma de cuadrados, ponderado por `Df`), es decir, $\hat{s}_{e}^{2}$ y $\hat{s}_{r}^{2}$.
+
+* `F value` y `Pr(>F)`: valor del estadístico $F = \frac{\hat{s}_{e}^{2}}{\hat{s}_{r}^{2}}$ y p-valor del contraste
+
+. . .
+
+En este caso: [**rechazamos la hipótesis nula**]{.hl-yellow} de igualdad de medias, es decir, [**existen evidencias suficientes para concluir que el grupo tiene un efecto en las notas**]{.hl-yellow}
+
+---
+
+## Caso real: crecimiento bebés
+
+Vamos a usar la tabla `leche_materna.csv` que recopila los resultados obtenidos de **2 tratamientos de leche en polvo distintos para el crecimiento de bebés prematuros** (de los que se miden su peso tras el tratamiento, partiendo de unas características similares, incluyendo además un **grupo control**).
+
+[**¿El objetivo?**]{.hl-yellow} Comprobar si alguno de los tratamientos fue efectivo.
+
+```{r}
+datos <-
+    read_csv(file = "./datos/leche_materna.csv") |> 
+    janitor::clean_names()
+datos
+```
+
+---
+
+## Caso real: crecimiento bebés
+
+```{r}
+datos
+```
+
+
+¿Cómo [**formulamos el ANOVA**]{.hl-yellow}?
+
+. . .
+
+$$y_{ij} = \mu_j + \varepsilon_{ij}, \quad y_{ij} = \text{peso del niño i del grupo j}, \quad j=1,2,3 \text{ (control, trt1, trt2)}$$
+
+donde $\mu_j$ representa la media de peso de cada grupo, cuyo **estimador** insesgado es $\overline{y}_{j}$
+
+---
+
+## Caso real: crecimiento bebés
+
+¿La [**hipótesis nula**]{.hl-yellow}?
+
+. . .
+
+$$H_0:~\mu_1 = \mu_2 = \mu_3 \quad \text{(no diferencias entre tratamientos y control)}, \quad H_1:~existe$$
+
+¿Existe una [**asociación entre el tratamiento/control y el peso**]{.hl_yellow}?
+
+---
+
+## Caso real: crecimiento bebés
+
+
+Desde un punto de vista [**descriptivo**]{.hl_yellow}, ¿cómo resumirlo numérica y gráficamente?
+
+:::: columns
+::: {.column width="47%"}
+
+```{r}
+datos |> 
+  summarise("mean_peso" = mean(weight),
+            "sd_peso" = sd(weight),
+            .by = group)
+```
+
+:::
+
+::: {.column width="53%"}
+
+```{r}
+#| code-fold: true
+ggplot(datos) +
+  geom_boxplot(aes(x = group, y = weight, fill = group,
+                   color = group), alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+:::
+::::
+
+---
+
+## Caso real: crecimiento bebés
+
+```{r}
+#| code-fold: true
+ggplot(datos |>
+         rowid_to_column(var = "id") |>
+         mutate("mean_weight" = mean(weight), .by = group)) +
+  geom_point(aes(x = id, y = weight, color = group),
+             alpha = 0.5, size = 4) +
+  geom_line(aes(x = id, y = mean_weight, color = group),
+            linewidth = 2) +
+  scale_y_continuous(limits = c(2.5, 7.5)) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+---
+
+## Caso real: crecimiento bebés
+
+
+```{r}
+aov(data = datos, formula = weight ~ group) |> summary()
+```
+
+El resultado del [**ANOVA de un factor (one-way ANOVA)**]{.hl-yellow} es el siguiente:
+
+Si [**analizamos por filas**]{.hl-yellow} tenemos
+
+* `group`: la parte correspondiente la [**variabilidad explicada o entre grupos de tratamiento**]{.hl-red}
+
+* `Residuals`: la parte correspondiente la [**variabilidad no explicada o intra grupos**]{.hl-purple}
+
+---
+
+## Caso real: crecimiento bebés
+
+
+```{r}
+aov(data = datos, formula = weight ~ group) |> summary()
+```
+
+Si [**analizamos por columnas**]{.hl-yellow} tenemos
+
+
+* `Df`: tenemos 2 grados de libertad (3 grupos - 1) para la varianza explicada y 27 grados de libertad (30 - 3 grupos) para la varianza no explicada.
+
+* `Sum Sq`: $SSE = 3.766$ y $SSR = 10.492$,
+
+* `Mean Sq`:  $\hat{s}_{e}^{2} = 1.8832$ y $\hat{s}_{r}^{2} = 0.3886$.
+
+
+* `F value` y `Pr(>F)`: valor del estadístico $F = \frac{\hat{s}_{e}^{2}}{\hat{s}_{r}^{2}} = \frac{1.8832}{0.3886} = 4.846$ y p-valor
+
+. . .
+
+[**Rechazamos la hipótesis nula**]{.hl-yellow}: [**existen evidencias para concluir que el tratamiento tiene un efecto en el peso**]{.hl-yellow}
+
+---
+
+## Caso real: crecimiento bebés
+
+
+```{r}
+aov(data = datos, formula = weight ~ group) |> summary()
+```
+
+¿El [**problema**]{.hl-red}?
+
+. . .
+
+Sabemos que el tratamiento (bien sea "real" bien sea el grupo control) tiene un efecto (al menos estadístico) y que se observan [**medias distintas**]{.hl-yellow}. 
+
+&nbsp;
+
+[**¿Pero cuáles son distintas 2 a 2**]{.hl-purple}? ¿Son distintas entre los tratamientos? ¿Son distintas tratamientos vs control? ¿Solo uno de los tratamientos es distinto o ambos?
+
+En este caso necesitamos **3 comparaciones**.
+
+---
+
+## Pruebas post-hoc
+
+Tras obtener un [**resultado significativo en un ANOVA**]{.hl-green} el siguiente objetivo sería determinar [**cuál de los grupos bajo estudio contribuye a esta significación estadística**]{.hl-yellow}. 
+
+. . .
+
+Pero como hemos explicado, la estrategia de aplicar [**repetidamente pruebas t-Student**]{.hl-yellow} puede conllevar un [**aumento desmesurado de la probabilidad de cometer un error de Tipo I**]{.hl-red} (detectar diferencias por pura aleatoriedad)
+
+. . .
+
+&nbsp;
+
+Alguno de los [**métodos post-hoc más comunes**]{.hl-yellow} (ver [**más**](https://journals.lww.com/jspinaldisorders/abstract/2022/06000/the_role_of_family_wise_error_rate_in_determining.7.aspx)) son **Bonferroni**, **Tukey** y **Dunnett**.
+
+---
+
+## post-hoc: bonferroni
+
+El [**método de corrección Bonferroni**]{.hl-yellow} ya lo hemos explicado anteriormente y para implementarlo basta con usar `pairwise.t.test()` 
+
+```{r}
+# `pool.sd = FALSE` implica que, para cada comparativa, se calcula una desv en cada grupo
+# `pool.sd = TRUE` --> la desviación estándar agrupada es un promedio ponderado de las sd de
+# dos o más grupos, tal que las sd individuales se promedian, con más "peso" dado a
+# tamaños de muestra más grandes. solo usar cuando los tamaños de cada grupo sean muy distintos
+pairwise.t.test(datos$weight, datos$group, p.adjust.method = "bonferroni", pool.sd = FALSE)
+```
+
+. . .
+
+* **ctrl vs trt 1**: p-valor ajustado 0.751 --> [**sin diferencias significativas**]{.hl-red}
+
+* **ctrl vs trt 2**: p-valor ajustado 0.144 --> [**sin diferencias significativas**]{.hl-red}
+
+* **trt 1 vs trt 2**: p-valor ajustado 0.028 --> [**dif sig de los tratamientos**]{.hl-yellow}
+
+
+---
+
+## Pruebas post-hoc
+
+* [**Bonferroni**]{.hl-yellow}:
+  - [**Ventajas**]{.hl-green}: simplicidad y **no paramétrico**
+  - [**Desventajas**]{.hl-red}: al intentar controlar tanto error tipo I (rechazar $H_0$ sin que existan diferencias) es un **método muy conservador** ->  cuesta mucho que se rechace $H_0$ -> [**alta tasa de errores  tipo II según aumentan comparaciones**]{.hl-red}
+  
+. . .
+
+Para evitar los problemas de Bonferroni cuando hay un alto número de comparaciones existe una alternativa conocida como [**test de Tukey**]{.hl-yellow}. 
+
+```{r}
+aov(data = datos, formula = weight ~ group) |> 
+  TukeyHSD()
+```
+
+
+---
+
+
+## post-hoc: Tukey
+
+```{r}
+aov(data = datos, formula = weight ~ group) |> 
+  TukeyHSD()
+```
+
+
+* [**Tukey**]{.hl-yellow}:
+  - [**Ventajas**]{.hl-green}: controla eficazmente la tasa de error tipo I, muy útil para **muchas comparaciones** y  [**mayor poder estadístico* vs Bonferroni**]{.hl-yellow}
+  - [**Desventajas**]{.hl-red}: sensible a valores atípicos y es [**paramétrico (requiere normalidad, grupos de tamaño similar e igualdad de varianzas)**]{.hl-red}
+
+[**Poder o potencia estadística**]{.hl-pruple}: probabilidad de rechazar $H_0$ cuando dicha hipótesis es falsa (probabilidad de no cometer un error del tipo II). 
+
+---
+
+## post-hoc: Dunnet
+
+En muchas ocasiones **no siempre queremos comparaciones 2 a 2 indistintamente** sino que querremos [**confrontar el resto de grupos respecto a un grupo control**]{.hl-yellow} (en nuestro caso: 2 tratamientos vs control, no los tratamientos entre sí).
+
+. . .
+
+Para ello disponemos del [**test de Dunnet**]{.hl-yellow}
+
+$$H_0:~\mu_{tr_{j}} = \mu_{ctrl}, \quad H_1:~\mu_{tr_{j}} \neq \mu_{ctrl}$$
+
+* [**Dunnet**]{.hl-yellow}:
+  - [**Ventajas**]{.hl-green}: el contraste con mayor potencia cuando se trata de comaprar contra un grupo contorl
+  - [**Desventajas**]{.hl-red}: [**paramétrico (requiere normalidad, igualdad de varianzas e independencia entre grupos)**]{.hl-red}
+  
+
+---
+
+
+## Pruebas post-hoc
+
+Para implementarlo **primero chequeamos igualdad de varianzas entre los grupos** (por ejemplo, con `car::leveneTest()`)
+
+
+```{r}
+car::leveneTest(datos$weight ~ datos$group)
+```
+
+. . .
+
+Y luego `DunnettTest()` del paquete `{DescTools}`
+
+```{r}
+DescTools::DunnettTest(x = datos$weight, g = datos$group, control = "ctrl")
+```
+
+Obtenemos que [**no hay dif. sig. entre ctrl y tratamientos**]{.hl-yellow} 
+
+
 
 # Clase 4: análisis de la varianza {#clase-4}
 
@@ -1997,7 +2793,7 @@ cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
 
 ---
 
-## ...
+## ANOVA: dos factores
 
 
 
