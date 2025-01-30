@@ -2223,17 +2223,28 @@ es decir, el [**promedio de las desviaciones al cuadrado respecto a la media de 
 $$\hat{\sigma}^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2, \quad  s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$$
 
 
-Sin embargo, dado que cada $\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2$ son **independientes entre sí** y siguen una $\chi^{2}_{n_j - 1}$ (la suma de normales al cuadrado es una $\chi^2$), tenemos que
+Sin embargo, dado que cada $\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2$ son **independientes** y siguen una $\chi^{2}_{n_j - 1}$ (suma de normales - tipificadas - al cuadrado), tenemos que
 
 $$n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2$$
 
 . . .
 
-Es decir: $\hat{\sigma}^2$ [**no es un estimador insesgado**]{.hl-red} de $\sigma^2$ así que usaremos la conocida como [**varianza residual (estimada)**]{.hl-yellow}
+$\hat{\sigma}^2$ [**no es un estimador insesgado**]{.hl-red} de $\sigma^2$ así que usaremos la conocida como [**varianza residual**]{.hl-yellow}
 
 $$\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2$$
 
 
+---
+
+## ANOVA: un factor
+
+
+$$\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2$$
+
+Fíjate que dado que $\hat{\mu}_j = \overline{y}_j$, hemos llamado
+
+$$\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j \sim N \left(\hat{\mu}_j, \hat{s}_{r}^2 \right)$$
+ a los [**residuos estimados**]{.hl-yellow} (valor real - estimación)
 
 ---
 
@@ -2247,7 +2258,14 @@ $$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2
 
 $$H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}$$
 
-La  [**hipótesis nula**]{.hl-green} es que las [**diferencias (variabilidad) entre notas en las distintas asignaturas**]{.hl-yellow} se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática)
+La  [**hipótesis nula**]{.hl-green} es que las [**diferencias entre notas en las distintas asignaturas**]{.hl-yellow} se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática).
+
+. . .
+
+El concepto «diferencias» se traduce en **variabilidad**, es decir, la [**hipótesis nula puede reformularse**]{.hl-green} como
+
+$$H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}$$
+
 
 ---
 
@@ -2344,7 +2362,15 @@ La idea es que [**no necesitamos comparar 2 a 2**]{.hl-red}. Si tenemos $c$ grup
 
 . . .
 
-¿Es esa [**variabilidad entre las estimaciones muestrales de las medias**]{.hl-yellow} (varianza ENTRE grupos, debida a estar en un grupo u otro) significativamente superior a la [**variabilidad promedio (intrínseca) de los grupos**]{.hl-purple} (varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)?
+Hemos reformulado antes la hipótesis nula como
+
+$$H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}$$
+
+¿Cómo cuantificar si esa [**variabilidad entre las medias**]{.hl-yellow} (varianza ENTRE grupos, debida a estar en un grupo u otro) es pequeña?
+
+. . .
+
+La vamos a [**comparar respecto a la variabilidad promedio (intrínseca) de los datos**]{.hl-purple} (promedio ponderado de la varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)
 
 
 
@@ -2352,7 +2378,7 @@ La idea es que [**no necesitamos comparar 2 a 2**]{.hl-red}. Si tenemos $c$ grup
 
 ## ANOVA: un factor
 
-Si la [**hipótesis nula fuese cierta**]{.hl-green} (todas las observaciones vienen de la misma población con misma varianza y media), la [**varianza entre grupos (explicada por el grupo) sería la misma que la varianza promedio dentro de los grupos**]{.hl-yellow}: según se alejen las medias de los grupos, la primera se incrementará pero la segunda permanecerá constante.
+Si la [**hipótesis nula fuese cierta**]{.hl-green} (todas las observaciones vienen de la misma población con misma varianza y media), la [**varianza entre grupos (explicada por el grupo) sería la misma que la varianza  inherente a los datos**]{.hl-yellow} (calculada como el promedio de las distintas varianzas intra-grupo).
 
 
 :::: columns
@@ -2396,9 +2422,23 @@ $$SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{
 
 A continuación **añadimos y restamos dentro del paréntesis la misma cantidad** (la media muestral de cada grupo $\overline{y}_j$, estimación insesgada de $\mu_j$)
 
-
-$$\begin{eqnarray}\color{green}{SST} &=& \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &=& \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &=& \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
+$$\begin{eqnarray}\color{green}{SST} &=& \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ \color{green}{VT} &=& \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2
 \end{eqnarray}$$
+
+---
+
+
+## ANOVA: un factor
+
+
+Desarrollando el cuadrado
+
+$$\begin{eqnarray}\color{green}{SST} &=& \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &=& \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &=& \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
+\end{eqnarray}$$
+
+donde (dado que la suma de errores dentro de cada grupo es nula)
+
+$$\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) = \sum_{j=1}^{c} \left(\overline{y}_j - \overline{y} \right) \sum_{i=1}^{n_j} \varepsilon_{ij} = 0$$
 
 
 ---
@@ -2415,28 +2455,28 @@ ya que
 
 $$\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \frac{1}{n}\sum_{l}^{n} y_{l} = \overline{y}$$
 
-Es la [**variabilidad explicada por los grupos**]{.hl-red} (variabilidad - de la media - ENTRE grupos).
+Es la [**variabilidad explicada por los grupos**]{.hl-red} (variabilidad - de la media - ENTRE grupos) y [**cuantifica la variabilidad de las medias**]{.hl-red}. ¿Es mucho? ¿Poco? La vamos a enfrentar a la variabilidad no explicada por los grupos (inherente a la variable)
 
 ---
 
 ## ANOVA: un factor
 
 
-El [**primer término**]{.hl-purple} es en realidad la [**media de la variabilidad $s_{j}^2$ DENTRO de cada grupo**]{.hl-purple} (el promedio de la variabilidad intragrupo)
+El [**primer término**]{.hl-purple} es en realidad el [**promedio de la variabilidad $s_{j}^2$ DENTRO de cada grupo**]{.hl-purple} (el promedio de la variabilidad intragrupo)
 
 
 $$\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2$$
 
-lo que hemos denominado antes $\hat{\sigma}^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j}  \hat{\varepsilon_{ij}}^2$ que se relaciona con la [**varianza residual (estimada)**]{.hl-purple} como $\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$.
+que se relaciona con la [**varianza residual (estimada)**]{.hl-purple} como $\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$.
 
 
-Es la [**variabilidad NO explicada (residual) por el factor**]{.hl-purple} (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo)
+Es la [**variabilidad NO explicada (residual) por el factor**]{.hl-purple} (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo) y [**cuantifica la variabilidad inherente a los datos (promediando las variabilidades de cada grupo)**]{.hl-red}
 
 ---
 
 ## ANOVA: un factor
 
-Por tanto, dado que el modelo es lineal, la [**variabilidad o información total**]{.hl-yellow} se puede descomponer como [**varianza explicada**]{.hl-red} (VE o suma cuadrados explicada - SSE) más [**varianza no explicada**]{.hl-purple} (VR o suma cuadrados residuales - SSR)
+Dado que el modelo es lineal, la [**variabilidad o información total**]{.hl-yellow} se puede descomponer como [**varianza explicada**]{.hl-red} (VE o suma cuadrados explicada - SSE) más [**varianza no explicada**]{.hl-purple} (VR o suma cuadrados residuales - SSR)
 
 
 $$SST = SSE + SSR, \quad VT = VE + VR$$
@@ -2444,27 +2484,51 @@ $$SST = SSE + SSR, \quad VT = VE + VR$$
 $$VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$$
 
 
-Así el objetivo será construir un **estadístico** para cuantificar si $VE$ se aleja mucho de $VR$ o no. 
+Así el objetivo será construir un **estadístico** para cuantificar si $VE$ (variabilidad entre las medias) es mucho más grande que $VR$ (variabilidad basal, la variabilidad inherente de nuestra variable)
 
 ---
 
 ## ANOVA: un factor
 
-Se puede **demostrar** como 
+Dado que la suma de normales al cuadrado es una chi-cuadrado, se puede **demostrar** como 
 
-$$\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c} \quad \Rightarrow \quad F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} = \frac{\hat{s}_{e}^2}{\frac{n*VR}{n-c}} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}$$
+$$\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c}$$
 
-usando que el cociente (ponderado por sus grados de libertad) de dos $\chi^2$ sigue una distribución conocida, calculando lo que se conoce como [**estadístico F**]{.hl-yellow}. 
+Si tenemos $X \sim \chi_{a}^2$ y $Y \sim \chi_{b}^2$, tenemos que su cociente (ponderado por sus grados de libertad) es $\frac{X/a}{Y/b} \sim F_{a, b}$, lo que implica que
+
+
+$$F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}}  \sim F_{c-1, n-c}$$
+---
+
+## ANOVA: un factor
+
+
+La varianza poblacional $\sigma^2$ divide y multiplica así que podemos eliminarla
+
+$$F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} \sim F_{c-1, n-c}$$
 
 . . .
 
-Si te fijas
+Si multiplicamos y dividimos abajo por $n$
 
-* $\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2$ es la [**varianza explicada (estimada)**]{.hl-red} calculada como una cuasivarianza ponderada.
+$$F = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} = \frac{\frac{SSE}{c-1}}{\frac{nSSR}{(n-c)n}} = \frac{\frac{SSE}{c-1}}{\frac{n*VR}{n-c}} = \frac{\frac{SSE}{c-1}}{\frac{n*\hat{\sigma}^2}{n-c}} = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} \sim F_{c-1, n-c}$$
 
-* $\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}$ es la [**varianza residual (estimada)**]{.hl-purple} mencionada anteriormente
+Si te fijas el **denominador** es $\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}$, la mencionada [**varianza residual (estimada)**]{.hl-purple} (el mejor estimador muestral de la varianza poblacional, la variabilidad inherente a los datos)
 
 
+---
+
+## ANOVA: un factor
+
+
+$$F = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}$$
+
+
+El **numerador** lo podemos denotar como
+
+$$\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{n}{c-1} \left(\sum_{j=1}^{c}\frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2 \right) = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2$$
+
+y es la [**varianza explicada (estimada)**]{.hl-red} calculada como la **variabilidad ponderada de las medias** (corregida por $n/(c-1)$ para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es [**más grande de lo que cabría esperar**]{.hl-yellow} (si las medias fuesen iguales) o no.
 
 ---
 
@@ -2507,7 +2571,7 @@ aov(data = datos, formula = notas ~ asignatura) |> summary()
 ```
 
 
-* `Df`: degrees of freedom (grados de libertad), definidos como $c-1$ para $SSE/VE$ (ya que $\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}$) y $n-c$ (ya que $\frac{SSR}{\sigma^2} \sim \chi^2_{n-c}$). 
+* `Df`: degrees of freedom (grados de libertad), definidos como $c-1 = 1$ para $SSE/VE$ (ya que $\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}$) y $n-c = 998$ (ya que $\frac{SSR}{\sigma^2} \sim \chi^2_{n-c}$). 
 
 * `Sum Sq`: sum of squares (suma de cuadrados), es decir, $SSE$ y $SSR$.
 
@@ -2518,6 +2582,8 @@ aov(data = datos, formula = notas ~ asignatura) |> summary()
 . . .
 
 En este caso: [**rechazamos la hipótesis nula**]{.hl-yellow} de igualdad de medias, es decir, [**existen evidencias suficientes para concluir que el grupo tiene un efecto en las notas**]{.hl-yellow}
+
+
 
 ---
 
@@ -2657,6 +2723,10 @@ Si [**analizamos por columnas**]{.hl-yellow} tenemos
 
 [**Rechazamos la hipótesis nula**]{.hl-yellow}: [**existen evidencias para concluir que el tratamiento tiene un efecto en el peso**]{.hl-yellow}
 
+# Clase 4: análisis de la varianza {#clase-4}
+
+[**Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)**]{style="color:#444442;"}
+
 ---
 
 ## Caso real: crecimiento bebés
@@ -2672,7 +2742,7 @@ aov(data = datos, formula = weight ~ group) |> summary()
 
 Sabemos que el tratamiento (bien sea "real" bien sea el grupo control) tiene un efecto (al menos estadístico) y que se observan [**medias distintas**]{.hl-yellow}. 
 
-&nbsp;
+. . .
 
 [**¿Pero cuáles son distintas 2 a 2**]{.hl-purple}? ¿Son distintas entre los tratamientos? ¿Son distintas tratamientos vs control? ¿Solo uno de los tratamientos es distinto o ambos?
 
@@ -2682,7 +2752,7 @@ En este caso necesitamos **3 comparaciones**.
 
 ## Pruebas post-hoc
 
-Tras obtener un [**resultado significativo en un ANOVA**]{.hl-green} el siguiente objetivo sería determinar [**cuál de los grupos bajo estudio contribuye a esta significación estadística**]{.hl-yellow}. 
+Tras obtener un [**resultado significativo en un ANOVA**]{.hl-green} el siguiente objetivo sería determinar [**cuál de los grupos bajo estudio contribuye a esta significación estadística**]{.hl-yellow} (pruebas post-hoc). 
 
 . . .
 
@@ -2731,8 +2801,7 @@ pairwise.t.test(datos$weight, datos$group, p.adjust.method = "bonferroni", pool.
 Para evitar los problemas de Bonferroni cuando hay un alto número de comparaciones existe una alternativa conocida como [**test de Tukey**]{.hl-yellow}. 
 
 ```{r}
-aov(data = datos, formula = weight ~ group) |> 
-  TukeyHSD()
+aov(data = datos, formula = weight ~ group) |> TukeyHSD()
 ```
 
 
@@ -2742,8 +2811,7 @@ aov(data = datos, formula = weight ~ group) |>
 ## post-hoc: Tukey
 
 ```{r}
-aov(data = datos, formula = weight ~ group) |> 
-  TukeyHSD()
+aov(data = datos, formula = weight ~ group) |> TukeyHSD()
 ```
 
 
@@ -2943,15 +3011,13 @@ DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
 
 :::
 
+---
 
-
-# Clase 4: análisis de la varianza {#clase-4}
-
-[**Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)**]{style="color:#444442;"}
+## 🐣 Caso práctico I: pendiente {#caso-practico-4-1}
 
 ---
 
-## ANOVA: dos factores
+## 🐣 Caso práctico II: pendiente {#caso-practico-4-2}
 
 
 # Repaso entrega I
@@ -2963,6 +3029,10 @@ DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
   - [**Encuesta satisfacción**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
   - [**Bronquitis vs tabaco**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco)
   - [**Encuesta salud mental**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental)
-  
-* [**Casos prácticos ANOVA**]{.hl-yellow}:   
+
+* [**Cuanti vs cuanti**]{.hl-yellow}: ver [💻 Tu turno](#tu-turno-2-3)
+
+* [**Casos prácticos ANOVA**]{.hl-yellow}:  
+  - [**pendiente**](...)
+  - [**pendiente**](...)
 

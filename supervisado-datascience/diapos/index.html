@@ -2493,23 +2493,33 @@ sample estimates:
 <section id="anova-un-factor-3" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[\hat{\sigma}^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2, \quad  s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2\]</span></p>
-<p>Sin embargo, dado que cada <span class="math inline">\(\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2\)</span> son <strong>independientes entre sí</strong> y siguen una <span class="math inline">\(\chi^{2}_{n_j - 1}\)</span> (la suma de normales al cuadrado es una <span class="math inline">\(\chi^2\)</span>), tenemos que</p>
+<p>Sin embargo, dado que cada <span class="math inline">\(\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2\)</span> son <strong>independientes</strong> y siguen una <span class="math inline">\(\chi^{2}_{n_j - 1}\)</span> (suma de normales - tipificadas - al cuadrado), tenemos que</p>
 <p><span class="math display">\[n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2\]</span></p>
 <div class="fragment">
-<p>Es decir: <span class="math inline">\(\hat{\sigma}^2\)</span> <span class="hl-red"><strong>no es un estimador insesgado</strong></span> de <span class="math inline">\(\sigma^2\)</span> así que usaremos la conocida como <span class="hl-yellow"><strong>varianza residual (estimada)</strong></span></p>
+<p><span class="math inline">\(\hat{\sigma}^2\)</span> <span class="hl-red"><strong>no es un estimador insesgado</strong></span> de <span class="math inline">\(\sigma^2\)</span> así que usaremos la conocida como <span class="hl-yellow"><strong>varianza residual</strong></span></p>
 <p><span class="math display">\[\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2\]</span></p>
 </div>
 </section>
 <section id="anova-un-factor-4" class="slide level2">
 <h2>ANOVA: un factor</h2>
+<p><span class="math display">\[\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2\]</span></p>
+<p>Fíjate que dado que <span class="math inline">\(\hat{\mu}_j = \overline{y}_j\)</span>, hemos llamado</p>
+<p><span class="math display">\[\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j \sim N \left(\hat{\mu}_j, \hat{s}_{r}^2 \right)\]</span> a los <span class="hl-yellow"><strong>residuos estimados</strong></span> (valor real - estimación)</p>
+</section>
+<section id="anova-un-factor-5" class="slide level2">
+<h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
 <p>¿Qué contraste deberíamos plantear si queremos <span class="hl-yellow"><strong>comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)</strong></span>?</p>
 <div class="fragment">
 <p><span class="math display">\[H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
-<p>La <span class="hl-green"><strong>hipótesis nula</strong></span> es que las <span class="hl-yellow"><strong>diferencias (variabilidad) entre notas en las distintas asignaturas</strong></span> se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática)</p>
+<p>La <span class="hl-green"><strong>hipótesis nula</strong></span> es que las <span class="hl-yellow"><strong>diferencias entre notas en las distintas asignaturas</strong></span> se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática).</p>
+</div>
+<div class="fragment">
+<p>El concepto «diferencias» se traduce en <strong>variabilidad</strong>, es decir, la <span class="hl-green"><strong>hipótesis nula puede reformularse</strong></span> como</p>
+<p><span class="math display">\[H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}\]</span></p>
 </div>
 </section>
-<section id="anova-un-factor-5" class="slide level2">
+<section id="anova-un-factor-6" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Vamos a visualizar las dos distribuciones</p>
 <div class="cell">
@@ -2528,7 +2538,7 @@ sample estimates:
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-66-1.png" width="960" class="r-stretch"><p>Aunque la distribución B está más desplazada a la izquierda, la <strong>nota más alta es de la asignatura B</strong>. ¿Es suficiente para decir que <strong>A distinto de B</strong>?</p>
 </section>
-<section id="anova-un-factor-6" class="slide level2">
+<section id="anova-un-factor-7" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
 <p><span class="math display">\[H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
@@ -2551,7 +2561,7 @@ mean of x mean of y
 </div>
 </div>
 </section>
-<section id="anova-un-factor-7" class="slide level2">
+<section id="anova-un-factor-8" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>¿Pero qué pasaría si <span class="hl-yellow"><strong>en lugar de dos asignaturas tuviésemos 6 asignaturas</strong></span>?</p>
 <div class="fragment">
@@ -2572,7 +2582,7 @@ mean of x mean of y
 <p>Si queremos que ese <strong><span class="math inline">\(\alpha_T\)</span> conjunto sea (al menos) de 0.05</strong>, necesitamos que cada <span class="math inline">\(\alpha\)</span> individual sea <span class="math inline">\(\alpha = \alpha_T/c\)</span> (en nuestro ejemplo <span class="math inline">\(\alpha = 0.00333\)</span>, demasiado pequeño si <span class="math inline">\(c\)</span> crece), o lo que es lo mismo $p-valor_{j}^{adj} = c*p-value_j $</p>
 </div>
 </section>
-<section id="anova-un-factor-8" class="slide level2">
+<section id="anova-un-factor-9" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>No solo existe un <span class="hl-red"><strong>problema de comparaciones múltiples</strong></span> sino que, además, ¡no lo necesitamos!</p>
 <div class="fragment">
@@ -2582,17 +2592,22 @@ mean of x mean of y
 <p>Y para responder a dicha pregunta <span class="hl-red"><strong>no necesitamos chequear 2 a 2</strong></span>: basta con que <span class="hl-yellow"><strong>encontremos una que no sea igual</strong></span></p>
 </div>
 </section>
-<section id="anova-un-factor-9" class="slide level2">
+<section id="anova-un-factor-10" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
 <p>La idea es que <span class="hl-red"><strong>no necesitamos comparar 2 a 2</strong></span>. Si tenemos <span class="math inline">\(c\)</span> grupos sabemos que <span class="hl-yellow"><strong>las medias <span class="math inline">\(\mu_j\)</span> (<span class="math inline">\(j=1,\ldots,c\)</span>) nunca van a ser exactamente iguales</strong></span> aunque el grupo no afecte, debido a la variabilidad intrínseca del experimento <span class="math inline">\(\varepsilon_{ij}\)</span></p>
 <div class="fragment">
-<p>¿Es esa <span class="hl-yellow"><strong>variabilidad entre las estimaciones muestrales de las medias</strong></span> (varianza ENTRE grupos, debida a estar en un grupo u otro) significativamente superior a la <span class="hl-purple"><strong>variabilidad promedio (intrínseca) de los grupos</strong></span> (varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)?</p>
+<p>Hemos reformulado antes la hipótesis nula como</p>
+<p><span class="math display">\[H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}\]</span></p>
+<p>¿Cómo cuantificar si esa <span class="hl-yellow"><strong>variabilidad entre las medias</strong></span> (varianza ENTRE grupos, debida a estar en un grupo u otro) es pequeña?</p>
+</div>
+<div class="fragment">
+<p>La vamos a <span class="hl-purple"><strong>comparar respecto a la variabilidad promedio (intrínseca) de los datos</strong></span> (promedio ponderado de la varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)</p>
 </div>
 </section>
-<section id="anova-un-factor-10" class="slide level2">
+<section id="anova-un-factor-11" class="slide level2">
 <h2>ANOVA: un factor</h2>
-<p>Si la <span class="hl-green"><strong>hipótesis nula fuese cierta</strong></span> (todas las observaciones vienen de la misma población con misma varianza y media), la <span class="hl-yellow"><strong>varianza entre grupos (explicada por el grupo) sería la misma que la varianza promedio dentro de los grupos</strong></span>: según se alejen las medias de los grupos, la primera se incrementará pero la segunda permanecerá constante.</p>
+<p>Si la <span class="hl-green"><strong>hipótesis nula fuese cierta</strong></span> (todas las observaciones vienen de la misma población con misma varianza y media), la <span class="hl-yellow"><strong>varianza entre grupos (explicada por el grupo) sería la misma que la varianza inherente a los datos</strong></span> (calculada como el promedio de las distintas varianzas intra-grupo).</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><img data-src="./img/anova-1.png"></p>
@@ -2601,7 +2616,7 @@ mean of x mean of y
 </div>
 </div>
 </section>
-<section id="anova-un-factor-11" class="slide level2">
+<section id="anova-un-factor-12" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
 <p>¿Cómo calcular la <span class="hl-red"><strong>varianza explicada</strong></span> por la variable de grupo (la variabilidad de las medias de cada grupo) y la <span class="hl-purple"><strong>varianza no explicada</strong></span> por el grupo (el promedio de las varianzas dentro de cada grupo, intrínseca a los datos)?</p>
@@ -2610,49 +2625,68 @@ mean of x mean of y
 <p><span class="math display">\[SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2\]</span></p>
 </div>
 </section>
-<section id="anova-un-factor-12" class="slide level2">
+<section id="anova-un-factor-13" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2\]</span></p>
 <p>A continuación <strong>añadimos y restamos dentro del paréntesis la misma cantidad</strong> (la media muestral de cada grupo <span class="math inline">\(\overline{y}_j\)</span>, estimación insesgada de <span class="math inline">\(\mu_j\)</span>)</p>
-<p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &amp;=&amp; \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &amp;=&amp; \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} - \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
+<p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ \color{green}{VT} &amp;=&amp; \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2
 \end{eqnarray}\]</span></p>
 </section>
-<section id="anova-un-factor-13" class="slide level2">
+<section id="anova-un-factor-14" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>Desarrollando el cuadrado</p>
+<p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &amp;=&amp; \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &amp;=&amp; \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
+\end{eqnarray}\]</span></p>
+<p>donde (dado que la suma de errores dentro de cada grupo es nula)</p>
+<p><span class="math display">\[\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) = \sum_{j=1}^{c} \left(\overline{y}_j - \overline{y} \right) \sum_{i=1}^{n_j} \varepsilon_{ij} = 0\]</span></p>
+</section>
+<section id="anova-un-factor-15" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>El <span class="hl-red"><strong>segundo término</strong></span> es en realidad la <span class="hl-red"><strong>variabilidad (ponderada) de las medias de los grupos</strong></span> (cómo fluctua la media entre los grupos)</p>
 <p><span class="math display">\[\color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \sum_{j=1}^{c}  \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2  }\]</span></p>
 <p>ya que</p>
 <p><span class="math display">\[\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \frac{1}{n}\sum_{l}^{n} y_{l} = \overline{y}\]</span></p>
-<p>Es la <span class="hl-red"><strong>variabilidad explicada por los grupos</strong></span> (variabilidad - de la media - ENTRE grupos).</p>
-</section>
-<section id="anova-un-factor-14" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p>El <span class="hl-purple"><strong>primer término</strong></span> es en realidad la <span class="hl-purple"><strong>media de la variabilidad <span class="math inline">\(s_{j}^2\)</span> DENTRO de cada grupo</strong></span> (el promedio de la variabilidad intragrupo)</p>
-<p><span class="math display">\[\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2\]</span></p>
-<p>lo que hemos denominado antes <span class="math inline">\(\hat{\sigma}^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon_{ij}}^2\)</span> que se relaciona con la <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> como <span class="math inline">\(\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\)</span>.</p>
-<p>Es la <span class="hl-purple"><strong>variabilidad NO explicada (residual) por el factor</strong></span> (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo)</p>
-</section>
-<section id="anova-un-factor-15" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p>Por tanto, dado que el modelo es lineal, la <span class="hl-yellow"><strong>variabilidad o información total</strong></span> se puede descomponer como <span class="hl-red"><strong>varianza explicada</strong></span> (VE o suma cuadrados explicada - SSE) más <span class="hl-purple"><strong>varianza no explicada</strong></span> (VR o suma cuadrados residuales - SSR)</p>
-<p><span class="math display">\[SST = SSE + SSR, \quad VT = VE + VR\]</span></p>
-<p><span class="math display">\[VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\]</span></p>
-<p>Así el objetivo será construir un <strong>estadístico</strong> para cuantificar si <span class="math inline">\(VE\)</span> se aleja mucho de <span class="math inline">\(VR\)</span> o no.</p>
+<p>Es la <span class="hl-red"><strong>variabilidad explicada por los grupos</strong></span> (variabilidad - de la media - ENTRE grupos) y <span class="hl-red"><strong>cuantifica la variabilidad de las medias</strong></span>. ¿Es mucho? ¿Poco? La vamos a enfrentar a la variabilidad no explicada por los grupos (inherente a la variable)</p>
 </section>
 <section id="anova-un-factor-16" class="slide level2">
 <h2>ANOVA: un factor</h2>
-<p>Se puede <strong>demostrar</strong> como</p>
-<p><span class="math display">\[\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c} \quad \Rightarrow \quad F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} = \frac{\hat{s}_{e}^2}{\frac{n*VR}{n-c}} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}\]</span></p>
-<p>usando que el cociente (ponderado por sus grados de libertad) de dos <span class="math inline">\(\chi^2\)</span> sigue una distribución conocida, calculando lo que se conoce como <span class="hl-yellow"><strong>estadístico F</strong></span>.</p>
-<div class="fragment">
-<p>Si te fijas</p>
-<ul>
-<li><p><span class="math inline">\(\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2\)</span> es la <span class="hl-red"><strong>varianza explicada (estimada)</strong></span> calculada como una cuasivarianza ponderada.</p></li>
-<li><p><span class="math inline">\(\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}\)</span> es la <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> mencionada anteriormente</p></li>
-</ul>
-</div>
+<p>El <span class="hl-purple"><strong>primer término</strong></span> es en realidad el <span class="hl-purple"><strong>promedio de la variabilidad <span class="math inline">\(s_{j}^2\)</span> DENTRO de cada grupo</strong></span> (el promedio de la variabilidad intragrupo)</p>
+<p><span class="math display">\[\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2\]</span></p>
+<p>que se relaciona con la <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> como <span class="math inline">\(\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\)</span>.</p>
+<p>Es la <span class="hl-purple"><strong>variabilidad NO explicada (residual) por el factor</strong></span> (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo) y <span class="hl-red"><strong>cuantifica la variabilidad inherente a los datos (promediando las variabilidades de cada grupo)</strong></span></p>
 </section>
 <section id="anova-un-factor-17" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>Dado que el modelo es lineal, la <span class="hl-yellow"><strong>variabilidad o información total</strong></span> se puede descomponer como <span class="hl-red"><strong>varianza explicada</strong></span> (VE o suma cuadrados explicada - SSE) más <span class="hl-purple"><strong>varianza no explicada</strong></span> (VR o suma cuadrados residuales - SSR)</p>
+<p><span class="math display">\[SST = SSE + SSR, \quad VT = VE + VR\]</span></p>
+<p><span class="math display">\[VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\]</span></p>
+<p>Así el objetivo será construir un <strong>estadístico</strong> para cuantificar si <span class="math inline">\(VE\)</span> (variabilidad entre las medias) es mucho más grande que <span class="math inline">\(VR\)</span> (variabilidad basal, la variabilidad inherente de nuestra variable)</p>
+</section>
+<section id="anova-un-factor-18" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>Dado que la suma de normales al cuadrado es una chi-cuadrado, se puede <strong>demostrar</strong> como</p>
+<p><span class="math display">\[\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c}\]</span></p>
+<p>Si tenemos <span class="math inline">\(X \sim \chi_{a}^2\)</span> y <span class="math inline">\(Y \sim \chi_{b}^2\)</span>, tenemos que su cociente (ponderado por sus grados de libertad) es <span class="math inline">\(\frac{X/a}{Y/b} \sim F_{a, b}\)</span>, lo que implica que</p>
+<p><span class="math display">\[F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}}  \sim F_{c-1, n-c}\]</span></p>
+</section>
+<section id="anova-un-factor-19" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>La varianza poblacional <span class="math inline">\(\sigma^2\)</span> divide y multiplica así que podemos eliminarla</p>
+<p><span class="math display">\[F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} \sim F_{c-1, n-c}\]</span></p>
+<div class="fragment">
+<p>Si multiplicamos y dividimos abajo por <span class="math inline">\(n\)</span></p>
+<p><span class="math display">\[F = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} = \frac{\frac{SSE}{c-1}}{\frac{nSSR}{(n-c)n}} = \frac{\frac{SSE}{c-1}}{\frac{n*VR}{n-c}} = \frac{\frac{SSE}{c-1}}{\frac{n*\hat{\sigma}^2}{n-c}} = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} \sim F_{c-1, n-c}\]</span></p>
+<p>Si te fijas el <strong>denominador</strong> es <span class="math inline">\(\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}\)</span>, la mencionada <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> (el mejor estimador muestral de la varianza poblacional, la variabilidad inherente a los datos)</p>
+</div>
+</section>
+<section id="anova-un-factor-20" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[F = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}\]</span></p>
+<p>El <strong>numerador</strong> lo podemos denotar como</p>
+<p><span class="math display">\[\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{n}{c-1} \left(\sum_{j=1}^{c}\frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2 \right) = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2\]</span></p>
+<p>y es la <span class="hl-red"><strong>varianza explicada (estimada)</strong></span> calculada como la <strong>variabilidad ponderada de las medias</strong> (corregida por <span class="math inline">\(n/(c-1)\)</span> para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es <span class="hl-yellow"><strong>más grande de lo que cabría esperar</strong></span> (si las medias fuesen iguales) o no.</p>
+</section>
+<section id="anova-un-factor-21" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Vamos a ver el ejemplo en <code>R</code> haciendo uso de la función <code>aov()</code></p>
 <ul>
@@ -2671,7 +2705,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="anova-un-factor-18" class="slide level2">
+<section id="anova-un-factor-22" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> notas <span class="sc">~</span> asignatura) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2689,7 +2723,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><code>Residuals</code>: la parte correspondiente la <span class="hl-purple"><strong>variabilidad no explicada o intra grupos</strong></span></p></li>
 </ul>
 </section>
-<section id="anova-un-factor-19" class="slide level2">
+<section id="anova-un-factor-23" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> notas <span class="sc">~</span> asignatura) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2702,7 +2736,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <ul>
-<li><p><code>Df</code>: degrees of freedom (grados de libertad), definidos como <span class="math inline">\(c-1\)</span> para <span class="math inline">\(SSE/VE\)</span> (ya que <span class="math inline">\(\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}\)</span>) y <span class="math inline">\(n-c\)</span> (ya que <span class="math inline">\(\frac{SSR}{\sigma^2} \sim \chi^2_{n-c}\)</span>).</p></li>
+<li><p><code>Df</code>: degrees of freedom (grados de libertad), definidos como <span class="math inline">\(c-1 = 1\)</span> para <span class="math inline">\(SSE/VE\)</span> (ya que <span class="math inline">\(\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}\)</span>) y <span class="math inline">\(n-c = 998\)</span> (ya que <span class="math inline">\(\frac{SSR}{\sigma^2} \sim \chi^2_{n-c}\)</span>).</p></li>
 <li><p><code>Sum Sq</code>: sum of squares (suma de cuadrados), es decir, <span class="math inline">\(SSE\)</span> y <span class="math inline">\(SSR\)</span>.</p></li>
 <li><p><code>Mean Sq</code>: mean of squares (media de la suma de cuadrados, ponderado por <code>Df</code>), es decir, <span class="math inline">\(\hat{s}_{e}^{2}\)</span> y <span class="math inline">\(\hat{s}_{r}^{2}\)</span>.</p></li>
 <li><p><code>F value</code> y <code>Pr(&gt;F)</code>: valor del estadístico <span class="math inline">\(F = \frac{\hat{s}_{e}^{2}}{\hat{s}_{r}^{2}}\)</span> y p-valor del contraste</p></li>
@@ -2870,6 +2904,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="fragment">
 <p><span class="hl-yellow"><strong>Rechazamos la hipótesis nula</strong></span>: <span class="hl-yellow"><strong>existen evidencias para concluir que el tratamiento tiene un efecto en el peso</strong></span></p>
 </div>
+</section></section>
+<section>
+<section id="clase-4" class="title-slide slide level1 center">
+<h1>Clase 4: análisis de la varianza</h1>
+<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)</strong></span></p>
 </section>
 <section id="caso-real-crecimiento-bebés-7" class="slide level2">
 <h2>Caso real: crecimiento bebés</h2>
@@ -2886,14 +2925,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>¿El <span class="hl-red"><strong>problema</strong></span>?</p>
 <div class="fragment">
 <p>Sabemos que el tratamiento (bien sea “real” bien sea el grupo control) tiene un efecto (al menos estadístico) y que se observan <span class="hl-yellow"><strong>medias distintas</strong></span>.</p>
-<p>&nbsp;</p>
+</div>
+<div class="fragment">
 <p><span class="hl-purple"><strong>¿Pero cuáles son distintas 2 a 2</strong></span>? ¿Son distintas entre los tratamientos? ¿Son distintas tratamientos vs control? ¿Solo uno de los tratamientos es distinto o ambos?</p>
 <p>En este caso necesitamos <strong>3 comparaciones</strong>.</p>
 </div>
 </section>
 <section id="pruebas-post-hoc" class="slide level2">
 <h2>Pruebas post-hoc</h2>
-<p>Tras obtener un <span class="hl-green"><strong>resultado significativo en un ANOVA</strong></span> el siguiente objetivo sería determinar <span class="hl-yellow"><strong>cuál de los grupos bajo estudio contribuye a esta significación estadística</strong></span>.</p>
+<p>Tras obtener un <span class="hl-green"><strong>resultado significativo en un ANOVA</strong></span> el siguiente objetivo sería determinar <span class="hl-yellow"><strong>cuál de los grupos bajo estudio contribuye a esta significación estadística</strong></span> (pruebas post-hoc).</p>
 <div class="fragment">
 <p>Pero como hemos explicado, la estrategia de aplicar <span class="hl-yellow"><strong>repetidamente pruebas t-Student</strong></span> puede conllevar un <span class="hl-red"><strong>aumento desmesurado de la probabilidad de cometer un error de Tipo I</strong></span> (detectar diferencias por pura aleatoriedad)</p>
 </div>
@@ -2944,8 +2984,7 @@ P value adjustment method: bonferroni </code></pre>
 <div class="fragment">
 <p>Para evitar los problemas de Bonferroni cuando hay un alto número de comparaciones existe una alternativa conocida como <span class="hl-yellow"><strong>test de Tukey</strong></span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> weight <span class="sc">~</span> group) <span class="sc">|&gt;</span> </span>
-<span id="cb135-2"><a href="#cb135-2"></a>  <span class="fu">TukeyHSD</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> weight <span class="sc">~</span> group) <span class="sc">|&gt;</span> <span class="fu">TukeyHSD</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -2964,8 +3003,7 @@ trt2-trt1  0.865  0.1737839 1.5562161 0.0120064</code></pre>
 <section id="post-hoc-tukey" class="slide level2">
 <h2>post-hoc: Tukey</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> weight <span class="sc">~</span> group) <span class="sc">|&gt;</span> </span>
-<span id="cb137-2"><a href="#cb137-2"></a>  <span class="fu">TukeyHSD</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> weight <span class="sc">~</span> group) <span class="sc">|&gt;</span> <span class="fu">TukeyHSD</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -3193,14 +3231,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="clase-4" class="title-slide slide level1 center">
-<h1>Clase 4: análisis de la varianza</h1>
-<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (4 de febrero de 2025)</strong></span></p>
 </section>
-<section id="anova-dos-factores" class="slide level2">
-<h2>ANOVA: dos factores</h2>
+<section id="caso-practico-4-1" class="slide level2">
+<h2>🐣 Caso práctico I: pendiente</h2>
+</section>
+<section id="caso-practico-4-2" class="slide level2">
+<h2>🐣 Caso práctico II: pendiente</h2>
 </section></section>
 <section id="repaso-entrega-i" class="title-slide slide level1 center">
 <h1>Repaso entrega I</h1>
@@ -3212,7 +3248,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco"><strong>Bronquitis vs tabaco</strong></a></li>
 <li><a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental"><strong>Encuesta salud mental</strong></a></li>
 </ul></li>
-<li><p><span class="hl-yellow"><strong>Casos prácticos ANOVA</strong></span>:</p></li>
+<li><p><span class="hl-yellow"><strong>Cuanti vs cuanti</strong></span>: ver <a href="#/tu-turno-2-3">💻 Tu turno</a></p></li>
+<li><p><span class="hl-yellow"><strong>Casos prácticos ANOVA</strong></span>:</p>
+<ul>
+<li><a href="..."><strong>pendiente</strong></a></li>
+<li><a href="..."><strong>pendiente</strong></a></li>
+</ul></li>
 </ul>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
