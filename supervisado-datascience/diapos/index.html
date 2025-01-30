@@ -528,8 +528,8 @@ Grado en Ciencia de Datos Aplicada • curso 2024-2025
 <td style="text-align: center;">S1</td>
 <td style="text-align: center;">23 ene</td>
 <td style="text-align: center;">Repaso descriptiva</td>
-<td style="text-align: center;"><a href="#/tu-turno-1-1">💻</a> <a href="#/tu-turno-1-2">💻</a> <a href="#/tu-turno-1-3">💻</a></td>
-<td style="text-align: center;"><a href="#/caso-practico-1-1">🐣</a> <a href="#/caso-practico-1-2">🐣</a> <a href="#/caso-practico-1-3">🐣</a> <a href="#/caso-practico-1-4">🐣</a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><a href="#/caso-practico-1-1">🐣</a></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -540,8 +540,8 @@ Grado en Ciencia de Datos Aplicada • curso 2024-2025
 <td style="text-align: center;">S2</td>
 <td style="text-align: center;">28 ene</td>
 <td style="text-align: center;">Medidas de asociación</td>
-<td style="text-align: center;">…</td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;"><a href="#/tu-turno-2-1">💻</a> <a href="#/tu-turno-2-2">💻</a></td>
+<td style="text-align: center;"><a href="#/caso-practico-2-1">🐣</a> <a href="#/caso-practico-2-2">🐣</a> <a href="#/caso-practico-2-3">🐣</a></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -552,8 +552,8 @@ Grado en Ciencia de Datos Aplicada • curso 2024-2025
 <td style="text-align: center;">S2</td>
 <td style="text-align: center;">30 ene</td>
 <td style="text-align: center;">Análisis de la varianza</td>
-<td style="text-align: center;">…</td>
-<td style="text-align: center;"></td>
+<td style="text-align: center;"><a href="#/tu-turno-3-1">💻</a></td>
+<td style="text-align: center;"><a href="#/caso-practico-3-1">🐣</a> <a href="#/caso-practico-3-2">🐣</a></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"></td>
@@ -2408,6 +2408,10 @@ sample estimates:
 </section>
 <section id="cuanti-vs-cuali-1" class="slide level2">
 <h2>Cuanti vs cuali</h2>
+
+<img data-src="https://bookdown.org/edsaul_perez/bioestadaistica_avanzada/Figuras/Imagenes%20del%20libro_page-0006.jpg" class="r-stretch"></section>
+<section id="cuanti-vs-cuali-2" class="slide level2">
+<h2>Cuanti vs cuali</h2>
 <p>Imagina que tenemos <strong><span class="math inline">\(n\)</span> estudiantes</strong> de los que disponemos sus <strong>notas <span class="math inline">\(y_{ij}\)</span></strong> para <span class="math inline">\(j=1,2\)</span> asignaturas alumnos (datos en <code>notas_1factor_2cat.csv</code>)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/notas_1factor_2cat.csv"</span>)</span>
@@ -3031,6 +3035,164 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Obtenemos que <span class="hl-yellow"><strong>no hay dif. sig. entre ctrl y tratamientos</strong></span></p>
 </div>
+</section>
+<section id="tu-turno-3-1" class="slide level2">
+<h2>💻 Tu turno</h2>
+<p><span style="color:#444442;"><strong>Intenta realizar los siguientes ejercicios sin mirar las soluciones</strong></span></p>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1"><span class="hl-yellow"><strong>Datos</strong></span></a></li><li><a href="#tabset-4-2"><span class="hl-yellow"><strong>Ej 1</strong></span></a></li><li><a href="#tabset-4-3"><span class="hl-yellow"><strong>Ej 2</strong></span></a></li><li><a href="#tabset-4-4"><span class="hl-yellow"><strong>Ej 3</strong></span></a></li><li><a href="#tabset-4-5"><span class="hl-yellow"><strong>Ej 4</strong></span></a></li><li><a href="#tabset-4-6"><span class="hl-yellow"><strong>Ej 5</strong></span></a></li><li><a href="#tabset-4-7"><span class="hl-yellow"><strong>Ej 6</strong></span></a></li><li><a href="#tabset-4-8"><span class="hl-yellow"><strong>Ej 7</strong></span></a></li><li><a href="#tabset-4-9"><span class="hl-yellow"><strong>Ej 8</strong></span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<p>Vamos a usar el fichero <code>cushing_syndrome.csv</code> que contiene datos del síndrome de Cushing, un trastorno hormonal asociado con un alto nivel de cortisol. Para cada individuo de la muestra tenemos recopiladas las tasas de excreción urinaria de dos metabolitos de esteroides (tetrahidrocortisona y pregnanetriol). La variable <code>type</code> recopila el tipo de síndrome: adenoma (a), hiperplasia bilateral (b), carcinoma (c) y desconocido (u)</p>
+</div>
+<div id="tabset-4-2">
+<p>📝 Carga el fichero <code>cushing_syndrome.csv</code></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb143-2"><a href="#cb143-2"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/cushing_syndrome.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb143-3"><a href="#cb143-3"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb143-4"><a href="#cb143-4"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 3
+   tetrahydrocortisone pregnanetriol type 
+                 &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;
+ 1                 3.1         11.7  a    
+ 2                 3            1.3  a    
+ 3                 1.9          0.1  a    
+ 4                 3.8          0.04 a    
+ 5                 4.1          1.1  a    
+ 6                 1.9          0.4  a    
+ 7                 8.3          1    b    
+ 8                 3.8          0.2  b    
+ 9                 3.9          0.6  b    
+10                 7.8          1.2  b    
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-4-3">
+<p>📝 Calcula la media global de <code>tetrahydrocortisone</code>. Calcula la media para cada uno de los tipos de síndrome así como su tamaño muestral</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb145-2"><a href="#cb145-2"></a>  <span class="fu">summarise</span>(<span class="st">"mean_global"</span> <span class="ot">=</span> <span class="fu">mean</span>(tetrahydrocortisone))</span>
+<span id="cb145-3"><a href="#cb145-3"></a></span>
+<span id="cb145-4"><a href="#cb145-4"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb145-5"><a href="#cb145-5"></a>  <span class="fu">summarise</span>(<span class="st">"mean_groups"</span> <span class="ot">=</span> <span class="fu">mean</span>(tetrahydrocortisone),</span>
+<span id="cb145-6"><a href="#cb145-6"></a>            <span class="st">"n"</span> <span class="ot">=</span> <span class="fu">n</span>(), <span class="at">.by =</span> type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-4">
+<p>📝 Calcula la varianza global de <code>tetrahydrocortisone</code>. Calcula la varianza para cada uno de los tipos de síndrome así como la varianza ponderada (cada varianza de grupo multiplicada por su proporción muestral)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb146-2"><a href="#cb146-2"></a>  <span class="fu">summarise</span>(<span class="st">"var_global"</span> <span class="ot">=</span> <span class="fu">var</span>(tetrahydrocortisone))</span>
+<span id="cb146-3"><a href="#cb146-3"></a></span>
+<span id="cb146-4"><a href="#cb146-4"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb146-5"><a href="#cb146-5"></a>  <span class="fu">summarise</span>(<span class="st">"var_groups"</span> <span class="ot">=</span> <span class="fu">var</span>(tetrahydrocortisone),</span>
+<span id="cb146-6"><a href="#cb146-6"></a>            <span class="st">"n"</span> <span class="ot">=</span> <span class="fu">n</span>(), <span class="at">.by =</span> type) <span class="sc">|&gt;</span> </span>
+<span id="cb146-7"><a href="#cb146-7"></a>  <span class="fu">mutate</span>(<span class="st">"var_weighted"</span> <span class="ot">=</span> <span class="fu">sum</span>(var_groups<span class="sc">*</span>n)<span class="sc">/</span><span class="fu">sum</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-5">
+<p>📝 Visualiza con boxplot <code>tetrahydrocortisone</code> para cada grupo</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb147-2"><a href="#cb147-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> tetrahydrocortisone,</span>
+<span id="cb147-3"><a href="#cb147-3"></a>                   <span class="at">fill =</span> type, <span class="at">color =</span> type), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb147-4"><a href="#cb147-4"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb147-5"><a href="#cb147-5"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb147-6"><a href="#cb147-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-87-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-4-6">
+<p>📝 Visualiza los puntos de <code>tetrahydrocortisone</code> junto con sus medias distinguiendo para cada uno de los grupos</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb148"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
+<span id="cb148-2"><a href="#cb148-2"></a>         <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb148-3"><a href="#cb148-3"></a>         <span class="fu">mutate</span>(<span class="st">"mean"</span> <span class="ot">=</span> <span class="fu">mean</span>(tetrahydrocortisone), <span class="at">.by =</span> type)) <span class="sc">+</span></span>
+<span id="cb148-4"><a href="#cb148-4"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> tetrahydrocortisone, <span class="at">color =</span> type),</span>
+<span id="cb148-5"><a href="#cb148-5"></a>             <span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb148-6"><a href="#cb148-6"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> mean, <span class="at">color =</span> type), <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb148-7"><a href="#cb148-7"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb148-8"><a href="#cb148-8"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-88-1.png" width="960"></p>
+</div>
+</div>
+</div>
+<div id="tabset-4-7">
+<p>📝 Plantea la formulación del ANOVA <code>tetrahydrocortisone</code> vs <code>type</code>. Ejecuta el código que consideres y saca conclusiones: ¿hay diferencias significativas de dicha hormona entre los síndromes con <span class="math inline">\(\alpha = 0.05\)</span> y <span class="math inline">\(\alpha = 0.01\)</span>?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> tetrahydrocortisone <span class="sc">~</span> type) <span class="sc">|&gt;</span></span>
+<span id="cb149-2"><a href="#cb149-2"></a>  <span class="fu">summary</span>()</span>
+<span id="cb149-3"><a href="#cb149-3"></a><span class="co"># p-valor: 0.01 &gt; 0.05 ==&gt; no rechazamos H_0 ==&gt;</span></span>
+<span id="cb149-4"><a href="#cb149-4"></a><span class="co"># no dif sig a ese nivel de sig. ==&gt; no se continuaría</span></span>
+<span id="cb149-5"><a href="#cb149-5"></a></span>
+<span id="cb149-6"><a href="#cb149-6"></a><span class="co"># p-valor: 0.0412 &lt; 0.05 ==&gt; rechazamos H_0 ==&gt;</span></span>
+<span id="cb149-7"><a href="#cb149-7"></a><span class="co"># hay diferencias sig. entre síndromes ==&gt; ¿entre cuáles?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-8">
+<p>📝 En los casos en los que se haya obtenido una dif significativa, ¿cuáles son diferentes entre sí? Haz pruebas post-hoc usando Bonferroni y Tukey (realizando comprobaciones previas que consideres). ¿Cuál sería más adecuado?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb150"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1"></a><span class="fu">pairwise.t.test</span>(datos<span class="sc">$</span>tetrahydrocortisone, datos<span class="sc">$</span>type, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>, <span class="at">pool.sd =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb150-2"><a href="#cb150-2"></a><span class="co"># solo diferencia significativas a vs b (0.01 p-valor ajustado)</span></span>
+<span id="cb150-3"><a href="#cb150-3"></a></span>
+<span id="cb150-4"><a href="#cb150-4"></a><span class="co"># ¿varianzas iguales?</span></span>
+<span id="cb150-5"><a href="#cb150-5"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(datos<span class="sc">$</span>tetrahydrocortisone <span class="sc">~</span> datos<span class="sc">$</span>type)</span>
+<span id="cb150-6"><a href="#cb150-6"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> tetrahydrocortisone <span class="sc">~</span> type) <span class="sc">|&gt;</span></span>
+<span id="cb150-7"><a href="#cb150-7"></a>  <span class="fu">TukeyHSD</span>()</span>
+<span id="cb150-8"><a href="#cb150-8"></a><span class="co"># solo dif significativa c vs a </span></span>
+<span id="cb150-9"><a href="#cb150-9"></a><span class="co"># dif medias = 16.753, IC bajo de 0.65, IC alto de 32.85</span></span>
+<span id="cb150-10"><a href="#cb150-10"></a><span class="co"># p-valor ajustado 0.039</span></span>
+<span id="cb150-11"><a href="#cb150-11"></a></span>
+<span id="cb150-12"><a href="#cb150-12"></a><span class="co"># en este caso mejor bonferroni porque a) no hay tamaños iguales y b) no son normales</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-4-9">
+<p>📝 Por último vamos a considerar que el tipo <code>"a"</code> es nuestro grupo de referencia/control. ¿Cómo comparar todas vs control en lugar de todas vs todas (asumimos que son independientes)?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb151"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1"></a><span class="co"># ¿varianzas iguales?</span></span>
+<span id="cb151-2"><a href="#cb151-2"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(datos<span class="sc">$</span>tetrahydrocortisone <span class="sc">~</span> datos<span class="sc">$</span>type)</span>
+<span id="cb151-3"><a href="#cb151-3"></a></span>
+<span id="cb151-4"><a href="#cb151-4"></a><span class="co"># ¿Normalidad? ==&gt; no parece</span></span>
+<span id="cb151-5"><a href="#cb151-5"></a>olsrr<span class="sc">::</span><span class="fu">ols_test_normality</span>(datos<span class="sc">$</span>tetrahydrocortisone)</span>
+<span id="cb151-6"><a href="#cb151-6"></a></span>
+<span id="cb151-7"><a href="#cb151-7"></a><span class="co"># Dunnet test</span></span>
+<span id="cb151-8"><a href="#cb151-8"></a>DescTools<span class="sc">::</span><span class="fu">DunnettTest</span>(<span class="at">x =</span> datos<span class="sc">$</span>tetrahydrocortisone, <span class="at">g =</span> datos<span class="sc">$</span>type)</span>
+<span id="cb151-9"><a href="#cb151-9"></a><span class="co"># nos devuelve que el único sig diferente al control es c (como antes)</span></span>
+<span id="cb151-10"><a href="#cb151-10"></a><span class="co"># resultados "con pinzas" ya que no cumple la normalidad de momento</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="clase-4" class="title-slide slide level1 center">
@@ -3039,10 +3201,23 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="anova-dos-factores" class="slide level2">
 <h2>ANOVA: dos factores</h2>
+</section></section>
+<section id="repaso-entrega-i" class="title-slide slide level1 center">
+<h1>Repaso entrega I</h1>
+<ul>
+<li><p><span class="hl-yellow"><strong>Caso práctico descriptiva</strong></span>: <a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe"><strong>anscombe</strong></a></p></li>
+<li><p><span class="hl-yellow"><strong>Casos prácticos cuali vs cuali</strong></span>:</p>
+<ul>
+<li><a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n"><strong>Encuesta satisfacción</strong></a></li>
+<li><a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco"><strong>Bronquitis vs tabaco</strong></a></li>
+<li><a href="https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental"><strong>Encuesta salud mental</strong></a></li>
+</ul></li>
+<li><p><span class="hl-yellow"><strong>Casos prácticos ANOVA</strong></span>:</p></li>
+</ul>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 

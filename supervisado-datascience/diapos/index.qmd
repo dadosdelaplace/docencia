@@ -162,9 +162,9 @@ Para el curso los únicos requisitos serán:
 ::: {style="font-size:20px"}
 |  CLASE | SEMANA | FECHAS | TOPIC | EJ. | WORKBOOK | ENTREGA | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [1](#clase-1) | S1 | 23 ene | Repaso descriptiva | [💻](#tu-turno-1-1) [💻](#tu-turno-1-2) [💻](#tu-turno-1-3) | [🐣](#caso-practico-1-1) [🐣](#caso-practico-1-2) [🐣](#caso-practico-1-3) [🐣](#caso-practico-1-4)  |  | 
-| [2](#clase-2) | S2 | 28 ene | Medidas de asociación | ... |  |  | 
-| [3](#clase-3) | S2 | 30 ene | Análisis de la varianza | ... |  |  | 
+| [1](#clase-1) | S1 | 23 ene | Repaso descriptiva |  | [🐣](#caso-practico-1-1) |  | 
+| [2](#clase-2) | S2 | 28 ene | Medidas de asociación |  [💻](#tu-turno-2-1)  [💻](#tu-turno-2-2) | [🐣](#caso-practico-2-1) [🐣](#caso-practico-2-2) [🐣](#caso-practico-2-3) |  | 
+| [3](#clase-3) | S2 | 30 ene | Análisis de la varianza | [💻](#tu-turno-3-1)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  | 
 | [4](#clase-4) | S3 | 4 feb | Análisis de la varianza | ... |  |  | 
 | [5](#clase-5) | S3 | 6 feb | Entrega I  | ... |  | [🎯 10%](#clase-5)  | 
 :::
@@ -2123,6 +2123,12 @@ Ya conocemos herramientas básicas para analizar la dependencia entre dos variab
 ---
 
 ## Cuanti vs cuali
+
+![](https://bookdown.org/edsaul_perez/bioestadaistica_avanzada/Figuras/Imagenes%20del%20libro_page-0006.jpg)
+
+---
+
+## Cuanti vs cuali
  
 Imagina que tenemos **$n$ estudiantes** de los que disponemos sus **notas $y_{ij}$** para $j=1,2$ asignaturas alumnos (datos en `notas_1factor_2cat.csv`)
 
@@ -2711,6 +2717,7 @@ pairwise.t.test(datos$weight, datos$group, p.adjust.method = "bonferroni", pool.
 * **trt 1 vs trt 2**: p-valor ajustado 0.028 --> [**dif sig de los tratamientos**]{.hl-yellow}
 
 
+
 ---
 
 ## Pruebas post-hoc
@@ -2785,6 +2792,157 @@ DescTools::DunnettTest(x = datos$weight, g = datos$group, control = "ctrl")
 
 Obtenemos que [**no hay dif. sig. entre ctrl y tratamientos**]{.hl-yellow} 
 
+---
+
+
+## 💻 Tu turno {#tu-turno-3-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Datos**]{.hl-yellow}
+
+Vamos a usar el fichero `cushing_syndrome.csv` que contiene datos del síndrome de Cushing, un trastorno hormonal asociado con un alto nivel de cortisol. Para cada individuo de la muestra tenemos recopiladas las tasas de excreción urinaria de dos metabolitos de esteroides (tetrahidrocortisona y pregnanetriol). La variable `type` recopila el tipo de síndrome: adenoma (a), hiperplasia bilateral (b), carcinoma (c) y desconocido (u)
+
+
+### [**Ej 1**]{.hl-yellow}
+
+📝  Carga el fichero `cushing_syndrome.csv`
+
+```{r}
+#| code-fold: true
+datos <-
+  read_csv(file = "./datos/cushing_syndrome.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Calcula la media global de `tetrahydrocortisone`. Calcula la media para cada uno de los tipos de síndrome así como su tamaño muestral
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  summarise("mean_global" = mean(tetrahydrocortisone))
+
+datos |> 
+  summarise("mean_groups" = mean(tetrahydrocortisone),
+            "n" = n(), .by = type)
+```
+
+### [**Ej 3**]{.hl-yellow}
+
+📝 Calcula la varianza global de `tetrahydrocortisone`. Calcula la varianza para cada uno de los tipos de síndrome así como la varianza ponderada (cada varianza de grupo multiplicada por su proporción muestral)
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  summarise("var_global" = var(tetrahydrocortisone))
+
+datos |> 
+  summarise("var_groups" = var(tetrahydrocortisone),
+            "n" = n(), .by = type) |> 
+  mutate("var_weighted" = sum(var_groups*n)/sum(n))
+```
+
+
+### [**Ej 4**]{.hl-yellow}
+
+📝 Visualiza con boxplot `tetrahydrocortisone` para cada grupo
+
+```{r}
+#| code-fold: true
+#| fig-height: 3
+ggplot(datos) +
+  geom_boxplot(aes(x = type, y = tetrahydrocortisone,
+                   fill = type, color = type), alpha = 0.6) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+### [**Ej 5**]{.hl-yellow}
+
+📝 Visualiza los puntos de `tetrahydrocortisone` junto con sus medias distinguiendo para cada uno de los grupos
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.8
+ggplot(datos |>
+         rowid_to_column(var = "id") |>
+         mutate("mean" = mean(tetrahydrocortisone), .by = type)) +
+  geom_point(aes(x = id, y = tetrahydrocortisone, color = type),
+             size = 3, alpha = 0.6) +
+  geom_line(aes(x = id, y = mean, color = type), linewidth = 2) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+### [**Ej 6**]{.hl-yellow}
+
+📝 Plantea la formulación del ANOVA `tetrahydrocortisone` vs `type`. Ejecuta el código que consideres y saca conclusiones: ¿hay diferencias significativas de dicha hormona entre los síndromes con $\alpha = 0.05$ y $\alpha = 0.01$?
+
+```{r}
+#| code-fold: true
+#| eval: false
+aov(data = datos, formula = tetrahydrocortisone ~ type) |>
+  summary()
+# p-valor: 0.01 > 0.05 ==> no rechazamos H_0 ==>
+# no dif sig a ese nivel de sig. ==> no se continuaría
+
+# p-valor: 0.0412 < 0.05 ==> rechazamos H_0 ==>
+# hay diferencias sig. entre síndromes ==> ¿entre cuáles?
+```
+
+### [**Ej 7**]{.hl-yellow}
+
+📝 En los casos en los que se haya obtenido una dif significativa, ¿cuáles son diferentes entre sí? Haz pruebas post-hoc usando Bonferroni y Tukey (realizando comprobaciones previas que consideres). ¿Cuál sería más adecuado?
+
+```{r}
+#| code-fold: true
+#| eval: false
+pairwise.t.test(datos$tetrahydrocortisone, datos$type, p.adjust.method = "bonferroni", pool.sd = FALSE) 
+# solo diferencia significativas a vs b (0.01 p-valor ajustado)
+
+# ¿varianzas iguales?
+car::leveneTest(datos$tetrahydrocortisone ~ datos$type)
+aov(data = datos, formula = tetrahydrocortisone ~ type) |>
+  TukeyHSD()
+# solo dif significativa c vs a 
+# dif medias = 16.753, IC bajo de 0.65, IC alto de 32.85
+# p-valor ajustado 0.039
+
+# en este caso mejor bonferroni porque a) no hay tamaños iguales y b) no son normales
+```
+
+
+### [**Ej 8**]{.hl-yellow}
+
+📝 Por último vamos a considerar que el tipo `"a"` es nuestro grupo de referencia/control. ¿Cómo comparar todas vs control en lugar de todas vs todas (asumimos que son independientes)?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# ¿varianzas iguales?
+car::leveneTest(datos$tetrahydrocortisone ~ datos$type)
+
+# ¿Normalidad? ==> no parece
+olsrr::ols_test_normality(datos$tetrahydrocortisone)
+
+# Dunnet test
+DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
+# nos devuelve que el único sig diferente al control es c (como antes)
+# resultados "con pinzas" ya que no cumple la normalidad de momento
+```
+
+
+:::
+
 
 
 # Clase 4: análisis de la varianza {#clase-4}
@@ -2796,6 +2954,15 @@ Obtenemos que [**no hay dif. sig. entre ctrl y tratamientos**]{.hl-yellow}
 ## ANOVA: dos factores
 
 
+# Repaso entrega I
+
+* [**Caso práctico descriptiva**]{.hl-yellow}: [**anscombe**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe)
 
 
+* [**Casos prácticos cuali vs cuali**]{.hl-yellow}:     
+  - [**Encuesta satisfacción**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
+  - [**Bronquitis vs tabaco**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco)
+  - [**Encuesta salud mental**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental)
+  
+* [**Casos prácticos ANOVA**]{.hl-yellow}:   
 
