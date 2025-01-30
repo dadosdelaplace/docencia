@@ -622,5 +622,20 @@ chisq.test(datos$depresion, datos$ansiedad)
 ```
 
 
+## Clases 3-4
+
+### 🐣 Caso práctico I: ¿cómo afecta a la participación los candidatos?
+
+```{r}
+datos <-
+  read_csv(file = "./datos/blackturnout.csv") |>
+  janitor::clean_names()
+datos
+```
+
+### 🐣 Caso práctico II: ¿cómo afecta el tamaño de una clase al rendimiento de los alumnos?
+
+https://www.dropbox.com/scl/fi/a21qlxby7vy3t0v7tn4mz/STAR.csv?rlkey=dawpbczom5jl3phlgaf24uya3&dl=1
+
 
 
