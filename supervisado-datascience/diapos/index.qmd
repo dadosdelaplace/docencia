@@ -126,15 +126,15 @@ Para que haga [**media el final**]{.hl-red} debes de sacar más de un 3 sobre 10
 
 ## Materiales
 
-* [**Diapositivas**]{.hl-yellow}: las diapositivas que usaremos en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia-R-supervisado-2324/diapos>** 
+* [**Diapositivas**]{.hl-yellow}: las diapositivas que usaremos en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia/supervisado-datascience/diapos>** 
 
 En el menú de las diapositivas (abajo a la izquierda) tienes una [**opción para descargarlas en pdf**]{.hl-yellow} en `Tools` (consejo: no lo hagas hasta el final del curso ya que irán modificándose)
   
 &nbsp;
 
-* [**Material**]{.hl-yellow}: [**scripts de cada tema**](https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/material) y materiales extras
+* [**Workbooks**]{.hl-yellow}: [**cuadernos de trabajo en casa**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud) y materiales extras
 
-* [**Resúmenes de paquetes**]{.hl-yellow}: [**chuletas de los paquetes**](https://github.com/dadosdelaplace/docencia-R-supervisado-2324/tree/main/fichas%20paquetes) en formato .pdf
+* [**Datos**]{.hl-yellow}: [**acceso a Drive**](https://drive.google.com/drive/folders/1sim9xjM2qRcWrsMHrv_qRlkwDbGKOWN9?usp=sharing)
 
 ---
 
@@ -164,8 +164,7 @@ Para el curso los únicos requisitos serán:
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [1](#clase-1) | S1 | 23 ene | Repaso descriptiva |  | [🐣](#caso-practico-1-1) |  | 
 | [2](#clase-2) | S2 | 28 ene | Medidas de asociación |  [💻](#tu-turno-2-1)  [💻](#tu-turno-2-2) | [🐣](#caso-practico-2-1) [🐣](#caso-practico-2-2) [🐣](#caso-practico-2-3) |  | 
-| [3](#clase-3) | S2 | 30 ene | Análisis de la varianza | [💻](#tu-turno-3-1)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  | 
-| [4](#clase-4) | S3 | 4 feb | Análisis de la varianza | ... |  |  | 
+| [3-4](#clase-3) | S2-3 | 30 ene y 4 feb  | Análisis de la varianza | [💻](#tu-turno-3-1)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  | 
 | [5](#clase-5) | S3 | 6 feb | Entrega I  | ... |  | [🎯 10%](#clase-5)  | 
 :::
 :::
@@ -814,7 +813,7 @@ anscombe_tb
 
 &nbsp;
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-anscombe)
 
 
 # Clase 2: asociación entre variables {#clase-2}
@@ -1192,7 +1191,7 @@ Vamos a seguir poniendo en práctica lo aprendido el dataset `SatisfaccionPacien
 
 &nbsp;
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
 
 
 ---
@@ -1645,7 +1644,7 @@ datos
 
 &nbsp;
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-bronquitis-y-tabaco)
 
 
 ---
@@ -1663,7 +1662,7 @@ datos <-
 
 &nbsp;
 
-Intenta responder a las preguntas planteadas en el [**workbook**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-iii-salud-mental)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-iii-salud-mental)
 
 
 ---
@@ -3074,7 +3073,7 @@ datos |> slice_head(n = 5)
 ```
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](...)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-participaci%C3%B3n-vs-candidatos)
 
 ---
 
@@ -3091,7 +3090,7 @@ datos |> slice_head(n = 5)
 Tenemos guardado el género de 48 estudiantes, divididos en 3 grupos de ingesta de alcohol, que han encontrado pareja que les atrae en un bar. También tenemos el **atractivo medido (puntuación del 0 al 100)**, otorgada por unos "jueces" externos, de la pareja encontrada por cada participante.
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](...)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-atractivo-vs-alcohol)
 
 
 
