@@ -622,9 +622,9 @@ chisq.test(datos$depresion, datos$ansiedad)
 ```
 
 
-## Clases 3-4
+## Clases 3 y 4
 
-### 🐣 Caso práctico I: ¿cómo afecta a la participación los candidatos en unas elecciones?
+### 🐣 Caso práctico I: participación vs candidatos
 
 El fichero `blackturnout.csv` contiene los datos de participación electoral en las elecciones para congresistas en Estados Unidos de los años 2006, 2008 y 2010, para cada uno de los estados. 
 * variable `turnout`: porcentaje de participación en las últimas elecciones presenciales de la población negra (proporción respecto a la población negra en edad de poder votar)
@@ -839,7 +839,7 @@ aov(data = datos, turnout ~ candidate) |>
 
 
 
-### 🐣 Caso práctico II: ¿vemos a la gente más atractiva cuando bebemos?
+### 🐣 Caso práctico II: atractivo vs alcohol
 
 Los datos los tenemos cargados directamente en `beer_goggles_effect.csv` 
 

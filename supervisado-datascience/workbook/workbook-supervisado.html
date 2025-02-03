@@ -3070,6 +3070,27 @@ vertical-align: -.125em;
   <li><a href="#pregunta-7-1" id="toc-pregunta-7-1" class="nav-link" data-scroll-target="#pregunta-7-1"><span class="header-section-number">2.3.7</span> Pregunta 7</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#clases-3-y-4" id="toc-clases-3-y-4" class="nav-link" data-scroll-target="#clases-3-y-4"><span class="header-section-number">3</span> Clases 3 y 4</a>
+  <ul>
+  <li><a href="#caso-práctico-i-participación-vs-candidatos" id="toc-caso-práctico-i-participación-vs-candidatos" class="nav-link" data-scroll-target="#caso-práctico-i-participación-vs-candidatos"><span class="header-section-number">3.1</span> 🐣 Caso práctico I: participación vs candidatos</a>
+  <ul>
+  <li><a href="#pregunta-1-4" id="toc-pregunta-1-4" class="nav-link" data-scroll-target="#pregunta-1-4"><span class="header-section-number">3.1.1</span> Pregunta 1</a></li>
+  <li><a href="#pregunta-2-4" id="toc-pregunta-2-4" class="nav-link" data-scroll-target="#pregunta-2-4"><span class="header-section-number">3.1.2</span> Pregunta 2</a></li>
+  <li><a href="#pregunta-3-4" id="toc-pregunta-3-4" class="nav-link" data-scroll-target="#pregunta-3-4"><span class="header-section-number">3.1.3</span> Pregunta 3</a></li>
+  <li><a href="#pregunta-4-4" id="toc-pregunta-4-4" class="nav-link" data-scroll-target="#pregunta-4-4"><span class="header-section-number">3.1.4</span> Pregunta 4</a></li>
+  <li><a href="#pregunta-5-3" id="toc-pregunta-5-3" class="nav-link" data-scroll-target="#pregunta-5-3"><span class="header-section-number">3.1.5</span> Pregunta 5</a></li>
+  <li><a href="#pregunta-6-3" id="toc-pregunta-6-3" class="nav-link" data-scroll-target="#pregunta-6-3"><span class="header-section-number">3.1.6</span> Pregunta 6</a></li>
+  <li><a href="#pregunta-7-2" id="toc-pregunta-7-2" class="nav-link" data-scroll-target="#pregunta-7-2"><span class="header-section-number">3.1.7</span> Pregunta 7</a></li>
+  </ul></li>
+  <li><a href="#caso-práctico-ii-atractivo-vs-alcohol" id="toc-caso-práctico-ii-atractivo-vs-alcohol" class="nav-link" data-scroll-target="#caso-práctico-ii-atractivo-vs-alcohol"><span class="header-section-number">3.2</span> 🐣 Caso práctico II: atractivo vs alcohol</a>
+  <ul>
+  <li><a href="#pregunta-1-5" id="toc-pregunta-1-5" class="nav-link" data-scroll-target="#pregunta-1-5"><span class="header-section-number">3.2.1</span> Pregunta 1</a></li>
+  <li><a href="#pregunta-2-5" id="toc-pregunta-2-5" class="nav-link" data-scroll-target="#pregunta-2-5"><span class="header-section-number">3.2.2</span> Pregunta 2</a></li>
+  <li><a href="#pregunta-3-5" id="toc-pregunta-3-5" class="nav-link" data-scroll-target="#pregunta-3-5"><span class="header-section-number">3.2.3</span> Pregunta 3</a></li>
+  <li><a href="#pregunta-4-5" id="toc-pregunta-4-5" class="nav-link" data-scroll-target="#pregunta-4-5"><span class="header-section-number">3.2.4</span> Pregunta 4</a></li>
+  <li><a href="#pregunta-5-4" id="toc-pregunta-5-4" class="nav-link" data-scroll-target="#pregunta-5-4"><span class="header-section-number">3.2.5</span> Pregunta 5</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -3928,6 +3949,485 @@ X-squared = 174.39, df = 63, p-value = 2.148e-12</code></pre>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-valores &lt;&lt; alpha --&gt; sí hay evidencias para rechazar la independencia --&gt;</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sí hay evidencias para afirmar la dependencia</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+</section>
+<section id="clases-3-y-4" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="clases-3-y-4"><span class="header-section-number">3</span> Clases 3 y 4</h2>
+<section id="caso-práctico-i-participación-vs-candidatos" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="caso-práctico-i-participación-vs-candidatos"><span class="header-section-number">3.1</span> 🐣 Caso práctico I: participación vs candidatos</h3>
+<p>El fichero <code>blackturnout.csv</code> contiene los datos de participación electoral en las elecciones para congresistas en Estados Unidos de los años 2006, 2008 y 2010, para cada uno de los estados. * variable <code>turnout</code>: porcentaje de participación en las últimas elecciones presenciales de la población negra (proporción respecto a la población negra en edad de poder votar)</p>
+<ul>
+<li><p>variable <code>cvap</code>: proporción de habitantes de población negra del distrito (proporción respecto a los habitantes en edad de votar)</p></li>
+<li><p>variable <code>candidate</code>: 1 si el candidato pertenece a la población negra; 0 en caso contrario.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;./datos/blackturnout.csv&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 1237 Columns: 7
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: &quot;,&quot; chr
+(1): state dbl (6): ...1, year, district, turnout, CVAP, candidate
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,237 × 7
+      x1  year state district turnout   cvap candidate
+   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1     1  2008 AK           0   0.710 0.0350         0
+ 2     2  2010 AK           0   0.448 0.0323         0
+ 3     3  2010 AK           1   0.448 0.0323         0
+ 4     4  2008 AK           1   0.710 0.0350         0
+ 5     5  2006 AK           1   0.439 0.0318         0
+ 6     6  2010 AL           0   0.397 0.256          0
+ 7     7  2008 AL           0   0.626 0.253          1
+ 8     8  2010 AL           1   0.374 0.261          0
+ 9     9  2006 AL           1   0.266 0.261          0
+10    10  2008 AL           1   0.620 0.261          0
+# ℹ 1,227 more rows</code></pre>
+</div>
+</div>
+<section id="pregunta-1-4" class="level4" data-number="3.1.1">
+<h4 data-number="3.1.1" class="anchored" data-anchor-id="pregunta-1-4"><span class="header-section-number">3.1.1</span> Pregunta 1</h4>
+<blockquote class="blockquote">
+<p>¿Cuántos distritos electorales había en cada estado para cada uno de los años (el número se reajusta en cada elección en función de la población)?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="fu">n_distinct</span>(district), <span class="at">.by =</span> <span class="fu">c</span>(state, year))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-2-4" class="level4" data-number="3.1.2">
+<h4 data-number="3.1.2" class="anchored" data-anchor-id="pregunta-2-4"><span class="header-section-number">3.1.2</span> Pregunta 2</h4>
+<blockquote class="blockquote">
+<p>¿Cuántos estados tenían un candidato negro en cada una de las elecciones? ¿Qué cantidad de candidatos negros hay en cada estado para cada una de las elecciones?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># n estados con candidato negro</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;n_candidates&quot;</span> <span class="ot">=</span> <span class="fu">sum</span>(candidate), <span class="at">.by =</span> <span class="fu">c</span>(year, state)) <span class="sc">|&gt;</span> </span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;n_states&quot;</span> <span class="ot">=</span> <span class="fu">sum</span>(n_candidates <span class="sc">&gt;</span> <span class="dv">0</span>), <span class="at">.by =</span> year)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># cantidad de candidatos negros hay en cada estado para elección</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;n_candidates&quot;</span> <span class="ot">=</span> <span class="fu">sum</span>(candidate), <span class="at">.by =</span> <span class="fu">c</span>(year, state)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-3-4" class="level4" data-number="3.1.3">
+<h4 data-number="3.1.3" class="anchored" data-anchor-id="pregunta-3-4"><span class="header-section-number">3.1.3</span> Pregunta 3</h4>
+<blockquote class="blockquote">
+<p>¿Qué gráfico podemos usar para visualizar una posible relación (lineal) entre <code>turnout</code> (participación) y <code>cvap</code> (proporción de población negra en el distrito) distinguiendo por año? ¿Qué opinas sobre una posible asociación?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos,</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> turnout, <span class="at">y =</span> cvap,</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="fu">factor</span>(year, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;2006&quot;</span>, <span class="st">&quot;2008&quot;</span>, <span class="st">&quot;2010&quot;</span>),</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ordered =</span> <span class="cn">TRUE</span>))) <span class="sc">+</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>  ggthemes<span class="sc">::</span><span class="fu">scale_color_colorblind</span>() <span class="sc">+</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Participación&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Proporción población&quot;</span>,</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Año&quot;</span>) <span class="sc">+</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a><span class="co"># sitios con mayor proporción de población negra --&gt; mayor participación entre ella (¿más comunidad?)</span></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2008 participación significativamente más alta que otros años (año obama en las presidenciales)</span></span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a><span class="co"># correlación positiva pero débil</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-4-4" class="level4" data-number="3.1.4">
+<h4 data-number="3.1.4" class="anchored" data-anchor-id="pregunta-4-4"><span class="header-section-number">3.1.4</span> Pregunta 4</h4>
+<blockquote class="blockquote">
+<p>Cuantifica de manera numérica la posible relación lineal entre ambas variables. Comenta todo lo que consideres. ¿Existen evidencias suficientes para rechazar que no exista dicha relación lineal?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuanti vs cuanti: correlación</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(turnout, cvap) <span class="sc">|&gt;</span> </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a><span class="co"># correlación muestral = 0.1686327</span></span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(datos<span class="sc">$</span>turnout, datos<span class="sc">$</span>cvap)</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value = 2.405e-09 ==&gt; rechazamos incorrelación</span></span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; correlación débil pero significativamente distinta de 0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-5-3" class="level4" data-number="3.1.5">
+<h4 data-number="3.1.5" class="anchored" data-anchor-id="pregunta-5-3"><span class="header-section-number">3.1.5</span> Pregunta 5</h4>
+<blockquote class="blockquote">
+<p>Asumiendo <code>year</code> como variable cualitativa (nos daría igual tener <code>2008</code> o <code>año1</code>), ¿hay un cambio en la cantidad de candidatos negros a lo largo de los años? ¿Existe alguna diferencia entre años? Debes cuantificarlo de 3 maneras: i) visualmente; ii) de manera descriptiva (correlación, tabla de frecuencias o lo que tú consideres adecuado); iii) de manera inferencial.</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuali vs cuali: tablas de contigencia + chi-cuadrado</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualmente</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;year&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(year, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;2006&quot;</span>, <span class="st">&quot;2008&quot;</span>, <span class="st">&quot;2010&quot;</span>),</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;black_candidate&quot;</span> <span class="ot">=</span> candidate <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">fill =</span> black_candidate, <span class="at">color =</span> black_candidate),</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Año&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Proporción candidatos&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a><span class="co"># no se aprecian a priori diferencias entre los años</span></span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a><span class="co"># tablas de contigencia</span></span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>year, datos<span class="sc">$</span>black_candidate)</span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>year, datos<span class="sc">$</span>black_candidate))</span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>year, datos<span class="sc">$</span>black_candidate), <span class="at">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>year, datos<span class="sc">$</span>black_candidate), <span class="at">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a><span class="co"># aprox todos los años igual: 87-88% vs 12-13%</span></span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-25"><a href="#cb65-25" aria-hidden="true" tabindex="-1"></a><span class="co"># chi cuadrado</span></span>
+<span id="cb65-26"><a href="#cb65-26" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(datos<span class="sc">$</span>year, datos<span class="sc">$</span>black_candidate)</span>
+<span id="cb65-27"><a href="#cb65-27" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value = 0.6816 ==&gt; no rechazamos independencia</span></span>
+<span id="cb65-28"><a href="#cb65-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; no hay evidencias suficientes para inferir asociación</span></span>
+<span id="cb65-29"><a href="#cb65-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; no hay evidencias suficientes para decir que proporción de candidatos negros sea distinta durante los años</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-6-3" class="level4" data-number="3.1.6">
+<h4 data-number="3.1.6" class="anchored" data-anchor-id="pregunta-6-3"><span class="header-section-number">3.1.6</span> Pregunta 6</h4>
+<blockquote class="blockquote">
+<p>Repite el ejercicio anterior pero sustituyendo año por <code>state</code>. ¿Existen diferencias por estados?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuali vs cuali: tablas de contigencia + chi-cuadrado</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualmente</span></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;state&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(state))</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">fill =</span> black_candidate, <span class="at">color =</span> black_candidate),</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Estado&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Proporción candidatos&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a><span class="co"># sí se aprecian diferentes evidentes a lo largo de los estados</span></span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a><span class="co"># tablas de contigencia: si hay muchos grupos, nada útiles</span></span>
+<span id="cb66-17"><a href="#cb66-17" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>state, datos<span class="sc">$</span>black_candidate)</span>
+<span id="cb66-18"><a href="#cb66-18" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>state, datos<span class="sc">$</span>black_candidate))</span>
+<span id="cb66-19"><a href="#cb66-19" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>state, datos<span class="sc">$</span>black_candidate), <span class="at">margin =</span> <span class="dv">1</span>)</span>
+<span id="cb66-20"><a href="#cb66-20" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(datos<span class="sc">$</span>state, datos<span class="sc">$</span>black_candidate), <span class="at">margin =</span> <span class="dv">2</span>)</span>
+<span id="cb66-21"><a href="#cb66-21" aria-hidden="true" tabindex="-1"></a><span class="co"># hay estados con 0% de candidatos negros y otros </span></span>
+<span id="cb66-22"><a href="#cb66-22" aria-hidden="true" tabindex="-1"></a><span class="co"># como Georgia (GA) de más del 30%</span></span>
+<span id="cb66-23"><a href="#cb66-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-24"><a href="#cb66-24" aria-hidden="true" tabindex="-1"></a><span class="co"># chi cuadrado</span></span>
+<span id="cb66-25"><a href="#cb66-25" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(datos<span class="sc">$</span>state, datos<span class="sc">$</span>black_candidate)</span>
+<span id="cb66-26"><a href="#cb66-26" aria-hidden="true" tabindex="-1"></a><span class="co">#  p-value = 2.953e-05 ==&gt; rechazamos independencia</span></span>
+<span id="cb66-27"><a href="#cb66-27" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; hay evidencias suficientes para inferir asociación</span></span>
+<span id="cb66-28"><a href="#cb66-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; hay evidencias suficientes para decir que proporción de candidatos negros sea distinta en los diferentes estados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-7-2" class="level4" data-number="3.1.7">
+<h4 data-number="3.1.7" class="anchored" data-anchor-id="pregunta-7-2"><span class="header-section-number">3.1.7</span> Pregunta 7</h4>
+<blockquote class="blockquote">
+<p>¿Influye en la participación electoral de la población negra que exista un candidato negro en su distrito? Cuantifica y concluye haciendo uso de todas las herramientas disponibles y detallando cada una de las conclusiones obtenidas (de manera razonada)</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuani vs cuali: boxplot/violin/densidad por grupos + anova</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="co"># visualmente</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> candidate, <span class="at">y =</span> turnout,</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> candidate, <span class="at">color =</span> candidate),</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Candidato negro&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Participación (negra)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a><span class="co"># en promedio (mediana) hay más participación negra</span></span>
+<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a><span class="co"># cuando hay candidatos negros (aunque los valores más altos)</span></span>
+<span id="cb67-14"><a href="#cb67-14" aria-hidden="true" tabindex="-1"></a><span class="co"># son justo de distritos sin candidato negro.</span></span>
+<span id="cb67-15"><a href="#cb67-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Influye entonces?</span></span>
+<span id="cb67-16"><a href="#cb67-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a><span class="co"># descriptivamente</span></span>
+<span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;mean_turnout&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(turnout), <span class="at">.by =</span> candidate)</span>
+<span id="cb67-20"><a href="#cb67-20" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿suficiente grande la diferencia para considerarlas suficiente?</span></span>
+<span id="cb67-21"><a href="#cb67-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-22"><a href="#cb67-22" aria-hidden="true" tabindex="-1"></a><span class="co"># anova (obviamos de momento las condiciones)</span></span>
+<span id="cb67-23"><a href="#cb67-23" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, turnout <span class="sc">~</span> candidate) <span class="sc">|&gt;</span> </span>
+<span id="cb67-24"><a href="#cb67-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb67-25"><a href="#cb67-25" aria-hidden="true" tabindex="-1"></a><span class="co"># SSE = 0.5</span></span>
+<span id="cb67-26"><a href="#cb67-26" aria-hidden="true" tabindex="-1"></a><span class="co"># SSR = 36.13</span></span>
+<span id="cb67-27"><a href="#cb67-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-28"><a href="#cb67-28" aria-hidden="true" tabindex="-1"></a><span class="co"># var explicada = 0.4950 (insesgado)</span></span>
+<span id="cb67-29"><a href="#cb67-29" aria-hidden="true" tabindex="-1"></a><span class="co"># var residual = 0.0293 (insesgado)</span></span>
+<span id="cb67-30"><a href="#cb67-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-31"><a href="#cb67-31" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Cómo de grande es la var explicada vs no explicada?</span></span>
+<span id="cb67-32"><a href="#cb67-32" aria-hidden="true" tabindex="-1"></a><span class="co"># F = 0.4950 / 0.0293 = 16.92 (aprox)</span></span>
+<span id="cb67-33"><a href="#cb67-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-34"><a href="#cb67-34" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Es suficientemente mayor que 1?</span></span>
+<span id="cb67-35"><a href="#cb67-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-36"><a href="#cb67-36" aria-hidden="true" tabindex="-1"></a><span class="co"># p-valor = 0 (aprox) ==&gt; F &gt;&gt;&gt;&gt; 1 ==&gt;</span></span>
+<span id="cb67-37"><a href="#cb67-37" aria-hidden="true" tabindex="-1"></a><span class="co"># variabilidad de las medias en cada grupo es significativamente grande</span></span>
+<span id="cb67-38"><a href="#cb67-38" aria-hidden="true" tabindex="-1"></a><span class="co"># (respecto a la variabilidad inherente de turnout)</span></span>
+<span id="cb67-39"><a href="#cb67-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ==&gt; hay diferencias significativas entre las medias</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="caso-práctico-ii-atractivo-vs-alcohol" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="caso-práctico-ii-atractivo-vs-alcohol"><span class="header-section-number">3.2</span> 🐣 Caso práctico II: atractivo vs alcohol</h3>
+<p>Los datos los tenemos cargados directamente en <code>beer_goggles_effect.csv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">&quot;./datos/beer_goggles_effect.csv&quot;</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 48 Columns: 3
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (2): gender, alcohol
+dbl (1): attractiveness
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 48 × 3
+   gender alcohol attractiveness
+   &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;
+ 1 Female None              67.4
+ 2 Female None              69.9
+ 3 Female None              61.0
+ 4 Female None              58.5
+ 5 Female None              59.7
+ 6 Female None              53.4
+ 7 Female None              60.6
+ 8 Female None              56.4
+ 9 Female 2 Pints           69.7
+10 Female 2 Pints           66.3
+# ℹ 38 more rows</code></pre>
+</div>
+</div>
+<p>En la tabla tenemos guardado el género de 48 estudiantes, 24 mujeres y 24 hombres, divididos en 3 grupos de alcohol, que han encontrado una pareja que les atrae en un bar. También tenemos la cantidad de alcohol ingerida y el <strong>atractivo medido en base a una puntuación del 0 al 100</strong>, otorgada por unos “jueces” externos, de la pareja encontrada por cada participante.</p>
+<blockquote class="blockquote">
+<p>Convierte a factor ordinal y/o nominal lo que consideres</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;gender&quot;</span> <span class="ot">=</span> <span class="fu">factor</span>(gender),</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;alcohol&quot;</span> <span class="ot">=</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">factor</span>(alcohol, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;None&quot;</span>, <span class="st">&quot;2 Pints&quot;</span>, <span class="st">&quot;4 Pints&quot;</span>),</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="pregunta-1-5" class="level4" data-number="3.2.1">
+<h4 data-number="3.2.1" class="anchored" data-anchor-id="pregunta-1-5"><span class="header-section-number">3.2.1</span> Pregunta 1</h4>
+<blockquote class="blockquote">
+<p>Visualiza la distribución de la variable cuantitativa <code>attractiveness</code>. Tras hacer los gráficos que consideres, ¿es una variable normal?</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># densidad</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> attractiveness)) <span class="sc">+</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="co"># q-q plot (vs normality)</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> attractiveness)) <span class="sc">+</span></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> attractiveness)) <span class="sc">+</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿es normal?</span></span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(datos<span class="sc">$</span>attractiveness)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-2-5" class="level4" data-number="3.2.2">
+<h4 data-number="3.2.2" class="anchored" data-anchor-id="pregunta-2-5"><span class="header-section-number">3.2.2</span> Pregunta 2</h4>
+<blockquote class="blockquote">
+<p>Repite el ejercicio anterior pero separando cada uno de los grupos de <code>alcohol</code></p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># densidades</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> attractiveness, <span class="at">fill =</span> alcohol,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> alcohol), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>alcohol, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a>  ggridges<span class="sc">::</span><span class="fu">geom_density_ridges</span>(<span class="fu">aes</span>(<span class="at">x =</span> attractiveness, <span class="at">y =</span> alcohol,</span>
+<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">fill =</span> alcohol, <span class="at">color =</span> alcohol),</span>
+<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a>                                <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-18"><a href="#cb74-18" aria-hidden="true" tabindex="-1"></a><span class="co"># q-q plot (vs normality)</span></span>
+<span id="cb74-19"><a href="#cb74-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos,</span>
+<span id="cb74-20"><a href="#cb74-20" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">sample =</span> attractiveness, <span class="at">fill =</span> alcohol, <span class="at">color =</span> alcohol)) <span class="sc">+</span></span>
+<span id="cb74-21"><a href="#cb74-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb74-22"><a href="#cb74-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb74-23"><a href="#cb74-23" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-24"><a href="#cb74-24" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-25"><a href="#cb74-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>alcohol, <span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb74-26"><a href="#cb74-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb74-27"><a href="#cb74-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-28"><a href="#cb74-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿es normal?</span></span>
+<span id="cb74-29"><a href="#cb74-29" aria-hidden="true" tabindex="-1"></a><span class="co"># son normales en cada subgrupo también</span></span>
+<span id="cb74-30"><a href="#cb74-30" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb74-31"><a href="#cb74-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;p_value&quot;</span> <span class="ot">=</span> <span class="fu">shapiro.test</span>(attractiveness)<span class="sc">$</span>p.value,</span>
+<span id="cb74-32"><a href="#cb74-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> alcohol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-3-5" class="level4" data-number="3.2.3">
+<h4 data-number="3.2.3" class="anchored" data-anchor-id="pregunta-3-5"><span class="header-section-number">3.2.3</span> Pregunta 3</h4>
+<blockquote class="blockquote">
+<p>¿Influye el grado de alcoholismo en lo atractivo que vemos a la gente? Responde a la pregunta como consideres. Responde de manera i) descriptiva; ii) visual y iii) inferencialmente</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cuanti (atractiveness) vs cuali (alcohol) ==&gt;  ANOVA</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co"># queremos testar</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># H_0: media de atractivo (&quot;objetivo&quot; según jueces) igual en cada grupo de alcohol</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># H_1: alguna distinta</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿Cuáles son las medias?</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;mean_attractiveness&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(attractiveness), <span class="at">.by =</span> alcohol)</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co"># son diferentes (siempre lo van a ser por puro azar) pero...</span></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿suficientemente diferentes?</span></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="co"># visualmente</span></span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> alcohol, <span class="at">y =</span> attractiveness,</span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> alcohol, <span class="at">color =</span> alcohol), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos) <span class="sc">+</span></span>
+<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> alcohol, <span class="at">y =</span> attractiveness,</span>
+<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">fill =</span> alcohol, <span class="at">color =</span> alcohol), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-25"><a href="#cb75-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb75-26"><a href="#cb75-26" aria-hidden="true" tabindex="-1"></a><span class="co"># parece que optan por personas ligeramente más atractivas con 2 pintas</span></span>
+<span id="cb75-27"><a href="#cb75-27" aria-hidden="true" tabindex="-1"></a><span class="co"># pero decrece estrepitosamente con 4</span></span>
+<span id="cb75-28"><a href="#cb75-28" aria-hidden="true" tabindex="-1"></a><span class="co"># además se pierde la simetría de la variable según van borrachos</span></span>
+<span id="cb75-29"><a href="#cb75-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿suficientes diferencias?</span></span>
+<span id="cb75-30"><a href="#cb75-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-31"><a href="#cb75-31" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos <span class="sc">|&gt;</span></span>
+<span id="cb75-32"><a href="#cb75-32" aria-hidden="true" tabindex="-1"></a>         <span class="fu">arrange</span>(alcohol) <span class="sc">|&gt;</span> </span>
+<span id="cb75-33"><a href="#cb75-33" aria-hidden="true" tabindex="-1"></a>         <span class="fu">rowid_to_column</span>(<span class="at">var =</span> <span class="st">&quot;id&quot;</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb75-34"><a href="#cb75-34" aria-hidden="true" tabindex="-1"></a>         <span class="fu">mutate</span>(<span class="st">&quot;mean_attractiveness&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(attractiveness),</span>
+<span id="cb75-35"><a href="#cb75-35" aria-hidden="true" tabindex="-1"></a>                <span class="at">.by =</span> alcohol)) <span class="sc">+</span></span>
+<span id="cb75-36"><a href="#cb75-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> attractiveness, <span class="at">color =</span> alcohol),</span>
+<span id="cb75-37"><a href="#cb75-37" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb75-38"><a href="#cb75-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> mean_attractiveness, <span class="at">color =</span> alcohol),</span>
+<span id="cb75-39"><a href="#cb75-39" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb75-40"><a href="#cb75-40" aria-hidden="true" tabindex="-1"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="at">palette_name =</span> <span class="st">&quot;Renoir&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-41"><a href="#cb75-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb75-42"><a href="#cb75-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-43"><a href="#cb75-43" aria-hidden="true" tabindex="-1"></a><span class="co"># inferencialmente: anova</span></span>
+<span id="cb75-44"><a href="#cb75-44" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, attractiveness <span class="sc">~</span> alcohol) <span class="sc">|&gt;</span> </span>
+<span id="cb75-45"><a href="#cb75-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb75-46"><a href="#cb75-46" aria-hidden="true" tabindex="-1"></a><span class="co"># SSE = 1054</span></span>
+<span id="cb75-47"><a href="#cb75-47" aria-hidden="true" tabindex="-1"></a><span class="co"># SSR = 3575</span></span>
+<span id="cb75-48"><a href="#cb75-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-49"><a href="#cb75-49" aria-hidden="true" tabindex="-1"></a><span class="co"># var explicada = 526.9 </span></span>
+<span id="cb75-50"><a href="#cb75-50" aria-hidden="true" tabindex="-1"></a><span class="co"># var no explicada = 79.4</span></span>
+<span id="cb75-51"><a href="#cb75-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-52"><a href="#cb75-52" aria-hidden="true" tabindex="-1"></a><span class="co"># F = var explicada / var no explicada = 6.633</span></span>
+<span id="cb75-53"><a href="#cb75-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-54"><a href="#cb75-54" aria-hidden="true" tabindex="-1"></a><span class="co"># pvalue = 0.00299 ==&gt; la variabilidad de las medias (varianza explicada)</span></span>
+<span id="cb75-55"><a href="#cb75-55" aria-hidden="true" tabindex="-1"></a><span class="co"># es significativamente mayor que la no explicada ==&gt; </span></span>
+<span id="cb75-56"><a href="#cb75-56" aria-hidden="true" tabindex="-1"></a><span class="co"># rechazamos la igualdad de medias ==&gt; hay diferencias significativas ==&gt;</span></span>
+<span id="cb75-57"><a href="#cb75-57" aria-hidden="true" tabindex="-1"></a><span class="co"># alcohol influye en el atractivo que percibimos (somos menos exigentes) =&gt;</span></span>
+<span id="cb75-58"><a href="#cb75-58" aria-hidden="true" tabindex="-1"></a><span class="co"># hay asociación</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-4-5" class="level4" data-number="3.2.4">
+<h4 data-number="3.2.4" class="anchored" data-anchor-id="pregunta-4-5"><span class="header-section-number">3.2.4</span> Pregunta 4</h4>
+<blockquote class="blockquote">
+<p>En caso de que se hayan observado diferencias significativas, ¿qué grupos son realmente diferentes entre sí? Usa el mejor método post-hoc usando Bonferroni. ¿Cuál sería más adecuado? que consideres suponiendo que los 3 grupos los tratamos por igual</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ¿varianzas iguales?</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">leveneTest</span>(datos<span class="sc">$</span>attractiveness <span class="sc">~</span> datos<span class="sc">$</span>alcohol)</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co"># no se rechaza igualdad de varianzas</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a><span class="co"># la normalidad ya la hemos comprobado</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="co"># mismo tamaño de grupos</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(alcohol)</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a><span class="co"># podemos aplicar tukey (paramétrico)</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a><span class="co"># que controla mucho mejor el error de tipo II (mayor poder estadístico que Bonferroni)</span></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> attractiveness <span class="sc">~</span> alcohol) <span class="sc">|&gt;</span></span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">TukeyHSD</span>()</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="co"># sin alcohol vs 2 pintas ==&gt; no significativo</span></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="co"># sin alcohol vs 4 pintas ==&gt; diferencia significativas</span></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 2 pintas vs 4 pintas ==&gt; diferencia significativas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="pregunta-5-4" class="level4" data-number="3.2.5">
+<h4 data-number="3.2.5" class="anchored" data-anchor-id="pregunta-5-4"><span class="header-section-number">3.2.5</span> Pregunta 5</h4>
+<blockquote class="blockquote">
+<p>Repite la pregunta anterior pero considerando (como deberías) que el grupo de los abstemios es el grupo control.</p>
+</blockquote>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tenemos que cumple todas las hipótesis ya comprobadas</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">DunnettTest</span>(<span class="at">x =</span> datos<span class="sc">$</span>attractiveness, <span class="at">g =</span> datos<span class="sc">$</span>alcohol,</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">control =</span> <span class="st">&quot;None&quot;</span>)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sin alcohol vs 2 pintas ==&gt; no significativo</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="co"># sin alcohol vs 4 pintas ==&gt; diferencias significativas</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="co"># podríamos decir que las diferencias son realmente significativas a partir de</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a><span class="co"># la segunda pinta</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
