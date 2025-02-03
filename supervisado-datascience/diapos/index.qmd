@@ -2162,7 +2162,7 @@ A eso se le conoce como [**análisis de la varianza (ANOVA) o análisis factoria
 
 ## ANOVA: un factor
 
-¿Cómo [**conceptualizar matemáticamente un modelo que asuma que todas las asignaturas tienen medias similares**]{.hl-yellow}?
+¿Cómo [**conceptualizar matemáticamente**]{.hl-yellow} un modelo que [**asuma que todas las asignaturas tienen medias similares**]{.hl-yellow}?
 
 . . .
 
@@ -2170,9 +2170,17 @@ A eso se le conoce como [**análisis de la varianza (ANOVA) o análisis factoria
 $$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \quad \text{perturbación aleatoria}$$
 
 
-donde [**$\mu_j$ representa la media de los estudiantes en la asignatura $j$**]{.hl-yellow} y la [**perturbación $\varepsilon_{ij}$ representa la desviación**]{.hl-purple} de la nota en la asignatura $j$ del estudiante $i$ (representan la variabilidad intrínseca del EXPERIMENTO).
+donde [**$\mu_j$ representa la media de los estudiantes en la asignatura $j$**]{.hl-yellow} y la [**perturbación $\varepsilon_{ij}$ representa la desviación**]{.hl-yellow} de la nota en la asignatura $j$ del estudiante $i$ (representan la variabilidad intrínseca del EXPERIMENTO).
 
+. . .
 
+&nbsp;
+
+Fíjate que el **modelo dice lo siguiente**: las posibles [**diferencias (variabilidad) entre notas**]{.hl-yellow} de distintos alumnos se pueden deber a 
+
+i) un grupo distinto (con su media $\mu_j$), es decir, algo [**EXPLICADO por los grupos**]{.hl-red}
+
+ii) una componente aleatoria (algo [**NO EXPLICADO**]{.hl-purple} por los grupos).
 
 ---
 
@@ -2186,7 +2194,7 @@ Esas perturbaciones vamos a asumir que cumplen una serie de [**hipótesis**]{.hl
 
 . . .
 
-2. [**Varianza constante (homocedasticidad)**]{.hl-green}: $V[\varepsilon_{ij}] = cte = \sigma^2$ para todo $i,j$ (las desviaciones respecto a la media de la asignatura son iguales)
+2. [**Varianza constante (homocedasticidad)**]{.hl-green}: $V[\varepsilon_{ij}] = cte = \sigma^2$ para todo $i,j$ (las desviaciones respecto a la media  son iguales para cada grupo)
 
 . . .
 
@@ -2201,73 +2209,6 @@ $$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2
 
 ---
 
-## ANOVA: un factor
-
-$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2) \quad  \Rightarrow \quad  y_{ij} \sim N(\mu_j, \sigma^2)$$
-
-Los [**esimadores insesgados**]{.hl-yellow} de dichos parámetros poblacionales $\left(\mu_j, \sigma^2 \right)$ son
-
-* [**Media**]{.hl-yellow}: $\hat{\mu}_{j} =  \overline{y}_j$, lo que implica que $\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j$.
-
-* [**Varianza**]{.hl-yellow}: 
-
-
-$$\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2$$
-
-es decir, el [**promedio de las desviaciones al cuadrado respecto a la media de cada grupo**]{.hl-purple} (también expresado como media ponderada de cada variabilidad), donde $s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$ representa la varianza de cada grupo.
-
----
-
-## ANOVA: un factor
-
-$$\hat{\sigma}^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2, \quad  s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$$
-
-
-Sin embargo, dado que cada $\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2$ son **independientes** y siguen una $\chi^{2}_{n_j - 1}$ (suma de normales - tipificadas - al cuadrado), tenemos que
-
-$$n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2$$
-
-. . .
-
-$\hat{\sigma}^2$ [**no es un estimador insesgado**]{.hl-red} de $\sigma^2$ así que usaremos la conocida como [**varianza residual**]{.hl-yellow}
-
-$$\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2$$
-
-
----
-
-## ANOVA: un factor
-
-
-$$\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2$$
-
-Fíjate que dado que $\hat{\mu}_j = \overline{y}_j$, hemos llamado
-
-$$\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j \sim N \left(\hat{\mu}_j, \hat{s}_{r}^2 \right)$$
- a los [**residuos estimados**]{.hl-yellow} (valor real - estimación)
-
----
-
-## ANOVA: un factor
-
-$$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
-
-¿Qué contraste deberíamos plantear si queremos [**comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)**]{.hl-yellow}?
-
-. . .
-
-$$H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}$$
-
-La  [**hipótesis nula**]{.hl-green} es que las [**diferencias entre notas en las distintas asignaturas**]{.hl-yellow} se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática).
-
-. . .
-
-El concepto «diferencias» se traduce en **variabilidad**, es decir, la [**hipótesis nula puede reformularse**]{.hl-green} como
-
-$$H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}$$
-
-
----
 
 ## ANOVA: un factor
 
@@ -2294,7 +2235,7 @@ Aunque la distribución B está más desplazada a la izquierda, la **nota más a
 
 $$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
 
-$$H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}$$
+$$H_0:~\mu_1 = \mu_2 = cte \quad vs \quad H_1:~\mu_1 \neq \mu_2$$
 
 En el caso de que **solo tengamos dos grupos** la solución es fácil: basta con hacer un [**contraste de medias conocido como prueba t**]{.hl-yellow}
 
@@ -2334,7 +2275,7 @@ $$P(B) = P(\bigcup_i A_i) \leq \sum_i P(A_i) = c \alpha := \alpha_T$$
 
 . . .
 
-Si queremos que ese **$\alpha_T$ conjunto sea (al menos) de 0.05**, necesitamos que cada $\alpha$ individual sea $\alpha = \alpha_T/c$ (en nuestro ejemplo $\alpha = 0.00333$, demasiado pequeño si $c$ crece), o lo que es lo mismo $p-valor_{j}^{adj} = c*p-value_j $
+Si queremos que ese **$\alpha_T$ conjunto sea (al menos) de 0.05**, necesitamos que cada $\alpha$ individual sea $\alpha = \alpha_T/c$ (demasiado pequeño si $c$ crece), o lo que es lo mismo definir un **pvalor ajustado** $pvalue_{j}^{adj} = c*pvalue_j$
 
 ---
 
@@ -2362,19 +2303,143 @@ La idea es que [**no necesitamos comparar 2 a 2**]{.hl-red}. Si tenemos $c$ grup
 
 . . .
 
-Hemos reformulado antes la hipótesis nula como
-
-$$H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}$$
-
-¿Cómo cuantificar si esa [**variabilidad entre las medias**]{.hl-yellow} (varianza ENTRE grupos, debida a estar en un grupo u otro) es pequeña?
+¿Qué contraste deberíamos plantear si queremos [**comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)**]{.hl-yellow}?
 
 . . .
 
-La vamos a [**comparar respecto a la variabilidad promedio (intrínseca) de los datos**]{.hl-purple} (promedio ponderado de la varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)
+Si [**no existiese asociación**]{.hl-yellow} entre asignatura y nota, tendríamos que todas las medias serían similares
+
+$$H_0:~independencia \rightarrow \mu_1 = \mu_2 = \ldots = \mu_c = cte \quad vs \quad H_1:~\text{no todas son iguales}$$
+
+---
+
+## ANOVA: un factor
+
+$$H_0:~independencia \rightarrow \mu_1 = \mu_2 = \ldots = \mu_c = cte \quad vs \quad H_1:~\text{no todas son iguales}$$
+
+¿Qué significa que una [**serie de valores sean constantes**]{.hl-yellow}? Si tuviésemos una variable $x$ en una tabla, ¿cómo comprobar fácilmente que todos los valores son idénticos?
+
+. . .
+
+La forma más inmediata es [**calcular su varianza**]{.hl-yellow} ya que nos cuantifica la **variabilidad**: si la varianza/variabilidad es nula (o muy pequeña), implica que la variable toma valores constantes.
+
+---
+
+## ANOVA: un factor
+
+$$H_0:~independencia \rightarrow \mu_1 = \mu_2 = cte \quad vs \quad H_1:~\text{no todas son iguales}$$
+
+Así que podemos [**reformular la hipótesis nula**]{.hl-green} en términos de la varianza: si las medias son iguales, la hipótesis nula es lo mismo que decir que las [**diferencias entre notas (en las distintas asignaturas)**]{.hl-yellow} se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática), es decir
+
+$$H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}$$
+
+¿Cómo cuantificar [**variabilidad entre las medias**]{.hl-yellow}?
+
+---
+
+## ANOVA: un factor
+
+
+$$H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}$$
+
+
+Para [**cuantificar la variabilidad**]{.hl-yellow} de las medias lo más inmediato es calcular su varianza. Si $x = \left(\overline{y}_1, \ldots, \overline{y}_c \right)$ representa el vector de medias (muestrales), y $\overline{\overline{y}_j}$ su media, entonces su varianza será
+
+$$\color{red}{\frac{1}{c}\sum_{j=1}^{c}  \left(\overline{y}_j - \overline{\overline{y}_j} \right)^2 = \frac{1}{c}\sum_{j=1}^{c}  \left(\overline{y}_j - \overline{y} \right)^2}~\#$$
+
+Dicha cantidad cuantifica la [**variabilidad de las medias de los grupos**]{.hl-red} (cómo fluctua la media entre los grupos), dando a **cada grupo el mismo peso $1/c$**. ¿Y si diésemos **peso a cada grupo en función de su tamaño**?
+
+
+${\tiny \#~\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \overline{y }}$
+
+---
+
+## ANOVA: un factor
+ 
+
+$$H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}$$
+
+
+$$\color{red}{\frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{\overline{y}_j} \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2}$$
+
+
+La cantidad de arriba cuantifica la [**variabilidad (PONDERADA) de las medias de los grupos**]{.hl-red}. En otras palabras: es la [**variabilidad EXPLICADA por los grupos**]{.hl-red} (variabilidad ENTRE grupos), cuyo **estimador insesgado** es (una "cuasivarianza")
+
+
+$$\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c} n_j\left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}$$
+
+---
+
+## ANOVA: un factor
+
+
+
+$$H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}$$
+
+$$\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}$$
+
+&nbsp;
+
+Imagina que al calcularla sale, por ejemplo, $\hat{s}_{e}^2 = 3$...
+
+**¿Es mucho? ¿Poco?** ¿Está suficientemente alejada de 0 para considerar que las medias son diferentes? ¿De qué depende?
+
+
+---
+
+## ANOVA: un factor
+
+Como siempre sucede con la varianza, per se no nos aporta nada: **debe ser comparada con otra cantidad**. ¿De qué depende?
+
+. . .
+
+Como (again) siempre sucede con la varianza, la magnitud de dicha variabilidad va a **depender de la propia magnitud de los datos**, en este caso, de la propia [**variabilidad inherente a la variable**]{.hl-yellow}: si la varianza basal de los datos es $2.9$, seguramente $\hat{s}_{e}^2 = 3$ sea poco; si la varianza de los datos es $0.01$, entonces $\hat{s}_{e}^2 = 3$ es una barbaridad (entre grupos varían 300 veces más que dentro de cada grupo).
+
+. . .
+
+&nbsp;
+
+¿Cómo [**cuantificar la variabilidad inherente de la variable (variabilidad NO EXPLICADA por los grupos)**]{.hl-purple}?
+
+---
+
+## ANOVA: un factor
+
+
+Si recuerdas aquellos días de inferencia, los [**esimadores insesgados**]{.hl-yellow} de la media y varianza poblacional $\left(\mu, \sigma^2 \right)$ son
+
+* [**Media**]{.hl-yellow}: $\hat{\mu} =  \overline{y}$, lo que implica que $\hat{\mu}_j = \overline{y}_j$ y  $\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j$.
+
+. . .
+
+* [**Varianza**]{.hl-yellow} (hemos asumido igual en cada grupo): la varianza muestral sería 
+
+$$\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 =\sum_{j=1}^{c} \frac{1}{n}\frac{n_j}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2$$
+
+es decir, el [**promedio de las desviaciones al cuadrado respecto a la media de cada grupo**]{.hl-purple} (también expresado como media ponderada de cada variabilidad), donde $s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2$ representa la varianza de cada grupo.
+
+---
+
+
+## ANOVA: un factor
+
+$$\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2$$
+
+
+Sin embargo, dado que cada $\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2$ son **independientes** y siguen una $\chi^{2}_{n_j - 1}$ (suma de normales - tipificadas - al cuadrado es una $\chi^2$), tenemos que
+
+$$n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2$$
+
+. . .
+
+Es decir, $\hat{\sigma}^2$ [**no es un estimador insesgado**]{.hl-red} de $\sigma^2$ así que recitificaremos por un factor definiendo la conocida como [**varianza residual**]{.hl-yellow}
+
+$$\color{purple}{\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \frac{1}{n-c}SSR}$$
 
 
 
 ---
+
 
 ## ANOVA: un factor
 
@@ -2397,16 +2462,30 @@ Si la [**hipótesis nula fuese cierta**]{.hl-green} (todas las observaciones vie
 :::
 ::::
 
+
+
+---
+
+## ANOVA: un factor
+
+Así tenemos el [**estimador insesgado de la varianza explicada**]{.hl-red} (variabilidad atribuida a los grupos)
+
+$$\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c} n_j\left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}$$
+
+y el [**estimador insesgado de la varianza no explicada**]{.hl-purple} (variabilidad intrínseca de la variable)
+
+$$\color{purple}{\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \frac{1}{n-c}SSR}$$
+
+. . .
+
+¿Qué [**relación hay entre ellas**]{.hl-yellow}? ¿Están relacionadas? ¿Pueden ambas subir mucho o bajar mucho, o se compensa una con otra?
+
+
 ---
 
 ## ANOVA: un factor
 
 $$y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)$$
-
-¿Cómo calcular la [**varianza explicada**]{.hl-red} por la variable de grupo (la variabilidad de las medias de cada grupo) y la [**varianza no explicada**]{.hl-purple} por el grupo (el promedio de las varianzas dentro de cada grupo, intrínseca a los datos)?
-
-. . .
-
 
 La [**variabilidad total (SST o VT)**]{.hl-green} de la variable $y$ se define como
 
@@ -2420,7 +2499,7 @@ $$SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{
 
 $$SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2$$
 
-A continuación **añadimos y restamos dentro del paréntesis la misma cantidad** (la media muestral de cada grupo $\overline{y}_j$, estimación insesgada de $\mu_j$)
+Si a continuación **añadimos y restamos dentro del paréntesis la misma cantidad** (la media muestral de cada grupo $\overline{y}_j$, estimación insesgada de $\mu_j$)
 
 $$\begin{eqnarray}\color{green}{SST} &=& \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ \color{green}{VT} &=& \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2
 \end{eqnarray}$$
@@ -2445,46 +2524,21 @@ $$\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\o
 
 ## ANOVA: un factor
 
-
-El [**segundo término**]{.hl-red} es en realidad la [**variabilidad (ponderada) de las medias de los grupos**]{.hl-red} (cómo fluctua la media entre los grupos)
-
-
-$$\color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \sum_{j=1}^{c}  \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2  }$$
-
-ya que
-
-$$\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \frac{1}{n}\sum_{l}^{n} y_{l} = \overline{y}$$
-
-Es la [**variabilidad explicada por los grupos**]{.hl-red} (variabilidad - de la media - ENTRE grupos) y [**cuantifica la variabilidad de las medias**]{.hl-red}. ¿Es mucho? ¿Poco? La vamos a enfrentar a la variabilidad no explicada por los grupos (inherente a la variable)
-
----
-
-## ANOVA: un factor
+$$\begin{eqnarray}\color{green}{SST} &=& \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} = \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2} \nonumber \\ &=& \color{purple}{SSR} + \color{red}{SSE} = \color{purple}{(n-c)\hat{s}_{r}^2} + \color{red}{(c-1)\hat{s}_{e}^2}\end{eqnarray}$$
 
 
-El [**primer término**]{.hl-purple} es en realidad el [**promedio de la variabilidad $s_{j}^2$ DENTRO de cada grupo**]{.hl-purple} (el promedio de la variabilidad intragrupo)
+
+El [**primer término**]{.hl-purple} es lo que hemos llamado [**variabilidad inherente de los datos (no explicada por los grupos o residual)**]{.hl-purple} calculada como el promedio de la variabilidad $s_{j}^2$ INTRA grupo. El [**segundo término**]{.hl-red} es lo que hemos llamado [**variabilidad explicada por los grupos**]{.hl-red} (ENTRE grupos)
 
 
-$$\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2$$
-
-que se relaciona con la [**varianza residual (estimada)**]{.hl-purple} como $\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$.
+. . .
 
 
-Es la [**variabilidad NO explicada (residual) por el factor**]{.hl-purple} (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo) y [**cuantifica la variabilidad inherente a los datos (promediando las variabilidades de cada grupo)**]{.hl-red}
+Cuando el modelo es lineal como el que tenemos, [**¡ambas están relacionadas por SST!**]{.hl-green} ya que la suma de ambas es la variabilidad total de nuestra variable.
 
----
+. . .
 
-## ANOVA: un factor
-
-Dado que el modelo es lineal, la [**variabilidad o información total**]{.hl-yellow} se puede descomponer como [**varianza explicada**]{.hl-red} (VE o suma cuadrados explicada - SSE) más [**varianza no explicada**]{.hl-purple} (VR o suma cuadrados residuales - SSR)
-
-
-$$SST = SSE + SSR, \quad VT = VE + VR$$
-
-$$VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}$$
-
-
-Así el objetivo será construir un **estadístico** para cuantificar si $VE$ (variabilidad entre las medias) es mucho más grande que $VR$ (variabilidad basal, la variabilidad inherente de nuestra variable)
+El objetivo será construir un **estadístico** para cuantificar si $\hat{s}_{e}^2$ (variabilidad explicada por los grupos) es mucho más grande que $\hat{s}_{r}^2$ (variabilidad inherente de nuestra variable) sabiendo que cuando sube una, baja la otra.
 
 ---
 
@@ -2524,11 +2578,7 @@ Si te fijas el **denominador** es $\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}
 $$F = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}$$
 
 
-El **numerador** lo podemos denotar como
-
-$$\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{n}{c-1} \left(\sum_{j=1}^{c}\frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2 \right) = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2$$
-
-y es la [**varianza explicada (estimada)**]{.hl-red} calculada como la **variabilidad ponderada de las medias** (corregida por $n/(c-1)$ para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es [**más grande de lo que cabría esperar**]{.hl-yellow} (si las medias fuesen iguales) o no.
+El [**numerador**]{.hl-yellow} es $\hat{s}_{e}^2 = \frac{SSE}{c-1} =  \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2$ la [**varianza explicada**]{.hl-red} calculada como la **variabilidad ponderada de las medias** (corregida por $n/(c-1)$ para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es [**más grande de lo que cabría esperar**]{.hl-yellow} (si las medias fuesen iguales) o no.
 
 ---
 

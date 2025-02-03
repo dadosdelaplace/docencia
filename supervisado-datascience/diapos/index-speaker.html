@@ -2450,10 +2450,18 @@ sample estimates:
 </section>
 <section id="anova-un-factor" class="slide level2">
 <h2>ANOVA: un factor</h2>
-<p>¿Cómo <span class="hl-yellow"><strong>conceptualizar matemáticamente un modelo que asuma que todas las asignaturas tienen medias similares</strong></span>?</p>
+<p>¿Cómo <span class="hl-yellow"><strong>conceptualizar matemáticamente</strong></span> un modelo que <span class="hl-yellow"><strong>asuma que todas las asignaturas tienen medias similares</strong></span>?</p>
 <div class="fragment">
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \quad \text{perturbación aleatoria}\]</span></p>
-<p>donde <span class="hl-yellow"><strong><span class="math inline">\(\mu_j\)</span> representa la media de los estudiantes en la asignatura <span class="math inline">\(j\)</span></strong></span> y la <span class="hl-purple"><strong>perturbación <span class="math inline">\(\varepsilon_{ij}\)</span> representa la desviación</strong></span> de la nota en la asignatura <span class="math inline">\(j\)</span> del estudiante <span class="math inline">\(i\)</span> (representan la variabilidad intrínseca del EXPERIMENTO).</p>
+<p>donde <span class="hl-yellow"><strong><span class="math inline">\(\mu_j\)</span> representa la media de los estudiantes en la asignatura <span class="math inline">\(j\)</span></strong></span> y la <span class="hl-yellow"><strong>perturbación <span class="math inline">\(\varepsilon_{ij}\)</span> representa la desviación</strong></span> de la nota en la asignatura <span class="math inline">\(j\)</span> del estudiante <span class="math inline">\(i\)</span> (representan la variabilidad intrínseca del EXPERIMENTO).</p>
+</div>
+<div class="fragment">
+<p>&nbsp;</p>
+<p>Fíjate que el <strong>modelo dice lo siguiente</strong>: las posibles <span class="hl-yellow"><strong>diferencias (variabilidad) entre notas</strong></span> de distintos alumnos se pueden deber a</p>
+<ol type="i">
+<li><p>un grupo distinto (con su media <span class="math inline">\(\mu_j\)</span>), es decir, algo <span class="hl-red"><strong>EXPLICADO por los grupos</strong></span></p></li>
+<li><p>una componente aleatoria (algo <span class="hl-purple"><strong>NO EXPLICADO</strong></span> por los grupos).</p></li>
+</ol>
 </div>
 </section>
 <section id="anova-un-factor-1" class="slide level2">
@@ -2464,7 +2472,7 @@ sample estimates:
 </ol>
 <div class="fragment">
 <ol start="2" type="1">
-<li><span class="hl-green"><strong>Varianza constante (homocedasticidad)</strong></span>: <span class="math inline">\(V[\varepsilon_{ij}] = cte = \sigma^2\)</span> para todo <span class="math inline">\(i,j\)</span> (las desviaciones respecto a la media de la asignatura son iguales)</li>
+<li><span class="hl-green"><strong>Varianza constante (homocedasticidad)</strong></span>: <span class="math inline">\(V[\varepsilon_{ij}] = cte = \sigma^2\)</span> para todo <span class="math inline">\(i,j\)</span> (las desviaciones respecto a la media son iguales para cada grupo)</li>
 </ol>
 </div>
 <div class="fragment">
@@ -2480,46 +2488,6 @@ sample estimates:
 </div>
 </section>
 <section id="anova-un-factor-2" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2) \quad  \Rightarrow \quad  y_{ij} \sim N(\mu_j, \sigma^2)\]</span></p>
-<p>Los <span class="hl-yellow"><strong>esimadores insesgados</strong></span> de dichos parámetros poblacionales <span class="math inline">\(\left(\mu_j, \sigma^2 \right)\)</span> son</p>
-<ul>
-<li><p><span class="hl-yellow"><strong>Media</strong></span>: <span class="math inline">\(\hat{\mu}_{j} = \overline{y}_j\)</span>, lo que implica que <span class="math inline">\(\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j\)</span>.</p></li>
-<li><p><span class="hl-yellow"><strong>Varianza</strong></span>:</p></li>
-</ul>
-<p><span class="math display">\[\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2\]</span></p>
-<p>es decir, el <span class="hl-purple"><strong>promedio de las desviaciones al cuadrado respecto a la media de cada grupo</strong></span> (también expresado como media ponderada de cada variabilidad), donde <span class="math inline">\(s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2\)</span> representa la varianza de cada grupo.</p>
-</section>
-<section id="anova-un-factor-3" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p><span class="math display">\[\hat{\sigma}^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2, \quad  s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2\]</span></p>
-<p>Sin embargo, dado que cada <span class="math inline">\(\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2\)</span> son <strong>independientes</strong> y siguen una <span class="math inline">\(\chi^{2}_{n_j - 1}\)</span> (suma de normales - tipificadas - al cuadrado), tenemos que</p>
-<p><span class="math display">\[n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2\]</span></p>
-<div class="fragment">
-<p><span class="math inline">\(\hat{\sigma}^2\)</span> <span class="hl-red"><strong>no es un estimador insesgado</strong></span> de <span class="math inline">\(\sigma^2\)</span> así que usaremos la conocida como <span class="hl-yellow"><strong>varianza residual</strong></span></p>
-<p><span class="math display">\[\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2\]</span></p>
-</div>
-</section>
-<section id="anova-un-factor-4" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p><span class="math display">\[\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2\]</span></p>
-<p>Fíjate que dado que <span class="math inline">\(\hat{\mu}_j = \overline{y}_j\)</span>, hemos llamado</p>
-<p><span class="math display">\[\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j \sim N \left(\hat{\mu}_j, \hat{s}_{r}^2 \right)\]</span> a los <span class="hl-yellow"><strong>residuos estimados</strong></span> (valor real - estimación)</p>
-</section>
-<section id="anova-un-factor-5" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
-<p>¿Qué contraste deberíamos plantear si queremos <span class="hl-yellow"><strong>comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)</strong></span>?</p>
-<div class="fragment">
-<p><span class="math display">\[H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
-<p>La <span class="hl-green"><strong>hipótesis nula</strong></span> es que las <span class="hl-yellow"><strong>diferencias entre notas en las distintas asignaturas</strong></span> se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática).</p>
-</div>
-<div class="fragment">
-<p>El concepto «diferencias» se traduce en <strong>variabilidad</strong>, es decir, la <span class="hl-green"><strong>hipótesis nula puede reformularse</strong></span> como</p>
-<p><span class="math display">\[H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}\]</span></p>
-</div>
-</section>
-<section id="anova-un-factor-6" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Vamos a visualizar las dos distribuciones</p>
 <div class="cell">
@@ -2538,10 +2506,10 @@ sample estimates:
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-66-1.png" width="960" class="r-stretch"><p>Aunque la distribución B está más desplazada a la izquierda, la <strong>nota más alta es de la asignatura B</strong>. ¿Es suficiente para decir que <strong>A distinto de B</strong>?</p>
 </section>
-<section id="anova-un-factor-7" class="slide level2">
+<section id="anova-un-factor-3" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
-<p><span class="math display">\[H_0:~\mu_1 = \mu_2 = cte = \mu \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
+<p><span class="math display">\[H_0:~\mu_1 = \mu_2 = cte \quad vs \quad H_1:~\mu_1 \neq \mu_2\]</span></p>
 <p>En el caso de que <strong>solo tengamos dos grupos</strong> la solución es fácil: basta con hacer un <span class="hl-yellow"><strong>contraste de medias conocido como prueba t</strong></span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="fu">t.test</span>(datos <span class="sc">|&gt;</span> <span class="fu">filter</span>(asignatura <span class="sc">==</span> <span class="st">"A"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(notas),</span>
@@ -2561,7 +2529,7 @@ mean of x mean of y
 </div>
 </div>
 </section>
-<section id="anova-un-factor-8" class="slide level2">
+<section id="anova-un-factor-4" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>¿Pero qué pasaría si <span class="hl-yellow"><strong>en lugar de dos asignaturas tuviésemos 6 asignaturas</strong></span>?</p>
 <div class="fragment">
@@ -2579,10 +2547,10 @@ mean of x mean of y
 <p><span class="math display">\[P(B) = P(\bigcup_i A_i) \leq \sum_i P(A_i) = c \alpha := \alpha_T\]</span></p>
 </div>
 <div class="fragment">
-<p>Si queremos que ese <strong><span class="math inline">\(\alpha_T\)</span> conjunto sea (al menos) de 0.05</strong>, necesitamos que cada <span class="math inline">\(\alpha\)</span> individual sea <span class="math inline">\(\alpha = \alpha_T/c\)</span> (en nuestro ejemplo <span class="math inline">\(\alpha = 0.00333\)</span>, demasiado pequeño si <span class="math inline">\(c\)</span> crece), o lo que es lo mismo $p-valor_{j}^{adj} = c*p-value_j $</p>
+<p>Si queremos que ese <strong><span class="math inline">\(\alpha_T\)</span> conjunto sea (al menos) de 0.05</strong>, necesitamos que cada <span class="math inline">\(\alpha\)</span> individual sea <span class="math inline">\(\alpha = \alpha_T/c\)</span> (demasiado pequeño si <span class="math inline">\(c\)</span> crece), o lo que es lo mismo definir un <strong>pvalor ajustado</strong> <span class="math inline">\(pvalue_{j}^{adj} = c*pvalue_j\)</span></p>
 </div>
 </section>
-<section id="anova-un-factor-9" class="slide level2">
+<section id="anova-un-factor-5" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>No solo existe un <span class="hl-red"><strong>problema de comparaciones múltiples</strong></span> sino que, además, ¡no lo necesitamos!</p>
 <div class="fragment">
@@ -2592,20 +2560,92 @@ mean of x mean of y
 <p>Y para responder a dicha pregunta <span class="hl-red"><strong>no necesitamos chequear 2 a 2</strong></span>: basta con que <span class="hl-yellow"><strong>encontremos una que no sea igual</strong></span></p>
 </div>
 </section>
-<section id="anova-un-factor-10" class="slide level2">
+<section id="anova-un-factor-6" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
 <p>La idea es que <span class="hl-red"><strong>no necesitamos comparar 2 a 2</strong></span>. Si tenemos <span class="math inline">\(c\)</span> grupos sabemos que <span class="hl-yellow"><strong>las medias <span class="math inline">\(\mu_j\)</span> (<span class="math inline">\(j=1,\ldots,c\)</span>) nunca van a ser exactamente iguales</strong></span> aunque el grupo no afecte, debido a la variabilidad intrínseca del experimento <span class="math inline">\(\varepsilon_{ij}\)</span></p>
 <div class="fragment">
-<p>Hemos reformulado antes la hipótesis nula como</p>
-<p><span class="math display">\[H_0:~\text{variab. notas de distintas asignaturas es pequeña} = \text{variab. medias es pequeña}\]</span></p>
-<p>¿Cómo cuantificar si esa <span class="hl-yellow"><strong>variabilidad entre las medias</strong></span> (varianza ENTRE grupos, debida a estar en un grupo u otro) es pequeña?</p>
+<p>¿Qué contraste deberíamos plantear si queremos <span class="hl-yellow"><strong>comprobar si existe un efecto del factor (asignatura) en la variable objetivo (nota)</strong></span>?</p>
 </div>
 <div class="fragment">
-<p>La vamos a <span class="hl-purple"><strong>comparar respecto a la variabilidad promedio (intrínseca) de los datos</strong></span> (promedio ponderado de la varianza DENTRO de los grupos, no explicada por los grupos sino intrínseca a los datos)</p>
+<p>Si <span class="hl-yellow"><strong>no existiese asociación</strong></span> entre asignatura y nota, tendríamos que todas las medias serían similares</p>
+<p><span class="math display">\[H_0:~independencia \rightarrow \mu_1 = \mu_2 = \ldots = \mu_c = cte \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
 </div>
 </section>
+<section id="anova-un-factor-7" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[H_0:~independencia \rightarrow \mu_1 = \mu_2 = \ldots = \mu_c = cte \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
+<p>¿Qué significa que una <span class="hl-yellow"><strong>serie de valores sean constantes</strong></span>? Si tuviésemos una variable <span class="math inline">\(x\)</span> en una tabla, ¿cómo comprobar fácilmente que todos los valores son idénticos?</p>
+<div class="fragment">
+<p>La forma más inmediata es <span class="hl-yellow"><strong>calcular su varianza</strong></span> ya que nos cuantifica la <strong>variabilidad</strong>: si la varianza/variabilidad es nula (o muy pequeña), implica que la variable toma valores constantes.</p>
+</div>
+</section>
+<section id="anova-un-factor-8" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[H_0:~independencia \rightarrow \mu_1 = \mu_2 = cte \quad vs \quad H_1:~\text{no todas son iguales}\]</span></p>
+<p>Así que podemos <span class="hl-green"><strong>reformular la hipótesis nula</strong></span> en términos de la varianza: si las medias son iguales, la hipótesis nula es lo mismo que decir que las <span class="hl-yellow"><strong>diferencias entre notas (en las distintas asignaturas)</strong></span> se debe únicamente a una variabilidad aleatoria (y no una diferencia sistemática), es decir</p>
+<p><span class="math display">\[H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}\]</span></p>
+<p>¿Cómo cuantificar <span class="hl-yellow"><strong>variabilidad entre las medias</strong></span>?</p>
+</section>
+<section id="anova-un-factor-9" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}\]</span></p>
+<p>Para <span class="hl-yellow"><strong>cuantificar la variabilidad</strong></span> de las medias lo más inmediato es calcular su varianza. Si <span class="math inline">\(x = \left(\overline{y}_1, \ldots, \overline{y}_c \right)\)</span> representa el vector de medias (muestrales), y <span class="math inline">\(\overline{\overline{y}_j}\)</span> su media, entonces su varianza será</p>
+<p><span class="math display">\[\color{red}{\frac{1}{c}\sum_{j=1}^{c}  \left(\overline{y}_j - \overline{\overline{y}_j} \right)^2 = \frac{1}{c}\sum_{j=1}^{c}  \left(\overline{y}_j - \overline{y} \right)^2}~\#\]</span></p>
+<p>Dicha cantidad cuantifica la <span class="hl-red"><strong>variabilidad de las medias de los grupos</strong></span> (cómo fluctua la media entre los grupos), dando a <strong>cada grupo el mismo peso <span class="math inline">\(1/c\)</span></strong>. ¿Y si diésemos <strong>peso a cada grupo en función de su tamaño</strong>?</p>
+<p><span class="math inline">\({\tiny \#~\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \overline{y }}\)</span></p>
+</section>
+<section id="anova-un-factor-10" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}\]</span></p>
+<p><span class="math display">\[\color{red}{\frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{\overline{y}_j} \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2}\]</span></p>
+<p>La cantidad de arriba cuantifica la <span class="hl-red"><strong>variabilidad (PONDERADA) de las medias de los grupos</strong></span>. En otras palabras: es la <span class="hl-red"><strong>variabilidad EXPLICADA por los grupos</strong></span> (variabilidad ENTRE grupos), cuyo <strong>estimador insesgado</strong> es (una “cuasivarianza”)</p>
+<p><span class="math display">\[\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c} n_j\left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}\]</span></p>
+</section>
 <section id="anova-un-factor-11" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[H_0:~\text{variab. notas distintas asignaturas es pequeña} = \text{"varianza" medias es pequeña}\]</span></p>
+<p><span class="math display">\[\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}\]</span></p>
+<p>&nbsp;</p>
+<p>Imagina que al calcularla sale, por ejemplo, <span class="math inline">\(\hat{s}_{e}^2 = 3\)</span>…</p>
+<p><strong>¿Es mucho? ¿Poco?</strong> ¿Está suficientemente alejada de 0 para considerar que las medias son diferentes? ¿De qué depende?</p>
+</section>
+<section id="anova-un-factor-12" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>Como siempre sucede con la varianza, per se no nos aporta nada: <strong>debe ser comparada con otra cantidad</strong>. ¿De qué depende?</p>
+<div class="fragment">
+<p>Como (again) siempre sucede con la varianza, la magnitud de dicha variabilidad va a <strong>depender de la propia magnitud de los datos</strong>, en este caso, de la propia <span class="hl-yellow"><strong>variabilidad inherente a la variable</strong></span>: si la varianza basal de los datos es <span class="math inline">\(2.9\)</span>, seguramente <span class="math inline">\(\hat{s}_{e}^2 = 3\)</span> sea poco; si la varianza de los datos es <span class="math inline">\(0.01\)</span>, entonces <span class="math inline">\(\hat{s}_{e}^2 = 3\)</span> es una barbaridad (entre grupos varían 300 veces más que dentro de cada grupo).</p>
+</div>
+<div class="fragment">
+<p>&nbsp;</p>
+<p>¿Cómo <span class="hl-purple"><strong>cuantificar la variabilidad inherente de la variable (variabilidad NO EXPLICADA por los grupos)</strong></span>?</p>
+</div>
+</section>
+<section id="anova-un-factor-13" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p>Si recuerdas aquellos días de inferencia, los <span class="hl-yellow"><strong>esimadores insesgados</strong></span> de la media y varianza poblacional <span class="math inline">\(\left(\mu, \sigma^2 \right)\)</span> son</p>
+<ul>
+<li><span class="hl-yellow"><strong>Media</strong></span>: <span class="math inline">\(\hat{\mu} = \overline{y}\)</span>, lo que implica que <span class="math inline">\(\hat{\mu}_j = \overline{y}_j\)</span> y <span class="math inline">\(\hat{\varepsilon}_{ij} = y_{ij} - \overline{y}_j\)</span>.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Varianza</strong></span> (hemos asumido igual en cada grupo): la varianza muestral sería</li>
+</ul>
+<p><span class="math display">\[\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 =\sum_{j=1}^{c} \frac{1}{n}\frac{n_j}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2\]</span></p>
+<p>es decir, el <span class="hl-purple"><strong>promedio de las desviaciones al cuadrado respecto a la media de cada grupo</strong></span> (también expresado como media ponderada de cada variabilidad), donde <span class="math inline">\(s_{j}^2 = \frac{1}{n_j}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2\)</span> representa la varianza de cada grupo.</p>
+</div>
+</section>
+<section id="anova-un-factor-14" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[\hat{\sigma}^2 = \frac{1}{n} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \sum_{j=1}^{c} \frac{n_j}{n} s_{j}^2\]</span></p>
+<p>Sin embargo, dado que cada <span class="math inline">\(\sum_{i=1}^{n_j} \left(\frac{y_{ij} - \overline{y}_j}{\sigma} \right)^2\)</span> son <strong>independientes</strong> y siguen una <span class="math inline">\(\chi^{2}_{n_j - 1}\)</span> (suma de normales - tipificadas - al cuadrado es una <span class="math inline">\(\chi^2\)</span>), tenemos que</p>
+<p><span class="math display">\[n\frac{\hat{\sigma}^2}{\sigma^2} \sim \chi^{2}_{n-c} \Rightarrow E[n\frac{\hat{\sigma}^2}{\sigma^2}] = n - c \Rightarrow E[\hat{\sigma}^2] = \frac{n-c}{n} \sigma^2\]</span></p>
+<div class="fragment">
+<p>Es decir, <span class="math inline">\(\hat{\sigma}^2\)</span> <span class="hl-red"><strong>no es un estimador insesgado</strong></span> de <span class="math inline">\(\sigma^2\)</span> así que recitificaremos por un factor definiendo la conocida como <span class="hl-yellow"><strong>varianza residual</strong></span></p>
+<p><span class="math display">\[\color{purple}{\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \frac{1}{n-c}SSR}\]</span></p>
+</div>
+</section>
+<section id="anova-un-factor-15" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Si la <span class="hl-green"><strong>hipótesis nula fuese cierta</strong></span> (todas las observaciones vienen de la misma población con misma varianza y media), la <span class="hl-yellow"><strong>varianza entre grupos (explicada por el grupo) sería la misma que la varianza inherente a los datos</strong></span> (calculada como el promedio de las distintas varianzas intra-grupo).</p>
 <div class="columns">
@@ -2616,23 +2656,30 @@ mean of x mean of y
 </div>
 </div>
 </section>
-<section id="anova-un-factor-12" class="slide level2">
+<section id="anova-un-factor-16" class="slide level2">
 <h2>ANOVA: un factor</h2>
-<p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
-<p>¿Cómo calcular la <span class="hl-red"><strong>varianza explicada</strong></span> por la variable de grupo (la variabilidad de las medias de cada grupo) y la <span class="hl-purple"><strong>varianza no explicada</strong></span> por el grupo (el promedio de las varianzas dentro de cada grupo, intrínseca a los datos)?</p>
+<p>Así tenemos el <span class="hl-red"><strong>estimador insesgado de la varianza explicada</strong></span> (variabilidad atribuida a los grupos)</p>
+<p><span class="math display">\[\color{red}{\hat{s}_{e}^2= \frac{n}{n-c} \sum_{j=1}^{c} n_j\left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n-c} SSE}\]</span></p>
+<p>y el <span class="hl-purple"><strong>estimador insesgado de la varianza no explicada</strong></span> (variabilidad intrínseca de la variable)</p>
+<p><span class="math display">\[\color{purple}{\hat{s}_{r}^2 = \frac{n}{n-c}\hat{\sigma}^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n-c} \sum_{j=1}^{c}\sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \frac{1}{n-c}SSR}\]</span></p>
 <div class="fragment">
-<p>La <span class="hl-green"><strong>variabilidad total (SST o VT)</strong></span> de la variable <span class="math inline">\(y\)</span> se define como</p>
-<p><span class="math display">\[SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2\]</span></p>
+<p>¿Qué <span class="hl-yellow"><strong>relación hay entre ellas</strong></span>? ¿Están relacionadas? ¿Pueden ambas subir mucho o bajar mucho, o se compensa una con otra?</p>
 </div>
 </section>
-<section id="anova-un-factor-13" class="slide level2">
+<section id="anova-un-factor-17" class="slide level2">
+<h2>ANOVA: un factor</h2>
+<p><span class="math display">\[y_{ij} =  \mu_j + \varepsilon_{ij}, \quad \varepsilon_{ij} \sim N (0, \sigma^2)\]</span></p>
+<p>La <span class="hl-green"><strong>variabilidad total (SST o VT)</strong></span> de la variable <span class="math inline">\(y\)</span> se define como</p>
+<p><span class="math display">\[SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2\]</span></p>
+</section>
+<section id="anova-un-factor-18" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[SST = \displaystyle \sum_{l=1}^{n} \left(y_l - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2, \quad VT  = \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2\]</span></p>
-<p>A continuación <strong>añadimos y restamos dentro del paréntesis la misma cantidad</strong> (la media muestral de cada grupo <span class="math inline">\(\overline{y}_j\)</span>, estimación insesgada de <span class="math inline">\(\mu_j\)</span>)</p>
+<p>Si a continuación <strong>añadimos y restamos dentro del paréntesis la misma cantidad</strong> (la media muestral de cada grupo <span class="math inline">\(\overline{y}_j\)</span>, estimación insesgada de <span class="math inline">\(\mu_j\)</span>)</p>
 <p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ \color{green}{VT} &amp;=&amp; \frac{1}{n} \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2
 \end{eqnarray}\]</span></p>
 </section>
-<section id="anova-un-factor-14" class="slide level2">
+<section id="anova-un-factor-19" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Desarrollando el cuadrado</p>
 <p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y} \right)^2 = \sum_{j=1}^{c} \sum_{i=1}^{n_j} \left( \left(y_{ij} - \overline{y}_j \right) - \left(\overline{y}_j - \overline{y} \right) \right)^2 \nonumber \\ &amp;=&amp; \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + 2\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) \nonumber \\ \color{green}{VT} &amp;=&amp; \color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} + \frac{2}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right)
@@ -2640,36 +2687,25 @@ mean of x mean of y
 <p>donde (dado que la suma de errores dentro de cada grupo es nula)</p>
 <p><span class="math display">\[\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right) \left(\overline{y}_j - \overline{y} \right) = \sum_{j=1}^{c} \left(\overline{y}_j - \overline{y} \right) \sum_{i=1}^{n_j} \varepsilon_{ij} = 0\]</span></p>
 </section>
-<section id="anova-un-factor-15" class="slide level2">
+<section id="anova-un-factor-20" class="slide level2">
 <h2>ANOVA: un factor</h2>
-<p>El <span class="hl-red"><strong>segundo término</strong></span> es en realidad la <span class="hl-red"><strong>variabilidad (ponderada) de las medias de los grupos</strong></span> (cómo fluctua la media entre los grupos)</p>
-<p><span class="math display">\[\color{red}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2 = \frac{1}{n}\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2 = \sum_{j=1}^{c}  \frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2  }\]</span></p>
-<p>ya que</p>
-<p><span class="math display">\[\overline{\overline{y}_j} = \frac{1}{c} \sum_{j=1}^{c} \overline{y}_j =   \sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{1}{c* n_{j}} y_{ij} = \frac{1}{n}\sum_{l}^{n} y_{l} = \overline{y}\]</span></p>
-<p>Es la <span class="hl-red"><strong>variabilidad explicada por los grupos</strong></span> (variabilidad - de la media - ENTRE grupos) y <span class="hl-red"><strong>cuantifica la variabilidad de las medias</strong></span>. ¿Es mucho? ¿Poco? La vamos a enfrentar a la variabilidad no explicada por los grupos (inherente a la variable)</p>
+<p><span class="math display">\[\begin{eqnarray}\color{green}{SST} &amp;=&amp; \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(\overline{y}_j - \overline{y} \right)^2} = \color{purple}{\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2} +  \color{red}{\sum_{j=1}^{c} n_j \left(\overline{y}_j - \overline{y} \right)^2} \nonumber \\ &amp;=&amp; \color{purple}{SSR} + \color{red}{SSE} = \color{purple}{(n-c)\hat{s}_{r}^2} + \color{red}{(c-1)\hat{s}_{e}^2}\end{eqnarray}\]</span></p>
+<p>El <span class="hl-purple"><strong>primer término</strong></span> es lo que hemos llamado <span class="hl-purple"><strong>variabilidad inherente de los datos (no explicada por los grupos o residual)</strong></span> calculada como el promedio de la variabilidad <span class="math inline">\(s_{j}^2\)</span> INTRA grupo. El <span class="hl-red"><strong>segundo término</strong></span> es lo que hemos llamado <span class="hl-red"><strong>variabilidad explicada por los grupos</strong></span> (ENTRE grupos)</p>
+<div class="fragment">
+<p>Cuando el modelo es lineal como el que tenemos, <span class="hl-green"><strong>¡ambas están relacionadas por SST!</strong></span> ya que la suma de ambas es la variabilidad total de nuestra variable.</p>
+</div>
+<div class="fragment">
+<p>El objetivo será construir un <strong>estadístico</strong> para cuantificar si <span class="math inline">\(\hat{s}_{e}^2\)</span> (variabilidad explicada por los grupos) es mucho más grande que <span class="math inline">\(\hat{s}_{r}^2\)</span> (variabilidad inherente de nuestra variable) sabiendo que cuando sube una, baja la otra.</p>
+</div>
 </section>
-<section id="anova-un-factor-16" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p>El <span class="hl-purple"><strong>primer término</strong></span> es en realidad el <span class="hl-purple"><strong>promedio de la variabilidad <span class="math inline">\(s_{j}^2\)</span> DENTRO de cada grupo</strong></span> (el promedio de la variabilidad intragrupo)</p>
-<p><span class="math display">\[\color{purple}{\frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \left(y_{ij} - \overline{y}_j \right)^2 = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \frac{n_j}{n_j} \left(y_{ij} - \overline{y}_j \right)^2  = \sum_{j=1}^{c}  \frac{n_j}{n} s_{j}^2} := \hat{\sigma}^2\]</span></p>
-<p>que se relaciona con la <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> como <span class="math inline">\(\hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\)</span>.</p>
-<p>Es la <span class="hl-purple"><strong>variabilidad NO explicada (residual) por el factor</strong></span> (promedio - de manera ponderada - de la variabilidad DENTRO de cada grupo) y <span class="hl-red"><strong>cuantifica la variabilidad inherente a los datos (promediando las variabilidades de cada grupo)</strong></span></p>
-</section>
-<section id="anova-un-factor-17" class="slide level2">
-<h2>ANOVA: un factor</h2>
-<p>Dado que el modelo es lineal, la <span class="hl-yellow"><strong>variabilidad o información total</strong></span> se puede descomponer como <span class="hl-red"><strong>varianza explicada</strong></span> (VE o suma cuadrados explicada - SSE) más <span class="hl-purple"><strong>varianza no explicada</strong></span> (VR o suma cuadrados residuales - SSR)</p>
-<p><span class="math display">\[SST = SSE + SSR, \quad VT = VE + VR\]</span></p>
-<p><span class="math display">\[VE =  \sum_{j=1}^{c}\frac{ n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2, \quad VR = \frac{1}{n}\sum_{j=1}^{c} \sum_{i=1}^{n_j} \hat{\varepsilon}_{ij}^2 = \hat{\sigma}^2 = \frac{n-c}{n} \hat{s}_{r}^{2}\]</span></p>
-<p>Así el objetivo será construir un <strong>estadístico</strong> para cuantificar si <span class="math inline">\(VE\)</span> (variabilidad entre las medias) es mucho más grande que <span class="math inline">\(VR\)</span> (variabilidad basal, la variabilidad inherente de nuestra variable)</p>
-</section>
-<section id="anova-un-factor-18" class="slide level2">
+<section id="anova-un-factor-21" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Dado que la suma de normales al cuadrado es una chi-cuadrado, se puede <strong>demostrar</strong> como</p>
 <p><span class="math display">\[\frac{SSE}{\sigma^2} \sim \chi^2_{c-1}, \quad \frac{SSR}{\sigma^2} \sim \chi^2_{n-c}\]</span></p>
 <p>Si tenemos <span class="math inline">\(X \sim \chi_{a}^2\)</span> y <span class="math inline">\(Y \sim \chi_{b}^2\)</span>, tenemos que su cociente (ponderado por sus grados de libertad) es <span class="math inline">\(\frac{X/a}{Y/b} \sim F_{a, b}\)</span>, lo que implica que</p>
 <p><span class="math display">\[F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}}  \sim F_{c-1, n-c}\]</span></p>
 </section>
-<section id="anova-un-factor-19" class="slide level2">
+<section id="anova-un-factor-22" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>La varianza poblacional <span class="math inline">\(\sigma^2\)</span> divide y multiplica así que podemos eliminarla</p>
 <p><span class="math display">\[F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}} = \frac{\frac{SSE}{c-1}}{\frac{SSR}{n-c}} \sim F_{c-1, n-c}\]</span></p>
@@ -2679,14 +2715,12 @@ mean of x mean of y
 <p>Si te fijas el <strong>denominador</strong> es <span class="math inline">\(\hat{s}_{r}^2 = \frac{SSR}{n-c} = \frac{n*VR}{n-c}\)</span>, la mencionada <span class="hl-purple"><strong>varianza residual (estimada)</strong></span> (el mejor estimador muestral de la varianza poblacional, la variabilidad inherente a los datos)</p>
 </div>
 </section>
-<section id="anova-un-factor-20" class="slide level2">
+<section id="anova-un-factor-23" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p><span class="math display">\[F = \frac{\frac{SSE}{c-1}}{\hat{s}_{r}^2} = \frac{\hat{s}_{e}^2}{\hat{s}_{r}^2} \sim F_{c-1, n-c}\]</span></p>
-<p>El <strong>numerador</strong> lo podemos denotar como</p>
-<p><span class="math display">\[\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{n * VE}{c-1} = \frac{n}{c-1} \left(\sum_{j=1}^{c}\frac{n_j}{n} \left(\overline{y}_j - \overline{y} \right)^2 \right) = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2\]</span></p>
-<p>y es la <span class="hl-red"><strong>varianza explicada (estimada)</strong></span> calculada como la <strong>variabilidad ponderada de las medias</strong> (corregida por <span class="math inline">\(n/(c-1)\)</span> para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es <span class="hl-yellow"><strong>más grande de lo que cabría esperar</strong></span> (si las medias fuesen iguales) o no.</p>
+<p>El <span class="hl-yellow"><strong>numerador</strong></span> es <span class="math inline">\(\hat{s}_{e}^2 = \frac{SSE}{c-1} = \frac{1}{c-1}\sum_{j=1}^{c}n_j \left(\overline{y}_j - \overline{y} \right)^2\)</span> la <span class="hl-red"><strong>varianza explicada</strong></span> calculada como la <strong>variabilidad ponderada de las medias</strong> (corregida por <span class="math inline">\(n/(c-1)\)</span> para hacerlo insesgado), que la enfrentaré con el denominador (variabilidad de mis datos no atribuida a los grupos, la inherente a los datos) para ver si es <span class="hl-yellow"><strong>más grande de lo que cabría esperar</strong></span> (si las medias fuesen iguales) o no.</p>
 </section>
-<section id="anova-un-factor-21" class="slide level2">
+<section id="anova-un-factor-24" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <p>Vamos a ver el ejemplo en <code>R</code> haciendo uso de la función <code>aov()</code></p>
 <ul>
@@ -2705,7 +2739,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="anova-un-factor-22" class="slide level2">
+<section id="anova-un-factor-25" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> notas <span class="sc">~</span> asignatura) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2723,7 +2757,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><code>Residuals</code>: la parte correspondiente la <span class="hl-purple"><strong>variabilidad no explicada o intra grupos</strong></span></p></li>
 </ul>
 </section>
-<section id="anova-un-factor-23" class="slide level2">
+<section id="anova-un-factor-26" class="slide level2">
 <h2>ANOVA: un factor</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">aov</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> notas <span class="sc">~</span> asignatura) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
