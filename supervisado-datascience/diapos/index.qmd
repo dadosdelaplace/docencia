@@ -2104,9 +2104,9 @@ performance::check_normality(datos$tiempo_espera)
 
 
 
-# Clase 3: análisis de la varianza {#clase-3}
+# Clases 3-4: análisis de la varianza {#clase-3}
 
-[**Asociación cuali vs cuanti: análisis de la varianza  (30 de enero de 2025)**]{style="color:#444442;"}
+[**Asociación cuali vs cuanti: análisis de la varianza  (30 de enero y 4 de febrero de 2025)**]{style="color:#444442;"}
 
 ---
 
@@ -3063,17 +3063,41 @@ DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
 
 ---
 
-## 🐣 Caso práctico I: pendiente {#caso-practico-4-1}
+## 🐣 Caso práctico I: participación vs candidatos {#caso-practico-3-1}
+
+El fichero `blackturnout.csv` contiene los datos de participación en las elecciones midterm en EEUU de los años 2006, 2008 y 2010: `turnout` proporción de participación de la población negra (respecto a población negra en edad de votar), `cvap` proporción de habitantes de población negra del distrito  y `candidate` 1 si el candidato pertenece a la población negra.
+
+
+```{r}
+datos <- read_csv(file = "./datos/blackturnout.csv") |> janitor::clean_names()
+datos |> slice_head(n = 5)
+```
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](...)
 
 ---
 
-## 🐣 Caso práctico II: pendiente {#caso-practico-4-2}
+
+## 🐣 Caso práctico II: atractivo vs alcohol {#caso-practico-3-2}
+
+Los datos los tenemos cargados directamente en `beer_goggles_effect.csv` 
+
+```{r}
+datos <- read_csv(file = "./datos/beer_goggles_effect.csv") |> janitor::clean_names()
+datos |> slice_head(n = 5)
+```
+
+Tenemos guardado el género de 48 estudiantes, divididos en 3 grupos de ingesta de alcohol, que han encontrado pareja que les atrae en un bar. También tenemos el **atractivo medido (puntuación del 0 al 100)**, otorgada por unos "jueces" externos, de la pareja encontrada por cada participante.
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](...)
+
 
 
 # Repaso entrega I
 
 * [**Caso práctico descriptiva**]{.hl-yellow}: [**anscombe**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-anscombe)
-
 
 * [**Casos prácticos cuali vs cuali**]{.hl-yellow}:     
   - [**Encuesta satisfacción**](https://javieralvarezliebana.quarto.pub/aprendizaje-supervisado/#caso-pr%C3%A1ctico-i-encuesta-de-satisfacci%C3%B3n)
@@ -3083,6 +3107,6 @@ DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
 * [**Cuanti vs cuanti**]{.hl-yellow}: ver [💻 Tu turno](#tu-turno-2-3)
 
 * [**Casos prácticos ANOVA**]{.hl-yellow}:  
-  - [**pendiente**](...)
-  - [**pendiente**](...)
+  - [**participación vs candidato**](...)
+  - [**atractivo vs alcohol**](...)
 

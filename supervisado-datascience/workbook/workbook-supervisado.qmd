@@ -624,7 +624,15 @@ chisq.test(datos$depresion, datos$ansiedad)
 
 ## Clases 3-4
 
-### 🐣 Caso práctico I: ¿cómo afecta a la participación los candidatos?
+### 🐣 Caso práctico I: ¿cómo afecta a la participación los candidatos en unas elecciones?
+
+El fichero `blackturnout.csv` contiene los datos de participación electoral en las elecciones para congresistas en Estados Unidos de los años 2006, 2008 y 2010, para cada uno de los estados. 
+* variable `turnout`: porcentaje de participación en las últimas elecciones presenciales de la población negra (proporción respecto a la población negra en edad de poder votar)
+
+* variable `cvap`: proporción de habitantes de población negra del distrito (proporción respecto a los habitantes en edad de votar)
+
+* variable `candidate`: 1 si el candidato pertenece a la población negra; 0 en caso contrario.
+
 
 ```{r}
 datos <-
@@ -633,9 +641,408 @@ datos <-
 datos
 ```
 
-### 🐣 Caso práctico II: ¿cómo afecta el tamaño de una clase al rendimiento de los alumnos?
+#### Pregunta 1
 
-https://www.dropbox.com/scl/fi/a21qlxby7vy3t0v7tn4mz/STAR.csv?rlkey=dawpbczom5jl3phlgaf24uya3&dl=1
+> ¿Cuántos distritos electorales había en cada estado para cada uno de los años (el número se reajusta en cada elección en función de la población)?
+
+```{r}
+#| eval: false
+#| code-fold: true
+datos |>
+   summarise(n_distinct(district), .by = c(state, year))
+```
+
+
+#### Pregunta 2
+
+> ¿Cuántos estados tenían un candidato negro en cada una de las elecciones? ¿Qué cantidad de candidatos negros hay en cada estado para cada una de las elecciones?
+
+```{r}
+#| eval: false
+#| code-fold: true
+# n estados con candidato negro
+datos |>
+  summarise("n_candidates" = sum(candidate), .by = c(year, state)) |> 
+  summarise("n_states" = sum(n_candidates > 0), .by = year)
+
+# cantidad de candidatos negros hay en cada estado para elección
+datos |>
+  summarise("n_candidates" = sum(candidate), .by = c(year, state)) 
+```
+
+#### Pregunta 3
+
+> ¿Qué gráfico podemos usar para visualizar una posible relación (lineal) entre `turnout` (participación) y `cvap` (proporción de población negra en el distrito) distinguiendo por año? ¿Qué opinas sobre una posible asociación?
+
+```{r}
+#| eval: false
+#| code-fold: true
+ggplot(datos,
+       aes(x = turnout, y = cvap,
+           color = factor(year, levels = c("2006", "2008", "2010"),
+                          ordered = TRUE))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  ggthemes::scale_color_colorblind() +
+  labs(x = "Participación", y = "Proporción población",
+       color = "Año") +
+  theme_minimal()
+# sitios con mayor proporción de población negra --> mayor participación entre ella (¿más comunidad?)
+# 2008 participación significativamente más alta que otros años (año obama en las presidenciales)
+# correlación positiva pero débil
+```
+
+
+#### Pregunta 4
+
+> Cuantifica de manera numérica la posible relación lineal entre ambas variables. Comenta todo lo que consideres. ¿Existen evidencias suficientes para rechazar que no exista dicha relación lineal?
+
+```{r}
+#| eval: false
+#| code-fold: true
+# cuanti vs cuanti: correlación
+datos |> 
+  select(turnout, cvap) |> 
+  cor()
+# correlación muestral = 0.1686327
+
+cor.test(datos$turnout, datos$cvap)
+# p-value = 2.405e-09 ==> rechazamos incorrelación
+# ==> correlación débil pero significativamente distinta de 0
+```
+
+#### Pregunta 5
+
+> Asumiendo `year` como variable cualitativa (nos daría igual tener `2008` o `año1`), ¿hay un cambio en la cantidad de candidatos negros a lo largo de los años? ¿Existe alguna diferencia entre años? Debes cuantificarlo de 3 maneras: i) visualmente; ii) de manera descriptiva (correlación, tabla de frecuencias o lo que tú consideres adecuado); iii) de manera inferencial.
+
+```{r}
+#| eval: false
+#| code-fold: true
+# cuali vs cuali: tablas de contigencia + chi-cuadrado
+
+# visualmente
+datos <-
+  datos |>
+  mutate("year" = factor(year, levels = c("2006", "2008", "2010"),
+                         ordered = TRUE),
+         "black_candidate" = candidate == 1)
+ggplot(datos) +
+  geom_bar(aes(x = year, fill = black_candidate, color = black_candidate),
+           alpha = 0.6, position = "fill") +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  labs(x = "Año", y = "Proporción candidatos") +
+  theme_minimal()
+# no se aprecian a priori diferencias entre los años
+
+# tablas de contigencia
+table(datos$year, datos$black_candidate)
+prop.table(table(datos$year, datos$black_candidate))
+prop.table(table(datos$year, datos$black_candidate), margin = 1)
+prop.table(table(datos$year, datos$black_candidate), margin = 2)
+# aprox todos los años igual: 87-88% vs 12-13%
+
+# chi cuadrado
+chisq.test(datos$year, datos$black_candidate)
+# p-value = 0.6816 ==> no rechazamos independencia
+# ==> no hay evidencias suficientes para inferir asociación
+# ==> no hay evidencias suficientes para decir que proporción de candidatos negros sea distinta durante los años
+```
+
+
+#### Pregunta 6
+
+> Repite el ejercicio anterior pero sustituyendo año por `state`. ¿Existen diferencias por estados?
+
+
+```{r}
+#| eval: false
+#| code-fold: true
+# cuali vs cuali: tablas de contigencia + chi-cuadrado
+
+# visualmente
+datos <-
+  datos |>
+  mutate("state" = factor(state))
+ggplot(datos) +
+  geom_bar(aes(x = state, fill = black_candidate, color = black_candidate),
+           alpha = 0.6, position = "fill") +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  labs(x = "Estado", y = "Proporción candidatos") +
+  theme_minimal()
+# sí se aprecian diferentes evidentes a lo largo de los estados
+
+# tablas de contigencia: si hay muchos grupos, nada útiles
+table(datos$state, datos$black_candidate)
+prop.table(table(datos$state, datos$black_candidate))
+prop.table(table(datos$state, datos$black_candidate), margin = 1)
+prop.table(table(datos$state, datos$black_candidate), margin = 2)
+# hay estados con 0% de candidatos negros y otros 
+# como Georgia (GA) de más del 30%
+
+# chi cuadrado
+chisq.test(datos$state, datos$black_candidate)
+#  p-value = 2.953e-05 ==> rechazamos independencia
+# ==> hay evidencias suficientes para inferir asociación
+# ==> hay evidencias suficientes para decir que proporción de candidatos negros sea distinta en los diferentes estados
+```
+
+
+#### Pregunta 7
+
+> ¿Influye en la participación electoral de la población negra que exista un candidato negro en su distrito? Cuantifica y concluye haciendo uso de todas las herramientas disponibles y detallando cada una de las conclusiones obtenidas (de manera razonada)
+
+```{r}
+#| eval: false
+#| code-fold: true
+# cuani vs cuali: boxplot/violin/densidad por grupos + anova
+
+# visualmente
+ggplot(datos) +
+  geom_boxplot(aes(x = candidate, y = turnout,
+                   fill = candidate, color = candidate),
+               alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  labs(x = "Candidato negro", y = "Participación (negra)") +
+  theme_minimal()
+# en promedio (mediana) hay más participación negra
+# cuando hay candidatos negros (aunque los valores más altos)
+# son justo de distritos sin candidato negro.
+# ¿Influye entonces?
+
+# descriptivamente
+datos |> 
+  summarise("mean_turnout" = mean(turnout), .by = candidate)
+# ¿suficiente grande la diferencia para considerarlas suficiente?
+
+# anova (obviamos de momento las condiciones)
+aov(data = datos, turnout ~ candidate) |> 
+  summary()
+# SSE = 0.5
+# SSR = 36.13
+
+# var explicada = 0.4950 (insesgado)
+# var residual = 0.0293 (insesgado)
+
+# ¿Cómo de grande es la var explicada vs no explicada?
+# F = 0.4950 / 0.0293 = 16.92 (aprox)
+
+# ¿Es suficientemente mayor que 1?
+
+# p-valor = 0 (aprox) ==> F >>>> 1 ==>
+# variabilidad de las medias en cada grupo es significativamente grande
+# (respecto a la variabilidad inherente de turnout)
+# ==> hay diferencias significativas entre las medias
+```
+
+
+
+### 🐣 Caso práctico II: ¿vemos a la gente más atractiva cuando bebemos?
+
+Los datos los tenemos cargados directamente en `beer_goggles_effect.csv` 
+
+```{r}
+datos <-
+  read_csv(file = "./datos/beer_goggles_effect.csv") 
+datos
+```
+
+En la tabla tenemos guardado el género de 48 estudiantes, 24 mujeres y 24 hombres, divididos en 3 grupos de alcohol, que han encontrado una pareja que les atrae en un bar. También tenemos la cantidad de alcohol ingerida y el **atractivo medido en base a una puntuación del 0 al 100**, otorgada por unos "jueces" externos, de la pareja encontrada por cada participante.
+
+
+
+> Convierte a factor ordinal y/o nominal lo que consideres
+
+```{r}
+#| code-fold: true
+datos <-
+  datos |> 
+  mutate("gender" = factor(gender),
+         "alcohol" =
+           factor(alcohol, levels = c("None", "2 Pints", "4 Pints"),
+                  ordered = TRUE))
+```
+
+
+#### Pregunta 1
+
+> Visualiza la distribución de la variable cuantitativa `attractiveness`. Tras hacer los gráficos que consideres, ¿es una variable normal?
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# densidad
+ggplot(datos) +
+  geom_density(aes(x = attractiveness)) +
+  theme_minimal()
+
+# q-q plot (vs normality)
+ggplot(datos) +
+  stat_qq(aes(sample = attractiveness)) +
+  stat_qq_line(aes(sample = attractiveness)) +
+  theme_minimal()
+
+# ¿es normal?
+shapiro.test(datos$attractiveness)
+```
+
+#### Pregunta 2
+
+> Repite el ejercicio anterior pero separando cada uno de los grupos de `alcohol`
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# densidades
+ggplot(datos) +
+  geom_density(aes(x = attractiveness, fill = alcohol,
+                   color = alcohol), alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  facet_wrap(~alcohol, scales = "free_y") +
+  theme_minimal()
+
+ggplot(datos) +
+  ggridges::geom_density_ridges(aes(x = attractiveness, y = alcohol,
+                                    fill = alcohol, color = alcohol),
+                                alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+
+# q-q plot (vs normality)
+ggplot(datos,
+       aes(sample = attractiveness, fill = alcohol, color = alcohol)) +
+  stat_qq(alpha = 0.5) +
+  stat_qq_line() +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  facet_wrap(~alcohol, scales = "free_y") +
+  theme_minimal()
+
+# ¿es normal?
+# son normales en cada subgrupo también
+datos |> 
+  summarise("p_value" = shapiro.test(attractiveness)$p.value,
+            .by = alcohol)
+```
+
+#### Pregunta 3
+
+> ¿Influye el grado de alcoholismo en lo atractivo que vemos a la gente? Responde a la pregunta como consideres. Responde de manera i) descriptiva; ii) visual y iii) inferencialmente
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# cuanti (atractiveness) vs cuali (alcohol) ==>  ANOVA
+# queremos testar
+# H_0: media de atractivo ("objetivo" según jueces) igual en cada grupo de alcohol
+# H_1: alguna distinta
+
+# ¿Cuáles son las medias?
+datos |> 
+  summarise("mean_attractiveness" = mean(attractiveness), .by = alcohol)
+# son diferentes (siempre lo van a ser por puro azar) pero...
+# ¿suficientemente diferentes?
+
+# visualmente
+ggplot(datos) +
+  geom_violin(aes(x = alcohol, y = attractiveness,
+                  fill = alcohol, color = alcohol), alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+
+ggplot(datos) +
+  geom_boxplot(aes(x = alcohol, y = attractiveness,
+                  fill = alcohol, color = alcohol), alpha = 0.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+# parece que optan por personas ligeramente más atractivas con 2 pintas
+# pero decrece estrepitosamente con 4
+# además se pierde la simetría de la variable según van borrachos
+# ¿suficientes diferencias?
+
+ggplot(datos |>
+         arrange(alcohol) |> 
+         rowid_to_column(var = "id") |> 
+         mutate("mean_attractiveness" = mean(attractiveness),
+                .by = alcohol)) +
+  geom_point(aes(x = id, y = attractiveness, color = alcohol),
+             alpha = 0.5, size = 3) +
+  geom_line(aes(x = id, y = mean_attractiveness, color = alcohol),
+            linewidth = 2.5) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  theme_minimal()
+
+# inferencialmente: anova
+aov(data = datos, attractiveness ~ alcohol) |> 
+  summary()
+# SSE = 1054
+# SSR = 3575
+
+# var explicada = 526.9 
+# var no explicada = 79.4
+
+# F = var explicada / var no explicada = 6.633
+
+# pvalue = 0.00299 ==> la variabilidad de las medias (varianza explicada)
+# es significativamente mayor que la no explicada ==> 
+# rechazamos la igualdad de medias ==> hay diferencias significativas ==>
+# alcohol influye en el atractivo que percibimos (somos menos exigentes) =>
+# hay asociación
+```
+
+
+#### Pregunta 4
+
+> En caso de que se hayan observado diferencias significativas, ¿qué grupos son realmente diferentes entre sí? Usa el mejor método post-hoc usando Bonferroni. ¿Cuál sería más adecuado? que consideres suponiendo que los 3 grupos los tratamos por igual
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# ¿varianzas iguales?
+car::leveneTest(datos$attractiveness ~ datos$alcohol)
+# no se rechaza igualdad de varianzas
+
+# la normalidad ya la hemos comprobado
+# mismo tamaño de grupos
+datos |> 
+  count(alcohol)
+
+# podemos aplicar tukey (paramétrico)
+# que controla mucho mejor el error de tipo II (mayor poder estadístico que Bonferroni)
+aov(data = datos, formula = attractiveness ~ alcohol) |>
+  TukeyHSD()
+# sin alcohol vs 2 pintas ==> no significativo
+# sin alcohol vs 4 pintas ==> diferencia significativas
+# 2 pintas vs 4 pintas ==> diferencia significativas
+```
+
+#### Pregunta 5
+
+> Repite la pregunta anterior pero considerando (como deberías) que el grupo de los abstemios es el grupo control.
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+# tenemos que cumple todas las hipótesis ya comprobadas
+DescTools::DunnettTest(x = datos$attractiveness, g = datos$alcohol,
+                       control = "None")
+# sin alcohol vs 2 pintas ==> no significativo
+# sin alcohol vs 4 pintas ==> diferencias significativas
+# podríamos decir que las diferencias son realmente significativas a partir de
+# la segunda pinta
+```
+
 
 
 

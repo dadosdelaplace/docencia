@@ -2394,8 +2394,8 @@ sample estimates:
 </section></section>
 <section>
 <section id="clase-3" class="title-slide slide level1 center">
-<h1>Clase 3: análisis de la varianza</h1>
-<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (30 de enero de 2025)</strong></span></p>
+<h1>Clases 3-4: análisis de la varianza</h1>
+<p><span style="color:#444442;"><strong>Asociación cuali vs cuanti: análisis de la varianza (30 de enero y 4 de febrero de 2025)</strong></span></p>
 </section>
 <section id="cuanti-vs-cuali" class="slide level2">
 <h2>Cuanti vs cuali</h2>
@@ -3266,11 +3266,45 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="caso-practico-4-1" class="slide level2">
-<h2>🐣 Caso práctico I: pendiente</h2>
+<section id="caso-practico-3-1" class="slide level2">
+<h2>🐣 Caso práctico I: participación vs candidatos</h2>
+<p>El fichero <code>blackturnout.csv</code> contiene los datos de participación en las elecciones midterm en EEUU de los años 2006, 2008 y 2010: <code>turnout</code> proporción de participación de la población negra (respecto a población negra en edad de votar), <code>cvap</code> proporción de habitantes de población negra del distrito y <code>candidate</code> 1 si el candidato pertenece a la población negra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb152"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/blackturnout.csv"</span>) <span class="sc">|&gt;</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb152-2"><a href="#cb152-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+     x1  year state district turnout   cvap candidate
+  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+1     1  2008 AK           0   0.710 0.0350         0
+2     2  2010 AK           0   0.448 0.0323         0
+3     3  2010 AK           1   0.448 0.0323         0
+4     4  2008 AK           1   0.710 0.0350         0
+5     5  2006 AK           1   0.439 0.0318         0</code></pre>
+</div>
+</div>
+<p>Intenta responder a las preguntas planteadas en el <a href="..."><strong>workbook</strong></a></p>
 </section>
-<section id="caso-practico-4-2" class="slide level2">
-<h2>🐣 Caso práctico II: pendiente</h2>
+<section id="caso-practico-3-2" class="slide level2">
+<h2>🐣 Caso práctico II: atractivo vs alcohol</h2>
+<p>Los datos los tenemos cargados directamente en <code>beer_goggles_effect.csv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/beer_goggles_effect.csv"</span>) <span class="sc">|&gt;</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb154-2"><a href="#cb154-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  gender alcohol attractiveness
+  &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;
+1 Female None              67.4
+2 Female None              69.9
+3 Female None              61.0
+4 Female None              58.5
+5 Female None              59.7</code></pre>
+</div>
+</div>
+<p>Tenemos guardado el género de 48 estudiantes, divididos en 3 grupos de ingesta de alcohol, que han encontrado pareja que les atrae en un bar. También tenemos el <strong>atractivo medido (puntuación del 0 al 100)</strong>, otorgada por unos “jueces” externos, de la pareja encontrada por cada participante.</p>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="..."><strong>workbook</strong></a></p>
 </section></section>
 <section id="repaso-entrega-i" class="title-slide slide level1 center">
 <h1>Repaso entrega I</h1>
@@ -3285,8 +3319,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p><span class="hl-yellow"><strong>Cuanti vs cuanti</strong></span>: ver <a href="#/tu-turno-2-3">💻 Tu turno</a></p></li>
 <li><p><span class="hl-yellow"><strong>Casos prácticos ANOVA</strong></span>:</p>
 <ul>
-<li><a href="..."><strong>pendiente</strong></a></li>
-<li><a href="..."><strong>pendiente</strong></a></li>
+<li><a href="..."><strong>participación vs candidato</strong></a></li>
+<li><a href="..."><strong>atractivo vs alcohol</strong></a></li>
 </ul></li>
 </ul>
 <div class="footer footer-default">
