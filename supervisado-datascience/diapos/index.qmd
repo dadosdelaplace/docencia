@@ -2551,6 +2551,7 @@ Si tenemos $X \sim \chi_{a}^2$ y $Y \sim \chi_{b}^2$, tenemos que su cociente (p
 
 
 $$F = \frac{\frac{SSE}{(c-1)\sigma^2}}{\frac{SSR}{(n-c)\sigma^2}}  \sim F_{c-1, n-c}$$
+
 ---
 
 ## ANOVA: un factor
@@ -3106,6 +3107,6 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosd
 * [**Cuanti vs cuanti**]{.hl-yellow}: ver [💻 Tu turno](#tu-turno-2-3)
 
 * [**Casos prácticos ANOVA**]{.hl-yellow}:  
-  - [**participación vs candidato**](...)
-  - [**atractivo vs alcohol**](...)
+  - [**participación vs candidato**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-participaci%C3%B3n-vs-candidatos)
+  - [**atractivo vs alcohol**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-atractivo-vs-alcohol)
 
