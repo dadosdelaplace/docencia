@@ -146,6 +146,325 @@ ggplot(datasaurus_dozen |> filter(dataset != "wide_lines"),
 
 ## Clase 2
 
+### 💻 Ejercicios resueltos: tablas de frecuencia
+
+
+#### Ejercicio 1
+
+Para repasar lo aprendido vamos a poner todo en práctica con el dataset `SatisfaccionPacientes.csv`. 
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+```
+
+
+📝 Aplica el código que sea necesario para responder a estas preguntas. ¿Cuál es el tamaño muestral? ¿Cuántas variables tenemos? ¿Cuántas modalidades tenemos en la variable `estado_civil` (y cuantas observaciones en cada una)?
+
+```{r}
+# Tamaño muestral / número de observaciones
+n <- nrow(datos)
+
+# Número de variables
+p <- ncol(datos)
+
+# ¿Qué modalidades tenemos?
+datos |>  count(estado_civil)
+```
+
+
+#### Ejercicio 2
+
+📝 Determina el tipo de variable (cuantitativa vs. cualitativa).
+
+```{r}
+# Variables cuantitativas: tiempo, grado satisfacción, número de visitas
+# Variables cualitativas: género, estado civil, estado salud
+glimpse(datos)
+```
+
+#### Ejercicio 3
+
+📝  Obten tablas de frecuencias (absoluta y relativa) en el caso de las cualitativas NOMINALES. Con ella intenta responder a las preguntas: a) ¿cuántas mujeres hay? b) ¿qué % de individuos están casados?
+
+```{r}
+# no podemos calcular acumulados ya que genero es nominal
+datos |>  count(genero) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 53 mujeres
+
+datos |> count(estado_civil) |> 
+  rename(frecuencia_abs = n) |> 
+  mutate(frecuencia_rel = frecuencia_abs/sum(frecuencia_abs))
+# Hay 26% personas casadas
+```
+
+
+#### Ejercicio 4
+
+📝 Convierte de manera adecuada la variable `genero` y `estado_civil` a cualitativa nominal
+
+```{r}
+datos <-
+  datos |>
+  mutate(estado_civil = factor(estado_civil),
+         genero = factor(genero))
+datos
+```
+
+#### Ejercicio 5
+
+📝 Calcula la media, mediana, rango intercuartílico y desviación típica de edad y tiempo de espera.
+
+```{r}
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25))
+resumen
+```
+
+#### Ejercicio 6
+
+📝 Repite el anterior ejercicio pero obteniendo las métricas desagregadas por sexo.
+
+```{r}
+resumen <-
+  datos |>
+  summarise(media_edad = mean(edad), sd_edad = sd(edad), mediana_edad = median(edad),
+           IQR_edad = quantile(edad, probs = 0.75) - quantile(edad, probs = 0.25),
+           # tiempo espera
+           media_tiempo_espera = mean(tiempo_espera), sd_tiempo_espera = sd(tiempo_espera),
+           mediana_tiempo_espera = median(tiempo_espera),
+           IQR_tiempo_espera = quantile(tiempo_espera, probs = 0.75) - quantile(tiempo_espera, probs = 0.25),
+          .by = genero)
+resumen
+```
+
+#### Ejercicio 7
+
+📝 Realiza un gráfico de violín para la variable `tiempo_espera` para cada género
+
+```{r}
+ggplot(datos) +
+  geom_violin(aes(x = genero, y = tiempo_espera, fill = genero, color = genero),
+              alpha = 0.7) +
+  ggthemes::scale_color_colorblind() +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+### 💻 Ejercicios resueltos: cuali vs cuali
+
+#### Ejercicio 1
+
+📝 Carga el fichero `placebo_medicamento_completo.csv` donde tenemos guardado los niveles de colesterol antes y después de un tratamiento: a 76 personas se les dio un medicamento para bajarlo y a 24 personas placebo.
+
+```{r}
+datos <- read_csv(file = "./datos/placebo_medicamento_completo.csv")
+datos
+```
+
+
+#### Ejercicio 2
+
+📝 Añade una nueva variable dicotómica a los datos que nos guarde `mejora` si el paciente mejoró tras el tratamiento y `no mejora` en caso negativo
+
+```{r}
+datos <-
+  datos |> 
+  mutate("mejora" = if_else(colesterol_post <= colesterol_pre, "mejora",
+                            "no mejora"))
+datos
+```
+
+#### Ejercicio 3
+
+📝 Visualiza ambas variables (`mejora` y `tratamiento`) a la vez con un diagrama de barras de manera que podamos observar indicios de una posible independencia o dependencia entre ambas. Hazlo antes a papel y boli si lo necesitas
+
+```{r}
+# así pintaríamos en cada barra de tratamiento los mejora o no mejora
+ggplot(datos) +
+  geom_bar(aes(x = tratamiento, fill = mejora), alpha = 0.6) +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+
+# pero dado que tienes más tratados que del grupo control
+# no permite comparar bien así que igualamos las barras
+# para que cada barra sea el 100% de su categoría
+ggplot(datos) +
+  geom_bar(aes(x = tratamiento, fill = mejora), alpha = 0.6,
+           position = "fill") +
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+
+# Parece evidente visualmente que hay una diferencia entre mejora y no mejora
+# en cada barra
+```
+
+#### Ejercicio 4
+
+📝 Calcula la tabla de frecuencias absoluta y relativa que consideres necesarias para responder a las siguientes preguntas:
+
+a) ¿Cuántas personas de las tratadas con medicamento no mejoraron?
+
+b) ¿Qué de personas del total del estudio acabaron mejorando habiendo tomando placebo?
+
+c) ¿Qué % de personas tomó medicamentos entre los que no mejoraron?
+
+d) ¿Qué % de personas de los que tomaron medicamento mejoraron?
+
+```{r}
+table(datos$tratamiento, datos$mejora)
+prop.table(table(datos$tratamiento, datos$mejora))
+prop.table(table(datos$tratamiento, datos$mejora), margin = 1)
+prop.table(table(datos$tratamiento, datos$mejora), margin = 2)
+# 9 personas de las tratadas con medicamento no mejoraron
+# 9% del total de personas mejoraron y tomaron placebo
+# 37% de los que no mejoraron habían tomado la medicación
+# 88.1% de los que tomaron medicamento mejoraron
+```
+
+#### Ejercicio 5
+
+📝 Para confirmar y cuantificar las evidencias que ya tenemos, vamos a realizar un contraste de hipótesis. Realiza la prueba de chi-cuadrado e interpreta el resultado con $\alpha = 0.05$.
+
+```{r}
+chisq.test(datos$tratamiento, datos$mejora)
+# Dado que p-value = 1.654e-06 << alpha --> debemos rechazar la hipótesis nula -->
+# hay evidencias suficientes para afirmar que hay relación de dependencia
+```
+
+#### Ejercicio 6
+
+
+> Realiza la prueba de chi-cuadrado y Fisher e incluye los p-valores en una tabla resumen haciendo uso de tidyverse. Exporta a un `.csv` dicha tabla resumen
+
+```{r}
+resumen_pvalores <-
+  datos |> 
+  summarise("sig_chisq" = chisq.test(datos$tratamiento, datos$mejora)$p.value,
+            "sig_fisher" = fisher.test(datos$tratamiento, datos$mejora)$p.value)
+resumen_pvalores
+
+write_csv(resumen_pvalores, file = "./datos/resumen_pvalores.csv")
+```
+
+#### Ejercicio 7
+
+📝 Realiza la prueba de Fisher y mira la salida completa. Interpreta la salida, no solo del contraste sino de los odd ratio.
+
+```{r}
+fisher.test(datos$tratamiento, datos$mejora)
+
+# OR estimado es de 11.95 --> al ser mayor que 1 implica que
+# hay una asociación positiva entre las variables
+# hay 12 veces más opciones de que te baje el colesterol si tomas el
+# medicamento respecto a una posible mejora aleatoria (porque sí).
+```
+
+### 💻 Ejercicios resueltos: cuanti vs cuanti
+
+#### Ejercicio 1
+
+Vamos a tomar de nuevo nuestros datos de satisfacción de pacientes
+
+```{r}
+library(readr)
+datos <-
+  read_csv(file = "./datos/SatisfaccionPacientes.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+📝 Obtén la matriz de correlaciones de Pearson haciendo uso de `cor()`. Luego haz uso de `correlate()` del paquete `{corrr}`
+
+```{r}
+datos |> 
+  select(where(is.numeric)) |> 
+  cor()
+
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate()
+```
+
+#### Ejercicio 2
+
+📝 Obtén la matriz de correlaciones con kendall y spearman
+
+
+```{r}
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate(method = "spearman")
+
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate(method = "kendall")
+```
+
+#### Ejercicio 3
+
+📝 Analiza y argumenta, en función de los resultados anteriores, la asociación entre `edad` y `grado_satisfaccion`, y entre `tiempo_espera` y `grado_satisfaccion`
+
+```{r}
+# Vemos que por ejemplo `edad` no correla con `grado_satisfaccion` ($-0.0339$ según Pearson) pero `tiempo_espera` tiene una correlación negativa ($-0.586$ según Pearson) con `grado_satisfaccion`.
+```
+
+#### Ejercicio 4
+
+📝 Con el paquete `{corrplot}` visualiza la matriz de correlaciones
+
+```{r}
+datos |> 
+  select(where(is.numeric)) |> 
+  cor() |> 
+  corrplot::corrplot(method = "square")
+```
+
+#### Ejercicio 5
+
+📝 Investiga el paquete `{GGally}` y a función `ggpairs()` para visualizar las correlaciones de todas las variables (salvo `id`)
+
+```{r}
+library(GGally)
+ggpairs(datos |> select(-id)) +
+  theme_minimal()
+
+# cuali vs cuali: pictogramas (con rectángulos)
+# cuanti vs cuanti: scatter plot
+# cuanti vs cuali: boxplot desagregados
+# variable vs sí misma: densidad
+```
+
+#### Ejercicio 6
+
+📝 ¿Cómo saber que la correlación observada entre `edad` y `grado_satisfaccion` ($-0.0339$) es suficientemente pequeña para considerarse incorreladas? ¿Cómo saber si la correlación entre `tiempo_espera` y `grado_satisfaccion` ($-0.586$) es suficientemente grande para considerar que es **significativa**?
+
+
+```{r}
+cor.test(datos$edad, datos$grado_satisfaccion)
+cor.test(datos$tiempo_espera, datos$grado_satisfaccion)
+
+# En uno el p-valor es bastante alto (**no rechazamos la hipótesis nula de incorrelación**) y en otro el p-valor es prácticamente 0 (rechazamos la hipótesis nula ->  **hay evidencias de correlación significativa**).
+
+# Ninguna de las 3 es normal así que lo apropiado sería
+# contrastar la correlación de rango
+performance::check_normality(datos$edad)
+performance::check_normality(datos$grado_satisfaccion)
+performance::check_normality(datos$tiempo_espera)
+```
+
+
+
 ### 🐣 Caso práctico I: encuesta de satisfacción
 
 Vamos a seguir poniendo en práctica lo aprendido el dataset `SatisfaccionPacientes.csv`
@@ -629,6 +948,132 @@ chisq.test(datos$depresion, datos$ansiedad)
 
 
 ## Clases 3 y 4
+
+### 💻 Ejercicios resueltos: ANOVA
+
+#### Ejercicio 1
+
+
+Vamos a usar el fichero `cushing_syndrome.csv` que contiene datos del síndrome de Cushing, un trastorno hormonal asociado con un alto nivel de cortisol. Para cada individuo de la muestra tenemos recopiladas las tasas de excreción urinaria de dos metabolitos de esteroides (tetrahidrocortisona y pregnanetriol). La variable `type` recopila el tipo de síndrome: adenoma (a), hiperplasia bilateral (b), carcinoma (c) y desconocido (u)
+
+
+📝  Carga el fichero `cushing_syndrome.csv`
+
+```{r}
+datos <-
+  read_csv(file = "./datos/cushing_syndrome.csv") |> 
+  janitor::clean_names()
+datos
+```
+
+#### Ejercicio 2
+
+📝 Calcula la media global de `tetrahydrocortisone`. Calcula la media para cada uno de los tipos de síndrome así como su tamaño muestral
+
+```{r}
+datos |> 
+  summarise("mean_global" = mean(tetrahydrocortisone))
+
+datos |> 
+  summarise("mean_groups" = mean(tetrahydrocortisone),
+            "n" = n(), .by = type)
+```
+
+#### Ejercicio 3
+
+📝 Calcula la varianza global de `tetrahydrocortisone`. Calcula la varianza para cada uno de los tipos de síndrome así como la varianza ponderada (cada varianza de grupo multiplicada por su proporción muestral)
+
+```{r}
+datos |> 
+  summarise("var_global" = var(tetrahydrocortisone))
+
+datos |> 
+  summarise("var_groups" = var(tetrahydrocortisone),
+            "n" = n(), .by = type) |> 
+  mutate("var_weighted" = sum(var_groups*n)/sum(n))
+```
+
+
+#### Ejercicio 4
+
+📝 Visualiza con boxplot `tetrahydrocortisone` para cada grupo
+
+```{r}
+ggplot(datos) +
+  geom_boxplot(aes(x = type, y = tetrahydrocortisone,
+                   fill = type, color = type), alpha = 0.6) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  MetBrewer::scale_fill_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+#### Ejercicio 5
+
+📝 Visualiza los puntos de `tetrahydrocortisone` junto con sus medias distinguiendo para cada uno de los grupos
+
+```{r}
+ggplot(datos |>
+         rowid_to_column(var = "id") |>
+         mutate("mean" = mean(tetrahydrocortisone), .by = type)) +
+  geom_point(aes(x = id, y = tetrahydrocortisone, color = type),
+             size = 3, alpha = 0.6) +
+  geom_line(aes(x = id, y = mean, color = type), linewidth = 2) +
+  MetBrewer::scale_color_met_d(palette_name = "Renoir") +
+  theme_minimal()
+```
+
+#### Ejercicio 6
+
+📝 Plantea la formulación del ANOVA `tetrahydrocortisone` vs `type`. Ejecuta el código que consideres y saca conclusiones: ¿hay diferencias significativas de dicha hormona entre los síndromes con $\alpha = 0.05$ y $\alpha = 0.01$?
+
+```{r}
+aov(data = datos, formula = tetrahydrocortisone ~ type) |>
+  summary()
+# p-valor: 0.01 > 0.05 ==> no rechazamos H_0 ==>
+# no dif sig a ese nivel de sig. ==> no se continuaría
+
+# p-valor: 0.0412 < 0.05 ==> rechazamos H_0 ==>
+# hay diferencias sig. entre síndromes ==> ¿entre cuáles?
+```
+
+#### Ejercicio 7
+
+📝 En los casos en los que se haya obtenido una dif significativa, ¿cuáles son diferentes entre sí? Haz pruebas post-hoc usando Bonferroni y Tukey (realizando comprobaciones previas que consideres). ¿Cuál sería más adecuado?
+
+```{r}
+pairwise.t.test(datos$tetrahydrocortisone, datos$type, p.adjust.method = "bonferroni", pool.sd = FALSE) 
+# solo diferencia significativas a vs b (0.01 p-valor ajustado)
+
+# ¿varianzas iguales?
+car::leveneTest(datos$tetrahydrocortisone ~ datos$type)
+aov(data = datos, formula = tetrahydrocortisone ~ type) |>
+  TukeyHSD()
+# solo dif significativa c vs a 
+# dif medias = 16.753, IC bajo de 0.65, IC alto de 32.85
+# p-valor ajustado 0.039
+
+# en este caso mejor bonferroni porque a) no hay tamaños iguales y b) no son normales
+```
+
+
+#### Ejercicio 8
+
+📝 Por último vamos a considerar que el tipo `"a"` es nuestro grupo de referencia/control. ¿Cómo comparar todas vs control en lugar de todas vs todas (asumimos que son independientes)?
+
+```{r}
+# ¿varianzas iguales?
+car::leveneTest(datos$tetrahydrocortisone ~ datos$type)
+
+# ¿Normalidad? ==> no parece
+olsrr::ols_test_normality(datos$tetrahydrocortisone)
+
+# Dunnet test
+DescTools::DunnettTest(x = datos$tetrahydrocortisone, g = datos$type)
+# nos devuelve que el único sig diferente al control es c (como antes)
+# resultados "con pinzas" ya que no cumple la normalidad de momento
+```
+
+
 
 ### 🐣 Caso práctico I: participación vs candidatos
 
