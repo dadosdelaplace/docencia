@@ -32,6 +32,8 @@ setwd(dir = getwd())
 En el paquete `{datasets}` se encuentra el dataset conocido como [**cuarteto de Anscombe**]{.hl-yellow}, un dataset que cuenta con 4 conjuntos de datos, cada uno de ellos cuenta con 11 observaciones de una variable x y otra y.
 
 ```{r}
+#| message: false
+#| warning: false
 library(tidyverse)
 anscombe_tb <- as_tibble(datasets::anscombe)
 anscombe_tb
