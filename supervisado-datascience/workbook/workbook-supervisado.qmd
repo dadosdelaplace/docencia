@@ -20,6 +20,10 @@ execute:
 setwd(dir = getwd())
 ```
 
+* [**Diapositivas**]{.hl-yellow}: las diapositivas usadas en el aula a lo largo del curso, estructuradas por clases, estarán disponibles y actualizadas en **<https://javieralvarezliebana.es/docencia/supervisado-datascience/diapos>** 
+
+* [**Datos**]{.hl-yellow}: [**acceso a Drive**](https://drive.google.com/drive/folders/1sim9xjM2qRcWrsMHrv_qRlkwDbGKOWN9?usp=sharing) y [**Github**](https://github.com/dadosdelaplace/docencia/tree/main/supervisado-datascience/workbook/datos)
+
 ## Clase 1
 
 ### 🐣 Caso práctico I: anscombe
