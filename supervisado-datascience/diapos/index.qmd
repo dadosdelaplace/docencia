@@ -3110,3 +3110,405 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosd
   - [**participación vs candidato**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-participaci%C3%B3n-vs-candidatos)
   - [**atractivo vs alcohol**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-atractivo-vs-alcohol)
 
+
+
+# Clase 6: primeras regresiones {#clase-6}
+
+[**Historia regresión. Regresión lineal univariante**]{style="color:#444442;"}
+
+
+
+---
+
+## Historia de la reg
+
+> Hay una regla universal: cualquier pariente tuyo es probablemente más mediocre que tú»
+
+La [**historia de regresión**]{.hl-yellow} se remonta a **Francis Galton**, primo de Charles Darwin, que además de estadístico fue psicólogo, geógrafo y, por desgracia, el primer eugenésico (de hecho acuñó el termino)
+
+. . .
+
+También fue el primero en proponer métodos de clasificación de huellas en medicina forense e incluso se le atribuye el primer mapa meteorológico de la historia
+
+---
+
+## Regresión y Darwin
+
+Galton mostró fascinación por «El origen de la especies» de su primo. Sin embargo, [**Galton no se centraba en los mejor adaptados sino en los que él llama mediocres**]{.hl-yellow}
+
+. . .
+
+Según Galton, las sociedades estaban fomentando la mediocridad, interfiriendo en la selección natural, así que empezó a **estudiar si el talento era o no hereditario**.
+
+
+. . .
+
+¿Su conclusión? El [**talento se disipaba**]{.hl-yellow} a lo largo de las generaciones
+
+---
+
+## Regresión a la mediocridad
+
+En 1886 publicó «Regression towards mediocrity in hereditary stature», un artículo que cambiaría la estadística: fue el [**primer uso documentado de lo que hoy conocemos como recta de regresión**]{.hl-yellow} 
+
+. . .
+
+:::: columns
+::: {.column width="38%"}
+
+![](img/reg_dalton.jpg)
+
+:::
+
+::: {.column width="62%"}
+
+Galton analizó la estatura de 205 hijos y padres, observando que, de nuevo, los valores extremos se disipaban: a lo largo de las generaciones había una [**regresión (un retroceso) a la mediocridad (entendida como la media)**]{.hl-yellow} 
+
+
+:::
+::::
+
+Hijos de altos eran algo más bajitos, e hijos de bajitos eran algo más altos.
+
+---
+
+## Regresión a la mediocridad
+
+:::: columns
+::: {.column width="60%"}
+
+![](img/reg-galton-coef.jpg)
+
+:::
+
+::: {.column width="40%"}
+
+Galton no solo observó que las [**estaturas «regresaban» a un valor medio sino que lo hacían con un patrón**]{.hl-yellow}, con un factor constante de $2/3$: si los padres se desviaban $+3$ por encima de la media, los hijos se desviaban solo $(2/3)*3 = +2$ por encima de la media.
+
+:::
+::::
+
+---
+
+## Aprendizaje estadístico
+
+La regresión lineal es el modelo más simple de lo que se conoce como [**aprendizaje estadístico (Machine Learning)**]{.hl-yellow}, en concreto del conocido como [**aprendizaje supervisado**]{.hl-yellow}
+
+
+* [**Aprendizaje supervisado**]{.hl-purple}: tendremos dos tipos de variables, la [**variable dependiente (output/target)**]{.hl-yellow} que se quiere predecir/clasificar, normalmente denotada como $Y$, y las [**variables independientes (inputs) o explicativas o predictoras**]{.hl-yellow}, que contienen la información disponible. Ejemplos: regresión, knn, árboles, etc.
+ 
+
+
+
+* [**Aprendizaje no supervisado**]{.hl-purple}: no existe la distinción entre target y variables explicativas ya que [**no tenemos etiquetados los datos**]{.hl-yellow}, no sabemos a priori la respuesta correcta. El aprendizaje no supervisado [**buscará patrones**]{.hl-yellow} basados en similitudes/diferencias. Ejemplos: PCA, clustering, redes neuronales, etc.
+
+
+
+---
+
+
+## Modelo predictivo
+
+Dentro del marco de la [**predicción supervisada**]{.hl-yellow} un modelo tendrá siempre la siguiente forma:
+
+$$Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) $$
+
+. . .
+
+* $X$ serán los [**datos**]{.hl-yellow}
+
+. . .
+
+* $f(\cdot)$ será nuestro [**modelo**]{.hl-yellow}, es decir, el [**valor esperado de $Y$**]{.hl-yellow} con la información que tenemos.
+
+. . .
+
+* $\mathbf{X} = \left(X_1, \ldots, X_p \right)$ serán nuestras [**predictoras o variables independientes**]{.hl-yellow}
+
+. . .
+
+* $\varepsilon$ será el [**error o ruido**]{.hl-yellow}, una [**variable aleatoria de media 0**]{.hl-yellow} $E \left[\varepsilon | \boldsymbol{X} = x \right] = 0$ (en estadística SIEMPRE nos vamos a equivocar).
+
+---
+
+## Modelo predictivo
+
+$$Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) $$
+
+
+El objetivo es intentar [**estimar dicha variable objetivo pero no a nivel individual sino su promedio $E \left[Y | \boldsymbol{X} = x \right]$**]{.hl-yellow} minimizando al máximo el error cometido (la parte que podemos evitar).
+
+. . .
+
+El [**modelo estimado**]{.hl-yellow} se definirá como
+
+$$\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]}  = \widehat{f}\left(X_1, \ldots, X_p \right), \quad \widehat{\varepsilon} = \widehat{Y} - Y$$
+
+* $\widehat{Y}$ serán las [**estimaciones**]{.hl-yellow}, definidas como la estimación del [**valor esperado de $Y$**]{.hl-yellow} con la información que tenemos.
+
+* $\widehat{f}$ será el [**modelo estimado**]{.hl-yellow}
+
+* $\widehat{\varepsilon}$ los [**errores estimados**]{.hl-yellow} (con media muestral igual a cero).
+
+
+---
+
+## Reg. lineal univariante
+
+En el caso concreto de la [**regresión lineal**]{.hl-yellow} nuestro modelo será un **hiperplano lineal** (y en el caso de una variable, una simple recta):
+
+$$E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p$$
+
+. . .
+
+Su estimación será por tanto
+
+$$\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]} = \widehat{f}(\mathbf{X}) = \widehat{\beta_0} + \widehat{\beta_1} X_1 + \ldots + \widehat{\beta_p} X_p $$
+
+* El modelo $\widehat{f}(\cdot)$ será una [**recta/hiperplano lineal**]{.hl-yellow}
+
+* En el caso de la regresión lineal [**univariante**]{.hl-yellow} tendremos por tanto $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1X$ ($p = 1$)
+
+* El objetivo será obtener la estimación de los $\widehat{\beta}$ tal que **minimicemos el error**
+
+---
+
+## Varianza residual
+
+El objetivo será [**explicar el máximo de información (variabilidad) de Y con la información de X**]{.hl-yellow}. Como ya se mencionó en el tema de ANOVA,  una manera de [**cuantificar lo que no podemos explicar**]{.hl-green} es lo que llamamos [**varianza residual (o error cuadrático medio)**]{.hl-green} (varianza del error).
+
+
+. . .
+
+Dicha cantidad la podemos estimar muestralmente como sigue (ya que la [**media muestral de los errores será cero**]{.hl-purple})
+
+
+$$s_{r}^{2} = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \left( \widehat{\varepsilon}_{i} - \overline{\widehat{\varepsilon}}_{i}\right)^2 = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} $$
+
+
+¿Cómo quedaría la fórmula si **desarrollo lo que vale los errores estimados** $\widehat{\varepsilon}$?
+
+. . .
+
+
+$$s_{r}^{2} := s_{r}^{2}\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)= \frac{1}{n} \sum_{i=1}^{n} \left(Y_i - \widehat{Y}_i \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\widehat{\beta}_0 + \widehat{\beta}_1X_i \right)\right]^2$$
+
+---
+
+## Varianza residual
+
+$$s_{r}^{2} := s_{r}^{2}\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)= \frac{1}{n} \sum_{i=1}^{n} \left(Y_i - \widehat{Y}_i \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\widehat{\beta}_0 + \widehat{\beta}_1X_i \right)\right]^2$$
+
+[**IMPORTANTE**]{.hl-green}: esa varianza residual cuantifica la variabilidad (es decir, la información) de la variable objetivo que **NO EXPLICA** la variable X, o lo que es lo mismo, [**cuantifica cúanto nos equivamos en promedio**]{.hl-yellow}, un promedio de las desviaciones (al cuadrado) entre el valor real $y$ y el valor predicho $\widehat{y}$
+
+---
+
+
+## Método mínimos cuadrados
+
+El [**método de los mínimos cuadrados**]{.hl-yellow}, originariamente planteado a la vez por Legendre y Gauss, consiste en establecer que los [**parámetros óptimos**]{.hl-yellow} serán aquellos $\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)$ que minimicen dicha suma de cuadrados (que minimicen la varianza residual)
+
+$$\widehat{\boldsymbol{\beta}} = \left(\widehat{\beta}_0, \widehat{\beta}_1 \right) = \arg \min_{\left(\beta_0, \beta_1 \right) \in \mathbb{R}^2} s_{r}^{2}\left(\beta_0, \beta_1 \right) = \arg \min_{\left(\beta_0, \beta_1 \right) \in \mathbb{R}^2} n*s_{r}^{2}\left(\beta_0, \beta_1 \right)$$
+
+Vamos a desarrollar ese cuadrado...
+
+--- 
+
+
+## Método mínimos cuadrados
+
+$$s_{r}^{2}\left(\beta_0, \beta_1 \right) = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\beta_0 + \beta_1 X_i \right)\right]^2$$ 
+Vamos a desarrollar ese cuadrado...
+
+. . .
+
+$$\begin{eqnarray} s_{r}^{2}\left(\beta_0, \beta_1 \right) &=& \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_0 + \beta_1 X_i \right)^2 - 2Y_{i}\left(\beta_0 + \beta_1 X_i \right)\right] \nonumber \\  &=& \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_{0}^{2} + \beta_{1}^{2}X_{i}^{2} + 2\beta_{0}\beta_{1} X_i \right) - 2Y_{i}\beta_{0} - 2Y_{i}\beta_{1} X_i  \right] \end{eqnarray}$$
+
+
+
+
+---
+
+## Método mínimos cuadrados
+
+$$\begin{eqnarray} s_{r}^{2}\left(\beta_0, \beta_1 \right) &=& \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_0 + \beta_1 X_i \right)^2 - 2Y_{i}\left(\beta_0 + \beta_1 X_i \right)\right] \nonumber \\  &=& \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_{0}^{2} + \beta_{1}^{2}X_{i}^{2} + 2\beta_{0}\beta_{1} X_i \right) - 2Y_{i}\beta_{0} - 2Y_{i}\beta_{1} X_i  \right] \end{eqnarray}$$
+
+¿Cómo encontrar el mínimo de una función?
+
+. . .
+
+Efectivamente, derivando.
+
+$$\frac{\partial s_{r}^{2}}{\partial \beta_0} = \frac{1}{n} \sum_{i=1}^{n} \left[ 2\beta_{0} + 2 \beta_1 X_i - 2Y_i \right] = 2 \left( \beta_{0} + \beta_{1} \overline{x} - \overline{y} \right)$$ 
+
+$$\frac{\partial s_{r}^{2}}{\partial \beta_1} = \frac{1}{n} \sum_{i=1}^{n} \left[ 2\beta_{1}X_{i}^{2} + 2 \beta_0 X_i - 2Y_iX_i \right] = 2 \left( \beta_{1} \overline{x^2}+\beta_{0}\overline{x} - \overline{xy} \right)$$ 
+
+---
+
+## Método mínimos cuadrados
+
+
+Si lo agrupamos en un sistema y lo [**igualamos a cero**]{.hl-yellow} para encontrar el óptimo tenemos
+
+$$\left\{\beta_{0} + \beta_{1} \overline{x}   = \overline{y} \atop \overline{x} \beta_{0} + \overline{x^2} \beta_{1} = \overline{xy} \right.$$ 
+
+¿Cómo resolver un sistema?
+
+. . .
+
+Haciendo la regla de Cramer tenemos que
+
+$$\widehat{\beta}_1 = \frac{\overline{xy} - \overline{x}*\overline{y}}{\overline{x^2} - \overline{x}^2} = \frac{s_{xy}}{s_{x}^{2}}$$
+
+$$\widehat{\beta}_0 = \frac{\overline{y}*\overline{x^2} - \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2}  = \overline{y} + \frac{\overline{y}*\overline{x}^2- \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2} = \overline{y} - \widehat{\beta}_1 \overline{x}$$
+
+
+---
+
+## Estimación reg. univariante
+
+
+Los [**estimadores de los parámetros de una regresión lineal univariante**]{.hl-yellow} serán por tanto $\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}$ ([**pendiente de la recta**]{.hl-purple}) y $\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}$ ([**ordenada en el origen**]{.hl-purple})
+
+. . .
+
+Es importante [**distinguir lo población de lo muestral**]{.hl-yellow}
+
+* Los parámetros $\left( \beta_0, \beta_1 \right)$ son desconocidos, los [**parámetros poblacionales**]{.hl-yellow}
+
+* Los parámetros $\left( \widehat{\beta}_0, \widehat{\beta}_1 \right)$ son estimados a partir de los datos, son [**variables aleatorias**]{.hl-yellow} ya que han sido calculados en función de una muestra aleatoria $\left\lbrace \left(x_i, y_i \right) \right\rbrace_{i=1}^{n}$ de la población $\left(X, Y \right) $
+
+---
+
+## Estimación reg. univariante
+
+Los [**estimadores de los parámetros de una regresión lineal univariante**]{.hl-yellow} serán por tanto $\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}$ ([**pendiente de la recta**]{.hl-purple}) y $\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}$ ([**ordenada en el origen**]{.hl-purple})
+
+¿Cuál es su [**interpretación**]{.hl-yellow}?
+
+. . .
+
+* [**Ordenada en el origen**]{.hl-yellow}: también llamado **intercepto**, y denotado como $\beta_0$ su valor real, es el valor de $Y$ cuando $X=0$. Es decir, $\widehat{\beta}_0$ se puede interpretar como la estimación $\widehat{Y}$ cuando $X = 0$ (cuando dicha estimación tenga sentido).
+
+
+. . .
+
+* [**Pendiente**]{.hl-yellow}: denotado com $\beta_1$ su valor real, cuantifica el incremento de $Y$ cuando $X$ aumenta una unidad. Es decir, $\widehat{\beta}_1$ se puede interpretar como la variación de la **estimación $\widehat{Y}$ cuando $X$ tiene un incremento unitario**.
+
+---
+
+## Regresión en R
+
+Para hacer un [**ajuste de regresión lineal univarainte en R**]{.hl-yellow} solo necesitamos utilizar la función `lm()` (de linear model) con dos argumentos:
+
+* `data = ...`: los datos de los que queremos sacar el ajuste (sin ausentes de momento)
+* `formula = ...`: la fórmula del ajuste (y frente a x, expresado como `y ~ x`)
+
+```{r}
+datos <- 
+  starwars |>
+  drop_na(mass, height) 
+ajuste_lineal <- lm(data = datos, formula = mass ~ height)
+```
+
+---
+
+## Regresión en R
+
+Una vez realizado el ajuste podemos [**resumirlo**]{.hl-yellow} con `summary()`
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+. . .
+
+¿Qué representa cada bloque de la salida?
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Call: ...`: la orden que hemos ejecutado
+
+* `Residuals: ...`: un resumen en forma de [**cuartiles de los residuales**]{.hl-yellow}, es decir, de los [**errores**]{.hl-yellow} (fíjate que aunque la media de los errores siempre es 0, no tiene porque serlo la mediana, de hecho que no lo sea ya nos indica que normales no van a ser seguramente).
+
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+
+* `Coefficients: ...`: de momento solo nos interesa la columna [**Estimate**]{.hl-yellow} que nos da las estimaciones de los parámetros. En la fila `Intercept` siempre irá $\widehat{\beta}_0$, y el resto de filas tendrá el nombre de la variable predictora a la que multiplica el parámetro (en este caso la fila `height` corresponde a la estimación $\widehat{\beta}_1$).
+
+---
+
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+En nuestro caso particular, el [**ajuste de regresión**]{.hl-yellow} viene dado por $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X = -11.4868 + 0.6240*X$, donde $X$ es la estatura: por cada cm extra que mida un personaje, el modelo estima que el peso aumenta 0.6240 kg, y la estimación de peso para un persona que mida 0 cm es de -11.4868 kg (obviamente esta estimación mucho sentido no tiene)
+
+---
+
+## Regresión en R
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Multiple R-squared: ...` (de momento lo demás lo ignoramos): es el conocido como $R^2$ o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una [**métrica de calidad del ajuste**]{.hl-yellow} que va de 0 (peor) a 1 (mejor).
+
+---
+
+## Predicción en R
+
+Una vez estimado el modelo (sus coeficientes) podemos usarlo, bien para  [**estimar valores que el modelo conoce**]{.hl-yellow} (de los que aprendió) o para [**predecir nuevos valores**]{.hl-yellow} de los que el modelo no ha aprendido
+
+. . .
+
+Simplemente necesitamos la función `predict(modelo, nuevos_datos)`, usando como argumentos el **modelo entrenado** y un [**nuevo dataset que contenga una/s columna/s llamadas igual que nuestras variables predictores**]{.hl-yellow} con los valores de la predictora para los que queremos predecir
+
+```{r}
+predicciones <- 
+  tibble("height" = c(15, 81.3, 153.1, 189.3, 210.3),
+         "mass_predict" = predict(ajuste_lineal, tibble("height" = height)))
+predicciones
+```
+
+---
+
+## Rango de fiabilidad
+
+Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un **modelo extremadamente bueno**, con una bondad de ajuste $R^2 = 0.99$. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con $X = 15$ cm?
+
+. . .
+
+```{r}
+predicciones
+```
+
+Si te fijas la [**¡predicción del peso es negativa!**]{.hl-red}: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?
+
+---
+
+## Rango de fiabilidad
+
+
+![](img/rango_1.png)
+![](img/rango_2.png)
+
+Nuestro [**modelo solo puede aprender de los datos que conoce**]{.hl-yellow}: solo podremos predecir para valores nuevos de las predictoras [**dentro del rango de las predictoras con las que entrenamos**]{.hl-yellow} el modelo
+
+Da igual lo bueno que sea el modelo: las [**predicciones fuera del rango de las predictoras de entrenamiento**]{.hl-red} no serán fiables ya que el modelo no sabe lo que sucede fuera.

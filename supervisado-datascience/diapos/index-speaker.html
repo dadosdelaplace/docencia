@@ -3310,10 +3310,396 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><a href="https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-atractivo-vs-alcohol"><strong>atractivo vs alcohol</strong></a></li>
 </ul></li>
 </ul>
+</section>
+
+<section>
+<section id="clase-6" class="title-slide slide level1 center">
+<h1>Clase 6: primeras regresiones</h1>
+<p><span style="color:#444442;"><strong>Historia regresión. Regresión lineal univariante</strong></span></p>
+</section>
+<section id="historia-de-la-reg" class="slide level2">
+<h2>Historia de la reg</h2>
+<blockquote>
+<p>Hay una regla universal: cualquier pariente tuyo es probablemente más mediocre que tú»</p>
+</blockquote>
+<p>La <span class="hl-yellow"><strong>historia de regresión</strong></span> se remonta a <strong>Francis Galton</strong>, primo de Charles Darwin, que además de estadístico fue psicólogo, geógrafo y, por desgracia, el primer eugenésico (de hecho acuñó el termino)</p>
+<div class="fragment">
+<p>También fue el primero en proponer métodos de clasificación de huellas en medicina forense e incluso se le atribuye el primer mapa meteorológico de la historia</p>
+</div>
+</section>
+<section id="regresión-y-darwin" class="slide level2">
+<h2>Regresión y Darwin</h2>
+<p>Galton mostró fascinación por «El origen de la especies» de su primo. Sin embargo, <span class="hl-yellow"><strong>Galton no se centraba en los mejor adaptados sino en los que él llama mediocres</strong></span></p>
+<div class="fragment">
+<p>Según Galton, las sociedades estaban fomentando la mediocridad, interfiriendo en la selección natural, así que empezó a <strong>estudiar si el talento era o no hereditario</strong>.</p>
+</div>
+<div class="fragment">
+<p>¿Su conclusión? El <span class="hl-yellow"><strong>talento se disipaba</strong></span> a lo largo de las generaciones</p>
+</div>
+</section>
+<section id="regresión-a-la-mediocridad" class="slide level2">
+<h2>Regresión a la mediocridad</h2>
+<p>En 1886 publicó «Regression towards mediocrity in hereditary stature», un artículo que cambiaría la estadística: fue el <span class="hl-yellow"><strong>primer uso documentado de lo que hoy conocemos como recta de regresión</strong></span></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:38%;">
+<p><img data-src="img/reg_dalton.jpg"></p>
+</div><div class="column" style="width:62%;">
+<p>Galton analizó la estatura de 205 hijos y padres, observando que, de nuevo, los valores extremos se disipaban: a lo largo de las generaciones había una <span class="hl-yellow"><strong>regresión (un retroceso) a la mediocridad (entendida como la media)</strong></span></p>
+</div>
+</div>
+<p>Hijos de altos eran algo más bajitos, e hijos de bajitos eran algo más altos.</p>
+</div>
+</section>
+<section id="regresión-a-la-mediocridad-1" class="slide level2">
+<h2>Regresión a la mediocridad</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="img/reg-galton-coef.jpg"></p>
+</div><div class="column" style="width:40%;">
+<p>Galton no solo observó que las <span class="hl-yellow"><strong>estaturas «regresaban» a un valor medio sino que lo hacían con un patrón</strong></span>, con un factor constante de <span class="math inline">\(2/3\)</span>: si los padres se desviaban <span class="math inline">\(+3\)</span> por encima de la media, los hijos se desviaban solo <span class="math inline">\((2/3)*3 = +2\)</span> por encima de la media.</p>
+</div>
+</div>
+</section>
+<section id="aprendizaje-estadístico" class="slide level2">
+<h2>Aprendizaje estadístico</h2>
+<p>La regresión lineal es el modelo más simple de lo que se conoce como <span class="hl-yellow"><strong>aprendizaje estadístico (Machine Learning)</strong></span>, en concreto del conocido como <span class="hl-yellow"><strong>aprendizaje supervisado</strong></span></p>
+<ul>
+<li><p><span class="hl-purple"><strong>Aprendizaje supervisado</strong></span>: tendremos dos tipos de variables, la <span class="hl-yellow"><strong>variable dependiente (output/target)</strong></span> que se quiere predecir/clasificar, normalmente denotada como <span class="math inline">\(Y\)</span>, y las <span class="hl-yellow"><strong>variables independientes (inputs) o explicativas o predictoras</strong></span>, que contienen la información disponible. Ejemplos: regresión, knn, árboles, etc.</p></li>
+<li><p><span class="hl-purple"><strong>Aprendizaje no supervisado</strong></span>: no existe la distinción entre target y variables explicativas ya que <span class="hl-yellow"><strong>no tenemos etiquetados los datos</strong></span>, no sabemos a priori la respuesta correcta. El aprendizaje no supervisado <span class="hl-yellow"><strong>buscará patrones</strong></span> basados en similitudes/diferencias. Ejemplos: PCA, clustering, redes neuronales, etc.</p></li>
+</ul>
+</section>
+<section id="modelo-predictivo-1" class="slide level2">
+<h2>Modelo predictivo</h2>
+<p>Dentro del marco de la <span class="hl-yellow"><strong>predicción supervisada</strong></span> un modelo tendrá siempre la siguiente forma:</p>
+<p><span class="math display">\[Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) \]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(X\)</span> serán los <span class="hl-yellow"><strong>datos</strong></span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(f(\cdot)\)</span> será nuestro <span class="hl-yellow"><strong>modelo</strong></span>, es decir, el <span class="hl-yellow"><strong>valor esperado de <span class="math inline">\(Y\)</span></strong></span> con la información que tenemos.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(\mathbf{X} = \left(X_1, \ldots, X_p \right)\)</span> serán nuestras <span class="hl-yellow"><strong>predictoras o variables independientes</strong></span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(\varepsilon\)</span> será el <span class="hl-yellow"><strong>error o ruido</strong></span>, una <span class="hl-yellow"><strong>variable aleatoria de media 0</strong></span> <span class="math inline">\(E \left[\varepsilon | \boldsymbol{X} = x \right] = 0\)</span> (en estadística SIEMPRE nos vamos a equivocar).</li>
+</ul>
+</div>
+</section>
+<section id="modelo-predictivo-2" class="slide level2">
+<h2>Modelo predictivo</h2>
+<p><span class="math display">\[Y = f(\mathbf{X}) + \varepsilon = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right) \]</span></p>
+<p>El objetivo es intentar <span class="hl-yellow"><strong>estimar dicha variable objetivo pero no a nivel individual sino su promedio <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right]\)</span></strong></span> minimizando al máximo el error cometido (la parte que podemos evitar).</p>
+<div class="fragment">
+<p>El <span class="hl-yellow"><strong>modelo estimado</strong></span> se definirá como</p>
+<p><span class="math display">\[\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]}  = \widehat{f}\left(X_1, \ldots, X_p \right), \quad \widehat{\varepsilon} = \widehat{Y} - Y\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\widehat{Y}\)</span> serán las <span class="hl-yellow"><strong>estimaciones</strong></span>, definidas como la estimación del <span class="hl-yellow"><strong>valor esperado de <span class="math inline">\(Y\)</span></strong></span> con la información que tenemos.</p></li>
+<li><p><span class="math inline">\(\widehat{f}\)</span> será el <span class="hl-yellow"><strong>modelo estimado</strong></span></p></li>
+<li><p><span class="math inline">\(\widehat{\varepsilon}\)</span> los <span class="hl-yellow"><strong>errores estimados</strong></span> (con media muestral igual a cero).</p></li>
+</ul>
+</div>
+</section>
+<section id="reg.-lineal-univariante" class="slide level2">
+<h2>Reg. lineal univariante</h2>
+<p>En el caso concreto de la <span class="hl-yellow"><strong>regresión lineal</strong></span> nuestro modelo será un <strong>hiperplano lineal</strong> (y en el caso de una variable, una simple recta):</p>
+<p><span class="math display">\[E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p\]</span></p>
+<div class="fragment">
+<p>Su estimación será por tanto</p>
+<p><span class="math display">\[\widehat{Y} := \widehat{E \left[Y | \boldsymbol{X} = x \right]} = \widehat{f}(\mathbf{X}) = \widehat{\beta_0} + \widehat{\beta_1} X_1 + \ldots + \widehat{\beta_p} X_p \]</span></p>
+<ul>
+<li><p>El modelo <span class="math inline">\(\widehat{f}(\cdot)\)</span> será una <span class="hl-yellow"><strong>recta/hiperplano lineal</strong></span></p></li>
+<li><p>En el caso de la regresión lineal <span class="hl-yellow"><strong>univariante</strong></span> tendremos por tanto <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1X\)</span> (<span class="math inline">\(p = 1\)</span>)</p></li>
+<li><p>El objetivo será obtener la estimación de los <span class="math inline">\(\widehat{\beta}\)</span> tal que <strong>minimicemos el error</strong></p></li>
+</ul>
+</div>
+</section>
+<section id="varianza-residual" class="slide level2">
+<h2>Varianza residual</h2>
+<p>El objetivo será <span class="hl-yellow"><strong>explicar el máximo de información (variabilidad) de Y con la información de X</strong></span>. Como ya se mencionó en el tema de ANOVA, una manera de <span class="hl-green"><strong>cuantificar lo que no podemos explicar</strong></span> es lo que llamamos <span class="hl-green"><strong>varianza residual (o error cuadrático medio)</strong></span> (varianza del error).</p>
+<div class="fragment">
+<p>Dicha cantidad la podemos estimar muestralmente como sigue (ya que la <span class="hl-purple"><strong>media muestral de los errores será cero</strong></span>)</p>
+<p><span class="math display">\[s_{r}^{2} = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \left( \widehat{\varepsilon}_{i} - \overline{\widehat{\varepsilon}}_{i}\right)^2 = \frac{1}{n} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} \]</span></p>
+<p>¿Cómo quedaría la fórmula si <strong>desarrollo lo que vale los errores estimados</strong> <span class="math inline">\(\widehat{\varepsilon}\)</span>?</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[s_{r}^{2} := s_{r}^{2}\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)= \frac{1}{n} \sum_{i=1}^{n} \left(Y_i - \widehat{Y}_i \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\widehat{\beta}_0 + \widehat{\beta}_1X_i \right)\right]^2\]</span></p>
+</div>
+</section>
+<section id="varianza-residual-1" class="slide level2">
+<h2>Varianza residual</h2>
+<p><span class="math display">\[s_{r}^{2} := s_{r}^{2}\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)= \frac{1}{n} \sum_{i=1}^{n} \left(Y_i - \widehat{Y}_i \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\widehat{\beta}_0 + \widehat{\beta}_1X_i \right)\right]^2\]</span></p>
+<p><span class="hl-green"><strong>IMPORTANTE</strong></span>: esa varianza residual cuantifica la variabilidad (es decir, la información) de la variable objetivo que <strong>NO EXPLICA</strong> la variable X, o lo que es lo mismo, <span class="hl-yellow"><strong>cuantifica cúanto nos equivamos en promedio</strong></span>, un promedio de las desviaciones (al cuadrado) entre el valor real <span class="math inline">\(y\)</span> y el valor predicho <span class="math inline">\(\widehat{y}\)</span></p>
+</section>
+<section id="método-mínimos-cuadrados" class="slide level2">
+<h2>Método mínimos cuadrados</h2>
+<p>El <span class="hl-yellow"><strong>método de los mínimos cuadrados</strong></span>, originariamente planteado a la vez por Legendre y Gauss, consiste en establecer que los <span class="hl-yellow"><strong>parámetros óptimos</strong></span> serán aquellos <span class="math inline">\(\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)\)</span> que minimicen dicha suma de cuadrados (que minimicen la varianza residual)</p>
+<p><span class="math display">\[\widehat{\boldsymbol{\beta}} = \left(\widehat{\beta}_0, \widehat{\beta}_1 \right) = \arg \min_{\left(\beta_0, \beta_1 \right) \in \mathbb{R}^2} s_{r}^{2}\left(\beta_0, \beta_1 \right) = \arg \min_{\left(\beta_0, \beta_1 \right) \in \mathbb{R}^2} n*s_{r}^{2}\left(\beta_0, \beta_1 \right)\]</span></p>
+<p>Vamos a desarrollar ese cuadrado…</p>
+</section>
+<section id="método-mínimos-cuadrados-1" class="slide level2">
+<h2>Método mínimos cuadrados</h2>
+<p><span class="math display">\[s_{r}^{2}\left(\beta_0, \beta_1 \right) = \frac{1}{n} \sum_{i=1}^{n} \left[Y_i - \left(\beta_0 + \beta_1 X_i \right)\right]^2\]</span> Vamos a desarrollar ese cuadrado…</p>
+<div class="fragment">
+<p><span class="math display">\[\begin{eqnarray} s_{r}^{2}\left(\beta_0, \beta_1 \right) &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_0 + \beta_1 X_i \right)^2 - 2Y_{i}\left(\beta_0 + \beta_1 X_i \right)\right] \nonumber \\  &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_{0}^{2} + \beta_{1}^{2}X_{i}^{2} + 2\beta_{0}\beta_{1} X_i \right) - 2Y_{i}\beta_{0} - 2Y_{i}\beta_{1} X_i  \right] \end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="método-mínimos-cuadrados-2" class="slide level2">
+<h2>Método mínimos cuadrados</h2>
+<p><span class="math display">\[\begin{eqnarray} s_{r}^{2}\left(\beta_0, \beta_1 \right) &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_0 + \beta_1 X_i \right)^2 - 2Y_{i}\left(\beta_0 + \beta_1 X_i \right)\right] \nonumber \\  &amp;=&amp; \frac{1}{n} \sum_{i=1}^{n} \left[Y_{i}^{2} + \left(\beta_{0}^{2} + \beta_{1}^{2}X_{i}^{2} + 2\beta_{0}\beta_{1} X_i \right) - 2Y_{i}\beta_{0} - 2Y_{i}\beta_{1} X_i  \right] \end{eqnarray}\]</span></p>
+<p>¿Cómo encontrar el mínimo de una función?</p>
+<div class="fragment">
+<p>Efectivamente, derivando.</p>
+<p><span class="math display">\[\frac{\partial s_{r}^{2}}{\partial \beta_0} = \frac{1}{n} \sum_{i=1}^{n} \left[ 2\beta_{0} + 2 \beta_1 X_i - 2Y_i \right] = 2 \left( \beta_{0} + \beta_{1} \overline{x} - \overline{y} \right)\]</span></p>
+<p><span class="math display">\[\frac{\partial s_{r}^{2}}{\partial \beta_1} = \frac{1}{n} \sum_{i=1}^{n} \left[ 2\beta_{1}X_{i}^{2} + 2 \beta_0 X_i - 2Y_iX_i \right] = 2 \left( \beta_{1} \overline{x^2}+\beta_{0}\overline{x} - \overline{xy} \right)\]</span></p>
+</div>
+</section>
+<section id="método-mínimos-cuadrados-3" class="slide level2">
+<h2>Método mínimos cuadrados</h2>
+<p>Si lo agrupamos en un sistema y lo <span class="hl-yellow"><strong>igualamos a cero</strong></span> para encontrar el óptimo tenemos</p>
+<p><span class="math display">\[\left\{\beta_{0} + \beta_{1} \overline{x}   = \overline{y} \atop \overline{x} \beta_{0} + \overline{x^2} \beta_{1} = \overline{xy} \right.\]</span></p>
+<p>¿Cómo resolver un sistema?</p>
+<div class="fragment">
+<p>Haciendo la regla de Cramer tenemos que</p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{\overline{xy} - \overline{x}*\overline{y}}{\overline{x^2} - \overline{x}^2} = \frac{s_{xy}}{s_{x}^{2}}\]</span></p>
+<p><span class="math display">\[\widehat{\beta}_0 = \frac{\overline{y}*\overline{x^2} - \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2}  = \overline{y} + \frac{\overline{y}*\overline{x}^2- \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2} = \overline{y} - \widehat{\beta}_1 \overline{x}\]</span></p>
+</div>
+</section>
+<section id="estimación-reg.-univariante" class="slide level2">
+<h2>Estimación reg. univariante</h2>
+<p>Los <span class="hl-yellow"><strong>estimadores de los parámetros de una regresión lineal univariante</strong></span> serán por tanto <span class="math inline">\(\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}\)</span> (<span class="hl-purple"><strong>pendiente de la recta</strong></span>) y <span class="math inline">\(\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}\)</span> (<span class="hl-purple"><strong>ordenada en el origen</strong></span>)</p>
+<div class="fragment">
+<p>Es importante <span class="hl-yellow"><strong>distinguir lo población de lo muestral</strong></span></p>
+<ul>
+<li><p>Los parámetros <span class="math inline">\(\left( \beta_0, \beta_1 \right)\)</span> son desconocidos, los <span class="hl-yellow"><strong>parámetros poblacionales</strong></span></p></li>
+<li><p>Los parámetros <span class="math inline">\(\left( \widehat{\beta}_0, \widehat{\beta}_1 \right)\)</span> son estimados a partir de los datos, son <span class="hl-yellow"><strong>variables aleatorias</strong></span> ya que han sido calculados en función de una muestra aleatoria <span class="math inline">\(\left\lbrace \left(x_i, y_i \right) \right\rbrace_{i=1}^{n}\)</span> de la población $(X, Y ) $</p></li>
+</ul>
+</div>
+</section>
+<section id="estimación-reg.-univariante-1" class="slide level2">
+<h2>Estimación reg. univariante</h2>
+<p>Los <span class="hl-yellow"><strong>estimadores de los parámetros de una regresión lineal univariante</strong></span> serán por tanto <span class="math inline">\(\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}\)</span> (<span class="hl-purple"><strong>pendiente de la recta</strong></span>) y <span class="math inline">\(\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}\)</span> (<span class="hl-purple"><strong>ordenada en el origen</strong></span>)</p>
+<p>¿Cuál es su <span class="hl-yellow"><strong>interpretación</strong></span>?</p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ordenada en el origen</strong></span>: también llamado <strong>intercepto</strong>, y denotado como <span class="math inline">\(\beta_0\)</span> su valor real, es el valor de <span class="math inline">\(Y\)</span> cuando <span class="math inline">\(X=0\)</span>. Es decir, <span class="math inline">\(\widehat{\beta}_0\)</span> se puede interpretar como la estimación <span class="math inline">\(\widehat{Y}\)</span> cuando <span class="math inline">\(X = 0\)</span> (cuando dicha estimación tenga sentido).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Pendiente</strong></span>: denotado com <span class="math inline">\(\beta_1\)</span> su valor real, cuantifica el incremento de <span class="math inline">\(Y\)</span> cuando <span class="math inline">\(X\)</span> aumenta una unidad. Es decir, <span class="math inline">\(\widehat{\beta}_1\)</span> se puede interpretar como la variación de la <strong>estimación <span class="math inline">\(\widehat{Y}\)</span> cuando <span class="math inline">\(X\)</span> tiene un incremento unitario</strong>.</li>
+</ul>
+</div>
+</section>
+<section id="regresión-en-r" class="slide level2">
+<h2>Regresión en R</h2>
+<p>Para hacer un <span class="hl-yellow"><strong>ajuste de regresión lineal univarainte en R</strong></span> solo necesitamos utilizar la función <code>lm()</code> (de linear model) con dos argumentos:</p>
+<ul>
+<li><code>data = ...</code>: los datos de los que queremos sacar el ajuste (sin ausentes de momento)</li>
+<li><code>formula = ...</code>: la fórmula del ajuste (y frente a x, expresado como <code>y ~ x</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1"></a>datos <span class="ot">&lt;-</span> </span>
+<span id="cb156-2"><a href="#cb156-2"></a>  starwars <span class="sc">|&gt;</span></span>
+<span id="cb156-3"><a href="#cb156-3"></a>  <span class="fu">drop_na</span>(mass, height) </span>
+<span id="cb156-4"><a href="#cb156-4"></a>ajuste_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regresión-en-r-1" class="slide level2">
+<h2>Regresión en R</h2>
+<p>Una vez realizado el ajuste podemos <span class="hl-yellow"><strong>resumirlo</strong></span> con <code>summary()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb157"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>¿Qué representa cada bloque de la salida?</p>
+</div>
+</section>
+<section id="regresión-en-r-2" class="slide level2">
+<h2>Regresión en R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb159"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><p><code>Call: ...</code>: la orden que hemos ejecutado</p></li>
+<li><p><code>Residuals: ...</code>: un resumen en forma de <span class="hl-yellow"><strong>cuartiles de los residuales</strong></span>, es decir, de los <span class="hl-yellow"><strong>errores</strong></span> (fíjate que aunque la media de los errores siempre es 0, no tiene porque serlo la mediana, de hecho que no lo sea ya nos indica que normales no van a ser seguramente).</p></li>
+</ul>
+</section>
+<section id="regresión-en-r-3" class="slide level2">
+<h2>Regresión en R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb161"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Coefficients: ...</code>: de momento solo nos interesa la columna <span class="hl-yellow"><strong>Estimate</strong></span> que nos da las estimaciones de los parámetros. En la fila <code>Intercept</code> siempre irá <span class="math inline">\(\widehat{\beta}_0\)</span>, y el resto de filas tendrá el nombre de la variable predictora a la que multiplica el parámetro (en este caso la fila <code>height</code> corresponde a la estimación <span class="math inline">\(\widehat{\beta}_1\)</span>).</li>
+</ul>
+</section>
+<section id="regresión-en-r-4" class="slide level2">
+<h2>Regresión en R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb163"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<p>En nuestro caso particular, el <span class="hl-yellow"><strong>ajuste de regresión</strong></span> viene dado por <span class="math inline">\(\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X = -11.4868 + 0.6240*X\)</span>, donde <span class="math inline">\(X\)</span> es la estatura: por cada cm extra que mida un personaje, el modelo estima que el peso aumenta 0.6240 kg, y la estimación de peso para un persona que mida 0 cm es de -11.4868 kg (obviamente esta estimación mucho sentido no tiene)</p>
+</section>
+<section id="regresión-en-r-5" class="slide level2">
+<h2>Regresión en R</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb165"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Multiple R-squared: ...</code> (de momento lo demás lo ignoramos): es el conocido como <span class="math inline">\(R^2\)</span> o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una <span class="hl-yellow"><strong>métrica de calidad del ajuste</strong></span> que va de 0 (peor) a 1 (mejor).</li>
+</ul>
+</section>
+<section id="predicción-en-r" class="slide level2">
+<h2>Predicción en R</h2>
+<p>Una vez estimado el modelo (sus coeficientes) podemos usarlo, bien para <span class="hl-yellow"><strong>estimar valores que el modelo conoce</strong></span> (de los que aprendió) o para <span class="hl-yellow"><strong>predecir nuevos valores</strong></span> de los que el modelo no ha aprendido</p>
+<div class="fragment">
+<p>Simplemente necesitamos la función <code>predict(modelo, nuevos_datos)</code>, usando como argumentos el <strong>modelo entrenado</strong> y un <span class="hl-yellow"><strong>nuevo dataset que contenga una/s columna/s llamadas igual que nuestras variables predictores</strong></span> con los valores de la predictora para los que queremos predecir</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1"></a>predicciones <span class="ot">&lt;-</span> </span>
+<span id="cb167-2"><a href="#cb167-2"></a>  <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="fl">81.3</span>, <span class="fl">153.1</span>, <span class="fl">189.3</span>, <span class="fl">210.3</span>),</span>
+<span id="cb167-3"><a href="#cb167-3"></a>         <span class="st">"mass_predict"</span> <span class="ot">=</span> <span class="fu">predict</span>(ajuste_lineal, <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> height)))</span>
+<span id="cb167-4"><a href="#cb167-4"></a>predicciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  height mass_predict
+   &lt;dbl&gt;        &lt;dbl&gt;
+1   15          -2.13
+2   81.3        39.2 
+3  153.         84.0 
+4  189.        107.  
+5  210.        120.  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="rango-de-fiabilidad" class="slide level2">
+<h2>Rango de fiabilidad</h2>
+<p>Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un <strong>modelo extremadamente bueno</strong>, con una bondad de ajuste <span class="math inline">\(R^2 = 0.99\)</span>. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con <span class="math inline">\(X = 15\)</span> cm?</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1"></a>predicciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  height mass_predict
+   &lt;dbl&gt;        &lt;dbl&gt;
+1   15          -2.13
+2   81.3        39.2 
+3  153.         84.0 
+4  189.        107.  
+5  210.        120.  </code></pre>
+</div>
+</div>
+<p>Si te fijas la <span class="hl-red"><strong>¡predicción del peso es negativa!</strong></span>: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?</p>
+</div>
+</section>
+<section id="rango-de-fiabilidad-1" class="slide level2">
+<h2>Rango de fiabilidad</h2>
+<p><img data-src="img/rango_1.png"> <img data-src="img/rango_2.png"></p>
+<p>Nuestro <span class="hl-yellow"><strong>modelo solo puede aprender de los datos que conoce</strong></span>: solo podremos predecir para valores nuevos de las predictoras <span class="hl-yellow"><strong>dentro del rango de las predictoras con las que entrenamos</strong></span> el modelo</p>
+<p>Da igual lo bueno que sea el modelo: las <span class="hl-red"><strong>predicciones fuera del rango de las predictoras de entrenamiento</strong></span> no serán fiables ya que el modelo no sabe lo que sucede fuera.</p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
