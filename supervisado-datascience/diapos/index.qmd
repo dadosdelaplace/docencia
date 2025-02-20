@@ -3470,6 +3470,388 @@ ajuste_lineal |> summary()
 
 * `Multiple R-squared: ...` (de momento lo demás lo ignoramos): es el conocido como $R^2$ o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una [**métrica de calidad del ajuste**]{.hl-yellow} que va de 0 (peor) a 1 (mejor).
 
+
+
+---
+
+## Rango de fiabilidad
+
+Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un **modelo extremadamente bueno**, con una bondad de ajuste $R^2 = 0.99$. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con $X = 15$ cm?
+
+. . .
+
+
+Si te fijas la [**¡predicción del peso es negativa!**]{.hl-red}: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?
+
+---
+
+## Rango de fiabilidad
+
+
+![](img/rango_1.png)
+![](img/rango_2.png)
+
+Nuestro [**modelo solo puede aprender de los datos que conoce**]{.hl-yellow}: solo podremos predecir para valores nuevos de las predictoras [**dentro del rango de las predictoras con las que entrenamos**]{.hl-yellow} el modelo
+
+Da igual lo bueno que sea el modelo: las [**predicciones fuera del rango de las predictoras de entrenamiento**]{.hl-red} no serán fiables ya que el modelo no sabe lo que sucede fuera.
+
+
+# Clase 7: inferencia {#clase-7}
+
+[**Inferencia de la regresión**]{style="color:#444442;"}
+
+---
+
+
+## Repaso
+
+
+* [**Modelo lineal**]{.hl-yellow}: descrito como $Y = \beta_0 +  \beta_1 X_1 + \ldots + \beta_p X_p + \varepsilon$, buscamos estimar el **valor esperado**  $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 +  \beta_1 X_1 + \ldots + \beta_p x_p$, donde $\boldsymbol{X}$ es la población y $x$ la muestra.
+
+. . .
+
+* [**Caso univariante**]{.hl-yellow}: $p = 1$ tal que $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 +  \beta_1 x$.
+
+. . .
+
+* [**Estimación**]{.hl-yellow}: $\widehat{Y}$ en función de $\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)$. De todas las rectas posibles, queremos la [**recta de regresión mínimos-cuadrados**]{.hl-yellow}: **minimiza la varianza residual** (calculamos sus derivadas parciales, igualamos a cero y resolvemos el sistema). Esos estimadores serán $\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}$  y $\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}$.
+
+. . .
+
+* [**Predicción**]{.hl-yellow}: podemos estimar o predecir valores con la recta $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_0 X$, siempre y cuando $X = x$ esté dentro del rango de valores de entrenamiento del modelo.
+
+---
+
+## Diagnosis
+
+Hasta ahora no hemos pedido nada a la muestra $\left\lbrace \left( X_i, Y_i \right) \right\rbrace_{i=1}^{n}$, ¿para qué necesitaríamos [**hipótesis**]{.hl-yellow} entonces?
+
+. . .
+
+La razón es que, hasta ahora, lo único que hemos podido realizar es una [**estimación puntual**]{.hl-yellow} de los parámetros, pero dado que dichos estimadores serán variables aleatorias, necesitaremos realizar [**inferencia estadística**]{.hl-yellow} sobre ellos (recuerda: los parámetros son simples estimaciones para esa muestra de la población, de forma que dada otra muestra, la recta será distinta).
+
+. . .
+
+Para poder cuantificar la [**variabilidad y precisión de nuestras estimaciones**]{.hl-yellow} necesitaremos que los datos cumplan ciertas [**hipótesis probabilísticas**]{.hl-purple}: lo interesante no es la estimación puntual de los parámetros a partir de la muestra sino lo que [**podamos inferir de ellos a la población**]{.hl-green}
+
+---
+
+## Diagnosis
+
+En el caso de la regresión lineal univariante pediremos [**4 hipótesis**]{.hl-yellow}
+
+. . .
+
+1. [**Linealidad**]{.hl-green}: el valor esperado de $Y$ es $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x$
+
+. . .
+
+2. [**Homocedasticidad**]{.hl-green}: el modelo no podrá explicar toda la información (a veces se equivocará por arriba y otras por abajo), pero necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$, que no varíe según aumenta o disminuye la $X$.
+
+. . .
+
+3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
+
+. . .
+
+4. [**Independencia**]{.hl-green}: los errores $\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}$ deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán **incorrelados**
+
+$${\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j$$
+
+---
+
+
+## Diagnosis
+
+
+Las 4 hipótesis se pueden [**resumir de manera teórica**]{.hl-yellow} en
+
+$$Y | \boldsymbol{X} = x \sim N \left(\beta_0 + \beta_1x, \sigma_{\varepsilon}^2 \right)$$
+
+. . .
+
+Su [**versión muestral**]{.hl-purple} sería simplemente
+
+$$y_i | \boldsymbol{X} = x_i \sim N \left(\beta_0 + \beta_1x_i, \sigma_{\varepsilon}^2 \right), \quad i=1,\ldots,n$$
+
+---
+
+
+## Inferencia de los parámetros
+
+Las hipótesis nos permiten decir (lo demostraremos más adelante) que los [**parámetros estimados siguen una distribución (condicionada) normal**]{.hl-yellow} de [**media el parámetro**]{.hl-purple}  a estimar y de [**varianza el conocido como standard error**]{.hl-purple}
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+. . .
+
+Por las propiedades de la normal y el teorema central del límite 
+
+$$\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)}| \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1$$
+
+---
+
+## Inferencia de los parámetros
+
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+Veremos más adelante porqué pero de momento...estos son los $SE^2$ (**varianza de nuestros parámetros**)
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+. . .
+
+¿Qué [**propiedades tienen entonces los estimadores**]{.hl-yellow} $\left(\widehat{\beta}_0,\widehat{\beta}_1 \right)$?
+
+
+---
+
+## Inferencia de los parámetros
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+. . .
+
+* [**Insesgados**]{.hl-yellow}: ambos son [**estimadores insesgados**]{.hl-green} ya que la esperanza de la estimación es el valor a estimar. $E \left[ \widehat{\beta}_j \right] = \beta_j$
+
+. . .
+ 
+* [**Precisión vs tamaño muestral**]{.hl-yellow}: cuando $n \to \infty$, sus varianzas tienden a cero, es decir, $SE \left(\widehat{\beta}_j\right)^2 \to^{n \to \infty} 0$ ya que $n$ está dividiendo. Traducción: [**a más datos, mayor precision**]{.hl-green} (menos varianza tendrán los estimadores si repetimos la toma de muestras)
+
+
+---
+
+## Inferencia de los parámetros
+
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+. . .
+
+* [**Precisión vs var residual**]{.hl-yellow}: cuanto más grande sea la varianza del error $\sigma_{\varepsilon}^{2}$, $SE \left(\widehat{\beta}_j\right)^2$ crecerá (es decir, [**más ruido implicará más imprecisión**]{.hl-red})
+
+. . .
+
+* [**Precisión vs varianza de X**]{.hl-yellow}: cuanto más grande sea la varianza de la predictora $s_{x}^2$, $SE \left(\widehat{\beta}_j\right)^2$ decrecerá, tal que $SE \left(\widehat{\beta}_j\right)^2 \to^{s_{x}^2 \to \infty} 0$. Dicho de otra forma: cuánta [**más información (varianza) contenga nuestra tabla, mayor precisión**]{.hl-green}.
+
+. . .
+
+* [**Precisión vs media X**]{.hl-yellow}: solo afecta a la estimación de $\beta_0$, cuya [**precisión decrece cuando la media aumenta**]{.hl-red}. Esto tiene sentido ya que cuánto más grande en media sean los datos, menos fiable será la predicción para $X=0$.
+
+---
+
+## Inferencia de los parámetros
+
+$$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
+
+$$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+
+
+Pero tenemos un problema: la [**varianza residual poblacional**]{.hl-yellow} (varianza población del error) $\sigma_{\varepsilon}^{2}$ es [**desconocida**]{.hl-yellow}. Como suele pasar, la [**sustituiremos por un estimador (insesgado)**]{.hl-yellow} de la misma  donde $p$ es el número de variables (el cuadrado de lo que R llama `Residual standard error)
+
+. . .
+
+$$\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \sqrt{\text{Res standard error}}$$
+
+---
+
+## Inferencia de los parámetros
+
+
+
+$$\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1$$
+
+
+¿Qué suele suceder cuando en una normal **desconocemos la varianza real y la sustituimos por su estimador insesgado**?
+
+. . .
+
+Si [**sustituimos el error standard por su estimador**]{.hl-yellow} (sustituyendo la varianza residual por su estimador insesgado), obtenemos que sigue una **t-Student**
+
+$$\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1$$
+
+donde $\widehat{SE} \left(\widehat{\beta}_0\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right]$ y $\widehat{SE} \left(\widehat{\beta}_1\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n s_{x}^2}$
+
+---
+
+## Inferencia de los parámetros
+
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `std error`: es lo que hemos denotado como $\widehat{SE} \left(\widehat{\beta}_j\right)^2$
+
+. . .
+
+* `t value`: es el estadístico $\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}$ que hemos dicho que sigue una t-Student (fíjate que hemos puesto $\beta_j = 0$)
+
+## Inferencia de los parámetros
+
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+* `Pr(>|t|)`: representa un p-valor. ¿De qué contraste se te ocurre?
+
+. . .
+
+* `Residual standard error`: es el estimador insesgado de la desviación típica residual, que hemos denotado como $\widehat{\sigma_{\varepsilon}}$
+
+---
+
+## Inferencia de los parámetros
+
+
+
+$$\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1$$
+
+
+Si te acuerdas de inferencia, esto implica que los [**intervalos de confianza de nuestros parámetros**]{.hl-yellow} son
+
+$$IC \left(\alpha, \widehat{\beta}_j \right) = \left[\widehat{\beta}_j - t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right), \widehat{\beta}_j + t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right) \right]$$
+donde $t_{n-p-1; \alpha/2}$ es el cuantil $1-\alpha/2$ (deja a la izquierda una probabilidad de $1-\alpha/2$).
+
+---
+
+
+## Inferencia de los parámetros
+
+Podemos calcular los intervalos de confianza de los parámetros en `R` con `confint()`
+
+```{r}
+confint(ajuste_lineal, level = 0.99)
+confint(ajuste_lineal, level = 0.95)
+confint(ajuste_lineal, level = 0.9)
+```
+
+---
+
+## Inferencia de los parámetros
+
+[**¿Qué significa realmente un intervalo de confianza?**]{.hl-yellow}
+
+. . .
+
+La **probabilidad de que el parámetro real** caiga dentro [**NO EXISTE**]{.hl-red}: el parámetro es desconocido pero fijo, no aleatorio, así que no sentido calcular su probabilidad.
+
+. . .
+
+Si obtenemos para un parámetro un intervalo $[-1, 1]$ al 95%, no significa que $P(parametro \in [-1, 1]) = 0.95$: significa que [**si tomamos 1000 muestras distintas de la población**]{.hl-yellow} y calculamos para cada una el intervalo de confianza, [**aproximadamente 950 intervalos de confianza contendrán dentro el parámetro real**]{.hl-yellow}
+
+. . .
+
+Un [**intervalo al 95% implica que habrá una frecuencia esperada de 0.95**]{.hl-yellow} de que intervalos que no conocemos (porque se derivan de muestras que no hemos tomado) contengan al parámetro real, pero [**no es la probabilidad de que tu intervalo calculado contenga a dicho parámetro**]{.hl-red}: nos habla la precisión de nuestra metodología de estimación, no del parámetro.
+
+
+---
+
+## Inferencia de los parámetros
+
+[**Ejemplo**]{.hl-yellow}. Dada una población normal $\mu = 3$ y $\sigma = 1.2$, generamos 500 muestras distintas (tamaño $n = 100$ cada una), de manera que para cada una aplicamos un `t.test()` para calcular un IC para la media $\mu$.
+
+```{r}
+#| code-fold: true
+mu <- 3
+sigma <- 1.2
+m <- 500
+conf_int <- tibble("id" = 1:m, "low" = NA, "high" = NA)
+
+for (i in 1:m) {
+  
+  sample <- rnorm(n = 100, mean = mu, sd = sigma)
+  hyp_test <- t.test(x = sample)
+  conf_int[i, 2] <- hyp_test$conf.int[1]
+  conf_int[i, 3] <- hyp_test$conf.int[2]
+}
+conf_int <-
+  conf_int |> 
+  mutate(true_param = mu >= low & mu <= high)
+
+ggplot(conf_int) +
+  geom_segment(aes(y = id, yend = id, x = low, xend = high,
+                   color = true_param, linewidth = true_param)) +
+  geom_vline(xintercept = mu) +
+  scale_linewidth_manual(values = c(1.1, 0.2)) +
+  theme_minimal() +
+  guides(linewidth = "none") +
+  labs(x = "Valores del intervalo",
+       y = "id intervalo",
+       color = "¿Contiene mu real?")
+```
+
+---
+
+
+## Inferencia de los parámetros
+
+Y si tenemos inferencia, tenemos contrastes: ¿te acuerdas de los p-valores que devuelve la tabla para cada parámetro?
+
+. . .
+
+Para cada parámetro se realiza un [**contraste de significancia**]{.hl-yellow}: ¿cuánta evidencia hay en mis datos para poder decir que el [**valor estimado de mi parámetro es distinto de 0**]{.hl-yellow}?
+
+$$H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0$$
+
+. . .
+
+El estadístico usado es el [**t value**]{.hl-yellow} que devuelve `R` definido como $\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}$ y que, [**BAJO EL SUPUESTO DE QUE LA HIPÓTESIS NULA SEA CIERTA**]{.hl-purple}, sigue una t-Student $t_{n-p-1}$
+
+---
+
+## Inferencia de los parámetros
+
+$$H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0$$
+
+Este contraste significancia en realidad **contesta a la siguiente pregunta**
+
+¿Tiene mi variable $X_j$ un [**efecto lineal SIGNIFICATIVO**]{.hl-yellow} en mi variable $Y$?
+
+. . .
+
+&nbsp;
+
+Esa pregunta puede ser respondida desde un punto de vista **frecuentista** haciendo uso de los [**p-valores**]{.hl-yellow}: si $p-value < \alpha$, se suele rechazar la nula (rechazamos que la variable no tenga efecto lineal significativo, es decir, aceptamos que sí lo tiene); en caso contrario no se suele rechazar (que **no es lo mismo que aceptarla**). 
+
+---
+
+## Inferencia de los parámetros
+
+
+
+```{r}
+ajuste_lineal |> summary()
+```
+
+Si te fijas ambos p-valores están por encima de $\alpha = 0.05$ (umbral adoptado habitualmente) los que nos dice que [**no hay evidencias de los datos sean compatibles con afirmar que haya efectos lineales significativos**]{.hl-yellow}
+
+. . .
+
+¿Y si probamos a quitar $\beta_0$ (es decir, la respuesta está centrada)?
+
+---
+
+## Inferencia de los parámetros
+
+Para ello basta añadir un `-1` antes de las variables predictoras.
+
+```{r}
+lm(data = datos, formula = mass ~ -1 + height) |> summary()
+```
+
+Fíjate que ahora, amén que [**hay un efecto lineal significativo de la altura**]{.hl-yellow} y de tener $R^2$ mayor, $\beta_1$ tiene una precisión mayor. En este caso [**solo podía quitar uno**]{.hl-yellow} (perderíamos $X$), pero veremos más adelante cómo decidir cuál quitar si tuviésemos varias variables.
+
+# Clase 8: predicción, simulación y caso práctico {#clase-8}
+
+[**Entendiendo mejor la regresión**]{style="color:#444442;"}
+
 ---
 
 ## Predicción en R
@@ -3487,28 +3869,290 @@ predicciones <-
 predicciones
 ```
 
+
 ---
 
-## Rango de fiabilidad
+## Simulación
 
-Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un **modelo extremadamente bueno**, con una bondad de ajuste $R^2 = 0.99$. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con $X = 15$ cm?
+Antes de seguir con un caso real, es importante pararse a reflexionar sobre lo ya aprendido, y una de las mejores es [**con simulación**]{.hl-yellow} 
 
 . . .
 
-```{r}
-predicciones
-```
+* [**Ejercicio 1**]{.hl-yellow}: simula una muestra de tamaño $n = 1000$ de una variable aleatoria $X \sim N(\mu=3, \sigma = 1)$. Esta variable representará nuestra predictora (normalmente la tendríamos ya en la tabla pero aquí la hemos simulado).
 
-Si te fijas la [**¡predicción del peso es negativa!**]{.hl-red}: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?
+. . .
+
+* [**Ejercicio 2**]{.hl-yellow}: simula un ruido $\varepsilon$ de varianza $0.1$ que cumpla las condiciones que necesitamos en una regresión lineal
+
+. . .
+
+* [**Ejercicio 3**]{.hl-yellow}: con la variable predictora y el ruido simulado, simula una variable aleatoria $Y$ bajo la hipótesis de que $Y$ puede ser explicada por $X$ mediante una recta de parámetros reales $\beta_0 = -2$ y $\beta_1 = 5$.
+
+. . .
+
+* [**Ejercicio 4**]{.hl-yellow}: visualiza en un gráfico la predictora $x$ vs var objetivo $y$, en otro gráfico la distribución de  $Y$ y en otro la distribución de los errores
 
 ---
 
-## Rango de fiabilidad
+## Simulación
+
+Deberías obtener algo **parecido a esto** (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)
+
+```{r}
+#| echo: false
+n <- 1e3
+set.seed(12345)
+x <- rnorm(n = n, mean = 3, sd = 1)
+eps <- rnorm(n = n, mean = 0, sd = sqrt(0.1))
+y <- -2 + 5*x + eps
+datos <- tibble("x" = x, "y" = y)
+
+gg1 <-
+  ggplot(datos, aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+gg2 <-
+  ggplot(datos, aes(x = y)) +
+  geom_density() +
+  theme_minimal()
+
+gg3 <-
+  ggplot(datos, aes(x = eps)) +
+  geom_density() +
+  theme_minimal()
+
+library(patchwork)
+gg1 + gg2 + gg3
+```
+
+---
+
+## Simulación
+
+* [**Ejercicio 4**]{.hl-yellow}: sin hacer uso de `lm` calcula el estimador insesgado de $\beta_0$ y el estimador insesgado de $\beta_1$. Haz uso de las funciones (R base o tidyverse) que consideres para realizar los cálculos.
+
+. . .
+
+* [**Ejercicio 5**]{.hl-yellow}: con dichas estimaciones de los parámetros, calcula estimaciones/predicciones de $y_i$, los conocidos como $\widehat{y}_i$, y los errores estimados $\widehat{\varepsilon}_i$. Guarda todo en una tabla de 5 columnas: $y$, $x$, $\varepsilon$, $\widehat{y}$ y $\widehat{\varepsilon}$ 
+
+. . .
+
+* [**Ejercicio 6**]{.hl-yellow}: con dicha tabla haz 3 gráficos. Gráfico 1: valores reales vs predicciones (¿qué deberíamos observar si la estimación fuese buena?) con el color dependiendo del error cometido. Gráfico 2: Q-Q plot de los errores reales simulados (los que conocemos porque los hemos generado nosotros). Gráfico 3:  Q-Q plot de los errores estimados (los únicos que veríamos si fuesen datos reales)
+
+---
+
+## Simulación
+
+Deberías obtener algo **parecido a esto** (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)
+
+```{r}
+#| echo: false
+betas <-
+  datos |>
+  summarise("beta_1" = cov(x, y)/var(x), "beta_0" = mean(y) - beta_1 * mean(x))
+datos <-
+  datos |> 
+  mutate("eps" = eps,
+         "y_hat" = betas$beta_0 + betas$beta_1*x,
+         "eps_hat" = y - y_hat)
+gg1 <-
+  ggplot(datos, aes(x = y, y = y_hat, color = eps_hat)) +
+  geom_point(size = 2.5, alpha = 0.8) +
+  scale_color_gradient2(low = "#cf514e", mid = "grey90", high = "#376990",
+                        midpoint = 0) +
+  theme_minimal()
+
+gg2 <-
+  ggplot(datos, aes(sample = eps)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+
+gg3 <-
+  ggplot(datos, aes(sample = eps_hat)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal()
+
+library(patchwork)
+gg1 + gg2 + gg3
+```
+
+---
+
+## Simulación
+
+* [**Ejercicio 7**]{.hl-yellow}: con dichos errores estimados estima (como si no la conocieses) de manera insesgada la desviación típica de los errores $\widehat{\sigma}_{\varepsilon}$ (el conocido como `Residual standard error`)
+
+. . .
+
+* [**Ejercicio 8**]{.hl-yellow}: con lo obtenido calcula sin hacer uso de `lm()` las estimaciones de las desviaciones típicas de las variables aleatorias $\widehat{\beta}_0$ y  $\widehat{\beta}_1$ que representan nuestros estimadores. Genera dos variables aleatorias ($n = 5000$) con la distribución de ambas variables
+
+. . .
+
+* [**Ejercicio 9**]{.hl-yellow}: repite el proceso inicial (generar x -->  generar errores --> generar y) con los mismos parámetros un total de 5000 iteraciones. En cada iteración calcula los estimadores muestrales de $\widehat{\beta}_0$ y  $\widehat{\beta}_1$, y visualiza después la distribución de sus valores. Enfrenta esa muestra de betas con la simulación del ejercicio anterior
+
+---
+
+## Simulación
+
+Deberías obtener algo **parecido a esto** (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)
+
+```{r}
+#| echo: false
+betas <-
+  datos |>
+  summarise("beta_1" = cov(x, y)/var(x),
+            "beta_0" = mean(y) - beta_1 * mean(x),
+            "res_std_error" = sqrt(sum(eps_hat^2)/(n()-2)),
+            "SE_0" = sqrt(res_std_error^2/(n() * var(x))),
+            "SE_1" = sqrt((res_std_error^2/n())*(1 + (mean(x)^2/var(x)))))
+sim_betas <-
+  tibble("beta_0_sim" = rnorm(n = 5e3, mean = betas$beta_0, sd = betas$SE_0),
+         "beta_1_sim" = rnorm(n = 5e3, mean = betas$beta_1, sd = betas$SE_1))
+gg1 <-
+  ggplot(sim_betas |> 
+           pivot_longer(cols = everything())) +
+  geom_density(aes(x = value, color = name, fill = name), alpha = 0.7) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  facet_wrap(~name, scales = "free") +
+  theme_minimal() +
+  labs(title = "Betas simulados a partir de la estimación de ambos")
+
+betas <- tibble()
+for (i in 1:5e3) {
+  
+  x <- rnorm(n = n, mean = 3, sd = 1)
+  eps <- rnorm(n = n, mean = 0, sd = sqrt(0.1))
+  y <- -2 + 5*x + eps
+  datos <- tibble("x" = x, "y" = y)
+  
+  betas <-
+    betas |> 
+    bind_rows(datos |>
+                summarise("beta_1" = cov(x, y)/var(x),
+                          "beta_0" = mean(y) - beta_1 * mean(x)) |> 
+                mutate("iter" = i))
+  
+}
+gg2 <-
+  ggplot(betas |> 
+           pivot_longer(cols = -iter)) +
+  geom_density(aes(x = value, color = name, fill = name), alpha = 0.7) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  facet_wrap(~name, scales = "free") +
+  theme_minimal() +
+  labs(title = "Betas muestrales a partir de simular datos")
+
+gg3 <-
+  ggplot() +
+  geom_point(data = tibble("betas_0" = betas$beta_0, "beta_0_sim" = sim_betas$beta_0_sim),
+             aes(x = betas_0, y = beta_0_sim), color = "#6559ac") +
+  theme_minimal()
+gg4 <-
+  ggplot() +
+  geom_point(data = tibble("betas_1" = betas$beta_1, "beta_1_sim" = sim_betas$beta_1_sim),
+             aes(x = betas_1, y = beta_1_sim), color = "#f8bd13") +
+  theme_minimal()
+library(patchwork)
+gg1 + gg2 + gg3 + gg4
+```
 
 
-![](img/rango_1.png)
-![](img/rango_2.png)
+---
 
-Nuestro [**modelo solo puede aprender de los datos que conoce**]{.hl-yellow}: solo podremos predecir para valores nuevos de las predictoras [**dentro del rango de las predictoras con las que entrenamos**]{.hl-yellow} el modelo
 
-Da igual lo bueno que sea el modelo: las [**predicciones fuera del rango de las predictoras de entrenamiento**]{.hl-red} no serán fiables ya que el modelo no sabe lo que sucede fuera.
+## Caso práctico
+
+Vamos a poner en práctica lo aprendido con el dataset `wine.csv` disponible en el campus.
+
+```{r}
+datos <- read_csv(file = "./datos/wine.csv")
+datos
+```
+
+---
+
+## Caso práctico
+
+
+El conjunto de datos está formado por 27 observaciones (cosechas de vino rojo Burdeos) y 7 variables
+
+* `Year`, `Age`: año de la cosecha y número de años en barrica.
+* `Price`: precio en 1990-1991 de cada cosecha (en **escala log**)
+* `WinterRain`: lluvia (en mm) que cayó ese año en invierno.
+* `AGST`: crecimiento medio de la temperatura (en grados Celsius) durante la temporada.
+* `HarvestRain`: lluvia (en mm) que cayó ese año durante la cosecha.
+* `FrancePop`: población (miles de habitantes) de Francia.
+
+Ver más en detalles en <https://doi.org/10.1080/09332480.1995.10542468>
+
+. . .
+
+[**El objetivo: predecir el precio**]{.hl-yellow}
+
+
+---
+
+## Caso práctico
+
+```{r}
+datos
+```
+
+Para predecir el precio vamos a usar (de momento) una [**regresión lineal univariante**]{.hl-yellow}, donde $Y = precio$ y deberemos elegir la predictora $X$ más apropiada.
+
+---
+
+## Pasos a seguir
+
+1. [**Análisis exploratorio inicial**]{.hl-yellow}:
+  - ¿Las variables son [**numéricas (continuas)**]{.hl-purple}?
+  - ¿Tienen [**problemas de rango**]{.hl-purple} (por ejemplo, pesos negativos)? ¿Tienen datos ausentes?
+  - ¿Cómo se [**distribuyen las variables**]{.hl-purple}? Ideas: resúmen numérico, histogramas/densidades, boxplots, gráficos de violín, etc
+  - ¿Hay [**datos atípicos**]{.hl-purple}?
+
+---
+
+## Pasos a seguir
+
+2. [**Análisis de dependencia**]{.hl-yellow}:
+  - ¿Qué [**predictora está más correlacionada (linealmente) con la variable objetivo**]{.hl-purple} a predecir?
+  - ¿Cómo se [**relacionan las predictoras**]{.hl-purple} entre sí? ¿Están correlacionadas? Ideas: matriz de correlaciones, diagramas de dispersión vs Y, corrplots, etc
+
+. . .
+
+3. [**Formulación**]{.hl-yellow} del modelo
+
+. . .
+
+4. [**Fase de estimación**]{.hl-yellow}:
+  - ¿Cuánto valen los [**parámetros estimados**]{.hl-purple}? ¿Cómo queda el ajuste?
+  - ¿Qué [**interpretación**]{.hl-purple} tienen?
+
+
+---
+
+## Pasos a seguir
+
+5. [**Fase de diagnosis**]{.hl-yellow} (pendiente de ver, de momento no la hagas pero apunta que hace falta para poder hacer la siguiente fase: sin condiciones no hay inferencia paramétrica)
+  
+. . .
+
+6. [**Fase de inferencia**]{.hl-yellow}:
+  - ¿Qué [**variabilidad**]{.hl-purple} tienen las estimaciones de nuestro parámetros?
+  - ¿Las predictoras/intercepto tienen un [**efecto lineal significativo**]{.hl-purple}?
+  - ¿Debemos [**re-entrenar el modelo**]{.hl-purple} sin alguno de ellos?
+
+---
+
+## Pasos a seguir
+
+7. [**Fase de evaluación**]{.hl-yellow}: pendiente de ver, de momento no la hagas pero apunta que hace falta
+
+8. [**Fase de predicción**]{.hl-yellow} (solo tiene sentido con todo lo anterior hecho)
+

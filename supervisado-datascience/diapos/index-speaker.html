@@ -3648,46 +3648,10 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <li><code>Multiple R-squared: ...</code> (de momento lo demás lo ignoramos): es el conocido como <span class="math inline">\(R^2\)</span> o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una <span class="hl-yellow"><strong>métrica de calidad del ajuste</strong></span> que va de 0 (peor) a 1 (mejor).</li>
 </ul>
 </section>
-<section id="predicción-en-r" class="slide level2">
-<h2>Predicción en R</h2>
-<p>Una vez estimado el modelo (sus coeficientes) podemos usarlo, bien para <span class="hl-yellow"><strong>estimar valores que el modelo conoce</strong></span> (de los que aprendió) o para <span class="hl-yellow"><strong>predecir nuevos valores</strong></span> de los que el modelo no ha aprendido</p>
-<div class="fragment">
-<p>Simplemente necesitamos la función <code>predict(modelo, nuevos_datos)</code>, usando como argumentos el <strong>modelo entrenado</strong> y un <span class="hl-yellow"><strong>nuevo dataset que contenga una/s columna/s llamadas igual que nuestras variables predictores</strong></span> con los valores de la predictora para los que queremos predecir</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1"></a>predicciones <span class="ot">&lt;-</span> </span>
-<span id="cb167-2"><a href="#cb167-2"></a>  <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="fl">81.3</span>, <span class="fl">153.1</span>, <span class="fl">189.3</span>, <span class="fl">210.3</span>),</span>
-<span id="cb167-3"><a href="#cb167-3"></a>         <span class="st">"mass_predict"</span> <span class="ot">=</span> <span class="fu">predict</span>(ajuste_lineal, <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> height)))</span>
-<span id="cb167-4"><a href="#cb167-4"></a>predicciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  height mass_predict
-   &lt;dbl&gt;        &lt;dbl&gt;
-1   15          -2.13
-2   81.3        39.2 
-3  153.         84.0 
-4  189.        107.  
-5  210.        120.  </code></pre>
-</div>
-</div>
-</div>
-</section>
 <section id="rango-de-fiabilidad" class="slide level2">
 <h2>Rango de fiabilidad</h2>
 <p>Aunque hablaremos en profundidad de la bondad de ajuste, supongamos que tenemos un <strong>modelo extremadamente bueno</strong>, con una bondad de ajuste <span class="math inline">\(R^2 = 0.99\)</span>. ¿Sería fiable nuestro modelo anterior para predecir el peso de un personaje con <span class="math inline">\(X = 15\)</span> cm?</p>
 <div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1"></a>predicciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  height mass_predict
-   &lt;dbl&gt;        &lt;dbl&gt;
-1   15          -2.13
-2   81.3        39.2 
-3  153.         84.0 
-4  189.        107.  
-5  210.        120.  </code></pre>
-</div>
-</div>
 <p>Si te fijas la <span class="hl-red"><strong>¡predicción del peso es negativa!</strong></span>: por muy bebé que sea, algo pesará. ¿Por qué sucede esto?</p>
 </div>
 </section>
@@ -3696,6 +3660,587 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p><img data-src="img/rango_1.png"> <img data-src="img/rango_2.png"></p>
 <p>Nuestro <span class="hl-yellow"><strong>modelo solo puede aprender de los datos que conoce</strong></span>: solo podremos predecir para valores nuevos de las predictoras <span class="hl-yellow"><strong>dentro del rango de las predictoras con las que entrenamos</strong></span> el modelo</p>
 <p>Da igual lo bueno que sea el modelo: las <span class="hl-red"><strong>predicciones fuera del rango de las predictoras de entrenamiento</strong></span> no serán fiables ya que el modelo no sabe lo que sucede fuera.</p>
+</section></section>
+<section>
+<section id="clase-7" class="title-slide slide level1 center">
+<h1>Clase 7: inferencia</h1>
+<p><span style="color:#444442;"><strong>Inferencia de la regresión</strong></span></p>
+</section>
+<section id="repaso" class="slide level2">
+<h2>Repaso</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Modelo lineal</strong></span>: descrito como <span class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p + \varepsilon\)</span>, buscamos estimar el <strong>valor esperado</strong> <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 X_1 + \ldots + \beta_p x_p\)</span>, donde <span class="math inline">\(\boldsymbol{X}\)</span> es la población y <span class="math inline">\(x\)</span> la muestra.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Caso univariante</strong></span>: <span class="math inline">\(p = 1\)</span> tal que <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Estimación</strong></span>: <span class="math inline">\(\widehat{Y}\)</span> en función de <span class="math inline">\(\left(\widehat{\beta}_0, \widehat{\beta}_1 \right)\)</span>. De todas las rectas posibles, queremos la <span class="hl-yellow"><strong>recta de regresión mínimos-cuadrados</strong></span>: <strong>minimiza la varianza residual</strong> (calculamos sus derivadas parciales, igualamos a cero y resolvemos el sistema). Esos estimadores serán <span class="math inline">\(\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}\)</span> y <span class="math inline">\(\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Predicción</strong></span>: podemos estimar o predecir valores con la recta <span class="math inline">\(\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_0 X\)</span>, siempre y cuando <span class="math inline">\(X = x\)</span> esté dentro del rango de valores de entrenamiento del modelo.</li>
+</ul>
+</div>
+</section>
+<section id="diagnosis" class="slide level2">
+<h2>Diagnosis</h2>
+<p>Hasta ahora no hemos pedido nada a la muestra <span class="math inline">\(\left\lbrace \left( X_i, Y_i \right) \right\rbrace_{i=1}^{n}\)</span>, ¿para qué necesitaríamos <span class="hl-yellow"><strong>hipótesis</strong></span> entonces?</p>
+<div class="fragment">
+<p>La razón es que, hasta ahora, lo único que hemos podido realizar es una <span class="hl-yellow"><strong>estimación puntual</strong></span> de los parámetros, pero dado que dichos estimadores serán variables aleatorias, necesitaremos realizar <span class="hl-yellow"><strong>inferencia estadística</strong></span> sobre ellos (recuerda: los parámetros son simples estimaciones para esa muestra de la población, de forma que dada otra muestra, la recta será distinta).</p>
+</div>
+<div class="fragment">
+<p>Para poder cuantificar la <span class="hl-yellow"><strong>variabilidad y precisión de nuestras estimaciones</strong></span> necesitaremos que los datos cumplan ciertas <span class="hl-purple"><strong>hipótesis probabilísticas</strong></span>: lo interesante no es la estimación puntual de los parámetros a partir de la muestra sino lo que <span class="hl-green"><strong>podamos inferir de ellos a la población</strong></span></p>
+</div>
+</section>
+<section id="diagnosis-1" class="slide level2">
+<h2>Diagnosis</h2>
+<p>En el caso de la regresión lineal univariante pediremos <span class="hl-yellow"><strong>4 hipótesis</strong></span></p>
+<div class="fragment">
+<ol type="1">
+<li><span class="hl-green"><strong>Linealidad</strong></span>: el valor esperado de <span class="math inline">\(Y\)</span> es <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li><span class="hl-green"><strong>Homocedasticidad</strong></span>: el modelo no podrá explicar toda la información (a veces se equivocará por arriba y otras por abajo), pero necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante</strong></span>, tal que <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte &lt; \infty\)</span>, que no varíe según aumenta o disminuye la <span class="math inline">\(X\)</span>.</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li><span class="hl-green"><strong>Normalidad</strong></span>: pediremos que <span class="math inline">\(\varepsilon \sim N \left(0, \sigma_{r}^2 \right)\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="4" type="1">
+<li><span class="hl-green"><strong>Independencia</strong></span>: los errores <span class="math inline">\(\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}\)</span> deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán <strong>incorrelados</strong></li>
+</ol>
+<p><span class="math display">\[{\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j\]</span></p>
+</div>
+</section>
+<section id="diagnosis-2" class="slide level2">
+<h2>Diagnosis</h2>
+<p>Las 4 hipótesis se pueden <span class="hl-yellow"><strong>resumir de manera teórica</strong></span> en</p>
+<p><span class="math display">\[Y | \boldsymbol{X} = x \sim N \left(\beta_0 + \beta_1x, \sigma_{\varepsilon}^2 \right)\]</span></p>
+<div class="fragment">
+<p>Su <span class="hl-purple"><strong>versión muestral</strong></span> sería simplemente</p>
+<p><span class="math display">\[y_i | \boldsymbol{X} = x_i \sim N \left(\beta_0 + \beta_1x_i, \sigma_{\varepsilon}^2 \right), \quad i=1,\ldots,n\]</span></p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p>Las hipótesis nos permiten decir (lo demostraremos más adelante) que los <span class="hl-yellow"><strong>parámetros estimados siguen una distribución (condicionada) normal</strong></span> de <span class="hl-purple"><strong>media el parámetro</strong></span> a estimar y de <span class="hl-purple"><strong>varianza el conocido como standard error</strong></span></p>
+<p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
+<div class="fragment">
+<p>Por las propiedades de la normal y el teorema central del límite</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)}| \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1\]</span></p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-1" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
+<p>Veremos más adelante porqué pero de momento…estos son los <span class="math inline">\(SE^2\)</span> (<strong>varianza de nuestros parámetros</strong>)</p>
+<p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
+<div class="fragment">
+<p>¿Qué <span class="hl-yellow"><strong>propiedades tienen entonces los estimadores</strong></span> <span class="math inline">\(\left(\widehat{\beta}_0,\widehat{\beta}_1 \right)\)</span>?</p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-2" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
+<p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Insesgados</strong></span>: ambos son <span class="hl-green"><strong>estimadores insesgados</strong></span> ya que la esperanza de la estimación es el valor a estimar. <span class="math inline">\(E \left[ \widehat{\beta}_j \right] = \beta_j\)</span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Precisión vs tamaño muestral</strong></span>: cuando <span class="math inline">\(n \to \infty\)</span>, sus varianzas tienden a cero, es decir, <span class="math inline">\(SE \left(\widehat{\beta}_j\right)^2 \to^{n \to \infty} 0\)</span> ya que <span class="math inline">\(n\)</span> está dividiendo. Traducción: <span class="hl-green"><strong>a más datos, mayor precision</strong></span> (menos varianza tendrán los estimadores si repetimos la toma de muestras)</li>
+</ul>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-3" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Precisión vs var residual</strong></span>: cuanto más grande sea la varianza del error <span class="math inline">\(\sigma_{\varepsilon}^{2}\)</span>, <span class="math inline">\(SE \left(\widehat{\beta}_j\right)^2\)</span> crecerá (es decir, <span class="hl-red"><strong>más ruido implicará más imprecisión</strong></span>)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Precisión vs varianza de X</strong></span>: cuanto más grande sea la varianza de la predictora <span class="math inline">\(s_{x}^2\)</span>, <span class="math inline">\(SE \left(\widehat{\beta}_j\right)^2\)</span> decrecerá, tal que <span class="math inline">\(SE \left(\widehat{\beta}_j\right)^2 \to^{s_{x}^2 \to \infty} 0\)</span>. Dicho de otra forma: cuánta <span class="hl-green"><strong>más información (varianza) contenga nuestra tabla, mayor precisión</strong></span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Precisión vs media X</strong></span>: solo afecta a la estimación de <span class="math inline">\(\beta_0\)</span>, cuya <span class="hl-red"><strong>precisión decrece cuando la media aumenta</strong></span>. Esto tiene sentido ya que cuánto más grande en media sean los datos, menos fiable será la predicción para <span class="math inline">\(X=0\)</span>.</li>
+</ul>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-4" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
+<p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
+<p>Pero tenemos un problema: la <span class="hl-yellow"><strong>varianza residual poblacional</strong></span> (varianza población del error) <span class="math inline">\(\sigma_{\varepsilon}^{2}\)</span> es <span class="hl-yellow"><strong>desconocida</strong></span>. Como suele pasar, la <span class="hl-yellow"><strong>sustituiremos por un estimador (insesgado)</strong></span> de la misma donde <span class="math inline">\(p\)</span> es el número de variables (el cuadrado de lo que R llama `Residual standard error)</p>
+<div class="fragment">
+<p><span class="math display">\[\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \sqrt{\text{Res standard error}}\]</span></p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-5" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1\]</span></p>
+<p>¿Qué suele suceder cuando en una normal <strong>desconocemos la varianza real y la sustituimos por su estimador insesgado</strong>?</p>
+<div class="fragment">
+<p>Si <span class="hl-yellow"><strong>sustituimos el error standard por su estimador</strong></span> (sustituyendo la varianza residual por su estimador insesgado), obtenemos que sigue una <strong>t-Student</strong></p>
+<p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1\]</span></p>
+<p>donde <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_0\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right]\)</span> y <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_1\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n s_{x}^2}\)</span></p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-6" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>std error</code>: es lo que hemos denotado como <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_j\right)^2\)</span></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>t value</code>: es el estadístico <span class="math inline">\(\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}\)</span> que hemos dicho que sigue una t-Student (fíjate que hemos puesto <span class="math inline">\(\beta_j = 0\)</span>)</li>
+</ul>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-7" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Pr(&gt;|t|)</code>: representa un p-valor. ¿De qué contraste se te ocurre?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>Residual standard error</code>: es el estimador insesgado de la desviación típica residual, que hemos denotado como <span class="math inline">\(\widehat{\sigma_{\varepsilon}}\)</span></li>
+</ul>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-8" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1\]</span></p>
+<p>Si te acuerdas de inferencia, esto implica que los <span class="hl-yellow"><strong>intervalos de confianza de nuestros parámetros</strong></span> son</p>
+<p><span class="math display">\[IC \left(\alpha, \widehat{\beta}_j \right) = \left[\widehat{\beta}_j - t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right), \widehat{\beta}_j + t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right) \right]\]</span> donde <span class="math inline">\(t_{n-p-1; \alpha/2}\)</span> es el cuantil <span class="math inline">\(1-\alpha/2\)</span> (deja a la izquierda una probabilidad de <span class="math inline">\(1-\alpha/2\)</span>).</p>
+</section>
+<section id="inferencia-de-los-parámetros-9" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p>Podemos calcular los intervalos de confianza de los parámetros en <code>R</code> con <code>confint()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb171"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1"></a><span class="fu">confint</span>(ajuste_lineal, <span class="at">level =</span> <span class="fl">0.99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 0.5 %     99.5 %
+(Intercept) -308.31117 285.337538
+height        -1.04467   2.292677</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb173"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1"></a><span class="fu">confint</span>(ajuste_lineal, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   2.5 %     97.5 %
+(Intercept) -234.5297439 211.556113
+height        -0.6298893   1.877896</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1"></a><span class="fu">confint</span>(ajuste_lineal, <span class="at">level =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     5 %       95 %
+(Intercept) -197.7243448 174.750713
+height        -0.4229783   1.670985</code></pre>
+</div>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-10" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="hl-yellow"><strong>¿Qué significa realmente un intervalo de confianza?</strong></span></p>
+<div class="fragment">
+<p>La <strong>probabilidad de que el parámetro real</strong> caiga dentro <span class="hl-red"><strong>NO EXISTE</strong></span>: el parámetro es desconocido pero fijo, no aleatorio, así que no sentido calcular su probabilidad.</p>
+</div>
+<div class="fragment">
+<p>Si obtenemos para un parámetro un intervalo <span class="math inline">\([-1, 1]\)</span> al 95%, no significa que <span class="math inline">\(P(parametro \in [-1, 1]) = 0.95\)</span>: significa que <span class="hl-yellow"><strong>si tomamos 1000 muestras distintas de la población</strong></span> y calculamos para cada una el intervalo de confianza, <span class="hl-yellow"><strong>aproximadamente 950 intervalos de confianza contendrán dentro el parámetro real</strong></span></p>
+</div>
+<div class="fragment">
+<p>Un <span class="hl-yellow"><strong>intervalo al 95% implica que habrá una frecuencia esperada de 0.95</strong></span> de que intervalos que no conocemos (porque se derivan de muestras que no hemos tomado) contengan al parámetro real, pero <span class="hl-red"><strong>no es la probabilidad de que tu intervalo calculado contenga a dicho parámetro</strong></span>: nos habla la precisión de nuestra metodología de estimación, no del parámetro.</p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-11" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="hl-yellow"><strong>Ejemplo</strong></span>. Dada una población normal <span class="math inline">\(\mu = 3\)</span> y <span class="math inline">\(\sigma = 1.2\)</span>, generamos 500 muestras distintas (tamaño <span class="math inline">\(n = 100\)</span> cada una), de manera que para cada una aplicamos un <code>t.test()</code> para calcular un IC para la media <span class="math inline">\(\mu\)</span>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb177-2"><a href="#cb177-2"></a>sigma <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb177-3"><a href="#cb177-3"></a>m <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb177-4"><a href="#cb177-4"></a>conf_int <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>m, <span class="st">"low"</span> <span class="ot">=</span> <span class="cn">NA</span>, <span class="st">"high"</span> <span class="ot">=</span> <span class="cn">NA</span>)</span>
+<span id="cb177-5"><a href="#cb177-5"></a></span>
+<span id="cb177-6"><a href="#cb177-6"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>m) {</span>
+<span id="cb177-7"><a href="#cb177-7"></a>  </span>
+<span id="cb177-8"><a href="#cb177-8"></a>  sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb177-9"><a href="#cb177-9"></a>  hyp_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">x =</span> sample)</span>
+<span id="cb177-10"><a href="#cb177-10"></a>  conf_int[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> hyp_test<span class="sc">$</span>conf.int[<span class="dv">1</span>]</span>
+<span id="cb177-11"><a href="#cb177-11"></a>  conf_int[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> hyp_test<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span>
+<span id="cb177-12"><a href="#cb177-12"></a>}</span>
+<span id="cb177-13"><a href="#cb177-13"></a>conf_int <span class="ot">&lt;-</span></span>
+<span id="cb177-14"><a href="#cb177-14"></a>  conf_int <span class="sc">|&gt;</span> </span>
+<span id="cb177-15"><a href="#cb177-15"></a>  <span class="fu">mutate</span>(<span class="at">true_param =</span> mu <span class="sc">&gt;=</span> low <span class="sc">&amp;</span> mu <span class="sc">&lt;=</span> high)</span>
+<span id="cb177-16"><a href="#cb177-16"></a></span>
+<span id="cb177-17"><a href="#cb177-17"></a><span class="fu">ggplot</span>(conf_int) <span class="sc">+</span></span>
+<span id="cb177-18"><a href="#cb177-18"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">y =</span> id, <span class="at">yend =</span> id, <span class="at">x =</span> low, <span class="at">xend =</span> high,</span>
+<span id="cb177-19"><a href="#cb177-19"></a>                   <span class="at">color =</span> true_param, <span class="at">linewidth =</span> true_param)) <span class="sc">+</span></span>
+<span id="cb177-20"><a href="#cb177-20"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mu) <span class="sc">+</span></span>
+<span id="cb177-21"><a href="#cb177-21"></a>  <span class="fu">scale_linewidth_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb177-22"><a href="#cb177-22"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb177-23"><a href="#cb177-23"></a>  <span class="fu">guides</span>(<span class="at">linewidth =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb177-24"><a href="#cb177-24"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores del intervalo"</span>,</span>
+<span id="cb177-25"><a href="#cb177-25"></a>       <span class="at">y =</span> <span class="st">"id intervalo"</span>,</span>
+<span id="cb177-26"><a href="#cb177-26"></a>       <span class="at">color =</span> <span class="st">"¿Contiene mu real?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960" class="r-stretch"></section>
+<section id="inferencia-de-los-parámetros-12" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p>Y si tenemos inferencia, tenemos contrastes: ¿te acuerdas de los p-valores que devuelve la tabla para cada parámetro?</p>
+<div class="fragment">
+<p>Para cada parámetro se realiza un <span class="hl-yellow"><strong>contraste de significancia</strong></span>: ¿cuánta evidencia hay en mis datos para poder decir que el <span class="hl-yellow"><strong>valor estimado de mi parámetro es distinto de 0</strong></span>?</p>
+<p><span class="math display">\[H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0\]</span></p>
+</div>
+<div class="fragment">
+<p>El estadístico usado es el <span class="hl-yellow"><strong>t value</strong></span> que devuelve <code>R</code> definido como <span class="math inline">\(\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}\)</span> y que, <span class="hl-purple"><strong>BAJO EL SUPUESTO DE QUE LA HIPÓTESIS NULA SEA CIERTA</strong></span>, sigue una t-Student <span class="math inline">\(t_{n-p-1}\)</span></p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-13" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p><span class="math display">\[H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0\]</span></p>
+<p>Este contraste significancia en realidad <strong>contesta a la siguiente pregunta</strong></p>
+<p>¿Tiene mi variable <span class="math inline">\(X_j\)</span> un <span class="hl-yellow"><strong>efecto lineal SIGNIFICATIVO</strong></span> en mi variable <span class="math inline">\(Y\)</span>?</p>
+<div class="fragment">
+<p>&nbsp;</p>
+<p>Esa pregunta puede ser respondida desde un punto de vista <strong>frecuentista</strong> haciendo uso de los <span class="hl-yellow"><strong>p-valores</strong></span>: si <span class="math inline">\(p-value &lt; \alpha\)</span>, se suele rechazar la nula (rechazamos que la variable no tenga efecto lineal significativo, es decir, aceptamos que sí lo tiene); en caso contrario no se suele rechazar (que <strong>no es lo mismo que aceptarla</strong>).</p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-14" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<p>Si te fijas ambos p-valores están por encima de <span class="math inline">\(\alpha = 0.05\)</span> (umbral adoptado habitualmente) los que nos dice que <span class="hl-yellow"><strong>no hay evidencias de los datos sean compatibles con afirmar que haya efectos lineales significativos</strong></span></p>
+<div class="fragment">
+<p>¿Y si probamos a quitar <span class="math inline">\(\beta_0\)</span> (es decir, la respuesta está centrada)?</p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-15" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
+<p>Para ello basta añadir un <code>-1</code> antes de las variables predictoras.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ -1 + height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.22  -29.32  -21.83  -18.22 1259.88 
+
+Coefficients:
+       Estimate Std. Error t value Pr(&gt;|t|)    
+height   0.5607     0.1230    4.56  2.7e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 168 on 58 degrees of freedom
+Multiple R-squared:  0.2639,    Adjusted R-squared:  0.2512 
+F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
+</div>
+</div>
+<p>Fíjate que ahora, amén que <span class="hl-yellow"><strong>hay un efecto lineal significativo de la altura</strong></span> y de tener <span class="math inline">\(R^2\)</span> mayor, <span class="math inline">\(\beta_1\)</span> tiene una precisión mayor. En este caso <span class="hl-yellow"><strong>solo podía quitar uno</strong></span> (perderíamos <span class="math inline">\(X\)</span>), pero veremos más adelante cómo decidir cuál quitar si tuviésemos varias variables.</p>
+</section></section>
+<section>
+<section id="clase-8" class="title-slide slide level1 center">
+<h1>Clase 8: predicción, simulación y caso práctico</h1>
+<p><span style="color:#444442;"><strong>Entendiendo mejor la regresión</strong></span></p>
+</section>
+<section id="predicción-en-r" class="slide level2">
+<h2>Predicción en R</h2>
+<p>Una vez estimado el modelo (sus coeficientes) podemos usarlo, bien para <span class="hl-yellow"><strong>estimar valores que el modelo conoce</strong></span> (de los que aprendió) o para <span class="hl-yellow"><strong>predecir nuevos valores</strong></span> de los que el modelo no ha aprendido</p>
+<div class="fragment">
+<p>Simplemente necesitamos la función <code>predict(modelo, nuevos_datos)</code>, usando como argumentos el <strong>modelo entrenado</strong> y un <span class="hl-yellow"><strong>nuevo dataset que contenga una/s columna/s llamadas igual que nuestras variables predictores</strong></span> con los valores de la predictora para los que queremos predecir</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1"></a>predicciones <span class="ot">&lt;-</span> </span>
+<span id="cb182-2"><a href="#cb182-2"></a>  <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="fl">81.3</span>, <span class="fl">153.1</span>, <span class="fl">189.3</span>, <span class="fl">210.3</span>),</span>
+<span id="cb182-3"><a href="#cb182-3"></a>         <span class="st">"mass_predict"</span> <span class="ot">=</span> <span class="fu">predict</span>(ajuste_lineal, <span class="fu">tibble</span>(<span class="st">"height"</span> <span class="ot">=</span> height)))</span>
+<span id="cb182-4"><a href="#cb182-4"></a>predicciones</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  height mass_predict
+   &lt;dbl&gt;        &lt;dbl&gt;
+1   15          -2.13
+2   81.3        39.2 
+3  153.         84.0 
+4  189.        107.  
+5  210.        120.  </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="simulación" class="slide level2">
+<h2>Simulación</h2>
+<p>Antes de seguir con un caso real, es importante pararse a reflexionar sobre lo ya aprendido, y una de las mejores es <span class="hl-yellow"><strong>con simulación</strong></span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 1</strong></span>: simula una muestra de tamaño <span class="math inline">\(n = 1000\)</span> de una variable aleatoria <span class="math inline">\(X \sim N(\mu=3, \sigma = 1)\)</span>. Esta variable representará nuestra predictora (normalmente la tendríamos ya en la tabla pero aquí la hemos simulado).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 2</strong></span>: simula un ruido <span class="math inline">\(\varepsilon\)</span> de varianza <span class="math inline">\(0.1\)</span> que cumpla las condiciones que necesitamos en una regresión lineal</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 3</strong></span>: con la variable predictora y el ruido simulado, simula una variable aleatoria <span class="math inline">\(Y\)</span> bajo la hipótesis de que <span class="math inline">\(Y\)</span> puede ser explicada por <span class="math inline">\(X\)</span> mediante una recta de parámetros reales <span class="math inline">\(\beta_0 = -2\)</span> y <span class="math inline">\(\beta_1 = 5\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 4</strong></span>: visualiza en un gráfico la predictora <span class="math inline">\(x\)</span> vs var objetivo <span class="math inline">\(y\)</span>, en otro gráfico la distribución de <span class="math inline">\(Y\)</span> y en otro la distribución de los errores</li>
+</ul>
+</div>
+</section>
+<section id="simulación-1" class="slide level2">
+<h2>Simulación</h2>
+<p>Deberías obtener algo <strong>parecido a esto</strong> (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-107-1.png" width="960" class="r-stretch"></section>
+<section id="simulación-2" class="slide level2">
+<h2>Simulación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 4</strong></span>: sin hacer uso de <code>lm</code> calcula el estimador insesgado de <span class="math inline">\(\beta_0\)</span> y el estimador insesgado de <span class="math inline">\(\beta_1\)</span>. Haz uso de las funciones (R base o tidyverse) que consideres para realizar los cálculos.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 5</strong></span>: con dichas estimaciones de los parámetros, calcula estimaciones/predicciones de <span class="math inline">\(y_i\)</span>, los conocidos como <span class="math inline">\(\widehat{y}_i\)</span>, y los errores estimados <span class="math inline">\(\widehat{\varepsilon}_i\)</span>. Guarda todo en una tabla de 5 columnas: <span class="math inline">\(y\)</span>, <span class="math inline">\(x\)</span>, <span class="math inline">\(\varepsilon\)</span>, <span class="math inline">\(\widehat{y}\)</span> y <span class="math inline">\(\widehat{\varepsilon}\)</span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 6</strong></span>: con dicha tabla haz 3 gráficos. Gráfico 1: valores reales vs predicciones (¿qué deberíamos observar si la estimación fuese buena?) con el color dependiendo del error cometido. Gráfico 2: Q-Q plot de los errores reales simulados (los que conocemos porque los hemos generado nosotros). Gráfico 3: Q-Q plot de los errores estimados (los únicos que veríamos si fuesen datos reales)</li>
+</ul>
+</div>
+</section>
+<section id="simulación-3" class="slide level2">
+<h2>Simulación</h2>
+<p>Deberías obtener algo <strong>parecido a esto</strong> (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960" class="r-stretch"></section>
+<section id="simulación-4" class="slide level2">
+<h2>Simulación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 7</strong></span>: con dichos errores estimados estima (como si no la conocieses) de manera insesgada la desviación típica de los errores <span class="math inline">\(\widehat{\sigma}_{\varepsilon}\)</span> (el conocido como <code>Residual standard error</code>)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 8</strong></span>: con lo obtenido calcula sin hacer uso de <code>lm()</code> las estimaciones de las desviaciones típicas de las variables aleatorias <span class="math inline">\(\widehat{\beta}_0\)</span> y <span class="math inline">\(\widehat{\beta}_1\)</span> que representan nuestros estimadores. Genera dos variables aleatorias (<span class="math inline">\(n = 5000\)</span>) con la distribución de ambas variables</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ejercicio 9</strong></span>: repite el proceso inicial (generar x –&gt; generar errores –&gt; generar y) con los mismos parámetros un total de 5000 iteraciones. En cada iteración calcula los estimadores muestrales de <span class="math inline">\(\widehat{\beta}_0\)</span> y <span class="math inline">\(\widehat{\beta}_1\)</span>, y visualiza después la distribución de sus valores. Enfrenta esa muestra de betas con la simulación del ejercicio anterior</li>
+</ul>
+</div>
+</section>
+<section id="simulación-5" class="slide level2">
+<h2>Simulación</h2>
+<p>Deberías obtener algo <strong>parecido a esto</strong> (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960" class="r-stretch"></section>
+<section id="caso-práctico" class="slide level2">
+<h2>Caso práctico</h2>
+<p>Vamos a poner en práctica lo aprendido con el dataset <code>wine.csv</code> disponible en el campus.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb184-2"><a href="#cb184-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 7
+    Year Price WinterRain  AGST HarvestRain   Age FrancePop
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+ 1  1952  7.50        600  17.1         160    31    43184.
+ 2  1953  8.04        690  16.7          80    30    43495.
+ 3  1955  7.69        502  17.2         130    28    44218.
+ 4  1957  6.98        420  16.1         110    26    45152.
+ 5  1958  6.78        582  16.4         187    25    45654.
+ 6  1959  8.08        485  17.5         187    24    46129.
+ 7  1960  6.52        763  16.4         290    23    46584.
+ 8  1961  8.49        830  17.3          38    22    47128.
+ 9  1962  7.39        697  16.3          52    21    48089.
+10  1963  6.71        608  15.7         155    20    48799.
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="caso-práctico-1" class="slide level2">
+<h2>Caso práctico</h2>
+<p>El conjunto de datos está formado por 27 observaciones (cosechas de vino rojo Burdeos) y 7 variables</p>
+<ul>
+<li><code>Year</code>, <code>Age</code>: año de la cosecha y número de años en barrica.</li>
+<li><code>Price</code>: precio en 1990-1991 de cada cosecha (en <strong>escala log</strong>)</li>
+<li><code>WinterRain</code>: lluvia (en mm) que cayó ese año en invierno.</li>
+<li><code>AGST</code>: crecimiento medio de la temperatura (en grados Celsius) durante la temporada.</li>
+<li><code>HarvestRain</code>: lluvia (en mm) que cayó ese año durante la cosecha.</li>
+<li><code>FrancePop</code>: población (miles de habitantes) de Francia.</li>
+</ul>
+<p>Ver más en detalles en <a href="https://doi.org/10.1080/09332480.1995.10542468" class="uri">https://doi.org/10.1080/09332480.1995.10542468</a></p>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>El objetivo: predecir el precio</strong></span></p>
+</div>
+</section>
+<section id="caso-práctico-2" class="slide level2">
+<h2>Caso práctico</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 7
+    Year Price WinterRain  AGST HarvestRain   Age FrancePop
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+ 1  1952  7.50        600  17.1         160    31    43184.
+ 2  1953  8.04        690  16.7          80    30    43495.
+ 3  1955  7.69        502  17.2         130    28    44218.
+ 4  1957  6.98        420  16.1         110    26    45152.
+ 5  1958  6.78        582  16.4         187    25    45654.
+ 6  1959  8.08        485  17.5         187    24    46129.
+ 7  1960  6.52        763  16.4         290    23    46584.
+ 8  1961  8.49        830  17.3          38    22    47128.
+ 9  1962  7.39        697  16.3          52    21    48089.
+10  1963  6.71        608  15.7         155    20    48799.
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+<p>Para predecir el precio vamos a usar (de momento) una <span class="hl-yellow"><strong>regresión lineal univariante</strong></span>, donde <span class="math inline">\(Y = precio\)</span> y deberemos elegir la predictora <span class="math inline">\(X\)</span> más apropiada.</p>
+</section>
+<section id="pasos-a-seguir" class="slide level2">
+<h2>Pasos a seguir</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Análisis exploratorio inicial</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Las variables son <span class="hl-purple"><strong>numéricas (continuas)</strong></span>?</li>
+<li>¿Tienen <span class="hl-purple"><strong>problemas de rango</strong></span> (por ejemplo, pesos negativos)? ¿Tienen datos ausentes?</li>
+<li>¿Cómo se <span class="hl-purple"><strong>distribuyen las variables</strong></span>? Ideas: resúmen numérico, histogramas/densidades, boxplots, gráficos de violín, etc</li>
+<li>¿Hay <span class="hl-purple"><strong>datos atípicos</strong></span>?</li>
+</ul>
+</section>
+<section id="pasos-a-seguir-1" class="slide level2">
+<h2>Pasos a seguir</h2>
+<ol start="2" type="1">
+<li><span class="hl-yellow"><strong>Análisis de dependencia</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Qué <span class="hl-purple"><strong>predictora está más correlacionada (linealmente) con la variable objetivo</strong></span> a predecir?</li>
+<li>¿Cómo se <span class="hl-purple"><strong>relacionan las predictoras</strong></span> entre sí? ¿Están correlacionadas? Ideas: matriz de correlaciones, diagramas de dispersión vs Y, corrplots, etc</li>
+</ul>
+<div class="fragment">
+<ol start="3" type="1">
+<li><span class="hl-yellow"><strong>Formulación</strong></span> del modelo</li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="4" type="1">
+<li><span class="hl-yellow"><strong>Fase de estimación</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Cuánto valen los <span class="hl-purple"><strong>parámetros estimados</strong></span>? ¿Cómo queda el ajuste?</li>
+<li>¿Qué <span class="hl-purple"><strong>interpretación</strong></span> tienen?</li>
+</ul>
+</div>
+</section>
+<section id="pasos-a-seguir-2" class="slide level2">
+<h2>Pasos a seguir</h2>
+<ol start="5" type="1">
+<li><span class="hl-yellow"><strong>Fase de diagnosis</strong></span> (pendiente de ver, de momento no la hagas pero apunta que hace falta para poder hacer la siguiente fase: sin condiciones no hay inferencia paramétrica)</li>
+</ol>
+<div class="fragment">
+<ol start="6" type="1">
+<li><span class="hl-yellow"><strong>Fase de inferencia</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Qué <span class="hl-purple"><strong>variabilidad</strong></span> tienen las estimaciones de nuestro parámetros?</li>
+<li>¿Las predictoras/intercepto tienen un <span class="hl-purple"><strong>efecto lineal significativo</strong></span>?</li>
+<li>¿Debemos <span class="hl-purple"><strong>re-entrenar el modelo</strong></span> sin alguno de ellos?</li>
+</ul>
+</div>
+</section>
+<section id="pasos-a-seguir-3" class="slide level2">
+<h2>Pasos a seguir</h2>
+<ol start="7" type="1">
+<li><p><span class="hl-yellow"><strong>Fase de evaluación</strong></span>: pendiente de ver, de momento no la hagas pero apunta que hace falta</p></li>
+<li><p><span class="hl-yellow"><strong>Fase de predicción</strong></span> (solo tiene sentido con todo lo anterior hecho)</p></li>
+</ol>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
