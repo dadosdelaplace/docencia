@@ -3656,7 +3656,9 @@ Pero tenemos un problema: la [**varianza residual poblacional**]{.hl-yellow} (va
 
 . . .
 
-$$\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \sqrt{\text{Res standard error}}$$
+$$\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{n}{n-p-1} MSE = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2$$
+
+donde $s_{r}^{2} = MSE$ es la varianza residual muestral o el **error cuadrático medio**.
 
 ---
 
@@ -3848,7 +3850,7 @@ lm(data = datos, formula = mass ~ -1 + height) |> summary()
 
 Fíjate que ahora, amén que [**hay un efecto lineal significativo de la altura**]{.hl-yellow} y de tener $R^2$ mayor, $\beta_1$ tiene una precisión mayor. En este caso [**solo podía quitar uno**]{.hl-yellow} (perderíamos $X$), pero veremos más adelante cómo decidir cuál quitar si tuviésemos varias variables.
 
-# Clase 8: predicción, simulación y caso práctico {#clase-8}
+# Clase 8: predicción y simulación {#clase-8}
 
 [**Entendiendo mejor la regresión**]{style="color:#444442;"}
 
@@ -3988,7 +3990,7 @@ gg1 + gg2 + gg3
 
 . . .
 
-* [**Ejercicio 8**]{.hl-yellow}: con lo obtenido calcula sin hacer uso de `lm()` las estimaciones de las desviaciones típicas de las variables aleatorias $\widehat{\beta}_0$ y  $\widehat{\beta}_1$ que representan nuestros estimadores. Genera dos variables aleatorias ($n = 5000$) con la distribución de ambas variables
+* [**Ejercicio 8**]{.hl-yellow}: con lo ya obtenido calcula sin hacer uso de `lm()` las estimaciones de las desviaciones típicas de las variables aleatorias $\widehat{\beta}_0$ y  $\widehat{\beta}_1$ que representan nuestros estimadores (los conocidos como $SE$). Genera dos variables aleatorias ($n = 5000$) con la distribución de ambas variables $\widehat{\beta}_0$ y  $\widehat{\beta}_1$
 
 . . .
 
@@ -3998,7 +4000,7 @@ gg1 + gg2 + gg3
 
 ## Simulación
 
-Deberías obtener algo **parecido a esto** (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)
+Deberías obtener algo **parecido a esto**: ¿cómo interpretas las 4 gráficas?
 
 ```{r}
 #| echo: false
@@ -4020,7 +4022,8 @@ gg1 <-
   MetBrewer::scale_fill_met_d("Renoir") +
   facet_wrap(~name, scales = "free") +
   theme_minimal() +
-  labs(title = "Betas simulados a partir de la estimación de ambos")
+  labs(title = "Betas simulados a partir de la estimación de ambos",
+       subtitle = "Lo que mi modelo estima que pasaría si tomase muchas muestras")
 
 betas <- tibble()
 for (i in 1:5e3) {
@@ -4046,25 +4049,34 @@ gg2 <-
   MetBrewer::scale_fill_met_d("Renoir") +
   facet_wrap(~name, scales = "free") +
   theme_minimal() +
-  labs(title = "Betas muestrales a partir de simular datos")
+  labs(title = "Betas muestrales a partir de simular datos",
+       subtitle = "Lo que pasaría si se pudiese tomar una muestra tras otra")
 
 gg3 <-
   ggplot() +
   geom_point(data = tibble("betas_0" = betas$beta_0, "beta_0_sim" = sim_betas$beta_0_sim),
              aes(x = betas_0, y = beta_0_sim), color = "#6559ac") +
+  labs(x = "beta_0 simulado a partir de parámetros poblacionales",
+       y = "beta_0 obtenido de muchas muestras") +
   theme_minimal()
 gg4 <-
   ggplot() +
   geom_point(data = tibble("betas_1" = betas$beta_1, "beta_1_sim" = sim_betas$beta_1_sim),
              aes(x = betas_1, y = beta_1_sim), color = "#f8bd13") +
+  labs(x = "beta_1 simulado a partir de parámetros poblacionales",
+       y = "beta_1 obtenido de muchas muestras") +
   theme_minimal()
 library(patchwork)
-gg1 + gg2 + gg3 + gg4
+gg1 + gg3 + gg2 + gg4
 ```
 
 
----
+# Clase 9: caso práctico {#clase-9}
 
+[**Diagnosis + evaluación**]{style="color:#444442;"}
+
+
+---
 
 ## Caso práctico
 
@@ -4155,4 +4167,34 @@ Para predecir el precio vamos a usar (de momento) una [**regresión lineal univa
 7. [**Fase de evaluación**]{.hl-yellow}: pendiente de ver, de momento no la hagas pero apunta que hace falta
 
 8. [**Fase de predicción**]{.hl-yellow} (solo tiene sentido con todo lo anterior hecho)
+
+
+
+# Clase 10: simulación {#clase-10}
+
+[**Entendiendo el R2 e incumpliendo hipótesis**]{style="color:#444442;"}
+
+---
+
+## Simulación
+
+# Clase 11: casos reales {#clase-12}
+
+[**Regresión univariante con casos reales**]{style="color:#444442;"}
+
+
+---
+
+## Casos reales
+
+
+# Clase 12: reg. multivariante {#clase-12}
+
+[**Introducción a la regresión multivariante. Formulación del modelo y estimación**]{style="color:#444442;"}
+
+---
+
+## Regresión multivariante
+
+
 

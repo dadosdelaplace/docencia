@@ -3789,7 +3789,8 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
 <p>Pero tenemos un problema: la <span class="hl-yellow"><strong>varianza residual poblacional</strong></span> (varianza población del error) <span class="math inline">\(\sigma_{\varepsilon}^{2}\)</span> es <span class="hl-yellow"><strong>desconocida</strong></span>. Como suele pasar, la <span class="hl-yellow"><strong>sustituiremos por un estimador (insesgado)</strong></span> de la misma donde <span class="math inline">\(p\)</span> es el número de variables (el cuadrado de lo que R llama `Residual standard error)</p>
 <div class="fragment">
-<p><span class="math display">\[\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \sqrt{\text{Res standard error}}\]</span></p>
+<p><span class="math display">\[\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{n}{n-p-1} MSE = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2\]</span></p>
+<p>donde <span class="math inline">\(s_{r}^{2} = MSE\)</span> es la varianza residual muestral o el <strong>error cuadrático medio</strong>.</p>
 </div>
 </section>
 <section id="inferencia-de-los-parámetros-5" class="slide level2">
@@ -4023,7 +4024,7 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 </section></section>
 <section>
 <section id="clase-8" class="title-slide slide level1 center">
-<h1>Clase 8: predicción, simulación y caso práctico</h1>
+<h1>Clase 8: predicción y simulación</h1>
 <p><span style="color:#444442;"><strong>Entendiendo mejor la regresión</strong></span></p>
 </section>
 <section id="predicción-en-r" class="slide level2">
@@ -4106,7 +4107,7 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 </ul>
 <div class="fragment">
 <ul>
-<li><span class="hl-yellow"><strong>Ejercicio 8</strong></span>: con lo obtenido calcula sin hacer uso de <code>lm()</code> las estimaciones de las desviaciones típicas de las variables aleatorias <span class="math inline">\(\widehat{\beta}_0\)</span> y <span class="math inline">\(\widehat{\beta}_1\)</span> que representan nuestros estimadores. Genera dos variables aleatorias (<span class="math inline">\(n = 5000\)</span>) con la distribución de ambas variables</li>
+<li><span class="hl-yellow"><strong>Ejercicio 8</strong></span>: con lo ya obtenido calcula sin hacer uso de <code>lm()</code> las estimaciones de las desviaciones típicas de las variables aleatorias <span class="math inline">\(\widehat{\beta}_0\)</span> y <span class="math inline">\(\widehat{\beta}_1\)</span> que representan nuestros estimadores (los conocidos como <span class="math inline">\(SE\)</span>). Genera dos variables aleatorias (<span class="math inline">\(n = 5000\)</span>) con la distribución de ambas variables <span class="math inline">\(\widehat{\beta}_0\)</span> y <span class="math inline">\(\widehat{\beta}_1\)</span></li>
 </ul>
 </div>
 <div class="fragment">
@@ -4117,9 +4118,14 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 </section>
 <section id="simulación-5" class="slide level2">
 <h2>Simulación</h2>
-<p>Deberías obtener algo <strong>parecido a esto</strong> (parecido != igual ya que estamos generando variables aleatorias: en promedio se parecerán pero a nivel individual no tienen porque coincidir)</p>
+<p>Deberías obtener algo <strong>parecido a esto</strong>: ¿cómo interpretas las 4 gráficas?</p>
 
-<img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="clase-9" class="title-slide slide level1 center">
+<h1>Clase 9: caso práctico</h1>
+<p><span style="color:#444442;"><strong>Diagnosis + evaluación</strong></span></p>
+</section>
 <section id="caso-práctico" class="slide level2">
 <h2>Caso práctico</h2>
 <p>Vamos a poner en práctica lo aprendido con el dataset <code>wine.csv</code> disponible en el campus.</p>
@@ -4241,6 +4247,30 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <li><p><span class="hl-yellow"><strong>Fase de evaluación</strong></span>: pendiente de ver, de momento no la hagas pero apunta que hace falta</p></li>
 <li><p><span class="hl-yellow"><strong>Fase de predicción</strong></span> (solo tiene sentido con todo lo anterior hecho)</p></li>
 </ol>
+</section></section>
+<section>
+<section id="clase-10" class="title-slide slide level1 center">
+<h1>Clase 10: simulación</h1>
+<p><span style="color:#444442;"><strong>Entendiendo el R2 e incumpliendo hipótesis</strong></span></p>
+</section>
+<section id="simulación-6" class="slide level2">
+<h2>Simulación</h2>
+</section></section>
+<section>
+<section id="clase-12" class="title-slide slide level1 center">
+<h1>Clase 11: casos reales</h1>
+<p><span style="color:#444442;"><strong>Regresión univariante con casos reales</strong></span></p>
+</section>
+<section id="casos-reales" class="slide level2">
+<h2>Casos reales</h2>
+</section></section>
+<section>
+<section id="clase-12" class="title-slide slide level1 center">
+<h1>Clase 12: reg. multivariante</h1>
+<p><span style="color:#444442;"><strong>Introducción a la regresión multivariante. Formulación del modelo y estimación</strong></span></p>
+</section>
+<section id="regresión-multivariante" class="slide level2">
+<h2>Regresión multivariante</h2>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
