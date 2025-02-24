@@ -3473,6 +3473,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><span class="math display">\[\widehat{\beta}_0 = \frac{\overline{y}*\overline{x^2} - \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2}  = \overline{y} + \frac{\overline{y}*\overline{x}^2- \overline{x}*\overline{xy}}{\overline{x^2} - \overline{x}^2} = \overline{y} - \widehat{\beta}_1 \overline{x}\]</span></p>
 </div>
 </section>
+<section id="método-mínimos-cuadrados-4" class="slide level2">
+<h2>Método mínimos cuadrados</h2>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}, \quad \widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}\]</span></p>
+<p>Se puede demostrar cómo los <span class="hl-yellow"><strong>estimadores mínimos cuadrados</strong></span> coincide con los <span class="hl-yellow"><strong>estimadores de máxima verosimilitud</strong></span>: condicionada a la muestra obtenida, ¿cuál es el valor más probable/verosímil de los parámetros? (para ello lo que se busca es maximizar la log-verosimilitud, que no es más que el logaritmo de la función de densidad condicionada a los datos, dependiendo de los dos parámetros)</p>
+</section>
 <section id="estimación-reg.-univariante" class="slide level2">
 <h2>Estimación reg. univariante</h2>
 <p>Los <span class="hl-yellow"><strong>estimadores de los parámetros de una regresión lineal univariante</strong></span> serán por tanto <span class="math inline">\(\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}\)</span> (<span class="hl-purple"><strong>pendiente de la recta</strong></span>) y <span class="math inline">\(\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x}\)</span> (<span class="hl-purple"><strong>ordenada en el origen</strong></span>)</p>
@@ -3707,12 +3712,8 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 </div>
 <div class="fragment">
 <ol start="2" type="1">
-<li><span class="hl-green"><strong>Homocedasticidad</strong></span>: el modelo no podrá explicar toda la información (a veces se equivocará por arriba y otras por abajo), pero necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante</strong></span>, tal que <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte &lt; \infty\)</span>, que no varíe según aumenta o disminuye la <span class="math inline">\(X\)</span>.</li>
-</ol>
-</div>
-<div class="fragment">
-<ol start="3" type="1">
-<li><span class="hl-green"><strong>Normalidad</strong></span>: pediremos que <span class="math inline">\(\varepsilon \sim N \left(0, \sigma_{r}^2 \right)\)</span></li>
+<li><p><span class="hl-green"><strong>Homocedasticidad</strong></span>: el modelo no podrá explicar toda la información pero necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante, sin depender de <span class="math inline">\(x\)</span></strong></span>, tal que <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte &lt; \infty\)</span>. . . .</p></li>
+<li><p><span class="hl-green"><strong>Normalidad</strong></span>: pediremos que <span class="math inline">\(\varepsilon \sim N \left(0, \sigma_{r}^2 \right)\)</span></p></li>
 </ol>
 </div>
 <div class="fragment">
@@ -3733,7 +3734,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 </section>
 <section id="inferencia-de-los-parámetros" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
-<p>Las hipótesis nos permiten decir (lo demostraremos más adelante) que los <span class="hl-yellow"><strong>parámetros estimados siguen una distribución (condicionada) normal</strong></span> de <span class="hl-purple"><strong>media el parámetro</strong></span> a estimar y de <span class="hl-purple"><strong>varianza el conocido como standard error</strong></span></p>
+<p>Las hipótesis nos permiten decir que los <span class="hl-yellow"><strong>parámetros estimados siguen una distribución (condicionada) normal</strong></span> de <span class="hl-purple"><strong>media el parámetro</strong></span> a estimar y de <span class="hl-purple"><strong>varianza el conocido como standard error</strong></span></p>
 <p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
 <div class="fragment">
 <p>Por las propiedades de la normal y el teorema central del límite</p>
@@ -3785,15 +3786,23 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 </section>
 <section id="inferencia-de-los-parámetros-4" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
+<p>Un inciso: no se si te has fijado que para calcular <span class="math inline">\(\widehat{\beta}_0\)</span> necesitas <span class="math inline">\(\widehat{\beta}_1\)</span>: los <span class="hl-yellow"><strong>parámetros están relacionados</strong></span></p>
+<div class="fragment">
+<p><span class="math display">\[Cov \left(\widehat{\beta}_0,\widehat{\beta}_1\right) = Cov \left(\overline{y} - \widehat{\beta}_1 \overline{x} ,\widehat{\beta}_1\right) = Cov\left(\overline{y} ,\widehat{\beta}_1\right) - Cov\left(\widehat{\beta}_1 \overline{x} ,\widehat{\beta}_1\right) = - \overline{x} V \left[\widehat{\beta}_1 \right] = \frac{-\overline{x}\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span> . . .</p>
+<p>Fíjate que esto implica que si <span class="math inline">\(\overline{x}&gt; 0\)</span>, entonces la <span class="hl-yellow"><strong>covarianza es negativa</strong></span>: poca precisión en la estimación de uno de los parámetros producirá mucha precisión en la estimación del otro (y viceversa).</p>
+</div>
+</section>
+<section id="inferencia-de-los-parámetros-5" class="slide level2">
+<h2>Inferencia de los parámetros</h2>
 <p><span class="math display">\[\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1\]</span></p>
 <p><span class="math display">\[SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}\]</span></p>
 <p>Pero tenemos un problema: la <span class="hl-yellow"><strong>varianza residual poblacional</strong></span> (varianza población del error) <span class="math inline">\(\sigma_{\varepsilon}^{2}\)</span> es <span class="hl-yellow"><strong>desconocida</strong></span>. Como suele pasar, la <span class="hl-yellow"><strong>sustituiremos por un estimador (insesgado)</strong></span> de la misma donde <span class="math inline">\(p\)</span> es el número de variables (el cuadrado de lo que R llama `Residual standard error)</p>
 <div class="fragment">
-<p><span class="math display">\[\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{n}{n-p-1} MSE = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2\]</span></p>
+<p><span class="math display">\[\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2\]</span></p>
 <p>donde <span class="math inline">\(s_{r}^{2} = MSE\)</span> es la varianza residual muestral o el <strong>error cuadrático medio</strong>.</p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-5" class="slide level2">
+<section id="inferencia-de-los-parámetros-6" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1\]</span></p>
 <p>¿Qué suele suceder cuando en una normal <strong>desconocemos la varianza real y la sustituimos por su estimador insesgado</strong>?</p>
@@ -3803,7 +3812,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p>donde <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_0\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right]\)</span> y <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_1\right)^2 = \frac{\widehat{\sigma_{\varepsilon}^{2}}}{n s_{x}^2}\)</span></p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-6" class="slide level2">
+<section id="inferencia-de-los-parámetros-7" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb167"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3835,7 +3844,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 </ul>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-7" class="slide level2">
+<section id="inferencia-de-los-parámetros-8" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb169"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3867,13 +3876,13 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 </ul>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-8" class="slide level2">
+<section id="inferencia-de-los-parámetros-9" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p><span class="math display">\[\frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} | \left( X=x \right) \sim t_{n-p-1} , \quad j=0,1\]</span></p>
 <p>Si te acuerdas de inferencia, esto implica que los <span class="hl-yellow"><strong>intervalos de confianza de nuestros parámetros</strong></span> son</p>
 <p><span class="math display">\[IC \left(\alpha, \widehat{\beta}_j \right) = \left[\widehat{\beta}_j - t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right), \widehat{\beta}_j + t_{n-p-1; \alpha/2} \widehat{SE} \left(\widehat{\beta}_j\right) \right]\]</span> donde <span class="math inline">\(t_{n-p-1; \alpha/2}\)</span> es el cuantil <span class="math inline">\(1-\alpha/2\)</span> (deja a la izquierda una probabilidad de <span class="math inline">\(1-\alpha/2\)</span>).</p>
 </section>
-<section id="inferencia-de-los-parámetros-9" class="slide level2">
+<section id="inferencia-de-los-parámetros-10" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p>Podemos calcular los intervalos de confianza de los parámetros en <code>R</code> con <code>confint()</code></p>
 <div class="cell">
@@ -3897,7 +3906,7 @@ height        -0.4229783   1.670985</code></pre>
 </div>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-10" class="slide level2">
+<section id="inferencia-de-los-parámetros-11" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p><span class="hl-yellow"><strong>¿Qué significa realmente un intervalo de confianza?</strong></span></p>
 <div class="fragment">
@@ -3910,7 +3919,7 @@ height        -0.4229783   1.670985</code></pre>
 <p>Un <span class="hl-yellow"><strong>intervalo al 95% implica que habrá una frecuencia esperada de 0.95</strong></span> de que intervalos que no conocemos (porque se derivan de muestras que no hemos tomado) contengan al parámetro real, pero <span class="hl-red"><strong>no es la probabilidad de que tu intervalo calculado contenga a dicho parámetro</strong></span>: nos habla la precisión de nuestra metodología de estimación, no del parámetro.</p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-11" class="slide level2">
+<section id="inferencia-de-los-parámetros-12" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p><span class="hl-yellow"><strong>Ejemplo</strong></span>. Dada una población normal <span class="math inline">\(\mu = 3\)</span> y <span class="math inline">\(\sigma = 1.2\)</span>, generamos 500 muestras distintas (tamaño <span class="math inline">\(n = 100\)</span> cada una), de manera que para cada una aplicamos un <code>t.test()</code> para calcular un IC para la media <span class="math inline">\(\mu\)</span>.</p>
 <div class="cell">
@@ -3946,7 +3955,7 @@ height        -0.4229783   1.670985</code></pre>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960" class="r-stretch"></section>
-<section id="inferencia-de-los-parámetros-12" class="slide level2">
+<section id="inferencia-de-los-parámetros-13" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p>Y si tenemos inferencia, tenemos contrastes: ¿te acuerdas de los p-valores que devuelve la tabla para cada parámetro?</p>
 <div class="fragment">
@@ -3957,7 +3966,7 @@ height        -0.4229783   1.670985</code></pre>
 <p>El estadístico usado es el <span class="hl-yellow"><strong>t value</strong></span> que devuelve <code>R</code> definido como <span class="math inline">\(\frac{\widehat{\beta}_j - 0}{\widehat{SE} \left(\widehat{\beta}_j\right)}\)</span> y que, <span class="hl-purple"><strong>BAJO EL SUPUESTO DE QUE LA HIPÓTESIS NULA SEA CIERTA</strong></span>, sigue una t-Student <span class="math inline">\(t_{n-p-1}\)</span></p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-13" class="slide level2">
+<section id="inferencia-de-los-parámetros-14" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p><span class="math display">\[H_0:~\widehat{\beta}_j = 0 \quad vs \quad H_1:~\widehat{\beta}_j \neq 0\]</span></p>
 <p>Este contraste significancia en realidad <strong>contesta a la siguiente pregunta</strong></p>
@@ -3967,7 +3976,7 @@ height        -0.4229783   1.670985</code></pre>
 <p>Esa pregunta puede ser respondida desde un punto de vista <strong>frecuentista</strong> haciendo uso de los <span class="hl-yellow"><strong>p-valores</strong></span>: si <span class="math inline">\(p-value &lt; \alpha\)</span>, se suele rechazar la nula (rechazamos que la variable no tenga efecto lineal significativo, es decir, aceptamos que sí lo tiene); en caso contrario no se suele rechazar (que <strong>no es lo mismo que aceptarla</strong>).</p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-14" class="slide level2">
+<section id="inferencia-de-los-parámetros-15" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb178"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -3995,7 +4004,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p>¿Y si probamos a quitar <span class="math inline">\(\beta_0\)</span> (es decir, la respuesta está centrada)?</p>
 </div>
 </section>
-<section id="inferencia-de-los-parámetros-15" class="slide level2">
+<section id="inferencia-de-los-parámetros-16" class="slide level2">
 <h2>Inferencia de los parámetros</h2>
 <p>Para ello basta añadir un <code>-1</code> antes de las variables predictoras.</p>
 <div class="cell">
@@ -4126,12 +4135,125 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <h1>Clase 9: caso práctico</h1>
 <p><span style="color:#444442;"><strong>Diagnosis + evaluación</strong></span></p>
 </section>
+<section id="resumen" class="slide level2">
+<h2>Resumen</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1"></a>datos <span class="ot">&lt;-</span> </span>
+<span id="cb184-2"><a href="#cb184-2"></a>  starwars <span class="sc">|&gt;</span></span>
+<span id="cb184-3"><a href="#cb184-3"></a>  <span class="fu">drop_na</span>(mass, height) </span>
+<span id="cb184-4"><a href="#cb184-4"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Residuals:</code> tabla con los cuartiles de los errores = residuales</li>
+</ul>
+</section>
+<section id="resumen-1" class="slide level2">
+<h2>Resumen</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Coefficients:</code> tabla referente a la <strong>estimación e inferencia</strong> de los estimadores de los parámetros <span class="math inline">\(\widehat{\beta}_j\)</span></li>
+</ul>
+</section>
+<section id="resumen-2" class="slide level2">
+<h2>Resumen</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Estimate</code> –&gt; media de los estimadores insesgados <span class="math inline">\(\widehat{\beta}_j \sim N\)</span></li>
+<li><code>Std. Error</code> –&gt; estimador insesgado de la desv. típica de los estimadores <span class="math inline">\(\widehat{\beta}_j \sim N(estimate, \sigma = std.~error)\)</span> para el que se ha sustituido la desv típica poblacional del error por su estimador insesgado <code>Residual standard error</code></li>
+</ul>
+</section>
+<section id="resumen-3" class="slide level2">
+<h2>Resumen</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mass ~ height, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -60.95  -29.51  -20.83  -17.65 1260.29 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -11.4868   111.3842  -0.103    0.918
+height        0.6240     0.6262   0.997    0.323
+
+Residual standard error: 169.5 on 57 degrees of freedom
+Multiple R-squared:  0.01712,   Adjusted R-squared:  -0.0001194 
+F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
+</div>
+</div>
+<ul>
+<li><code>t value</code> –&gt; estadístico bajo la hipótesis nula <span class="math inline">\(tvalue = estimate/std.error\)</span></li>
+<li><code>Pr(&gt;|t|)</code> –&gt; p-valor del contraste de significación (<span class="math inline">\(H_0:~\beta_j = 0\)</span>).</li>
+</ul>
+</section>
 <section id="caso-práctico" class="slide level2">
 <h2>Caso práctico</h2>
 <p>Vamos a poner en práctica lo aprendido con el dataset <code>wine.csv</code> disponible en el campus.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
-<span id="cb184-2"><a href="#cb184-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb192-2"><a href="#cb192-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 27 × 7
     Year Price WinterRain  AGST HarvestRain   Age FrancePop
@@ -4169,7 +4291,7 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <section id="caso-práctico-2" class="slide level2">
 <h2>Caso práctico</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 27 × 7
     Year Price WinterRain  AGST HarvestRain   Age FrancePop
@@ -4247,6 +4369,305 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <li><p><span class="hl-yellow"><strong>Fase de evaluación</strong></span>: pendiente de ver, de momento no la hagas pero apunta que hace falta</p></li>
 <li><p><span class="hl-yellow"><strong>Fase de predicción</strong></span> (solo tiene sentido con todo lo anterior hecho)</p></li>
 </ol>
+</section>
+<section id="análisis-exploratorio-inicial" class="slide level2">
+<h2>Análisis exploratorio inicial</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Análisis exploratorio inicial</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Las variables son <span class="hl-purple"><strong>numéricas (continuas)</strong></span>?</li>
+<li>¿Tienen <span class="hl-purple"><strong>problemas de rango</strong></span> (por ejemplo, pesos negativos)? ¿Tienen datos ausentes?</li>
+</ul>
+<p>&nbsp;</p>
+<p>Para responder a dichas preguntas lo más sencillos es hacer uso de la función <code>skim()</code> del paquete <code>{skimr}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb196-2"><a href="#cb196-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>En este caso <span class="hl-green"><strong>no tenemos ausentes ni problemas de codificación</strong></span></p>
+</div>
+</section>
+<section id="análisis-exploratorio-inicial-1" class="slide level2">
+<h2>Análisis exploratorio inicial</h2>
+<ul>
+<li>¿Cómo se <span class="hl-purple"><strong>distribuyen las variables</strong></span>?</li>
+<li>¿Hay <span class="hl-purple"><strong>datos atípicos</strong></span>?</li>
+</ul>
+<p>&nbsp;</p>
+<p>Para ello podemos <span class="hl-yellow"><strong>visualizar la distribución de cada variable</strong></span> haciendo uso de densidades, histogramas y/o boxplots (por ejemplo)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
+<span id="cb197-2"><a href="#cb197-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb197-3"><a href="#cb197-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb197-4"><a href="#cb197-4"></a></span>
+<span id="cb197-5"><a href="#cb197-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb197-6"><a href="#cb197-6"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
+<span id="cb197-7"><a href="#cb197-7"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb197-8"><a href="#cb197-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb197-9"><a href="#cb197-9"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb197-10"><a href="#cb197-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb197-11"><a href="#cb197-11"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960" class="r-stretch"></section>
+<section id="análisis-exploratorio-inicial-2" class="slide level2">
+<h2>Análisis exploratorio inicial</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">y =</span> values, <span class="at">x =</span> variable)) <span class="sc">+</span></span>
+<span id="cb198-2"><a href="#cb198-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
+<span id="cb198-3"><a href="#cb198-3"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb198-4"><a href="#cb198-4"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb198-5"><a href="#cb198-5"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb198-6"><a href="#cb198-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb198-7"><a href="#cb198-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960" class="r-stretch"><p><span class="hl-green"><strong>No hay valores atípicos</strong></span> (respecto a percentiles al menos)</p>
+</section>
+<section id="análisis-exploratorio-inicial-3" class="slide level2">
+<h2>Análisis exploratorio inicial</h2>
+<p>Podemos también visualizar con un <span class="hl-yellow"><strong>scatter plot</strong></span> todas las variables y además sus correlaciones, con el paquete <code>{GGally}</code> y la función `ggpairs(), sin necesidad de convertir a tidydata.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb199-2"><a href="#cb199-2"></a><span class="fu">ggpairs</span>(datos) <span class="sc">+</span></span>
+<span id="cb199-3"><a href="#cb199-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960" class="r-stretch"></section>
+<section id="análisis-de-dependencia" class="slide level2">
+<h2>Análisis de dependencia</h2>
+<ol start="2" type="1">
+<li><span class="hl-yellow"><strong>Análisis de dependencia</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Qué <span class="hl-purple"><strong>predictora está más correlacionada (linealmente) con la variable objetivo</strong></span> a predecir? ¿Existe otro tipo de dependencia (pendiente implementar en <code>R</code>)?</li>
+<li>¿Cómo se <span class="hl-purple"><strong>relacionan las predictoras</strong></span> entre sí? ¿Están correlacionadas? Ideas: matriz de correlaciones, diagramas de dispersión vs Y, corrplots, etc</li>
+</ul>
+<div class="fragment">
+<p>Este paso será crucial en el <span class="hl-yellow"><strong>contexto multivariante</strong></span> pero en este caso simplemente vamos a ver como se relacionan linealmente las predictoras entre sí, y cuál de ellas es la <strong>más adecuada para predecir linealmente</strong> <code>precio</code></p>
+</div>
+</section>
+<section id="análisis-de-dependencia-1" class="slide level2">
+<h2>Análisis de dependencia</h2>
+<p>El primer paso es la <span class="hl-yellow"><strong>matriz de correlaciones</strong></span> con la función <code>cor()</code> o con la función <code>correlate()</code> del paquete <code>{corrr}</code> (importa en tibble más visual)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1"></a><span class="fu">library</span>(corrr)</span>
+<span id="cb200-2"><a href="#cb200-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">correlate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 8
+  term           Year  Price WinterRain    AGST HarvestRain     Age FrancePop
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+1 Year        NA      -0.460     0.0512 -0.295      -0.0588 -1         0.992 
+2 Price       -0.460  NA         0.135   0.668      -0.507   0.460    -0.481 
+3 WinterRain   0.0512  0.135    NA      -0.321      -0.268  -0.0512    0.0295
+4 AGST        -0.295   0.668    -0.321  NA          -0.0271  0.295    -0.301 
+5 HarvestRain -0.0588 -0.507    -0.268  -0.0271     NA       0.0588   -0.0320
+6 Age         -1       0.460    -0.0512  0.295       0.0588 NA        -0.992 
+7 FrancePop    0.992  -0.481     0.0295 -0.301      -0.0320 -0.992    NA     </code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><p><span class="hl-yellow"><strong>Respecto a Y</strong></span>: predictoras con mayor cor lineal son <code>AGST</code> (más calor, menos cosechas, sube el precio) y <code>HarvestRain</code> (más lluvias, más cosechas, baja el precio, ¡el signo importa!)</p></li>
+<li><p><span class="hl-yellow"><strong>Dependencia entre predictoras</strong></span>: las variables <code>Age</code>, <code>Year</code> y <code>FrancePop</code> presentan la misma información.</p></li>
+</ul>
+</div>
+</section>
+<section id="análisis-de-dependencia-2" class="slide level2">
+<h2>Análisis de dependencia</h2>
+<p>También podemos usar <code>corrplot()</code> del paquete <code>{corrplot}</code>, al que le pasamos una matriz de correlaciones clásica y nos la <span class="hl-yellow"><strong>visualiza</strong></span>.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb202-2"><a href="#cb202-2"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb202-3"><a href="#cb202-3"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb202-4"><a href="#cb202-4"></a>  <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"ellipse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-121-1.png" width="960" class="r-stretch"><p>Puedes ver distintas opciones de visualización en <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html" class="uri">https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html</a></p>
+</section>
+<section id="análisis-de-dependencia-3" class="slide level2">
+<h2>Análisis de dependencia</h2>
+<p>Otra opción es <span class="hl-yellow"><strong>visualizar con un scatter plots todas las predictoras vs Y</strong></span>, pivotando antes nuestro dataset (solo pivotamos las predictoras)</p>
+<div class="columns">
+<div class="column" style="width:65%;">
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
+<span id="cb203-2"><a href="#cb203-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb203-3"><a href="#cb203-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Price, <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb203-4"><a href="#cb203-4"></a>               <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb203-5"><a href="#cb203-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> Price)) <span class="sc">+</span> </span>
+<span id="cb203-6"><a href="#cb203-6"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb203-7"><a href="#cb203-7"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb203-8"><a href="#cb203-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb203-9"><a href="#cb203-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb203-10"><a href="#cb203-10"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:35%;">
+<p>No solo comprobamos que las rectas con más pendiente son <code>AGST</code> y <code>HarvestRain</code>, además los puntos parecen poder ajustarse a una recta sin otro patrón identificable.</p>
+</div>
+</div>
+<p>Esto es importante hacerlo ya que debemos <span class="hl-red"><strong>descartar posibles correlaciones espúreas</strong></span> (ver ejemplo datasaurus)</p>
+</section>
+<section id="formulación-del-modelo" class="slide level2">
+<h2>Formulación del modelo</h2>
+<p>Una vez que hemos decidido que dos predictoras usaremos, vamos por tanto a plantear <span class="hl-yellow"><strong>dos posibles modelos univariantes</strong></span></p>
+<p><span class="math display">\[Price = \beta_0 + \beta_1*AGST + \varepsilon\]</span> <span class="math display">\[Price = \beta_0 + \beta_1*HarvestRain + \varepsilon\]</span></p>
+</section>
+<section id="fase-de-estimación" class="slide level2">
+<h2>Fase de estimación</h2>
+<ol start="4" type="1">
+<li><span class="hl-yellow"><strong>Fase de estimación</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Cuánto valen los <span class="hl-purple"><strong>parámetros estimados</strong></span>? ¿Cómo queda el ajuste?</li>
+<li>¿Qué <span class="hl-purple"><strong>interpretación</strong></span> tienen?</li>
+</ul>
+<p>&nbsp;</p>
+<p>Para ello ejecutaremos ambos modelos con <code>lm()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1"></a>ajuste_AGST <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST)</span>
+<span id="cb204-2"><a href="#cb204-2"></a>ajuste_harvest <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> HarvestRain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fase-de-estimación-1" class="slide level2">
+<h2>Fase de estimación</h2>
+<p><span class="hl-yellow"><strong>Ajuste con AGST</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\(\beta_0=\)</span> -3.547: predicción del precio (escala log) cuando <span class="math inline">\(AGST = 0\)</span> (es decir, si <span class="math inline">\(AGST = 0\)</span>, entonces precio es de <span class="math inline">\(0.02881 = exp(-3.5469)\)</span>)</p></li>
+<li><p><span class="math inline">\(\beta_1=\)</span> 0.643: lo que aumenta el precio (escala log) por cada grado de aumento (es decir, por cada unidad que aumenta la temperatura el precio se multiplica por <span class="math inline">\(exp(0.6426) = 1.901418\)</span> –&gt; aumenta un 90%)</p></li>
+</ul>
+</section>
+<section id="fase-de-estimación-2" class="slide level2">
+<h2>Fase de estimación</h2>
+<p><span class="hl-yellow"><strong>Ajuste con AGST</strong></span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<ul>
+<li><span class="hl-yellow"><strong>Residuales</strong></span>: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que <span class="math inline">\(\widehat{\sigma}_{\varepsilon}=\sqrt{\frac{1}{n-p-1}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2}}= 0.4819\)</span> (estimador insesgado de la desv típica residual) y <span class="math inline">\(R^2 = 0.4456\)</span> (bondad de ajuste)</li>
+</ul>
+</section>
+<section id="fase-de-estimación-3" class="slide level2">
+<h2>Fase de estimación</h2>
+<p><span class="hl-yellow"><strong>Ajuste con harvestRain</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1"></a>ajuste_harvest <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ HarvestRain, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.03792 -0.27679 -0.07892  0.40434  1.21958 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  7.679856   0.241911  31.747  &lt; 2e-16 ***
+HarvestRain -0.004405   0.001497  -2.942  0.00693 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5577 on 25 degrees of freedom
+Multiple R-squared:  0.2572,    Adjusted R-squared:  0.2275 
+F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\(\beta_0=\)</span> 7.68: predicción del precio (escaña log) cuando la lluvia fue nula (es decir, si <span class="math inline">\(HarvestRain = 0\)</span>, entonces precio es de <span class="math inline">\(2164.308 = exp(7.679856)\)</span> tras deshacer escala log)</p></li>
+<li><p><span class="math inline">\(\beta_1=\)</span> -0.004: lo que aumenta el precio (escala log) por cada litro de lluvia de aumento (es decir, por cada unidad que aumenta la precipitación el precio se multiplica por <span class="math inline">\(exp(-0.0044) = 0.9956047\)</span> –&gt; disminuye un 0.5%)</p></li>
+</ul>
+</section>
+<section id="fase-de-estimación-4" class="slide level2">
+<h2>Fase de estimación</h2>
+<p><span class="hl-yellow"><strong>Ajuste con harvestRain</strong></span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ HarvestRain, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.03792 -0.27679 -0.07892  0.40434  1.21958 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  7.679856   0.241911  31.747  &lt; 2e-16 ***
+HarvestRain -0.004405   0.001497  -2.942  0.00693 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5577 on 25 degrees of freedom
+Multiple R-squared:  0.2572,    Adjusted R-squared:  0.2275 
+F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
+</div>
+</div>
+<ul>
+<li><span class="hl-yellow"><strong>Residuales</strong></span>: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que <span class="math inline">\(\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577\)</span> (algo más grande que el otro ajuste) y <span class="math inline">\(R^2 = 0.2572\)</span> (algo más pequeño que el otro ajuste) -&gt; de momento es mejor el primer modelo.</li>
+</ul>
 </section></section>
 <section>
 <section id="clase-10" class="title-slide slide level1 center">

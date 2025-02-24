@@ -3365,6 +3365,19 @@ $$\widehat{\beta}_0 = \frac{\overline{y}*\overline{x^2} - \overline{x}*\overline
 
 ---
 
+## Método mínimos cuadrados
+
+
+
+$$\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^{2}}, \quad \widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}$$
+
+
+Se puede demostrar cómo los [**estimadores mínimos cuadrados**]{.hl-yellow} coincide con los [**estimadores de máxima verosimilitud**]{.hl-yellow}: condicionada a la muestra obtenida, ¿cuál es el valor más probable/verosímil de los parámetros? (para ello lo que se busca es maximizar la log-verosimilitud, que no es más que el logaritmo de la función de densidad condicionada a los datos, dependiendo de los dos parámetros)
+
+---
+
+
+
 ## Estimación reg. univariante
 
 
@@ -3546,8 +3559,7 @@ En el caso de la regresión lineal univariante pediremos [**4 hipótesis**]{.hl-
 
 . . .
 
-2. [**Homocedasticidad**]{.hl-green}: el modelo no podrá explicar toda la información (a veces se equivocará por arriba y otras por abajo), pero necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$, que no varíe según aumenta o disminuye la $X$.
-
+2. [**Homocedasticidad**]{.hl-green}: el modelo no podrá explicar toda la información pero necesitamos que la [**varianza del error sea finita y constante, sin depender de $x$**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$.
 . . .
 
 3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
@@ -3579,7 +3591,7 @@ $$y_i | \boldsymbol{X} = x_i \sim N \left(\beta_0 + \beta_1x_i, \sigma_{\varepsi
 
 ## Inferencia de los parámetros
 
-Las hipótesis nos permiten decir (lo demostraremos más adelante) que los [**parámetros estimados siguen una distribución (condicionada) normal**]{.hl-yellow} de [**media el parámetro**]{.hl-purple}  a estimar y de [**varianza el conocido como standard error**]{.hl-purple}
+Las hipótesis nos permiten decir que los [**parámetros estimados siguen una distribución (condicionada) normal**]{.hl-yellow} de [**media el parámetro**]{.hl-purple}  a estimar y de [**varianza el conocido como standard error**]{.hl-purple}
 
 $$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
 
@@ -3588,6 +3600,8 @@ $$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat
 Por las propiedades de la normal y el teorema central del límite 
 
 $$\frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)}| \left( X=x \right) \sim N \left(0, 1 \right), \quad j=0,1$$
+
+
 
 ---
 
@@ -3647,6 +3661,20 @@ $$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[
 
 ## Inferencia de los parámetros
 
+Un inciso: no se si te has fijado que para calcular $\widehat{\beta}_0$ necesitas $\widehat{\beta}_1$: los [**parámetros están relacionados**]{.hl-yellow}
+
+. . .
+
+
+$$Cov \left(\widehat{\beta}_0,\widehat{\beta}_1\right) = Cov \left(\overline{y} - \widehat{\beta}_1 \overline{x} ,\widehat{\beta}_1\right) = Cov\left(\overline{y} ,\widehat{\beta}_1\right) - Cov\left(\widehat{\beta}_1 \overline{x} ,\widehat{\beta}_1\right) = - \overline{x} V \left[\widehat{\beta}_1 \right] = \frac{-\overline{x}\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
+. . .
+
+Fíjate que esto implica que si $\overline{x}> 0$, entonces la [**covarianza es negativa**]{.hl-yellow}: poca precisión en la estimación de uno de los parámetros producirá mucha precisión en la estimación del otro (y viceversa).
+
+---
+
+## Inferencia de los parámetros
+
 $$\widehat{\beta}_j | \left( X=x \right) \sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad j=0,1$$
 
 $$SE \left(\widehat{\beta}_0\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n}\left[ 1+ \frac{\overline{x}^2}{s_{x}^2} \right], \quad SE \left(\widehat{\beta}_1\right)^2 = \frac{\sigma_{\varepsilon}^{2}}{n s_{x}^2}$$
@@ -3656,7 +3684,7 @@ Pero tenemos un problema: la [**varianza residual poblacional**]{.hl-yellow} (va
 
 . . .
 
-$$\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{n}{n-p-1} MSE = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2$$
+$$\widehat{\sigma_{\varepsilon}^{2}} = \frac{n}{n-p-1} s_{r}^{2} = \frac{1}{n-p-1} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 =_{p=1} \frac{1}{n-2} \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^2 := \text{Res standard error}^2$$
 
 donde $s_{r}^{2} = MSE$ es la varianza residual muestral o el **error cuadrático medio**.
 
@@ -4078,6 +4106,56 @@ gg1 + gg3 + gg2 + gg4
 
 ---
 
+## Resumen
+
+
+```{r}
+datos <- 
+  starwars |>
+  drop_na(mass, height) 
+lm(data = datos, formula = mass ~ height) |> summary()
+```
+
+* `Residuals:` tabla con los cuartiles de los errores = residuales
+
+---
+
+## Resumen
+
+
+```{r}
+lm(data = datos, formula = mass ~ height) |> summary()
+```
+
+* `Coefficients:` tabla referente a la **estimación e inferencia** de los estimadores de los parámetros $\widehat{\beta}_j$
+
+---
+
+## Resumen
+
+
+```{r}
+lm(data = datos, formula = mass ~ height) |> summary()
+```
+
+* `Estimate` --> media de los estimadores insesgados $\widehat{\beta}_j \sim N$
+* `Std. Error` --> estimador insesgado de la desv. típica de los estimadores $\widehat{\beta}_j \sim N(estimate, \sigma = std.~error)$ para el que se ha sustituido la desv típica poblacional del error por su estimador insesgado `Residual standard error`
+
+---
+
+
+## Resumen
+
+
+```{r}
+lm(data = datos, formula = mass ~ height) |> summary()
+```
+
+* `t value` --> estadístico bajo la hipótesis nula $tvalue = estimate/std.error$
+* `Pr(>|t|)` --> p-valor del contraste de significación ($H_0:~\beta_j = 0$).
+
+---
+
 ## Caso práctico
 
 Vamos a poner en práctica lo aprendido con el dataset `wine.csv` disponible en el campus.
@@ -4168,7 +4246,258 @@ Para predecir el precio vamos a usar (de momento) una [**regresión lineal univa
 
 8. [**Fase de predicción**]{.hl-yellow} (solo tiene sentido con todo lo anterior hecho)
 
+---
 
+
+## Análisis exploratorio inicial
+
+
+1. [**Análisis exploratorio inicial**]{.hl-yellow}:
+  - ¿Las variables son [**numéricas (continuas)**]{.hl-purple}?
+  - ¿Tienen [**problemas de rango**]{.hl-purple} (por ejemplo, pesos negativos)? ¿Tienen datos ausentes?
+  
+&nbsp;
+
+Para responder a dichas preguntas lo más sencillos es hacer uso de la función `skim()` del paquete `{skimr}`
+
+```{r}
+#| eval: false
+library(skimr)
+datos |> skim()
+```
+
+. . .
+
+En este caso [**no tenemos ausentes ni problemas de codificación**]{.hl-green}
+
+
+---
+
+## Análisis exploratorio inicial
+
+- ¿Cómo se [**distribuyen las variables**]{.hl-purple}?
+- ¿Hay [**datos atípicos**]{.hl-purple}?
+
+
+&nbsp;
+
+Para ello podemos [**visualizar la distribución de cada variable**]{.hl-yellow} haciendo uso de densidades, histogramas y/o boxplots (por ejemplo)
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos |> 
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "values")
+
+ggplot(datos_tidy, aes(x = values)) +
+  geom_density(aes(color = variable, fill = variable),
+               alpha = 0.6) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  facet_wrap(~variable, scales = "free") +
+  theme_minimal()
+```
+
+
+
+---
+
+## Análisis exploratorio inicial
+
+```{r}
+#| code-fold: true
+ggplot(datos_tidy, aes(y = values, x = variable)) +
+  geom_boxplot(aes(color = variable, fill = variable),
+               alpha = 0.6) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  facet_wrap(~variable, scales = "free") +
+  theme_minimal()
+```
+
+[**No hay valores atípicos**]{.hl-green} (respecto a percentiles al menos)
+
+
+---
+
+## Análisis exploratorio inicial
+
+Podemos también visualizar con un [**scatter plot**]{.hl-yellow} todas las variables y además sus correlaciones, con el paquete `{GGally}` y la función `ggpairs(), sin necesidad de convertir a tidydata.
+
+```{r}
+#| code-fold: true
+library(GGally)
+ggpairs(datos) +
+  theme_minimal()
+```
+   
+---
+
+
+## Análisis de dependencia
+
+2. [**Análisis de dependencia**]{.hl-yellow}:
+  - ¿Qué [**predictora está más correlacionada (linealmente) con la variable objetivo**]{.hl-purple} a predecir? ¿Existe otro tipo de dependencia (pendiente implementar en `R`)?
+  - ¿Cómo se [**relacionan las predictoras**]{.hl-purple} entre sí? ¿Están correlacionadas? Ideas: matriz de correlaciones, diagramas de dispersión vs Y, corrplots, etc
+
+. . .
+
+Este paso será crucial en el [**contexto multivariante**]{.hl-yellow} pero en este caso simplemente vamos a ver como se relacionan linealmente las predictoras entre sí, y cuál de ellas es la **más adecuada para predecir linealmente** `precio`
+
+---
+
+## Análisis de dependencia
+
+El primer paso es la [**matriz de correlaciones**]{.hl-yellow} con la función `cor()` o con la función `correlate()` del paquete `{corrr}` (importa en tibble más visual)
+
+```{r}
+library(corrr)
+datos |> correlate()
+```
+
+. . .
+
+* [**Respecto a Y**]{.hl-yellow}: predictoras con mayor cor lineal son `AGST` (más calor, menos cosechas, sube el precio) y `HarvestRain` (más lluvias, más cosechas, baja el precio, ¡el signo importa!)
+
+* [**Dependencia entre predictoras**]{.hl-yellow}: las variables `Age`, `Year` y `FrancePop` presentan la misma información.
+
+
+---
+
+## Análisis de dependencia
+
+También podemos usar `corrplot()` del paquete `{corrplot}`, al que le pasamos una matriz de correlaciones clásica y nos la [**visualiza**]{.hl-yellow}.
+
+```{r}
+#| code-fold: true
+library(corrplot)
+datos |>
+  cor() |>
+  corrplot(method = "ellipse")
+```
+
+Puedes ver distintas opciones de visualización en <https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html>
+
+---
+
+## Análisis de dependencia
+
+Otra opción es [**visualizar con un scatter plots todas las predictoras vs Y**]{.hl-yellow}, pivotando antes nuestro dataset (solo pivotamos las predictoras)
+
+:::: columns
+::: {.column width="65%"}
+
+```{r}
+#| code-fold: true
+datos_tidy <-
+  datos |>
+  pivot_longer(cols = -Price, names_to = "variable",
+               values_to = "values")
+ggplot(datos_tidy, aes(x = values, y = Price)) + 
+  geom_point(aes(color = variable), alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  MetBrewer::scale_color_met_d("Renoir") +
+  facet_wrap(~variable, scales = "free_x") +
+  theme_minimal()
+```
+
+:::
+
+::: {.column width="35%"}
+
+No solo comprobamos que las rectas con más pendiente son `AGST` y `HarvestRain`, además los puntos parecen poder ajustarse a una recta sin otro patrón identificable.
+
+:::
+::::
+
+Esto es importante hacerlo ya que debemos [**descartar posibles correlaciones espúreas**]{.hl-red} (ver ejemplo datasaurus)
+
+---
+
+## Formulación del modelo
+
+Una vez que hemos decidido que dos predictoras usaremos, vamos por tanto a plantear [**dos posibles modelos univariantes**]{.hl-yellow}
+
+$$Price = \beta_0 + \beta_1*AGST + \varepsilon$$
+$$Price = \beta_0 + \beta_1*HarvestRain + \varepsilon$$
+
+---
+
+## Fase de estimación
+
+
+4. [**Fase de estimación**]{.hl-yellow}:
+  - ¿Cuánto valen los [**parámetros estimados**]{.hl-purple}? ¿Cómo queda el ajuste?
+  - ¿Qué [**interpretación**]{.hl-purple} tienen?
+
+
+&nbsp;
+
+Para ello ejecutaremos ambos modelos con `lm()`
+
+```{r}
+ajuste_AGST <- lm(data = datos, formula = Price ~ AGST)
+ajuste_harvest <- lm(data = datos, formula = Price ~ HarvestRain)
+```
+
+---
+
+
+## Fase de estimación
+
+[**Ajuste con AGST**]{.hl-yellow}
+
+```{r}
+ajuste_AGST |> summary()
+```
+
+* $\beta_0=$ `r round(ajuste_AGST$coefficients[1], 3)`: predicción del precio (escala log) cuando $AGST = 0$ (es decir, si $AGST = 0$, entonces precio es de $0.02881 = exp(-3.5469)$)
+
+* $\beta_1=$ `r round(ajuste_AGST$coefficients[2], 3)`: lo que aumenta el precio (escala log) por cada grado de aumento (es decir, por cada unidad que aumenta la temperatura el precio se multiplica por $exp(0.6426) = 1.901418$ --> aumenta un 90%)
+
+
+---
+
+## Fase de estimación
+
+[**Ajuste con AGST**]{.hl-yellow}
+
+```{r}
+#| echo: false
+ajuste_AGST |> summary()
+```
+
+* [**Residuales**]{.hl-yellow}: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que $\widehat{\sigma}_{\varepsilon}=\sqrt{\frac{1}{n-p-1}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2}}= 0.4819$ (estimador insesgado de la desv típica residual) y $R^2 = 0.4456$ (bondad de ajuste)
+
+
+---
+
+## Fase de estimación
+
+[**Ajuste con harvestRain**]{.hl-yellow}
+
+
+```{r}
+ajuste_harvest |> summary()
+```
+
+* $\beta_0=$ `r round(ajuste_harvest$coefficients[1], 3)`: predicción del precio (escaña log) cuando la lluvia fue nula (es decir, si $HarvestRain = 0$, entonces precio es de $2164.308 = exp(7.679856)$ tras deshacer escala log)
+
+* $\beta_1=$ `r round(ajuste_harvest$coefficients[2], 3)`: lo que aumenta el precio (escala log) por cada litro de lluvia de aumento (es decir, por cada unidad que aumenta la precipitación el precio se multiplica por $exp(-0.0044) = 0.9956047$ --> disminuye un 0.5%)
+
+
+---
+
+## Fase de estimación
+
+[**Ajuste con harvestRain**]{.hl-yellow}
+
+```{r}
+#| echo: false
+ajuste_harvest |> summary()
+```
+
+* [**Residuales**]{.hl-yellow}: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que $\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577$ (algo más grande que el otro ajuste) y $R^2 = 0.2572$ (algo más pequeño que el otro ajuste) -> de momento es mejor el primer modelo.
 
 # Clase 10: simulación {#clase-10}
 
