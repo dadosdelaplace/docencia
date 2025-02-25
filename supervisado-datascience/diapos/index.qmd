@@ -166,6 +166,9 @@ Para el curso los únicos requisitos serán:
 | [2](#clase-2) | S2 | 28 ene | Medidas de asociación |  [💻](#tu-turno-2-1)  [💻](#tu-turno-2-2) | [🐣](#caso-practico-2-1) [🐣](#caso-practico-2-2) [🐣](#caso-practico-2-3) |  | 
 | [3-4](#clase-3) | S2-3 | 30 ene y 4 feb  | Análisis de la varianza | [💻](#tu-turno-3-1)  | [🐣](#caso-practico-3-1) [🐣](#caso-practico-3-2) |  | 
 | [5](#clase-5) | S3 | 6 feb | Entrega I  | ... |  | [🎯 10%](#clase-5)  | 
+| [6](#clase-6) | S4 | 13 feb  | Primeras regresiones | | [🐣](#caso-practico-6-1) |  | 
+| [7](#clase-7) | S5 | 18 feb  | Inferencia | |  |  | 
+| [8](#clase-8) | S5 | 20 feb  | Simulación | [💻](#tu-turno-8-1) | [🐣](#caso-practico-8-1)  |  | 
 :::
 :::
 
@@ -3410,80 +3413,79 @@ Los [**estimadores de los parámetros de una regresión lineal univariante**]{.h
 
 ---
 
-## Regresión en R
+## 💻 Tu turno {#tu-turno-6-1}
 
-Para hacer un [**ajuste de regresión lineal univarainte en R**]{.hl-yellow} solo necesitamos utilizar la función `lm()` (de linear model) con dos argumentos:
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ej 1**]{.hl-yellow}
+
+📝 Elimina ausentes de estatura y peso en la base de datos de starwars
+
+```{r}
+#| code-fold: true
+datos <- 
+  starwars |>
+  drop_na(mass, height) 
+```
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Para hacer un [**ajuste de regresión lineal univariante en R**]{.hl-yellow} solo necesitamos utilizar la función `lm()` (de linear model) con dos argumentos:
 
 * `data = ...`: los datos de los que queremos sacar el ajuste (sin ausentes de momento)
 * `formula = ...`: la fórmula del ajuste (y frente a x, expresado como `y ~ x`)
 
+Realiza el ajuste de regresión `peso vs estatura`
+
+
 ```{r}
-datos <- 
-  starwars |>
-  drop_na(mass, height) 
+#| code-fold: true
+# lo guardamos en un objeto
 ajuste_lineal <- lm(data = datos, formula = mass ~ height)
 ```
 
----
+### [**Ej 3**]{.hl-yellow}
 
-## Regresión en R
-
-Una vez realizado el ajuste podemos [**resumirlo**]{.hl-yellow} con `summary()`
+📝 Aplica `summary()` al objeto anterior para obtener un resumen
 
 ```{r}
+#| code-fold: true
+#| eval: false
 ajuste_lineal |> summary()
 ```
 
-. . .
+### [**Ej 4**]{.hl-yellow}
 
-¿Qué representa cada bloque de la salida?
-
----
-
-## Regresión en R
+📝 Interpreta cada parte de la salida (hasta la tabla de coefficients incluida)
 
 ```{r}
-ajuste_lineal |> summary()
+#| code-fold: true
+# `Call: ...`: la orden que hemos ejecutado
+
+# `Residuals: ...`: un resumen en forma de cuartiles de los residuales/errores
+# (fíjate que aunque la media de los errores siempre es 0, no tiene porque serlo la mediana, de hecho que no lo sea ya nos indica que normales no van a ser seguramente).
+
+# `Coefficients: ...`: de momento solo nos interesa la columna estimate que nos da las
+# estimaciones de los parámetros. En la fila `Intercept` siempre irá beta_0, y el resto de 
+# filas tendrá el nombre de la variable predictora a la que multiplica el parámetro (en 
+# este caso la fila `height` corresponde a la estimación de beta_1)
 ```
 
-* `Call: ...`: la orden que hemos ejecutado
+### [**Ej 5**]{.hl-yellow}
 
-* `Residuals: ...`: un resumen en forma de [**cuartiles de los residuales**]{.hl-yellow}, es decir, de los [**errores**]{.hl-yellow} (fíjate que aunque la media de los errores siempre es 0, no tiene porque serlo la mediana, de hecho que no lo sea ya nos indica que normales no van a ser seguramente).
-
-
----
-
-## Regresión en R
+📝 Con la información anterior determina la ecuación del modelo
 
 ```{r}
-ajuste_lineal |> summary()
+#| code-fold: true
+# En nuestro caso particular, el [**ajuste de regresión**]{.hl-yellow} viene dado por 
+# Y_hat = -11.4868 + 0.6240*X, donde X es la estatura: por cada cm extra que mida un 
+# personaje, el modelo estima que el peso aumenta 0.6240 kg, y la estimación de peso para 
+# un persona que mida 0 cm es de -11.4868 kg 
 ```
 
-
-* `Coefficients: ...`: de momento solo nos interesa la columna [**Estimate**]{.hl-yellow} que nos da las estimaciones de los parámetros. En la fila `Intercept` siempre irá $\widehat{\beta}_0$, y el resto de filas tendrá el nombre de la variable predictora a la que multiplica el parámetro (en este caso la fila `height` corresponde a la estimación $\widehat{\beta}_1$).
-
----
-
-
-## Regresión en R
-
-```{r}
-ajuste_lineal |> summary()
-```
-
-En nuestro caso particular, el [**ajuste de regresión**]{.hl-yellow} viene dado por $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X = -11.4868 + 0.6240*X$, donde $X$ es la estatura: por cada cm extra que mida un personaje, el modelo estima que el peso aumenta 0.6240 kg, y la estimación de peso para un persona que mida 0 cm es de -11.4868 kg (obviamente esta estimación mucho sentido no tiene)
-
----
-
-## Regresión en R
-
-```{r}
-ajuste_lineal |> summary()
-```
-
-* `Multiple R-squared: ...` (de momento lo demás lo ignoramos): es el conocido como $R^2$ o bondad de ajuste. Hablaremos de él en las próximas clases, pero de momento, nos basta saber que es una [**métrica de calidad del ajuste**]{.hl-yellow} que va de 0 (peor) a 1 (mejor).
-
-
+:::
 
 ---
 
@@ -3878,6 +3880,8 @@ lm(data = datos, formula = mass ~ -1 + height) |> summary()
 
 Fíjate que ahora, amén que [**hay un efecto lineal significativo de la altura**]{.hl-yellow} y de tener $R^2$ mayor, $\beta_1$ tiene una precisión mayor. En este caso [**solo podía quitar uno**]{.hl-yellow} (perderíamos $X$), pero veremos más adelante cómo decidir cuál quitar si tuviésemos varias variables.
 
+
+
 # Clase 8: predicción y simulación {#clase-8}
 
 [**Entendiendo mejor la regresión**]{style="color:#444442;"}
@@ -4097,6 +4101,51 @@ gg4 <-
 library(patchwork)
 gg1 + gg3 + gg2 + gg4
 ```
+
+---
+
+
+## 💻 Tu turno {#tu-turno-8-1}
+
+[**Intenta realizar los siguientes ejercicios sin mirar las soluciones**]{style="color:#444442;"}
+
+::: panel-tabset
+
+### [**Ej 1**]{.hl-yellow}
+
+📝 Simula una población de datos $(x, y)$ (tamaño n = 1000000, como si fuese la población teórica real) bajo la hipótesis de que siguen el modelo lineal $y = 1.5 - 3*x + \varepsilon$. Toma las decisiones que consideres teniendo en cuenta que i) $\varepsilon$ debe cumplir las condiciones necesarias con una varianza de $0.75$; ii) $x$ se generará según una normal de varianza 1.5.
+
+### [**Ej 2**]{.hl-yellow}
+
+📝 Obtén una muestra aleatoria simple de $n = 5000$ de dicha población.
+
+### [**Ej 3**]{.hl-yellow}
+
+📝 ¿Cuál es la ecuación del modelo? ¿Son los parámetros significativos? ¿Por qué? Interpreta el valor de ambos parámetros de manera adecuada.
+
+### [**Ej 4**]{.hl-yellow}
+
+📝 Calcula la media de los residuales al cuadrado (varianza residual o MSE). Haciendo uso de la salida, ¿cuánto estima el modelo que es su estimador insesgado?
+
+
+### [**Ej 5**]{.hl-yellow}
+
+📝 Si volviésemos a extraer una muestra de la población y estimásemos $\beta_0$ y $\beta_1$, una y otra vez, ¿cuál sería la distribución que observaríamos en ambos? ¿Qué media tendría? ¿Qué variabilidad?
+
+### [**Ej 6**]{.hl-yellow}
+
+📝 Repite los ejercicios 1-5 con el único cambio de que la varianza de $\varepsilon$ ahora será de $2.5$. Repite los ejercicios 1-5 con el único cambio de que la varianza de $\varepsilon$ ahora será de $7$. ¿Qué observas?
+
+
+### [**Ej 7**]{.hl-yellow}
+
+📝 Repite los ejercicios 1-5 con el único cambio que ahora la muestra será de $n = 50$. ¿Qué observas?
+
+:::
+
+---
+
+## 🐣 Caso práctico I: precisión vs sesgo {#caso-practico-8-1}
 
 
 # Clase 9: caso práctico {#clase-9}
