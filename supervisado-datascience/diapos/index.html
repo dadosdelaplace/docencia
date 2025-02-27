@@ -4126,7 +4126,7 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <section>
 <section id="clase-9" class="title-slide slide level1 center">
 <h1>Clase 9: caso práctico</h1>
-<p><span style="color:#444442;"><strong>Diagnosis + evaluación</strong></span></p>
+<p><span style="color:#444442;"><strong>Poniendo en práctica lo aprendido</strong></span></p>
 </section>
 <section id="resumen" class="slide level2">
 <h2>Resumen</h2>
@@ -4664,7 +4664,694 @@ F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
 </section></section>
 <section>
 <section id="clase-10" class="title-slide slide level1 center">
-<h1>Clase 10: simulación</h1>
+<h1>Clase 10: caso práctico</h1>
+<p><span style="color:#444442;"><strong>Diagnosis + evaluación</strong></span></p>
+</section>
+<section id="fase-de-diagnosis" class="slide level2">
+<h2>Fase de diagnosis</h2>
+<ol start="5" type="1">
+<li><span class="hl-yellow"><strong>Fase de diagnosis</strong></span> (paquetes <code>{performance}</code> y <code>{olsrr}</code>):</li>
+</ol>
+<ul>
+<li>¿Cumplen los datos las <span class="hl-purple"><strong>hipótesis parámetricas</strong></span> requeridas para poder hacer inferencia? ¿Cómo modificar los datos para que se cumplan?</li>
+<li>Análisis de residuales</li>
+</ul>
+<div class="fragment">
+<p>¿Para qué necesitamos comprobar las hipótesis si el código no da error?</p>
+</div>
+<div class="fragment">
+<p>Lo único que hemos hecho es <span class="hl-yellow"><strong>obtener un modelo que SOLO sirve para la muestra</strong></span>: si queremos extrapolar sus conclusiones a toda la población e interpretar la inferencia del modelo <span class="hl-yellow"><strong>necesitamos verificar ANTES las hipótesis</strong></span>. Lo haremos con <code>{performance}</code> y <code>{olsrr}</code></p>
+</div>
+</section>
+<section id="fase-de-diagnosis-1" class="slide level2">
+<h2>Fase de diagnosis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb205-2"><a href="#cb205-2"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-linealidad" class="slide level2">
+<h2>Diagnosis: linealidad</h2>
+<ol type="1">
+<li><span class="hl-green"><strong>Linealidad</strong></span>: el valor esperado de <span class="math inline">\(Y\)</span> es <span class="math inline">\(E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x\)</span></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960" class="r-stretch"><p>Si te fijas el gráfico que se refiere a ello está <span class="hl-yellow"><strong>visualizando residuales vs valores estimados</strong></span>: está volviendo a plantear un segundo modelo de regresión donde ahora <span class="math inline">\(\widehat{\varepsilon}_i = \gamma_0 + \gamma_1 \widehat{y}_i\)</span></p>
+</section>
+<section id="diagnosis-linealidad-1" class="slide level2">
+<h2>Diagnosis: linealidad</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb207-2"><a href="#cb207-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb207-3"><a href="#cb207-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted)</span>
+<span id="cb207-4"><a href="#cb207-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = residuals ~ fitted, data = tibble(fitted = ajuste_AGST$fitted.values, 
+    residuals = ajuste_AGST$residuals))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  2.148e-15  1.574e+00       0        1
+fitted      -3.084e-16  2.231e-01       0        1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  3.694e-32, Adjusted R-squared:  -0.04 
+F-statistic: 9.234e-31 on 1 and 25 DF,  p-value: 1</code></pre>
+</div>
+</div>
+<p>Si te fijas <span class="hl-green"><strong>ambos parámetros no son significativamente distintos de 0</strong></span>: no presentan una tendencia (lineal al menos)</p>
+</section>
+<section id="diagnosis-linealidad-2" class="slide level2">
+<h2>Diagnosis: linealidad</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb209-2"><a href="#cb209-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb209-3"><a href="#cb209-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb209-4"><a href="#cb209-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = residuals ~ fitted + I(fitted^2), data = tibble(fitted = ajuste_AGST$fitted.values, 
+    residuals = ajuste_AGST$residuals))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78405 -0.23888 -0.02835  0.29086  0.89305 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  2.37668   21.73441   0.109    0.914
+fitted      -0.68216    6.22538  -0.110    0.914
+I(fitted^2)  0.04877    0.44481   0.110    0.914
+
+Residual standard error: 0.4917 on 24 degrees of freedom
+Multiple R-squared:  0.0005007, Adjusted R-squared:  -0.08279 
+F-statistic: 0.006012 on 2 and 24 DF,  p-value: 0.994</code></pre>
+</div>
+</div>
+<p>También podemos ver si existe una relación de otro tipo (por ejemplo cuadrática) entre residuales y valores ajustados</p>
+</section>
+<section id="diagnosis-linealidad-3" class="slide level2">
+<h2>Diagnosis: linealidad</h2>
+<p>También podemos <span class="hl-yellow"><strong>visualizar nosotros ese scatter plot residuales vs estimaciones</strong></span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb211-2"><a href="#cb211-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb211-3"><a href="#cb211-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb211-4"><a href="#cb211-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb211-5"><a href="#cb211-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb211-6"><a href="#cb211-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-homocedasticidad" class="slide level2">
+<h2>Diagnosis: homocedasticidad</h2>
+<ol start="2" type="1">
+<li><span class="hl-green"><strong>Homocedasticidad</strong></span>: necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante</strong></span>, tal que <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte &lt; \infty\)</span>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">check_heteroscedasticity</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: Error variance appears to be homoscedastic (p = 0.137).</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>El gráfico titulado <code>Homogeneity of variance</code> nos visualiza la raíz cuadrada del valor absoluto de los residuos estandarizados frente a las predicciones (se conoce como <span class="hl-yellow"><strong>gráfico de escala-localización</strong></span>)</p>
+</div>
+</section>
+<section id="diagnosis-homocedasticidad-1" class="slide level2">
+<h2>Diagnosis: homocedasticidad</h2>
+<p>Si visualizamos los <span class="hl-yellow"><strong>residuales</strong></span> deberían estar en torno a 0, dentro de una banda constante (varianza constante)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb214-2"><a href="#cb214-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb214-3"><a href="#cb214-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb214-4"><a href="#cb214-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb214-5"><a href="#cb214-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-homocedasticidad-2" class="slide level2">
+<h2>Diagnosis: homocedasticidad</h2>
+<p>Si visualizamos el gráfico de <span class="hl-yellow"><strong>escala-localización</strong></span> deberíamos obtener un diagrama de dispersión cuya recta de regresión saliese casi plana en torno al 1.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb215-2"><a href="#cb215-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
+<span id="cb215-3"><a href="#cb215-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
+<span id="cb215-4"><a href="#cb215-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb215-5"><a href="#cb215-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb215-6"><a href="#cb215-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960" class="r-stretch"><p>Según el gráfico no deberíamos asumir homocedasticidad. <strong>¿Por qué el contraste no la rechaza?</strong></p>
+</section>
+<section id="diagnosis-homocedasticidad-3" class="slide level2">
+<h2>Diagnosis: homocedasticidad</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb216-2"><a href="#cb216-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
+<span id="cb216-3"><a href="#cb216-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
+<span id="cb216-4"><a href="#cb216-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb216-5"><a href="#cb216-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb216-6"><a href="#cb216-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960" class="r-stretch"><p>Con el poco tamaño muestral que tenemos, es complicado tener evidencias que refuten la hipótesis nula (y el gráfico puede estar parcialmente diseñado). Por eso es la <span class="hl-yellow"><strong>hipótesis más difícil de cumplir</strong></span>. Lo importante es que en <span class="hl-green"><strong>la recta de regresión al dibujar los residuos no se aprecia una banda cuya anchura se modifique groseramente</strong></span>, más o menos constante</p>
+</section>
+<section id="diagnosis-normalidad" class="slide level2">
+<h2>Diagnosis: normalidad</h2>
+<ol start="3" type="1">
+<li><span class="hl-green"><strong>Normalidad</strong></span>: pediremos que <span class="math inline">\(\varepsilon \sim N \left(0, \sigma_{r}^2 \right)\)</span></li>
+</ol>
+<p>Con la función <code>ols_test_normality()</code> del paquete <code>{olsrr}</code> podemos obtener diferentes contrastes de normalidad</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb217-2"><a href="#cb217-2"></a><span class="fu">ols_test_normality</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-----------------------------------------------
+       Test             Statistic       pvalue  
+-----------------------------------------------
+Shapiro-Wilk              0.9685         0.5633 
+Kolmogorov-Smirnov        0.0904         0.9657 
+Cramer-von Mises          3.3055         0.0000 
+Anderson-Darling          0.2422         0.7457 
+-----------------------------------------------</code></pre>
+</div>
+</div>
+<p>Nos centraremos en los contrastes de <code>Shapiro-Wilk</code> si la muestra es pequeña, y <code>Kolmogorov-Smirnov</code> en caso contrario: <span class="hl-yellow"><strong>no se rechaza normalidad</strong></span></p>
+</section>
+<section id="diagnosis-normalidad-1" class="slide level2">
+<h2>Diagnosis: normalidad</h2>
+<p>Además del contraste podemos visualizar con <code>stat_qq()</code> y <code>stat_qq_line()</code> el conocido como <span class="hl-yellow"><strong>Q-Q plot</strong></span>: enfrenta los cuantiles de una muestra con los cuantiles de una normal teórica, teniendo que <strong>obtener los puntos en torno a una recta</strong> (especilamente en el centro).</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">+</span></span>
+<span id="cb219-2"><a href="#cb219-2"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb219-3"><a href="#cb219-3"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals))<span class="sc">+</span></span>
+<span id="cb219-4"><a href="#cb219-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960" class="r-stretch"></section>
+<section id="diagnosis-independencia" class="slide level2">
+<h2>Diagnosis: independencia</h2>
+<ol start="4" type="1">
+<li><span class="hl-green"><strong>Independencia</strong></span>: los errores <span class="math inline">\(\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}\)</span> deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán <strong>incorrelados</strong></li>
+</ol>
+<p><span class="math display">\[{\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a><span class="fu">check_autocorrelation</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: Residuals appear to be independent and not autocorrelated (p = 0.562).</code></pre>
+</div>
+</div>
+<p>Por último, <code>check_autocorrelation()</code> comprueba como efectivamente los <span class="hl-yellow"><strong>residuales/errores son independientes</strong></span>, haciendo un test de autocorrelación (nos tiene que salir lo contrario a una serie temporal, que el error i no depende del i-1).</p>
+</section>
+<section id="diagnosis-independencia-1" class="slide level2">
+<h2>Diagnosis: independencia</h2>
+<p>Otra forma de verlo es <span class="hl-yellow"><strong>visualizando los residuos respecto a su versión con retardo</strong></span> (por ejemplo, <span class="math inline">\(\left(\widehat{\varepsilon}_1, \widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_{n-1} \right)\)</span> vs <span class="math inline">\(\left(\widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_n \right)\)</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"lag1"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals)],</span>
+<span id="cb222-2"><a href="#cb222-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="dv">1</span>]),</span>
+<span id="cb222-3"><a href="#cb222-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> residuals, <span class="at">y =</span> lag1)) <span class="sc">+</span></span>
+<span id="cb222-4"><a href="#cb222-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb222-5"><a href="#cb222-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb222-6"><a href="#cb222-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960" class="r-stretch"></section>
+<section id="fase-de-diagnosis-2" class="slide level2">
+<h2>Fase de diagnosis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960" class="r-stretch"><p>En nuestro caso se cumplen todas las hipótesis (algunas más fuertemente que otras).</p>
+<p><span class="hl-yellow"><strong>Repite el proceso con el otro modelo</strong></span></p>
+</section>
+<section id="fase-de-diagnosis-3" class="slide level2">
+<h2>Fase de diagnosis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a><span class="fu">check_predictions</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960" class="r-stretch"><p>Nos faltan dos gráficas por comentar:</p>
+<ul>
+<li><code>Posterior Predictive Checks</code>: <span class="hl-yellow"><strong>simula distintas variables respuesta</strong></span> suponiendo que el modelo fuese cierto (añadiendo ruido aleatorio) y lo compara con la muestra. <span class="hl-red"><strong>Si lo observado se distancia mucho de las simulaciones</strong></span> es que el modelo planteado no ajusta bien a la muestra.</li>
+</ul>
+</section>
+<section id="fase-de-diagnosis-4" class="slide level2">
+<h2>Fase de diagnosis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1"></a><span class="fu">check_outliers</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: No outliers detected.
+- Based on the following method and threshold: cook (0.713).
+- For variable: (Whole model)</code></pre>
+</div>
+</div>
+<ul>
+<li><code>Influential Observations</code>: nos permite identificar <span class="hl-yellow"><strong>observaciones influyentes</strong></span>, marcando aquellas (con su id de fila) que se salgan fuera de la banda definida por la conocida como <strong>distancia de Cook</strong> denotada como <span class="math inline">\(D_i\)</span> (realiza, para cada observación, la suma de todos los cambios de la regresión cuando la observación <span class="math inline">\(i\)</span> es retirada: si hay muchos cambios al cambiar una observación, es que era muy influyente)</li>
+</ul>
+<div class="fragment">
+<p>Diferencia dos tipos:</p>
+<ul>
+<li><span class="hl-yellow"><strong>outliers</strong></span>: valor atípico de la <strong>respuesta</strong> pudiendo perturbar la varianza residual</li>
+<li><span class="hl-yellow"><strong>high-leverage points</strong></span>: valor atípico en alguna de las <strong>predictoras</strong></li>
+</ul>
+</div>
+</section>
+<section id="fase-de-inferencia" class="slide level2">
+<h2>Fase de inferencia</h2>
+<ol start="6" type="1">
+<li><span class="hl-yellow"><strong>Fase de inferencia</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Qué <span class="hl-purple"><strong>variabilidad</strong></span> tienen las estimaciones de nuestro parámetros?</li>
+<li>¿Las predictoras/intercepto tienen un <span class="hl-purple"><strong>efecto lineal significativo</strong></span>?</li>
+<li>¿Debemos <span class="hl-purple"><strong>re-entrenar el modelo</strong></span> sin alguno de ellos?</li>
+</ul>
+<p>&nbsp;</p>
+<p>Una vez <strong>verificadas las hipótesis</strong> lo que haremos será <span class="hl-yellow"><strong>inferir conclusiones de la población en función de la muestra</strong></span></p>
+</section>
+<section id="fase-de-inferencia-1" class="slide level2">
+<h2>Fase de inferencia</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>Variabilidad</strong></span> de las estimaciones de nuestro parámetros</p>
+<ul>
+<li><span class="math inline">\(\widehat{SE} \left( \widehat{\beta}_0 \right)\)</span> igual a 2.3641 por lo que <span class="math inline">\(\widehat{\beta_0} \sim N(-3.5469, \sigma = 2.3641)\)</span></li>
+<li><span class="math inline">\(\widehat{SE} \left( \widehat{\beta}_1 \right)\)</span> igual a 0.1434 por lo que que <span class="math inline">\(\widehat{\beta_1} \sim N(0.6426, \sigma = 0.1434)\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="fase-de-inferencia-2" class="slide level2">
+<h2>Fase de inferencia</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="hl-yellow"><strong>Estadístico</strong></span> del contraste</p>
+<ul>
+<li><span class="math inline">\(\frac{\widehat{\beta}_0 - 0}{\widehat{SE} \left( \widehat{\beta}_0 \right)}\)</span> igual a -1.5 (valor que tendrías que buscar en las tablas a mano)</li>
+<li><span class="math inline">\(\frac{\widehat{\beta}_1 - 0}{\widehat{SE} \left( \widehat{\beta}_1 \right)}\)</span> igual a 4.483 (valor que tendrías que buscar en las tablas a mano)</li>
+</ul></li>
+</ul>
+</section>
+<section id="fase-de-inferencia-3" class="slide level2">
+<h2>Fase de inferencia</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<ul>
+<li><span class="hl-yellow"><strong>Efecto (lineal)</strong></span>: si nos fijamos en la tabla, el p-valor de <span class="math inline">\(\beta_0\)</span> es 0.146052. Si adoptamos <span class="math inline">\(\alpha = 0.05\)</span> como suele ser habitual, el contraste <span class="math inline">\(H_0:~\beta_0 = 0\)</span> vs <span class="math inline">\(H_1:~\beta_0 \neq 0\)</span> nos dice que <span class="hl-red"><strong>no podemos rechazar de forma significativa la hipótesis nula</strong></span> (no sucede con <span class="math inline">\(\beta_1\)</span>, si sucediese no habría modelo)</li>
+</ul>
+</section>
+<section id="fase-de-inferencia-4" class="slide level2">
+<h2>Fase de inferencia</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ AGST, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.78370 -0.23827 -0.03421  0.29973  0.90198 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -3.5469     2.3641  -1.500 0.146052    
+AGST          0.6426     0.1434   4.483 0.000143 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4819 on 25 degrees of freedom
+Multiple R-squared:  0.4456,    Adjusted R-squared:  0.4234 
+F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
+</div>
+</div>
+<p><span class="hl-yellow"><strong>¿Y si quitamos dicho parámetro?</strong></span></p>
+<div class="fragment">
+<p>Para quitarlo añadimos un -1 al modelo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a>ajuste_AGST_sin_beta0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="re-aprendiendo" class="slide level2">
+<h2>Re-aprendiendo</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1"></a>ajuste_AGST_sin_beta0 <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ -1 + AGST, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.7324 -0.3756 -0.0092  0.3838  1.0804 
+
+Coefficients:
+     Estimate Std. Error t value Pr(&gt;|t|)    
+AGST 0.427691   0.005757   74.29   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4933 on 26 degrees of freedom
+Multiple R-squared:  0.9953,    Adjusted R-squared:  0.9951 
+F-statistic:  5519 on 1 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p>La <span class="hl-yellow"><strong>bondad de ajuste</strong></span> ha pasado de <span class="math inline">\(R^2 = 0.446\)</span> a <span class="math inline">\(R^2 = 0.9953\)</span> (veremos que no son comparables cuando tiene o no intercepto)</p></li>
+<li><p>La <span class="hl-yellow"><strong>variabilidad de la estimación</strong></span> <span class="math inline">\(\widehat{SE} \left( \widehat{\beta}_1 \right)\)</span> ha pasado de 0.143 a 0.005757 –&gt; más precisión</p></li>
+</ul>
+</section>
+<section id="comparar-modelos" class="slide level2">
+<h2>Comparar modelos</h2>
+<p>Aunque no hemos hablado en profundidad de las <strong>métricas de evaluación</strong> podemos <span class="hl-yellow"><strong>comparar los modelos</strong></span> con <code>compare_performance()</code> del paquete <code>{performance}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1"></a><span class="fu">compare_performance</span>(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name                  | Model | AIC (weights) | AICc (weights) | BIC (weights)
+------------------------------------------------------------------------------
+ajuste_AGST           |    lm |  41.1 (0.535) |   42.2 (0.469) |  45.0 (0.379)
+ajuste_AGST_sin_beta0 |    lm |  41.4 (0.454) |   41.9 (0.522) |  44.0 (0.614)
+ajuste_harvest        |    lm |  49.0 (0.010) |   50.1 (0.009) |  52.9 (0.007)
+
+Name                  |    R2 | R2 (adj.) |  RMSE | Sigma
+---------------------------------------------------------
+ajuste_AGST           | 0.446 |     0.423 | 0.464 | 0.482
+ajuste_AGST_sin_beta0 | 0.995 |     0.995 | 0.484 | 0.493
+ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
+</div>
+</div>
+</section>
+<section id="fase-de-evaluación" class="slide level2">
+<h2>Fase de evaluación</h2>
+<ol start="7" type="1">
+<li><span class="hl-yellow"><strong>Fase de evaluación</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Es significativo el modelo? <span class="hl-purple"><strong>ANOVA: análisis de la varianza</strong></span></li>
+<li>¿Qué información de la predictora explica el modelo? <span class="hl-purple"><strong>Parámetros de bondad de ajuste</strong></span> (<span class="math inline">\(R^2\)</span> por ejemplo)</li>
+<li>¿Qué otras métricas o herramientas podemos usar para <span class="hl-purple"><strong>cuantificar la calidad predictora de nuestro ajuste</strong></span></li>
+</ul>
+<div class="fragment">
+<p>Una de las herramientas más útiles para evaluar nuestro modelo es <span class="hl-yellow"><strong>enfrentar los valores ajustados con los valores reales</strong></span> (dado que los conocemos al ser aprendizaje supervisado)</p>
+</div>
+</section>
+<section id="fase-de-evaluación-1" class="slide level2">
+<h2>Fase de evaluación</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> datos<span class="sc">$</span>Price, <span class="st">"y_est"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values),</span>
+<span id="cb239-2"><a href="#cb239-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> y_est)) <span class="sc">+</span></span>
+<span id="cb239-3"><a href="#cb239-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb239-4"><a href="#cb239-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb239-5"><a href="#cb239-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb239-6"><a href="#cb239-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores reales"</span>, <span class="at">y =</span> <span class="st">"Valores estimados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-150-1.png" width="960" class="r-stretch"><p>En el gráfica podemos ver como los <span class="hl-green"><strong>valores reales vs estimados</strong></span> están <strong>muy cercanos a la diagonal</strong>: el error cometido es muy pequeño.</p>
+</section>
+<section id="fase-de-evaluación-2" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p>¿Cómo <span class="hl-yellow"><strong>cuantificar el acierto del modelo</strong></span>?</p>
+<div class="fragment">
+<p>Y para saber cómo cuantificar el acierto la primera pregunta que deberíamos hacernos es: ¿cuál es el <strong>objetivo de un modelo</strong> que pretende predecir una variable continua <span class="math inline">\(Y\)</span>? ¿Qué nos gustaría que pasase si el modelo fuese perfecto?</p>
+</div>
+<div class="fragment">
+<p>Si construimos un <strong>modelo predictivo para <span class="math inline">\(Y\)</span></strong>, lo ideal sería que nuestro modelo puede capaz de <span class="hl-yellow"><strong>capturar/explicar toda la variabilidad respecto a la media de Y</strong></span> (por qué sube cuando sube, por qué baja cuando baja, etc). ¿Y qué usamos en estadística para hablar de <strong>información</strong>?</p>
+</div>
+</section>
+<section id="fase-de-evaluación-3" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p>Vamos a <span class="hl-yellow"><strong>cuantificar la información de <span class="math inline">\(Y\)</span></strong></span> (respecto a su media) como su varianza (o suma total de cuadrados <span class="math inline">\(SST\)</span>), representada como</p>
+<p><span class="math display">\[s_{y}^2 := \frac{1}{n} \sum_{i=1}^{n} \left(y_i - \overline{y} \right)^2 = \frac{1}{n} SST\]</span></p>
+<div class="fragment">
+<p>¿El <strong>objetivo del modelo</strong>? Ser capaces de construir una variable predicha <span class="math inline">\(\widehat{Y}\)</span> que consiga <span class="hl-yellow"><strong>capturar la mayor información de <span class="math inline">\(Y\)</span></strong></span> posible. ¿Cómo podríamos <strong>cuantificar la información que captura esa predicción</strong> <span class="math inline">\(\widehat{Y}\)</span>?</p>
+</div>
+</section>
+<section id="fase-de-evaluación-4" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p>Vamos a <span class="hl-yellow"><strong>cuantificar la información de <span class="math inline">\(\widehat{Y}\)</span></strong></span> de nuevo como su varianza (o suma de cuadrados explicada <span class="math inline">\(SSE\)</span>), representada como</p>
+<p><span class="math display">\[s_{\widehat{y}}^2 := \frac{1}{n} \sum_{i=1}^{n} \left(\widehat{y}_i - \overline{\widehat{y}} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left(\widehat{y}_i - \overline{y} \right)^2 = \frac{1}{n} SSE\]</span></p>
+<p>ya que la media de la variable predicha es (reminder: <span class="math inline">\(\widehat{\beta}_0 = \overline{y}- \widehat{\beta}_1 \overline{x}\)</span>)</p>
+<p><span class="math display">\[\overline{\widehat{y}}  = \frac{1}{n}  \sum_{i=1}^{n}\widehat{y}_i = \frac{1}{n}  \sum_{i=1}^{n} \left(\widehat{\beta}_0 + \widehat{\beta}_1 x_i \right) = \widehat{\beta}_0+\widehat{\beta}_1 \overline{x} = \overline{y}\]</span></p>
+</section>
+<section id="fase-de-evaluación-5" class="slide level2">
+<h2>Fase de evaluación</h2>
+<ul>
+<li><p><span class="hl-yellow"><strong>Información a modelizar</strong></span>: <span class="math inline">\(s_{y}^2 = \frac{1}{n} SST\)</span></p></li>
+<li><p><span class="hl-yellow"><strong>Información modelizada</strong></span>: <span class="math inline">\(s_{\widehat{y}}^2 = \frac{1}{n} SSE\)</span></p></li>
+</ul>
+<p>¿Qué querríamos si nuestro <strong>modelo fuese perfecto</strong> en términos de acierto? El objetivo ideal es que <span class="math inline">\(s_{y}^2 = s_{\widehat{y}}^2\)</span> (<strong>modelo explica todo lo explicable</strong>).</p>
+<div class="fragment">
+<p>Vamos a construir con ambas cantidades un <span class="hl-yellow"><strong>ratio de información explicada</strong></span>, también conocido como <span class="hl-yellow"><strong>bondad de ajuste o coeficiente de determinación o <span class="math inline">\(R^2\)</span></strong></span> (lo que <code>R</code> llama <code>Multiple R-squared</code>)</p>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]\]</span></p>
+<ul>
+<li>Si <span class="math inline">\(R^2 \to 1\)</span> –&gt; modelo explica casi todo lo explicable</li>
+</ul>
+</div>
+</section>
+<section id="fase-de-evaluación-6" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]\]</span></p>
+<p>Esta definición de <span class="math inline">\(R^2\)</span> es <span class="hl-yellow"><strong>general para cualquier modelo de aprendizaje estadístico</strong></span> pero vamos a ver si, en el <strong>caso de un modelo de regresión linea</strong>, podemos relacionarlo con algo que conozcamos</p>
+<div class="fragment">
+<p>Vamos a tomar la información que queremos explicar y vamos a realizar una descomposición similar a la que hicimos con el <strong>ANOVA one-way (ANOVA cuali vs cuanti)</strong></p>
+<p><span class="math display">\[\begin{eqnarray}SST &amp;=&amp;  \sum_{i=1}^{n} \left(y_i - \overline{y} \right)^2 =  \sum_{i=1}^{n} \left[\left(y_i -  \widehat{y}_i \right) + \left( \widehat{y}_i - \overline{y} \right) \right] ^2 \nonumber \\ &amp;=&amp;  \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 + 2 \sum_{i=1}^{n}  \left(y_i - \widehat{y}_i \right)\left(\widehat{y}_i  - \overline{y}\right)  \end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="fase-de-evaluación-7" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]\]</span></p>
+<p>Así, asumiendo que los errores están incorrelados,</p>
+<p><span class="math display">\[\begin{eqnarray}SST &amp;=&amp;    \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 + 2 \sum_{i=1}^{n}  \left(y_i - \widehat{y}_i \right)\left(\widehat{y}_i  - \overline{y}\right) \nonumber \\ &amp;=&amp;  \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 =\sum_{i=1}^{n}  \widehat{\varepsilon}_{i}^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 \nonumber \\ &amp;=&amp; SSR + SSE \end{eqnarray}\]</span></p>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>SOLO en el caso lineal</strong></span> tenemos que la información total puede descomponerse entre la <span class="hl-green"><strong>explicada</strong></span> más la <span class="hl-red"><strong>no explicada</strong></span></p>
+</div>
+</section>
+<section id="fase-de-evaluación-8" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST}, \quad SST = SSE + SSR\]</span></p>
+<p>Reescribiendo por tanto la expresión anterior tenemos que para el <strong>caso lineal</strong></p>
+<p><span class="math display">\[R^2 = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = \frac{SST - SSR}{SST} = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2}\]</span> ¿De qué <strong>depende la info no explicada <span class="math inline">\(s_{r}^2\)</span></strong>?</p>
+<div class="fragment">
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+</div>
+</section>
+<section id="fase-de-evaluación-9" class="slide level2">
+<h2>Fase de evaluación</h2>
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+<p><span class="hl-yellow"><strong>¿De qué depende?</strong></span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Más predictoras (p)</strong></span> implica que <span class="hl-yellow"><strong><span class="math inline">\(R^2\)</span> crece</strong></span>, ¡incluso aunque dichas <span class="hl-red"><strong>predictoras no sean significativas ni útiles</strong></span>! (lo arreglaremos usando el <span class="math inline">\(R^2\)</span> ajustado)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>A igualdad de errores: menos varianza de <span class="math inline">\(y\)</span>, menor <span class="math inline">\(R^2\)</span></strong></span></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Más ruido, menor <span class="math inline">\(R^2\)</span></strong></span> (aunque el modelo sea igual de bueno)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Ignora si el modelo cumple las hipótesis</strong></span>: un modelo con un alto <span class="math inline">\(R^2\)</span> puede dar predicciones nefastas si las incumple</li>
+</ul>
+</div>
+</section>
+<section id="anova" class="slide level2">
+<h2>ANOVA</h2>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\]</span></p>
+<p>Al igual que pasaba en el ANOVA cualis vs cuanti, podríamos plantearnos la siguiente pregunta: ¿conocemos la <span class="hl-yellow"><strong>distribución de <span class="math inline">\(SSE\)</span> y <span class="math inline">\(SSR\)</span></strong></span>?</p>
+<div class="fragment">
+<p>Dado que de nuevo cada uno es una suma de normales al cuadrado (ergo una chi-cuadrado) se puede <strong>demostrar</strong> como</p>
+<p><span class="math display">\[\frac{SSE}{\sigma_{\varepsilon}^2} \sim \chi^2_{p}, \quad \frac{SSR}{\sigma_{\varepsilon}^2} \sim \chi^2_{n-p-1}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[F = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}}  \sim F_{p, n-p-1}\]</span></p>
+</div>
+</section>
+<section id="anova-1" class="slide level2">
+<h2>ANOVA</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+AGST         1  4.665   4.665   20.09 0.000143 ***
+Residuals   25  5.805   0.232                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<table>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Df (grados)</th>
+<th style="text-align: center;">Sum Sq</th>
+<th style="text-align: center;">Mean Sq</th>
+<th style="text-align: center;">F value</th>
+<th style="text-align: center;">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">x1</td>
+<td style="text-align: center;">p</td>
+<td style="text-align: center;">SSE</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{SSE}{p}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F-value = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}}\)</span></td>
+<td style="text-align: center;">p-valor F test</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Residuals</td>
+<td style="text-align: center;">n - p - 1</td>
+<td style="text-align: center;">SSR</td>
+<td style="text-align: center;"><span class="math inline">\(\widehat{\sigma}_{\varepsilon}^{2} = \frac{SSR}{n-p-1}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>El F-value es <span class="math inline">\(F = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}} \sim F_{p, n-p-1}\)</span> asociado al <span class="hl-yellow"><strong>contraste de sig global</strong></span></p>
+<p><span class="math display">\[H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0~(j \geq 1)\]</span></p>
+</section>
+<section id="anova-2" class="slide level2">
+<h2>ANOVA</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+AGST         1  4.665   4.665   20.09 0.000143 ***
+Residuals   25  5.805   0.232                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><span class="math display">\[H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0~(j \geq 1)\]</span></p>
+<p>El contraste pretende responder a: <span class="hl-yellow"><strong>¿existe una dependencia lineal entre <span class="math inline">\(Y\)</span> y el CONJUNTO de predictoras?</strong></span> (global, no parámetro a parámetro).</p>
+<div class="fragment">
+<p>Si se <span class="hl-yellow"><strong>rechaza</strong></span> significa que <span class="hl-yellow"><strong>existe al menos un predictor cuyo efecto LINEAL sobre Y es significativo</strong></span>.</p>
+</div>
+<div class="fragment">
+<p><span class="hl-red"><strong>Importante</strong></span>: en el caso de la reg. lineal univariante, <span class="math inline">\(F-value\)</span> y <span class="math inline">\(p-value\)</span> del ANOVA es equivalente al <span class="math inline">\(t-value\)</span> y <span class="math inline">\(p-value\)</span> del contraste de significación para <span class="math inline">\(\beta_1\)</span> (ya que…no hay más).</p>
+</div>
+</section></section>
+<section>
+<section id="clase-11" class="title-slide slide level1 center">
+<h1>Clase 11: simulación</h1>
 <p><span style="color:#444442;"><strong>Entendiendo el R2 e incumpliendo hipótesis</strong></span></p>
 </section>
 <section id="simulación-6" class="slide level2">

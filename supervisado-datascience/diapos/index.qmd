@@ -4150,7 +4150,7 @@ gg1 + gg3 + gg2 + gg4
 
 # Clase 9: caso práctico {#clase-9}
 
-[**Diagnosis + evaluación**]{style="color:#444442;"}
+[**Poniendo en práctica lo aprendido**]{style="color:#444442;"}
 
 
 ---
@@ -4548,7 +4548,583 @@ ajuste_harvest |> summary()
 
 * [**Residuales**]{.hl-yellow}: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que $\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577$ (algo más grande que el otro ajuste) y $R^2 = 0.2572$ (algo más pequeño que el otro ajuste) -> de momento es mejor el primer modelo.
 
-# Clase 10: simulación {#clase-10}
+# Clase 10: caso práctico {#clase-10}
+
+[**Diagnosis + evaluación**]{style="color:#444442;"}
+
+---
+
+## Fase de diagnosis
+
+5. [**Fase de diagnosis**]{.hl-yellow} (paquetes `{performance}` y `{olsrr}`):
+  - ¿Cumplen los datos las [**hipótesis parámetricas**]{.hl-purple} requeridas para poder hacer inferencia? ¿Cómo modificar los datos para que se cumplan?
+  - Análisis de residuales
+  
+. . .
+
+¿Para qué necesitamos comprobar las hipótesis si el código no da error?
+
+. . .
+
+Lo único que hemos hecho es [**obtener un modelo que SOLO sirve para la muestra**]{.hl-yellow}: si queremos extrapolar sus conclusiones a toda la población e interpretar la inferencia del modelo [**necesitamos verificar ANTES las hipótesis**]{.hl-yellow}. Lo haremos con `{performance}` y `{olsrr}`
+
+---
+
+## Fase de diagnosis
+
+```{r}
+library(performance)
+check_model(ajuste_AGST)
+```
+
+---
+
+## Diagnosis: linealidad
+
+1. [**Linealidad**]{.hl-green}: el valor esperado de $Y$ es $E \left[Y | \boldsymbol{X} = x \right] = \beta_0 + \beta_1 x$
+
+
+```{r}
+#| code-fold: true
+check_model(ajuste_AGST)
+```
+
+Si te fijas el gráfico que se refiere a ello está [**visualizando residuales vs valores estimados**]{.hl-yellow}: está volviendo a plantear un segundo modelo de regresión donde ahora $\widehat{\varepsilon}_i = \gamma_0 + \gamma_1 \widehat{y}_i$
+
+---
+
+## Diagnosis: linealidad
+
+```{r}
+linealidad <- lm(data = tibble("fitted" = ajuste_AGST$fitted.values,
+                               "residuals" = ajuste_AGST$residuals),
+                 formula = residuals ~ fitted)
+linealidad |> summary()
+```
+
+Si te fijas [**ambos parámetros no son significativamente distintos de 0**]{.hl-green}: no presentan una tendencia (lineal al menos)
+
+---
+
+## Diagnosis: linealidad
+
+```{r}
+linealidad <- lm(data = tibble("fitted" = ajuste_AGST$fitted.values,
+                               "residuals" = ajuste_AGST$residuals),
+                 formula = residuals ~ fitted + I(fitted^2))
+linealidad |> summary()
+```
+
+También podemos ver si existe una relación de otro tipo (por ejemplo cuadrática) entre residuales y valores ajustados
+
+---
+
+## Diagnosis: linealidad
+
+También podemos [**visualizar nosotros ese scatter plot residuales vs estimaciones**]{.hl-yellow}
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
+              "residuals" = ajuste_AGST$residuals),
+       aes(x = fitted, y = residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  theme_minimal()
+```
+
+---
+
+## Diagnosis: homocedasticidad
+
+2. [**Homocedasticidad**]{.hl-green}: necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow}, tal que $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte < \infty$.
+
+```{r}
+check_heteroscedasticity(ajuste_AGST)
+```
+
+. . .
+
+El gráfico titulado `Homogeneity of variance` nos visualiza la raíz cuadrada del valor absoluto de los residuos estandarizados frente a las predicciones (se conoce como [**gráfico de escala-localización**]{.hl-yellow})
+
+---
+
+## Diagnosis: homocedasticidad
+
+Si visualizamos los [**residuales**]{.hl-yellow} deberían estar en torno a 0, dentro de una banda constante (varianza constante)
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("id" = 1:length(ajuste_AGST$residuals),
+              "residuals" = ajuste_AGST$residuals),
+       aes(x = id, y = residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  theme_minimal()
+```
+
+---
+
+
+## Diagnosis: homocedasticidad
+
+Si visualizamos el gráfico de [**escala-localización**]{.hl-yellow} deberíamos obtener un diagrama de dispersión cuya recta de regresión saliese casi plana en torno al 1.
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
+              "sqrt_std_residuals" = sqrt(abs((ajuste_AGST$residuals - mean(ajuste_AGST$residuals)) / sd(ajuste_AGST$residuals)))),
+       aes(x = fitted, y = sqrt_std_residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+Según el gráfico no deberíamos asumir homocedasticidad. **¿Por qué el contraste no la rechaza?**
+
+---
+
+## Diagnosis: homocedasticidad
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("fitted" = ajuste_AGST$fitted.values,
+              "sqrt_std_residuals" = sqrt(abs((ajuste_AGST$residuals - mean(ajuste_AGST$residuals)) / sd(ajuste_AGST$residuals)))),
+       aes(x = fitted, y = sqrt_std_residuals)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+```
+
+Con el poco tamaño muestral que tenemos, es complicado tener evidencias que refuten la hipótesis nula (y el gráfico puede estar parcialmente diseñado). Por eso es la [**hipótesis más difícil de cumplir**]{.hl-yellow}. Lo importante es que en [**la recta de regresión al dibujar los residuos no se aprecia una banda cuya anchura se modifique groseramente**]{.hl-green}, más o menos constante
+
+
+---
+
+## Diagnosis: normalidad
+
+3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
+
+Con la función `ols_test_normality()` del paquete `{olsrr}` podemos obtener diferentes contrastes de normalidad
+
+```{r}
+library(olsrr)
+ols_test_normality(ajuste_AGST)
+```
+
+Nos centraremos en los contrastes de `Shapiro-Wilk` si la muestra es pequeña, y `Kolmogorov-Smirnov` en caso contrario: [**no se rechaza normalidad**]{.hl-yellow}
+
+
+---
+
+## Diagnosis: normalidad
+
+Además del contraste podemos visualizar con `stat_qq()` y `stat_qq_line()` el conocido como [**Q-Q plot**]{.hl-yellow}: enfrenta los cuantiles de una muestra con los cuantiles de una normal teórica, teniendo que **obtener los puntos en torno a una recta** (especilamente en el centro).
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("residuals" = ajuste_AGST$residuals)) +
+  stat_qq(aes(sample = residuals)) +
+  stat_qq_line(aes(sample = residuals))+
+  theme_minimal()
+```
+
+
+---
+
+## Diagnosis: independencia
+
+4. [**Independencia**]{.hl-green}: los errores $\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}$ deben ser independientes entre sí (el error en una observación no depende de otras). En particular, serán **incorrelados**
+
+$${\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j$$
+
+```{r}
+check_autocorrelation(ajuste_AGST)
+```
+
+Por último, `check_autocorrelation()` comprueba como efectivamente los [**residuales/errores son independientes**]{.hl-yellow}, haciendo un test de autocorrelación (nos tiene que salir lo contrario a una serie temporal, que el error i no depende del i-1).
+
+---
+
+## Diagnosis: independencia
+
+Otra forma de verlo es [**visualizando los residuos respecto a su versión con retardo**]{.hl-yellow} (por ejemplo, $\left(\widehat{\varepsilon}_1, \widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_{n-1} \right)$ vs $\left(\widehat{\varepsilon}_2, \widehat{\varepsilon}_3, \ldots, \widehat{\varepsilon}_n \right)$ 
+
+```{r}
+#| code-fold: true
+ggplot(tibble("lag1" = ajuste_AGST$residuals[-length(ajuste_AGST$residuals)],
+              "residuals" = ajuste_AGST$residuals[-1]),
+       aes(x = residuals, y = lag1)) +
+  geom_point(size = 3, alpha = 0.7) + 
+  geom_smooth(method = "lm") + 
+  theme_minimal()
+```
+
+---
+
+## Fase de diagnosis
+
+```{r}
+check_model(ajuste_AGST)
+```
+
+En nuestro caso se cumplen todas las hipótesis (algunas más fuertemente que otras).
+
+[**Repite el proceso con el otro modelo**]{.hl-yellow}
+
+---
+
+## Fase de diagnosis
+
+```{r}
+check_predictions(ajuste_AGST)
+```
+
+Nos faltan dos gráficas por comentar:
+
+* `Posterior Predictive Checks`: [**simula distintas variables respuesta**]{.hl-yellow} suponiendo que el modelo fuese cierto (añadiendo ruido aleatorio) y lo compara con la muestra. [**Si lo observado se distancia mucho de las simulaciones**]{.hl-red} es que el modelo planteado no ajusta bien a la muestra.
+
+---
+
+## Fase de diagnosis
+
+```{r}
+check_outliers(ajuste_AGST)
+```
+
+* `Influential Observations`: nos permite identificar [**observaciones influyentes**]{.hl-yellow}, marcando aquellas (con su id de fila) que se salgan fuera de la banda definida por la conocida como **distancia de Cook** denotada como $D_i$ (realiza, para cada observación, la suma de todos los cambios de la regresión cuando la observación $i$ es retirada: si hay muchos cambios al cambiar una observación, es que era muy influyente)
+
+. . .
+
+Diferencia dos tipos: 
+
+* [**outliers**]{.hl-yellow}: valor atípico de la **respuesta** pudiendo perturbar la varianza residual
+* [**high-leverage points**]{.hl-yellow}: valor atípico en alguna de las **predictoras**
+
+---
+
+## Fase de inferencia
+
+6. [**Fase de inferencia**]{.hl-yellow}:
+  - ¿Qué [**variabilidad**]{.hl-purple} tienen las estimaciones de nuestro parámetros?
+  - ¿Las predictoras/intercepto tienen un [**efecto lineal significativo**]{.hl-purple}?
+  - ¿Debemos [**re-entrenar el modelo**]{.hl-purple} sin alguno de ellos?
+
+&nbsp;
+
+Una vez **verificadas las hipótesis** lo que haremos será [**inferir conclusiones de la población en función de la muestra**]{.hl-yellow}
+
+---
+
+## Fase de inferencia
+
+```{r}
+ajuste_AGST |> summary()
+```
+
+* [**Variabilidad**]{.hl-yellow} de las estimaciones de nuestro parámetros
+
+  - $\widehat{SE} \left( \widehat{\beta}_0 \right)$ igual a 2.3641 por lo que $\widehat{\beta_0} \sim N(-3.5469, \sigma = 2.3641)$
+  - $\widehat{SE} \left( \widehat{\beta}_1 \right)$ igual a 0.1434  por lo que que $\widehat{\beta_1} \sim N(0.6426, \sigma = 0.1434)$
+  
+
+---
+
+## Fase de inferencia
+
+```{r}
+#| echo: false
+ajuste_AGST |> summary()
+```
+
+* [**Estadístico**]{.hl-yellow} del contraste
+
+  - $\frac{\widehat{\beta}_0 - 0}{\widehat{SE} \left( \widehat{\beta}_0 \right)}$ igual a -1.5 (valor que tendrías que buscar en las tablas a mano)
+  - $\frac{\widehat{\beta}_1 - 0}{\widehat{SE} \left( \widehat{\beta}_1 \right)}$ igual a 4.483 (valor que tendrías que buscar en las tablas a mano)
+  
+  
+  
+---
+
+## Fase de inferencia
+
+```{r}
+ajuste_AGST |> summary()
+```
+
+* [**Efecto (lineal)**]{.hl-yellow}: si nos fijamos en la tabla, el p-valor de $\beta_0$ es 0.146052. Si adoptamos $\alpha = 0.05$ como suele ser habitual, el contraste $H_0:~\beta_0 = 0$ vs $H_1:~\beta_0 \neq 0$ nos dice que [**no podemos rechazar de forma significativa la hipótesis nula**]{.hl-red} (no sucede con $\beta_1$, si sucediese no habría modelo)
+
+---
+
+## Fase de inferencia
+
+```{r}
+ajuste_AGST |> summary()
+```
+
+[**¿Y si quitamos dicho parámetro?**]{.hl-yellow}
+
+. . .
+
+Para quitarlo añadimos un -1 al modelo
+
+```{r}
+ajuste_AGST_sin_beta0 <- lm(data = datos, formula = Price ~ -1 + AGST)
+```
+ 
+---
+
+## Re-aprendiendo
+
+```{r}
+ajuste_AGST_sin_beta0 |> summary()
+```
+
+* La [**bondad de ajuste**]{.hl-yellow} ha pasado de $R^2 = 0.446$ a $R^2 = 0.9953$ (veremos que no son comparables cuando tiene o no intercepto)
+
+* La [**variabilidad de la estimación**]{.hl-yellow} $\widehat{SE} \left( \widehat{\beta}_1 \right)$  ha pasado de 0.143 a 0.005757 --> más precisión
+
+---
+
+## Comparar modelos
+
+Aunque no hemos hablado en profundidad de las **métricas de evaluación** podemos [**comparar los modelos**]{.hl-yellow} con `compare_performance()` del paquete `{performance}`
+
+
+```{r}
+compare_performance(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)
+```
+
+---
+
+## Fase de evaluación
+
+7. [**Fase de evaluación**]{.hl-yellow}:
+  - ¿Es significativo el modelo? [**ANOVA: análisis de la varianza**]{.hl-purple}
+  - ¿Qué información de la predictora explica el modelo? [**Parámetros de bondad de ajuste**]{.hl-purple} ($R^2$ por ejemplo)
+  - ¿Qué otras métricas o herramientas podemos usar para [**cuantificar la calidad predictora de nuestro ajuste**]{.hl-purple}
+  
+. . . 
+
+Una de las herramientas más útiles para evaluar nuestro modelo es [**enfrentar los valores ajustados con los valores reales**]{.hl-yellow} (dado que los conocemos al ser aprendizaje supervisado)
+
+---
+
+## Fase de evaluación
+
+
+```{r}
+#| code-fold: true
+ggplot(tibble("y" = datos$Price, "y_est" = ajuste_AGST$fitted.values),
+       aes(x = y, y = y_est)) +
+  geom_point(size = 1.2, alpha = 0.75) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(x = "Valores reales", y = "Valores estimados")
+```
+
+En el gráfica podemos ver como los [**valores reales vs estimados**]{.hl-green} están **muy cercanos a la diagonal**: el error cometido es muy pequeño.
+
+---
+
+## Fase de evaluación
+
+
+¿Cómo [**cuantificar el acierto del modelo**]{.hl-yellow}?
+
+. . .
+
+Y para saber cómo cuantificar el acierto la primera pregunta que deberíamos hacernos es: ¿cuál es el **objetivo de un modelo** que pretende predecir una variable continua $Y$? ¿Qué nos gustaría que pasase si el modelo fuese perfecto?
+
+. . .
+
+Si construimos un **modelo predictivo para $Y$**, lo ideal sería que nuestro modelo puede capaz de [**capturar/explicar toda la variabilidad respecto a la media de Y**]{.hl-yellow} (por qué sube cuando sube, por qué baja cuando baja, etc). ¿Y qué usamos en estadística para hablar de **información**?
+
+
+
+---
+
+## Fase de evaluación
+
+Vamos a [**cuantificar la información de $Y$**]{.hl-yellow} (respecto a su media) como su varianza (o suma total de cuadrados $SST$), representada como
+
+$$s_{y}^2 := \frac{1}{n} \sum_{i=1}^{n} \left(y_i - \overline{y} \right)^2 = \frac{1}{n} SST$$
+
+. . .
+
+¿El **objetivo del modelo**? Ser capaces de construir una variable predicha $\widehat{Y}$ que consiga [**capturar la mayor información de $Y$**]{.hl-yellow} posible. ¿Cómo podríamos **cuantificar la información que captura esa predicción** $\widehat{Y}$?
+
+
+---
+
+## Fase de evaluación
+
+Vamos a [**cuantificar la información de $\widehat{Y}$**]{.hl-yellow} de nuevo como su varianza (o suma de cuadrados explicada $SSE$), representada como
+
+$$s_{\widehat{y}}^2 := \frac{1}{n} \sum_{i=1}^{n} \left(\widehat{y}_i - \overline{\widehat{y}} \right)^2 = \frac{1}{n} \sum_{i=1}^{n} \left(\widehat{y}_i - \overline{y} \right)^2 = \frac{1}{n} SSE$$
+
+ya que la media de la variable predicha es (reminder: $\widehat{\beta}_0 =  \overline{y}-  \widehat{\beta}_1 \overline{x}$)
+
+$$\overline{\widehat{y}}  = \frac{1}{n}  \sum_{i=1}^{n}\widehat{y}_i = \frac{1}{n}  \sum_{i=1}^{n} \left(\widehat{\beta}_0 + \widehat{\beta}_1 x_i \right) = \widehat{\beta}_0+\widehat{\beta}_1 \overline{x} = \overline{y}$$
+
+---
+
+## Fase de evaluación
+
+
+* [**Información a modelizar**]{.hl-yellow}: $s_{y}^2 = \frac{1}{n} SST$
+
+* [**Información modelizada**]{.hl-yellow}: $s_{\widehat{y}}^2 = \frac{1}{n} SSE$
+
+¿Qué querríamos si nuestro **modelo fuese perfecto** en términos de acierto? El objetivo ideal es que $s_{y}^2 = s_{\widehat{y}}^2$ (**modelo explica todo lo explicable**).
+
+. . .
+
+Vamos a construir con ambas cantidades un [**ratio de información explicada**]{.hl-yellow}, también conocido como [**bondad de ajuste o coeficiente de determinación o $R^2$**]{.hl-yellow} (lo que `R` llama `Multiple R-squared`)
+
+
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]$$
+
+* Si $R^2 \to 1$ --> modelo explica casi todo lo explicable
+
+
+---
+
+## Fase de evaluación
+
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]$$
+
+
+Esta definición de $R^2$ es [**general para cualquier modelo de aprendizaje estadístico**]{.hl-yellow} pero vamos a ver si, en el **caso de un modelo de regresión linea**, podemos relacionarlo con algo que conozcamos
+
+. . .
+
+Vamos a tomar la información que queremos explicar y vamos a realizar una descomposición similar a la que hicimos con el **ANOVA one-way (ANOVA cuali vs cuanti)** 
+
+$$\begin{eqnarray}SST &=&  \sum_{i=1}^{n} \left(y_i - \overline{y} \right)^2 =  \sum_{i=1}^{n} \left[\left(y_i -  \widehat{y}_i \right) + \left( \widehat{y}_i - \overline{y} \right) \right] ^2 \nonumber \\ &=&  \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 + 2 \sum_{i=1}^{n}  \left(y_i - \widehat{y}_i \right)\left(\widehat{y}_i  - \overline{y}\right)  \end{eqnarray}$$
+
+---
+
+## Fase de evaluación
+
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{y}^2}{s_{\widehat{y}}^2} = \frac{SSE}{SST} \in [0,1]$$
+
+Así, asumiendo que los errores están incorrelados,
+
+$$\begin{eqnarray}SST &=&    \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 + 2 \sum_{i=1}^{n}  \left(y_i - \widehat{y}_i \right)\left(\widehat{y}_i  - \overline{y}\right) \nonumber \\ &=&  \sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 =\sum_{i=1}^{n}  \widehat{\varepsilon}_{i}^2 + \sum_{i=1}^{n} \left(\widehat{y}_i  - \overline{y}\right)^2 \nonumber \\ &=& SSR + SSE \end{eqnarray}$$
+
+. . .
+
+[**SOLO en el caso lineal**]{.hl-yellow} tenemos que la información total puede descomponerse entre la [**explicada**]{.hl-green} más la [**no explicada**]{.hl-red}
+
+---
+
+## Fase de evaluación
+
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST}, \quad SST = SSE + SSR$$
+
+Reescribiendo por tanto la expresión anterior tenemos que para el **caso lineal**
+
+$$R^2 = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = \frac{SST - SSR}{SST} = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2}$$
+¿De qué **depende la info no explicada $s_{r}^2$**?
+
+. . .
+
+
+$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
+
+---
+
+## Fase de evaluación
+
+$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
+
+[**¿De qué depende?**]{.hl-yellow}
+
+. . .
+
+* [**Más predictoras (p)**]{.hl-yellow} implica que [**$R^2$ crece**]{.hl-yellow}, ¡incluso aunque dichas [**predictoras no sean significativas ni útiles**]{.hl-red}! (lo arreglaremos usando el $R^2$ ajustado)
+
+. . .
+
+* [**A igualdad de errores: menos varianza de $y$, menor $R^2$**]{.hl-yellow} 
+
+. . .
+
+* [**Más ruido, menor $R^2$**]{.hl-yellow} (aunque el modelo sea igual de bueno)
+
+. . .
+
+* [**Ignora si el modelo cumple las hipótesis**]{.hl-yellow}: un modelo con un alto $R^2$ puede dar predicciones nefastas si las incumple
+
+
+
+---
+
+## ANOVA
+
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}$$
+
+Al igual que pasaba en el ANOVA cualis vs cuanti, podríamos plantearnos la siguiente pregunta: ¿conocemos la [**distribución de $SSE$ y $SSR$**]{.hl-yellow}?
+
+
+. . .
+
+
+Dado que de nuevo cada uno es una suma de normales al cuadrado (ergo una chi-cuadrado) se puede **demostrar** como 
+
+$$\frac{SSE}{\sigma_{\varepsilon}^2} \sim \chi^2_{p}, \quad \frac{SSR}{\sigma_{\varepsilon}^2} \sim \chi^2_{n-p-1}$$
+
+. . .
+
+
+
+$$F = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}}  \sim F_{p, n-p-1}$$
+
+---
+
+## ANOVA
+
+```{r}
+ajuste_AGST |> aov() |> summary()
+```
+
+
+|  | Df (grados) | Sum Sq | Mean Sq | F value | Pr(>F) |
+|:---------:|:-----:|:------:|:------:|:------:|:------:|
+| x1  | p  | SSE | $\frac{SSE}{p}$ | $F-value = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}}$ | p-valor F test
+| Residuals  | n - p - 1 | SSR | $\widehat{\sigma}_{\varepsilon}^{2} = \frac{SSR}{n-p-1}$ | | |
+
+El F-value es  $F = \frac{\frac{SSE}{p}}{\frac{SSR}{n-p-1}} \sim F_{p, n-p-1}$ asociado al [**contraste de sig global**]{.hl-yellow}
+
+$$H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0~(j \geq 1)$$
+
+---
+
+## ANOVA
+
+```{r}
+ajuste_AGST |> aov() |> summary()
+```
+
+$$H_0:~\beta_1 = \ldots = \beta_p = 0 \quad vs \quad H_1:~\text{existe al menos un} \quad \beta_j \neq 0~(j \geq 1)$$
+
+El contraste pretende responder a: [**¿existe una dependencia lineal entre $Y$ y el CONJUNTO de predictoras?**]{.hl-yellow} (global, no parámetro a parámetro).
+
+. . .
+
+Si se [**rechaza**]{.hl-yellow} significa que [**existe al menos un predictor cuyo efecto LINEAL sobre Y es significativo**]{.hl-yellow}.
+
+. . .
+
+[**Importante**]{.hl-red}: en el caso de la reg. lineal univariante, $F-value$ y $p-value$ del ANOVA es equivalente al $t-value$ y $p-value$ del contraste de significación para $\beta_1$ (ya que...no hay más).
+
+
+
+# Clase 11: simulación {#clase-11}
 
 [**Entendiendo el R2 e incumpliendo hipótesis**]{style="color:#444442;"}
 
