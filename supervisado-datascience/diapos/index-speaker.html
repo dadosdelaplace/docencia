@@ -4665,7 +4665,7 @@ F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
 <section>
 <section id="clase-10" class="title-slide slide level1 center">
 <h1>Clase 10: caso práctico</h1>
-<p><span style="color:#444442;"><strong>Diagnosis + evaluación</strong></span></p>
+<p><span style="color:#444442;"><strong>Diagnosis</strong></span></p>
 </section>
 <section id="fase-de-diagnosis" class="slide level2">
 <h2>Fase de diagnosis</h2>
@@ -5118,6 +5118,11 @@ F-statistic:  5519 on 1 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>La <span class="hl-yellow"><strong>bondad de ajuste</strong></span> ha pasado de <span class="math inline">\(R^2 = 0.446\)</span> a <span class="math inline">\(R^2 = 0.9953\)</span> (veremos que no son comparables cuando tiene o no intercepto)</p></li>
 <li><p>La <span class="hl-yellow"><strong>variabilidad de la estimación</strong></span> <span class="math inline">\(\widehat{SE} \left( \widehat{\beta}_1 \right)\)</span> ha pasado de 0.143 a 0.005757 –&gt; más precisión</p></li>
 </ul>
+</section></section>
+<section>
+<section id="clase-11" class="title-slide slide level1 center">
+<h1>Clase 11: caso práctico</h1>
+<p><span style="color:#444442;"><strong>Evaluación</strong></span></p>
 </section>
 <section id="comparar-modelos" class="slide level2">
 <h2>Comparar modelos</h2>
@@ -5348,26 +5353,306 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="fragment">
 <p><span class="hl-red"><strong>Importante</strong></span>: en el caso de la reg. lineal univariante, <span class="math inline">\(F-value\)</span> y <span class="math inline">\(p-value\)</span> del ANOVA es equivalente al <span class="math inline">\(t-value\)</span> y <span class="math inline">\(p-value\)</span> del contraste de significación para <span class="math inline">\(\beta_1\)</span> (ya que…no hay más).</p>
 </div>
-</section></section>
-<section>
-<section id="clase-11" class="title-slide slide level1 center">
-<h1>Clase 11: simulación</h1>
-<p><span style="color:#444442;"><strong>Entendiendo el R2 e incumpliendo hipótesis</strong></span></p>
 </section>
 <section id="simulación-6" class="slide level2">
 <h2>Simulación</h2>
+<ol type="1">
+<li>Simula unos datos (<span class="math inline">\(n = 500\)</span>) bajo la hipótesis (junta <span class="math inline">\(y\)</span> y <span class="math inline">\(x\)</span> en la misma tabla)</li>
+</ol>
+<p><span class="math display">\[Y = -1 + 3*X + \varepsilon, \quad  X \sim N(-3, \sigma = 1.2), \quad \varepsilon \sim N(0, \sigma = 3)\]</span></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
+<span id="cb244-2"><a href="#cb244-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
+<span id="cb244-3"><a href="#cb244-3"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
+<span id="cb244-4"><a href="#cb244-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulación-7" class="slide level2">
+<h2>Simulación</h2>
+<ol start="2" type="1">
+<li>Ajusta un modelo de regresión lineal univariante e interpreta todo lo que consideres (asume que la diagnosis se cumple ya que lo hemos simulado para que así sea)</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1"></a>ajuste_inicial <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> x)</span>
+<span id="cb245-2"><a href="#cb245-2"></a>ajuste_inicial <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.3000 -2.0292 -0.0207  2.2439  8.4378 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -1.3736     0.3683   -3.73 0.000214 ***
+x             2.9048     0.1120   25.94  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.104 on 498 degrees of freedom
+Multiple R-squared:  0.5746,    Adjusted R-squared:  0.5738 
+F-statistic: 672.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="simulación-8" class="slide level2">
+<h2>Simulación</h2>
+<ol start="3" type="1">
+<li>Diseña un bucle de 490 iteraciones de manera que, en cada iteración, incorpores a la tabla una nueva predictora <span class="math inline">\(X_i \sim N(0, 1)\)</span>. Fíjate que las <span class="hl-red"><strong>predictoras nuevas no tienen ningún tipo de relación con <span class="math inline">\(y\)</span></strong></span> (son “basura” para el modelo). En cada iteración haz un ajuste de <span class="math inline">\(y\)</span> vs todas y guarda su <span class="math inline">\(R2\)</span></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb247-2"><a href="#cb247-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>) {</span>
+<span id="cb247-3"><a href="#cb247-3"></a>  </span>
+<span id="cb247-4"><a href="#cb247-4"></a>  datos[, i <span class="sc">+</span> <span class="dv">2</span>] <span class="ot">&lt;-</span>  <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb247-5"><a href="#cb247-5"></a>  R2[i] <span class="ot">&lt;-</span> (<span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> .) <span class="sc">|&gt;</span> <span class="fu">summary</span>())<span class="sc">$</span>r.squared</span>
+<span id="cb247-6"><a href="#cb247-6"></a>  </span>
+<span id="cb247-7"><a href="#cb247-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulación-9" class="slide level2">
+<h2>Simulación</h2>
+<ol start="4" type="1">
+<li>Crea una tabla con dos columnas: iteración y R2. Tras ello visualiza la evolución del R2 en función del número de la iteración (=número de predictoras basura)</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1"></a>tabla_R2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"iter"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>, <span class="st">"R2"</span> <span class="ot">=</span> R2)</span>
+<span id="cb248-2"><a href="#cb248-2"></a><span class="fu">ggplot</span>(tabla_R2) <span class="sc">+</span></span>
+<span id="cb248-3"><a href="#cb248-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> iter, <span class="at">y =</span> R2), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb248-4"><a href="#cb248-4"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb248-5"><a href="#cb248-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de predictoras basura"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-156-1.png" width="960" class="r-stretch"></section>
+<section id="simulación-10" class="slide level2">
+<h2>Simulación</h2>
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+<p><span class="hl-yellow"><strong>Moraleja</strong></span>: a mayor nº de predictoras, más se infla <span class="math inline">\(R^2\)</span> (¡aunque sean basura!)</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a>tabla_R2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"iter"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>, <span class="st">"R2"</span> <span class="ot">=</span> R2)</span>
+<span id="cb249-2"><a href="#cb249-2"></a><span class="fu">ggplot</span>(tabla_R2) <span class="sc">+</span></span>
+<span id="cb249-3"><a href="#cb249-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> iter, <span class="at">y =</span> R2), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb249-4"><a href="#cb249-4"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb249-5"><a href="#cb249-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de predictoras basura"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-157-1.png" width="960" class="r-stretch"></section>
+<section id="simulación-11" class="slide level2">
+<h2>Simulación</h2>
+<ol start="5" type="1">
+<li>Simula una colección de datos (<span class="math inline">\(n = 500\)</span>) bajo la hipótesis de que <span class="math inline">\(Y = -1 + 3*X_1 + \varepsilon\)</span> con <span class="math inline">\(X \sim N(-3, \sigma = 1.2)\)</span> y</li>
+</ol>
+<ul>
+<li><p><code>datos_1</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 0.5)\)</span></p></li>
+<li><p><code>datos_2</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 1)\)</span></p></li>
+<li><p><code>datos_3</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 2)\)</span></p></li>
+<li><p><code>datos_4</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 4)\)</span></p></li>
+<li><p><code>datos_5</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 8)\)</span></p></li>
+<li><p><code>datos_6</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 12)\)</span></p></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
+<span id="cb250-2"><a href="#cb250-2"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>x</span>
+<span id="cb250-3"><a href="#cb250-3"></a></span>
+<span id="cb250-4"><a href="#cb250-4"></a>datos_1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), x)</span>
+<span id="cb250-5"><a href="#cb250-5"></a>datos_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), x)</span>
+<span id="cb250-6"><a href="#cb250-6"></a>datos_3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), x)</span>
+<span id="cb250-7"><a href="#cb250-7"></a>datos_4 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">4</span>), x)</span>
+<span id="cb250-8"><a href="#cb250-8"></a>datos_5 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">8</span>), x)</span>
+<span id="cb250-9"><a href="#cb250-9"></a>datos_6 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">12</span>), x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulación-12" class="slide level2">
+<h2>Simulación</h2>
+<ol start="6" type="1">
+<li>Realiza los 6 ajustes, uno para cada dataset, siempre <span class="math inline">\(y\)</span> vs <span class="math inline">\(x\)</span>. <span class="hl-yellow"><strong>IMPORTANTE</strong></span>: fíjate que la parte a explicar, la modelizable, la parte no aleatoria, ¡es siempre la misma! Así que el modelo debería ser parecido siempre. Usa <code>compare_performance()</code> para compararlos.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1"></a>ajuste_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_1, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-2"><a href="#cb251-2"></a>ajuste_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_2, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-3"><a href="#cb251-3"></a>ajuste_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_3, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-4"><a href="#cb251-4"></a>ajuste_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_4, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-5"><a href="#cb251-5"></a>ajuste_5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_5, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-6"><a href="#cb251-6"></a>ajuste_6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_6, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb251-7"><a href="#cb251-7"></a></span>
+<span id="cb251-8"><a href="#cb251-8"></a><span class="fu">compare_performance</span>(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name     | Model |  AIC (weights) | AICc (weights) |  BIC (weights) |    R2
+---------------------------------------------------------------------------
+ajuste_1 |    lm |  744.6 (&gt;.999) |  744.7 (&gt;.999) |  757.3 (&gt;.999) | 0.981
+ajuste_2 |    lm | 1474.6 (&lt;.001) | 1474.7 (&lt;.001) | 1487.3 (&lt;.001) | 0.923
+ajuste_3 |    lm | 2083.4 (&lt;.001) | 2083.4 (&lt;.001) | 2096.0 (&lt;.001) | 0.784
+ajuste_4 |    lm | 2789.7 (&lt;.001) | 2789.8 (&lt;.001) | 2802.4 (&lt;.001) | 0.478
+ajuste_5 |    lm | 3531.9 (&lt;.001) | 3531.9 (&lt;.001) | 3544.5 (&lt;.001) | 0.200
+ajuste_6 |    lm | 3886.8 (&lt;.001) | 3886.8 (&lt;.001) | 3899.4 (&lt;.001) | 0.101
+
+Name     | R2 (adj.) |   RMSE |  Sigma
+--------------------------------------
+ajuste_1 |     0.981 |  0.506 |  0.507
+ajuste_2 |     0.923 |  1.051 |  1.053
+ajuste_3 |     0.784 |  1.932 |  1.936
+ajuste_4 |     0.477 |  3.915 |  3.923
+ajuste_5 |     0.198 |  8.223 |  8.239
+ajuste_6 |     0.099 | 11.726 | 11.750</code></pre>
+</div>
+</div>
+<p><strong>¡La supuesta calidad del ajuste desciende drásticamente, siendo igual de bueno!</strong> La parte que se puede predecir está perfectamente ajustada pero tenemos más ruido en los datos (ruido = no modelizable)</p>
+</section>
+<section id="simulación-13" class="slide level2">
+<h2>Simulación</h2>
+<ol start="7" type="1">
+<li>Y si tenemos un modelo con un alto <span class="math inline">\(R^2\)</span>, <span class="hl-yellow"><strong>¿no hace falta que cumpla las hipótesis?</strong></span>. Basándote en <span class="math inline">\(X \sim N(-3, \sigma = 1.5)\)</span> y <span class="math inline">\(\varepsilon \sim N(0, \sigma = 1)\)</span> con <span class="math inline">\(n = 500\)</span>, simula un modelo entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> que incumpla la hipótesis de linealidad.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb253-2"><a href="#cb253-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb253-3"><a href="#cb253-3"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb253-4"><a href="#cb253-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulación-14" class="slide level2">
+<h2>Simulación</h2>
+<ol start="8" type="1">
+<li>Realiza el ajuste lineal y visualiza residuos vs valores predichos.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> x)</span>
+<span id="cb254-2"><a href="#cb254-2"></a></span>
+<span id="cb254-3"><a href="#cb254-3"></a>tabla_residuos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"eps_hat"</span> <span class="ot">=</span> ajuste<span class="sc">$</span>residuals, <span class="st">"y_hat"</span> <span class="ot">=</span> ajuste<span class="sc">$</span>fitted.values)</span>
+<span id="cb254-4"><a href="#cb254-4"></a><span class="fu">ggplot</span>(tabla_residuos) <span class="sc">+</span></span>
+<span id="cb254-5"><a href="#cb254-5"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> y_hat, <span class="at">y =</span> eps_hat)) <span class="sc">+</span></span>
+<span id="cb254-6"><a href="#cb254-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-161-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Nos queda un patrón cuadrático porque <strong>en los datos existe dicho patrón</strong> y no lo hemos incluido en el modelo (hipótesis de linealidad errónea)</p>
+</div>
+</section>
+<section id="simulación-15" class="slide level2">
+<h2>Simulación</h2>
+<p>Fíjate que <span class="hl-yellow"><strong>tenemos un <span class="math inline">\(R^2\)</span> bastante alto</strong></span> pero no tiene sentido su interpretación ya que la recta como modelo aquí no tiene sentido</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb255-2"><a href="#cb255-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb255-3"><a href="#cb255-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb255-4"><a href="#cb255-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-162-1.png" width="960" class="r-stretch"></section>
+<section id="simulación-16" class="slide level2">
+<h2>Simulación</h2>
+<ol start="9" type="1">
+<li>Simula los datos bajo la siguiente hipótesis (<span class="math inline">\(x_i = 0.01 + 0.01*(i-1)\)</span>)</li>
+</ol>
+<p><span class="math display">\[y_i = 1 - 2x_i(1 + 0.25 \sin(4 \pi x_i)) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma_i = 0.25 * x_{i}^2 )\]</span></p>
+<p>Junta todo en un dataset de 3 columnas: y, x y <span class="math inline">\(\sigma_i\)</span>. ¿Qué hipótesis se incumplen?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">2</span>, <span class="at">l =</span> <span class="dv">500</span>)</span>
+<span id="cb256-2"><a href="#cb256-2"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.2</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb256-3"><a href="#cb256-3"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.25</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">4</span> <span class="sc">*</span> pi <span class="sc">*</span> x)) <span class="sc">+</span> eps</span>
+<span id="cb256-4"><a href="#cb256-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y, <span class="st">"x"</span> <span class="ot">=</span> x, <span class="st">"sigma"</span> <span class="ot">=</span>  <span class="fl">0.2</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="simulación-17" class="slide level2">
+<h2>Simulación</h2>
+<ol start="10" type="1">
+<li>Realiza el ajuste de <span class="math inline">\(y ~ x\)</span> y observa el <span class="math inline">\(R^2\)</span></li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1"></a>ajuste_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
+<span id="cb257-2"><a href="#cb257-2"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = datos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.10561 -0.26617  0.02587  0.24773  1.95832 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.91964    0.04748   19.37   &lt;2e-16 ***
+x           -1.88030    0.04099  -45.87   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5276 on 498 degrees of freedom
+Multiple R-squared:  0.8086,    Adjusted R-squared:  0.8082 
+F-statistic:  2104 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="simulación-18" class="slide level2">
+<h2>Simulación</h2>
+<ol start="11" type="1">
+<li>Fíjate que <span class="hl-yellow"><strong>tenemos un <span class="math inline">\(R^2\)</span> bastante alto</strong></span> pero… ¿tiene sentido su interpretación? Pinta en un diagrama de puntos + recta de regresión los datos <span class="math inline">\(x\)</span> vs <span class="math inline">\(y\)</span>.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb259-2"><a href="#cb259-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb259-3"><a href="#cb259-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb259-4"><a href="#cb259-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-165-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Aunque el <span class="math inline">\(R^2\)</span> es bastante alto, el modelo no tiene sentido, dando <span class="hl-red"><strong>estimaciones cada vez más erradas</strong></span></p>
+</div>
 </section></section>
 <section>
 <section id="clase-12" class="title-slide slide level1 center">
-<h1>Clase 11: casos reales</h1>
+<h1>Clase 12: casos reales</h1>
 <p><span style="color:#444442;"><strong>Regresión univariante con casos reales</strong></span></p>
 </section>
 <section id="casos-reales" class="slide level2">
 <h2>Casos reales</h2>
 </section></section>
 <section>
-<section id="clase-12" class="title-slide slide level1 center">
-<h1>Clase 12: reg. multivariante</h1>
+<section id="clase-13" class="title-slide slide level1 center">
+<h1>Clase 13: reg. multivariante</h1>
 <p><span style="color:#444442;"><strong>Introducción a la regresión multivariante. Formulación del modelo y estimación</strong></span></p>
 </section>
 <section id="regresión-multivariante" class="slide level2">
