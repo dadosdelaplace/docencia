@@ -4097,31 +4097,117 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1"><span class="hl-yellow"><strong>Ej 1</strong></span></a></li><li><a href="#tabset-6-2"><span class="hl-yellow"><strong>Ej 2</strong></span></a></li><li><a href="#tabset-6-3"><span class="hl-yellow"><strong>Ej 3</strong></span></a></li><li><a href="#tabset-6-4"><span class="hl-yellow"><strong>Ej 4</strong></span></a></li><li><a href="#tabset-6-5"><span class="hl-yellow"><strong>Ej 5</strong></span></a></li><li><a href="#tabset-6-6"><span class="hl-yellow"><strong>Ej 6</strong></span></a></li><li><a href="#tabset-6-7"><span class="hl-yellow"><strong>Ej 7</strong></span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
-<p>📝 Simula una población de datos <span class="math inline">\((x, y)\)</span> (tamaño n = 1000000, como si fuese la población teórica real) bajo la hipótesis de que siguen el modelo lineal <span class="math inline">\(y = 1.5 - 3*x + \varepsilon\)</span>. Toma las decisiones que consideres teniendo en cuenta que i) <span class="math inline">\(\varepsilon\)</span> debe cumplir las condiciones necesarias con una varianza de <span class="math inline">\(0.75\)</span>; ii) <span class="math inline">\(x\)</span> se generará según una normal de varianza 1.5.</p>
+<p>📝 Simula una población de datos <span class="math inline">\((x, y)\)</span> (tamaño n = 1000000, como si fuese la población teórica real) bajo la hipótesis de que siguen el modelo lineal <span class="math inline">\(y = 1.5 - 3*x + \varepsilon\)</span>. Toma las decisiones que consideres teniendo en cuenta que i) <span class="math inline">\(\varepsilon\)</span> debe cumplir las condiciones necesarias con una varianza de <span class="math inline">\(0.75\)</span>; ii) <span class="math inline">\(x\)</span> se generará según una normal de media 1 y varianza 1.5.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1"></a>n <span class="ot">&lt;-</span> <span class="fl">1e6</span></span>
+<span id="cb178-2"><a href="#cb178-2"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">0.75</span>))</span>
+<span id="cb178-3"><a href="#cb178-3"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">1.5</span>))</span>
+<span id="cb178-4"><a href="#cb178-4"></a>y <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
+<span id="cb178-5"><a href="#cb178-5"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x, eps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-2">
 <p>📝 Obtén una muestra aleatoria simple de <span class="math inline">\(n = 5000\)</span> de dicha población.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1"></a>muestra <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-3">
-<p>📝 ¿Cuál es la ecuación del modelo? ¿Son los parámetros significativos? ¿Por qué? Interpreta el valor de ambos parámetros de manera adecuada.</p>
+<p>📝 Ajusta un modelo de regresión lineal. ¿Cuál es la ecuación del modelo estimado? ¿Son los parámetros significativos? ¿Por qué? Interpreta el valor de ambos parámetros de manera adecuada.</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1"></a>muestra <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5000</span>)</span>
+<span id="cb180-2"><a href="#cb180-2"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> muestra, y <span class="sc">~</span> x)</span>
+<span id="cb180-3"><a href="#cb180-3"></a><span class="co"># y_hat = 1.492520 - 2.986930*X</span></span>
+<span id="cb180-4"><a href="#cb180-4"></a><span class="co"># ambos parámetros significativos porque al realizar</span></span>
+<span id="cb180-5"><a href="#cb180-5"></a><span class="co"># el contraste de significación (¡ASUMIENDO QUE SE CUMPLEN HIPÓTESIS!)</span></span>
+<span id="cb180-6"><a href="#cb180-6"></a><span class="co"># salen p-valores &lt; 0.05 ==&gt; rechazamos H0: beta_j = 0 en ambos casos</span></span>
+<span id="cb180-7"><a href="#cb180-7"></a><span class="co"># 1.492 es la estimación de E[Y|X = 0].</span></span>
+<span id="cb180-8"><a href="#cb180-8"></a><span class="co"># 2.986 es lo que desciende en promedio Y cuando X aumenta +1 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-4">
 <p>📝 Calcula la media de los residuales al cuadrado (varianza residual o MSE). Haciendo uso de la salida, ¿cuánto estima el modelo que es su estimador insesgado?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">mean</span>(ajuste<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb181-2"><a href="#cb181-2"></a>estimador_insesgado_var_res <span class="ot">&lt;-</span> <span class="fl">0.8504</span><span class="sc">^</span><span class="dv">2</span> <span class="co"># residual standard error^2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-5">
 <p>📝 Si volviésemos a extraer una muestra de la población y estimásemos <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span>, una y otra vez, ¿cuál sería la distribución que observaríamos en ambos? ¿Qué media tendría? ¿Qué variabilidad?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1"></a><span class="co"># ¡Suponiendo ciertas las hipótesis ojo!</span></span>
+<span id="cb182-2"><a href="#cb182-2"></a><span class="co"># beta_hat_0 ~ N(1.492, sigma = 0.015626)</span></span>
+<span id="cb182-3"><a href="#cb182-3"></a><span class="co"># beta_hat_1 ~ N(-2.987, sigma = 0.009928)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-6">
 <p>📝 Repite los ejercicios 1-5 con el único cambio de que la varianza de <span class="math inline">\(\varepsilon\)</span> ahora será de <span class="math inline">\(2.5\)</span>. Repite los ejercicios 1-5 con el único cambio de que la varianza de <span class="math inline">\(\varepsilon\)</span> ahora será de <span class="math inline">\(7\)</span>. ¿Qué observas?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">2.5</span>))</span>
+<span id="cb183-2"><a href="#cb183-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">1.5</span>))</span>
+<span id="cb183-3"><a href="#cb183-3"></a>y <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
+<span id="cb183-4"><a href="#cb183-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x, eps)</span>
+<span id="cb183-5"><a href="#cb183-5"></a>muestra <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5000</span>)</span>
+<span id="cb183-6"><a href="#cb183-6"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> muestra, y <span class="sc">~</span> x)</span>
+<span id="cb183-7"><a href="#cb183-7"></a><span class="co"># R2 de 0.9477 a 0.8389</span></span>
+<span id="cb183-8"><a href="#cb183-8"></a><span class="co"># Estimación varianza residual de 0.8504^2 a 1.579^2</span></span>
+<span id="cb183-9"><a href="#cb183-9"></a><span class="co"># mismo modelo, pero aparenta funcionar peor</span></span>
+<span id="cb183-10"><a href="#cb183-10"></a><span class="co"># varianza de beta_0 y beta_1 aumenta</span></span>
+<span id="cb183-11"><a href="#cb183-11"></a></span>
+<span id="cb183-12"><a href="#cb183-12"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="dv">7</span>))</span>
+<span id="cb183-13"><a href="#cb183-13"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">1.5</span>))</span>
+<span id="cb183-14"><a href="#cb183-14"></a>y <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
+<span id="cb183-15"><a href="#cb183-15"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x, eps)</span>
+<span id="cb183-16"><a href="#cb183-16"></a>muestra <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">5000</span>)</span>
+<span id="cb183-17"><a href="#cb183-17"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> muestra, y <span class="sc">~</span> x)</span>
+<span id="cb183-18"><a href="#cb183-18"></a><span class="co"># aún más extremo</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 <div id="tabset-6-7">
 <p>📝 Repite los ejercicios 1-5 con el único cambio que ahora la muestra será de <span class="math inline">\(n = 50\)</span>. ¿Qué observas?</p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">0.75</span>))</span>
+<span id="cb184-2"><a href="#cb184-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fu">sqrt</span>(<span class="fl">1.5</span>))</span>
+<span id="cb184-3"><a href="#cb184-3"></a>y <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
+<span id="cb184-4"><a href="#cb184-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x, eps)</span>
+<span id="cb184-5"><a href="#cb184-5"></a>muestra <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">50</span>)</span>
+<span id="cb184-6"><a href="#cb184-6"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> muestra, y <span class="sc">~</span> x)</span>
+<span id="cb184-7"><a href="#cb184-7"></a><span class="co"># Estimación varianza residual de 0.8504^2 a 0.9546^2</span></span>
+<span id="cb184-8"><a href="#cb184-8"></a><span class="co"># aunque haya empeorado un poco R2 de 0.9477 a 0.9541 </span></span>
+<span id="cb184-9"><a href="#cb184-9"></a><span class="co"># ==&gt; para la cantidad de pocos datos que tienes, no ha</span></span>
+<span id="cb184-10"><a href="#cb184-10"></a><span class="co"># empeorado tanto (recuerda que R2 depende de la varianza de y)</span></span>
+<span id="cb184-11"><a href="#cb184-11"></a><span class="co"># a menos n más opciones hay que de la varianza sea más alta</span></span>
+<span id="cb184-12"><a href="#cb184-12"></a><span class="co"># ya que puedes tener valores más "extremos"</span></span>
+<span id="cb184-13"><a href="#cb184-13"></a><span class="co"># varianza de beta_0 y beta_1 aumentan (menos precisión)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </div>
 </div>
 </div>
 </section>
 <section id="caso-practico-8-1" class="slide level2">
-<h2>🐣 Caso práctico I: precisión vs sesgo</h2>
+<h2>🐣 Caso práctico I: predicción de iris</h2>
+<p>pendiente</p>
 </section></section>
 <section>
 <section id="clase-9" class="title-slide slide level1 center">
@@ -4131,10 +4217,10 @@ F-statistic: 20.79 on 1 and 58 DF,  p-value: 2.697e-05</code></pre>
 <section id="resumen" class="slide level2">
 <h2>Resumen</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1"></a>datos <span class="ot">&lt;-</span> </span>
-<span id="cb178-2"><a href="#cb178-2"></a>  starwars <span class="sc">|&gt;</span></span>
-<span id="cb178-3"><a href="#cb178-3"></a>  <span class="fu">drop_na</span>(mass, height) </span>
-<span id="cb178-4"><a href="#cb178-4"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1"></a>datos <span class="ot">&lt;-</span> </span>
+<span id="cb185-2"><a href="#cb185-2"></a>  starwars <span class="sc">|&gt;</span></span>
+<span id="cb185-3"><a href="#cb185-3"></a>  <span class="fu">drop_na</span>(mass, height) </span>
+<span id="cb185-4"><a href="#cb185-4"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4161,7 +4247,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <section id="resumen-1" class="slide level2">
 <h2>Resumen</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4188,7 +4274,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <section id="resumen-2" class="slide level2">
 <h2>Resumen</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4216,7 +4302,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <section id="resumen-3" class="slide level2">
 <h2>Resumen</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1"></a><span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> mass <span class="sc">~</span> height) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4245,8 +4331,8 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <h2>Caso práctico</h2>
 <p>Vamos a poner en práctica lo aprendido con el dataset <code>wine.csv</code> disponible en el campus.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
-<span id="cb186-2"><a href="#cb186-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb193-2"><a href="#cb193-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 27 × 7
     Year Price WinterRain  AGST HarvestRain   Age FrancePop
@@ -4284,7 +4370,7 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <section id="caso-práctico-2" class="slide level2">
 <h2>Caso práctico</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 27 × 7
     Year Price WinterRain  AGST HarvestRain   Age FrancePop
@@ -4375,8 +4461,8 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p>&nbsp;</p>
 <p>Para responder a dichas preguntas lo más sencillos es hacer uso de la función <code>skim()</code> del paquete <code>{skimr}</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb190-2"><a href="#cb190-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb197-2"><a href="#cb197-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>En este caso <span class="hl-green"><strong>no tenemos ausentes ni problemas de codificación</strong></span></p>
@@ -4393,37 +4479,37 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
-<span id="cb191-2"><a href="#cb191-2"></a>  datos <span class="sc">|&gt;</span> </span>
-<span id="cb191-3"><a href="#cb191-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
-<span id="cb191-4"><a href="#cb191-4"></a></span>
-<span id="cb191-5"><a href="#cb191-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
-<span id="cb191-6"><a href="#cb191-6"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
-<span id="cb191-7"><a href="#cb191-7"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb191-8"><a href="#cb191-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
-<span id="cb191-9"><a href="#cb191-9"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
-<span id="cb191-10"><a href="#cb191-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb191-11"><a href="#cb191-11"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
+<span id="cb198-2"><a href="#cb198-2"></a>  datos <span class="sc">|&gt;</span> </span>
+<span id="cb198-3"><a href="#cb198-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"variable"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb198-4"><a href="#cb198-4"></a></span>
+<span id="cb198-5"><a href="#cb198-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span></span>
+<span id="cb198-6"><a href="#cb198-6"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
+<span id="cb198-7"><a href="#cb198-7"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb198-8"><a href="#cb198-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb198-9"><a href="#cb198-9"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb198-10"><a href="#cb198-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb198-11"><a href="#cb198-11"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-123-1.png" width="960" class="r-stretch"></section>
 <section id="análisis-exploratorio-inicial-2" class="slide level2">
 <h2>Análisis exploratorio inicial</h2>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">y =</span> values, <span class="at">x =</span> variable)) <span class="sc">+</span></span>
-<span id="cb192-2"><a href="#cb192-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
-<span id="cb192-3"><a href="#cb192-3"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb192-4"><a href="#cb192-4"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
-<span id="cb192-5"><a href="#cb192-5"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
-<span id="cb192-6"><a href="#cb192-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb192-7"><a href="#cb192-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">y =</span> values, <span class="at">x =</span> variable)) <span class="sc">+</span></span>
+<span id="cb199-2"><a href="#cb199-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable, <span class="at">fill =</span> variable),</span>
+<span id="cb199-3"><a href="#cb199-3"></a>               <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb199-4"><a href="#cb199-4"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb199-5"><a href="#cb199-5"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_fill_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb199-6"><a href="#cb199-6"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb199-7"><a href="#cb199-7"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960" class="r-stretch"><p><span class="hl-green"><strong>No hay valores atípicos</strong></span> (respecto a percentiles al menos)</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960" class="r-stretch"><p><span class="hl-green"><strong>No hay valores atípicos</strong></span> (respecto a percentiles al menos)</p>
 </section>
 <section id="análisis-exploratorio-inicial-3" class="slide level2">
 <h2>Análisis exploratorio inicial</h2>
@@ -4431,13 +4517,13 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb193-2"><a href="#cb193-2"></a><span class="fu">ggpairs</span>(datos) <span class="sc">+</span></span>
-<span id="cb193-3"><a href="#cb193-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb200-2"><a href="#cb200-2"></a><span class="fu">ggpairs</span>(datos) <span class="sc">+</span></span>
+<span id="cb200-3"><a href="#cb200-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960" class="r-stretch"></section>
 <section id="análisis-de-dependencia" class="slide level2">
 <h2>Análisis de dependencia</h2>
 <ol start="2" type="1">
@@ -4455,8 +4541,8 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <h2>Análisis de dependencia</h2>
 <p>El primer paso es la <span class="hl-yellow"><strong>matriz de correlaciones</strong></span> con la función <code>cor()</code> o con la función <code>correlate()</code> del paquete <code>{corrr}</code> (importa en tibble más visual)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1"></a><span class="fu">library</span>(corrr)</span>
-<span id="cb194-2"><a href="#cb194-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">correlate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1"></a><span class="fu">library</span>(corrr)</span>
+<span id="cb201-2"><a href="#cb201-2"></a>datos <span class="sc">|&gt;</span> <span class="fu">correlate</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 8
   term           Year  Price WinterRain    AGST HarvestRain     Age FrancePop
@@ -4483,14 +4569,14 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb196-2"><a href="#cb196-2"></a>datos <span class="sc">|&gt;</span></span>
-<span id="cb196-3"><a href="#cb196-3"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
-<span id="cb196-4"><a href="#cb196-4"></a>  <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"ellipse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb203-2"><a href="#cb203-2"></a>datos <span class="sc">|&gt;</span></span>
+<span id="cb203-3"><a href="#cb203-3"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb203-4"><a href="#cb203-4"></a>  <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"ellipse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960" class="r-stretch"><p>Puedes ver distintas opciones de visualización en <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html" class="uri">https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html</a></p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960" class="r-stretch"><p>Puedes ver distintas opciones de visualización en <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html" class="uri">https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html</a></p>
 </section>
 <section id="análisis-de-dependencia-3" class="slide level2">
 <h2>Análisis de dependencia</h2>
@@ -4500,19 +4586,19 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
-<span id="cb197-2"><a href="#cb197-2"></a>  datos <span class="sc">|&gt;</span></span>
-<span id="cb197-3"><a href="#cb197-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Price, <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
-<span id="cb197-4"><a href="#cb197-4"></a>               <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
-<span id="cb197-5"><a href="#cb197-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> Price)) <span class="sc">+</span> </span>
-<span id="cb197-6"><a href="#cb197-6"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb197-7"><a href="#cb197-7"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb197-8"><a href="#cb197-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
-<span id="cb197-9"><a href="#cb197-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb197-10"><a href="#cb197-10"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1"></a>datos_tidy <span class="ot">&lt;-</span></span>
+<span id="cb204-2"><a href="#cb204-2"></a>  datos <span class="sc">|&gt;</span></span>
+<span id="cb204-3"><a href="#cb204-3"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Price, <span class="at">names_to =</span> <span class="st">"variable"</span>,</span>
+<span id="cb204-4"><a href="#cb204-4"></a>               <span class="at">values_to =</span> <span class="st">"values"</span>)</span>
+<span id="cb204-5"><a href="#cb204-5"></a><span class="fu">ggplot</span>(datos_tidy, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> Price)) <span class="sc">+</span> </span>
+<span id="cb204-6"><a href="#cb204-6"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> variable), <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb204-7"><a href="#cb204-7"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb204-8"><a href="#cb204-8"></a>  MetBrewer<span class="sc">::</span><span class="fu">scale_color_met_d</span>(<span class="st">"Renoir"</span>) <span class="sc">+</span></span>
+<span id="cb204-9"><a href="#cb204-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb204-10"><a href="#cb204-10"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-121-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
 </div>
 </div>
 </div><div class="column" style="width:35%;">
@@ -4538,15 +4624,15 @@ F-statistic: 0.9931 on 1 and 57 DF,  p-value: 0.3232</code></pre>
 <p>&nbsp;</p>
 <p>Para ello ejecutaremos ambos modelos con <code>lm()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1"></a>ajuste_AGST <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST)</span>
-<span id="cb198-2"><a href="#cb198-2"></a>ajuste_harvest <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> HarvestRain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1"></a>ajuste_AGST <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST)</span>
+<span id="cb205-2"><a href="#cb205-2"></a>ajuste_harvest <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> HarvestRain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="fase-de-estimación-1" class="slide level2">
 <h2>Fase de estimación</h2>
 <p><span class="hl-yellow"><strong>Ajuste con AGST</strong></span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4606,7 +4692,7 @@ F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
 <h2>Fase de estimación</h2>
 <p><span class="hl-yellow"><strong>Ajuste con harvestRain</strong></span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1"></a>ajuste_harvest <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1"></a>ajuste_harvest <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4661,6 +4747,10 @@ F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
 <ul>
 <li><span class="hl-yellow"><strong>Residuales</strong></span>: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que <span class="math inline">\(\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577\)</span> (algo más grande que el otro ajuste) y <span class="math inline">\(R^2 = 0.2572\)</span> (algo más pequeño que el otro ajuste) -&gt; de momento es mejor el primer modelo.</li>
 </ul>
+</section>
+<section id="caso-practico-9-1" class="slide level2">
+<h2>🐣 Caso práctico I: predicción de colesterol</h2>
+<p>pendiente</p>
 </section></section>
 <section>
 <section id="clase-10" class="title-slide slide level1 center">
@@ -4686,11 +4776,11 @@ F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
 <section id="fase-de-diagnosis-1" class="slide level2">
 <h2>Fase de diagnosis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1"></a><span class="fu">library</span>(performance)</span>
-<span id="cb205-2"><a href="#cb205-2"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb212-2"><a href="#cb212-2"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960" class="r-stretch"></section>
 <section id="diagnosis-linealidad" class="slide level2">
 <h2>Diagnosis: linealidad</h2>
 <ol type="1">
@@ -4699,19 +4789,19 @@ F-statistic: 8.658 on 1 and 25 DF,  p-value: 0.00693</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960" class="r-stretch"><p>Si te fijas el gráfico que se refiere a ello está <span class="hl-yellow"><strong>visualizando residuales vs valores estimados</strong></span>: está volviendo a plantear un segundo modelo de regresión donde ahora <span class="math inline">\(\widehat{\varepsilon}_i = \gamma_0 + \gamma_1 \widehat{y}_i\)</span></p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960" class="r-stretch"><p>Si te fijas el gráfico que se refiere a ello está <span class="hl-yellow"><strong>visualizando residuales vs valores estimados</strong></span>: está volviendo a plantear un segundo modelo de regresión donde ahora <span class="math inline">\(\widehat{\varepsilon}_i = \gamma_0 + \gamma_1 \widehat{y}_i\)</span></p>
 </section>
 <section id="diagnosis-linealidad-1" class="slide level2">
 <h2>Diagnosis: linealidad</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
-<span id="cb207-2"><a href="#cb207-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
-<span id="cb207-3"><a href="#cb207-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted)</span>
-<span id="cb207-4"><a href="#cb207-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb214-2"><a href="#cb214-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb214-3"><a href="#cb214-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted)</span>
+<span id="cb214-4"><a href="#cb214-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4737,10 +4827,10 @@ F-statistic: 9.234e-31 on 1 and 25 DF,  p-value: 1</code></pre>
 <section id="diagnosis-linealidad-2" class="slide level2">
 <h2>Diagnosis: linealidad</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
-<span id="cb209-2"><a href="#cb209-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
-<span id="cb209-3"><a href="#cb209-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb209-4"><a href="#cb209-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a>linealidad <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb216-2"><a href="#cb216-2"></a>                               <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb216-3"><a href="#cb216-3"></a>                 <span class="at">formula =</span> residuals <span class="sc">~</span> fitted <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb216-4"><a href="#cb216-4"></a>linealidad <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -4770,23 +4860,23 @@ F-statistic: 0.006012 on 2 and 24 DF,  p-value: 0.994</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
-<span id="cb211-2"><a href="#cb211-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
-<span id="cb211-3"><a href="#cb211-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
-<span id="cb211-4"><a href="#cb211-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb211-5"><a href="#cb211-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb211-6"><a href="#cb211-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb218-2"><a href="#cb218-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb218-3"><a href="#cb218-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb218-4"><a href="#cb218-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb218-5"><a href="#cb218-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb218-6"><a href="#cb218-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960" class="r-stretch"></section>
 <section id="diagnosis-homocedasticidad" class="slide level2">
 <h2>Diagnosis: homocedasticidad</h2>
 <ol start="2" type="1">
 <li><span class="hl-green"><strong>Homocedasticidad</strong></span>: necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante</strong></span>, tal que <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \boldsymbol{X} = x \right] = cte &lt; \infty\)</span>.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1"></a><span class="fu">check_heteroscedasticity</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1"></a><span class="fu">check_heteroscedasticity</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OK: Error variance appears to be homoscedastic (p = 0.137).</code></pre>
 </div>
@@ -4801,47 +4891,47 @@ F-statistic: 0.006012 on 2 and 24 DF,  p-value: 0.994</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals),</span>
-<span id="cb214-2"><a href="#cb214-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
-<span id="cb214-3"><a href="#cb214-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
-<span id="cb214-4"><a href="#cb214-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb214-5"><a href="#cb214-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"id"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb221-2"><a href="#cb221-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals),</span>
+<span id="cb221-3"><a href="#cb221-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb221-4"><a href="#cb221-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb221-5"><a href="#cb221-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960" class="r-stretch"></section>
 <section id="diagnosis-homocedasticidad-2" class="slide level2">
 <h2>Diagnosis: homocedasticidad</h2>
 <p>Si visualizamos el gráfico de <span class="hl-yellow"><strong>escala-localización</strong></span> deberíamos obtener un diagrama de dispersión cuya recta de regresión saliese casi plana en torno al 1.</p>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
-<span id="cb215-2"><a href="#cb215-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
-<span id="cb215-3"><a href="#cb215-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
-<span id="cb215-4"><a href="#cb215-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb215-5"><a href="#cb215-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb215-6"><a href="#cb215-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb222-2"><a href="#cb222-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
+<span id="cb222-3"><a href="#cb222-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
+<span id="cb222-4"><a href="#cb222-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb222-5"><a href="#cb222-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb222-6"><a href="#cb222-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960" class="r-stretch"><p>Según el gráfico no deberíamos asumir homocedasticidad. <strong>¿Por qué el contraste no la rechaza?</strong></p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960" class="r-stretch"><p>Según el gráfico no deberíamos asumir homocedasticidad. <strong>¿Por qué el contraste no la rechaza?</strong></p>
 </section>
 <section id="diagnosis-homocedasticidad-3" class="slide level2">
 <h2>Diagnosis: homocedasticidad</h2>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
-<span id="cb216-2"><a href="#cb216-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
-<span id="cb216-3"><a href="#cb216-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
-<span id="cb216-4"><a href="#cb216-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb216-5"><a href="#cb216-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb216-6"><a href="#cb216-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values,</span>
+<span id="cb223-2"><a href="#cb223-2"></a>              <span class="st">"sqrt_std_residuals"</span> <span class="ot">=</span> <span class="fu">sqrt</span>(<span class="fu">abs</span>((ajuste_AGST<span class="sc">$</span>residuals <span class="sc">-</span> <span class="fu">mean</span>(ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">/</span> <span class="fu">sd</span>(ajuste_AGST<span class="sc">$</span>residuals)))),</span>
+<span id="cb223-3"><a href="#cb223-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> sqrt_std_residuals)) <span class="sc">+</span></span>
+<span id="cb223-4"><a href="#cb223-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb223-5"><a href="#cb223-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb223-6"><a href="#cb223-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960" class="r-stretch"><p>Con el poco tamaño muestral que tenemos, es complicado tener evidencias que refuten la hipótesis nula (y el gráfico puede estar parcialmente diseñado). Por eso es la <span class="hl-yellow"><strong>hipótesis más difícil de cumplir</strong></span>. Lo importante es que en <span class="hl-green"><strong>la recta de regresión al dibujar los residuos no se aprecia una banda cuya anchura se modifique groseramente</strong></span>, más o menos constante</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960" class="r-stretch"><p>Con el poco tamaño muestral que tenemos, es complicado tener evidencias que refuten la hipótesis nula (y el gráfico puede estar parcialmente diseñado). Por eso es la <span class="hl-yellow"><strong>hipótesis más difícil de cumplir</strong></span>. Lo importante es que en <span class="hl-green"><strong>la recta de regresión al dibujar los residuos no se aprecia una banda cuya anchura se modifique groseramente</strong></span>, más o menos constante</p>
 </section>
 <section id="diagnosis-normalidad" class="slide level2">
 <h2>Diagnosis: normalidad</h2>
@@ -4850,8 +4940,8 @@ F-statistic: 0.006012 on 2 and 24 DF,  p-value: 0.994</code></pre>
 </ol>
 <p>Con la función <code>ols_test_normality()</code> del paquete <code>{olsrr}</code> podemos obtener diferentes contrastes de normalidad</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1"></a><span class="fu">library</span>(olsrr)</span>
-<span id="cb217-2"><a href="#cb217-2"></a><span class="fu">ols_test_normality</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb224-2"><a href="#cb224-2"></a><span class="fu">ols_test_normality</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>-----------------------------------------------
        Test             Statistic       pvalue  
@@ -4871,14 +4961,14 @@ Anderson-Darling          0.2422         0.7457
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">+</span></span>
-<span id="cb219-2"><a href="#cb219-2"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals)) <span class="sc">+</span></span>
-<span id="cb219-3"><a href="#cb219-3"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals))<span class="sc">+</span></span>
-<span id="cb219-4"><a href="#cb219-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb226"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb226-1"><a href="#cb226-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals)) <span class="sc">+</span></span>
+<span id="cb226-2"><a href="#cb226-2"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb226-3"><a href="#cb226-3"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals))<span class="sc">+</span></span>
+<span id="cb226-4"><a href="#cb226-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960" class="r-stretch"></section>
 <section id="diagnosis-independencia" class="slide level2">
 <h2>Diagnosis: independencia</h2>
 <ol start="4" type="1">
@@ -4886,9 +4976,9 @@ Anderson-Darling          0.2422         0.7457
 </ol>
 <p><span class="math display">\[{\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] - E \left[\varepsilon_i \right] E \left[\varepsilon_j \right] = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1"></a><span class="fu">check_autocorrelation</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1"></a><span class="fu">check_autocorrelation</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>OK: Residuals appear to be independent and not autocorrelated (p = 0.562).</code></pre>
+<pre><code>OK: Residuals appear to be independent and not autocorrelated (p = 0.602).</code></pre>
 </div>
 </div>
 <p>Por último, <code>check_autocorrelation()</code> comprueba como efectivamente los <span class="hl-yellow"><strong>residuales/errores son independientes</strong></span>, haciendo un test de autocorrelación (nos tiene que salir lo contrario a una serie temporal, que el error i no depende del i-1).</p>
@@ -4899,32 +4989,32 @@ Anderson-Darling          0.2422         0.7457
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"lag1"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals)],</span>
-<span id="cb222-2"><a href="#cb222-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="dv">1</span>]),</span>
-<span id="cb222-3"><a href="#cb222-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> residuals, <span class="at">y =</span> lag1)) <span class="sc">+</span></span>
-<span id="cb222-4"><a href="#cb222-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
-<span id="cb222-5"><a href="#cb222-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
-<span id="cb222-6"><a href="#cb222-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb229"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb229-1"><a href="#cb229-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"lag1"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="fu">length</span>(ajuste_AGST<span class="sc">$</span>residuals)],</span>
+<span id="cb229-2"><a href="#cb229-2"></a>              <span class="st">"residuals"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>residuals[<span class="sc">-</span><span class="dv">1</span>]),</span>
+<span id="cb229-3"><a href="#cb229-3"></a>       <span class="fu">aes</span>(<span class="at">x =</span> residuals, <span class="at">y =</span> lag1)) <span class="sc">+</span></span>
+<span id="cb229-4"><a href="#cb229-4"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb229-5"><a href="#cb229-5"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> </span>
+<span id="cb229-6"><a href="#cb229-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-146-1.png" width="960" class="r-stretch"></section>
 <section id="fase-de-diagnosis-2" class="slide level2">
 <h2>Fase de diagnosis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a><span class="fu">check_model</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960" class="r-stretch"><p>En nuestro caso se cumplen todas las hipótesis (algunas más fuertemente que otras).</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-147-1.png" width="960" class="r-stretch"><p>En nuestro caso se cumplen todas las hipótesis (algunas más fuertemente que otras).</p>
 <p><span class="hl-yellow"><strong>Repite el proceso con el otro modelo</strong></span></p>
 </section>
 <section id="fase-de-diagnosis-3" class="slide level2">
 <h2>Fase de diagnosis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1"></a><span class="fu">check_predictions</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb231"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb231-1"><a href="#cb231-1"></a><span class="fu">check_predictions</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960" class="r-stretch"><p>Nos faltan dos gráficas por comentar:</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-148-1.png" width="960" class="r-stretch"><p>Nos faltan dos gráficas por comentar:</p>
 <ul>
 <li><code>Posterior Predictive Checks</code>: <span class="hl-yellow"><strong>simula distintas variables respuesta</strong></span> suponiendo que el modelo fuese cierto (añadiendo ruido aleatorio) y lo compara con la muestra. <span class="hl-red"><strong>Si lo observado se distancia mucho de las simulaciones</strong></span> es que el modelo planteado no ajusta bien a la muestra.</li>
 </ul>
@@ -4932,7 +5022,7 @@ Anderson-Darling          0.2422         0.7457
 <section id="fase-de-diagnosis-4" class="slide level2">
 <h2>Fase de diagnosis</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1"></a><span class="fu">check_outliers</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a><span class="fu">check_outliers</span>(ajuste_AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OK: No outliers detected.
 - Based on the following method and threshold: cook (0.713).
@@ -4966,7 +5056,7 @@ Anderson-Darling          0.2422         0.7457
 <section id="fase-de-inferencia-1" class="slide level2">
 <h2>Fase de inferencia</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb227"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb227-1"><a href="#cb227-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -5031,7 +5121,7 @@ F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
 <section id="fase-de-inferencia-3" class="slide level2">
 <h2>Fase de inferencia</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb230"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb230-1"><a href="#cb230-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -5060,7 +5150,7 @@ F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
 <section id="fase-de-inferencia-4" class="slide level2">
 <h2>Fase de inferencia</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb232"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb232-1"><a href="#cb232-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -5086,14 +5176,14 @@ F-statistic: 20.09 on 1 and 25 DF,  p-value: 0.0001425</code></pre>
 <div class="fragment">
 <p>Para quitarlo añadimos un -1 al modelo</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb234"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb234-1"><a href="#cb234-1"></a>ajuste_AGST_sin_beta0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb241"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb241-1"><a href="#cb241-1"></a>ajuste_AGST_sin_beta0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> AGST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="re-aprendiendo" class="slide level2">
 <h2>Re-aprendiendo</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb235"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb235-1"><a href="#cb235-1"></a>ajuste_AGST_sin_beta0 <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>ajuste_AGST_sin_beta0 <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -5118,6 +5208,14 @@ F-statistic:  5519 on 1 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>La <span class="hl-yellow"><strong>bondad de ajuste</strong></span> ha pasado de <span class="math inline">\(R^2 = 0.446\)</span> a <span class="math inline">\(R^2 = 0.9953\)</span> (veremos que no son comparables cuando tiene o no intercepto)</p></li>
 <li><p>La <span class="hl-yellow"><strong>variabilidad de la estimación</strong></span> <span class="math inline">\(\widehat{SE} \left( \widehat{\beta}_1 \right)\)</span> ha pasado de 0.143 a 0.005757 –&gt; más precisión</p></li>
 </ul>
+</section>
+<section id="caso-practico-10-1" class="slide level2">
+<h2>🐣 Caso práctico I: precisión vs sesgo</h2>
+<p>pendiente</p>
+</section>
+<section id="caso-practico-10-2" class="slide level2">
+<h2>🐣 Caso práctico II: incumpliendo hipótesis</h2>
+<p>pendiente</p>
 </section></section>
 <section>
 <section id="clase-11" class="title-slide slide level1 center">
@@ -5128,7 +5226,7 @@ F-statistic:  5519 on 1 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Comparar modelos</h2>
 <p>Aunque no hemos hablado en profundidad de las <strong>métricas de evaluación</strong> podemos <span class="hl-yellow"><strong>comparar los modelos</strong></span> con <code>compare_performance()</code> del paquete <code>{performance}</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb237"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb237-1"><a href="#cb237-1"></a><span class="fu">compare_performance</span>(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a><span class="fu">compare_performance</span>(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -5165,16 +5263,16 @@ ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb239"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb239-1"><a href="#cb239-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> datos<span class="sc">$</span>Price, <span class="st">"y_est"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values),</span>
-<span id="cb239-2"><a href="#cb239-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> y_est)) <span class="sc">+</span></span>
-<span id="cb239-3"><a href="#cb239-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb239-4"><a href="#cb239-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb239-5"><a href="#cb239-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb239-6"><a href="#cb239-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores reales"</span>, <span class="at">y =</span> <span class="st">"Valores estimados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> datos<span class="sc">$</span>Price, <span class="st">"y_est"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values),</span>
+<span id="cb246-2"><a href="#cb246-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> y_est)) <span class="sc">+</span></span>
+<span id="cb246-3"><a href="#cb246-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb246-4"><a href="#cb246-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb246-5"><a href="#cb246-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb246-6"><a href="#cb246-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores reales"</span>, <span class="at">y =</span> <span class="st">"Valores estimados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-150-1.png" width="960" class="r-stretch"><p>En el gráfica podemos ver como los <span class="hl-green"><strong>valores reales vs estimados</strong></span> están <strong>muy cercanos a la diagonal</strong>: el error cometido es muy pequeño.</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-157-1.png" width="960" class="r-stretch"><p>En el gráfica podemos ver como los <span class="hl-green"><strong>valores reales vs estimados</strong></span> están <strong>muy cercanos a la diagonal</strong>: el error cometido es muy pequeño.</p>
 </section>
 <section id="fase-de-evaluación-2" class="slide level2">
 <h2>Fase de evaluación</h2>
@@ -5268,9 +5366,42 @@ ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
 </ul>
 </div>
 </section>
+<section id="resumen-r2" class="slide level2">
+<h2>Resumen R2</h2>
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+<ul>
+<li><span class="hl-yellow"><strong>¿Es útil?</strong></span> Sí, nos puede servir para <strong>comparar</strong> entre modelos con complejidades similares aplicados a datos similares.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>¿Nos habla sobre la inferencia del modelo o la verificación de sus hipótesis?</strong></span> No.&nbsp;Siempre <strong>asume que se cumplen</strong>, ignorando completamente si es cierto o no. No es un contraste.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>¿Debe ser interpretado con cuidado y no de forma «sagrada»?</strong></span> No.&nbsp;Depende de <span class="math inline">\(p\)</span> (tengan o no utilidad), de la varianza de <span class="math inline">\(y\)</span> y del ruido de los datos</li>
+</ul>
+</div>
+</section>
+<section id="resumen-r2-1" class="slide level2">
+<h2>Resumen R2</h2>
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+<ul>
+<li><span class="hl-yellow"><strong>¿Representa la proporción de variabilidad de <span class="math inline">\(y\)</span> (en general)?</strong></span> No.&nbsp;El coeficiente <span class="math inline">\(R^2\)</span> compara la explicabilidad del modelo <strong>respecto a un modelo de referencia (modelo nulo)</strong>, aquel en el que <span class="math inline">\(\widehat{y} = \overline{y} = cte\)</span> (de ahí que <span class="math inline">\(SSE\)</span> - <span class="math inline">\(y\)</span> vs <span class="math inline">\(\widehat{y}\)</span> - se divida por <span class="math inline">\(SST\)</span>, donde <span class="math inline">\(y\)</span> vs <span class="math inline">\(\overline{y}\)</span>). Ese modelo de referencia es aquel con pendiente nula <span class="math inline">\(\widehat{\beta}_1 = 0\)</span>, por lo que <span class="math inline">\(\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x} = \overline{y}\)</span></li>
+</ul>
+</section>
+<section id="resumen-r2-2" class="slide level2">
+<h2>Resumen R2</h2>
+<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
+<ul>
+<li><span class="hl-yellow"><strong>¿Sirve la salida de <span class="math inline">\(R^2\)</span> cuando <span class="math inline">\(\widehat{\beta}_0 = \beta_0 = 0\)</span>?</strong></span> No.&nbsp;Dado que el modelo nulo respecto al que se compara es aquel que tiene <span class="math inline">\(\widehat{\beta}_1 = 0\)</span> donde <span class="math inline">\(\widehat{\beta}_0 = \overline{y}\)</span>, el modelo de referencia ahora sería aquel con <span class="math inline">\(\overline{y} = 0\)</span>. Por ello la función <code>lm()</code> te devuelve en este caso un valor <span class="math inline">\(R_{0}^2\)</span> definido como</li>
+</ul>
+<p><span class="math display">\[R_{0}^2 =  1 - \frac{SSR}{SST_0} = 1 - \frac{\sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2}{\sum_{i=1}^{n} y_{i}^2}\]</span></p>
+<p>Esto hace que dicho valor puede ser <strong>muy elevado</strong> ya que lo compara respecto a <span class="math inline">\(\widehat{y} = 0 = cte\)</span> (malo será que no lo mejore). De hecho en este caso <span class="math inline">\(SST \neq SSR + SSE\)</span> sino que <span class="math inline">\(SST_0 = SSE_0 + SSR\)</span>, donde <span class="math inline">\(SSE_0 = \sum_{i=1}^{n} \widehat{y}_{i}^2\)</span></p>
+</section>
 <section id="anova" class="slide level2">
 <h2>ANOVA</h2>
-<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\]</span></p>
+<p><span class="math display">\[R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST} \]</span></p>
 <p>Al igual que pasaba en el ANOVA cualis vs cuanti, podríamos plantearnos la siguiente pregunta: ¿conocemos la <span class="hl-yellow"><strong>distribución de <span class="math inline">\(SSE\)</span> y <span class="math inline">\(SSR\)</span></strong></span>?</p>
 <div class="fragment">
 <p>Dado que de nuevo cada uno es una suma de normales al cuadrado (ergo una chi-cuadrado) se puede <strong>demostrar</strong> como</p>
@@ -5283,7 +5414,7 @@ ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
 <section id="anova-1" class="slide level2">
 <h2>ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb240"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb240-1"><a href="#cb240-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 AGST         1  4.665   4.665   20.09 0.000143 ***
@@ -5336,7 +5467,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="anova-2" class="slide level2">
 <h2>ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb242"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb242-1"><a href="#cb242-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 AGST         1  4.665   4.665   20.09 0.000143 ***
@@ -5354,293 +5485,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><span class="hl-red"><strong>Importante</strong></span>: en el caso de la reg. lineal univariante, <span class="math inline">\(F-value\)</span> y <span class="math inline">\(p-value\)</span> del ANOVA es equivalente al <span class="math inline">\(t-value\)</span> y <span class="math inline">\(p-value\)</span> del contraste de significación para <span class="math inline">\(\beta_1\)</span> (ya que…no hay más).</p>
 </div>
 </section>
-<section id="simulación-6" class="slide level2">
-<h2>Simulación</h2>
-<ol type="1">
-<li>Simula unos datos (<span class="math inline">\(n = 500\)</span>) bajo la hipótesis (junta <span class="math inline">\(y\)</span> y <span class="math inline">\(x\)</span> en la misma tabla)</li>
-</ol>
-<p><span class="math display">\[Y = -1 + 3*X + \varepsilon, \quad  X \sim N(-3, \sigma = 1.2), \quad \varepsilon \sim N(0, \sigma = 3)\]</span></p>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb244"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb244-1"><a href="#cb244-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span>
-<span id="cb244-2"><a href="#cb244-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
-<span id="cb244-3"><a href="#cb244-3"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>x <span class="sc">+</span> eps</span>
-<span id="cb244-4"><a href="#cb244-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(y, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="caso-practico-11-1" class="slide level2">
+<h2>🐣 Caso práctico I: simulación</h2>
+<p>pendiente</p>
 </section>
-<section id="simulación-7" class="slide level2">
-<h2>Simulación</h2>
-<ol start="2" type="1">
-<li>Ajusta un modelo de regresión lineal univariante e interpreta todo lo que consideres (asume que la diagnosis se cumple ya que lo hemos simulado para que así sea)</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1"></a>ajuste_inicial <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> x)</span>
-<span id="cb245-2"><a href="#cb245-2"></a>ajuste_inicial <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x, data = datos)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--9.3000 -2.0292 -0.0207  2.2439  8.4378 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -1.3736     0.3683   -3.73 0.000214 ***
-x             2.9048     0.1120   25.94  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.104 on 498 degrees of freedom
-Multiple R-squared:  0.5746,    Adjusted R-squared:  0.5738 
-F-statistic: 672.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="simulación-8" class="slide level2">
-<h2>Simulación</h2>
-<ol start="3" type="1">
-<li>Diseña un bucle de 490 iteraciones de manera que, en cada iteración, incorpores a la tabla una nueva predictora <span class="math inline">\(X_i \sim N(0, 1)\)</span>. Fíjate que las <span class="hl-red"><strong>predictoras nuevas no tienen ningún tipo de relación con <span class="math inline">\(y\)</span></strong></span> (son “basura” para el modelo). En cada iteración haz un ajuste de <span class="math inline">\(y\)</span> vs todas y guarda su <span class="math inline">\(R2\)</span></li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb247-2"><a href="#cb247-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>) {</span>
-<span id="cb247-3"><a href="#cb247-3"></a>  </span>
-<span id="cb247-4"><a href="#cb247-4"></a>  datos[, i <span class="sc">+</span> <span class="dv">2</span>] <span class="ot">&lt;-</span>  <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb247-5"><a href="#cb247-5"></a>  R2[i] <span class="ot">&lt;-</span> (<span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> .) <span class="sc">|&gt;</span> <span class="fu">summary</span>())<span class="sc">$</span>r.squared</span>
-<span id="cb247-6"><a href="#cb247-6"></a>  </span>
-<span id="cb247-7"><a href="#cb247-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="simulación-9" class="slide level2">
-<h2>Simulación</h2>
-<ol start="4" type="1">
-<li>Crea una tabla con dos columnas: iteración y R2. Tras ello visualiza la evolución del R2 en función del número de la iteración (=número de predictoras basura)</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1"></a>tabla_R2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"iter"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>, <span class="st">"R2"</span> <span class="ot">=</span> R2)</span>
-<span id="cb248-2"><a href="#cb248-2"></a><span class="fu">ggplot</span>(tabla_R2) <span class="sc">+</span></span>
-<span id="cb248-3"><a href="#cb248-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> iter, <span class="at">y =</span> R2), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb248-4"><a href="#cb248-4"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb248-5"><a href="#cb248-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de predictoras basura"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-156-1.png" width="960" class="r-stretch"></section>
-<section id="simulación-10" class="slide level2">
-<h2>Simulación</h2>
-<p><span class="math display">\[R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}\]</span></p>
-<p><span class="hl-yellow"><strong>Moraleja</strong></span>: a mayor nº de predictoras, más se infla <span class="math inline">\(R^2\)</span> (¡aunque sean basura!)</p>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a>tabla_R2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"iter"</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">490</span>, <span class="st">"R2"</span> <span class="ot">=</span> R2)</span>
-<span id="cb249-2"><a href="#cb249-2"></a><span class="fu">ggplot</span>(tabla_R2) <span class="sc">+</span></span>
-<span id="cb249-3"><a href="#cb249-3"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> iter, <span class="at">y =</span> R2), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb249-4"><a href="#cb249-4"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb249-5"><a href="#cb249-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Número de predictoras basura"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-157-1.png" width="960" class="r-stretch"></section>
-<section id="simulación-11" class="slide level2">
-<h2>Simulación</h2>
-<ol start="5" type="1">
-<li>Simula una colección de datos (<span class="math inline">\(n = 500\)</span>) bajo la hipótesis de que <span class="math inline">\(Y = -1 + 3*X_1 + \varepsilon\)</span> con <span class="math inline">\(X \sim N(-3, \sigma = 1.2)\)</span> y</li>
-</ol>
-<ul>
-<li><p><code>datos_1</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 0.5)\)</span></p></li>
-<li><p><code>datos_2</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 1)\)</span></p></li>
-<li><p><code>datos_3</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 2)\)</span></p></li>
-<li><p><code>datos_4</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 4)\)</span></p></li>
-<li><p><code>datos_5</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 8)\)</span></p></li>
-<li><p><code>datos_6</code>: <span class="math inline">\(\varepsilon \sim N(0, \sigma = 12)\)</span></p></li>
-</ul>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.2</span>)</span>
-<span id="cb250-2"><a href="#cb250-2"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>x</span>
-<span id="cb250-3"><a href="#cb250-3"></a></span>
-<span id="cb250-4"><a href="#cb250-4"></a>datos_1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.5</span>), x)</span>
-<span id="cb250-5"><a href="#cb250-5"></a>datos_2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), x)</span>
-<span id="cb250-6"><a href="#cb250-6"></a>datos_3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>), x)</span>
-<span id="cb250-7"><a href="#cb250-7"></a>datos_4 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">4</span>), x)</span>
-<span id="cb250-8"><a href="#cb250-8"></a>datos_5 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">8</span>), x)</span>
-<span id="cb250-9"><a href="#cb250-9"></a>datos_6 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">12</span>), x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="simulación-12" class="slide level2">
-<h2>Simulación</h2>
-<ol start="6" type="1">
-<li>Realiza los 6 ajustes, uno para cada dataset, siempre <span class="math inline">\(y\)</span> vs <span class="math inline">\(x\)</span>. <span class="hl-yellow"><strong>IMPORTANTE</strong></span>: fíjate que la parte a explicar, la modelizable, la parte no aleatoria, ¡es siempre la misma! Así que el modelo debería ser parecido siempre. Usa <code>compare_performance()</code> para compararlos.</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb251"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb251-1"><a href="#cb251-1"></a>ajuste_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_1, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-2"><a href="#cb251-2"></a>ajuste_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_2, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-3"><a href="#cb251-3"></a>ajuste_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_3, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-4"><a href="#cb251-4"></a>ajuste_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_4, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-5"><a href="#cb251-5"></a>ajuste_5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_5, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-6"><a href="#cb251-6"></a>ajuste_6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos_6, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb251-7"><a href="#cb251-7"></a></span>
-<span id="cb251-8"><a href="#cb251-8"></a><span class="fu">compare_performance</span>(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># Comparison of Model Performance Indices
-
-Name     | Model |  AIC (weights) | AICc (weights) |  BIC (weights) |    R2
----------------------------------------------------------------------------
-ajuste_1 |    lm |  744.6 (&gt;.999) |  744.7 (&gt;.999) |  757.3 (&gt;.999) | 0.981
-ajuste_2 |    lm | 1474.6 (&lt;.001) | 1474.7 (&lt;.001) | 1487.3 (&lt;.001) | 0.923
-ajuste_3 |    lm | 2083.4 (&lt;.001) | 2083.4 (&lt;.001) | 2096.0 (&lt;.001) | 0.784
-ajuste_4 |    lm | 2789.7 (&lt;.001) | 2789.8 (&lt;.001) | 2802.4 (&lt;.001) | 0.478
-ajuste_5 |    lm | 3531.9 (&lt;.001) | 3531.9 (&lt;.001) | 3544.5 (&lt;.001) | 0.200
-ajuste_6 |    lm | 3886.8 (&lt;.001) | 3886.8 (&lt;.001) | 3899.4 (&lt;.001) | 0.101
-
-Name     | R2 (adj.) |   RMSE |  Sigma
---------------------------------------
-ajuste_1 |     0.981 |  0.506 |  0.507
-ajuste_2 |     0.923 |  1.051 |  1.053
-ajuste_3 |     0.784 |  1.932 |  1.936
-ajuste_4 |     0.477 |  3.915 |  3.923
-ajuste_5 |     0.198 |  8.223 |  8.239
-ajuste_6 |     0.099 | 11.726 | 11.750</code></pre>
-</div>
-</div>
-<p><strong>¡La supuesta calidad del ajuste desciende drásticamente, siendo igual de bueno!</strong> La parte que se puede predecir está perfectamente ajustada pero tenemos más ruido en los datos (ruido = no modelizable)</p>
-</section>
-<section id="simulación-13" class="slide level2">
-<h2>Simulación</h2>
-<ol start="7" type="1">
-<li>Y si tenemos un modelo con un alto <span class="math inline">\(R^2\)</span>, <span class="hl-yellow"><strong>¿no hace falta que cumpla las hipótesis?</strong></span>. Basándote en <span class="math inline">\(X \sim N(-3, \sigma = 1.5)\)</span> y <span class="math inline">\(\varepsilon \sim N(0, \sigma = 1)\)</span> con <span class="math inline">\(n = 500\)</span>, simula un modelo entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> que incumpla la hipótesis de linealidad.</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb253"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb253-1"><a href="#cb253-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb253-2"><a href="#cb253-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">3</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb253-3"><a href="#cb253-3"></a>y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">1.5</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">3</span><span class="sc">*</span>x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb253-4"><a href="#cb253-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="simulación-14" class="slide level2">
-<h2>Simulación</h2>
-<ol start="8" type="1">
-<li>Realiza el ajuste lineal y visualiza residuos vs valores predichos.</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, y <span class="sc">~</span> x)</span>
-<span id="cb254-2"><a href="#cb254-2"></a></span>
-<span id="cb254-3"><a href="#cb254-3"></a>tabla_residuos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"eps_hat"</span> <span class="ot">=</span> ajuste<span class="sc">$</span>residuals, <span class="st">"y_hat"</span> <span class="ot">=</span> ajuste<span class="sc">$</span>fitted.values)</span>
-<span id="cb254-4"><a href="#cb254-4"></a><span class="fu">ggplot</span>(tabla_residuos) <span class="sc">+</span></span>
-<span id="cb254-5"><a href="#cb254-5"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> y_hat, <span class="at">y =</span> eps_hat)) <span class="sc">+</span></span>
-<span id="cb254-6"><a href="#cb254-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-161-1.png" width="960" class="r-stretch"><div class="fragment">
-<p>Nos queda un patrón cuadrático porque <strong>en los datos existe dicho patrón</strong> y no lo hemos incluido en el modelo (hipótesis de linealidad errónea)</p>
-</div>
-</section>
-<section id="simulación-15" class="slide level2">
-<h2>Simulación</h2>
-<p>Fíjate que <span class="hl-yellow"><strong>tenemos un <span class="math inline">\(R^2\)</span> bastante alto</strong></span> pero no tiene sentido su interpretación ya que la recta como modelo aquí no tiene sentido</p>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb255"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb255-1"><a href="#cb255-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb255-2"><a href="#cb255-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb255-3"><a href="#cb255-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb255-4"><a href="#cb255-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-162-1.png" width="960" class="r-stretch"></section>
-<section id="simulación-16" class="slide level2">
-<h2>Simulación</h2>
-<ol start="9" type="1">
-<li>Simula los datos bajo la siguiente hipótesis (<span class="math inline">\(x_i = 0.01 + 0.01*(i-1)\)</span>)</li>
-</ol>
-<p><span class="math display">\[y_i = 1 - 2x_i(1 + 0.25 \sin(4 \pi x_i)) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma_i = 0.25 * x_{i}^2 )\]</span></p>
-<p>Junta todo en un dataset de 3 columnas: y, x y <span class="math inline">\(\sigma_i\)</span>. ¿Qué hipótesis se incumplen?</p>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">2</span>, <span class="at">l =</span> <span class="dv">500</span>)</span>
-<span id="cb256-2"><a href="#cb256-2"></a>eps <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.2</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb256-3"><a href="#cb256-3"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.25</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">4</span> <span class="sc">*</span> pi <span class="sc">*</span> x)) <span class="sc">+</span> eps</span>
-<span id="cb256-4"><a href="#cb256-4"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> y, <span class="st">"x"</span> <span class="ot">=</span> x, <span class="st">"sigma"</span> <span class="ot">=</span>  <span class="fl">0.2</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</section>
-<section id="simulación-17" class="slide level2">
-<h2>Simulación</h2>
-<ol start="10" type="1">
-<li>Realiza el ajuste de <span class="math inline">\(y ~ x\)</span> y observa el <span class="math inline">\(R^2\)</span></li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1"></a>ajuste_lineal <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> y <span class="sc">~</span> x)</span>
-<span id="cb257-2"><a href="#cb257-2"></a>ajuste_lineal <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x, data = datos)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--2.10561 -0.26617  0.02587  0.24773  1.95832 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  0.91964    0.04748   19.37   &lt;2e-16 ***
-x           -1.88030    0.04099  -45.87   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.5276 on 498 degrees of freedom
-Multiple R-squared:  0.8086,    Adjusted R-squared:  0.8082 
-F-statistic:  2104 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="simulación-18" class="slide level2">
-<h2>Simulación</h2>
-<ol start="11" type="1">
-<li>Fíjate que <span class="hl-yellow"><strong>tenemos un <span class="math inline">\(R^2\)</span> bastante alto</strong></span> pero… ¿tiene sentido su interpretación? Pinta en un diagrama de puntos + recta de regresión los datos <span class="math inline">\(x\)</span> vs <span class="math inline">\(y\)</span>.</li>
-</ol>
-<div class="cell">
-<details>
-<summary>Código</summary>
-<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb259-2"><a href="#cb259-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb259-3"><a href="#cb259-3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb259-4"><a href="#cb259-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-
-</div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-165-1.png" width="960" class="r-stretch"><div class="fragment">
-<p>Aunque el <span class="math inline">\(R^2\)</span> es bastante alto, el modelo no tiene sentido, dando <span class="hl-red"><strong>estimaciones cada vez más erradas</strong></span></p>
-</div>
+<section id="caso-practico-11-2" class="slide level2">
+<h2>🐣 Caso práctico II: vuelta a iris y colesterol</h2>
+<p>pendiente</p>
 </section></section>
 <section>
 <section id="clase-12" class="title-slide slide level1 center">

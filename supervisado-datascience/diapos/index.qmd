@@ -4113,40 +4113,121 @@ gg1 + gg3 + gg2 + gg4
 
 ### [**Ej 1**]{.hl-yellow}
 
-📝 Simula una población de datos $(x, y)$ (tamaño n = 1000000, como si fuese la población teórica real) bajo la hipótesis de que siguen el modelo lineal $y = 1.5 - 3*x + \varepsilon$. Toma las decisiones que consideres teniendo en cuenta que i) $\varepsilon$ debe cumplir las condiciones necesarias con una varianza de $0.75$; ii) $x$ se generará según una normal de varianza 1.5.
+📝 Simula una población de datos $(x, y)$ (tamaño n = 1000000, como si fuese la población teórica real) bajo la hipótesis de que siguen el modelo lineal $y = 1.5 - 3*x + \varepsilon$. Toma las decisiones que consideres teniendo en cuenta que i) $\varepsilon$ debe cumplir las condiciones necesarias con una varianza de $0.75$; ii) $x$ se generará según una normal de media 1 y varianza 1.5.
+
+```{r}
+#| code-fold: true
+n <- 1e6
+eps <- rnorm(n = n, mean = 0, sd = sqrt(0.75))
+x <- rnorm(n = n, mean = 1, sd = sqrt(1.5))
+y <- 1.5 - 3*x + eps
+datos <- tibble(y, x, eps)
+```
+
 
 ### [**Ej 2**]{.hl-yellow}
 
 📝 Obtén una muestra aleatoria simple de $n = 5000$ de dicha población.
 
+```{r}
+#| code-fold: true
+muestra <- datos |> slice_sample(n = 5000)
+```
+
 ### [**Ej 3**]{.hl-yellow}
 
-📝 ¿Cuál es la ecuación del modelo? ¿Son los parámetros significativos? ¿Por qué? Interpreta el valor de ambos parámetros de manera adecuada.
+📝 Ajusta un modelo de regresión lineal. ¿Cuál es la ecuación del modelo estimado? ¿Son los parámetros significativos? ¿Por qué? Interpreta el valor de ambos parámetros de manera adecuada.
+
+```{r}
+#| code-fold: true
+muestra <- datos |> slice_sample(n = 5000)
+ajuste <- lm(data = muestra, y ~ x)
+# y_hat = 1.492520 - 2.986930*X
+# ambos parámetros significativos porque al realizar
+# el contraste de significación (¡ASUMIENDO QUE SE CUMPLEN HIPÓTESIS!)
+# salen p-valores < 0.05 ==> rechazamos H0: beta_j = 0 en ambos casos
+# 1.492 es la estimación de E[Y|X = 0].
+# 2.986 es lo que desciende en promedio Y cuando X aumenta +1 
+```
 
 ### [**Ej 4**]{.hl-yellow}
 
 📝 Calcula la media de los residuales al cuadrado (varianza residual o MSE). Haciendo uso de la salida, ¿cuánto estima el modelo que es su estimador insesgado?
+
+```{r}
+#| code-fold: true
+MSE <- mean(ajuste$residuals^2)
+estimador_insesgado_var_res <- 0.8504^2 # residual standard error^2
+```
 
 
 ### [**Ej 5**]{.hl-yellow}
 
 📝 Si volviésemos a extraer una muestra de la población y estimásemos $\beta_0$ y $\beta_1$, una y otra vez, ¿cuál sería la distribución que observaríamos en ambos? ¿Qué media tendría? ¿Qué variabilidad?
 
+```{r}
+#| code-fold: true
+# ¡Suponiendo ciertas las hipótesis ojo!
+# beta_hat_0 ~ N(1.492, sigma = 0.015626)
+# beta_hat_1 ~ N(-2.987, sigma = 0.009928)
+```
+
 ### [**Ej 6**]{.hl-yellow}
 
 📝 Repite los ejercicios 1-5 con el único cambio de que la varianza de $\varepsilon$ ahora será de $2.5$. Repite los ejercicios 1-5 con el único cambio de que la varianza de $\varepsilon$ ahora será de $7$. ¿Qué observas?
+
+```{r}
+#| code-fold: true
+eps <- rnorm(n = n, mean = 0, sd = sqrt(2.5))
+x <- rnorm(n = n, mean = 1, sd = sqrt(1.5))
+y <- 1.5 - 3*x + eps
+datos <- tibble(y, x, eps)
+muestra <- datos |> slice_sample(n = 5000)
+ajuste <- lm(data = muestra, y ~ x)
+# R2 de 0.9477 a 0.8389
+# Estimación varianza residual de 0.8504^2 a 1.579^2
+# mismo modelo, pero aparenta funcionar peor
+# varianza de beta_0 y beta_1 aumenta
+
+eps <- rnorm(n = n, mean = 0, sd = sqrt(7))
+x <- rnorm(n = n, mean = 1, sd = sqrt(1.5))
+y <- 1.5 - 3*x + eps
+datos <- tibble(y, x, eps)
+muestra <- datos |> slice_sample(n = 5000)
+ajuste <- lm(data = muestra, y ~ x)
+# aún más extremo
+```
+
 
 
 ### [**Ej 7**]{.hl-yellow}
 
 📝 Repite los ejercicios 1-5 con el único cambio que ahora la muestra será de $n = 50$. ¿Qué observas?
 
+```{r}
+#| code-fold: true
+eps <- rnorm(n = n, mean = 0, sd = sqrt(0.75))
+x <- rnorm(n = n, mean = 1, sd = sqrt(1.5))
+y <- 1.5 - 3*x + eps
+datos <- tibble(y, x, eps)
+muestra <- datos |> slice_sample(n = 50)
+ajuste <- lm(data = muestra, y ~ x)
+# Estimación varianza residual de 0.8504^2 a 0.9546^2
+# aunque haya empeorado un poco R2 de 0.9477 a 0.9541 
+# ==> para la cantidad de pocos datos que tienes, no ha
+# empeorado tanto (recuerda que R2 depende de la varianza de y)
+# a menos n más opciones hay que de la varianza sea más alta
+# ya que puedes tener valores más "extremos"
+# varianza de beta_0 y beta_1 aumentan (menos precisión)
+```
+
 :::
 
 ---
 
-## 🐣 Caso práctico I: precisión vs sesgo {#caso-practico-8-1}
+## 🐣 Caso práctico I: predicción de iris {#caso-practico-8-1}
 
+pendiente
 
 # Clase 9: caso práctico {#clase-9}
 
@@ -4548,6 +4629,12 @@ ajuste_harvest |> summary()
 
 * [**Residuales**]{.hl-yellow}: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que $\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577$ (algo más grande que el otro ajuste) y $R^2 = 0.2572$ (algo más pequeño que el otro ajuste) -> de momento es mejor el primer modelo.
 
+---
+
+## 🐣 Caso práctico I: predicción de colesterol {#caso-practico-9-1}
+
+pendiente
+
 # Clase 10: caso práctico {#clase-10}
 
 [**Diagnosis**]{style="color:#444442;"}
@@ -4887,6 +4974,17 @@ ajuste_AGST_sin_beta0 |> summary()
 
 * La [**variabilidad de la estimación**]{.hl-yellow} $\widehat{SE} \left( \widehat{\beta}_1 \right)$  ha pasado de 0.143 a 0.005757 --> más precisión
 
+---
+
+## 🐣 Caso práctico I: precisión vs sesgo {#caso-practico-10-1}
+
+pendiente
+
+## 🐣 Caso práctico II: incumpliendo hipótesis {#caso-practico-10-2}
+
+pendiente
+
+
 # Clase 11: caso práctico {#clase-11}
 
 [**Evaluación**]{style="color:#444442;"}
@@ -5065,12 +5163,51 @@ $$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-
 * [**Ignora si el modelo cumple las hipótesis**]{.hl-yellow}: un modelo con un alto $R^2$ puede dar predicciones nefastas si las incumple
 
 
+---
+
+## Resumen R2
+
+
+$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
+
+* [**¿Es útil?**]{.hl-yellow} Sí, nos puede servir para **comparar** entre modelos con complejidades similares aplicados a datos similares.
+
+. . .
+
+* [**¿Nos habla sobre la inferencia del modelo o la verificación de sus hipótesis?**]{.hl-yellow} No. Siempre **asume que se cumplen**, ignorando completamente si es cierto o no. No es un contraste.
+
+. . .
+
+
+* [**¿Debe ser interpretado con cuidado y no de forma «sagrada»?**]{.hl-yellow} No. Depende de $p$ (tengan o no utilidad), de la varianza de $y$ y del ruido de los datos
+
+---
+
+## Resumen R2
+
+
+$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
+
+* [**¿Representa la proporción de variabilidad de $y$ (en general)?**]{.hl-yellow} No. El coeficiente $R^2$ compara la explicabilidad del modelo **respecto a un modelo de referencia (modelo nulo)**, aquel en el que $\widehat{y} = \overline{y} = cte$ (de ahí que $SSE$ - $y$ vs $\widehat{y}$ - se divida por $SST$, donde $y$ vs $\overline{y}$). Ese modelo de referencia es aquel con pendiente nula $\widehat{\beta}_1 = 0$, por lo que $\widehat{\beta}_0 = \overline{y} - \widehat{\beta}_1 \overline{x} = \overline{y}$
+
+---
+
+## Resumen R2
+
+
+$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
+
+* [**¿Sirve la salida de $R^2$ cuando $\widehat{\beta}_0 = \beta_0 = 0$?**]{.hl-yellow} No. Dado que el modelo nulo respecto al que se compara es aquel que tiene $\widehat{\beta}_1 = 0$ donde $\widehat{\beta}_0  = \overline{y}$, el modelo de referencia ahora sería aquel con $\overline{y} = 0$. Por ello la función `lm()` te devuelve en este caso un valor $R_{0}^2$ definido como
+
+$$R_{0}^2 =  1 - \frac{SSR}{SST_0} = 1 - \frac{\sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2}{\sum_{i=1}^{n} y_{i}^2}$$
+
+Esto hace que dicho valor puede ser **muy elevado** ya que lo compara respecto a $\widehat{y} = 0 = cte$ (malo será que no lo mejore). De hecho en este caso $SST \neq SSR + SSE$ sino que $SST_0 = SSE_0 + SSR$, donde $SSE_0 = \sum_{i=1}^{n} \widehat{y}_{i}^2$
 
 ---
 
 ## ANOVA
 
-$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}$$
+$$R^2 = \frac{\text{info modelizada}}{\text{info a modelizar}} = \frac{s_{\widehat{y}}^2}{s_{y}^2} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST} $$
 
 Al igual que pasaba en el ANOVA cualis vs cuanti, podríamos plantearnos la siguiente pregunta: ¿conocemos la [**distribución de $SSE$ y $SSR$**]{.hl-yellow}?
 
@@ -5129,226 +5266,16 @@ Si se [**rechaza**]{.hl-yellow} significa que [**existe al menos un predictor cu
 
 ---
 
-## Simulación
+## 🐣 Caso práctico I: simulación {#caso-practico-11-1}
 
-
-1. Simula unos datos ($n = 500$) bajo la hipótesis (junta $y$ y $x$ en la misma tabla)
-
-$$Y = -1 + 3*X + \varepsilon, \quad  X \sim N(-3, \sigma = 1.2), \quad \varepsilon \sim N(0, \sigma = 3)$$
-
-```{r}
-#| code-fold: true
-eps <- rnorm(n = 500, mean = 0, sd = 3)
-x <- rnorm(n = 500, mean = -3, sd = 1.2)
-y <- -1 + 3*x + eps
-datos <- tibble(y, x)
-```
+pendiente
 
 ---
 
-## Simulación
 
-2. Ajusta un modelo de regresión lineal univariante e interpreta todo lo que consideres (asume que la diagnosis se cumple ya que lo hemos simulado para que así sea) 
+## 🐣 Caso práctico II: vuelta a iris y colesterol {#caso-practico-11-2}
 
-```{r}
-#| code-fold: true
-ajuste_inicial <- lm(data = datos, y ~ x)
-ajuste_inicial |> summary()
-```
-
----
-
-## Simulación
-
-3. Diseña un bucle de 490 iteraciones de manera que, en cada iteración, incorpores a la tabla una nueva predictora $X_i \sim N(0, 1)$. Fíjate que las [**predictoras nuevas no tienen ningún tipo de relación con $y$**]{.hl-red} (son "basura" para el modelo). En cada iteración haz un ajuste de $y$ vs todas y guarda su $R2$
-
-```{r}
-#| code-fold: true
-R2 <- c()
-for (i in 1:490) {
-  
-  datos[, i + 2] <-  rnorm(n = 500, mean = 0, sd = 1)
-  R2[i] <- (lm(data = datos, y ~ .) |> summary())$r.squared
-  
-}
-```
-
----
-
-## Simulación
-
-4. Crea una tabla con dos columnas: iteración y R2. Tras ello visualiza la evolución del R2 en función del número de la iteración (=número de predictoras basura)
-
-```{r}
-#| code-fold: true
-tabla_R2 <- tibble("iter" = 1:490, "R2" = R2)
-ggplot(tabla_R2) +
-  geom_line(aes(x = iter, y = R2), linewidth = 1.5) +
-  theme_minimal() +
-  labs(x = "Número de predictoras basura")
-```
-
----
-
-## Simulación
-
-$$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-1}{n}\widehat{\sigma}_{\varepsilon}^2}{s_{y}^2}$$
-
-[**Moraleja**]{.hl-yellow}: a mayor nº de predictoras, más se infla $R^2$ (¡aunque sean basura!)
-
-
-```{r}
-#| code-fold: true
-tabla_R2 <- tibble("iter" = 1:490, "R2" = R2)
-ggplot(tabla_R2) +
-  geom_line(aes(x = iter, y = R2), linewidth = 1.5) +
-  theme_minimal() +
-  labs(x = "Número de predictoras basura")
-```
-
----
-
-## Simulación
-
-5. Simula una colección de datos ($n = 500$) bajo la hipótesis de que $Y = -1 + 3*X_1 + \varepsilon$ con $X \sim N(-3, \sigma = 1.2)$ y
-
-* `datos_1`: $\varepsilon \sim N(0, \sigma = 0.5)$, `datos_2`: $\varepsilon \sim N(0, \sigma = 1)$
-
-* `datos_3`: $\varepsilon \sim N(0, \sigma = 2)$, `datos_4`: $\varepsilon \sim N(0, \sigma = 4)$
-
-* `datos_5`: $\varepsilon \sim N(0, \sigma = 8)$, `datos_6`: $\varepsilon \sim N(0, \sigma = 12)$
-
-```{r}
-#| code-fold: true
-x <- rnorm(n = 500, mean = -3, sd = 1.2)
-y <- -1 + 3*x
-
-datos_1 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 0.5), x)
-datos_2 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 1), x)
-datos_3 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 2), x)
-datos_4 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 4), x)
-datos_5 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 8), x)
-datos_6 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 12), x)
-```
-
----
-
-## Simulación
-
-6. Realiza los 6 ajustes, uno para cada dataset, siempre $y$ vs $x$. [**IMPORTANTE**]{.hl-yellow}: fíjate que la parte a explicar, la modelizable, la parte no aleatoria, ¡es siempre la misma! Así que el modelo debería ser parecido siempre. Usa `compare_performance()` para compararlos.
-
-```{r}
-#| code-fold: true
-ajuste_1 <- lm(data = datos_1, formula = y ~ x)
-ajuste_2 <- lm(data = datos_2, formula = y ~ x)
-ajuste_3 <- lm(data = datos_3, formula = y ~ x)
-ajuste_4 <- lm(data = datos_4, formula = y ~ x)
-ajuste_5 <- lm(data = datos_5, formula = y ~ x)
-ajuste_6 <- lm(data = datos_6, formula = y ~ x)
-
-compare_performance(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)
-```
-
-**¡La supuesta calidad del ajuste desciende drásticamente, siendo igual de bueno!** La parte que se puede predecir está perfectamente ajustada pero tenemos más ruido en los datos (ruido = no modelizable)
-
----
-
-## Simulación
-
-7. Y si tenemos un modelo con un alto $R^2$, [**¿no hace falta que cumpla las hipótesis?**]{.hl-yellow}. Basándote en  $X \sim N(-3, \sigma = 1.5)$ y $\varepsilon \sim N(0, \sigma = 1)$  con $n = 500$, simula un modelo entre $X$ e $Y$ que incumpla la hipótesis de linealidad.
-
-```{r}
-#| code-fold: true
-eps <- rnorm(n = 500, mean = 0, sd = 1)
-x <- rnorm(n = 500, mean = -3, sd = 1.5)
-y <- -1.5 + 2*x - 3*x^2
-datos <- tibble(x, y)
-```
-
----
-
-## Simulación
-
-8. Realiza el ajuste lineal y visualiza residuos vs valores predichos.
-
-```{r}
-#| code-fold: true
-ajuste <- lm(data = datos, y ~ x)
-
-tabla_residuos <- tibble("eps_hat" = ajuste$residuals, "y_hat" = ajuste$fitted.values)
-ggplot(tabla_residuos) +
-  geom_point(aes(x = y_hat, y = eps_hat)) +
-  theme_minimal()
-```
-
-
-. . .
-
-Nos queda un patrón cuadrático porque **en los datos existe dicho patrón** y no lo hemos incluido en el modelo (hipótesis de linealidad errónea)
-
----
-
-## Simulación
-
-Fíjate que [**tenemos un $R^2$ bastante alto**]{.hl-yellow} pero no tiene sentido su interpretación ya que la recta como modelo aquí no tiene sentido
-
-```{r}
-#| code-fold: true
-ggplot(datos, aes(x = x, y = y)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  theme_minimal()
-```
-
----
-
-## Simulación
-
-9. Simula los datos bajo la siguiente hipótesis ($x_i = 0.01 + 0.01*(i-1)$) 
-
-$$y_i = 1 - 2x_i(1 + 0.25 \sin(4 \pi x_i)) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma_i = 0.25 * x_{i}^2 )$$
-
-
-Junta todo en un dataset de 3 columnas: y, x y $\sigma_i$. ¿Qué hipótesis se incumplen?
-
-```{r}
-#| code-fold: true
-x <- seq(0.01, 2, l = 500)
-eps <- rnorm(n = 500, mean = 0, sd = 0.2 * x^2)
-y <- 1 - 2 * x * (1 + 0.25*sin(4 * pi * x)) + eps
-datos <- tibble("y" = y, "x" = x, "sigma" =  0.2 * x^2)
-```
-
----
-
-## Simulación
-
-10. Realiza el ajuste de $y ~ x$ y observa el $R^2$
-
-```{r}
-#| code-fold: true
-ajuste_lineal <- lm(data = datos, formula = y ~ x)
-ajuste_lineal |> summary()
-```
-
----
-
-## Simulación
-
-11.  Fíjate que [**tenemos un $R^2$ bastante alto**]{.hl-yellow} pero... ¿tiene sentido su interpretación? Pinta en un diagrama de puntos + recta de regresión los datos $x$ vs $y$.
-
-```{r}
-#| code-fold: true
-ggplot(datos, aes(x = x, y = y)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  theme_minimal()
-```
-
-. . .
-
-Aunque el $R^2$ es bastante alto, el modelo no tiene sentido, dando [**estimaciones cada vez más erradas**]{.hl-red}
-
+pendiente
 
 
 # Clase 12: casos reales {#clase-12}
