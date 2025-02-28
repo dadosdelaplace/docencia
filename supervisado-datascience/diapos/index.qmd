@@ -4227,7 +4227,15 @@ ajuste <- lm(data = muestra, y ~ x)
 
 ## 🐣 Caso práctico I: predicción de iris {#caso-practico-8-1}
 
-pendiente
+Vamos a empezar la regresión con un ejemplo sencillo haciendo uso del archiconocido dataset `iris` donde tenemos para 150 plantas de 3 especies distintas guardado su longitud y anchura de sépalo, y su longitud y anchura de pétalo.
+
+```{r}
+datos <- iris |> as_tibble()
+```
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#clase-8)
+
+
 
 # Clase 9: caso práctico {#clase-9}
 
@@ -5203,7 +5211,7 @@ $$R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{s_{r}^2}{s_{y}^2} = 1 - \frac{\frac{n-p-
 
 $$R_{0}^2 =  1 - \frac{SSR}{SST_0} = 1 - \frac{\sum_{i=1}^{n} \left(y_i - \widehat{y}_i \right)^2}{\sum_{i=1}^{n} y_{i}^2}$$
 
-Esto hace que dicho valor puede ser **muy elevado** ya que lo compara respecto a $\widehat{y} = 0 = cte$ (malo será que no lo mejore). De hecho en este caso $SST \neq SSR + SSE$ sino que $SST_0 = SSE_0 + SSR$, donde $SSE_0 = \sum_{i=1}^{n} \widehat{y}_{i}^2$
+Esto hace que dicho valor puede ser **muy elevado** ya que lo compara respecto a $\widehat{y} = 0 = cte$ (malo será que no lo mejore). De hecho en este caso $SST \neq SSR + SSE$ sino que $SST_0 = SSE_0 + SSR$
 
 ---
 
