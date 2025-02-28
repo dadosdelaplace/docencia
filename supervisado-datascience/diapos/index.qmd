@@ -4629,11 +4629,7 @@ ajuste_harvest |> summary()
 
 * [**Residuales**]{.hl-yellow}: además de media cero, parecen presentar una distribución simétrica con la mediana en torno al cero. Además se tiene que $\widehat{\sigma}_{\varepsilon}^{2}=\frac{1}{n-2}\sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = 0.5577$ (algo más grande que el otro ajuste) y $R^2 = 0.2572$ (algo más pequeño que el otro ajuste) -> de momento es mejor el primer modelo.
 
----
 
-## 🐣 Caso práctico I: predicción de colesterol {#caso-practico-9-1}
-
-pendiente
 
 # Clase 10: caso práctico {#clase-10}
 
@@ -4984,6 +4980,12 @@ pendiente
 
 pendiente
 
+---
+
+## 🐣 Caso práctico III: colesterol {#caso-practico-10-3}
+
+pendiente
+
 
 # Clase 11: caso práctico {#clase-11}
 
@@ -5271,6 +5273,7 @@ Si se [**rechaza**]{.hl-yellow} significa que [**existe al menos un predictor cu
 pendiente
 
 ---
+
 
 
 ## 🐣 Caso práctico II: vuelta a iris y colesterol {#caso-practico-11-2}

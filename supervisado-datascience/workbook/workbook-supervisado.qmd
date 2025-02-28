@@ -1494,6 +1494,328 @@ DescTools::DunnettTest(x = datos$attractiveness, g = datos$alcohol,
 # la segunda pinta
 ```
 
+## Clase 8
+
+### 🐣 Caso práctico I: predicción de iris
+
+Vamos a empezar la regresión con un ejemplo sencillo haciendo uso del archiconocido dataset `iris` donde tenemos para 150 plantas de 3 especies distintas guardado su longitud y anchura de sépalo, y su longitud y anchura de pétalo.
+
+```{r}
+datos <- iris |> as_tibble()
+datos
+```
+
+#### Pregunta 1
+
+> ¿Cuál de todas las variables va más por "libre" (no depende tanto de las demás) asumiendo una relación lineal?
+
+```{r}
+#| code-fold: true
+#| eval: false
+# forma 1
+datos |> select(where(is.numeric)) |> cor()
+
+# forma 2
+datos |> select(where(is.numeric)) |> corrr::correlate()
+
+# forma 3
+datos |> select(where(is.numeric)) |> cor() |> corrplot::corrplot()
+
+# la variable sepal.width es la que enos depende del resto (no así petal width)
+```
+
+
+#### Pregunta 2
+
+> Suponiendo que queremos predecir de manera lineal la variable ` Sepal.Length` haciendo uso de tan solo una predictora, ¿con cuál te quedarías y por qué? Si fuésemos a meter todas las variables, ¿podríamos hacerlo o tendríamos información redundante que deberíamos quitar
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> select(where(is.numeric)) |> corrr::correlate()
+# con aquella con mayor correlación en valor absoluto
+# es decir Petal.Length
+
+# no tiene sentido meter a la vez Petal.Length y Petal.Width
+# ya que tienen una correlación de 0.963 --> aportan la misma info
+# deberíamos de hacer un análisis de colinealidad y retirar alguna
+```
+
+
+
+#### Pregunta 3
+
+> Con la variable seleccionada realiza la formulación del modelo que planteas como hipótesis y ejecuta el código `lm()` adecuado. Interpreta hasta donde puedas en este momento del proceso. 
+
+```{r}
+#| echo: false
+ajuste <- lm(data = datos, Sepal.Length ~ Petal.Length)
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+# modelo:
+# Sepal.Length = beta_0 + beta_1*Petal.Length + epsilon
+# donde epsilon ~ N(0, sigma) tal que
+# estimacion = beta_hat_0 + beta_hat_1*Petal.Length 
+# tal que los beta_hat salen de una estimación por mínimos cuadrados
+
+ajuste <- lm(data = datos, Sepal.Length ~ Petal.Length)
+ajuste |> summary()
+
+# beta_hat_0 = 4.30660  -> predicción de la longitud del
+# sépalo cuando la longitud del pétalo es nula
+# Petal.Length = 0.40892  -> por cada cm que se incrementa
+# la longitud del sépalo, la longitud del pétalo
+# crece 0.40892 cm
+
+# 0.4071 es la estimación insesgada de la 
+# desv. típica de la varianza residual -> cuantifica
+# un promedio de los errores.
+
+# Y HASTA AQUÍ
+```
+
+#### Pregunta 4
+
+> ¿Qué no puedes interpretar todavía y por qué?
+
+
+```{r}
+#| code-fold: true
+# No podemos interpretar de momento nada más ya que
+# R2: no sabemos interpretarlo a estas alturas del curso todavía
+# p-valores: necesitamos que se cumplan las hipótesis
+# para poder hacer inferencia
+```
+
+#### Pregunta 5
+
+> Usa el código que consideres para calcular la media de los errores al cuadrado (MSE). Visualiza la distribución de los residuos
+
+```{r}
+#| code-fold: true
+#| eval: false
+MSE <- mean(ajuste$residuals^2)
+
+ggplot(tibble("residuos" = ajuste$residuals)) +
+  geom_density(aes(x = residuos)) +
+  theme_minimal()
+
+ggplot(tibble("residuos" = ajuste$residuals)) +
+  stat_qq(aes(sample = residuos)) +
+  stat_qq_line(aes(sample = residuos)) +
+  theme_minimal()
+```
+
+#### Pregunta 6
+
+> Construye una tabla con 3 columnas: (x, y, y_hat), siendo y_hat el valor predicho. Tras ello visualiza y vs y_hat para tener una calibración visual del acierto de nuestro modelo
+
+```{r}
+#| code-fold: true
+tabla_predicciones <-
+  tibble("x" = datos$Petal.Length,
+         "y" = datos$Sepal.Length,
+         "y_hat" = ajuste$fitted.values)
+
+ggplot(tabla_predicciones) +
+  geom_point(aes(x = y, y = y_hat)) +
+  geom_line(aes(x = y, y = y), color = "#913131",
+            linewidth = 1.4) +
+  theme_minimal()
+```
+
+#### Pregunta 7
+
+> ¿Cómo crees que será de buena la predicción del modelo para una longitud de pétalo de 12cm?
+
+```{r}
+#| code-fold: true
+# da igual el R2, la varianza residual o los errores:
+# el modelo no es fiable si x está fuera del rango
+# de valores con los que has entrenado el modelo
+```
+
+
+## Clase 11
+
+### 🐣 Caso práctico I: simulación
+
+
+#### Pregunta 1
+
+> Simula unos datos ($n = 500$) bajo la hipótesis (junta $y$ y $x$ en la misma tabla) de que
+
+$$Y = -1 + 3*X + \varepsilon, \quad  X \sim N(-3, \sigma = 1.2), \quad \varepsilon \sim N(0, \sigma = 3)$$
+
+```{r}
+#| code-fold: true
+eps <- rnorm(n = 500, mean = 0, sd = 3)
+x <- rnorm(n = 500, mean = -3, sd = 1.2)
+y <- -1 + 3*x + eps
+datos <- tibble(y, x)
+```
+
+#### Pregunta 2
+
+> Ajusta un modelo de regresión lineal univariante e interpreta todo lo que consideres (asume que la diagnosis se cumple ya que lo hemos simulado para que así sea) 
+
+```{r}
+#| code-fold: true
+ajuste_inicial <- lm(data = datos, y ~ x)
+ajuste_inicial |> summary()
+```
+
+#### Pregunta 3
+
+>  Diseña un bucle de 490 iteraciones de manera que, en cada iteración, incorpores a la tabla una nueva predictora $X_i \sim N(0, 1)$. Fíjate que las [**predictoras nuevas no tienen ningún tipo de relación con $y$**]{.hl-red} (son "basura" para el modelo). En cada iteración haz un ajuste de $y$ vs todas y guarda su $R2$
+
+```{r}
+#| code-fold: true
+R2 <- c()
+for (i in 1:490) {
+  
+  datos[, i + 2] <-  rnorm(n = 500, mean = 0, sd = 1)
+  R2[i] <- (lm(data = datos, y ~ .) |> summary())$r.squared
+  
+}
+```
+
+#### Pregunta 4
+
+>  Crea una tabla con dos columnas: iteración y R2. Tras ello visualiza la evolución del R2 en función del número de la iteración (=número de predictoras basura). Interpreta lo que observes
+
+```{r}
+#| code-fold: true
+tabla_R2 <- tibble("iter" = 1:490, "R2" = R2)
+ggplot(tabla_R2) +
+  geom_line(aes(x = iter, y = R2), linewidth = 1.5) +
+  theme_minimal() +
+  labs(x = "Número de predictoras basura")
+# Moraleja: a mayor nº de predictoras, más se infla R^2
+# ¡aunque sean basura!
+```
+
+#### Pregunta 5
+
+> Simula una colección de datos ($n = 500$) bajo la hipótesis de que $Y = -1 + 3*X_1 + \varepsilon$ con $X \sim N(-3, \sigma = 1.2)$ y
+
+* `datos_1`: $\varepsilon \sim N(0, \sigma = 0.5)$, `datos_2`: $\varepsilon \sim N(0, \sigma = 1)$
+
+* `datos_3`: $\varepsilon \sim N(0, \sigma = 2)$, `datos_4`: $\varepsilon \sim N(0, \sigma = 4)$
+
+* `datos_5`: $\varepsilon \sim N(0, \sigma = 8)$, `datos_6`: $\varepsilon \sim N(0, \sigma = 12)$
+
+```{r}
+#| code-fold: true
+x <- rnorm(n = 500, mean = -3, sd = 1.2)
+y <- -1 + 3*x
+
+datos_1 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 0.5), x)
+datos_2 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 1), x)
+datos_3 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 2), x)
+datos_4 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 4), x)
+datos_5 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 8), x)
+datos_6 <- tibble("y" = y + rnorm(n = 500, mean = 0, sd = 12), x)
+```
+
+#### Pregunta 6
+
+> Realiza los 6 ajustes, uno para cada dataset, siempre $y$ vs $x$. **IMPORTANTE**: fíjate que la parte a explicar, la modelizable, la parte no aleatoria, ¡es siempre la misma! Así que el modelo debería ser parecido siempre. Usa `compare_performance()` para compararlos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+ajuste_1 <- lm(data = datos_1, formula = y ~ x)
+ajuste_2 <- lm(data = datos_2, formula = y ~ x)
+ajuste_3 <- lm(data = datos_3, formula = y ~ x)
+ajuste_4 <- lm(data = datos_4, formula = y ~ x)
+ajuste_5 <- lm(data = datos_5, formula = y ~ x)
+ajuste_6 <- lm(data = datos_6, formula = y ~ x)
+
+performance::compare_performance(ajuste_1, ajuste_2, ajuste_3, ajuste_4, ajuste_5, ajuste_6)
+# ¡La supuesta calidad del ajuste desciende drásticamente,
+# siendo igual de bueno! La parte que se puede predecir está
+# perfectamente ajustada pero tenemos más ruido en los
+# datos (ruido = no modelizable)
+```
+
+
+
+#### Pregunta 7
+
+> Y si tenemos un modelo con un alto $R^2$, ¿no hace falta que cumpla las hipótesis?. Basándote en  $X \sim N(-3, \sigma = 1.5)$ y $\varepsilon \sim N(0, \sigma = 1)$  con $n = 500$, simula un modelo entre $X$ e $Y$ que incumpla la hipótesis de linealidad.
+
+```{r}
+#| code-fold: true
+eps <- rnorm(n = 500, mean = 0, sd = 1)
+x <- rnorm(n = 500, mean = -3, sd = 1.5)
+y <- -1.5 + 2*x - 3*x^2 # por ejemplo
+datos <- tibble(x, y)
+```
+
+#### Pregunta 8
+
+>  Realiza el ajuste lineal y visualiza residuos vs valores predichos.
+
+```{r}
+#| code-fold: true
+ajuste <- lm(data = datos, y ~ x)
+
+tabla_residuos <- tibble("eps_hat" = ajuste$residuals, "y_hat" = ajuste$fitted.values)
+ggplot(tabla_residuos) +
+  geom_point(aes(x = y_hat, y = eps_hat)) +
+  theme_minimal()
+# deberías observar en los residuos el patrón que en
+# los datos no modelizaste o no tuviste en cuenta
+
+```
+
+
+#### Pregunta 9
+
+> Simula los datos bajo la siguiente hipótesis ($x_i = 0.01 + 0.01*(i-1)$) 
+
+$$y_i = 1 - 2x_i(1 + 0.25 \sin(4 \pi x_i)) + \varepsilon_i, \quad \varepsilon_i \sim N(0, \sigma_i = 0.25 * x_{i}^2 )$$
+
+
+Junta todo en un dataset de 3 columnas: y, x y $\sigma_i$. ¿Qué hipótesis se incumplen?
+
+```{r}
+#| code-fold: true
+x <- seq(0.01, 2, l = 500)
+eps <- rnorm(n = 500, mean = 0, sd = 0.2 * x^2)
+y <- 1 - 2 * x * (1 + 0.25*sin(4 * pi * x)) + eps
+datos <- tibble("y" = y, "x" = x, "sigma" =  0.2 * x^2)
+```
+
+#### Pregunta 10
+
+> Realiza el ajuste de $y ~ x$ y observa el $R^2$
+
+```{r}
+#| code-fold: true
+ajuste_lineal <- lm(data = datos, formula = y ~ x)
+ajuste_lineal |> summary()
+```
+
+#### Pregunta 11
+
+> Fíjate que tenemos un $R^2$ bastante alto pero... ¿tiene sentido su interpretación? Pinta en un diagrama de puntos + recta de regresión los datos $x$ vs $y$.
+
+```{r}
+#| code-fold: true
+ggplot(datos, aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal()
+# Aunque el R^2 es bastante alto, el modelo no tiene sentido,
+# dando estimaciones cada vez más erradas
+```
+
+
 
 
 
