@@ -5278,7 +5278,8 @@ Si se [**rechaza**]{.hl-yellow} significa que [**existe al menos un predictor cu
 
 ## 🐣 Caso práctico I: simulación {#caso-practico-11-1}
 
-pendiente
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#clase-11)
+
 
 ---
 
