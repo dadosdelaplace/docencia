@@ -4982,17 +4982,29 @@ ajuste_AGST_sin_beta0 |> summary()
 
 ## 🐣 Caso práctico I: precisión vs sesgo {#caso-practico-10-1}
 
-pendiente
+```{r}
+
+```
 
 ## 🐣 Caso práctico II: incumpliendo hipótesis {#caso-practico-10-2}
 
-pendiente
+```{r}
+datos <- read_csv(file = "./datos/colesterol.csv")
+```
+
 
 ---
 
 ## 🐣 Caso práctico III: colesterol {#caso-practico-10-3}
 
-pendiente
+Vamos a intentar predecir los niveles de colesterol de 100 pacientes en función de otras variables predictoras
+
+```{r}
+datos <- read_csv(file = "./datos/colesterol.csv")
+```
+
+
+Intenta responder a las preguntas planteadas en el [**workbook**](...)
 
 
 # Clase 11: caso práctico {#clase-11}

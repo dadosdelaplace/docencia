@@ -1638,6 +1638,311 @@ ggplot(tabla_predicciones) +
 # de valores con los que has entrenado el modelo
 ```
 
+## Clase 10
+
+### 🐣 Caso práctico III: colesterol
+
+
+Vamos a intentar predecir los niveles de colesterol de 100 pacientes en función de otras variables predictoras
+
+```{r}
+datos <- read_csv(file = "./datos/colesterol.csv")
+datos
+```
+
+#### Pregunta 1
+
+> Nuestra variable objetivo es colesterol. Depura la variable eliminando datos ausentes e imputando cómo consideres los posibles valores atípicos en dicha variable
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# eliminamos ausentes
+datos <-
+  datos |> 
+  drop_na(colesterol)
+
+# chequeamos outliers
+ggplot(datos) +
+  geom_boxplot(aes(y = colesterol)) +
+  theme_minimal()
+ggplot(datos) +
+  geom_density(aes(x = colesterol)) +
+  theme_minimal()
+ggplot(datos) +
+  stat_qq(aes(sample = colesterol)) +
+  stat_qq_line(aes(sample = colesterol)) +
+  theme_minimal()
+olsrr::ols_test_normality(datos$colesterol)
+
+# parece tenemos outliers
+# y la variable parece normal
+# ==> vamos a detectar los outliers según la media
+# outlier: si se aleja 2.5 desviaciones típicas de la media
+datos <-
+  datos |> 
+  mutate("outlier" =
+           abs(outliers::scores(colesterol, type = "z")) > 2.5) 
+datos |> filter(outlier)
+
+# imputamos
+datos <-
+  datos |> 
+  mutate("colesterol" = if_else(outlier, NA, colesterol),
+         "colesterol" =
+           if_else(is.na(colesterol),
+                   mean(colesterol, na.rm = TRUE), colesterol))
+# chequeamos que la distribución no ha variado sustancialmente
+ggplot(datos) +
+  geom_density(aes(x = colesterol)) +
+  theme_minimal()
+```
+
+
+#### Pregunta 2
+
+> ¿Existe relación entre los niveles de colesterol y el sexo del paciente? Ejecuta el código que consideres para responder
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# numéricamente
+datos |>
+  drop_na(sexo) |> 
+  summarise(mean(colesterol), .by = sexo)
+
+# visualmente
+ggplot(datos |> drop_na(sexo)) +
+  geom_boxplot(aes(x = sexo, y = colesterol, fill = sexo,
+                   color = sexo), alpha = 0.5) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  theme_minimal()
+# se parecian diferencias pequeñas: ¿suficientes para decir que no?
+
+# inferencialmente
+aov(data = datos, colesterol ~ sexo) |> 
+  summary()
+# estimación insesgada de la varianza explicada:  5.06 
+# estimación insesgada de la var no explicada: 166.64
+# cociente entre ambas: F-value = 0.03
+# resultado: p-valor >> 0.05 ==> no podemos rechazar H0
+# no hay ev suficientes para decir que las medias sean disitntas
+# no hay relación entre el sexo y los niveles de colesteorl
+```
+
+
+
+#### Pregunta 3
+
+> Vamos a querer ahora predecir la variable colesterol mediante un modelo lineal univariante. ¿Qué variable sería la mejor predictora? ¿Por qué?
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  select(where(is.numeric)) |> 
+  corrr::correlate() |> 
+  filter(term == "colesterol")
+# la variable más correlada (en valor absoluto) es edad
+
+# ambas variables son normales, podemos usar pearson
+olsrr::ols_test_normality(datos |> drop_na(edad) |> pull(edad))
+
+datos |> 
+  select(where(is.numeric)) |> 
+  cor(use = "complete.obs") |> 
+  corrplot::corrplot()
+
+ggplot(datos, aes(x = edad, y = colesterol)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+# Es la más correlada pero suficientemente distinto de 0?
+cor.test(datos$colesterol, datos$edad) # ==> sí
+```
+
+
+#### Pregunta 4
+
+> Formula el modelo. Comprueba que no hay missings ni outliers tampoco en edad (si los hubiese, impútalos por lo que consideres). Tras ello aplica lm(). Interpreta todo lo que sepas y puedas HASTA ESTE PUNTO del análisis.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# sí tengo ausentes
+datos |>
+  count(is.na(edad))
+
+# al ser normal la variable, se lo imputo por la media
+datos <- 
+  datos |> 
+  mutate("edad" = if_else(is.na(edad), mean(edad, na.rm = TRUE),
+                          edad))
+
+# ¿hay outliers? (detectados e imputados respecto a la media)
+datos <-
+  datos |> 
+  mutate("outliers_edad" = abs(outliers::scores(edad, type = "z")) > 2.5) |> 
+  mutate("edad" = if_else(outliers_edad, mean(edad), edad))
+
+# modelo:
+#  colesterol = beta_0 + beta_1 * edad
+ajuste_lineal <-
+  lm(data = datos, colesterol ~ edad)
+ajuste_lineal |> summary()
+
+# interpretación
+# colesterol_hat = 97.3456 +  0.6795 * edad
+# - si edad = 0 (es decir, lo basal de un ser humano),
+#  el colesterol promedio predicho es de 97.3456
+# - por cada año que envejecemos, el modelo predice EN PROMEDIO
+#  que al colesterol aumenta en +0.6795
+
+# Residual standard error: 10.66 --> estimación insesgada de
+# la desviación típica poblacional de los residuos
+
+# Y FIN DE MOMENTO: no podemos interpretar más
+```
+
+
+#### Pregunta 5
+
+> ¿Cumple el modelo las condiciones inferenciales necesarias? ¿Para que necesitamos que se cumplan?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# 4. incorrelación
+# visual (deberías no ver patrón)
+ggplot(tibble("res" = ajuste_lineal$residuals[-1],
+              "res_lag" =
+                ajuste_lineal$residuals[-length(ajuste_lineal$residuals)])) +
+  geom_point(aes(x = res, y = res_lag)) +
+  theme_minimal()
+
+# inferencial
+performance::check_autocorrelation(ajuste_lineal)
+
+# 3. normalidad
+# visual
+ggplot(tibble("res" = ajuste_lineal$residuals)) +
+  stat_qq(aes(sample = res)) +
+  stat_qq_line(aes(sample = res)) +
+  theme_minimal()
+ggplot(tibble("res" = ajuste_lineal$residuals)) +
+  geom_density(aes(x = res)) +
+  theme_minimal()
+
+# inferencial
+performance::check_normality(ajuste_lineal)
+
+
+# 2. heterocedasticidad
+# visual (debería ver todo dentro deuna banda sin que aumente varianza)
+ggplot(tibble("x" = datos$edad,
+              "res" = ajuste_lineal$residuals)) +
+  geom_line(aes(x = x, y = res)) +
+  theme_minimal()
+
+# inferencial
+performance::check_heteroscedasticity(ajuste_lineal)
+
+# 1. linealidad
+# visual (debería ver todo sin patrón=
+ggplot(tibble("y_hat" = ajuste_lineal$fitted.values,
+              "res" = ajuste_lineal$residuals)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+
+# inferencial
+# lineal
+lm(data = tibble("y_hat" = ajuste_lineal$fitted.values,
+                 "res" = ajuste_lineal$residuals),
+   res ~ y_hat) |> summary()
+# cuadrático
+lm(data = tibble("y_hat" = ajuste_lineal$fitted.values,
+                 "res" = ajuste_lineal$residuals),
+   res ~ y_hat + I(y_hat^2)) |> summary()
+
+# cúbico
+lm(data = tibble("y_hat" = ajuste_lineal$fitted.values,
+                 "res" = ajuste_lineal$residuals),
+   res ~ y_hat + I(y_hat^2) + I(y_hat^3)) |> summary()
+
+# todo a la vez
+performance::check_model(ajuste_lineal)
+```
+
+
+#### Pregunta 6
+
+> Si fuese posible interpreta el resto de la salida inferencial del modelo. Detalla todo lo que consideras.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# ahora sí
+ajuste_lineal <-
+  lm(data = datos, colesterol ~ edad)
+ajuste_lineal |> summary()
+
+# beta_0 ~ N(97.3456, sigma = 6.0564)
+# beta_1 ~ N(0.6795 , sigma = 0.1065)
+# p-valores < 0.05 ==> ambos parámetros son significativos no hay que quitarlos
+# R2 de momento en clsae 10 no sabemos (pero si lo haces y ya sabes interpreta)
+```
+
+
+#### Pregunta 7
+
+> Piensa el código necesario para obtener las 2 siguientes gráficas e interprétalas.
+
+```{r}
+#| echo: false
+ajuste_lineal <- lm(data = datos, colesterol ~ edad)
+```
+
+```{r}
+#| code-fold: true
+beta_0_sim <-
+  rnorm(n = 1000, mean = ajuste_lineal$coefficients[1], sd = 6.0564)
+beta_1_sim <-
+  rnorm(n = 1000, mean = ajuste_lineal$coefficients[2], sd = 0.1065)
+betas_sim <- 
+  tibble(beta_0_sim, beta_1_sim) |> 
+  pivot_longer(cols = everything(), names_to = "param", values_to = "values")
+
+ggplot(betas_sim) +
+  geom_density(aes(x = values, fill = param, color = param),
+               alpha = 0.5) +
+  MetBrewer::scale_color_met_d("Renoir") +
+  MetBrewer::scale_fill_met_d("Renoir") +
+  facet_wrap(~param, scales = "free") +
+  theme_minimal() +
+  labs(title = "Betas simulados")
+
+predic_simul <-
+  datos |> 
+  reframe("id_simul" = rep(1:1000, each = length(edad)),
+          "x" = rep(edad, 1000),
+          "y_hat" = beta_0_sim + beta_1_sim*x)
+ggplot(predic_simul) +
+  geom_density(aes(x = y_hat, group = id_simul),
+               color = "grey20", alpha = 0.2, linewidth = 0.1) +
+  geom_density(data =
+                 tibble("y_hat" = ajuste_lineal$fitted.values),
+               aes(x = y_hat), color = "red", linewidth = 1.5) +
+  theme_minimal() +
+  labs(title = "Simulación predicciones",
+       subtitle = "1000 simulaciones")
+```
 
 ## Clase 11
 
