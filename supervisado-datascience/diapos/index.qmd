@@ -4986,6 +4986,8 @@ ajuste_AGST_sin_beta0 |> summary()
 
 ```
 
+---
+
 ## 🐣 Caso práctico II: incumpliendo hipótesis {#caso-practico-10-2}
 
 ```{r}
@@ -5004,7 +5006,7 @@ datos <- read_csv(file = "./datos/colesterol.csv")
 ```
 
 
-Intenta responder a las preguntas planteadas en el [**workbook**](...)
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#clase-10)
 
 
 # Clase 11: caso práctico {#clase-11}
