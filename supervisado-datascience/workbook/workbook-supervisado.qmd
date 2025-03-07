@@ -1642,7 +1642,7 @@ ggplot(tabla_predicciones) +
 
 ### 🐣 Caso práctico I: hoja a mano 
 
-Vamos a hacer en `R` los ejercicios 5 y 7 de los ejercicios de la hoja para hacer mano (reminder: deberías saber hacerlos con boli y papel)
+Vamos a hacer en `R` el ejercicio 5 de los ejercicios de la hoja para hacer mano (reminder: deberías saber hacerlos con boli y papel)
 
 #### Ejercicio 5: enunciado
 

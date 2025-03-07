@@ -5210,27 +5210,39 @@ F-statistic:  5519 on 1 and 26 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </section>
 <section id="caso-practico-10-1" class="slide level2">
-<h2>🐣 Caso práctico I: precisión vs sesgo</h2>
-<p>pendiente</p>
+<h2>🐣 Caso práctico I: ejercicios hoja a mano</h2>
+<p>Vamos a hacer en R el ejercicio 5 de los ejercicios de la hoja para hacer mano (reminder: deberías saber hacerlos con boli y papel)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1"></a>datos <span class="ot">&lt;-</span> </span>
+<span id="cb245-2"><a href="#cb245-2"></a>  <span class="fu">tibble</span>(<span class="st">"temp_avg"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="fl">17.2</span>, <span class="dv">18</span>, <span class="fl">17.2</span>, <span class="fl">16.9</span>, <span class="fl">17.1</span>, <span class="fl">18.2</span>, <span class="fl">17.3</span>, <span class="fl">17.5</span>, <span class="fl">16.6</span>),</span>
+<span id="cb245-3"><a href="#cb245-3"></a>         <span class="st">"n_dias"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">58</span>, <span class="dv">82</span>, <span class="dv">81</span>, <span class="dv">65</span>, <span class="dv">61</span>, <span class="dv">48</span>, <span class="dv">61</span>, <span class="dv">43</span>, <span class="dv">33</span>, <span class="dv">36</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-hoja-a-mano"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-practico-10-2" class="slide level2">
 <h2>🐣 Caso práctico II: incumpliendo hipótesis</h2>
-<p>pendiente</p>
+<p>Vamos a generar distintos ejemplos que incumplen las hipótesis.</p>
+<p>&nbsp;</p>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-incumpliendo-hip%C3%B3tesis"><strong>workbook</strong></a></p>
 </section>
 <section id="caso-practico-10-3" class="slide level2">
 <h2>🐣 Caso práctico III: colesterol</h2>
-<p>pendiente</p>
+<p>Vamos a intentar predecir los niveles de colesterol de 100 pacientes en función de otras variables predictoras</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb246"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb246-1"><a href="#cb246-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/colesterol.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Intenta responder a las preguntas planteadas en el <a href="https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#clase-10"><strong>workbook</strong></a></p>
 </section></section>
 <section>
 <section id="clase-11" class="title-slide slide level1 center">
-<h1>Clase 11: caso práctico</h1>
+<h1>Clase 11-12: caso práctico</h1>
 <p><span style="color:#444442;"><strong>Evaluación</strong></span></p>
 </section>
 <section id="comparar-modelos" class="slide level2">
 <h2>Comparar modelos</h2>
 <p>Aunque no hemos hablado en profundidad de las <strong>métricas de evaluación</strong> podemos <span class="hl-yellow"><strong>comparar los modelos</strong></span> con <code>compare_performance()</code> del paquete <code>{performance}</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb245"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb245-1"><a href="#cb245-1"></a><span class="fu">compare_performance</span>(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a><span class="fu">compare_performance</span>(ajuste_AGST, ajuste_AGST_sin_beta0, ajuste_harvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -5267,16 +5279,16 @@ ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
 <div class="cell">
 <details>
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb247"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb247-1"><a href="#cb247-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> datos<span class="sc">$</span>Price, <span class="st">"y_est"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values),</span>
-<span id="cb247-2"><a href="#cb247-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> y_est)) <span class="sc">+</span></span>
-<span id="cb247-3"><a href="#cb247-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
-<span id="cb247-4"><a href="#cb247-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb247-5"><a href="#cb247-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb247-6"><a href="#cb247-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores reales"</span>, <span class="at">y =</span> <span class="st">"Valores estimados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb249"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb249-1"><a href="#cb249-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"y"</span> <span class="ot">=</span> datos<span class="sc">$</span>Price, <span class="st">"y_est"</span> <span class="ot">=</span> ajuste_AGST<span class="sc">$</span>fitted.values),</span>
+<span id="cb249-2"><a href="#cb249-2"></a>       <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> y_est)) <span class="sc">+</span></span>
+<span id="cb249-3"><a href="#cb249-3"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb249-4"><a href="#cb249-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb249-5"><a href="#cb249-5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb249-6"><a href="#cb249-6"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valores reales"</span>, <span class="at">y =</span> <span class="st">"Valores estimados"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-158-1.png" width="960" class="r-stretch"><p>En el gráfica podemos ver como los <span class="hl-green"><strong>valores reales vs estimados</strong></span> están <strong>muy cercanos a la diagonal</strong>: el error cometido es muy pequeño.</p>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-160-1.png" width="960" class="r-stretch"><p>En el gráfica podemos ver como los <span class="hl-green"><strong>valores reales vs estimados</strong></span> están <strong>muy cercanos a la diagonal</strong>: el error cometido es muy pequeño.</p>
 </section>
 <section id="fase-de-evaluación-2" class="slide level2">
 <h2>Fase de evaluación</h2>
@@ -5418,7 +5430,7 @@ ajuste_harvest        | 0.257 |     0.228 | 0.537 | 0.558</code></pre>
 <section id="anova-1" class="slide level2">
 <h2>ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb248"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb248-1"><a href="#cb248-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 AGST         1  4.665   4.665   20.09 0.000143 ***
@@ -5471,7 +5483,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="anova-2" class="slide level2">
 <h2>ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb250"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb250-1"><a href="#cb250-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb252"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb252-1"><a href="#cb252-1"></a>ajuste_AGST <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 AGST         1  4.665   4.665   20.09 0.000143 ***
@@ -5496,14 +5508,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="caso-practico-11-2" class="slide level2">
 <h2>🐣 Caso práctico II: vuelta a iris y colesterol</h2>
 <p>pendiente</p>
-</section></section>
-<section>
-<section id="clase-12" class="title-slide slide level1 center">
-<h1>Clase 12: casos reales</h1>
-<p><span style="color:#444442;"><strong>Regresión univariante con casos reales</strong></span></p>
-</section>
-<section id="casos-reales" class="slide level2">
-<h2>Casos reales</h2>
 </section></section>
 <section>
 <section id="clase-13" class="title-slide slide level1 center">

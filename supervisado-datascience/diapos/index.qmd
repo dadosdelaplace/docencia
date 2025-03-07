@@ -4982,20 +4982,26 @@ ajuste_AGST_sin_beta0 |> summary()
 
 ## 🐣 Caso práctico I: ejercicios hoja a mano {#caso-practico-10-1}
 
-```{r}
+Vamos a hacer en R el ejercicio 5 de los ejercicios de la hoja para hacer mano (reminder: deberías saber hacerlos con boli y papel)
 
+```{r}
+#| eval: false
+datos <- 
+  tibble("temp_avg" = c(16, 17.2, 18, 17.2, 16.9, 17.1, 18.2, 17.3, 17.5, 16.6),
+         "n_dias" = c(58, 82, 81, 65, 61, 48, 61, 43, 33, 36))
 ```
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-i-hoja-a-mano)
 
 ---
 
 ## 🐣 Caso práctico II: incumpliendo hipótesis {#caso-practico-10-2}
 
-```{r}
-eps <- rnorm(n = 5000, mean = 0, sd = 1)
-x <- rnorm(n = 5000, mean = -3, sd = 1.5)
-y <- -2 + 5*x^1 + eps
+Vamos a generar distintos ejemplos que incumplen las hipótesis.
 
-```
+&nbsp;
+
+Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#caso-pr%C3%A1ctico-ii-incumpliendo-hip%C3%B3tesis)
 
 
 ---
@@ -5005,6 +5011,7 @@ y <- -2 + 5*x^1 + eps
 Vamos a intentar predecir los niveles de colesterol de 100 pacientes en función de otras variables predictoras
 
 ```{r}
+#| eval: false
 datos <- read_csv(file = "./datos/colesterol.csv")
 ```
 
@@ -5012,7 +5019,7 @@ datos <- read_csv(file = "./datos/colesterol.csv")
 Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosdelaplace-workbook-supervisado.share.connect.posit.cloud/#clase-10)
 
 
-# Clase 11: caso práctico {#clase-11}
+# Clase 11-12: caso práctico {#clase-11}
 
 [**Evaluación**]{style="color:#444442;"}
 
@@ -5305,16 +5312,6 @@ Intenta responder a las preguntas planteadas en el [**workbook**](https://dadosd
 ## 🐣 Caso práctico II: vuelta a iris y colesterol {#caso-practico-11-2}
 
 pendiente
-
-
-# Clase 12: casos reales {#clase-12}
-
-[**Regresión univariante con casos reales**]{style="color:#444442;"}
-
-
----
-
-## Casos reales
 
 
 # Clase 13: reg. multivariante {#clase-13}
