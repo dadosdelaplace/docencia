@@ -4980,7 +4980,7 @@ ajuste_AGST_sin_beta0 |> summary()
 
 ---
 
-## 🐣 Caso práctico I: precisión vs sesgo {#caso-practico-10-1}
+## 🐣 Caso práctico I: ejercicios hoja a mano {#caso-practico-10-1}
 
 ```{r}
 
@@ -4991,7 +4991,10 @@ ajuste_AGST_sin_beta0 |> summary()
 ## 🐣 Caso práctico II: incumpliendo hipótesis {#caso-practico-10-2}
 
 ```{r}
-datos <- read_csv(file = "./datos/colesterol.csv")
+eps <- rnorm(n = 5000, mean = 0, sd = 1)
+x <- rnorm(n = 5000, mean = -3, sd = 1.5)
+y <- -2 + 5*x^1 + eps
+
 ```
 
 

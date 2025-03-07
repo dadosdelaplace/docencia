@@ -1640,6 +1640,335 @@ ggplot(tabla_predicciones) +
 
 ## Clase 10
 
+### 🐣 Caso práctico I: hoja a mano 
+
+Vamos a hacer en `R` los ejercicios 5 y 7 de los ejercicios de la hoja para hacer mano (reminder: deberías saber hacerlos con boli y papel)
+
+#### Ejercicio 5: enunciado
+
+> En la tabla inferior se han recopilado (del año 2013 al 2022) la temperatura media en el mes de abril en Madrid (variable X, en ºC) y el número de días (variable Y) en el que el nivel de ozono superó las 0.20 ppm (partes por millón). Justifica todas tus respuestas (y reflexiona antes de ponerte a hacer nada si es necesario resumir datos en una tabla de frecuencias para este tamaño muestral)
+
+Lo primero será cargar los datos
+
+```{r}
+datos <- 
+  tibble("temp_avg" = c(16, 17.2, 18, 17.2, 16.9, 17.1, 18.2, 17.3, 17.5, 16.6),
+         "n_dias" = c(58, 82, 81, 65, 61, 48, 61, 43, 33, 36))
+datos
+```
+
+
+#### Ejercicio 5, apartado a
+
+> ¿Cuál fue la media de días en los que se superó el umbral de ozono en los años que la temperatura media en marzo superó los 17.4ºC?
+
+```{r}
+#| code-fold: true
+#| eval: false
+datos |> 
+  filter(temp_avg > 17.4) |> 
+  summarise(mean(n_dias))
+```
+
+#### Ejercicio 5, apartado b
+
+> ¿Existe alguna relación de dependencia entre las variables? En caso de existir, ¿de qué tipo? ¿Cómo de fuerte o débil es dicha relación? ¿En qué dirección es dicha relación?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# chequeamos que sean normales
+# (con tan poco n, casi siempre va a ser
+# conservador y dirá que sí)
+
+# esto obviamente a mano no podemos
+olsrr::ols_test_normality(datos$temp_avg)
+olsrr::ols_test_normality(datos$n_dias)
+ggplot(datos |>
+         pivot_longer(cols = everything(), names_to = "variables",
+                      values_to = "values")) +
+  stat_qq(aes(sample = values)) +
+  stat_qq_line(aes(sample = values)) +
+  facet_wrap(~variables, scale = "free") +
+  theme_minimal()
+
+# podemos usar pearson entonces 
+# a mano: siempre pearson
+datos |> 
+  cor()
+
+# esto obviamente a mano no podemos
+cor.test(datos$temp_avg, datos$n_dias)
+
+# corelación 0.26 positiva --> débil y no 
+# podemos rechazar la hipótesis nula
+# en realidad nuestras variables están
+# incorreladas linealmente
+
+# no vemos en el scatter plot ningún otro patrón
+# concreto (así que probablemente sean
+# independientes)
+ggplot(datos) +
+  geom_point(aes(x = n_dias, y = temp_avg)) +
+  theme_minimal()
+```
+
+#### Ejercicio 5, apartado c
+
+> Determina la recta de regresión unidimensional estimada (de Y sobre X).
+
+```{r}
+#| code-fold: true
+#| eval: false
+# modelo:
+#   n_dias = beta_0 + beta_1 * temp_avg + eps
+ajuste_lineal <- lm(data = datos, n_dias ~ temp_avg)
+ajuste_lineal |> summary()
+# modelo estimado
+#   n_dias_hat = -64.64 + 7.06 * temp_avg
+```
+
+#### Ejercicio 5, apartado d
+
+> Interpreta los coeficientes obtenidos.
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# beta_0_hat: -64.640  ==> predicción del níumero de días
+# cuando la temperatura media es 0 (no es útil ya que
+# x = 0 está fuera del rango de aprendizaje)
+# 
+# beta_1_hat: 7.06 ==> por cada grado que aumente la
+# temperatura media en abril, el número de días
+# se incrementa en 7 días
+
+# Residual standard error: 17.36 --> est insesgada de
+# la desv. típica poblacional de los errores
+# Y NADA MÁS SIN COMPROBAR HIPÓTESIS
+```
+
+#### Ejercicio 5, apartado e
+
+> Calcula la suma de residuales al cuadrado y la varianza residual. ¿Podemos concluir algo de dicho valor?
+
+```{r}
+#| code-fold: true
+#| eval: false
+
+# forma 1 (usando salida del lm)
+n <- nrow(datos)
+res_std_error <- (ajuste_lineal |> summary())$sigma
+SSE <- (res_std_error^2) * (n-2)
+var_residual <- SSE / n
+
+# forma 2:
+n <- nrow(datos)
+SSE <- sum(ajuste_lineal$residuals^2)
+var_residual <- SSE / n
+
+# no, no podemos concluir nada solo con ella
+# deberíamos comprarla con otra de otro modelo
+# siempre y cuando ambos se apliquen a los mismos datos
+```
+
+
+
+### 🐣 Caso práctico II: incumpliendo hipótesis
+
+#### Linealidad
+
+> Con $\varepsilon \sim N(0, \sigma = 9)$ y $X_i = seq(10, 150, l = 1000)$, simula (n = 1000) un modelo de regresión que incumpla la hipótesis de linealidad. Junta en una tabla x e y. Tras ello ajusta el lm y visualiza los residuos vs y_hat. ¿Qué observas? ¿Cómo lo arreglarías?
+
+```{r}
+#| code-fold: true
+#| eval: false
+eps <- rnorm(n = 1000, mean = 0, sd = 9)
+x <- seq(10, 150, l = 1000)
+
+# Por ejemplo voy a simular que y está en escala log
+y <- -2 + 3*x + eps
+y <- log(y)
+datos <- tibble(x, y)
+ggplot(datos) +
+  geom_point(aes(x = x, y = y)) +
+  theme_minimal()
+
+ajuste_lineal <- lm(data = datos, y ~ x)
+ajuste_lineal |> summary()
+
+ggplot(tibble("res" = ajuste_lineal$residuals,
+              "y_hat" = ajuste_lineal$fitted.values)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+# vemos que hay un evidente patrón logarítmico
+# en los residuos ==> significa que la hipótesis de
+# linealidad es falsa y que queda una relación log
+# pendiente de modelizar
+
+# ¿para arreglarlo? en lugar de modelizar y
+# habrá que modelizar exp(y)
+datos <-
+  datos |> 
+  mutate("y_transformada" = exp(y))
+ajuste_lineal <- lm(data = datos, y_transformada ~ x)
+ajuste_lineal |> summary()
+ggplot(tibble("res" = ajuste_lineal$residuals,
+              "y_hat" = ajuste_lineal$fitted.values)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+# ajuste perfecto!
+```
+
+#### Homocedasticidad
+
+> Con $X \sim N(-1.5, \sigma = 2)$ y $y = -2 + 3x + \varepsilon$, simula (n = 1000) un modelo de regresión que incumpla la hipótesis de homocedasticidad. Junta en una tabla x e y. Tras ello ajusta el lm y visualiza lo que consideres. ¿Qué observas?
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- rnorm(n = 1000, mean = -1.5, sd = 2)
+
+# Por ejemplo voy a considerar que la
+# desv. tipica del error es 1.5 cuando x <= 0
+# y 9 cuando no
+sigma <- if_else(x <= 0, 1.5, 9)
+eps <- rnorm(n = 1000, mean = 0, sd = sigma)
+y <- -2 + 3*x + eps
+datos <- tibble(x, y)
+ggplot(datos) +
+  geom_point(aes(x = x, y = y)) +
+  theme_minimal()
+
+ajuste_lineal <- lm(data = datos, y ~ x)
+ajuste_lineal |> summary()
+# aunque el R2 no es especialmente malo
+# no podemos interpretar la significancia 
+# de los parámetros ya que claramente
+# se observa que los datos no son
+# homocedástico, observando una varianza distinta 
+# a partir de un punto
+
+# eso mismo se va a observar en los residuos
+ggplot(tibble("res" = ajuste_lineal$residuals,
+              "y_hat" = ajuste_lineal$fitted.values)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+performance::check_heteroscedasticity(ajuste_lineal)
+```
+
+#### Normalidad
+
+> Con $X \sim N(-1.5, \sigma = 2)$ y $y = -2 + 3x + \varepsilon$, simula (n = 1000) un modelo de regresión que incumpla la hipótesis de normalidad. Junta en una tabla x e y. Tras ello ajusta el lm y visualiza lo que consideres. ¿Qué observas?
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- rnorm(n = 1000, mean = -1.5, sd = 2)
+
+# Por ejemplo voy a considerar que los errores
+# son una chi-cuadrado de 2 grados de liberatad
+eps <- rchisq(n = 1000, df = 2)
+y <- -2 + 3*x + eps
+datos <- tibble(x, y)
+ggplot(datos) +
+  geom_point(aes(x = x, y = y)) +
+  theme_minimal()
+
+ajuste_lineal <- lm(data = datos, y ~ x)
+ajuste_lineal |> summary()
+# aunque el R2 es muy bueno
+# no podemos interpretar la significancia 
+# de los parámetros ya que claramente
+# se observa que los datos no cumplen 
+# las hipótesis (fíjate que todos los datos están
+# por encima de una recta)
+
+# en los residuos vemos como una mayor concentración
+# por encima del 0 y en el centro del y_hat
+ggplot(tibble("res" = ajuste_lineal$residuals,
+              "y_hat" = ajuste_lineal$fitted.values)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+performance::check_normality(ajuste_lineal)
+
+ggplot(tibble("res" = ajuste_lineal$residuals)) +
+  stat_qq(aes(sample = res)) +
+  stat_qq_line(aes(sample = res)) +
+  theme_minimal()
+
+# Vemos como la distribución chi-cuadrado se replica
+# en los residuales
+ggplot(tibble("res" = ajuste_lineal$residuals)) +
+  geom_density(aes(x = res)) +
+  theme_minimal()
+
+# ya veremos como arreglarlo
+```
+
+#### Incorrelación
+
+> Con $X \sim N(-1.5, \sigma = 2)$ y $y = -2 + 3x + \varepsilon$, simula (n = 1000) un modelo de regresión que incumpla la hipótesis de incorrelación en los errores. Junta en una tabla x e y. Tras ello ajusta el lm y visualiza lo que consideres. ¿Qué observas?
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- rnorm(n = 1000, mean = -1.5, sd = 2)
+
+# Por ejemplo voy a considerar que los errores
+# siguen un proceso autoregresivo AR(1)
+eps <- c()
+eps[1] <- rnorm(n = 1, mean = 0, sd = 1)
+for (i in 2:1000) {
+  eps[i] <- 0.8*eps[i-1] + rnorm(n = 1, mean = 0, sd = 1)
+}
+
+y <- -2 + 3*x + eps
+datos <- tibble(x, y)
+ggplot(datos) +
+  geom_point(aes(x = x, y = y)) +
+  theme_minimal()
+
+ajuste_lineal <- lm(data = datos, y ~ x)
+ajuste_lineal |> summary()
+# aunque el R2 es muy bueno
+# no podemos interpretar la significancia 
+# de los parámetros ya que claramente
+# se observa que los datos no cumplen 
+# las hipótesis
+
+# en los residuos a priori no se observa patrón vs y_hat
+ggplot(tibble("res" = ajuste_lineal$residuals,
+              "y_hat" = ajuste_lineal$fitted.values)) +
+  geom_point(aes(x = y_hat, y = res)) +
+  theme_minimal()
+
+# ¿Y si modelizamos los residuos vs su versión lageada?
+res_lag <-
+  tibble("res" = ajuste_lineal$residuals,
+         "res_lag" = lag(ajuste_lineal$residuals))
+ggplot(res_lag) +
+  geom_point(aes(x = res, y = res_lag)) +
+  theme_minimal()
+# ¡Vemos claramente un patrón!
+
+# De hecho si hacemos res vs res_lag vemos 
+# claramente un ajuste con rho_1 = 0.8
+ajuste_res_lag <- lm(data = res_lag, res ~ res_lag)
+ajuste_res_lag |> summary()
+
+# de hecho podemos hacer uso de las herramientas
+# de series temporales para ver que 
+# efectivamente el residuo correla consigo mismo
+pacf(ajuste_lineal$residuals)
+acf(ajuste_lineal$residuals)
+
+# ¿Como arreglarlo? --> modelizando el error 
+# como una serie temporal
+```
+
 ### 🐣 Caso práctico III: colesterol
 
 
