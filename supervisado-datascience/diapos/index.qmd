@@ -5322,5 +5322,147 @@ pendiente
 
 ## Regresión multivariante
 
+De aquí en adelante llamaremos [**modelo multivariante**]{.hl-yellow} a todo modelo en el que $p>1$ (es decir, tenemos más de una variable predictora).
+
+$$Y = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right)$$
+tal que $E \left[ \varepsilon | \left( X_1 = x_1, \ldots, X_p = x_p \right) \right] = 0$.
+
+. . .
+
+En el caso del [**modelo lineal multivariante **]{.hl-yellow}se traducirá por tanto en
+
+$$E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p, \quad \widehat{Y} = \widehat{\beta_0} + \displaystyle \sum_{j=1}^{p} \widehat{\beta_j} X_j$$
+
+El objetivo seguirá siendo obtener la estimación de los $\widehat{\beta}$ tal que minimicemos el error (la suma de errores al cuadrado).
+ 
+--- 
+
+## Formulación matricial
+
+Si tenemos $n$ observaciones y $p$ predictoras, su [**formulación matricial teórica**]{.hl-yellow} la podemos expresar mediante la **matriz de diseño**
+
+$$\mathbf{X} =\begin{pmatrix} 1 & X_{11} & \ldots & X_{1p} \\ 1 & X_{21} & \ldots & X_{2p} \\
+\vdots & \vdots & \ddots & \vdots\\
+1 & X_{n1} & \ldots & X_{np}
+\end{pmatrix}_{n\times(p+1)}, \quad Y_i =  \beta_0 + \displaystyle \sum_{j=1}^{p} \beta_j X_{ij} + \varepsilon_i$$
+
+tal que
 
 
+$$\mathbf{Y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} = \begin{pmatrix} 1 & X_{11} & \ldots & X_{1p} \\ 
+\vdots & \vdots & \ddots & \vdots\\
+1 & X_{n1} & \ldots & X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \beta_0 \\ \vdots \\ \beta_p \end{pmatrix}_{(p+1)\times1} + \begin{pmatrix} \varepsilon_1 \\  \vdots \\ \varepsilon_n \end{pmatrix}_{n\times1}$$
+
+---
+
+## Formulación matricial
+
+Dicho modelo teórico será estimado tal que
+
+$$\widehat{\mathbf{Y}} = \begin{pmatrix} \widehat{Y}_1 \\ \widehat{Y}_2 \\ \vdots \\ \widehat{Y}_n \end{pmatrix}_{n\times1} = \mathbf{X} \widehat{\boldsymbol{\beta}} = \begin{pmatrix} 1 & X_{11} & \ldots & X_{1p} \\ 1 & X_{21} & \ldots & X_{2p} \\
+\vdots & \vdots & \ddots & \vdots\\
+1 & X_{n1} & \ldots & X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \widehat{\beta}_1 \\ \widehat{\beta}_2 \\ \vdots \\ \widehat{\beta}_p \end{pmatrix}_{(p+1)\times1}$$
+
+---
+
+## Mínimos cuadrados
+
+Como pasaba en el modelo univariante, nuestro objetivo será encontrar que [**vector de parámetros minimiza la suma de errores al cuadrado**]{.hl-yellow}
+
+$$SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = \displaystyle \sum_{i=1}^{n} \left[Y_i - \left(\beta_0 - \beta_1 X_{i1} - \ldots - \beta_p X_{ip} \right)\right]^2$$
+
+
+¿Cómo quedaría **matricialmente**?
+
+. . .
+
+
+$$SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) = \varepsilon^{T} \varepsilon$$
+
+por lo que, de todos los $\boldsymbol{\beta}$ posibles, el [**vector óptimo de parámetros**]{.hl_yellow} $\widehat{\boldsymbol{\beta}} = \left(\widehat{\beta}_0, \widehat{\beta}_1, \ldots, \widehat{\beta}_p\right)$ será aquel que minimice $SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2}= \varepsilon^{T} \varepsilon$
+
+---
+
+## Mínimos cuadrados
+
+Para hallar el mínimo de la función $SSE \left(\boldsymbol{\beta} \right)$ (donde $\boldsymbol{\beta}$ es el argumento) calcularemos la derivada respecto a $\boldsymbol{\beta}$ e igualaremos a 0
+
+. . .
+
+Teniendo en cuenta que $\left(A B \right)^T = B^T A^T$
+
+$$\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &=& \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} \nonumber \\  &=& \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}}{\partial \boldsymbol{\beta}}\right)^{T} + \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}}  \nonumber \\  &=&  \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \mathbf{X} \boldsymbol{\beta} \right)^{T}}{\partial \boldsymbol{\beta}}\right)^{T} -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\  &=&  \left( \left(\mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}}\right)^{T} - \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}$$
+
+---
+
+## Mínimos cuadrados
+
+$$\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &=& \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}$$ 
+¿Cuánto vale $\frac{\partial \left(  - \boldsymbol{\beta}^{T} A  \right)}{\partial \boldsymbol{\beta}}$ para una matriz $A$ de constantes cualesquiera?
+
+. . .
+
+
+$$\begin{eqnarray}\frac{\partial \left(  - \boldsymbol{\beta}^{T} A  \right)}{\partial \boldsymbol{\beta}} &=& \frac{\partial}{\partial \boldsymbol{\beta}}\left(-\beta_0, \ldots, -\beta_p\right)\begin{pmatrix} a_{11} & \ldots & a_{1q} \\ \vdots & \ddots & \vdots \\
+a_{p1} & \ldots & a_{pq}
+\end{pmatrix} = - \frac{\partial}{\partial \boldsymbol{\beta}} \left(\sum_{i=1}^{p} \beta_i a_{i1}, \ldots, \sum_{i=1}^{p} \beta_i a_{iq}\right) \nonumber \\ &=& - \begin{pmatrix} \frac{\partial}{\partial \beta_1} \sum_{i=1}^{p} \beta_i a_{i1} & \ldots & \frac{\partial}{\partial \beta_p} \sum_{i=1}^{p} \beta_i a_{i1} \\ \vdots & \ddots & \vdots \\
+\frac{\partial}{\partial \beta_1} \sum_{i=1}^{p} \beta_i a_{iq} & \ldots & \frac{\partial}{\partial \beta_p} \sum_{i=1}^{p} \beta_i a_{iq}
+\end{pmatrix} \nonumber \\ &=& - \begin{pmatrix} a_{11} & \ldots & a_{p1} \\ \vdots & \ddots & \vdots \\
+a_{1q} & \ldots &  a_{pq}
+\end{pmatrix} = -A^{T}\end{eqnarray}$$
+
+
+---
+
+
+## Mínimos cuadrados
+
+$$\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &=& \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}$$  
+
+Usando dicho resultado tenemos por tanto que
+
+$$\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &=& \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\ &=& - \left(\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)\right)^T  -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\ &=& -2\left(\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)\right)^T = 0 \end{eqnarray}$$ 
+
+. . .
+
+Eso es equivalente a decir que $\widehat{\boldsymbol{\beta}}$ será aquel vector que
+
+$$\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \widehat{\boldsymbol{\beta}} \right) = 0$$ 
+
+---
+
+## Mínimos cuadrados
+
+$$\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \widehat{\boldsymbol{\beta}} \right) = 0$$ 
+
+Despejando tenemos que
+
+$$\mathbf{X}^{T} \mathbf{Y} - \mathbf{X}^{T}\mathbf{X} \widehat{\boldsymbol{\beta}}  = 0 \Rightarrow \widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y} $$
+
+. . .
+
+[**IMPORTANTE**]{.hl-yellow}: para que exista solución (única) necesitamos que $\mathbf{X}^{T}\mathbf{X}$ sea invertible, es decir, que $\left| \mathbf{X}^{T}\mathbf{X} \right| \neq 0$. 
+
+
+---
+
+## Estimación multivariante
+
+$$\widehat{\mathbf{Y}} = \begin{pmatrix} \widehat{Y}_1 \\ \widehat{Y}_2 \\ \vdots \\ \widehat{Y}_n \end{pmatrix}_{n\times1} = \mathbf{X} \widehat{\boldsymbol{\beta}} = \begin{pmatrix} 1 & X_{11} & \ldots & X_{1p} \\ 1 & X_{21} & \ldots & X_{2p} \\
+\vdots & \vdots & \ddots & \vdots\\
+1 & X_{n1} & \ldots & X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \widehat{\beta}_1 \\ \widehat{\beta}_2 \\ \vdots \\ \widehat{\beta}_p \end{pmatrix}_{(p+1)\times1}$$
+
+Así la estimación muestral será $\widehat{\mathbf{Y}} = X \widehat{\boldsymbol{\beta}} = X\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y}$ tal que $H:=X\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T}$ se conoce
+como [**hat matrix o matriz de proyección**]{.hl-yellow} (ya que hace que las estimaciones $\widehat{y}$ sean en realidad los valores y proyectados verticalmente sobre el plano de regresión ajustado).
+
+---
+
+## Deberes
+
+Demuestra que $\widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y}$, cuando $p = 1$, coincide con las expresiones ya conocidas
+
+$$\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^2}$$
+$$\widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}$$

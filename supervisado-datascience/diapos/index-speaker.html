@@ -5516,6 +5516,97 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="regresión-multivariante" class="slide level2">
 <h2>Regresión multivariante</h2>
+<p>De aquí en adelante llamaremos <span class="hl-yellow"><strong>modelo multivariante</strong></span> a todo modelo en el que <span class="math inline">\(p&gt;1\)</span> (es decir, tenemos más de una variable predictora).</p>
+<p><span class="math display">\[Y = f\left(X_1, \ldots, X_p \right) + \varepsilon, \quad E \left[Y | \boldsymbol{X} = x \right] =f\left(X_1, \ldots, X_p \right)\]</span> tal que <span class="math inline">\(E \left[ \varepsilon | \left( X_1 = x_1, \ldots, X_p = x_p \right) \right] = 0\)</span>.</p>
+<div class="fragment">
+<p>En el caso del <span class="hl-yellow"><strong>modelo lineal multivariante </strong></span>se traducirá por tanto en</p>
+<p><span class="math display">\[E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \beta_1 X_1 + \ldots + \beta_p X_p, \quad \widehat{Y} = \widehat{\beta_0} + \displaystyle \sum_{j=1}^{p} \widehat{\beta_j} X_j\]</span></p>
+<p>El objetivo seguirá siendo obtener la estimación de los <span class="math inline">\(\widehat{\beta}\)</span> tal que minimicemos el error (la suma de errores al cuadrado).</p>
+</div>
+</section>
+<section id="formulación-matricial" class="slide level2">
+<h2>Formulación matricial</h2>
+<p>Si tenemos <span class="math inline">\(n\)</span> observaciones y <span class="math inline">\(p\)</span> predictoras, su <span class="hl-yellow"><strong>formulación matricial teórica</strong></span> la podemos expresar mediante la <strong>matriz de diseño</strong></p>
+<p><span class="math display">\[\mathbf{X} =\begin{pmatrix} 1 &amp; X_{11} &amp; \ldots &amp; X_{1p} \\ 1 &amp; X_{21} &amp; \ldots &amp; X_{2p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+1 &amp; X_{n1} &amp; \ldots &amp; X_{np}
+\end{pmatrix}_{n\times(p+1)}, \quad Y_i =  \beta_0 + \displaystyle \sum_{j=1}^{p} \beta_j X_{ij} + \varepsilon_i\]</span></p>
+<p>tal que</p>
+<p><span class="math display">\[\mathbf{Y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} = \begin{pmatrix} 1 &amp; X_{11} &amp; \ldots &amp; X_{1p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+1 &amp; X_{n1} &amp; \ldots &amp; X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \beta_0 \\ \vdots \\ \beta_p \end{pmatrix}_{(p+1)\times1} + \begin{pmatrix} \varepsilon_1 \\  \vdots \\ \varepsilon_n \end{pmatrix}_{n\times1}\]</span></p>
+</section>
+<section id="formulación-matricial-1" class="slide level2">
+<h2>Formulación matricial</h2>
+<p>Dicho modelo teórico será estimado tal que</p>
+<p><span class="math display">\[\widehat{\mathbf{Y}} = \begin{pmatrix} \widehat{Y}_1 \\ \widehat{Y}_2 \\ \vdots \\ \widehat{Y}_n \end{pmatrix}_{n\times1} = \mathbf{X} \widehat{\boldsymbol{\beta}} = \begin{pmatrix} 1 &amp; X_{11} &amp; \ldots &amp; X_{1p} \\ 1 &amp; X_{21} &amp; \ldots &amp; X_{2p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+1 &amp; X_{n1} &amp; \ldots &amp; X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \widehat{\beta}_1 \\ \widehat{\beta}_2 \\ \vdots \\ \widehat{\beta}_p \end{pmatrix}_{(p+1)\times1}\]</span></p>
+</section>
+<section id="mínimos-cuadrados" class="slide level2">
+<h2>Mínimos cuadrados</h2>
+<p>Como pasaba en el modelo univariante, nuestro objetivo será encontrar que <span class="hl-yellow"><strong>vector de parámetros minimiza la suma de errores al cuadrado</strong></span></p>
+<p><span class="math display">\[SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = \displaystyle \sum_{i=1}^{n} \left[Y_i - \left(\beta_0 - \beta_1 X_{i1} - \ldots - \beta_p X_{ip} \right)\right]^2\]</span></p>
+<p>¿Cómo quedaría <strong>matricialmente</strong>?</p>
+<div class="fragment">
+<p><span class="math display">\[SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) = \varepsilon^{T} \varepsilon\]</span></p>
+<p>por lo que, de todos los <span class="math inline">\(\boldsymbol{\beta}\)</span> posibles, el <span class="hl_yellow"><strong>vector óptimo de parámetros</strong></span> <span class="math inline">\(\widehat{\boldsymbol{\beta}} = \left(\widehat{\beta}_0, \widehat{\beta}_1, \ldots, \widehat{\beta}_p\right)\)</span> será aquel que minimice <span class="math inline">\(SSE \left(\boldsymbol{\beta} \right) = \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2}= \varepsilon^{T} \varepsilon\)</span></p>
+</div>
+</section>
+<section id="mínimos-cuadrados-1" class="slide level2">
+<h2>Mínimos cuadrados</h2>
+<p>Para hallar el mínimo de la función <span class="math inline">\(SSE \left(\boldsymbol{\beta} \right)\)</span> (donde <span class="math inline">\(\boldsymbol{\beta}\)</span> es el argumento) calcularemos la derivada respecto a <span class="math inline">\(\boldsymbol{\beta}\)</span> e igualaremos a 0</p>
+<div class="fragment">
+<p>Teniendo en cuenta que <span class="math inline">\(\left(A B \right)^T = B^T A^T\)</span></p>
+<p><span class="math display">\[\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &amp;=&amp; \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} \nonumber \\  &amp;=&amp; \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}}{\partial \boldsymbol{\beta}}\right)^{T} + \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \frac{\partial \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}}  \nonumber \\  &amp;=&amp;  \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \mathbf{X} \boldsymbol{\beta} \right)^{T}}{\partial \boldsymbol{\beta}}\right)^{T} -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\  &amp;=&amp;  \left( \left(\mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}}\right)^{T} - \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="mínimos-cuadrados-2" class="slide level2">
+<h2>Mínimos cuadrados</h2>
+<p><span class="math display">\[\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &amp;=&amp; \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}\]</span> ¿Cuánto vale <span class="math inline">\(\frac{\partial \left( - \boldsymbol{\beta}^{T} A \right)}{\partial \boldsymbol{\beta}}\)</span> para una matriz <span class="math inline">\(A\)</span> de constantes cualesquiera?</p>
+<div class="fragment">
+<p><span class="math display">\[\begin{eqnarray}\frac{\partial \left(  - \boldsymbol{\beta}^{T} A  \right)}{\partial \boldsymbol{\beta}} &amp;=&amp; \frac{\partial}{\partial \boldsymbol{\beta}}\left(-\beta_0, \ldots, -\beta_p\right)\begin{pmatrix} a_{11} &amp; \ldots &amp; a_{1q} \\ \vdots &amp; \ddots &amp; \vdots \\
+a_{p1} &amp; \ldots &amp; a_{pq}
+\end{pmatrix} = - \frac{\partial}{\partial \boldsymbol{\beta}} \left(\sum_{i=1}^{p} \beta_i a_{i1}, \ldots, \sum_{i=1}^{p} \beta_i a_{iq}\right) \nonumber \\ &amp;=&amp; - \begin{pmatrix} \frac{\partial}{\partial \beta_1} \sum_{i=1}^{p} \beta_i a_{i1} &amp; \ldots &amp; \frac{\partial}{\partial \beta_p} \sum_{i=1}^{p} \beta_i a_{i1} \\ \vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial}{\partial \beta_1} \sum_{i=1}^{p} \beta_i a_{iq} &amp; \ldots &amp; \frac{\partial}{\partial \beta_p} \sum_{i=1}^{p} \beta_i a_{iq}
+\end{pmatrix} \nonumber \\ &amp;=&amp; - \begin{pmatrix} a_{11} &amp; \ldots &amp; a_{p1} \\ \vdots &amp; \ddots &amp; \vdots \\
+a_{1q} &amp; \ldots &amp;  a_{pq}
+\end{pmatrix} = -A^{T}\end{eqnarray}\]</span></p>
+</div>
+</section>
+<section id="mínimos-cuadrados-3" class="slide level2">
+<h2>Mínimos cuadrados</h2>
+<p><span class="math display">\[\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &amp;=&amp; \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X}\end{eqnarray}\]</span></p>
+<p>Usando dicho resultado tenemos por tanto que</p>
+<p><span class="math display">\[\begin{eqnarray}\frac{\partial SSE \left( \boldsymbol{\beta} \right)}{\partial \boldsymbol{\beta}} &amp;=&amp; \left(\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) \frac{\partial \left(  - \boldsymbol{\beta}^{T} \mathbf{X}^{T}  \right)}{\partial \boldsymbol{\beta}} \right)^T -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\ &amp;=&amp; - \left(\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)\right)^T  -\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T} \mathbf{X} \nonumber \\ &amp;=&amp; -2\left(\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)\right)^T = 0 \end{eqnarray}\]</span></p>
+<div class="fragment">
+<p>Eso es equivalente a decir que <span class="math inline">\(\widehat{\boldsymbol{\beta}}\)</span> será aquel vector que</p>
+<p><span class="math display">\[\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \widehat{\boldsymbol{\beta}} \right) = 0\]</span></p>
+</div>
+</section>
+<section id="mínimos-cuadrados-4" class="slide level2">
+<h2>Mínimos cuadrados</h2>
+<p><span class="math display">\[\mathbf{X}^{T}\left( \mathbf{Y} - \mathbf{X} \widehat{\boldsymbol{\beta}} \right) = 0\]</span></p>
+<p>Despejando tenemos que</p>
+<p><span class="math display">\[\mathbf{X}^{T} \mathbf{Y} - \mathbf{X}^{T}\mathbf{X} \widehat{\boldsymbol{\beta}}  = 0 \Rightarrow \widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y} \]</span></p>
+<div class="fragment">
+<p><span class="hl-yellow"><strong>IMPORTANTE</strong></span>: para que exista solución (única) necesitamos que <span class="math inline">\(\mathbf{X}^{T}\mathbf{X}\)</span> sea invertible, es decir, que <span class="math inline">\(\left| \mathbf{X}^{T}\mathbf{X} \right| \neq 0\)</span>.</p>
+</div>
+</section>
+<section id="estimación-multivariante" class="slide level2">
+<h2>Estimación multivariante</h2>
+<p><span class="math display">\[\widehat{\mathbf{Y}} = \begin{pmatrix} \widehat{Y}_1 \\ \widehat{Y}_2 \\ \vdots \\ \widehat{Y}_n \end{pmatrix}_{n\times1} = \mathbf{X} \widehat{\boldsymbol{\beta}} = \begin{pmatrix} 1 &amp; X_{11} &amp; \ldots &amp; X_{1p} \\ 1 &amp; X_{21} &amp; \ldots &amp; X_{2p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+1 &amp; X_{n1} &amp; \ldots &amp; X_{np}
+\end{pmatrix}_{n\times(p+1)}\begin{pmatrix} \widehat{\beta}_1 \\ \widehat{\beta}_2 \\ \vdots \\ \widehat{\beta}_p \end{pmatrix}_{(p+1)\times1}\]</span></p>
+<p>Así la estimación muestral será <span class="math inline">\(\widehat{\mathbf{Y}} = X \widehat{\boldsymbol{\beta}} = X\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y}\)</span> tal que <span class="math inline">\(H:=X\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T}\)</span> se conoce como <span class="hl-yellow"><strong>hat matrix o matriz de proyección</strong></span> (ya que hace que las estimaciones <span class="math inline">\(\widehat{y}\)</span> sean en realidad los valores y proyectados verticalmente sobre el plano de regresión ajustado).</p>
+</section>
+<section id="deberes" class="slide level2">
+<h2>Deberes</h2>
+<p>Demuestra que <span class="math inline">\(\widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y}\)</span>, cuando <span class="math inline">\(p = 1\)</span>, coincide con las expresiones ya conocidas</p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^2}\]</span> <span class="math display">\[\widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}\]</span></p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
