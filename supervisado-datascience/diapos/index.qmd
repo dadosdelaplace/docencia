@@ -5466,3 +5466,795 @@ Demuestra que $\widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \ri
 
 $$\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^2}$$
 $$\widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}$$
+
+
+# Clase 14: reg. multivariante {#clase-14}
+
+[**Etapas: ¿cómo se adaptan?**]{style="color:#444442;"}
+
+---
+
+## Caso práctico: wine.csv
+
+Vamos a volver a usar nuestros datos `wine.csv`
+
+```{r}
+datos <- read_csv(file = "./datos/wine.csv")
+datos
+```
+
+
+Pero esta vez no vamos a seleccionar previamente. Para [**ajustar un modelo multivariante**]{.hl-yellow} basta con añadir variables `+`, para usar todas las variables `~ .`
+
+```{r}
+ajuste_uni <- lm(data = datos, formula = Price ~ AGST)
+ajuste_2 <- lm(data = datos, formula = Price ~ AGST + HarvestRain)
+ajuste_full <- lm(data = datos, formula = Price ~ .)
+```
+
+---
+
+## Fase 1
+
+1. [**Análisis exploratorio**]{.hl-yellow}:
+  - ¿Tenemos variables mal codificadas? (por ejemplo, estatura negativa)
+  - ¿Tenemos ausentes?
+  - ¿Tenemos outliers?
+  
+. . .
+
+Para la codificación podemos usar alguna función que nos **extraiga un resumen general de las variables**, por ejemplo
+
+```{r}
+skimr::skim(datos)
+```
+
+---
+
+## Fase 1
+
+```{r}
+#| eval: false
+skimr::skim(datos)
+```
+
+En este caso
+
+* No tenemos variables mal codificadas
+* No tenemos ausentes
+
+Para esto último también podemos usar `gg_miss_var()` del paquete `{naniar}`
+
+```{r}
+naniar::gg_miss_var(datos)
+```
+
+
+---
+
+##  Atípicos/ausentes
+
+En general, respecto a los outliers y ausentes hay dos estrategias
+
+* [**Eliminarlos**]{.hl-yellow}: se pasan todos los outliers a `NA` y se procede a eliminarlos. Es una opción mucho más sencilla [**PERO ES MUY PELIGROSA**]{.hl-red}: en muchos casos no tendrás suficiente muestra para permitirte eliminar tantas observaciones (además de que puedes estar descartando información relevante).
+
+. . .
+
+* [**Imputarlos**]{.hl-yellow}: se pasan los outliers a `NA` y se les asigna (imputa) otro valor que no modifique sustancialmente la distribución de la variables. Será la opcióin que haremos una vez que los hayamos detectado (y hayamos visto como imputar en depuración)
+
+
+---
+
+
+## Atípicos/ausentes
+
+La [**detección de atípicos parámetrica**]{.hl-yellow} se basa en 3 ideas:
+
+
+* Un **centro**: una medida que represente la centralidad  de los datos. Por ejemplo, la media o la mediana.
+
+* Una **distancia**: ¿cómo medir lo alejado o cerca que está cada punto de ese centro? Por ejemplo, en el caso de la media, es habitual medir las desviaciones típicas que se aleja cada dato
+
+* Un **umbral**: ¿a partir de qué distancia se considera que el dato es atípico?
+
+
+---
+
+## Atípicos/ausentes
+
+* [**Atípico respecto a media**]{.hl-yellow}: una definición habitual es definir un [**dato atípico**]{.hl-yellow} como aquel que se [**aleja de la media  $k$ veces la desviación típica**]{.hl-yellow} (un valor habitual es $k = 2.5$)
+
+$$\left| x_i - \overline{x} \right| > k*s_{x}$$
+
+Dicha definición de atípico [**solo tendrá sentido cuando la media sea representativa**]{.hl-yellow} de tu distribución, es decir, siempre y cuando tengamos [**cierta simetría**]{.hl-yellow}
+
+
+---
+
+## Atípicos/ausentes
+
+* [**Atípico respecto a mediana**]{.hl-yellow}: una definición habitual (conocido como **filtro de Hampel**) es definir un dato atípico como aquel que se [**aleja de la mediana $k$ veces la mediana de las desviaciones absolutas**]{.hl-yellow} (un valor habitual es $k=3$), conocida como $MAD = Me \left(|x_i - Me_x| \right)$
+
+$$\left| x_i - Me_x \right| > k*MAD$$
+
+
+---
+
+## Atípicos/ausentes
+
+* [**Atípico respecto a percentiles**]{.hl-yellow}: una definición habitual es definir un [**dato atípico como aquel que se aleja de cuartiles 1 y 3 (percentiles 25 y 75)  $k$ veces el rango intercuartílico**]{.hl-yellow} ($IQR = Q_3 - Q_1$). Un valor habitual es $k=1.5$
+
+$$x_i > Q_3 + k*IQR \quad \text{ o bien } \quad x_i < Q_1 - k*IQR$$
+
+---
+
+
+## Atípicos/ausentes
+
+Estos tres métodos pueden ser implementados usando el paquete `{outliers}` haciendo uso de la función `scores()` que nos dará en cada caso una [**"puntuación" de cada observación**]{.hl-yellow} (lo que se aleja). 
+
+&nbsp;
+
+En caso de que queramos detectarlos **respecto a la media**, le indicaremos que `type = "z"` y nos devolverá el número  $k$ de desviaciones típicas que se aleja cada dato de la media
+
+```{r}
+library(outliers)
+abs(scores(c(1, -1, 0, 5, 2, 1.5, 0.5, -0.3, 0, 2, 1.7, 0.2, -0.8), type = "z"))
+```
+
+De esta forma podemos detectar muy fácil los outliers en función de los estrictos que queramos ser con ese  $k$ (si supera un umbral -> outlier). 
+
+
+---
+
+## Atípicos/ausentes
+
+En caso de que queramos detectarlos **respecto a la media**, le indicaremos que `type = "mad"` y nos devolverá de nuevo esa distancia  $k$  (ahora respecto a las desviación absoluta respecto a la mediana)
+
+```{r}
+abs(scores(c(1, -1, 0, 5, 2, 1.5, 0.5, -0.3, 0, 2, 1.7, 0.2, -0.8), type = "mad"))
+```
+
+
+---
+
+## Atípicos/ausentes
+
+En caso de que queramos detectarlos **respecto a los percentiles**, le indicaremos que `type = "iqr"` y nos devolverá de nuevo esa distancia  $k$  (ahora respecto a cuántos IQR se aleja del Q3 o del Q1)
+
+```{r}
+abs(scores(c(1, -1, 0, 5, 2, 1.5, 0.5, -0.3, 0, 2, 1.7, 0.2, -0.8), type = "iqr"))
+```
+
+
+---
+
+## Atípicos/ausentes
+
+Con `if_any()` dentro del `filter()` podemos mostrar todo los registros detectados como outlier en alguna variable. Por ejemplo, voy a aplicar a todas el método IQR
+
+```{r}
+datos |> 
+  mutate(across(everything(), 
+         function(x) {
+           if_else(outliers::scores(x, type = "iqr") > 1.5, NA, x) })) |>
+  filter(if_any(everything(), is.na))
+```
+
+En este caso no tenemos.
+
+
+
+---
+
+## Atípicos/ausentes
+
+Existen otros [**procedimientos basados en inferencia estadística**]{.hl-yellow}  (muchos de ellos en el paquete  `{outliers}`)
+
+* [**Tests de Grubbs y Dixon**]{.hl-yellow}: ambos test nos permiten detectar si el valor más alto (o bajo) de una variable es un outlier, pudiendo detectar [**un solo outlier en cada iteración**]{.hl-yellow} (en caso de detectarlo, deberíamos tratarlo y volver a ejecutar el test)
+
+$H_0$: valor más alto/bajo no es outlier
+
+$H_1$: valor más alto/bajo sí es outlier
+ 
+. . .
+
+El [**test de Dixon**]{.hl-yellow} (basado en una ordenación) suele funcionar mejor cuando tenemos poca muestra que el test de Grubbs (basado en la media).
+
+Ver más documentación de su funcionamiento en <https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h1.htm> y <https://www.statisticshowto.com/dixons-q-test/>
+
+---
+
+
+## Atípicos/ausentes
+
+```{r}
+x <- c(1, -1, 0, 5, 2, 1.5, 0.5, -0.3, 0, 2, 1.7, 0.2, -0.8)
+dixon.test(x, opposite = TRUE) # ¿es valor más bajo outlier?
+x <- c(1, -1, 0, 5, 2, 1.5, 0.5, -0.3, 0, 2, 1.7, 0.2, -0.8)
+dixon.test(x, opposite = FALSE) # ¿es valor más alto outlier?
+```
+
+. . .
+
+
+
+* [**Test de Rosner**]{.hl-yellow}: al contrario que los anteriores, nos permite detectar varios outliers a la vez, especialmente diseñado para evitar que un valor atípico nos perturbe tanto que nos enmascare otro (basado en la media). Podemos ejecutarlo con la función `rosnerTest()` del paquete `{EnvStats}`.
+ 
+---
+
+## Atípicos/ausentes
+
+
+También existen [**técnicas de Machine Learning**]{.hl-yellow} para la identificación de outliers, como los conocidos como [**Isolation Forest**]{.hl-yellow}.
+
+. . .
+
+La idea es un poco similar a la de un [**Random Forest**]{.hl-yellow}, mediante la [**combinación de muchos árboles**]{.hl-yellow} de clasificación/regresión conocidos como **isolation trees**, aunque en este caso los puntos de corte se hace de manera totalmente aleatoria.
+
+. . .
+
+De esta manera, aquellos individuos con características diferentes al resto quedarán aislados rápidamente, de manera que los [**outliers serán aquellos aislados a los que se llega más rápido**]{.hl-yellow} que al resto
+
+---
+
+## Atípicos/ausentes
+
+Es un [**algoritmo no supervisado**]{.hl-yellow}, lo que significa que [**no hay un criterio óptimo objetivo**]{.hl-yellow} para decidir que a partir de dicho valor una observación es un outlier (idea: usar percentiles de dicha distancia, por ejemplo el 5-10% con menor distancia)
+
+. . .
+
+En casos donde el tamaño muestral sea elevado, aislar cada observación puede ser [**costoso computacionalmente**]{.hl-red} por lo que a veces se asume una [**profundidad máxima**]{.hl-yellow} hasta donde puede crecer
+
+---
+
+
+## Atípicos/ausentes
+
+Para implementarlo podemos usar el paquete `{solitude}`. Es importante que el dataset haya sido ya tratado por ausentes.
+
+```{r}
+library(solitude)
+# Modelo isolation forest
+isoforest <-
+  isolationForest$new(sample_size = round((datos |> nrow())/2),
+                      num_trees = 500,
+                      replace = TRUE, seed = 1234567,
+                      max_depth = 7)
+isoforest$fit(dataset = datos)
+
+```
+
+---
+
+## Atípicos/ausentes
+
+Con el modelo entrenado, se predicen las distancias de aislamiento promedio de cada observación. Los resultados que calcula `isoforest$predict()` son la [**distancia promedio `average_depth`**]{.hl-yellow} y una métrica que mide el [**grado de anomalía**]{.hl-yellow} `anomaly_score` (valores próximos a 1 para outliers)
+
+```{r}
+predicciones <-
+  isoforest$predict(data = datos)
+predicciones |> arrange(average_depth)
+```
+
+---
+
+## Atípicos/ausentes
+
+```{r}
+#| code-fold: true
+ggplot(data = predicciones, aes(x = average_depth)) +
+  geom_density(fill = "#6D98ED", alpha = 0.5) +
+  geom_vline(xintercept =
+               quantile(predicciones$average_depth,
+                        seq(0, 1, 0.1)),
+             color = "#DC5B49", linetype = "dashed") +
+  labs(title = "Distribución de distancias medias del Isolation Forest",
+    subtitle = "Deciles marcados en rojo") +
+  theme_minimal()
+```
+
+
+---
+
+## Fase 2: selección de variables
+
+En el ajuste univariante nos interesaba **buscar la variable más correlada** pero ahora, en esta primer cribado, dado que queremos un ajuste multivariante, el objetivo será [**DESCARTAR variables que no estén correladas linealmente**]{.hl-yellow} con la variable objetivo
+
+
+```{r}
+# Fíjate que hasta que compruebe que si son o normales uso el método de spearman
+datos |> corrr::correlate(method = "spearman")
+```
+
+
+---
+
+## Análisis de correlaciones
+
+```{r}
+# Fíjate que hasta que compruebe que si son o normales uso el método de spearman
+datos |> corrr::correlate(method = "spearman")
+```
+
+En este caso la variable más probable a estar incorrelada es `WinterRain` ya que es la que tiene menor correlación en valor absoluto con la objetivo.
+
+. . .
+
+Para cuantificarlo vamos a realizar un [**test de correlaciones**]{.hl-yellow}
+
+```{r}
+cor.test(datos$Price, datos$WinterRain, method = "spearman")
+```
+
+Efectivamente [**debemos descartar `WinterRain` ya que no presenta correlación con y**]{.hl-yellow}
+
+---
+
+## Análisis de correlaciones
+
+La siguiente es `Year` o `Age` o `FrancePop`, pruebo con cualquiera de ellas
+
+. . .
+
+```{r}
+cor.test(datos$Price, datos$Year, method = "spearman")
+```
+
+
+Ya obtenemos un contraste significativo: el **resto de variables no se eliminan de momento**
+
+---
+
+## Análisis de colinealidad
+
+
+Y decimos "de momento" porque en el ajuste multivariante no solo vamos a necesitar un análisis de correlaciones (Y vs x dos a dos) sino que será crucial un [**análisis de colinealidad**]{.hl-yellow}
+
+. . .
+
+La pregunta a responder es: [**¿existen predictoras con información repetida?**]{.hl-yellow} Buscamos
+
+* [**predictoras con la mayor correlación con y**]{.hl-yellow}
+
+* pero [**predictoras con la menor correlación entre ellas**]{.hl-yellow}
+
+Para responder a esa pregunta **no nos limitaremos solo a mirar correlaciones dos a dos** sino que para cada predictora $X_j$ plantearemos el siguiente modelo
+
+$$reg_{X_{j}}:~X_j \quad vs \quad \left(X_1, \ldots, X_{j-1}, X_{j+1}, \ldots, X_p \right)$$
+
+---
+
+## Análisis de colinealidad
+
+
+$$reg_{X_{j}}:~X_j \quad vs \quad \left(X_1, \ldots, X_{j-1}, X_{j+1}, \ldots, X_p \right)$$
+
+Para cada predictora $X_j$ calcularemos del ajuste superior su $R^2$ tal que cuantificaremos dicha multicolinealidad con el conocido como [**factor de inflación de la varianza (VIF)**]{.hl-yellow}
+
+
+$$VIF\left(\widehat {\beta_j} \right) = \frac{1}{1 - R^2_{X_{j}}}$$
+
+donde $R_{j}^2$ representa la [**bondad de ajuste cuando predecimos con una regresión lineal multivariante la predictora $X_j$**]{.hl-yellow} en función del resto de predictoras (sin la variable objetivo). Si $VIF > 10$ ($R^2 > 0.9$), diremos que hay [**predictoras altamente correlacionadas**]{.hl-yellow}; si $VIF > 5$ ($R^2 > 0.8$), diremos que hay [**predictoras moderadamente correlacionadas**]{.hl-yellow}.
+
+---
+
+## Análisis de colinealidad
+
+Para calcularlo tenemos `check_collinearity()` del paquete `{performance}` (sin la variable que ya hemos descartado en el paso anterior)
+
+```{r}
+ajuste_saturado <- lm(data = datos, formula = Price ~ . - WinterRain)
+performance::check_collinearity(ajuste_saturado)
+```
+
+Antes de analizar nada fíjate en la [**primera línea de la salida**]{.hl-red}:
+
+> Model matrix is rank deficient. VIFs may not be sensible.
+
+---
+
+
+## Análisis de colinealidad
+
+Antes de analizar nada fíjate en la [**primera línea de la salida**]{.hl-red}:
+
+> Model matrix is rank deficient. VIFs may not be sensible.
+
+Esto significa que hay una variable que no es que esté relacionada con otras sino que [**es directamente igual a una combinación lineal exacta de las demás**]{.hl-yellow}. En este caso `age` es literal `hoy - year`
+
+---
+
+## Ajuste de colinealidad
+
+También podemos detectarlo si observamos el ajuste: hay una **fila de coeficientes con `NA`** ya que al no tener una matriz de covarianzas de rango completo debe eliminar una para obtener una (única) solución.
+
+```{r}
+ajuste_saturado <-
+  lm(data = datos |> select(-WinterRain), formula = Price ~ .)
+ajuste_saturado |> summary()
+```
+
+---
+
+## Análisis de colinealidad
+
+Eliminamos la variable que no aparece y volvemos a analizarlo
+
+```{r}
+ajuste_saturado <-
+  lm(data = datos |> select(-WinterRain, -Age), formula = Price ~ .)
+performance::check_collinearity(ajuste_saturado)
+```
+
+. . .
+
+Observamos [**dos variables `Year` y `FrancePop` que comparten muchísima información**]{.hl-yellow} con una combinación de las demás ya que cuando intentamos predecir `Year` o `FrancePop` en función de las demás obtenemos $VIF \simeq 68$, es decir, $R^2 \simeq = 0.98$
+
+---
+
+## Análisis de colinealidad
+
+Eliminamos la variable con mayor VIF y volvemos a repetirlo: [**NO podemos eliminar varias a la vez ya que eliminar una cambiará todo**]{.hl-red}, debemos hacerlo de forma secuencial.
+
+```{r}
+ajuste_saturado <- lm(data = datos |> select(-WinterRain, -Age, -FrancePop),
+                      formula = Price ~ .)
+performance::check_collinearity(ajuste_saturado)
+```
+
+Todo perfecto, ya podemos plantear nuestro **modelo saturado** :)
+
+---
+
+## Fase 3: planteamiento del modelo
+
+Nuestro [**modelo teórico**]{.hl-yellow} que asumimos como cierto es el siguiente
+
+$$Price = \beta_0 + \beta_1 * Year + \beta_2 * AGST + \beta_3 * HarvestRain + \varepsilon$$
+ tal que
+ 
+ 
+ $$E \left[Price | X \right] = \beta_0 + \beta_1 * Year + \beta_2 * AGST + \beta_3 * HarvestRain $$
+
+por lo que nuestro [**modelo estimado**]{.hl-yellow} será
+
+$$\widehat{Y} = \widehat{E \left[Price | X \right]} = \widehat{\beta}_0 + \widehat{\beta}_1 * Year + \widehat{\beta}_2 * AGST + \widehat{\beta}_3 * HarvestRain $$
+
+---
+
+## Fase 4: ajuste
+
+```{r}
+ajuste_saturado <- lm(data = datos |> select(-WinterRain, -Age, -FrancePop),
+                      formula = Price ~ .)
+ajuste_saturado |> summary()
+```
+
+
+---
+
+## Interpretación
+
+
+* [**Ordenada en el origen**]{.hl-yellow}: es el valor de $Y$ cuando $X_1 = \ldots = X_p = 0$. Es decir, $\widehat{\beta}_0 = 48.19678$ se puede interpretar como la estimación promedio de $\widehat{y}$ cuando [**TODAS las predictoras son nulas**]{.hl-yellow} (0 años, 0ºC de temperatura promedio y 0º precipitaciones).
+
+En este caso recuerda que es la predicción del logaritmo del precio
+
+
+---
+
+## Interpretación
+
+
+* [**Pendientes (estimadas)**]{.hl-yellow}: denotadas como $\widehat{\beta}_j$, para $j=1,\ldots, p$, cuantifica el incremento de promedio estimado cuando solo $X_j$ aumenta una unidad. 
+
+  - $\widehat{\beta}_1 = -0.02509$ se puede interpretar como lo que disminuye el precio (log) por cada año de más  [**SIEMPRE Y CUANDO el resto de predictoras permanecen fijas**]{.hl-purple} --> precio disminuye un 2.47%
+
+  - $\widehat{\beta}_2 = 0.53671$ se puede interpretar como lo que aumenta el precio (log) por cada grado que se incrementa la temperatura media en los meses cálidos  [**SIEMPRE Y CUANDO el resto de predictoras permanecen fijas**]{.hl-purple} --> precio aumenta un $71%$
+  
+    - $\widehat{\beta}_3 = -0.00444$ se puede interpretar como lo que disminuye el precio (log) por cada unidad de precipitación que aumente  [**SIEMPRE Y CUANDO el resto de predictoras permanecen fijas**]{.hl-purple} -->  precio disminuye un 0.4%
+    
+---
+
+
+## Interpretación
+
+Y de momento salvo `Residual standard error: 0.3153` (la estimación de la **desv típica poblacional de los residuos**) no podemos interpretar nada más.
+
+```{r}
+ajuste_saturado <- lm(data = datos |> select(-WinterRain, -Age, -FrancePop),
+                      formula = Price ~ .)
+ajuste_saturado |> summary()
+```
+
+---
+
+## Fase 5: diagnosis
+
+En el caso multivariante las [**4 hipótesis**]{.hl-yellow} se convierten en
+
+1. [**Linealidad**]{.hl-green}: el valor esperado de $Y$ es 
+
+$$E \left[Y | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \right] = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p$$
+
+2. [**Homocedasticidad**]{.hl-green}: necesitamos que la [**varianza del error sea finita y constante**]{.hl-yellow} $\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \right] = cte < \infty$
+
+3. [**Normalidad**]{.hl-green}: pediremos que $\varepsilon \sim N \left(0, \sigma_{r}^2 \right)$
+
+
+4. [**Independencia**]{.hl-green}: los errores $\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}$ deben ser en independientes, y en particular **incorrelados** ${\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j$
+
+---
+
+## Fase 5: diagnosis
+
+Las hipótesis conjuntamente se pueden resumir en
+
+$$Y | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \sim N \left(\beta_0 + \beta_1x_1 + \ldots + \beta_p x_p, \sigma_{\varepsilon}^2 \right)$$
+
+. . .
+
+* [**Incorrelación de los residuos: check**]{.hl-green}
+
+```{r}
+performance::check_autocorrelation(ajuste_saturado)
+```
+
+---
+
+## Fase 5: diagnosis
+
+* [**Normalidad de los residuos: check**]{.hl-green}
+
+```{r}
+performance::check_normality(ajuste_saturado)
+ggplot(tibble("res" = ajuste_saturado$residuals)) +
+  stat_qq(aes(sample = res)) +
+  stat_qq_line(aes(sample = res)) +
+  theme_minimal()
+```
+
+---
+
+## Fase 5: diagnosis
+
+* [**Homocedasticidad de los residuos: check**]{.hl-green}
+
+```{r}
+performance::check_normality(ajuste_saturado)
+
+# debo observar que están en una banda constante
+ggplot(tibble("fitted" = ajuste_saturado$fitted.values,
+              "res" = ajuste_saturado$residuals),
+       aes(x = fitted, y = res)) +
+  geom_point() +
+  theme_minimal()
+```
+
+
+---
+
+## Fase 5: diagnosis
+
+* [**Linealidad**]{.hl-yellow}: si el modelo subyacente fuese igual a mi hipótesis (modelo lineal), no debería ver **ningún patrón por modelizar en mis residuos**.
+
+Chequeamos primero si queda algo lineal por modelizar entre mis residuos y mis valores ajustados
+
+```{r}
+tabla_residuos <- tibble("fitted" = ajuste_saturado$fitted.values, "res" = ajuste_saturado$residuals)
+ajuste_res <- lm(data = tabla_residuos, res ~ fitted)
+ajuste_res |> summary()
+```
+
+Modelo no significativo --> [**no hay ningún patrón lineal entre residuos y valores ajustados]{.hl-yellow}
+
+---
+
+## Fase 5: diagnosis
+
+
+¿Queda algo cuadrático por modelizar?
+
+```{r}
+ajuste_res <- lm(data = tabla_residuos, res ~ fitted + I(fitted^2))
+ajuste_res |> summary()
+```
+
+Nada
+
+---
+
+## Fase 5: diagnosis
+
+
+¿Queda algo cúbico por modelizar?
+
+```{r}
+ajuste_res <- lm(data = tabla_residuos, res ~ fitted + I(fitted^2) + I(fitted^3))
+ajuste_res |> summary()
+```
+
+Nada
+
+---
+
+## Fase 5: diagnosis
+
+
+¿Queda algo logarítmico por modelizar?
+
+```{r}
+ajuste_res <- lm(data = tabla_residuos, res ~ log(fitted))
+ajuste_res |> summary()
+```
+
+Nada
+
+---
+
+## Fase 5: diagnosis
+
+Como no podemos chequear cada función que existe en matemáticas, tras descartas las relaciones más comunes y probables, **graficamos los residuos vs valores ajustados para chequear que no se observa ningún patrón**
+
+```{r}
+#| code-fold: true
+ggplot(tabla_residuos, aes(x = fitted, y = res)) +
+  geom_point() +
+  theme_minimal()
+```
+
+---
+
+## Fase 6: inferencia 
+
+Ahora hemos **chequeado las hipótesis** podemos [**interpretar la parte inferencial de mis parámetros**]{.hl-yellow}
+
+. . .
+
+En el caso multivariante tendremos que los [**parámetros  siguen una distribución normal multivariante**]{.hl-yellow} de [**media el vector de parámetros a estimar**]{.hl-purple}  y de [**matriz de covarianzas la varianza residual por $\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}$**]{.hl-purple}
+
+$$\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)$$
+
+¿Que significa **normal multivariante**?
+
+---
+
+
+## Fase 6: inferencia 
+
+$$\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)$$
+
+Vamos a llamar $\Sigma= \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$ conocida como [**matriz de varianzas-covarianzas**]{.hl-yellow} de los parámetros. ¿Por qué una matriz y por qué covarianzas?
+
+. . .
+
+* Elementos de la **diagonal** $\Sigma_{jj}$: cuantifican como pasaba en el univariante la [**varianza de cada parámetro**]{.hl-yellow} tal que
+
+$$\Sigma_{jj} = Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$$
+
+---
+
+## Fase 6: inferencia 
+
+
+$$\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)$$
+
+* Elementos de **fuera de la diagonal** $\Sigma_{ij}$ (matriz simétrica): cuantifican la [**covarianza de cada  par de parámetros**]{.hl-yellow} tal que
+
+$$\Sigma_{ij} = Cov[\widehat{\beta}_i, \widehat{\beta}_j] =  \sigma_{\varepsilon}^2 v_{ij}, \quad v_{ij} \text{ elemento (i,j) de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$$
+
+ya que los parámetros están relacionados (no pueden subir todos a la vez ni bajar).
+
+---
+
+## Fase 6: inferencia 
+
+
+Esa normal multivariante, componente a componente, deriva en
+
+$$\widehat{\beta}_j\sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad \frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} \sim N \left(0, 1 \right), \quad \frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} \sim t_{n-p-1}$$
+
+donde $\widehat{SE} \left(\widehat{\beta}_j\right)^2 = \widehat{\sigma}_{\varepsilon}^2 v_j$, con $v_j$ el elemento $j$-ésimo de la diagonal de $\left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$ (matriz que representa la **variabilidad de predictores**)
+
+---
+
+## Precisión vs colinealidad
+
+Vamos a pararnos detenidamente en qué determina la varianza de los parámetros
+
+$$Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$$
+
+Como pasaba en el caso univariante: a [**mayor cantidad de ruido en los datos, mayor será la varianza (menor precisión)**]{.hl-yellow}. ¿Qué sucede con esos elementos $v_j$?
+
+. . .
+
+* Si tenemos [**dos o más predictoras que dependen linealmente entre sí**]{.hl-yellow} -->  $\left(X^{T} X \right)^{-1}$ directamente **no se puede invertir** ya que es singular (determinante igual a 0, no es de rango completo)
+
+Esto se conoce como [**colinealidad exacta**]{.hl-yellow}
+
+
+---
+
+## Precisión vs colinealidad
+
+Vamos a pararnos detenidamente en qué determina la varianza de los parámetros
+
+$$Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$$
+
+La colinealidad exacta es solo el ejemplo más extremo de lo que hemos llamado [**problema de colinealidad**]{.hl-red}: un problema que aparece cuando varias predictoras están **altamente correladas**.  Un [**problema de colinealidad**]{.hl-yellow} tiene principalmente dos consecuencias:
+
+. . .
+
+* [**Reduce la precisión de los estimadores**]{.hl-red} ya que la matriz $X^{T} X$, según aumenta la dependencia, tiene un determinante cada vez más cercano a 0, por lo que $\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}$, que siempre depende de $1/det\left( \mathbf{X}^{T}\mathbf{X} \right)$, tendrá valores cada vez más grandes, por lo que sus elementos de la diagonal $v_j$ también: [**a mayor colinealidad, mayor varianza de las estimaciones**]{.hl-red}
+
+. . .
+
+---
+
+## Fase 7: evaluación
+
+```{r}
+ajuste_saturado |> summary()
+```
+
+
+* [**Bondad de ajuste**]{.hl-yellow}: usaremos el $R_{adj}^2$ ya que controla mejor la inflacción del $R^2$ al aumentar predictoras. En este caso es bastante bueno con $0.7531$ y además [**no existe mucha diferencia con el $R^2$**]{.hl-yellow}: aumento de complejidad justificado.
+
+
+---
+
+## Fase 7: evaluación
+
+* [**ANOVA**]{.hl-yellow}: ahora tenemos el contraste $H_0:~\beta_1 = \beta_2 = \beta_3 = 0$
+
+```{r}
+ajuste_saturado |> summary()
+```
+
+
+---
+
+## Fase 7: evaluación
+
+```{r}
+ajuste_saturado |> aov() |> summary()
+```
+
+Si te fijas ahora `aov()` nos devuelve 4 filas ya que en realidad nos hace una [**ANOVA secuencial**]{.hl-yellow} (variable a variable)
+
+---
+
+## Fase 7: evaluación
+
+|  | Df (grados) | Sum Sq | Mean Sq | F value | Pr(>F) |
+|:---------:|:-----:|:------:|:------:|:------:|:------:|
+| $x_1$  | 1  | $SSR_1$ | $\frac{SSR_1}{1}$ | $F-value = \frac{\frac{SSR_1}{1}}{\frac{SSE}{n-p-1}}$ | $p_1$
+| ...  | ...  | ... | ... | $F-value = \frac{\frac{SSR}{p}}{\frac{SSE}{n-p-1}}$ | p-valor F test
+| $x_p$  | 1  | $SSR_p$ | $\frac{SSR_p}{1}$ | $F-value = \frac{\frac{SSR_p}{1}}{\frac{SSE}{n-p-1}}$ | $p_p$
+| Residuals  | n - p - 1 | SSE | $\widehat{\sigma}_{\varepsilon}^{2} = \frac{SSE}{n-p-1}$ | | |
+
+donde $SSR_j$, con $j=1,\ldots,p$, representa la **suma de residuos al cuadrado** cuando incluimos la predictora j-ésima $X_j$, frente a cuando no lo hacemos, tal que $SSR_j = SSR \left(X_1, \ldots, X_j \right) - SSR \left(X_1, \ldots, X_{j-1} \right)$
+
+---
+
+## Fase 8: predicción
+
+Por último podemos predecir otros valores que tengamos
+
+
+```{r}
+nuevos_datos <- tibble("AGST" = c(12, 15, 15.5, 16, 17),
+                       "Year" = c(1960, 1970, 1975, 1978, 1990),
+                       "HarvestRain" = c(120, 30, 200, 150, 240))
+predict(ajuste_saturado, newdata = nuevos_datos)
+```
+
+. . .
+
+De las 5 predicciones **solo la tercera y la cuarta son fiables**: aunque el $R^2$ sea bastante bueno, el resto de observaciones tiene [**alguna de las predictoras fuera del rango de aprendizaje del modelo**]{.hl-red}
+
+
+# Clase 15: selección de modelos {#clase-1}
+
+[**Colinealidad y selección secuencial de modelos**]{style="color:#444442;"}

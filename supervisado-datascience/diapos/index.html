@@ -5607,10 +5607,1193 @@ a_{1q} &amp; \ldots &amp;  a_{pq}
 <h2>Deberes</h2>
 <p>Demuestra que <span class="math inline">\(\widehat{\boldsymbol{\beta}} = \left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T} \mathbf{Y}\)</span>, cuando <span class="math inline">\(p = 1\)</span>, coincide con las expresiones ya conocidas</p>
 <p><span class="math display">\[\widehat{\beta}_1 = \frac{s_{xy}}{s_{x}^2}\]</span> <span class="math display">\[\widehat{\beta}_0 =  \overline{y} - \widehat{\beta}_1 \overline{x}\]</span></p>
+</section></section>
+<section>
+<section id="clase-14" class="title-slide slide level1 center">
+<h1>Clase 14: reg. multivariante</h1>
+<p><span style="color:#444442;"><strong>Etapas: ¿cómo se adaptan?</strong></span></p>
+</section>
+<section id="caso-práctico-wine.csv" class="slide level2">
+<h2>Caso práctico: wine.csv</h2>
+<p>Vamos a volver a usar nuestros datos <code>wine.csv</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb254"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb254-1"><a href="#cb254-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb254-2"><a href="#cb254-2"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 27 × 7
+    Year Price WinterRain  AGST HarvestRain   Age FrancePop
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+ 1  1952  7.50        600  17.1         160    31    43184.
+ 2  1953  8.04        690  16.7          80    30    43495.
+ 3  1955  7.69        502  17.2         130    28    44218.
+ 4  1957  6.98        420  16.1         110    26    45152.
+ 5  1958  6.78        582  16.4         187    25    45654.
+ 6  1959  8.08        485  17.5         187    24    46129.
+ 7  1960  6.52        763  16.4         290    23    46584.
+ 8  1961  8.49        830  17.3          38    22    47128.
+ 9  1962  7.39        697  16.3          52    21    48089.
+10  1963  6.71        608  15.7         155    20    48799.
+# ℹ 17 more rows</code></pre>
+</div>
+</div>
+<p>Pero esta vez no vamos a seleccionar previamente. Para <span class="hl-yellow"><strong>ajustar un modelo multivariante</strong></span> basta con añadir variables <code>+</code>, para usar todas las variables <code>~ .</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb256"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb256-1"><a href="#cb256-1"></a>ajuste_uni <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST)</span>
+<span id="cb256-2"><a href="#cb256-2"></a>ajuste_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST <span class="sc">+</span> HarvestRain)</span>
+<span id="cb256-3"><a href="#cb256-3"></a>ajuste_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fase-1" class="slide level2">
+<h2>Fase 1</h2>
+<ol type="1">
+<li><span class="hl-yellow"><strong>Análisis exploratorio</strong></span>:</li>
+</ol>
+<ul>
+<li>¿Tenemos variables mal codificadas? (por ejemplo, estatura negativa)</li>
+<li>¿Tenemos ausentes?</li>
+<li>¿Tenemos outliers?</li>
+</ul>
+<div class="fragment">
+<p>Para la codificación podemos usar alguna función que nos <strong>extraiga un resumen general de las variables</strong>, por ejemplo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb257"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb257-1"><a href="#cb257-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">datos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Year</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1966.81</td>
+<td style="text-align: right;">8.25</td>
+<td style="text-align: right;">1952.00</td>
+<td style="text-align: right;">1960.50</td>
+<td style="text-align: right;">1967.00</td>
+<td style="text-align: right;">1973.50</td>
+<td style="text-align: right;">1980.00</td>
+<td style="text-align: left;">▅▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Price</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7.04</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">6.20</td>
+<td style="text-align: right;">6.51</td>
+<td style="text-align: right;">6.98</td>
+<td style="text-align: right;">7.44</td>
+<td style="text-align: right;">8.49</td>
+<td style="text-align: left;">▇▅▆▂▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WinterRain</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">608.41</td>
+<td style="text-align: right;">129.03</td>
+<td style="text-align: right;">376.00</td>
+<td style="text-align: right;">543.50</td>
+<td style="text-align: right;">600.00</td>
+<td style="text-align: right;">705.50</td>
+<td style="text-align: right;">830.00</td>
+<td style="text-align: left;">▃▃▇▃▃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AGST</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.48</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">14.98</td>
+<td style="text-align: right;">16.15</td>
+<td style="text-align: right;">16.42</td>
+<td style="text-align: right;">17.01</td>
+<td style="text-align: right;">17.65</td>
+<td style="text-align: left;">▂▃▇▃▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HarvestRain</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">144.81</td>
+<td style="text-align: right;">73.07</td>
+<td style="text-align: right;">38.00</td>
+<td style="text-align: right;">88.00</td>
+<td style="text-align: right;">123.00</td>
+<td style="text-align: right;">185.50</td>
+<td style="text-align: right;">292.00</td>
+<td style="text-align: left;">▇▇▇▁▅</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.19</td>
+<td style="text-align: right;">8.25</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">9.50</td>
+<td style="text-align: right;">16.00</td>
+<td style="text-align: right;">22.50</td>
+<td style="text-align: right;">31.00</td>
+<td style="text-align: left;">▇▇▇▇▅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FrancePop</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50085.44</td>
+<td style="text-align: right;">3793.00</td>
+<td style="text-align: right;">43183.57</td>
+<td style="text-align: right;">46856.00</td>
+<td style="text-align: right;">50650.41</td>
+<td style="text-align: right;">53511.21</td>
+<td style="text-align: right;">55110.24</td>
+<td style="text-align: left;">▃▃▅▅▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="fase-1-1" class="slide level2">
+<h2>Fase 1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb258"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb258-1"><a href="#cb258-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En este caso</p>
+<ul>
+<li>No tenemos variables mal codificadas</li>
+<li>No tenemos ausentes</li>
+</ul>
+<p>Para esto último también podemos usar <code>gg_miss_var()</code> del paquete <code>{naniar}</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb259"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb259-1"><a href="#cb259-1"></a>naniar<span class="sc">::</span><span class="fu">gg_miss_var</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-167-1.png" width="960" class="r-stretch"></section>
+<section id="atípicosausentes" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>En general, respecto a los outliers y ausentes hay dos estrategias</p>
+<ul>
+<li><span class="hl-yellow"><strong>Eliminarlos</strong></span>: se pasan todos los outliers a <code>NA</code> y se procede a eliminarlos. Es una opción mucho más sencilla <span class="hl-red"><strong>PERO ES MUY PELIGROSA</strong></span>: en muchos casos no tendrás suficiente muestra para permitirte eliminar tantas observaciones (además de que puedes estar descartando información relevante).</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Imputarlos</strong></span>: se pasan los outliers a <code>NA</code> y se les asigna (imputa) otro valor que no modifique sustancialmente la distribución de la variables. Será la opcióin que haremos una vez que los hayamos detectado (y hayamos visto como imputar en depuración)</li>
+</ul>
+</div>
+</section>
+<section id="atípicosausentes-1" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>La <span class="hl-yellow"><strong>detección de atípicos parámetrica</strong></span> se basa en 3 ideas:</p>
+<ul>
+<li><p>Un <strong>centro</strong>: una medida que represente la centralidad de los datos. Por ejemplo, la media o la mediana.</p></li>
+<li><p>Una <strong>distancia</strong>: ¿cómo medir lo alejado o cerca que está cada punto de ese centro? Por ejemplo, en el caso de la media, es habitual medir las desviaciones típicas que se aleja cada dato</p></li>
+<li><p>Un <strong>umbral</strong>: ¿a partir de qué distancia se considera que el dato es atípico?</p></li>
+</ul>
+</section>
+<section id="atípicosausentes-2" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Atípico respecto a media</strong></span>: una definición habitual es definir un <span class="hl-yellow"><strong>dato atípico</strong></span> como aquel que se <span class="hl-yellow"><strong>aleja de la media <span class="math inline">\(k\)</span> veces la desviación típica</strong></span> (un valor habitual es <span class="math inline">\(k = 2.5\)</span>)</li>
+</ul>
+<p><span class="math display">\[\left| x_i - \overline{x} \right| &gt; k*s_{x}\]</span></p>
+<p>Dicha definición de atípico <span class="hl-yellow"><strong>solo tendrá sentido cuando la media sea representativa</strong></span> de tu distribución, es decir, siempre y cuando tengamos <span class="hl-yellow"><strong>cierta simetría</strong></span></p>
+</section>
+<section id="atípicosausentes-3" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Atípico respecto a mediana</strong></span>: una definición habitual (conocido como <strong>filtro de Hampel</strong>) es definir un dato atípico como aquel que se <span class="hl-yellow"><strong>aleja de la mediana <span class="math inline">\(k\)</span> veces la mediana de las desviaciones absolutas</strong></span> (un valor habitual es <span class="math inline">\(k=3\)</span>), conocida como <span class="math inline">\(MAD = Me \left(|x_i - Me_x| \right)\)</span></li>
+</ul>
+<p><span class="math display">\[\left| x_i - Me_x \right| &gt; k*MAD\]</span></p>
+</section>
+<section id="atípicosausentes-4" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Atípico respecto a percentiles</strong></span>: una definición habitual es definir un <span class="hl-yellow"><strong>dato atípico como aquel que se aleja de cuartiles 1 y 3 (percentiles 25 y 75) <span class="math inline">\(k\)</span> veces el rango intercuartílico</strong></span> (<span class="math inline">\(IQR = Q_3 - Q_1\)</span>). Un valor habitual es <span class="math inline">\(k=1.5\)</span></li>
+</ul>
+<p><span class="math display">\[x_i &gt; Q_3 + k*IQR \quad \text{ o bien } \quad x_i &lt; Q_1 - k*IQR\]</span></p>
+</section>
+<section id="atípicosausentes-5" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Estos tres métodos pueden ser implementados usando el paquete <code>{outliers}</code> haciendo uso de la función <code>scores()</code> que nos dará en cada caso una <span class="hl-yellow"><strong>“puntuación” de cada observación</strong></span> (lo que se aleja).</p>
+<p>&nbsp;</p>
+<p>En caso de que queramos detectarlos <strong>respecto a la media</strong>, le indicaremos que <code>type = "z"</code> y nos devolverá el número <span class="math inline">\(k\)</span> de desviaciones típicas que se aleja cada dato de la media</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb260"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb260-1"><a href="#cb260-1"></a><span class="fu">library</span>(outliers)</span>
+<span id="cb260-2"><a href="#cb260-2"></a><span class="fu">abs</span>(<span class="fu">scores</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">1.7</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">type =</span> <span class="st">"z"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.05794825 1.19759725 0.56982450 2.56903925 0.68572100 0.37183463
+ [7] 0.25593812 0.75815632 0.56982450 0.68572100 0.49738918 0.44426995
+[13] 1.07204270</code></pre>
+</div>
+</div>
+<p>De esta forma podemos detectar muy fácil los outliers en función de los estrictos que queramos ser con ese <span class="math inline">\(k\)</span> (si supera un umbral -&gt; outlier).</p>
+</section>
+<section id="atípicosausentes-6" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>En caso de que queramos detectarlos <strong>respecto a la media</strong>, le indicaremos que <code>type = "mad"</code> y nos devolverá de nuevo esa distancia <span class="math inline">\(k\)</span> (ahora respecto a las desviación absoluta respecto a la mediana)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb262"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb262-1"><a href="#cb262-1"></a><span class="fu">abs</span>(<span class="fu">scores</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">1.7</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">type =</span> <span class="st">"mad"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.3372454 1.0117361 0.3372454 3.0352084 1.0117361 0.6744908 0.0000000
+ [8] 0.5395926 0.3372454 1.0117361 0.8093889 0.2023472 0.8768380</code></pre>
+</div>
+</div>
+</section>
+<section id="atípicosausentes-7" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>En caso de que queramos detectarlos <strong>respecto a los percentiles</strong>, le indicaremos que <code>type = "iqr"</code> y nos devolverá de nuevo esa distancia <span class="math inline">\(k\)</span> (ahora respecto a cuántos IQR se aleja del Q3 o del Q1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb264"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb264-1"><a href="#cb264-1"></a><span class="fu">abs</span>(<span class="fu">scores</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">1.7</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.8</span>), <span class="at">type =</span> <span class="st">"iqr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.0000000 0.5882353 0.0000000 1.9411765 0.1764706 0.0000000 0.0000000
+ [8] 0.1764706 0.0000000 0.1764706 0.0000000 0.0000000 0.4705882</code></pre>
+</div>
+</div>
+</section>
+<section id="atípicosausentes-8" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Con <code>if_any()</code> dentro del <code>filter()</code> podemos mostrar todo los registros detectados como outlier en alguna variable. Por ejemplo, voy a aplicar a todas el método IQR</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb266"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb266-1"><a href="#cb266-1"></a>datos <span class="sc">|&gt;</span> </span>
+<span id="cb266-2"><a href="#cb266-2"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), </span>
+<span id="cb266-3"><a href="#cb266-3"></a>         <span class="cf">function</span>(x) {</span>
+<span id="cb266-4"><a href="#cb266-4"></a>           <span class="fu">if_else</span>(outliers<span class="sc">::</span><span class="fu">scores</span>(x, <span class="at">type =</span> <span class="st">"iqr"</span>) <span class="sc">&gt;</span> <span class="fl">1.5</span>, <span class="cn">NA</span>, x) })) <span class="sc">|&gt;</span></span>
+<span id="cb266-5"><a href="#cb266-5"></a>  <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">everything</span>(), is.na))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 7
+# ℹ 7 variables: Year &lt;dbl&gt;, Price &lt;dbl&gt;, WinterRain &lt;dbl&gt;, AGST &lt;dbl&gt;,
+#   HarvestRain &lt;dbl&gt;, Age &lt;dbl&gt;, FrancePop &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>En este caso no tenemos.</p>
+</section>
+<section id="atípicosausentes-9" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Existen otros <span class="hl-yellow"><strong>procedimientos basados en inferencia estadística</strong></span> (muchos de ellos en el paquete <code>{outliers}</code>)</p>
+<ul>
+<li><span class="hl-yellow"><strong>Tests de Grubbs y Dixon</strong></span>: ambos test nos permiten detectar si el valor más alto (o bajo) de una variable es un outlier, pudiendo detectar <span class="hl-yellow"><strong>un solo outlier en cada iteración</strong></span> (en caso de detectarlo, deberíamos tratarlo y volver a ejecutar el test)</li>
+</ul>
+<p><span class="math inline">\(H_0\)</span>: valor más alto/bajo no es outlier</p>
+<p><span class="math inline">\(H_1\)</span>: valor más alto/bajo sí es outlier</p>
+<div class="fragment">
+<p>El <span class="hl-yellow"><strong>test de Dixon</strong></span> (basado en una ordenación) suele funcionar mejor cuando tenemos poca muestra que el test de Grubbs (basado en la media).</p>
+<p>Ver más documentación de su funcionamiento en <a href="https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h1.htm" class="uri">https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h1.htm</a> y <a href="https://www.statisticshowto.com/dixons-q-test/" class="uri">https://www.statisticshowto.com/dixons-q-test/</a></p>
+</div>
+</section>
+<section id="atípicosausentes-10" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb268"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb268-1"><a href="#cb268-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">1.7</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.8</span>)</span>
+<span id="cb268-2"><a href="#cb268-2"></a><span class="fu">dixon.test</span>(x, <span class="at">opposite =</span> <span class="cn">TRUE</span>) <span class="co"># ¿es valor más bajo outlier?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Dixon test for outliers
+
+data:  x
+Q = 0.23333, p-value = 0.8072
+alternative hypothesis: lowest value -1 is an outlier</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb270"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb270-1"><a href="#cb270-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">1.7</span>, <span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.8</span>)</span>
+<span id="cb270-2"><a href="#cb270-2"></a><span class="fu">dixon.test</span>(x, <span class="at">opposite =</span> <span class="cn">FALSE</span>) <span class="co"># ¿es valor más alto outlier?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Dixon test for outliers
+
+data:  x
+Q = 0.51724, p-value = 0.1055
+alternative hypothesis: highest value 5 is an outlier</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Test de Rosner</strong></span>: al contrario que los anteriores, nos permite detectar varios outliers a la vez, especialmente diseñado para evitar que un valor atípico nos perturbe tanto que nos enmascare otro (basado en la media). Podemos ejecutarlo con la función <code>rosnerTest()</code> del paquete <code>{EnvStats}</code>.</li>
+</ul>
+</div>
+</section>
+<section id="atípicosausentes-11" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>También existen <span class="hl-yellow"><strong>técnicas de Machine Learning</strong></span> para la identificación de outliers, como los conocidos como <span class="hl-yellow"><strong>Isolation Forest</strong></span>.</p>
+<div class="fragment">
+<p>La idea es un poco similar a la de un <span class="hl-yellow"><strong>Random Forest</strong></span>, mediante la <span class="hl-yellow"><strong>combinación de muchos árboles</strong></span> de clasificación/regresión conocidos como <strong>isolation trees</strong>, aunque en este caso los puntos de corte se hace de manera totalmente aleatoria.</p>
+</div>
+<div class="fragment">
+<p>De esta manera, aquellos individuos con características diferentes al resto quedarán aislados rápidamente, de manera que los <span class="hl-yellow"><strong>outliers serán aquellos aislados a los que se llega más rápido</strong></span> que al resto</p>
+</div>
+</section>
+<section id="atípicosausentes-12" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Es un <span class="hl-yellow"><strong>algoritmo no supervisado</strong></span>, lo que significa que <span class="hl-yellow"><strong>no hay un criterio óptimo objetivo</strong></span> para decidir que a partir de dicho valor una observación es un outlier (idea: usar percentiles de dicha distancia, por ejemplo el 5-10% con menor distancia)</p>
+<div class="fragment">
+<p>En casos donde el tamaño muestral sea elevado, aislar cada observación puede ser <span class="hl-red"><strong>costoso computacionalmente</strong></span> por lo que a veces se asume una <span class="hl-yellow"><strong>profundidad máxima</strong></span> hasta donde puede crecer</p>
+</div>
+</section>
+<section id="atípicosausentes-13" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Para implementarlo podemos usar el paquete <code>{solitude}</code>. Es importante que el dataset haya sido ya tratado por ausentes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb272"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb272-1"><a href="#cb272-1"></a><span class="fu">library</span>(solitude)</span>
+<span id="cb272-2"><a href="#cb272-2"></a><span class="co"># Modelo isolation forest</span></span>
+<span id="cb272-3"><a href="#cb272-3"></a>isoforest <span class="ot">&lt;-</span></span>
+<span id="cb272-4"><a href="#cb272-4"></a>  isolationForest<span class="sc">$</span><span class="fu">new</span>(<span class="at">sample_size =</span> <span class="fu">round</span>((datos <span class="sc">|&gt;</span> <span class="fu">nrow</span>())<span class="sc">/</span><span class="dv">2</span>),</span>
+<span id="cb272-5"><a href="#cb272-5"></a>                      <span class="at">num_trees =</span> <span class="dv">500</span>,</span>
+<span id="cb272-6"><a href="#cb272-6"></a>                      <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">seed =</span> <span class="dv">1234567</span>,</span>
+<span id="cb272-7"><a href="#cb272-7"></a>                      <span class="at">max_depth =</span> <span class="dv">7</span>)</span>
+<span id="cb272-8"><a href="#cb272-8"></a>isoforest<span class="sc">$</span><span class="fu">fit</span>(<span class="at">dataset =</span> datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>INFO  [14:03:41.573] Building Isolation Forest ...
+INFO  [14:03:41.623] done
+INFO  [14:03:41.630] Computing depth of terminal nodes ...
+INFO  [14:03:42.360] done
+INFO  [14:03:42.370] Completed growing isolation forest</code></pre>
+</div>
+</div>
+</section>
+<section id="atípicosausentes-14" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<p>Con el modelo entrenado, se predicen las distancias de aislamiento promedio de cada observación. Los resultados que calcula <code>isoforest$predict()</code> son la <span class="hl-yellow"><strong>distancia promedio <code>average_depth</code></strong></span> y una métrica que mide el <span class="hl-yellow"><strong>grado de anomalía</strong></span> <code>anomaly_score</code> (valores próximos a 1 para outliers)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb274"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb274-1"><a href="#cb274-1"></a>predicciones <span class="ot">&lt;-</span></span>
+<span id="cb274-2"><a href="#cb274-2"></a>  isoforest<span class="sc">$</span><span class="fu">predict</span>(<span class="at">data =</span> datos)</span>
+<span id="cb274-3"><a href="#cb274-3"></a>predicciones <span class="sc">|&gt;</span> <span class="fu">arrange</span>(average_depth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    id average_depth anomaly_score
+ 1:  8         3.342     0.5925953
+ 2:  6         3.354     0.5914829
+ 3: 24         3.388     0.5883427
+ 4:  2         3.488     0.5792030
+ 5: 23         3.534     0.5750465
+ 6:  4         3.536     0.5748665
+ 7:  7         3.584     0.5705625
+ 8: 25         3.606     0.5686006
+ 9:  3         3.630     0.5664680
+10: 12         3.644     0.5652277
+11: 27         3.686     0.5615231
+12:  1         3.730     0.5576681
+13: 26         3.886     0.5442125
+14: 19         3.898     0.5431910
+15:  5         4.026     0.5324135
+16: 20         4.082     0.5277659
+17: 11         4.086     0.5274355
+18: 13         4.088     0.5272703
+19: 15         4.106     0.5257865
+20:  9         4.282     0.5114959
+21: 16         4.338     0.5070309
+22: 10         4.352     0.5059207
+23: 21         4.372     0.5043390
+24: 22         4.386     0.5032347
+25: 14         4.664     0.4818011
+26: 17         4.738     0.4762512
+27: 18         4.810     0.4709127
+    id average_depth anomaly_score</code></pre>
+</div>
+</div>
+</section>
+<section id="atípicosausentes-15" class="slide level2">
+<h2>Atípicos/ausentes</h2>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb276"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb276-1"><a href="#cb276-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> predicciones, <span class="fu">aes</span>(<span class="at">x =</span> average_depth)) <span class="sc">+</span></span>
+<span id="cb276-2"><a href="#cb276-2"></a>  <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">"#6D98ED"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb276-3"><a href="#cb276-3"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span></span>
+<span id="cb276-4"><a href="#cb276-4"></a>               <span class="fu">quantile</span>(predicciones<span class="sc">$</span>average_depth,</span>
+<span id="cb276-5"><a href="#cb276-5"></a>                        <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)),</span>
+<span id="cb276-6"><a href="#cb276-6"></a>             <span class="at">color =</span> <span class="st">"#DC5B49"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb276-7"><a href="#cb276-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribución de distancias medias del Isolation Forest"</span>,</span>
+<span id="cb276-8"><a href="#cb276-8"></a>    <span class="at">subtitle =</span> <span class="st">"Deciles marcados en rojo"</span>) <span class="sc">+</span></span>
+<span id="cb276-9"><a href="#cb276-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-175-1.png" width="960" class="r-stretch"></section>
+<section id="fase-2-selección-de-variables" class="slide level2">
+<h2>Fase 2: selección de variables</h2>
+<p>En el ajuste univariante nos interesaba <strong>buscar la variable más correlada</strong> pero ahora, en esta primer cribado, dado que queremos un ajuste multivariante, el objetivo será <span class="hl-yellow"><strong>DESCARTAR variables que no estén correladas linealmente</strong></span> con la variable objetivo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb277"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb277-1"><a href="#cb277-1"></a><span class="co"># Fíjate que hasta que compruebe que si son o normales uso el método de spearman</span></span>
+<span id="cb277-2"><a href="#cb277-2"></a>datos <span class="sc">|&gt;</span> corrr<span class="sc">::</span><span class="fu">correlate</span>(<span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 8
+  term           Year   Price WinterRain    AGST HarvestRain     Age FrancePop
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+1 Year        NA      -0.448      0.0299 -0.319      -0.0956 -1         1     
+2 Price       -0.448  NA          0.0678  0.689      -0.466   0.448    -0.448 
+3 WinterRain   0.0299  0.0678    NA      -0.358      -0.364  -0.0299    0.0299
+4 AGST        -0.319   0.689     -0.358  NA           0.0566  0.319    -0.319 
+5 HarvestRain -0.0956 -0.466     -0.364   0.0566     NA       0.0956   -0.0956
+6 Age         -1       0.448     -0.0299  0.319       0.0956 NA        -1     
+7 FrancePop    1      -0.448      0.0299 -0.319      -0.0956 -1        NA     </code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-de-correlaciones" class="slide level2">
+<h2>Análisis de correlaciones</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb279"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb279-1"><a href="#cb279-1"></a><span class="co"># Fíjate que hasta que compruebe que si son o normales uso el método de spearman</span></span>
+<span id="cb279-2"><a href="#cb279-2"></a>datos <span class="sc">|&gt;</span> corrr<span class="sc">::</span><span class="fu">correlate</span>(<span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 8
+  term           Year   Price WinterRain    AGST HarvestRain     Age FrancePop
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+1 Year        NA      -0.448      0.0299 -0.319      -0.0956 -1         1     
+2 Price       -0.448  NA          0.0678  0.689      -0.466   0.448    -0.448 
+3 WinterRain   0.0299  0.0678    NA      -0.358      -0.364  -0.0299    0.0299
+4 AGST        -0.319   0.689     -0.358  NA           0.0566  0.319    -0.319 
+5 HarvestRain -0.0956 -0.466     -0.364   0.0566     NA       0.0956   -0.0956
+6 Age         -1       0.448     -0.0299  0.319       0.0956 NA        -1     
+7 FrancePop    1      -0.448      0.0299 -0.319      -0.0956 -1        NA     </code></pre>
+</div>
+</div>
+<p>En este caso la variable más probable a estar incorrelada es <code>WinterRain</code> ya que es la que tiene menor correlación en valor absoluto con la objetivo.</p>
+<div class="fragment">
+<p>Para cuantificarlo vamos a realizar un <span class="hl-yellow"><strong>test de correlaciones</strong></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb281"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb281-1"><a href="#cb281-1"></a><span class="fu">cor.test</span>(datos<span class="sc">$</span>Price, datos<span class="sc">$</span>WinterRain, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  datos$Price and datos$WinterRain
+S = 3054, p-value = 0.7369
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+0.06777591 </code></pre>
+</div>
+</div>
+<p>Efectivamente <span class="hl-yellow"><strong>debemos descartar <code>WinterRain</code> ya que no presenta correlación con y</strong></span></p>
+</div>
+</section>
+<section id="análisis-de-correlaciones-1" class="slide level2">
+<h2>Análisis de correlaciones</h2>
+<p>La siguiente es <code>Year</code> o <code>Age</code> o <code>FrancePop</code>, pruebo con cualquiera de ellas</p>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb283"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb283-1"><a href="#cb283-1"></a><span class="fu">cor.test</span>(datos<span class="sc">$</span>Price, datos<span class="sc">$</span>Year, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Spearman's rank correlation rho
+
+data:  datos$Price and datos$Year
+S = 4744, p-value = 0.02001
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+       rho 
+-0.4481074 </code></pre>
+</div>
+</div>
+<p>Ya obtenemos un contraste significativo: el <strong>resto de variables no se eliminan de momento</strong></p>
+</div>
+</section>
+<section id="análisis-de-colinealidad" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p>Y decimos “de momento” porque en el ajuste multivariante no solo vamos a necesitar un análisis de correlaciones (Y vs x dos a dos) sino que será crucial un <span class="hl-yellow"><strong>análisis de colinealidad</strong></span></p>
+<div class="fragment">
+<p>La pregunta a responder es: <span class="hl-yellow"><strong>¿existen predictoras con información repetida?</strong></span> Buscamos</p>
+<ul>
+<li><p><span class="hl-yellow"><strong>predictoras con la mayor correlación con y</strong></span></p></li>
+<li><p>pero <span class="hl-yellow"><strong>predictoras con la menor correlación entre ellas</strong></span></p></li>
+</ul>
+<p>Para responder a esa pregunta <strong>no nos limitaremos solo a mirar correlaciones dos a dos</strong> sino que para cada predictora <span class="math inline">\(X_j\)</span> plantearemos el siguiente modelo</p>
+<p><span class="math display">\[reg_{X_{j}}:~X_j \quad vs \quad \left(X_1, \ldots, X_{j-1}, X_{j+1}, \ldots, X_p \right)\]</span></p>
+</div>
+</section>
+<section id="análisis-de-colinealidad-1" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p><span class="math display">\[reg_{X_{j}}:~X_j \quad vs \quad \left(X_1, \ldots, X_{j-1}, X_{j+1}, \ldots, X_p \right)\]</span></p>
+<p>Para cada predictora <span class="math inline">\(X_j\)</span> calcularemos del ajuste superior su <span class="math inline">\(R^2\)</span> tal que cuantificaremos dicha multicolinealidad con el conocido como <span class="hl-yellow"><strong>factor de inflación de la varianza (VIF)</strong></span></p>
+<p><span class="math display">\[VIF\left(\widehat {\beta_j} \right) = \frac{1}{1 - R^2_{X_{j}}}\]</span></p>
+<p>donde <span class="math inline">\(R_{j}^2\)</span> representa la <span class="hl-yellow"><strong>bondad de ajuste cuando predecimos con una regresión lineal multivariante la predictora <span class="math inline">\(X_j\)</span></strong></span> en función del resto de predictoras (sin la variable objetivo). Si <span class="math inline">\(VIF &gt; 10\)</span> (<span class="math inline">\(R^2 &gt; 0.9\)</span>), diremos que hay <span class="hl-yellow"><strong>predictoras altamente correlacionadas</strong></span>; si <span class="math inline">\(VIF &gt; 5\)</span> (<span class="math inline">\(R^2 &gt; 0.8\)</span>), diremos que hay <span class="hl-yellow"><strong>predictoras moderadamente correlacionadas</strong></span>.</p>
+</section>
+<section id="análisis-de-colinealidad-2" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p>Para calcularlo tenemos <code>check_collinearity()</code> del paquete <code>{performance}</code> (sin la variable que ya hemos descartado en el paso anterior)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb285"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb285-1"><a href="#cb285-1"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> . <span class="sc">-</span> WinterRain)</span>
+<span id="cb285-2"><a href="#cb285-2"></a>performance<span class="sc">::</span><span class="fu">check_collinearity</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+        Term  VIF      VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+        AGST 1.10 [ 1.00,   3.33]         1.05      0.91     [0.30, 1.00]
+ HarvestRain 1.05 [ 1.00,  15.21]         1.03      0.95     [0.07, 1.00]
+
+High Correlation
+
+      Term   VIF      VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+      Year 68.32 [40.45, 115.87]         8.27      0.01     [0.01, 0.02]
+ FrancePop 68.39 [40.49, 116.00]         8.27      0.01     [0.01, 0.02]</code></pre>
+</div>
+</div>
+<p>Antes de analizar nada fíjate en la <span class="hl-red"><strong>primera línea de la salida</strong></span>:</p>
+<blockquote>
+<p>Model matrix is rank deficient. VIFs may not be sensible.</p>
+</blockquote>
+</section>
+<section id="análisis-de-colinealidad-3" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p>Antes de analizar nada fíjate en la <span class="hl-red"><strong>primera línea de la salida</strong></span>:</p>
+<blockquote>
+<p>Model matrix is rank deficient. VIFs may not be sensible.</p>
+</blockquote>
+<p>Esto significa que hay una variable que no es que esté relacionada con otras sino que <span class="hl-yellow"><strong>es directamente igual a una combinación lineal exacta de las demás</strong></span>. En este caso <code>age</code> es literal <code>hoy - year</code></p>
+</section>
+<section id="ajuste-de-colinealidad" class="slide level2">
+<h2>Ajuste de colinealidad</h2>
+<p>También podemos detectarlo si observamos el ajuste: hay una <strong>fila de coeficientes con <code>NA</code></strong> ya que al no tener una matriz de covarianzas de rango completo debe eliminar una para obtener una (única) solución.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb287"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb287-1"><a href="#cb287-1"></a>ajuste_saturado <span class="ot">&lt;-</span></span>
+<span id="cb287-2"><a href="#cb287-2"></a>  <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain), <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb287-3"><a href="#cb287-3"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ ., data = select(datos, -WinterRain))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.6303 -0.2511 -0.0108  0.2693  0.4581 
+
+Coefficients: (1 not defined because of singularities)
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -8.974e+00  1.172e+02  -0.077    0.940    
+Year         5.714e-03  6.303e-02   0.091    0.929    
+AGST         5.335e-01  1.001e-01   5.327 2.39e-05 ***
+HarvestRain -4.349e-03  8.828e-04  -4.926 6.30e-05 ***
+Age                 NA         NA      NA       NA    
+FrancePop   -6.756e-05  1.371e-04  -0.493    0.627    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3206 on 22 degrees of freedom
+Multiple R-squared:  0.784, Adjusted R-squared:  0.7447 
+F-statistic: 19.96 on 4 and 22 DF,  p-value: 4.598e-07</code></pre>
+</div>
+</div>
+</section>
+<section id="análisis-de-colinealidad-4" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p>Eliminamos la variable que no aparece y volvemos a analizarlo</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb289"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb289-1"><a href="#cb289-1"></a>ajuste_saturado <span class="ot">&lt;-</span></span>
+<span id="cb289-2"><a href="#cb289-2"></a>  <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain, <span class="sc">-</span>Age), <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb289-3"><a href="#cb289-3"></a>performance<span class="sc">::</span><span class="fu">check_collinearity</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+        Term  VIF      VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+        AGST 1.10 [ 1.00,   3.72]         1.05      0.91     [0.27, 1.00]
+ HarvestRain 1.05 [ 1.00,  19.81]         1.03      0.95     [0.05, 1.00]
+
+High Correlation
+
+      Term   VIF      VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+      Year 68.32 [39.41, 118.99]         8.27      0.01     [0.01, 0.03]
+ FrancePop 68.39 [39.45, 119.11]         8.27      0.01     [0.01, 0.03]</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Observamos <span class="hl-yellow"><strong>dos variables <code>Year</code> y <code>FrancePop</code> que comparten muchísima información</strong></span> con una combinación de las demás ya que cuando intentamos predecir <code>Year</code> o <code>FrancePop</code> en función de las demás obtenemos <span class="math inline">\(VIF \simeq 68\)</span>, es decir, <span class="math inline">\(R^2 \simeq = 0.98\)</span></p>
+</div>
+</section>
+<section id="análisis-de-colinealidad-5" class="slide level2">
+<h2>Análisis de colinealidad</h2>
+<p>Eliminamos la variable con mayor VIF y volvemos a repetirlo: <span class="hl-red"><strong>NO podemos eliminar varias a la vez ya que eliminar una cambiará todo</strong></span>, debemos hacerlo de forma secuencial.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb291"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb291-1"><a href="#cb291-1"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain, <span class="sc">-</span>Age, <span class="sc">-</span>FrancePop),</span>
+<span id="cb291-2"><a href="#cb291-2"></a>                      <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb291-3"><a href="#cb291-3"></a>performance<span class="sc">::</span><span class="fu">check_collinearity</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+        Term  VIF       VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+        Year 1.10 [1.00,     4.28]         1.05      0.91     [0.23, 1.00]
+        AGST 1.10 [1.00,     4.48]         1.05      0.91     [0.22, 1.00]
+ HarvestRain 1.01 [1.00,      Inf]         1.00      0.99     [0.00, 1.00]</code></pre>
+</div>
+</div>
+<p>Todo perfecto, ya podemos plantear nuestro <strong>modelo saturado</strong> :)</p>
+</section>
+<section id="fase-3-planteamiento-del-modelo" class="slide level2">
+<h2>Fase 3: planteamiento del modelo</h2>
+<p>Nuestro <span class="hl-yellow"><strong>modelo teórico</strong></span> que asumimos como cierto es el siguiente</p>
+<p><span class="math display">\[Price = \beta_0 + \beta_1 * Year + \beta_2 * AGST + \beta_3 * HarvestRain + \varepsilon\]</span> tal que</p>
+<p><span class="math display">\[E \left[Price | X \right] = \beta_0 + \beta_1 * Year + \beta_2 * AGST + \beta_3 * HarvestRain \]</span></p>
+<p>por lo que nuestro <span class="hl-yellow"><strong>modelo estimado</strong></span> será</p>
+<p><span class="math display">\[\widehat{Y} = \widehat{E \left[Price | X \right]} = \widehat{\beta}_0 + \widehat{\beta}_1 * Year + \widehat{\beta}_2 * AGST + \widehat{\beta}_3 * HarvestRain \]</span></p>
+</section>
+<section id="fase-4-ajuste" class="slide level2">
+<h2>Fase 4: ajuste</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb293"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb293-1"><a href="#cb293-1"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain, <span class="sc">-</span>Age, <span class="sc">-</span>FrancePop),</span>
+<span id="cb293-2"><a href="#cb293-2"></a>                      <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb293-3"><a href="#cb293-3"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ ., data = select(datos, -WinterRain, -Age, 
+    -FrancePop))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66299 -0.25269 -0.01668  0.28031  0.48530 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 48.1967815 16.0382256   3.005  0.00631 ** 
+Year        -0.0250942  0.0078670  -3.190  0.00408 ** 
+AGST         0.5367125  0.0982803   5.461 1.50e-05 ***
+HarvestRain -0.0044405  0.0008487  -5.232 2.63e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3153 on 23 degrees of freedom
+Multiple R-squared:  0.7816,    Adjusted R-squared:  0.7531 
+F-statistic: 27.44 on 3 and 23 DF,  p-value: 8.895e-08</code></pre>
+</div>
+</div>
+</section>
+<section id="interpretación" class="slide level2">
+<h2>Interpretación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Ordenada en el origen</strong></span>: es el valor de <span class="math inline">\(Y\)</span> cuando <span class="math inline">\(X_1 = \ldots = X_p = 0\)</span>. Es decir, <span class="math inline">\(\widehat{\beta}_0 = 48.19678\)</span> se puede interpretar como la estimación promedio de <span class="math inline">\(\widehat{y}\)</span> cuando <span class="hl-yellow"><strong>TODAS las predictoras son nulas</strong></span> (0 años, 0ºC de temperatura promedio y 0º precipitaciones).</li>
+</ul>
+<p>En este caso recuerda que es la predicción del logaritmo del precio</p>
+</section>
+<section id="interpretación-1" class="slide level2">
+<h2>Interpretación</h2>
+<ul>
+<li><p><span class="hl-yellow"><strong>Pendientes (estimadas)</strong></span>: denotadas como <span class="math inline">\(\widehat{\beta}_j\)</span>, para <span class="math inline">\(j=1,\ldots, p\)</span>, cuantifica el incremento de promedio estimado cuando solo <span class="math inline">\(X_j\)</span> aumenta una unidad.</p>
+<ul>
+<li><p><span class="math inline">\(\widehat{\beta}_1 = -0.02509\)</span> se puede interpretar como lo que disminuye el precio (log) por cada año de más <span class="hl-purple"><strong>SIEMPRE Y CUANDO el resto de predictoras permanecen fijas</strong></span> –&gt; precio disminuye un 2.47%</p></li>
+<li><p><span class="math inline">\(\widehat{\beta}_2 = 0.53671\)</span> se puede interpretar como lo que aumenta el precio (log) por cada grado que se incrementa la temperatura media en los meses cálidos <span class="hl-purple"><strong>SIEMPRE Y CUANDO el resto de predictoras permanecen fijas</strong></span> –&gt; precio aumenta un <span class="math inline">\(71%\)</span></p>
+<ul>
+<li><span class="math inline">\(\widehat{\beta}_3 = -0.00444\)</span> se puede interpretar como lo que disminuye el precio (log) por cada unidad de precipitación que aumente <span class="hl-purple"><strong>SIEMPRE Y CUANDO el resto de predictoras permanecen fijas</strong></span> –&gt; precio disminuye un 0.4%</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="interpretación-2" class="slide level2">
+<h2>Interpretación</h2>
+<p>Y de momento salvo <code>Residual standard error: 0.3153</code> (la estimación de la <strong>desv típica poblacional de los residuos</strong>) no podemos interpretar nada más.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb295"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb295-1"><a href="#cb295-1"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain, <span class="sc">-</span>Age, <span class="sc">-</span>FrancePop),</span>
+<span id="cb295-2"><a href="#cb295-2"></a>                      <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb295-3"><a href="#cb295-3"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ ., data = select(datos, -WinterRain, -Age, 
+    -FrancePop))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66299 -0.25269 -0.01668  0.28031  0.48530 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 48.1967815 16.0382256   3.005  0.00631 ** 
+Year        -0.0250942  0.0078670  -3.190  0.00408 ** 
+AGST         0.5367125  0.0982803   5.461 1.50e-05 ***
+HarvestRain -0.0044405  0.0008487  -5.232 2.63e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3153 on 23 degrees of freedom
+Multiple R-squared:  0.7816,    Adjusted R-squared:  0.7531 
+F-statistic: 27.44 on 3 and 23 DF,  p-value: 8.895e-08</code></pre>
+</div>
+</div>
+</section>
+<section id="fase-5-diagnosis" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>En el caso multivariante las <span class="hl-yellow"><strong>4 hipótesis</strong></span> se convierten en</p>
+<ol type="1">
+<li><span class="hl-green"><strong>Linealidad</strong></span>: el valor esperado de <span class="math inline">\(Y\)</span> es</li>
+</ol>
+<p><span class="math display">\[E \left[Y | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \right] = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p\]</span></p>
+<ol start="2" type="1">
+<li><p><span class="hl-green"><strong>Homocedasticidad</strong></span>: necesitamos que la <span class="hl-yellow"><strong>varianza del error sea finita y constante</strong></span> <span class="math inline">\(\sigma_{r}^2 = \sigma_{\varepsilon}^2 = {\rm Var} \left[\varepsilon | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \right] = cte &lt; \infty\)</span></p></li>
+<li><p><span class="hl-green"><strong>Normalidad</strong></span>: pediremos que <span class="math inline">\(\varepsilon \sim N \left(0, \sigma_{r}^2 \right)\)</span></p></li>
+<li><p><span class="hl-green"><strong>Independencia</strong></span>: los errores <span class="math inline">\(\left\lbrace \varepsilon_i \right\rbrace_{i=1}^{n}\)</span> deben ser en independientes, y en particular <strong>incorrelados</strong> <span class="math inline">\({\rm Cor}_{\varepsilon_i \varepsilon_j} = E \left[\varepsilon_i \varepsilon_j \right] = 0, \quad i \neq j\)</span></p></li>
+</ol>
+</section>
+<section id="fase-5-diagnosis-1" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>Las hipótesis conjuntamente se pueden resumir en</p>
+<p><span class="math display">\[Y | \left( \boldsymbol{X}_1 = x_1, \ldots, \boldsymbol{X}_p = x_p \right) \sim N \left(\beta_0 + \beta_1x_1 + \ldots + \beta_p x_p, \sigma_{\varepsilon}^2 \right)\]</span></p>
+<div class="fragment">
+<ul>
+<li><span class="hl-green"><strong>Incorrelación de los residuos: check</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb297"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb297-1"><a href="#cb297-1"></a>performance<span class="sc">::</span><span class="fu">check_autocorrelation</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: Residuals appear to be independent and not autocorrelated (p = 0.498).</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="fase-5-diagnosis-2" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<ul>
+<li><span class="hl-green"><strong>Normalidad de los residuos: check</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb299"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb299-1"><a href="#cb299-1"></a>performance<span class="sc">::</span><span class="fu">check_normality</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: residuals appear as normally distributed (p = 0.312).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb301"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb301-1"><a href="#cb301-1"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"res"</span> <span class="ot">=</span> ajuste_saturado<span class="sc">$</span>residuals)) <span class="sc">+</span></span>
+<span id="cb301-2"><a href="#cb301-2"></a>  <span class="fu">stat_qq</span>(<span class="fu">aes</span>(<span class="at">sample =</span> res)) <span class="sc">+</span></span>
+<span id="cb301-3"><a href="#cb301-3"></a>  <span class="fu">stat_qq_line</span>(<span class="fu">aes</span>(<span class="at">sample =</span> res)) <span class="sc">+</span></span>
+<span id="cb301-4"><a href="#cb301-4"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-187-1.png" width="960" class="r-stretch"></section>
+<section id="fase-5-diagnosis-3" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<ul>
+<li><span class="hl-green"><strong>Homocedasticidad de los residuos: check</strong></span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb302"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb302-1"><a href="#cb302-1"></a>performance<span class="sc">::</span><span class="fu">check_normality</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: residuals appear as normally distributed (p = 0.312).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb304"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb304-1"><a href="#cb304-1"></a><span class="co"># debo observar que están en una banda constante</span></span>
+<span id="cb304-2"><a href="#cb304-2"></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_saturado<span class="sc">$</span>fitted.values,</span>
+<span id="cb304-3"><a href="#cb304-3"></a>              <span class="st">"res"</span> <span class="ot">=</span> ajuste_saturado<span class="sc">$</span>residuals),</span>
+<span id="cb304-4"><a href="#cb304-4"></a>       <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> res)) <span class="sc">+</span></span>
+<span id="cb304-5"><a href="#cb304-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb304-6"><a href="#cb304-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-188-1.png" width="960" class="r-stretch"></section>
+<section id="fase-5-diagnosis-4" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Linealidad</strong></span>: si el modelo subyacente fuese igual a mi hipótesis (modelo lineal), no debería ver <strong>ningún patrón por modelizar en mis residuos</strong>.</li>
+</ul>
+<p>Chequeamos primero si queda algo lineal por modelizar entre mis residuos y mis valores ajustados</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb305"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb305-1"><a href="#cb305-1"></a>tabla_residuos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"fitted"</span> <span class="ot">=</span> ajuste_saturado<span class="sc">$</span>fitted.values, <span class="st">"res"</span> <span class="ot">=</span> ajuste_saturado<span class="sc">$</span>residuals)</span>
+<span id="cb305-2"><a href="#cb305-2"></a>ajuste_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> tabla_residuos, res <span class="sc">~</span> fitted)</span>
+<span id="cb305-3"><a href="#cb305-3"></a>ajuste_res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = res ~ fitted, data = tabla_residuos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66299 -0.25269 -0.01668  0.28031  0.48530 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  6.672e-16  7.467e-01       0        1
+fitted      -9.702e-17  1.057e-01       0        1
+
+Residual standard error: 0.3024 on 25 degrees of freedom
+Multiple R-squared:  6.122e-32, Adjusted R-squared:  -0.04 
+F-statistic: 1.531e-30 on 1 and 25 DF,  p-value: 1</code></pre>
+</div>
+</div>
+<p>Modelo no significativo –&gt; <span class="hl-yellow">**no hay ningún patrón lineal entre residuos y valores ajustados</span></p>
+</section>
+<section id="fase-5-diagnosis-5" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>¿Queda algo cuadrático por modelizar?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb307"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb307-1"><a href="#cb307-1"></a>ajuste_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> tabla_residuos, res <span class="sc">~</span> fitted <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb307-2"><a href="#cb307-2"></a>ajuste_res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = res ~ fitted + I(fitted^2), data = tabla_residuos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.61037 -0.21400 -0.00073  0.18263  0.48033 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  11.4249     8.1718   1.398    0.175
+fitted       -3.2749     2.3353  -1.402    0.174
+I(fitted^2)   0.2332     0.1662   1.404    0.173
+
+Residual standard error: 0.2967 on 24 degrees of freedom
+Multiple R-squared:  0.07587,   Adjusted R-squared:  -0.001136 
+F-statistic: 0.9852 on 2 and 24 DF,  p-value: 0.3879</code></pre>
+</div>
+</div>
+<p>Nada</p>
+</section>
+<section id="fase-5-diagnosis-6" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>¿Queda algo cúbico por modelizar?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb309"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb309-1"><a href="#cb309-1"></a>ajuste_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> tabla_residuos, res <span class="sc">~</span> fitted <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(fitted<span class="sc">^</span><span class="dv">3</span>))</span>
+<span id="cb309-2"><a href="#cb309-2"></a>ajuste_res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = res ~ fitted + I(fitted^2) + I(fitted^3), data = tabla_residuos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.61061 -0.21374 -0.00042  0.18307  0.48005 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 11.885694  93.469001   0.127    0.900
+fitted      -3.474223  40.334602  -0.086    0.932
+I(fitted^2)  0.261837   5.779388   0.045    0.964
+I(fitted^3) -0.001361   0.274977  -0.005    0.996
+
+Residual standard error: 0.3031 on 23 degrees of freedom
+Multiple R-squared:  0.07588,   Adjusted R-squared:  -0.04466 
+F-statistic: 0.6295 on 3 and 23 DF,  p-value: 0.6034</code></pre>
+</div>
+</div>
+<p>Nada</p>
+</section>
+<section id="fase-5-diagnosis-7" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>¿Queda algo logarítmico por modelizar?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb311"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb311-1"><a href="#cb311-1"></a>ajuste_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> tabla_residuos, res <span class="sc">~</span> <span class="fu">log</span>(fitted))</span>
+<span id="cb311-2"><a href="#cb311-2"></a>ajuste_res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = res ~ log(fitted), data = tabla_residuos)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66120 -0.25408 -0.01996  0.28007  0.48887 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  0.08924    1.43915   0.062    0.951
+log(fitted) -0.04579    0.73788  -0.062    0.951
+
+Residual standard error: 0.3024 on 25 degrees of freedom
+Multiple R-squared:  0.000154,  Adjusted R-squared:  -0.03984 
+F-statistic: 0.003852 on 1 and 25 DF,  p-value: 0.951</code></pre>
+</div>
+</div>
+<p>Nada</p>
+</section>
+<section id="fase-5-diagnosis-8" class="slide level2">
+<h2>Fase 5: diagnosis</h2>
+<p>Como no podemos chequear cada función que existe en matemáticas, tras descartas las relaciones más comunes y probables, <strong>graficamos los residuos vs valores ajustados para chequear que no se observa ningún patrón</strong></p>
+<div class="cell">
+<details>
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb313"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb313-1"><a href="#cb313-1"></a><span class="fu">ggplot</span>(tabla_residuos, <span class="fu">aes</span>(<span class="at">x =</span> fitted, <span class="at">y =</span> res)) <span class="sc">+</span></span>
+<span id="cb313-2"><a href="#cb313-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb313-3"><a href="#cb313-3"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-193-1.png" width="960" class="r-stretch"></section>
+<section id="fase-6-inferencia" class="slide level2">
+<h2>Fase 6: inferencia</h2>
+<p>Ahora hemos <strong>chequeado las hipótesis</strong> podemos <span class="hl-yellow"><strong>interpretar la parte inferencial de mis parámetros</strong></span></p>
+<div class="fragment">
+<p>En el caso multivariante tendremos que los <span class="hl-yellow"><strong>parámetros siguen una distribución normal multivariante</strong></span> de <span class="hl-purple"><strong>media el vector de parámetros a estimar</strong></span> y de <span class="hl-purple"><strong>matriz de covarianzas la varianza residual por <span class="math inline">\(\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\)</span></strong></span></p>
+<p><span class="math display">\[\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)\]</span></p>
+<p>¿Que significa <strong>normal multivariante</strong>?</p>
+</div>
+</section>
+<section id="fase-6-inferencia-1" class="slide level2">
+<h2>Fase 6: inferencia</h2>
+<p><span class="math display">\[\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)\]</span></p>
+<p>Vamos a llamar <span class="math inline">\(\Sigma= \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\)</span> conocida como <span class="hl-yellow"><strong>matriz de varianzas-covarianzas</strong></span> de los parámetros. ¿Por qué una matriz y por qué covarianzas?</p>
+<div class="fragment">
+<ul>
+<li>Elementos de la <strong>diagonal</strong> <span class="math inline">\(\Sigma_{jj}\)</span>: cuantifican como pasaba en el univariante la <span class="hl-yellow"><strong>varianza de cada parámetro</strong></span> tal que</li>
+</ul>
+<p><span class="math display">\[\Sigma_{jj} = Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\]</span></p>
+</div>
+</section>
+<section id="fase-6-inferencia-2" class="slide level2">
+<h2>Fase 6: inferencia</h2>
+<p><span class="math display">\[\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)\]</span></p>
+<ul>
+<li>Elementos de <strong>fuera de la diagonal</strong> <span class="math inline">\(\Sigma_{ij}\)</span> (matriz simétrica): cuantifican la <span class="hl-yellow"><strong>covarianza de cada par de parámetros</strong></span> tal que</li>
+</ul>
+<p><span class="math display">\[\Sigma_{ij} = Cov[\widehat{\beta}_i, \widehat{\beta}_j] =  \sigma_{\varepsilon}^2 v_{ij}, \quad v_{ij} \text{ elemento (i,j) de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\]</span></p>
+<p>ya que los parámetros están relacionados (no pueden subir todos a la vez ni bajar).</p>
+</section>
+<section id="fase-6-inferencia-3" class="slide level2">
+<h2>Fase 6: inferencia</h2>
+<p>Esa normal multivariante, componente a componente, deriva en</p>
+<p><span class="math display">\[\widehat{\beta}_j\sim N \left(\beta_j, SE \left(\widehat{\beta}_j\right)^2 \right), \quad \frac{\widehat{\beta}_j - \beta_j}{SE \left(\widehat{\beta}_j\right)} \sim N \left(0, 1 \right), \quad \frac{\widehat{\beta}_j - \beta_j}{\widehat{SE} \left(\widehat{\beta}_j\right)} \sim t_{n-p-1}\]</span></p>
+<p>donde <span class="math inline">\(\widehat{SE} \left(\widehat{\beta}_j\right)^2 = \widehat{\sigma}_{\varepsilon}^2 v_j\)</span>, con <span class="math inline">\(v_j\)</span> el elemento <span class="math inline">\(j\)</span>-ésimo de la diagonal de <span class="math inline">\(\left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\)</span> (matriz que representa la <strong>variabilidad de predictores</strong>)</p>
+</section>
+<section id="precisión-vs-colinealidad" class="slide level2">
+<h2>Precisión vs colinealidad</h2>
+<p>Vamos a pararnos detenidamente en qué determina la varianza de los parámetros</p>
+<p><span class="math display">\[Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\]</span></p>
+<p>Como pasaba en el caso univariante: a <span class="hl-yellow"><strong>mayor cantidad de ruido en los datos, mayor será la varianza (menor precisión)</strong></span>. ¿Qué sucede con esos elementos <span class="math inline">\(v_j\)</span>?</p>
+<div class="fragment">
+<ul>
+<li>Si tenemos <span class="hl-yellow"><strong>dos o más predictoras que dependen linealmente entre sí</strong></span> –&gt; <span class="math inline">\(\left(X^{T} X \right)^{-1}\)</span> directamente <strong>no se puede invertir</strong> ya que es singular (determinante igual a 0, no es de rango completo)</li>
+</ul>
+<p>Esto se conoce como <span class="hl-yellow"><strong>colinealidad exacta</strong></span></p>
+</div>
+</section>
+<section id="precisión-vs-colinealidad-1" class="slide level2">
+<h2>Precisión vs colinealidad</h2>
+<p>Vamos a pararnos detenidamente en qué determina la varianza de los parámetros</p>
+<p><span class="math display">\[Var[\widehat{\beta}_j] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j, \quad v_j \text{ elemento j-ésimo de la diagonal de } \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\]</span></p>
+<p>La colinealidad exacta es solo el ejemplo más extremo de lo que hemos llamado <span class="hl-red"><strong>problema de colinealidad</strong></span>: un problema que aparece cuando varias predictoras están <strong>altamente correladas</strong>. Un <span class="hl-yellow"><strong>problema de colinealidad</strong></span> tiene principalmente dos consecuencias:</p>
+<div class="fragment">
+<ul>
+<li><span class="hl-red"><strong>Reduce la precisión de los estimadores</strong></span> ya que la matriz <span class="math inline">\(X^{T} X\)</span>, según aumenta la dependencia, tiene un determinante cada vez más cercano a 0, por lo que <span class="math inline">\(\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\)</span>, que siempre depende de <span class="math inline">\(1/det\left( \mathbf{X}^{T}\mathbf{X} \right)\)</span>, tendrá valores cada vez más grandes, por lo que sus elementos de la diagonal <span class="math inline">\(v_j\)</span> también: <span class="hl-red"><strong>a mayor colinealidad, mayor varianza de las estimaciones</strong></span></li>
+</ul>
+</div>
+</section>
+<section id="fase-7-evaluación" class="slide level2">
+<h2>Fase 7: evaluación</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb314"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ ., data = select(datos, -WinterRain, -Age, 
+    -FrancePop))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66299 -0.25269 -0.01668  0.28031  0.48530 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 48.1967815 16.0382256   3.005  0.00631 ** 
+Year        -0.0250942  0.0078670  -3.190  0.00408 ** 
+AGST         0.5367125  0.0982803   5.461 1.50e-05 ***
+HarvestRain -0.0044405  0.0008487  -5.232 2.63e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3153 on 23 degrees of freedom
+Multiple R-squared:  0.7816,    Adjusted R-squared:  0.7531 
+F-statistic: 27.44 on 3 and 23 DF,  p-value: 8.895e-08</code></pre>
+</div>
+</div>
+<ul>
+<li><span class="hl-yellow"><strong>Bondad de ajuste</strong></span>: usaremos el <span class="math inline">\(R_{adj}^2\)</span> ya que controla mejor la inflacción del <span class="math inline">\(R^2\)</span> al aumentar predictoras. En este caso es bastante bueno con <span class="math inline">\(0.7531\)</span> y además <span class="hl-yellow"><strong>no existe mucha diferencia con el <span class="math inline">\(R^2\)</span></strong></span>: aumento de complejidad justificado.</li>
+</ul>
+</section>
+<section id="fase-7-evaluación-1" class="slide level2">
+<h2>Fase 7: evaluación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>ANOVA</strong></span>: ahora tenemos el contraste <span class="math inline">\(H_0:~\beta_1 = \beta_2 = \beta_3 = 0\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb316"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb316-1"><a href="#cb316-1"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ ., data = select(datos, -WinterRain, -Age, 
+    -FrancePop))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66299 -0.25269 -0.01668  0.28031  0.48530 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 48.1967815 16.0382256   3.005  0.00631 ** 
+Year        -0.0250942  0.0078670  -3.190  0.00408 ** 
+AGST         0.5367125  0.0982803   5.461 1.50e-05 ***
+HarvestRain -0.0044405  0.0008487  -5.232 2.63e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3153 on 23 degrees of freedom
+Multiple R-squared:  0.7816,    Adjusted R-squared:  0.7531 
+F-statistic: 27.44 on 3 and 23 DF,  p-value: 8.895e-08</code></pre>
+</div>
+</div>
+</section>
+<section id="fase-7-evaluación-2" class="slide level2">
+<h2>Fase 7: evaluación</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb318"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb318-1"><a href="#cb318-1"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">aov</span>() <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+Year         1  2.219   2.219   22.32 9.24e-05 ***
+AGST         1  3.243   3.243   32.62 8.14e-06 ***
+HarvestRain  1  2.722   2.722   27.37 2.63e-05 ***
+Residuals   23  2.287   0.099                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Si te fijas ahora <code>aov()</code> nos devuelve 4 filas ya que en realidad nos hace una <span class="hl-yellow"><strong>ANOVA secuencial</strong></span> (variable a variable)</p>
+</section>
+<section id="fase-7-evaluación-3" class="slide level2">
+<h2>Fase 7: evaluación</h2>
+<table>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">Df (grados)</th>
+<th style="text-align: center;">Sum Sq</th>
+<th style="text-align: center;">Mean Sq</th>
+<th style="text-align: center;">F value</th>
+<th style="text-align: center;">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(SSR_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{SSR_1}{1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F-value = \frac{\frac{SSR_1}{1}}{\frac{SSE}{n-p-1}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(p_1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;"><span class="math inline">\(F-value = \frac{\frac{SSR}{p}}{\frac{SSE}{n-p-1}}\)</span></td>
+<td style="text-align: center;">p-valor F test</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(x_p\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(SSR_p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{SSR_p}{1}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F-value = \frac{\frac{SSR_p}{1}}{\frac{SSE}{n-p-1}}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(p_p\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Residuals</td>
+<td style="text-align: center;">n - p - 1</td>
+<td style="text-align: center;">SSE</td>
+<td style="text-align: center;"><span class="math inline">\(\widehat{\sigma}_{\varepsilon}^{2} = \frac{SSE}{n-p-1}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>donde <span class="math inline">\(SSR_j\)</span>, con <span class="math inline">\(j=1,\ldots,p\)</span>, representa la <strong>suma de residuos al cuadrado</strong> cuando incluimos la predictora j-ésima <span class="math inline">\(X_j\)</span>, frente a cuando no lo hacemos, tal que <span class="math inline">\(SSR_j = SSR \left(X_1, \ldots, X_j \right) - SSR \left(X_1, \ldots, X_{j-1} \right)\)</span></p>
+</section>
+<section id="fase-8-predicción" class="slide level2">
+<h2>Fase 8: predicción</h2>
+<p>Por último podemos predecir otros valores que tengamos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb320"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb320-1"><a href="#cb320-1"></a>nuevos_datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">"AGST"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="fl">15.5</span>, <span class="dv">16</span>, <span class="dv">17</span>),</span>
+<span id="cb320-2"><a href="#cb320-2"></a>                       <span class="st">"Year"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1960</span>, <span class="dv">1970</span>, <span class="dv">1975</span>, <span class="dv">1978</span>, <span class="dv">1990</span>),</span>
+<span id="cb320-3"><a href="#cb320-3"></a>                       <span class="st">"HarvestRain"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">120</span>, <span class="dv">30</span>, <span class="dv">200</span>, <span class="dv">150</span>, <span class="dv">240</span>))</span>
+<span id="cb320-4"><a href="#cb320-4"></a><span class="fu">predict</span>(ajuste_saturado, <span class="at">newdata =</span> nuevos_datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1        2        3        4        5 
+4.919870 6.678712 6.066709 6.481809 6.317744 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>De las 5 predicciones <strong>solo la tercera y la cuarta son fiables</strong>: aunque el <span class="math inline">\(R^2\)</span> sea bastante bueno, el resto de observaciones tiene <span class="hl-red"><strong>alguna de las predictoras fuera del rango de aprendizaje del modelo</strong></span></p>
+</div>
+</section></section>
+<section id="clase-1" class="title-slide slide level1 center">
+<h1>Clase 15: selección de modelos</h1>
+<p><span style="color:#444442;"><strong>Colinealidad y selección secuencial de modelos</strong></span></p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
