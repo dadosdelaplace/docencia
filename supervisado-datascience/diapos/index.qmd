@@ -6194,12 +6194,18 @@ La colinealidad exacta es solo el ejemplo más extremo de lo que hemos llamado [
 
 ## Fase 7: evaluación
 
+* [**Bondad de ajuste**]{.hl-yellow}: usaremos el $R_{adj}^2$ ya que controla mejor la inflacción del $R^2$ al aumentar predictoras. En este caso es bastante bueno con $0.7531$ y además [**no existe mucha diferencia con el $R^2$**]{.hl-yellow}: aumento de complejidad justificado.
+
+
+Sabemos además que cuando $n$ es suficientemente grande
+
+$$\lim_{n\to \infty} R_{adj}^2 = \lim_{n\to \infty} \left(1 - \frac{\widehat{\sigma}_{\varepsilon}^{2}}{SST}(n-1) \right) = \lim_{n\to \infty} \left(1 - \frac{\widehat{\sigma}_{\varepsilon}^{2}}{SST}(n-p-1) \right) = R^2$$
+
+
 ```{r}
 ajuste_saturado |> summary()
 ```
 
-
-* [**Bondad de ajuste**]{.hl-yellow}: usaremos el $R_{adj}^2$ ya que controla mejor la inflacción del $R^2$ al aumentar predictoras. En este caso es bastante bueno con $0.7531$ y además [**no existe mucha diferencia con el $R^2$**]{.hl-yellow}: aumento de complejidad justificado.
 
 
 ---
@@ -6257,4 +6263,449 @@ De las 5 predicciones **solo la tercera y la cuarta son fiables**: aunque el $R^
 
 # Clase 15: selección de modelos {#clase-1}
 
-[**Colinealidad y selección secuencial de modelos**]{style="color:#444442;"}
+[**Selección secuencial de modelos**]{style="color:#444442;"}
+
+
+---
+
+## Selección de modelos
+
+
+Como hemos visto en un **modelo de regresión multivariante** va a ser crucial [**la selección de variables variables**]{.hl-yellow} para solventar esos problemas de colinealidad o de significación estadística. Y como hemos visto, [**no podremos simplemente comparar 2 a 2 correlaciones o p-valores**]{.hl-red} ya que el efecto de una variable nos puede afectar en otras. ¿Qué hacer?
+
+. . .
+
+Un [**protocolo de actuación**]{.hl-yellow} habitual podría ser el siguiente:
+
+1. Hacemos el [**ajuste del modelo sin haber seleccionada nada**]{.hl-yellow}
+
+2. Eliminamos variables sin correlación lineal con la objetiva (`cor.test()`)
+
+3. Calculamos el [**VIF de cada estimador**]{.hl-yellow} y adoptamos un umbral (por ejemplo, $VIF > 10$), de manera que [**eliminamos la predictora con VIF más alto por encima de ese umbral**]{.hl-yellow}
+
+
+De ahora en adelante llamaremos [**modelo saturado**]{.hl-yellow} al modelo con las predictoras  que sale del paso 4
+
+
+
+
+---
+
+## Selección de modelos
+
+
+Lo que nos dice el VIF y lo visto hasta ahora es que, incluso aunque tengan efecto, [**añadir predictoras complejizando el modelo no es gratis**]{.hl-yellow}, ya que lo hacemos a costa de [**sobreajustar el modelo**]{.hl-yellow} (la varianza de los estimadores se incrementa considerablemente)
+
+¿Cuál es el [**número mínimo/máximo de predictoras**]{.hl-yellow} que podremos incluir?
+
+. . .
+
+* El número mínimo de predictoras será $p = 1$
+* El número máximo será $p = n-2$, o dicho de otra forma, necesito al menos $n \geq p+2$ observaciones. Piensa en $p=1$: si quiero una recta, necesito al menos 2 puntos para que la recta existe y al menos 3 para poder calcular la varianza residual estimada (acuérdate que se divide entre $n-p-1$)
+
+. . .
+
+De manera resumida: dado un modelo con $p$ predictores, necesitaremos estimar [**$p+2$ incógnitas**]{.hl-yellow} ($p+1$ coeficientes y la varianza residual).
+
+
+---
+
+
+## Selección de modelos
+
+Así que aunque en los pasos anteriores hayamos [**eliminado información redundante**]{.hl-yellow} o variables sin correlación lineal con la objetivo que nos pueden aportar ruido, necesitamos todavía llevar a cabo una [**selección de modelos más fina**]{.hl-yellow}.
+
+
+. . .
+
+Las opciones que veremos en este curso serán
+
+* BIC
+* AIC
+* Regresión penalizada (LASSO, ridge, elastic net)
+
+
+---
+
+## BIC y AIC
+
+[**¿Cómo seleccionar los predictores más adecuados para el CONJUNTO del ajuste?**]{.hl-yellow}
+
+. . .
+
+Los métodos más conocidos son los conocidos como [**selección de modelos stepwise (paso-a-paso)**]{.hl-yellow}, que de manera **iterativa**, va incluyendo y descartando distintos predictores, y comparando su calidad, para decidir que **combinación de parámetros** es la más óptima.
+
+. . .
+
+La idea es [**seleccionar el modelo más óptimo**]{.hl-yellow} en función de un [**criterio de información**]{.hl-yellow} que combina la calidad del modelo con el número de predictoras empleadas: vamos a [**penalizar el uso de variables que no mejore suficiente el modelo**]{.hl-yellow}
+
+---
+
+
+## BIC y AIC
+
+Los dos criterios de información más famosos son el [**Bayesian Information Criterion (BIC)**]{.hl-yellow} y el [**Akaike Information Criterion (AIC)**]{.hl-yellow} definidos ambos como
+
+$$AIC/BIC_{modelo} = -Calidad + \underbrace{\text{npar(modelo)} * \text{penalización}}_{\text{Complejidad}}$$
+
+
+* $\text{npar(modelo)}$ es el [**número de parámetros a estimar del modelo**]{.hl-yellow}, que en el caso que nos ocupa es $\text{npar(modelo)} = p+2$ (coeficientes + var residual)
+
+* $\text{Calidad}$ una medida que nos diga como de bueno es nuestro ajuste: al tener signo negativo, buscamos el [**menor valor de AIC/BIC**]{.hl-yellow}
+
+* $\text{penalización}$: cuando sube $p$, entonces suba el $AIC/BIC$
+
+El objetivo será probar [**distintos modelos y quedarnos con el que tenga AIC/BIC más pequeño**]{.hl-yellow}
+
+---
+
+## BIC y AIC
+
+Es habitual que la [**calidad del modelo**]{.hl-yellow} venga cuantificada por $2\ell(\text{modelo})$, donde $\ell(\text{modelo})$ es lo que se conoce como [**log-verosimilitud del modelo**]{.hl-yellow} 
+
+$$\ell(\text{modelo}) = \log \left(P \left(\text{datos} |  \left(\text{parámetros}, \text{modelo} \right) \right) \right)$$
+
+es decir, suponiendo que el **modelo fuese correcto** y los **parámetros valiesen la estimación obtenida**, ¿cómo de [**probable es que mis datos hayan sido los que han sido**]{.hl-yellow}?
+
+. . .
+
+Así nuestros criterios quedan como
+
+$$AIC/BIC_{modelo} = -2\ell(\text{modelo}) + \underbrace{(p+2) * \text{penalización}}_{\text{Complejidad}}$$
+
+---
+
+## BIC y AIC
+
+La diferencia entre ambos está en la **penalización usada**
+
+
+$$BIC(modelo_p) = -2\ell(\text{modelo}) + \underbrace{(p+2) * \log(n)}_{\text{Complejidad}}$$
+
+$$AIC (modelo_p) = -2\ell(\text{modelo}) + \underbrace{(p+2) * 2}_{\text{Complejidad}}$$
+
+El [**criterio BIC es más agresivo**]{.hl-yellow} seleccionando variables ya que, si $n$ crece, $\log(n) >> 2$ (penaliza más el sobreajuste) y, además, [**depende del tamaño muestral**]{.hl-yellow}
+
+---
+
+
+## BIC y AIC
+
+Vamos a ver un **ejemplo** con `wine.csv`. Ya sabemos que debemos elimnar
+
+* `WinterRain`: no correla linealmente con `Price`
+* `Age`: presenta colinealidad exacta con otras predictoras
+* `FrancePop`: presenta problemas de colinealidad con $VIF > 10$.
+
+
+Al modelo `Price ~ Year + AGST + HarvestRain` le llamaremos **modelo saturado**. Además de ese haremos otros 4 ajustes: solo `AGST`,  otro `AGST + HarvestRain`, otro `AGST + Year`, y otro con todas (incluso las que hemos rechazado incluir)
+
+```{r}
+datos <- read_csv(file = "./datos/wine.csv")
+ajuste_sin_depurar <- lm(data = datos, formula = Price ~ .)
+ajuste_saturado <- lm(data = datos |> select(-WinterRain, -Age, -FrancePop), formula = Price ~ .)
+ajuste_1 <- lm(data = datos, formula = Price ~ AGST)
+ajuste_2 <- lm(data = datos, formula = Price ~ AGST + HarvestRain)
+ajuste_3 <- lm(data = datos, formula = Price ~ AGST + Year)
+```
+
+---
+
+## BIC y AIC
+
+Tras aplicar los 4 modelos [**calcularemos su BIC/AIC**]{.hl-yellow} con las funciones `BIC()` y `AIC()`
+
+:::: columns
+::: {.column width="50%"}
+```{r}
+BIC(ajuste_sin_depurar)
+BIC(ajuste_saturado)
+BIC(ajuste_1)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+BIC(ajuste_2)
+BIC(ajuste_3)
+```
+:::
+::::
+
+. . .
+
+:::: columns
+::: {.column width="50%"}
+```{r}
+AIC(ajuste_sin_depurar)
+AIC(ajuste_saturado)
+AIC(ajuste_1)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+AIC(ajuste_2)
+AIC(ajuste_3)
+```
+:::
+::::
+
+---
+
+## BIC y AIC
+
+Podemos usar  `compare_performance()`  ($AICc = AIC +\frac{2(p+2)^{2} + 2(p+2)}{n-(p+2)-1}$ versión corregida para tamaños muestrales pequeños)
+
+```{r}
+performance::compare_performance(ajuste_sin_depurar, ajuste_saturado, ajuste_1, ajuste_2, ajuste_3)
+```
+
+. . .
+
+En ambos criterios la conclusión es que de los 5 modelos, el [**"mejor" es el que hemos llamado saturado ya que proporciona AIC/BIC más bajos**]{.hl-yellow} (aunque $R_{adj}^2$ menor): la mejora que produce meter todas las variables iniciales no es suficiente para lo que se complica el modelo.
+
+---
+
+## Ejercicio de simulación
+
+Simula el siguiente modelo para $n=200$
+
+* $Y = 0.01 + 1.5*X_1 -1.5X_2 + \varepsilon$ con $X_1,X_2 \sim N(0,1)$ y $\varepsilon \sim N(0, 2)$
+* Añade una predictora basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-8}$ ($j=1$)
+* Añade 5 predictoras basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-8}$ ( $j = 5$)
+* Añade 10 predictoras basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-8}$ ( $j = 20$)
+* Añade 25 predictoras basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-8}$ ( $j = 40$)
+* Añade 50 predictoras basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-8}$ ( $j = 80$)
+
+Pista: define el modelo base inicial. Después crea un vector `p <- c(1, 5, 20, 40, 80)` y haz un bucle que lo recorra (añadiendo en cada iteración las predictoras basura que correspondan)
+
+
+---
+
+## Ejercicio de simulación
+
+```{r}
+#| echo: false
+n <- 200
+p <- c(1, 5, 20, 40, 80)
+
+set.seed(12345)
+x_1 <- rnorm(n)
+x_2 <- rnorm(n)
+eps <- rnorm(n, mean = 0, sd = 2)
+y <- 0.01 + 1.5*x_1 - 1.5*x_2 + eps
+ajuste_0 <- lm(data = tibble("y" = y, "x_1" = x_1, "x_2" = x_2), y ~ .)
+
+X <- matrix(rnorm(n * max(p), mean = 0, sd = 2), nrow = n)
+ajuste <- list()
+for (j in 1:length(p)) {
+  
+  ynew <- y + 1e-8 * sum(X[, 1:p[j]])
+  datos <- tibble("y" = ynew, "x_1" = x_1, "x_2" = x_2, X[, 1:p[j]])
+  ajuste[[j]] <- lm(data = datos, y ~ .)
+}
+performance::compare_performance(ajuste_0, ajuste[[1]], ajuste[[2]],
+                    ajuste[[3]], ajuste[[4]], ajuste[[5]])
+```
+
+* $R^2$ no deja de crecer
+* `AIC` y `BIC` no dejan de crecer (más valor de ambos, peor), pero crece mucho más el `BIC` (¿por qué?)
+* $R_{adj}^2$ mucho más controlado.
+
+---
+
+## Sobreajuste
+
+Algo importante a tener en cuenta es que, aunque ambos criterios nos ayudan a seleccionar modelos, ambos [**funcionan de manera aceptable bajo la hipótesis**]{.hl-yellow} de que $n >> p +2$: en caso contrario, si $n$ se acerca a $p +2$, el sobreajuste seguirá produciéndose
+
+. . .
+
+Dado que la penalización es más grande en el BIC, el [**criterio BIC nos garantiza una más temprana detección del sobreajuste**]{.hl-yellow}
+
+---
+
+## Simulación: sobreajuste
+
+Simula el siguiente modelo para $n=150$
+
+* $Y = 0.01 + 1.5*X_1 -1.5X_2 + \varepsilon$ con $X_1,X_2 \sim N(0,1)$ y $\varepsilon \sim N(0, 2)$
+* Añade secuencialmente 145 predictoras basura $X_{2+j} \sim N(0, 2)$ con $\beta_{2+j} = 10^{-10}$ ( $j = 145$) y guarda, para cada uno de los 195 modelos, el BIC y AIC de los modelos
+* Repite el proceso anterior 100 veces (y pinta las 100 curvas del BIC y las 100 curvas del AIC, donde el eje x será el número de predictoras)
+
+Pista: debes generar dos bucles, uno de 80 iteraciones y otro que, dentro cada iteración, genere los 145 ajustes y guarde el BIC y AIC (80x145 valores)
+
+
+---
+
+## Simulación: sobreajuste
+
+```{r}
+#| echo: false
+M <- 80
+n <- 150
+p <- 145
+BIC_values <- AIC_values <- matrix(NA, M, p)
+
+set.seed(12345)
+for (i in 1:M) {
+  
+  x_1 <- rnorm(n)
+  x_2 <- rnorm(n)
+  eps <- rnorm(n, mean = 0, sd = 12)
+  y <- 0.01 + 1.5*x_1 - 1.5*x_2 + eps
+  
+  X <- matrix(NA, n, p)
+  for (j in 1:p) {
+    
+    X[, j] <- rnorm(n, mean = 0, sd = 2)
+    y <- y + 1e-10 * X[, j]
+    datos <- tibble("y" = y, "x_1" = x_1, "x_2" = x_2, X[, 1:j])
+    ajuste <- lm(data = datos, y ~ .)
+    
+    BIC_values[i, j] <- BIC(ajuste)
+    AIC_values[i, j] <- AIC(ajuste)
+  }
+}
+
+mean_BIC <- BIC_values |> colMeans()
+mean_AIC <- AIC_values |> colMeans()
+
+gg <- ggplot()
+for (i in 1:M) {
+  gg <-
+    gg +
+    geom_line(data =
+                 tibble("p" = 1:p, "BIC" = BIC_values[i, ],
+                        "AIC" = AIC_values[i, ]) |>
+                 pivot_longer(cols = -p, names_to = "criterio",
+                              values_to = "values"),
+               aes(x = p, y = values, color = criterio),
+              linewidth = 0.01, alpha = 0.1) +
+    geom_line(data = tibble("p" = 1:p, "BIC" = mean_BIC,
+                            "AIC" = mean_AIC) |>
+                 pivot_longer(cols = -p, names_to = "criterio",
+                              values_to = "values"),
+              aes(x = p, y = values, color = criterio), linewidth = 1.5)
+}
+gg1 <- 
+  gg +
+  theme_minimal() +
+  labs(x = "Número de predictoras basura")
+gg1
+```
+
+Fíjate como el BIC tarda más en descender, de hecho $BIC(p=195)>BIC(p=2)$
+ (nos haría quedarnos con el modelo sin sobreajustar) mientras que $AIC(p=115)<AIC(p=2)$ (aprox, y para todos los que van detrás), por lo que acabaríamos eligiendo el modelo más sobreajustado.
+ 
+---
+
+## Consistencia
+
+Otra [**enorme ventaja del BIC**]{.hl-yellow} es que se ha demostrado matemáticamente que es [**consistente**]{.hl-yellow}: si el tamaño muestral fuese lo suficientemente grande, el [**BIC garantiza elegir el modelo correcto que genera los datos**]{.hl-green}. Matemáticamente se cumple que, si tenemos una serie de modelos $M_1, \ldots, M_m$, y el modelo real que genera los datos $M_0$ (que pretendemos estimar), entonces
+
+$$P\left[\arg\min_{k=0,\ldots,m}\text{BIC}(\widehat{M}_k)=0\right]\to 1, \quad  n \to \infty$$
+
+Esto solo suponiendo que el modelo subyacente sea lineal claro... Esto [**no sucede con el AIC**]{.hl-red} (para vuestro yo del futuro: en <https://doi.org/10.2307/2290328.> se prueba que el AIC es equivalente a usar validación cruzada leave-one-out, el cual es inconsistente)
+
+---
+
+## stepAIC
+
+Y aquí nos puede nacer una duda: si tengo muchos predictores, [**¿tengo que calcular el BIC/AIC de todas las combinaciones posibles?**]{.hl-yellow}
+
+. . .
+
+Sí, pero lo hará por nosotros `MASS::stepAIC()`, donde en el parámetro `k = ...` le indicamos la penalización (si `k = 2` es AIC y si `k = log(n)` es el BIC)
+
+```{r}
+#| eval: false
+datos <- read_csv(file = "./datos/wine.csv")
+ajuste_saturado <- lm(data = datos, Price ~ .)
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)))
+```
+
+---
+
+## stepAIC
+
+```{r}
+datos <- read_csv(file = "./datos/wine.csv")
+ajuste_saturado <- lm(data = datos, Price ~ .)
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)))
+```
+
+
+---
+
+## stepAIC
+
+Lo que obtendremos será una [**selección secuencial de modelos**]{.hl-yellow}, de manera que el irá probando las combinaciones, nos **muestra el ajuste y el valor del BIC/AIC** y se parará cuando el AIC/BIC no mejore.
+
+```{r}
+#| eval: false
+datos <- read_csv(file = "./datos/wine.csv")
+ajuste_saturado <- lm(data = datos, Price ~ .)
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)))
+```
+
+
+---
+
+## stepAIC
+
+```{r}
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)), direction = "forward")
+```
+
+El argumento `direction = ...` puede tomar los valores `"both"`, `"forward"` y `"backward"` (por defecto) que nos determina la [**dirección de búsqueda**]{.hl-yellow}:
+
+
+* `direction = "forward"`: empieza con el modelo proporcionado y va [**añadiendo**]{.hl-yellow} predictoras haciendo modelos cada vez más complejos.
+
+---
+
+## stepAIC
+
+```{r}
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)), direction = "forward")
+```
+
+
+Fíjate que ahora  como le hemos dado el modelo saturado y `direction = "forward"`, entonces no hace nada. Para controlar esto podríamos incluir la variable `scope = list(lower = mod_easy, upper = mod_complex)`, donde **podemos pasarle dos modelos**: los modelos más complejos y más sencillo **entre los que queremos que se mueva en la búsqueda**.
+
+---
+
+## stepAIC
+
+```{r}
+#| eval: false
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)), direction = "backward")
+```
+
+* `direction = "backward"`: empieza con el modelo proporcionado y va [**eliminando**]{.hl-yellow} predictoras haciendo modelos cada vez más sencillos.
+
+
+```{r}
+#| eval: false
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)))
+```
+
+* `direction = "both"`: empieza con el modelo proporcionado y va [**añadiendo y eliminando**]{.hl-yellow} predictoras según sea más conveniente (pudiendo añadir/eliminar una variable que previamente e había eliminado/añadido)
+
+
+
+
+---
+
+## stepAIC
+
+```{r}
+MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)), direction = "forward")
+```
+
+[**Aviso**]{.hl-red}: en realidad `MASS::stepAIC()` no calcula exactamente el mismo BIC/AIC que las funciones `BIC()` e `AIC()`, sino que les suma una constante $n(\log(2\pi) + 1) + \log(n)$ para BIC y $n(\log(2\pi) + 1) + 2$ para AIC
+
+Dado que es una constante nos da igual para comparar modelos, pero hace que [**NO podamos comparar salidas**]{.hl-red} de `BIC()` y `AIC()` con salidas de `MASS::stepAIC()`.
+
+

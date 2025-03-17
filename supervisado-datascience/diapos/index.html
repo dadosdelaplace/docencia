@@ -6010,11 +6010,11 @@ alternative hypothesis: highest value 5 is an outlier</code></pre>
 <span id="cb272-7"><a href="#cb272-7"></a>                      <span class="at">max_depth =</span> <span class="dv">7</span>)</span>
 <span id="cb272-8"><a href="#cb272-8"></a>isoforest<span class="sc">$</span><span class="fu">fit</span>(<span class="at">dataset =</span> datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO  [14:03:41.573] Building Isolation Forest ...
-INFO  [14:03:41.623] done
-INFO  [14:03:41.630] Computing depth of terminal nodes ...
-INFO  [14:03:42.360] done
-INFO  [14:03:42.370] Completed growing isolation forest</code></pre>
+<pre><code>INFO  [16:54:35.690] Building Isolation Forest ...
+INFO  [16:54:35.818] done
+INFO  [16:54:35.824] Computing depth of terminal nodes ...
+INFO  [16:54:37.418] done
+INFO  [16:54:37.433] Completed growing isolation forest</code></pre>
 </div>
 </div>
 </section>
@@ -6634,6 +6634,11 @@ F-statistic: 0.003852 on 1 and 25 DF,  p-value: 0.951</code></pre>
 </section>
 <section id="fase-7-evaluación" class="slide level2">
 <h2>Fase 7: evaluación</h2>
+<ul>
+<li><span class="hl-yellow"><strong>Bondad de ajuste</strong></span>: usaremos el <span class="math inline">\(R_{adj}^2\)</span> ya que controla mejor la inflacción del <span class="math inline">\(R^2\)</span> al aumentar predictoras. En este caso es bastante bueno con <span class="math inline">\(0.7531\)</span> y además <span class="hl-yellow"><strong>no existe mucha diferencia con el <span class="math inline">\(R^2\)</span></strong></span>: aumento de complejidad justificado.</li>
+</ul>
+<p>Sabemos además que cuando <span class="math inline">\(n\)</span> es suficientemente grande</p>
+<p><span class="math display">\[\lim_{n\to \infty} R_{adj}^2 = \lim_{n\to \infty} \left(1 - \frac{\widehat{\sigma}_{\varepsilon}^{2}}{SST}(n-1) \right) = \lim_{n\to \infty} \left(1 - \frac{\widehat{\sigma}_{\varepsilon}^{2}}{SST}(n-p-1) \right) = R^2\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb314"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb314-1"><a href="#cb314-1"></a>ajuste_saturado <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -6660,9 +6665,6 @@ Multiple R-squared:  0.7816,    Adjusted R-squared:  0.7531
 F-statistic: 27.44 on 3 and 23 DF,  p-value: 8.895e-08</code></pre>
 </div>
 </div>
-<ul>
-<li><span class="hl-yellow"><strong>Bondad de ajuste</strong></span>: usaremos el <span class="math inline">\(R_{adj}^2\)</span> ya que controla mejor la inflacción del <span class="math inline">\(R^2\)</span> al aumentar predictoras. En este caso es bastante bueno con <span class="math inline">\(0.7531\)</span> y además <span class="hl-yellow"><strong>no existe mucha diferencia con el <span class="math inline">\(R^2\)</span></strong></span>: aumento de complejidad justificado.</li>
-</ul>
 </section>
 <section id="fase-7-evaluación-1" class="slide level2">
 <h2>Fase 7: evaluación</h2>
@@ -6787,13 +6789,427 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>De las 5 predicciones <strong>solo la tercera y la cuarta son fiables</strong>: aunque el <span class="math inline">\(R^2\)</span> sea bastante bueno, el resto de observaciones tiene <span class="hl-red"><strong>alguna de las predictoras fuera del rango de aprendizaje del modelo</strong></span></p>
 </div>
 </section></section>
+<section>
 <section id="clase-1" class="title-slide slide level1 center">
 <h1>Clase 15: selección de modelos</h1>
-<p><span style="color:#444442;"><strong>Colinealidad y selección secuencial de modelos</strong></span></p>
+<p><span style="color:#444442;"><strong>Selección secuencial de modelos</strong></span></p>
+</section>
+<section id="selección-de-modelos" class="slide level2">
+<h2>Selección de modelos</h2>
+<p>Como hemos visto en un <strong>modelo de regresión multivariante</strong> va a ser crucial <span class="hl-yellow"><strong>la selección de variables variables</strong></span> para solventar esos problemas de colinealidad o de significación estadística. Y como hemos visto, <span class="hl-red"><strong>no podremos simplemente comparar 2 a 2 correlaciones o p-valores</strong></span> ya que el efecto de una variable nos puede afectar en otras. ¿Qué hacer?</p>
+<div class="fragment">
+<p>Un <span class="hl-yellow"><strong>protocolo de actuación</strong></span> habitual podría ser el siguiente:</p>
+<ol type="1">
+<li><p>Hacemos el <span class="hl-yellow"><strong>ajuste del modelo sin haber seleccionada nada</strong></span></p></li>
+<li><p>Eliminamos variables sin correlación lineal con la objetiva (<code>cor.test()</code>)</p></li>
+<li><p>Calculamos el <span class="hl-yellow"><strong>VIF de cada estimador</strong></span> y adoptamos un umbral (por ejemplo, <span class="math inline">\(VIF &gt; 10\)</span>), de manera que <span class="hl-yellow"><strong>eliminamos la predictora con VIF más alto por encima de ese umbral</strong></span></p></li>
+</ol>
+<p>De ahora en adelante llamaremos <span class="hl-yellow"><strong>modelo saturado</strong></span> al modelo con las predictoras que sale del paso 4</p>
+</div>
+</section>
+<section id="selección-de-modelos-1" class="slide level2">
+<h2>Selección de modelos</h2>
+<p>Lo que nos dice el VIF y lo visto hasta ahora es que, incluso aunque tengan efecto, <span class="hl-yellow"><strong>añadir predictoras complejizando el modelo no es gratis</strong></span>, ya que lo hacemos a costa de <span class="hl-yellow"><strong>sobreajustar el modelo</strong></span> (la varianza de los estimadores se incrementa considerablemente)</p>
+<p>¿Cuál es el <span class="hl-yellow"><strong>número mínimo/máximo de predictoras</strong></span> que podremos incluir?</p>
+<div class="fragment">
+<ul>
+<li>El número mínimo de predictoras será <span class="math inline">\(p = 1\)</span></li>
+<li>El número máximo será <span class="math inline">\(p = n-2\)</span>, o dicho de otra forma, necesito al menos <span class="math inline">\(n \geq p+2\)</span> observaciones. Piensa en <span class="math inline">\(p=1\)</span>: si quiero una recta, necesito al menos 2 puntos para que la recta existe y al menos 3 para poder calcular la varianza residual estimada (acuérdate que se divide entre <span class="math inline">\(n-p-1\)</span>)</li>
+</ul>
+</div>
+<div class="fragment">
+<p>De manera resumida: dado un modelo con <span class="math inline">\(p\)</span> predictores, necesitaremos estimar <span class="hl-yellow"><strong><span class="math inline">\(p+2\)</span> incógnitas</strong></span> (<span class="math inline">\(p+1\)</span> coeficientes y la varianza residual).</p>
+</div>
+</section>
+<section id="selección-de-modelos-2" class="slide level2">
+<h2>Selección de modelos</h2>
+<p>Así que aunque en los pasos anteriores hayamos <span class="hl-yellow"><strong>eliminado información redundante</strong></span> o variables sin correlación lineal con la objetivo que nos pueden aportar ruido, necesitamos todavía llevar a cabo una <span class="hl-yellow"><strong>selección de modelos más fina</strong></span>.</p>
+<div class="fragment">
+<p>Las opciones que veremos en este curso serán</p>
+<ul>
+<li>BIC</li>
+<li>AIC</li>
+<li>Regresión penalizada (LASSO, ridge, elastic net)</li>
+</ul>
+</div>
+</section>
+<section id="bic-y-aic" class="slide level2">
+<h2>BIC y AIC</h2>
+<p><span class="hl-yellow"><strong>¿Cómo seleccionar los predictores más adecuados para el CONJUNTO del ajuste?</strong></span></p>
+<div class="fragment">
+<p>Los métodos más conocidos son los conocidos como <span class="hl-yellow"><strong>selección de modelos stepwise (paso-a-paso)</strong></span>, que de manera <strong>iterativa</strong>, va incluyendo y descartando distintos predictores, y comparando su calidad, para decidir que <strong>combinación de parámetros</strong> es la más óptima.</p>
+</div>
+<div class="fragment">
+<p>La idea es <span class="hl-yellow"><strong>seleccionar el modelo más óptimo</strong></span> en función de un <span class="hl-yellow"><strong>criterio de información</strong></span> que combina la calidad del modelo con el número de predictoras empleadas: vamos a <span class="hl-yellow"><strong>penalizar el uso de variables que no mejore suficiente el modelo</strong></span></p>
+</div>
+</section>
+<section id="bic-y-aic-1" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>Los dos criterios de información más famosos son el <span class="hl-yellow"><strong>Bayesian Information Criterion (BIC)</strong></span> y el <span class="hl-yellow"><strong>Akaike Information Criterion (AIC)</strong></span> definidos ambos como</p>
+<p><span class="math display">\[AIC/BIC_{modelo} = -Calidad + \underbrace{\text{npar(modelo)} * \text{penalización}}_{\text{Complejidad}}\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\text{npar(modelo)}\)</span> es el <span class="hl-yellow"><strong>número de parámetros a estimar del modelo</strong></span>, que en el caso que nos ocupa es <span class="math inline">\(\text{npar(modelo)} = p+2\)</span> (coeficientes + var residual)</p></li>
+<li><p><span class="math inline">\(\text{Calidad}\)</span> una medida que nos diga como de bueno es nuestro ajuste: al tener signo negativo, buscamos el <span class="hl-yellow"><strong>menor valor de AIC/BIC</strong></span></p></li>
+<li><p><span class="math inline">\(\text{penalización}\)</span>: cuando sube <span class="math inline">\(p\)</span>, entonces suba el <span class="math inline">\(AIC/BIC\)</span></p></li>
+</ul>
+<p>El objetivo será probar <span class="hl-yellow"><strong>distintos modelos y quedarnos con el que tenga AIC/BIC más pequeño</strong></span></p>
+</section>
+<section id="bic-y-aic-2" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>Es habitual que la <span class="hl-yellow"><strong>calidad del modelo</strong></span> venga cuantificada por <span class="math inline">\(2\ell(\text{modelo})\)</span>, donde <span class="math inline">\(\ell(\text{modelo})\)</span> es lo que se conoce como <span class="hl-yellow"><strong>log-verosimilitud del modelo</strong></span></p>
+<p><span class="math display">\[\ell(\text{modelo}) = \log \left(P \left(\text{datos} |  \left(\text{parámetros}, \text{modelo} \right) \right) \right)\]</span></p>
+<p>es decir, suponiendo que el <strong>modelo fuese correcto</strong> y los <strong>parámetros valiesen la estimación obtenida</strong>, ¿cómo de <span class="hl-yellow"><strong>probable es que mis datos hayan sido los que han sido</strong></span>?</p>
+<div class="fragment">
+<p>Así nuestros criterios quedan como</p>
+<p><span class="math display">\[AIC/BIC_{modelo} = -2\ell(\text{modelo}) + \underbrace{(p+2) * \text{penalización}}_{\text{Complejidad}}\]</span></p>
+</div>
+</section>
+<section id="bic-y-aic-3" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>La diferencia entre ambos está en la <strong>penalización usada</strong></p>
+<p><span class="math display">\[BIC(modelo_p) = -2\ell(\text{modelo}) + \underbrace{(p+2) * \log(n)}_{\text{Complejidad}}\]</span></p>
+<p><span class="math display">\[AIC (modelo_p) = -2\ell(\text{modelo}) + \underbrace{(p+2) * 2}_{\text{Complejidad}}\]</span></p>
+<p>El <span class="hl-yellow"><strong>criterio BIC es más agresivo</strong></span> seleccionando variables ya que, si <span class="math inline">\(n\)</span> crece, <span class="math inline">\(\log(n) &gt;&gt; 2\)</span> (penaliza más el sobreajuste) y, además, <span class="hl-yellow"><strong>depende del tamaño muestral</strong></span></p>
+</section>
+<section id="bic-y-aic-4" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>Vamos a ver un <strong>ejemplo</strong> con <code>wine.csv</code>. Ya sabemos que debemos elimnar</p>
+<ul>
+<li><code>WinterRain</code>: no correla linealmente con <code>Price</code></li>
+<li><code>Age</code>: presenta colinealidad exacta con otras predictoras</li>
+<li><code>FrancePop</code>: presenta problemas de colinealidad con <span class="math inline">\(VIF &gt; 10\)</span>.</li>
+</ul>
+<p>Al modelo <code>Price ~ Year + AGST + HarvestRain</code> le llamaremos <strong>modelo saturado</strong>. Además de ese haremos otros 4 ajustes: solo <code>AGST</code>, otro <code>AGST + HarvestRain</code>, otro <code>AGST + Year</code>, y otro con todas (incluso las que hemos rechazado incluir)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb322"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb322-1"><a href="#cb322-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb322-2"><a href="#cb322-2"></a>ajuste_sin_depurar <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb322-3"><a href="#cb322-3"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>WinterRain, <span class="sc">-</span>Age, <span class="sc">-</span>FrancePop), <span class="at">formula =</span> Price <span class="sc">~</span> .)</span>
+<span id="cb322-4"><a href="#cb322-4"></a>ajuste_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST)</span>
+<span id="cb322-5"><a href="#cb322-5"></a>ajuste_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST <span class="sc">+</span> HarvestRain)</span>
+<span id="cb322-6"><a href="#cb322-6"></a>ajuste_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, <span class="at">formula =</span> Price <span class="sc">~</span> AGST <span class="sc">+</span> Year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bic-y-aic-5" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>Tras aplicar los 4 modelos <span class="hl-yellow"><strong>calcularemos su BIC/AIC</strong></span> con las funciones <code>BIC()</code> y <code>AIC()</code></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb323"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb323-1"><a href="#cb323-1"></a><span class="fu">BIC</span>(ajuste_sin_depurar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26.62387</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb325"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb325-1"><a href="#cb325-1"></a><span class="fu">BIC</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26.44583</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb327"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb327-1"><a href="#cb327-1"></a><span class="fu">BIC</span>(ajuste_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 45.00735</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb329"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb329-1"><a href="#cb329-1"></a><span class="fu">BIC</span>(ajuste_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 33.04011</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb331"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb331-1"><a href="#cb331-1"></a><span class="fu">BIC</span>(ajuste_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 44.3177</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb333"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb333-1"><a href="#cb333-1"></a><span class="fu">AIC</span>(ajuste_sin_depurar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 17.55302</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb335"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb335-1"><a href="#cb335-1"></a><span class="fu">AIC</span>(ajuste_saturado)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 19.96665</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb337"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb337-1"><a href="#cb337-1"></a><span class="fu">AIC</span>(ajuste_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41.11983</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb339"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb339-1"><a href="#cb339-1"></a><span class="fu">AIC</span>(ajuste_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 27.85676</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb341"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb341-1"><a href="#cb341-1"></a><span class="fu">AIC</span>(ajuste_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 39.13435</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bic-y-aic-6" class="slide level2">
+<h2>BIC y AIC</h2>
+<p>Podemos usar <code>compare_performance()</code> (<span class="math inline">\(AICc = AIC +\frac{2(p+2)^{2} + 2(p+2)}{n-(p+2)-1}\)</span> versión corregida para tamaños muestrales pequeños)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb343"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb343-1"><a href="#cb343-1"></a>performance<span class="sc">::</span><span class="fu">compare_performance</span>(ajuste_sin_depurar, ajuste_saturado, ajuste_1, ajuste_2, ajuste_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name               | Model | AIC (weights) | AICc (weights) | BIC (weights)
+---------------------------------------------------------------------------
+ajuste_sin_depurar |    lm |  17.6 (0.766) |   23.4 (0.415) |  26.6 (0.469)
+ajuste_saturado    |    lm |  20.0 (0.229) |   22.8 (0.567) |  26.4 (0.512)
+ajuste_1           |    lm |  41.1 (&lt;.001) |   42.2 (&lt;.001) |  45.0 (&lt;.001)
+ajuste_2           |    lm |  27.9 (0.004) |   29.7 (0.018) |  33.0 (0.019)
+ajuste_3           |    lm |  39.1 (&lt;.001) |   41.0 (&lt;.001) |  44.3 (&lt;.001)
+
+Name               |    R2 | R2 (adj.) |  RMSE | Sigma
+------------------------------------------------------
+ajuste_sin_depurar | 0.828 |     0.787 | 0.258 | 0.293
+ajuste_saturado    | 0.782 |     0.753 | 0.291 | 0.315
+ajuste_1           | 0.446 |     0.423 | 0.464 | 0.482
+ajuste_2           | 0.685 |     0.659 | 0.350 | 0.371
+ajuste_3           | 0.522 |     0.482 | 0.431 | 0.457</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>En ambos criterios la conclusión es que de los 5 modelos, el <span class="hl-yellow"><strong>“mejor” es el que hemos llamado saturado ya que proporciona AIC/BIC más bajos</strong></span> (aunque <span class="math inline">\(R_{adj}^2\)</span> menor): la mejora que produce meter todas las variables iniciales no es suficiente para lo que se complica el modelo.</p>
+</div>
+</section>
+<section id="ejercicio-de-simulación" class="slide level2">
+<h2>Ejercicio de simulación</h2>
+<p>Simula el siguiente modelo para <span class="math inline">\(n=200\)</span></p>
+<ul>
+<li><span class="math inline">\(Y = 0.01 + 1.5*X_1 -1.5X_2 + \varepsilon\)</span> con <span class="math inline">\(X_1,X_2 \sim N(0,1)\)</span> y <span class="math inline">\(\varepsilon \sim N(0, 2)\)</span></li>
+<li>Añade una predictora basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-8}\)</span> (<span class="math inline">\(j=1\)</span>)</li>
+<li>Añade 5 predictoras basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-8}\)</span> ( <span class="math inline">\(j = 5\)</span>)</li>
+<li>Añade 10 predictoras basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-8}\)</span> ( <span class="math inline">\(j = 20\)</span>)</li>
+<li>Añade 25 predictoras basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-8}\)</span> ( <span class="math inline">\(j = 40\)</span>)</li>
+<li>Añade 50 predictoras basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-8}\)</span> ( <span class="math inline">\(j = 80\)</span>)</li>
+</ul>
+<p>Pista: define el modelo base inicial. Después crea un vector <code>p &lt;- c(1, 5, 20, 40, 80)</code> y haz un bucle que lo recorra (añadiendo en cada iteración las predictoras basura que correspondan)</p>
+</section>
+<section id="ejercicio-de-simulación-1" class="slide level2">
+<h2>Ejercicio de simulación</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name                         | Model | AIC (weights) | AICc (weights)
+---------------------------------------------------------------------
+ajuste_0                     |    lm | 847.1 (0.047) |  847.3 (0.066)
+c(\[[\, \ajuste\, \1\) |    lm | 843.1 (0.353) |  843.4 (0.478)
+c(\[[\, \ajuste\, \2\) |    lm | 842.6 (0.457) |  843.5 (0.449)
+c(\[[\, \ajuste\, \3\) |    lm | 844.9 (0.143) |  851.8 (0.007)
+c(\[[\, \ajuste\, \4\) |    lm | 864.3 (&lt;.001) |  889.9 (&lt;.001)
+c(\[[\, \ajuste\, \5\) |    lm | 883.5 (&lt;.001) | 1007.7 (&lt;.001)
+
+Name                         |  BIC (weights) |    R2 | R2 (adj.) |  RMSE | Sigma
+---------------------------------------------------------------------------------
+ajuste_0                     |  860.3 (0.407) | 0.531 |     0.527 | 1.972 | 1.987
+c(\[[\, \ajuste\, \1\) |  859.6 (0.592) | 0.545 |     0.538 | 1.942 | 1.962
+c(\[[\, \ajuste\, \2\) |  872.3 (0.001) | 0.564 |     0.548 | 1.901 | 1.940
+c(\[[\, \ajuste\, \3\) |  924.1 (&lt;.001) | 0.621 |     0.574 | 1.774 | 1.886
+c(\[[\, \ajuste\, \4\) | 1009.5 (&lt;.001) | 0.658 |     0.566 | 1.685 | 1.902
+c(\[[\, \ajuste\, \5\) | 1160.6 (&lt;.001) | 0.747 |     0.570 | 1.448 | 1.893</code></pre>
+</div>
+</div>
+<ul>
+<li><span class="math inline">\(R^2\)</span> no deja de crecer</li>
+<li><code>AIC</code> y <code>BIC</code> no dejan de crecer (más valor de ambos, peor), pero crece mucho más el <code>BIC</code> (¿por qué?)</li>
+<li><span class="math inline">\(R_{adj}^2\)</span> mucho más controlado.</li>
+</ul>
+</section>
+<section id="sobreajuste" class="slide level2">
+<h2>Sobreajuste</h2>
+<p>Algo importante a tener en cuenta es que, aunque ambos criterios nos ayudan a seleccionar modelos, ambos <span class="hl-yellow"><strong>funcionan de manera aceptable bajo la hipótesis</strong></span> de que <span class="math inline">\(n &gt;&gt; p +2\)</span>: en caso contrario, si <span class="math inline">\(n\)</span> se acerca a <span class="math inline">\(p +2\)</span>, el sobreajuste seguirá produciéndose</p>
+<div class="fragment">
+<p>Dado que la penalización es más grande en el BIC, el <span class="hl-yellow"><strong>criterio BIC nos garantiza una más temprana detección del sobreajuste</strong></span></p>
+</div>
+</section>
+<section id="simulación-sobreajuste" class="slide level2">
+<h2>Simulación: sobreajuste</h2>
+<p>Simula el siguiente modelo para <span class="math inline">\(n=150\)</span></p>
+<ul>
+<li><span class="math inline">\(Y = 0.01 + 1.5*X_1 -1.5X_2 + \varepsilon\)</span> con <span class="math inline">\(X_1,X_2 \sim N(0,1)\)</span> y <span class="math inline">\(\varepsilon \sim N(0, 2)\)</span></li>
+<li>Añade secuencialmente 145 predictoras basura <span class="math inline">\(X_{2+j} \sim N(0, 2)\)</span> con <span class="math inline">\(\beta_{2+j} = 10^{-10}\)</span> ( <span class="math inline">\(j = 145\)</span>) y guarda, para cada uno de los 195 modelos, el BIC y AIC de los modelos</li>
+<li>Repite el proceso anterior 100 veces (y pinta las 100 curvas del BIC y las 100 curvas del AIC, donde el eje x será el número de predictoras)</li>
+</ul>
+<p>Pista: debes generar dos bucles, uno de 80 iteraciones y otro que, dentro cada iteración, genere los 145 ajustes y guarde el BIC y AIC (80x145 valores)</p>
+</section>
+<section id="simulación-sobreajuste-1" class="slide level2">
+<h2>Simulación: sobreajuste</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-205-1.png" width="960" class="r-stretch"><p>Fíjate como el BIC tarda más en descender, de hecho <span class="math inline">\(BIC(p=195)&gt;BIC(p=2)\)</span> (nos haría quedarnos con el modelo sin sobreajustar) mientras que <span class="math inline">\(AIC(p=115)&lt;AIC(p=2)\)</span> (aprox, y para todos los que van detrás), por lo que acabaríamos eligiendo el modelo más sobreajustado.</p>
+</section>
+<section id="consistencia" class="slide level2">
+<h2>Consistencia</h2>
+<p>Otra <span class="hl-yellow"><strong>enorme ventaja del BIC</strong></span> es que se ha demostrado matemáticamente que es <span class="hl-yellow"><strong>consistente</strong></span>: si el tamaño muestral fuese lo suficientemente grande, el <span class="hl-green"><strong>BIC garantiza elegir el modelo correcto que genera los datos</strong></span>. Matemáticamente se cumple que, si tenemos una serie de modelos <span class="math inline">\(M_1, \ldots, M_m\)</span>, y el modelo real que genera los datos <span class="math inline">\(M_0\)</span> (que pretendemos estimar), entonces</p>
+<p><span class="math display">\[P\left[\arg\min_{k=0,\ldots,m}\text{BIC}(\widehat{M}_k)=0\right]\to 1, \quad  n \to \infty\]</span></p>
+<p>Esto solo suponiendo que el modelo subyacente sea lineal claro… Esto <span class="hl-red"><strong>no sucede con el AIC</strong></span> (para vuestro yo del futuro: en <a href="https://doi.org/10.2307/2290328." class="uri">https://doi.org/10.2307/2290328.</a> se prueba que el AIC es equivalente a usar validación cruzada leave-one-out, el cual es inconsistente)</p>
+</section>
+<section id="stepaic" class="slide level2">
+<h2>stepAIC</h2>
+<p>Y aquí nos puede nacer una duda: si tengo muchos predictores, <span class="hl-yellow"><strong>¿tengo que calcular el BIC/AIC de todas las combinaciones posibles?</strong></span></p>
+<div class="fragment">
+<p>Sí, pero lo hará por nosotros <code>MASS::stepAIC()</code>, donde en el parámetro <code>k = ...</code> le indicamos la penalización (si <code>k = 2</code> es AIC y si <code>k = log(n)</code> es el BIC)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb346"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb346-1"><a href="#cb346-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb346-2"><a href="#cb346-2"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, Price <span class="sc">~</span> .)</span>
+<span id="cb346-3"><a href="#cb346-3"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="stepaic-1" class="slide level2">
+<h2>stepAIC</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb347"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb347-1"><a href="#cb347-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb347-2"><a href="#cb347-2"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, Price <span class="sc">~</span> .)</span>
+<span id="cb347-3"><a href="#cb347-3"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=-53.29
+Price ~ Year + WinterRain + AGST + HarvestRain + Age + FrancePop
+
+
+Step:  AIC=-53.29
+Price ~ Year + WinterRain + AGST + HarvestRain + FrancePop
+
+              Df Sum of Sq    RSS     AIC
+- FrancePop    1    0.0026 1.8058 -56.551
+- Year         1    0.0048 1.8080 -56.519
+&lt;none&gt;                     1.8032 -53.295
+- WinterRain   1    0.4585 2.2617 -50.473
+- HarvestRain  1    1.8063 3.6095 -37.852
+- AGST         1    3.3756 5.1788 -28.105
+
+Step:  AIC=-56.55
+Price ~ Year + WinterRain + AGST + HarvestRain
+
+              Df Sum of Sq    RSS     AIC
+&lt;none&gt;                     1.8058 -56.551
+- WinterRain   1    0.4809 2.2867 -53.473
+- Year         1    0.9089 2.7147 -48.840
+- HarvestRain  1    1.8760 3.6818 -40.612
+- AGST         1    3.4428 5.2486 -31.039</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Year + WinterRain + AGST + HarvestRain, 
+    data = datos)
+
+Coefficients:
+(Intercept)         Year   WinterRain         AGST  HarvestRain  
+  43.639042    -0.023848     0.001167     0.616392    -0.003861  </code></pre>
+</div>
+</div>
+</section>
+<section id="stepaic-2" class="slide level2">
+<h2>stepAIC</h2>
+<p>Lo que obtendremos será una <span class="hl-yellow"><strong>selección secuencial de modelos</strong></span>, de manera que el irá probando las combinaciones, nos <strong>muestra el ajuste y el valor del BIC/AIC</strong> y se parará cuando el AIC/BIC no mejore.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb350"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb350-1"><a href="#cb350-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/wine.csv"</span>)</span>
+<span id="cb350-2"><a href="#cb350-2"></a>ajuste_saturado <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> datos, Price <span class="sc">~</span> .)</span>
+<span id="cb350-3"><a href="#cb350-3"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stepaic-3" class="slide level2">
+<h2>stepAIC</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb351"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb351-1"><a href="#cb351-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)), <span class="at">direction =</span> <span class="st">"forward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=-53.29
+Price ~ Year + WinterRain + AGST + HarvestRain + Age + FrancePop</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Year + WinterRain + AGST + HarvestRain + 
+    Age + FrancePop, data = datos)
+
+Coefficients:
+(Intercept)         Year   WinterRain         AGST  HarvestRain          Age  
+  2.496e+01   -1.377e-02    1.153e-03    6.144e-01   -3.837e-03           NA  
+  FrancePop  
+ -2.213e-05  </code></pre>
+</div>
+</div>
+<p>El argumento <code>direction = ...</code> puede tomar los valores <code>"both"</code>, <code>"forward"</code> y <code>"backward"</code> (por defecto) que nos determina la <span class="hl-yellow"><strong>dirección de búsqueda</strong></span>:</p>
+<ul>
+<li><code>direction = "forward"</code>: empieza con el modelo proporcionado y va <span class="hl-yellow"><strong>añadiendo</strong></span> predictoras haciendo modelos cada vez más complejos.</li>
+</ul>
+</section>
+<section id="stepaic-4" class="slide level2">
+<h2>stepAIC</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb354"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb354-1"><a href="#cb354-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)), <span class="at">direction =</span> <span class="st">"forward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=-53.29
+Price ~ Year + WinterRain + AGST + HarvestRain + Age + FrancePop</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Year + WinterRain + AGST + HarvestRain + 
+    Age + FrancePop, data = datos)
+
+Coefficients:
+(Intercept)         Year   WinterRain         AGST  HarvestRain          Age  
+  2.496e+01   -1.377e-02    1.153e-03    6.144e-01   -3.837e-03           NA  
+  FrancePop  
+ -2.213e-05  </code></pre>
+</div>
+</div>
+<p>Fíjate que ahora como le hemos dado el modelo saturado y <code>direction = "forward"</code>, entonces no hace nada. Para controlar esto podríamos incluir la variable <code>scope = list(lower = mod_easy, upper = mod_complex)</code>, donde <strong>podemos pasarle dos modelos</strong>: los modelos más complejos y más sencillo <strong>entre los que queremos que se mueva en la búsqueda</strong>.</p>
+</section>
+<section id="stepaic-5" class="slide level2">
+<h2>stepAIC</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb357"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb357-1"><a href="#cb357-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)), <span class="at">direction =</span> <span class="st">"backward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>direction = "backward"</code>: empieza con el modelo proporcionado y va <span class="hl-yellow"><strong>eliminando</strong></span> predictoras haciendo modelos cada vez más sencillos.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb358"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb358-1"><a href="#cb358-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>direction = "both"</code>: empieza con el modelo proporcionado y va <span class="hl-yellow"><strong>añadiendo y eliminando</strong></span> predictoras según sea más conveniente (pudiendo añadir/eliminar una variable que previamente e había eliminado/añadido)</li>
+</ul>
+</section>
+<section id="stepaic-6" class="slide level2">
+<h2>stepAIC</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb359"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb359-1"><a href="#cb359-1"></a>MASS<span class="sc">::</span><span class="fu">stepAIC</span>(ajuste_saturado, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(datos)), <span class="at">direction =</span> <span class="st">"forward"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=-53.29
+Price ~ Year + WinterRain + AGST + HarvestRain + Age + FrancePop</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Price ~ Year + WinterRain + AGST + HarvestRain + 
+    Age + FrancePop, data = datos)
+
+Coefficients:
+(Intercept)         Year   WinterRain         AGST  HarvestRain          Age  
+  2.496e+01   -1.377e-02    1.153e-03    6.144e-01   -3.837e-03           NA  
+  FrancePop  
+ -2.213e-05  </code></pre>
+</div>
+</div>
+<p><span class="hl-red"><strong>Aviso</strong></span>: en realidad <code>MASS::stepAIC()</code> no calcula exactamente el mismo BIC/AIC que las funciones <code>BIC()</code> e <code>AIC()</code>, sino que les suma una constante <span class="math inline">\(n(\log(2\pi) + 1) + \log(n)\)</span> para BIC y <span class="math inline">\(n(\log(2\pi) + 1) + 2\)</span> para AIC</p>
+<p>Dado que es una constante nos da igual para comparar modelos, pero hace que <span class="hl-red"><strong>NO podamos comparar salidas</strong></span> de <code>BIC()</code> y <code>AIC()</code> con salidas de <code>MASS::stepAIC()</code>.</p>
 <div class="footer footer-default">
 <p><a href="..."><strong>Javier Álvarez Liébana</strong></a> • Grado en Ciencia de Datos Aplicada (UCM) • curso 2024-2025</p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
