@@ -2908,6 +2908,7 @@ car::leveneTest(datos$weight ~ datos$group)
 Y luego `DunnettTest()` del paquete `{DescTools}`
 
 ```{r}
+#| eval: false
 DescTools::DunnettTest(x = datos$weight, g = datos$group, control = "ctrl")
 ```
 
@@ -6261,7 +6262,7 @@ predict(ajuste_saturado, newdata = nuevos_datos)
 De las 5 predicciones **solo la tercera y la cuarta son fiables**: aunque el $R^2$ sea bastante bueno, el resto de observaciones tiene [**alguna de las predictoras fuera del rango de aprendizaje del modelo**]{.hl-red}
 
 
-# Clase 15: selección de modelos {#clase-1}
+# Clase 15 y 16: selección de modelos {#clase-15}
 
 [**Selección secuencial de modelos**]{style="color:#444442;"}
 
@@ -6707,5 +6708,62 @@ MASS::stepAIC(ajuste_saturado, k = log(nrow(datos)), direction = "forward")
 [**Aviso**]{.hl-red}: en realidad `MASS::stepAIC()` no calcula exactamente el mismo BIC/AIC que las funciones `BIC()` e `AIC()`, sino que les suma una constante $n(\log(2\pi) + 1) + \log(n)$ para BIC y $n(\log(2\pi) + 1) + 2$ para AIC
 
 Dado que es una constante nos da igual para comparar modelos, pero hace que [**NO podamos comparar salidas**]{.hl-red} de `BIC()` y `AIC()` con salidas de `MASS::stepAIC()`.
+
+---
+
+## 🐣 Caso práctico I: análisis de seatpos {#caso-practico-16-1}
+
+
+Vamos a trabajar con la base de datos `seatpos` del paquete `{faraway}`: datos de 38 conductores donde el objetivo es predecir `hipcenter`, la posición del asiento del conductor, en función de distintas variables (ver `? faraway::seatpos`)
+
+```{r}
+datos <- faraway::seatpos |> as_tibble()
+datos
+```
+
+---
+
+## 🐣 Caso práctico I: análisis de seatpos
+
+1. Fase descriptiva: analiza si hay datos ausentes, variables mal codificadas o outliers. En caso afirmativo, toma las decisiones que consideres haciendo uso de lo visto en depuración
+
+. . .
+
+2. Fase de correlación y colinealidad. ¿Todas las predictoras deberían estar (teniendo en cuenta que queremos predecir linealmente `hipcenter`)? ¿Todas las predictoras deberían estar (teniendo en cuenta que una alta colinealidad nos produce problemas a futuro en la matriz $\left(X^T X \right)^{-1}$)? Detalla todo lo que consideres sobre porqué la colinealidad es un problema y que produce
+
+
+. . .
+
+3. Fase de formulación del modelo. Con las variables que hayan sobrevivido a los pasos anteriores, plantea tu modelo saturado.
+
+---
+
+## 🐣 Caso práctico I: análisis de seatpos
+
+4. Fase de estimación/interpretación del ajuste. Interpreta todo lo que consideres (y que puedas en esta punto del análisis...) sobre tu modelo saturado. ¿Qué decisiones crees que habrá que tomar y por qué?
+
+. . .
+
+5. Fase de diagnosis. Comprueba si tu modelo saturado cumple las hipótesis necesarias.
+
+. . .
+
+4bis. Antes de interpretar la fase de inferencia, ¿tiene sentido ese modelo saturado? Con la información extraída del punto 4, ¿tiene sentido incluir todas las predictoras del saturado? ¿Por qué? En caso de qué no justifícalo y usa dos métodos secuenciales de selección de modelos, uno basado en aic y otro en bic
+
+---
+
+## 🐣 Caso práctico I: análisis de seatpos
+
+
+5bis. Repite la diagnosis para los dos modelos nuevos
+
+. . .
+
+6. De los 3 modelos que tienes, y solo en los casos en los que se supere la fase de diagnosis, interpreta de manera adecuada toda la parte inferencial de tus modelos
+
+. . .
+
+7.  Compara la calidad de la predicción de todos los modelos que hayan sobrevivido. Analiza las diferencias y justifica con cuál te quedarías.
+
 
 
