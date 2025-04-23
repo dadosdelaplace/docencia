@@ -6766,4 +6766,845 @@ datos
 7.  Compara la calidad de la predicción de todos los modelos que hayan sobrevivido. Analiza las diferencias y justifica con cuál te quedarías.
 
 
+# Regresión penalizada
+
+---
+
+
+## Regresión penalizada
+
+Hagamos un resumen: [**¿cuál era el objetivo de la regresión ordinaria?**]{.hl-yellow} 
+
+. . .
+
+Asumiendo que 
+
+$$E \left[Y | \boldsymbol{X} = x \right]  = \beta_0 + \displaystyle \sum_{j=1}^{p} \beta_j X_j, \quad \widehat{Y} = \widehat{\beta_0} + \displaystyle \sum_{j=1}^{p} \widehat{\beta_j} X_j, \quad E \left[ \varepsilon | \left( X_1 = x_1, \ldots, X_p = x_p \right) \right] = 0 $$
+
+El objetivo ha sido obtener la estimación de los $\widehat{\beta}$ tal que [**minimicemos la varianza residual o suma de errores al cuadrado**]{.hl-yellow} $SSE$
+
+$$SSE \left(\boldsymbol{\beta} \right) =  \displaystyle \sum_{i=1}^{n} \widehat{\varepsilon}_{i}^{2} = \displaystyle \sum_{i=1}^{n} \left(Y_i - \beta_0 - \beta_1 X_{i1} - \ldots - \beta_p X_{ip} \right)^2 = \left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right)^{T}\left( \mathbf{Y} - \mathbf{X} \boldsymbol{\beta} \right) $$
+
+. . .
+
+Tras derivar e igualar a cero obteníamos $\widehat{\boldsymbol{\beta}}=\left(\mathbf{X}^{T}\mathbf{X} \right)^{-1}\mathbf{X}^{T}\mathbf{Y}$
+
+---
+
+## Regresión penalizada
+
+
+El estimador $\widehat{\boldsymbol{\beta}}$ es aquel que nos garantiza
+
+$$\widehat{\boldsymbol{\beta}} = \arg \min_{\beta \in \mathbb{R}^{p+1}} SSE \left(\boldsymbol{\beta} \right)$$
+
+. . .
+
+
+También tenemos garantizado que si se [**cumple las hipótesis**]{.hl-green} tenemos que
+
+$$\widehat{\boldsymbol{\beta}} \sim N_{p+1}\left(\boldsymbol{\beta}, \sigma_{\varepsilon}^2 \left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}\right)$$
+
+lo que implica que $E \left[ \widehat{\boldsymbol{\beta}}\right] = \boldsymbol{\beta}$, es decir, tenemos un [**estimador insesgado**]{.hl-yellow}.
+
+. . .
+
+El [**sesgo en una estimación**]{.hl-yellow} es un [**error sistemático**]{.hl-yellow} en la misma. Pero hay otra componente importante que hasta ahora solo hemos mencionado pero que no hemos tenido en cuenta: la [**varianza de la estimación**]{.hl-yellow}
+
+---
+
+## Balance sesgo-varianza
+
+Si descomponemos el error cuadrático medio de una estimación obtenemos que
+
+
+$$\begin{eqnarray}MSE \left(\widehat{Y} \right) &=& E \left[ \left( \widehat{Y} - Y \right)^2 \right] = E \left[ \left( \left(\widehat{Y} - E \left[ \widehat{Y}\right] \right) - \left(E \left[ \widehat{Y}\right] - Y \right)\right)^2 \right] \nonumber \\ &=& E \left[  \left(\widehat{Y} - E \left[ \widehat{Y}\right] \right)^2 \right] +\left( E \left[  \widehat{Y}\right] - Y \right)^2 + 2*cosas \nonumber \\ &=& \left( E \left[  \widehat{Y}\right] - Y \right)^2 + Var \left[ \widehat{Y} \right] + ruido\end{eqnarray}$$
+
+. . .
+
+* $\left( E \left[  \widehat{Y}\right] - Y \right)^2$ es literal el [**sesgo al cuadrado**]{.hl-yellow} ya que $E \left[  \widehat{Y}\right] - Y$ es justo lo que llamamos en estadística sesgo: lo que se desvía la realidad de lo predicho (en promedio).
+
+* $Var \left[ \widehat{Y} \right]$: varianza de las predicciones.
+
+---
+
+
+## Balance sesgo-varianza
+
+
+$$MSE \left(\widehat{Y} \right) = \text{sesgo}^2 + Var \left[ \widehat{Y} \right] + ruido$$
+
+
+Así el [**eror cuadrático medio podemos descomponerlo**]{.hl-yellow} en una suma de sesgo (al cuadrado), varianza y ruido (este último es intrínseco a los datos)
+
+. . .
+
+Lo anterior implica que ambos conceptos están relacionados: si queremos **bajar el sesgo** debemos aumentar la varianza (sobreajuste); si queremos **bajar la varianza** debemos aumentar el sesgo.
+
+---
+
+## Balance sesgo-varianza
+
+:::: columns
+::: {.column width="40%"}
+
+* [**Bajoajuste (underfitting)**]{.hl-yellow}: modelos muy simples proporcionan un **sesgo muy grande** y **poca varianza** ya que la predicción siempre será muy parecida (errores altos en train).
+
+* [**Sobreajuste (overfitting)**]{.hl-yellow}: modelos muy complicados proporcionan un **sesgo bajo** pero al ser tan complejas proporcionarán una **mayor varianza** para cada intento (errores altos en test).
+
+:::
+
+::: {.column width="60%"}
+
+![](img/bias_varianc_tradeoff.jpg)
+
+Extraída de <https://mlu-explain.github.io/bias-variance/>
+:::
+::::
+
+---
+
+
+## Balance sesgo-varianza
+
+Si lo visto en las estimaciones lo trasladamos a los  [**coeficientes estimados**]{.hl-yellow} tenemos
+
+$$MSE \left(\widehat{\beta}_j \right) =  \left( E \left[  \widehat{\beta}_j \right] - \beta_j \right)^2+Var \left[ \widehat{\beta}_j \right] + ruido$$
+
+. . .
+
+En este caso además sabemos que $Var \left[ \widehat{\beta}_j \right] = SE \left(\widehat{\beta}_j\right)^2 = \sigma_{\varepsilon}^2 v_j$, con $v_j$ el elemento $j$-ésimo de la diagonal de $\left( \mathbf{X}^{T}\mathbf{X} \right)^{-1}$.
+
+. . .
+
+La forma más sencilla de reducir drásticamente la varianza residual es aumentando el número de parámetros, es decir sobreajustando. Dicho de otra forma: para conseguir [**reducir la varianza de la estimaciones debemos simplificar los modelos**]{.hl-yellow}, y para ello lo que haremos será  [**introducir un pequeño sesgo (para que baje la varianza)**]{.hl-yellow}
+
+---
+
+
+## Regresión penalizada
+
+
+
+
+$$\begin{eqnarray}MSE \left(\widehat{\beta}_j \right) =  \left( E \left[  \widehat{\beta}_j \right] - \beta_j \right)^2+Var \left[ \widehat{\beta}_j \right] + ruido \end{eqnarray} $$
+
+La idea será [**sesgar los coeficientes**]{.hl-yellow} de tal manera que se busque obtener [**coeficientes que, en caso de no ser tan importantes como otros, tiendan a cero**]{.hl-yellow}, un sesgo hacia lo que se conoce como [**sparsity**]{.hl-purple}.
+
+. . .
+
+Para ello haremos uso de lo que se conoce como [**shrinkage methods**]{.hl-yellow}, y  en particular hablaremos de [**regresión penalizada**]{.hl-yellow}
+
+---
+
+## Regresión penalizada
+
+Si en el caso de la regresión lineal ordinaria teníamos $\widehat{\boldsymbol{\beta}} = \arg \min_{\beta \in \mathbb{R}^{p+1}} SSE \left(\boldsymbol{\beta} \right)$ ahora incluiremos una [**penalización $\lambda \geq 0$**]{.hl-red}
+ 
+ $$\widehat{\boldsymbol{\beta}}_{\lambda} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left\| \beta_{-1} \right\| \right), \quad \lambda \geq 0$$
+ 
+ donde $\left\| \beta_{-1} \right\|$ será [**alguna norma del vector de coeficientes (excluyendo el intercepto, de ahí el -1)**]{.hl-yellow} (distancia del vector a 0) y $\lambda$ deberemos determinar su valor óptimo.
+ 
+. . .
+
+Por tanto ahora el objetivo no será solo [**minimizar los errores al cuadrado**]{.hl-yellow} sino también [**minimizar la penalización**]{.hl-yellow}, y la única forma de hacerlo (dado que una norma siempre devuelve algo positiva) es que los [**coeficientes sean lo más pequeño posibles**]{.hl-yellow}
+
+---
+
+## Penalización
+
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left\| \beta_{-1} \right\| \right), \quad \lambda \geq 0$$
+ 
+ ¿Qué sucede cuando $\lambda$ **crece o decrece**?
+ 
+ . . .
+ 
+ * Si $\lambda \to 0$ --> estamos en el caso de **mínimos cuadrados ordinarios** (no hay penalización)
+ 
+ * Si $\lambda \to \infty$ --> $\beta_j \to 0$ para todo $j \geq 0$ (el modelo tiende a desaparecer)
+ 
+---
+
+## Familia de normas
+ 
+$$\widehat{\boldsymbol{\beta}}_{\lambda} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left\| \beta_{-1} \right\| \right), \quad \lambda \geq 0$$
+ 
+Una de las [**familias de normas**]{.hl-yellow} más habituales son las [**normas $\ell^p$**]{.hl-yellow}
+
+$$\left\| x \right\|_{p} = \left\| \left(x_1, \ldots, x_k \right)\right\|_{p} = \left( \sum_{j=1}^{k} \left| x_{j} \right|^{p} \right)^{1/p}, \quad x \in \mathbb{R}^{k}$$
+
+. . .
+
+* Si $p=1$ --> $\left\| x \right\|_{1}  =  \sum_{j=1}^{k} \left| x_{j} \right|$ se conoce como [**norma taxicab o de Manhattan**]{.hl-yellow} (la métrica que usaríamos para recorrer calles en un mapa)
+
+* Si $p=2$ --> $\left\| x \right\|_{2}  =  \left(\sum_{j=1}^{k} x_{j}^{2} \right)^{1/2}$ se conoce como [**norma Euclídea**]{.hl-yellow} (la habitual)
+
+* Si $p=\infty$ --> $\left\| x \right\|_{\infty}  =  \lim_{p \to \infty} \left(\sum_{j=1}^{k} \left| x_{j} \right|^{p} \right)^{1/p} = \displaystyle \max_{j} \left| x_{j} \right|$ se conoce como [**norma infinita o de Chebyshev**]{.hl-yellow} (movimientos de rey en ajedrez)
+
+---
+
+
+## Regresión elastic-net
+
+ 
+Dado que las más usadas son la [**norma Manhattan y la Euclídea**]{.hl-yellow}, podemos generalizar la regresión penalizada anterior combinando ambas penalizaciones
+
+ 
+$$\widehat{\boldsymbol{\beta}}_{\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left(\alpha \left\| \beta_{-1} \right\|_1  + (1-\alpha) \left\| \beta_{-1} \right\|_{2}^{2} \right)\right), \quad \lambda \geq 0,~0 \leq \alpha \leq 1$$
+
+La [**regresión elastic-net**]{.hl-yellow} es una regresión penalizada que combina una [**penalización $\lambda$**]{.hl-red} (que nos cuantifica lo agresivo que queremos hacer tender los coeficientes a cero) y una [**proporción $\alpha$**]{.hl-green} (que nos permite combinar ambas penalizaciones)
+
+. . .
+
+::: callout-important
+## Importante
+
+Dado que la penalización depende de la norma de los coeficientes, su magnitud será importante, por lo que [**deberemos estandarizar antes los predictores**]{.hl-yellow} (lo hace solo `glmnet`)
+
+:::
+
+---
+ 
+## Ridge y lasso
+
+ 
+$$\widehat{\boldsymbol{\beta}}_{\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left(\alpha \left\| \beta_{-1} \right\|_1  + (1-\alpha) \left\| \beta_{-1} \right\|_{2}^{2} \right)\right), \quad \lambda \geq 0,~0 \leq \alpha \leq 1$$
+
+Hay dos escenarios de penalización principalmente conocidos:
+
+* [**Regresión ridge**]{.hl-yellow}: cuando $\alpha = 0$ (penalización cuadrática)
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, ridge} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda  \left\| \beta_{-1} \right\|_{2}^{2} \right), \quad \lambda \geq 0$$
+
+* [**Regresión LASSO**]{.hl-yellow}: cuando $\alpha = 1$ (penalización absoluta)
+
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, LASSO} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda  \left\| \beta_{-1} \right\|_1  \right), \quad \lambda \geq 0$$
+
+---
+
+## Ridge y lasso
+
+* [**Regresión ridge**]{.hl-yellow}: cuando $\alpha = 0$ (penalización cuadrática)
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, ridge} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda  \left\| \beta_{-1} \right\|_{2}^{2} \right), \quad \lambda \geq 0$$
+
+Una de las [**ventajas de la regresión ridge**]{.hl-green} es que podemos calcular su [**expresión explícita**]{.hl-green} (algo que no sucede en la regresión lasso, solo se puede obtener mediante simulación numérica)
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, ridge} = \left(\mathbf{X}^{T}\mathbf{X} + \lambda \mathbf{I}_{p \times p} \right)^{-1}\mathbf{X}^{T}\mathbf{Y}$$
+donde $\mathbf{I}_{p \times p}$ es la matriz identidad.
+
+
+---
+
+## Ridge y lasso
+
+* [**Regresión LASSO**]{.hl-yellow}: cuando $\alpha = 1$ (penalización absoluta)
+
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, LASSO} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda  \left\| \beta_{-1} \right\|_1  \right), \quad \lambda \geq 0$$
+
+Una de las [**ventajas de la regresión LASSO**]{.hl-green} es que nos realiza una [**selección de variables**]{.hl-green} ya hace [**tender más rápido los coeficientes a cero**]{.hl-yellow}.
+
+&nbsp;
+
+¿Por qué?
+
+--- 
+
+## Regresión elastic-net
+
+ 
+$$\widehat{\boldsymbol{\beta}}_{\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left(\alpha \left\| \beta_{-1} \right\|_1  + (1-\alpha) \left\| \beta_{-1} \right\|_{2}^{2} \right)\right), \quad \lambda \geq 0,~0 \leq \alpha \leq 1$$
+
+La [**regresión elastic-net**]{.hl-yellow} consiste en minimizar una suma de residuos al cuadrado más una penalización en la norma de los parámetros (ponderando entre las dos normas), es decir, que busca que la norma de los parámetros pequeña.
+
+. . .
+
+
+Este [**problema de optimización se puede reformular**]{.hl-yellow} como «queremos el vector de parámetros que minimize la suma de residuos al cuadrado tal que la norma ponderada no valga más de una cantidad $s_{\lambda}$» (**optimización basada en restricciones**)
+
+
+
+$$\widehat{\boldsymbol{\beta}}_{s_\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}:~\sum_{j=1}^{p} \left(\alpha \left| \beta_{j} \right| + (1-\alpha) \left| \beta_{j} \right|^{2} \right) \leq s_\lambda} SSE \left(\boldsymbol{\beta} \right) , \quad 0 \leq \alpha \leq 1$$
+
+donde $s_\lambda$ es un valor numérico que no depende de $\beta$.
+
+---
+
+## Regresión elastic-net
+
+Por ejemplo, si tenemos solo dos predictoras...
+
+![](img/elastic-net.jpg)
+
+Las elipses nos muestran los valores para los que $SSE \left( \boldsymbol{\beta} \right)$ es constante (lo que queremos minimizar, una especie de mapa de isobaras), el punto representa el valor óptimo por mínimos cuadrados y las **regiones sombreadas representan el espacio de valores posibles** debido a la penalización (ver más en <https://link.springer.com/book/10.1007/978-1-4614-7138-7>)
+
+---
+
+## LASSO
+
+
+Si nos fijamos en ambas regiones, dado que el [**LASSO usa una norma absoluta**]{.hl-yellow}, el espacio de restricciones es más "picudo", lo que hará más probable que cuando la **elipse corte con la zona sombreada** lo haga en los vértices (donde uno de los coeficientes es cero) en lugar de en los laterales.
+
+![](img/elastic-net.jpg)
+
+Ver más en <https://link.springer.com/book/10.1007/978-1-4614-7138-7>
+
+
+
+---
+
+
+## Selección de la penalización
+
+En todo este proceso de regresión penalizada hay un "elefante en la habitación": [**¿cómo seleccionar el $\lambda$ más óptimo?**]{.hl-yellow}
+
+. . .
+
+
+Una de las más formas más habituales para ello es lo que se conoce como [**validación cruzada**]{.hl-yellow}. La idea se basa en un ideal: poder **disponer de muchas muestras** tal que, probando en cada una distintos valores de $\lambda$, consigamos obtener aquel que nos proporcione (en media) el menor error.
+
+. . .
+
+[**¿El problema?**]{.hl-red} Casi nunca disponemos de un gran número de muestras de la misma población, así que una [**solución es "simularlas" nosotros mismos a partir de la muestra original**]{.hl-green}
+
+---
+
+## Validación cruzada
+
+Supongamos que tenemos una muestra tal que contamos con una variable objetivo a predecir en función de $p$ predictoras $\left\lbrace Y_i, \left(X_{i1}, \ldots, X_{ip} \right) \right\rbrace_{i=1,\ldots,n}$, y que pretendemos usar un [**estimador $\widehat{f}_{\lambda}$ que depende de un parámetro $\lambda$**]{.hl-yellow}, tal que
+
+$$\widehat{Y} =\widehat{f}_{\lambda} \left(X_{1}, \ldots, X_{p} \right)$$
+
+La opción más sencilla es lo que se conoce como [**validación simple**]{.hl-yellow}:
+
+
+---
+
+## Validación simple
+
+
+$$\widehat{Y} =\widehat{f}_{\lambda} \left(X_{1}, \ldots, X_{p} \right)$$
+La opción más sencilla es lo que se conoce como [**validación simple**]{.hl-yellow}:
+
+
+1. Hacemos una partición de train y test. De los datos de train, realizamos una segunda partición que llamamos [**conjunto de validación**]{.hl-yellow}.
+
+. . .
+
+2. [**Entrenamos solo  con train**]{.hl-yellow} el modelo para distintos valores de $\lambda$
+
+. . .
+
+3. Evaluamos el error que produce cada $\widehat{f}_{\lambda}$ en el [**conjunto de validación**]{.hl-yellow} (un conjunto del que el modelo no ha aprendido) para [**elegir el mejor parámetro**]{.hl-yellow} $\lambda$.
+
+. . .
+
+4. Proporcionamos una evaluación final en la tercera partición (test), que no ha sido usada ni para la estimación ni para la elección del mejor parámetro.
+
+---
+
+## Validación cruzada
+
+La [**validación simple**]{.hl-yellow} tiene un problema: [**depende muchísimo de la partición aleatoria**]{.hl-red} que se realice (si tenemos mala o buena suerta) y, además, puede provocar un [**problema de tamaño muestral**]{.hl-red} si $n$ no es muy grande (ya que necesitamos 3 particiones de los datos).
+
+. . .
+
+Para solventarlo existe una alternativa conocida como [**validación cruzada**]{.hl-yellow}: en lugar de extraer un subconjunto de train, lo que se hace es que **cada observación pueda jugar ambos roles**: el rol de entrenamiento y el rol de validación.
+
+
+---
+
+## Validación cruzada
+
+
+La más famosa es la conocida como [**leave-one-out cross-validation (LOOCV)**]{.hl-yellow}:
+
+1. Hacemos una partición de train (con $m$ elementos) y test ($n - m$).
+
+2. De los datos de train $\left\lbrace X_{i} \right\rbrace_{i=1,\ldots,m}$, entrenamos el modelo sin una de las observaciones de entrenamiento $\boldsymbol{X}_{-1} = \left\lbrace X_{i} \right\rbrace_{i=2,\ldots,m}$, y usamos esa observación $X_{1}$ para obtener una métrica del error para cada $\lambda$ (un conjunto de validación de tamaño muestral igual a 1).
+
+3. Repetimos el proceso para cada una de ellas, considerando como entrenamiento $\boldsymbol{X}_{-j} = \left\lbrace X_{i} \right\rbrace_{i=1,\ldots, j-1, j+1, \ldots,m}$ y $X_j$ como conjunto de validación.
+
+4. En total se entrena el modelo con $n$ conjuntos train (de $n-1$ observaciones cada uno) y $n$ conjuntos de validación (de una observación cada uno), obteniendo al final una media del error en entrenamiento y otra en validación, usando esta última para [**elegir el mejor parámetro**]{.hl-yellow} $\lambda$.
+
+---
+
+## Validación cruzada
+
+
+La anterior idea puede ser generalizada a lo que se conoce como [**leave-k-out cross-validation (LOOCV)**]{.hl-yellow}:
+
+1. Hacemos una partición de train (con $m$ elementos) y test ($n - m$).
+
+2. De los datos de train $\left\lbrace X_{i} \right\rbrace_{i=1,\ldots,m}$, entrenamos el modelo sin $k$ observaciones de entrenamiento $\boldsymbol{X}_{-i_1, \ldots, -i_k}$, y usamos esa $k$ observaciónes $\left\lbrace X_{i_1}, \ldots, X_{i_k} \right\rbrace$ para obtener una métrica del error (un conjunto de validación de tamaño muestral igual a $k$).
+
+3. Repetimos el proceso para cada posible forma de combinar $m$ elementos de $k$ en $k$ 
+
+4. En total se entrena el modelo con $C_{k}^{m}$ conjuntos train (de $m-k$ observaciones cada uno) y $C_{k}^{m}$ conjuntos de validación (de $k$ observaciones cada uno), obteniendo estos últimos para [**elegir el mejor parámetro**]{.hl-yellow} $\lambda$.
+
+
+&nbsp;
+
+Aunque esta opción nos da una métrica más robusta del error, si hacemos unas sencillas cuentas vemos que puede no ser factible si $m$ y/o $k$ toman valores elevados. Por ejemplo, si $m = 100$ y $k = 30$, tendríamos que entrenar $C_{k}^{m} \simeq 10^{25}$ modelos
+
+
+---
+
+## Validación cruzada k-folds
+
+Dado que las dos opciones anteriores pueden no servirnos existe una tercera vía, la conocida como [**validación cruzada k-folds**]{.hl-yellow}:
+
+![](img/k-fold.png)
+
+---
+
+## Validación cruzada k-folds
+
+Dado que las dos opciones anteriores pueden no servirnos existe una tercera vía, la conocida como [**validación cruzada k-folds**]{.hl-yellow}:
+
+
+1. Hacemos una partición de train (con $m$ elementos) y test ($n - m$).
+
+2. De los datos de train $\left\lbrace X_{i} \right\rbrace_{i=1,\ldots,m}$, dividimos dicho conjunto en $k$ particiones ($k$ folds) que denotaremos como $\boldsymbol{X}_{fold_1}, \ldots, \boldsymbol{X}_{fold_k}$ (con $m/k$ observaciones cada una aproximadamente).
+
+3. Entrenamos $k$ modelos, de manera que en la iteración $j$, usaremos las $m-m/k$ observaciones de las particiones $\boldsymbol{X}_{fold_1}, \ldots, \boldsymbol{X}_{fold_{j-1}}, \boldsymbol{X}_{fold_{j+1}}, \ldots, \boldsymbol{X}_{fold_{k}}$ para entrenar y las $m/k$ observaciones de $\boldsymbol{X}_{fold_{j}}$ para validar.
+
+4. De esta manera **cada observación jugará $k-1$ veces el rol de entrenamiento** y **una sola vez el rol de validación**, teniendo $k$ validaciones cuyos resultados promediaremos para [**elegir el mejor parámetro**]{.hl-yellow} $\lambda$.
+
+---
+
+## Selección de la penalización
+
+Así llamaremos $\widehat{\lambda}_{k-CV}$ a la [**penalización óptima elegida a través de validación k-fold**]{.hl-yellow}
+
+$$\widehat{\lambda}_{k-CV} = \arg \min_{\lambda \geq 0} CV_k(\lambda),\quad CV_k(\lambda)=\sum_{j=1}^k  SSE \left(\widehat{\boldsymbol{\beta}_{(j)} } \right)$$
+donde $SSE \left(\widehat{\boldsymbol{\beta}}_{(k)} \right)$ es la suma de residuos al cuadrado del $j$-ésimo slot de validación (con los parámetros obtenidos en el entrenamiento sin ese slot).
+
+---
+
+## Selección de la penalización
+
+
+$$\widehat{\lambda}_{k-CV} = \arg \min_{\lambda \geq 0} CV_k(\lambda),\quad CV_k(\lambda)=\sum_{j=1}^k  SSE \left(\widehat{\boldsymbol{\beta}_{(j)} } \right)$$
+
+Con el objetivo de [**simplificar aún más el modelo**]{.hl-yellow} existe una variante de penalización $\widehat{\lambda}_{k-1SE}$ conocida como [**«one standard error rule»**]{.hl-yellow}: la idea es elegir el [**modelo más sencillo de los modelos aceptanles**]{.hl-yellow}, la penalización más grande posible (es decir, el modelo más sencillo posible) acercándose lo máximo que pueda a $\widehat{\lambda}_{k-CV}$. La idea consiste en estimar $\widehat{\lambda}_{k-CV}$ y calcular su correspondiente $CV_k(\widehat{\lambda}_{k-CV})$  para cada partición de validación(que es en sí una variable aleatoria), para posteriormente [**estimar su variabilidad**]{.hl-yellow} ($SE$ igual a desviación típica dividida entre $\sqrt{n}$) entre todas las particiones de validación, tal que
+
+$$\widehat{\lambda}_{k-1SE}= \max \left\lbrace \lambda \geq 0: CV_k(\lambda) \in \left(CV_k(\widehat{\lambda}_{k-CV})\pm\widehat{\mathrm{SE}}\left(CV_k(\widehat{\lambda}_{k-CV})\right)\right)\right\rbrace$$
+
+---
+
+
+## Regresión penalizada en R
+
+Vamos a realizar un pequeño ejemplo con el famoso dataset `iris`, al que primero lo preprocesaremos convenientemente para tener solo variables numéricas (la variable objetivo será `Sepal.Length`)
+
+```{r}
+#| code-fold: true
+datos <- as_tibble(iris)
+datos_preproc <-
+  datos |> 
+  fastDummies::dummy_cols(select_columns = "Species", remove_first_dummy = TRUE) |> 
+  select(-Species)
+
+# Ajuste Saturado
+ajuste_saturado <- lm(data = datos_preproc, Sepal.Length ~ .)
+ajuste_saturado |> summary()
+```
+
+---
+
+## Regresión penalizada en R
+
+Tras realizar el ajuste saturado (vamos a hacer una prueba sencilla, no hacemos colinealidad ni diagnosis, solo ajuste), [**seleccionamos modelos con AIC y BIC**]{.hl-yellow}
+
+```{r}
+#| eval: false
+ajuste_AIC <- MASS::stepAIC(ajuste_saturado, direction = "both", k = 2)
+ajuste_BIC <- MASS::stepAIC(ajuste_saturado, direction = "both", k = log(nrow(datos_preproc)))
+```
+
+```{r}
+#| eval: false
+ajuste_AIC |> summary()
+ajuste_BIC |> summary()
+```
+
+---
+
+## Regresión ridge en R
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left(\alpha \left\| \beta_{-1} \right\|_1  + (1-\alpha) \left\| \beta_{-1} \right\|_{2}^{2} \right)\right), \quad \lambda \geq 0,~0 \leq \alpha \leq 1$$
+
+[**¿Cómo realizar una regresión penalizada en R?**]{.hl-yellow}. Para ello vamos a usar el completísimo paquete `{glmnet}`, cuya documentación puedes consultar en <https://glmnet.stanford.edu/articles/glmnet.html#linear-regression-family-gaussian-default>
+
+. . .
+
+Para realizar una ridge regresión, es decir $\alpha = 0$, basta con hacer uso de la función `glmnet()`, dándole en `x` matriz de variables (solo numéricas en formato matriz), en `y` la variable objetivo y `alpha = 0`
+
+```{r}
+library(glmnet)
+
+y <- datos_preproc |> select(Sepal.Length) |> as.matrix()
+x <- datos_preproc |> select(-Sepal.Length) |> as.matrix()
+
+ajuste_ridge <- glmnet(x = x, y = y, alpha = 0)
+```
+
+---
+
+
+## Regresión ridge en R
+
+[**¿Qué tenemos guardado?**]{.hl-yellow}
+
+* `$lambda`: tenemos los valores de $\lambda$ probados (por defecto, hay un argumento `nlambda` en `glmnet()` que vale 100, y la secuencia de valores los decide en función de otro argumento `lambda.min.ratio` que por defecto vale 0.01)
+
+```{r}
+ajuste_ridge$lambda
+```
+
+---
+
+## Regresión ridge en R
+
+[**¿Qué tenemos guardado?**]{.hl-yellow}
+
+* `$dev.ratio`: tenemos lo que se conoce como «deviance» para las penalizaciones probadas, que es una generalización de $R^2$ para modelos más complejos (en nuestro caso es equivalente)
+
+```{r}
+ajuste_ridge$dev.ratio
+```
+
+---
+
+## Regresión ridge en R
+
+Fíjate que a [**mayor penalización (modelos más simples, más sparsity)**]{.hl-yellow}, el $R^2$ disminuye (o lo que es lo mismo, aumenta el SSE)
+
+```{r}
+ggplot(tibble("lambda" = log(ajuste_ridge$lambda),
+              "R2" = ajuste_ridge$dev.ratio)) +
+  geom_line(aes(x = lambda, y = R2)) +
+  theme_minimal() + labs(x = "log-lambda", y = "R2")
+```
+
+
+---
+
+## Regresión ridge en R
+
+* `$a0`: tenemos guardados los [**interceptos $\widehat{\beta}_0$**]{.hl-yellow} de las regresiones ajustadas para cada penalización (en este caso 100 valores distintos)
+
+* `$beta`: tenemos guardados en formato matricial los [**coeficientes $\widehat{\beta}_j$**]{.hl-yellow} (para $j \geq 1$) de las regresiones ajustadas para cada penalización (en este caso una matriz de 5 filas (5 predictoras) y 100 columnas (100 penalizaciones)
+
+```{r}
+dim(ajuste_ridge$beta)
+length(ajuste_ridge$a0)
+```
+
+---
+
+## Regresión ridge en R
+
+Fíjate que a [**mayor penalización (modelos más simples, más sparsity)**]{.hl-yellow}, la [**norma Euclídea $\left\| \cdot \right\|_2$ de los coeficientes**]{.hl-yellow} disminuye (ya que penaliza más)
+
+
+```{r}
+ggplot(tibble("lambda" = log(ajuste_ridge$lambda),
+              "norma" = sqrt(colSums(ajuste_ridge$beta^2)))) +
+  geom_line(aes(x = lambda, y = norma)) +
+  theme_minimal() + labs(x = "log-lambda", y = "norma")
+```
+
+
+---
+
+## Selección de lambda en R
+
+Para no tener que elegir manualmente el mejor $\lambda$, la función `cv.glmnet()` nos permite elegir el mejor  $\widehat{\lambda}_{k-CV}$ ([**penalización óptima elegida a través de validación k-fold**]{.hl-yellow})
+
+* `nfolds`: indica el número $k$ de particiones en la validación cruzada.
+
+* `type.measure`: métrica de error usada (por defecto lo que hemos llamado $SSE$ o $MSE$)
+
+```{r}
+set.seed(12345)
+kfolds_lambda_ridge <- cv.glmnet(x = x, y = y, alpha = 0, nfolds = 20)
+```
+
+
+---
+
+## Selección de lambda en R
+
+```{r}
+set.seed(12345)
+kfolds_lambda_ridge <- cv.glmnet(x = x, y = y, alpha = 0, nfolds = 20)
+```
+
+* `$lambda`: los valores $\lambda$ probados.
+* `$lambda.min`: el valor que nos proporciona el promedio de errores en validación más pequeño
+* `$cvm`: valores $CV_k(\lambda)$
+
+
+```{r}
+# Lambda mínimo
+kfolds_lambda_ridge$lambda.min
+
+# Lambda mínimo manualmente
+cv_min <- which.min(kfolds_lambda_ridge$cvm)
+kfolds_lambda_ridge$lambda[cv_min]
+```
+
+---
+
+## Selección de lambda en R
+
+
+Es [**importante chequear que el mínimo no sea un extremo**]{.hl-yellow} de la secuencia de $\lambda$ (ya que sino no sabemos si el mínimo está fuera del rango).
+
+```{r}
+min(kfolds_lambda_ridge$lambda)
+kfolds_lambda_ridge$lambda.min
+```
+
+. . .
+
+Para solventarlo podemos [**proporcionar manualmente un grid (normalmente logarítmico)**]{.hl-yellow} de penalizaciones con las que debe probar la función `glmnet(..., lambda = ...)`
+
+```{r}
+# grid logarítmico
+lambda_seq <- 10^seq(log10(max(kfolds_lambda_ridge$lambda)), log10(0.0001), l = 200)
+
+set.seed(12345)
+kfolds_lambda_ridge <-
+  cv.glmnet(x = x, y = y, alpha = 0, nfolds = 20, lambda = lambda_seq)
+kfolds_lambda_ridge$lambda.min
+```
+
+---
+
+## Selección de lambda en R
+
+
+* `$lambda.1se`: mejor penalización $\widehat{\lambda}_{k-1SE}$ según [**«one standard error rule»**]{.hl-yellow}
+
+```{r}
+kfolds_lambda_ridge$lambda.1se
+kfolds_lambda_ridge
+```
+
+---
+
+## Selección de lambda en R
+
+Con la función `plot()` podemos dibujar de manera automática los distintos valores $CV_k(\lambda)$, resultado de promediar en los $k$-folds de la validación (la incertidumbre se representa con las barras de error). Con `abline()` podemos pintar las lineas horizontales para $\widehat{\lambda}_{k-CV}$ y $\widehat{\lambda}_{k-1SE}$.
+
+```{r}
+plot(kfolds_lambda_ridge)
+abline(h = min(kfolds_lambda_ridge$cvm) + c(0, min(kfolds_lambda_ridge$cvsd)))
+```
+
+---
+
+## Selección de lambda en R
+
+Podemos replicarlo en ggplot ya que en `$cvlo` y `$cvup` tenemos guardado los valores superiores e inferiores en las validaciones probadas (los extremos de las barras de error)
+
+```{r}
+#| code-fold: true
+ggplot() +
+  geom_errorbar(data =
+                  tibble("log_lambda" = log(kfolds_lambda_ridge$lambda),
+                         "cvlo" = kfolds_lambda_ridge$cvlo,
+                         "cvup" = kfolds_lambda_ridge$cvup),
+                aes(x = log_lambda,
+                    ymin = cvlo, ymax = cvup), color = "gray60") + 
+		geom_point(data =
+		             tibble("log_lambda" = log(kfolds_lambda_ridge$lambda),
+		                    "MSE" = kfolds_lambda_ridge$cvm),
+		           aes(x = log_lambda, y = MSE), color = "red") +
+		geom_vline(xintercept = log(kfolds_lambda_ridge$lambda.min),
+		           linetype = "dashed") +
+		geom_vline(xintercept = log(kfolds_lambda_ridge$lambda.1se),
+		           linetype = "dashed") +
+  theme_minimal()
+  
+```
+
+
+---
+
+## Regresión ridge en R
+
+
+Para [**aplicar el modelo de regresión ridge con la penalización óptima considerada**]{.hl-yellow} se puede hacer uso de `predict(kfolds_lambda_ridge, ...)`, indicándole que quieres «predecir» los coeficientes (`type = "coefficients"`) o con `coef()`
+
+
+```{r}
+predict(kfolds_lambda_ridge, type = "coefficients",
+        s = kfolds_lambda_ridge$lambda.1se)
+coef(kfolds_lambda_ridge)
+```   
+
+---
+
+## Regresión ridge en R
+
+
+::: callout-important
+## Importante
+
+Los coeficientes calculados son los promedios en validación. Si se quiere un ajuste "exacto" en el dataset original...
+
+```{r}
+ajuste_ridge_CV <- glmnet(x = x, y = y, alpha = 0,
+                          lambda = kfolds_lambda_ridge$lambda.1se)
+ajuste_ridge_CV$dev.ratio
+ajuste_ridge_CV$a0
+ajuste_ridge_CV$beta
+
+predict(kfolds_lambda_ridge, type = "coefficients",
+        s = kfolds_lambda_ridge$lambda.1se, newx = x)
+```  
+
+:::
+
+---
+
+## Regresión lasso en R
+
+
+$$\widehat{\boldsymbol{\beta}}_{\lambda, \alpha} = \arg \min_{\beta \in \mathbb{R}^{p+1}} \left( SSE \left(\boldsymbol{\beta} \right) + \lambda \left(\alpha \left\| \beta_{-1} \right\|_1  + (1-\alpha) \left\| \beta_{-1} \right\|_{2}^{2} \right)\right), \quad \lambda \geq 0,~0 \leq \alpha \leq 1$$
+
+La única diferencia para implementar la [**regresión lasso en R**]{.hl-yellow} es $\alpha = 1$ (con la misma función `glmnet()`)
+
+```{r}
+ajuste_lasso <- glmnet(x = x, y = y, alpha = 1)
+dim(ajuste_lasso$beta)
+length(ajuste_lasso$a0)
+ajuste_lasso$lambda
+```
+
+---
+
+## Regresión lasso en R
+
+Fíjate que, de nuevo, a [**mayor penalización (modelos más simples, más sparsity)**]{.hl-yellow}, el $R^2$ disminuye (o lo que es lo mismo, aumenta el SSE)
+
+```{r}
+ggplot(tibble("lambda" = log(ajuste_lasso$lambda),
+              "R2" = ajuste_lasso$dev.ratio)) +
+  geom_line(aes(x = lambda, y = R2)) +
+  theme_minimal() + labs(x = "log-lambda", y = "R2")
+```
+
+---
+
+## Regresión lasso en R
+
+De nuevo a [**mayor penalización (modelos más simples, más sparsity)**]{.hl-yellow}, la [**norma absoluta $\left\| \cdot \right\|_1$ de los coeficientes**]{.hl-yellow} disminuye (ya que penaliza más)
+
+
+```{r}
+ggplot(tibble("lambda" = log(ajuste_lasso$lambda),
+              "norma" = colSums(abs(ajuste_lasso$beta)))) +
+  geom_line(aes(x = lambda, y = norma)) +
+  theme_minimal() + labs(x = "log-lambda", y = "norma")
+```
+
+
+---
+
+## Selección de lambda en R
+
+De nuevo podemos hacer uso de `cv.glmnet()` para elegir la ([**penalización óptima elegida a través de validación k-fold**]{.hl-yellow})
+
+```{r}
+set.seed(12345)
+kfolds_lambda_lasso <- cv.glmnet(x = x, y = y, alpha = 1, nfolds = 20)
+min(kfolds_lambda_lasso$lambda)
+kfolds_lambda_lasso$lambda.min
+kfolds_lambda_lasso$lambda.1se
+
+lambda_seq <- 10^seq(log10(max(kfolds_lambda_ridge$lambda)), log10(0.0001), l = 200)
+
+set.seed(12345)
+kfolds_lambda_lasso <- cv.glmnet(x = x, y = y, alpha = 1, nfolds = 20, lambda = lambda_seq)
+min(kfolds_lambda_lasso$lambda)
+kfolds_lambda_lasso$lambda.min
+kfolds_lambda_lasso$lambda.1se
+```
+
+---
+
+
+## Selección de lambda en R
+
+Con la función `plot()` podemos dibujar de nuevo de manera automática los distintos valores $CV_k(\lambda)$: los números que aparecen arriba indican el [**número de predictores distintos de 0**]{.hl-yellow}
+
+```{r}
+plot(kfolds_lambda_lasso)
+abline(h = min(kfolds_lambda_lasso$cvm) + c(0, min(kfolds_lambda_lasso$cvsd)))
+```
+
+
+---
+
+## Regresión lasso en R
+
+La predicción se realiza de la misma manera (depende de si queremos el promedio en validación o del conjunto de train original): ahora **algunos coeficientes están a 0** lo cual nos puede servir no solo como modelo sino como [**método de selección de variables**]{.hl-yellow} (ejecutando ahora una regresión sin penalizar pero sin las variables cuyos coeficientes son 0).
+
+```{r}
+predict(kfolds_lambda_lasso, type = "coefficients",
+        s = kfolds_lambda_lasso$lambda.1se, newx = x)
+```  
+
+---
+
+## Mínimo global
+
+Uno de los [**problemas de la validación cruzada**]{.hl-red} es que podemos encontrarnos con lo que se conoce como [**L-shaped problem**]{.hl-yellow}: la curva de la cual pretendemos encontrar el mínimo no tiene un mínimo global. Veamos un ejemplo.
+
+```{r}
+#| code-fold: true
+set.seed(12345)
+p <- 100
+n <- 300
+x <- matrix(rnorm(n * p), n, p)
+y <- 1 + rnorm(n)
+lambdaGrid <- exp(seq(-10, 3, l = 200))
+
+# Validación leave-1-out
+plot(cv.glmnet(x = x, y = y, alpha = 1, nfolds = n, lambda = lambdaGrid))
+```
+
+Esto puede ser un indicio de que el **intercepto es significativo y no así el resto de predictores**
+
+---
+
+## Consistencia reg. penalizada
+
+
+
+:::: columns
+::: {.column width="55%"}
+
+![](img/consistency-lasso.jpg)
+
+:::
+
+::: {.column width="45%"}
+
+Como sucedía entre el BIC/AIC, en [Zhao and Yu (2006)](https://www.jmlr.org/papers/v7/zhao06a.html) se prueba como la [**selección lasso es consistente bajo la one standard rule**]{.hl-yellow} (bajo ciertas condiciones), pero no así cuando $\lambda$ es seleccionado por validación cruzada (incluye demasiados más predictores de los necesarios, como le sucedía al AIC)
+
+Imagen obtenida de <https://bookdown.org/egarpor/PM-UC3M/lm-iii-shrink.html#lm-iii-shrink-varsel>
+
+:::
+::::
+
+---
 
