@@ -31,7 +31,7 @@ execute:
 
 ## Hi!
 
-[**Mail**]{.hl-green}: **<javalv09@ucm.es>**.
+[**Mail**]{.hl-green}: **<javier.alvarez.liebana@upm.es>**.
 
 ::: columns
 ::: {.column width="30%"}
@@ -54,7 +54,7 @@ execute:
 :::
 
 
-Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl-yellow}. Disseminating via [**Twitter**](https://twitter.com/dadosdelaplace) e [**Instagram**](https://instagram.com/javieralvarezliebana)
+Currently, [**Assistant Professor at UPM**]{.hl-yellow}. Disseminating via [**bluesky**](https://bsky.app/profile/dadosdelaplace.bsky.social) e [**Instagram**](https://instagram.com/javieralvarezliebana)
 
 
 ---
@@ -91,13 +91,14 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 . . .
 
-- [**Final exam**]{.hl-yellow} on 10/09/2024, 15:00-16:10 (70%). 
+- [**Final exam**]{.hl-yellow} on 09/09/2025, 15:00-16:10 (70%). 
 
 . . .
 
 * [**Max grade**]{.hl-yellow}: to get a grade greater than 9/10 you should get at least 9/10 in the final exam.
 
----
+
+<!--
 
 ## Evaluation: data programming
 
@@ -120,6 +121,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 * [**Max grade**]{.hl-yellow}: to get a grade greater than 9/10 you should get at least 9/10 in the individual tasks.
 
 
+
 ---
 
 ## Planning
@@ -138,6 +140,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 * [**Final exam (25% if required)**]{.hl-yellow}: TBA
 
+-->
 
 ---
 
@@ -153,6 +156,8 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 | [0-4](#clase-0-4) | S2 | 10 sep | Final task| | | [🎯 (70%)](#clase-0-4) |
 :::
 :::
+
+<!-- 
 
 ---
 
@@ -190,6 +195,7 @@ Currently, [**Assistant Professor at the Faculty of Statistics of the UCM**]{.hl
 
 * [📚 **Extra resources**]{.hl-yellow}:  <https://r4ds.had.co.nz/>, <https://cdr-book.github.io/> and <https://ivelasq.quarto.pub/intro-to-quarto/>.
 
+-->
 
 # L1: [first steps]{.flow} {#clase-0-1}
 
@@ -9260,6 +9266,7 @@ Another option available (especially if we work with other people working) is to
 The first time you will be asked for a tidyverse permission to interact with your drive
 
 ```{r}
+#| eval: false
 library(googlesheets4)
 google_sheet <-
   read_sheet("https://docs.google.com/spreadsheets/d/1Uz38nHjl3bmftxDpcXj--DYyPo1I39NHVf-xjeg1_wI/edit?usp=sharing")
@@ -9280,6 +9287,7 @@ owid_covid() |> as_tibble()
 
 ```{r}
 #| echo: false
+#| eval: false
 library(owidR)
 owid_covid() |> as_tibble() |> slice(1:7)
 ```
@@ -9306,6 +9314,7 @@ aemet_api_key(apikey, install = TRUE)
 
 ```{r}
 #| echo: false
+#| eval: false
 library(climaemet)
 ```
 
@@ -9317,6 +9326,7 @@ library(climaemet)
 With this package we can do a [**search for stations**]{.hl-yellow} to know both its postal code and its identifier code within the AEMET network
 
 ```{r}
+#| eval: false
 stations <- aemet_stations()
 stations
 ```
@@ -9328,6 +9338,7 @@ stations
 For example, to get data from the station of the airport of El Prat, Barcelona, the code to provide is `"0076"`, obtaining **hourly data**
 
 ```{r}
+#| eval: false
 aemet_last_obs("0076")
 ```
 
@@ -9340,6 +9351,7 @@ aemet_last_obs("0076")
 One of the most useful tools in recent years is known as `{tidycensus}`: a tool for [**facilitating the process of downloading census data**]{.hl-yellow} for the United States from `R`.
 
 ```{r}
+#| eval: false
 library(tidycensus)
 ```
 
@@ -9361,6 +9373,7 @@ library(tidycensus)
 For example, we will download the **census data** (`get_decennial()`) at the state level (`geography = “state”`) for the population (variable `variables = “P001001”`) for the year 2010 (see variables in `tidycensus::load_variables()`).
 
 ```{r}
+#| eval: false
 total_population_10 <-
   get_decennial(geography = "state", 
   variables = "P001001",
