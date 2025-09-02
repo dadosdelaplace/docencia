@@ -150,10 +150,10 @@ Currently, [**Assistant Professor at UPM**]{.hl-yellow}. Disseminating via [**bl
 ::: {style="font-size:20px"}
 |  LESSON | WEEK | DATES | TOPIC | EX. | WORKBOOK | TASK | 
 |:------:|:--------:|:--------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
-| [0-1](#clase-0-1) | S1 | 2 sep | First steps: R base programming | [💻](#tu-turno-0-1-1) [💻](#tu-turno-0-1-2)  |  |  | 
-| [0-2](#clase-0-2) | S1 | 4 sep | First data: concatenate values and databases | [💻](#tu-turno-0-2-1) [💻](#tu-turno-0-2-2) [💻](#tu-turno-0-2-3) |  [🐣](#caso-practico-0-2-1) [🐣](#caso-practico-0-2-2) |  |
-| [0-3](#clase-0-3) | S1 | 6 sep | Quarto and if-else | [💻](#tu-turno-0-3-1) [💻](#tu-turno-0-3-2) [💻](#tu-turno-0-3-3) |  [🐣](#caso-practico-0-3-1) [🐣](#caso-practico-0-3-2) [🐣](#caso-practico-0-3-3) |  |
-| [0-4](#clase-0-4) | S2 | 10 sep | Final task| | | [🎯 (70%)](#clase-0-4) |
+| [0-1](#clase-0-1) | S1 | 1 sep | First steps | [💻](#tu-turno-0-1-1)  |  |  | 
+| [0-2](#clase-0-2) | S1 | 3 sep | First data: concatenate values and databases | [💻](#tu-turno-0-2-1) [💻](#tu-turno-0-2-2) [💻](#tu-turno-0-2-3) [💻](#tu-turno-0-2-4) |  [🐣](#caso-practico-0-2-1) [🐣](#caso-practico-0-2-2) |  |
+| [0-3](#clase-0-3) | S1 | 8 sep | Quarto and if-else | [💻](#tu-turno-0-3-1) [💻](#tu-turno-0-3-2) [💻](#tu-turno-0-3-3) |  [🐣](#caso-practico-0-3-1) [🐣](#caso-practico-0-3-2) [🐣](#caso-practico-0-3-3) |  |
+| [0-4](#clase-0-4) | S2 | 9 sep | Final task| | | [🎯 (70%)](#clase-0-4) |
 :::
 :::
 
@@ -647,150 +647,9 @@ Now we have a **fourth window**: the window where we will [**write our codes**]{
 - [**Select lines**]{.hl-yellow} and press `Ctrl+Enter`
 - [**Enable Source on Save**]{.hl-yellow} next to save: not only saves but also executes the **entire code**.
 
----
-
-
-## Organizing: projects
-
-Just as we usually work [**organized by folders**]{.hl-yellow} on the computer, in `RStudio` we can do the same to work [**efficiently by creating projects**]{.hl-yellow}.
-
-. . .
-
-::: columns
-::: {.column width="60%"}
-
-A [**project will be a "folder"**]{.hl-yellow} within `RStudio`, so our root directory will automatically be the project folder itself (allowing us to switch from one project to another using the top right menu).
-
-We can create one in a new folder or in an existing folder."
-
-:::
-
-::: {.column width="40%"}
-![](img/rstudio_proyectos.png){width="370"}
-:::
-:::
-
 
 ---
 
-## 💻 It's your turn {#tu-turno-0-1-1}
-
-::: panel-tabset
-### [**Exercise 1**]{.hl-yellow}
-
-📝 Create in your computer a folder of the subject and create inside it the `RStudio` project: it is there where you are going to save everything that we will do along this course, after creating the project you will have an `R Project` file. Then create in this folder two subfolders: `data` (this is where you will save the different datasets that we will use) and `scripts` (this is where you will save the `.R` files of each class).
-
-### [**Exercise 2**]{.hl-yellow}
-
-📝 Inside the project create a script `Exercises-class1.R` (inside the `scripts` folder). Once created, define in it a variable named `a` and whose value is -1. Execute the code in the (three) ways explained before.
-
-```{r}
-#| code-fold: true
-a <- -1
-```
-
-### [**Exercise 3**]{.hl-yellow}
-
-📝 Add below another line to define a variable `b` with the value 5. Then save the multiplication of both variables. Execute the code as you want.
-
-```{r}
-#| code-fold: true
-#| eval: false
-b <- 5
-a * b # without saving it
-mult <- a * b # save it
-```
-
-### [**Exercise 4**]{.hl-yellow}
-
-📝 Modify the code below to define two variables c and d, with values 3 and -1. Then divide the variables and save the result.
-
-```{r}
-#| eval: false
-c <- # you should assign 3
-d <- # you should assign -1
-```
-
-```{r}
-#| code-fold: true
-#| eval: false
-c <- 3
-d <- -1
-c / d
-div <- c / d
-```
-
-### [**Exercise 5**]{.hl-yellow}
-
-📝 Assign to `x` a positive value and then compute its square root; assign to `y` a negative number and compute its absolute value using `abs()`.
-
-```{r}
-#| code-fold: true
-#| eval: false
-x <- 5
-sqrt(x)
-
-y <- -2
-abs(y)
-```
-
-::: callout-note
-## Note that...
-
-Commands like `sqrt()`, `abs()` or `max()` are what we call [**functions**]{.hl-purple}: lines of code that we have "encapsulated" under a name, and given some input arguments, execute the commands (a sort of shortcut). In the functions the [**arguments will ALWAYS be enclosed in parentheses**]{.hl-yellow}
-
-:::
-
-
-### [**Exercise 6**]{.hl-yellow}
-
-📝 Using the variable `x` already defined, complete/modify the code below to store in a new variable `z` the result stored in `x` minus 5.
-
-```{r}
-#| eval: false
-z <- ? - ? # complete the code
-z
-```
-
-```{r}
-#| code-fold: true
-#| eval: false
-z <- x - 5
-z
-```
-
-### [**Exercise 7**]{.hl-yellow}
-
-📝 Define an `x` variable and assign it the value `-1`. Define another `y` and assign it the value `0`. Then perform the operations a) `x` by `y`; b) square root of `x`. What do you get?
-
-
-```{r}
-#| code-fold: true
-#| eval: false
-x <- -1
-y <- 0
-
-x / y
-sqrt(x)
-```
-
-### [**Exercise 8**]{.hl-yellow}
-
-📝 Write the code below in your script. Why do you think it doesn't work?
-
-```{r}
-#| error: true
-x <- -1
-y <- 0
-
-X + y
-```
-
-:::
-
-
-
----
 
 ## From CELL to TABLE
 
@@ -1157,6 +1016,169 @@ The `=` operator is [**reserved for assigning arguments**]{.hl-yellow} within fu
 
 ---
 
+## 💻 It's your turn {#tu-turno-0-1-1}
+
+::: panel-tabset
+### [**Exercise 1**]{.hl-yellow}
+
+📝 Create in your computer a folder of the subject and create inside it the `RStudio` project: it is there where you are going to save everything that we will do along this course, after creating the project you will have an `R Project` file. Then create in this folder two subfolders: `data` (this is where you will save the different datasets that we will use) and `scripts` (this is where you will save the `.R` files of each class).
+
+### [**Exercise 2**]{.hl-yellow}
+
+📝 Inside the project create a script `Exercises-class1.R` (inside the `scripts` folder). Once created, define in it a variable named `a` and whose value is -1. Execute the code in the (three) ways explained before.
+
+```{r}
+#| code-fold: true
+a <- -1
+```
+
+### [**Exercise 3**]{.hl-yellow}
+
+📝 Add below another line to define a variable `b` with the value 5. Then save the multiplication of both variables. Execute the code as you want.
+
+```{r}
+#| code-fold: true
+#| eval: false
+b <- 5
+a * b # without saving it
+mult <- a * b # save it
+```
+
+### [**Exercise 4**]{.hl-yellow}
+
+📝 Modify the code below to define two variables c and d, with values 3 and -1. Then divide the variables and save the result.
+
+```{r}
+#| eval: false
+c <- # you should assign 3
+d <- # you should assign -1
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+c <- 3
+d <- -1
+c / d
+div <- c / d
+```
+
+### [**Exercise 5**]{.hl-yellow}
+
+📝 Assign to `x` a positive value and then compute its square root; assign to `y` a negative number and compute its absolute value using `abs()`.
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- 5
+sqrt(x)
+
+y <- -2
+abs(y)
+```
+
+::: callout-note
+## Note that...
+
+Commands like `sqrt()`, `abs()` or `max()` are what we call [**functions**]{.hl-purple}: lines of code that we have "encapsulated" under a name, and given some input arguments, execute the commands (a sort of shortcut). In the functions the [**arguments will ALWAYS be enclosed in parentheses**]{.hl-yellow}
+
+:::
+
+
+### [**Exercise 6**]{.hl-yellow}
+
+📝 Using the variable `x` already defined, complete/modify the code below to store in a new variable `z` the result stored in `x` minus 5.
+
+```{r}
+#| eval: false
+z <- ? - ? # complete the code
+z
+```
+
+```{r}
+#| code-fold: true
+#| eval: false
+z <- x - 5
+z
+```
+
+### [**Exercise 7**]{.hl-yellow}
+
+📝 Define an `x` variable and assign it the value `-1`. Define another `y` and assign it the value `0`. Then perform the operations a) `x` by `y`; b) square root of `x`. What do you get?
+
+
+```{r}
+#| code-fold: true
+#| eval: false
+x <- -1
+y <- 0
+
+x / y
+sqrt(x)
+```
+
+### [**Exercise 8**]{.hl-yellow}
+
+📝 Write the code below in your script. Why do you think it doesn't work?
+
+```{r}
+#| error: true
+x <- -1
+y <- 0
+
+X + y
+```
+
+:::
+
+
+
+
+# L2 : [databases]{.flow} {#clase-0-2}
+
+[**Concatenating cells: vectors. First databases**]{style="color:#444442;"}
+
+* [💻 Solved exercises: type of variables](#tu-turno-0-2-1) 
+
+* [💻 Solved exercises: vectors](#tu-turno-0-2-2) 
+
+* [💻 Solved exercises: matrix](#tu-turno-0-2-3) 
+
+* [💻 Solved exercises: data.frame and tibble](#tu-turno-0-2-4) 
+
+* [🐣 Workbook/case study I-II](#caso-practico-0-2-1)
+
+* [📆 Planning](#planificacion)
+
+
+---
+
+
+
+## Organizing: projects
+
+Just as we usually work [**organized by folders**]{.hl-yellow} on the computer, in `RStudio` we can do the same to work [**efficiently by creating projects**]{.hl-yellow}.
+
+. . .
+
+::: columns
+::: {.column width="60%"}
+
+A [**project will be a "folder"**]{.hl-yellow} within `RStudio`, so our root directory will automatically be the project folder itself (allowing us to switch from one project to another using the top right menu).
+
+We can create one in a new folder or in an existing folder."
+
+:::
+
+::: {.column width="40%"}
+![](img/rstudio_proyectos.png){width="370"}
+:::
+:::
+
+
+---
+
+
 ## First package: glue
 
 A more intuitive way to work with text is to use the `{glue}` package: the first thing to do is to "buy the book" (if we have never done it before). After that [**load the package**]{.hl-yellow}
@@ -1448,9 +1470,10 @@ You have a pdf summary of the most important packages in the [**corresponding fo
 
 :::
 
+
 ---
 
-## 💻 It's your turn {#tu-turno-0-1-2}
+## 💻 It's your turn {#tu-turno-0-2-1}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -1530,20 +1553,6 @@ month(birth_date)
 today() - birth_date
 ```
 :::
-
-# L2 : [databases]{.flow} {#clase-0-2}
-
-[**Concatenating cells: vectors. First databases**]{style="color:#444442;"}
-
-* [💻 Solved exercises: vectors](#tu-turno-0-2-1) 
-
-* [💻 Solved exercises: matrix](#tu-turno-0-2-2) 
-
-* [💻 Solved exercises: data.frame and tibble](#tu-turno-0-2-3) 
-
-* [🐣 Workbook/case study I-II](#caso-practico-0-2-1)
-
-* [📆 Planning](#planificacion)
 
 ---
 
@@ -2044,7 +2053,7 @@ ages[order(ages)]
 
 ---
 
-## 💻 It's your turn {#tu-turno-0-2-1}
+## 💻 It's your turn {#tu-turno-0-2-2}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -2357,7 +2366,7 @@ apply(data_mat, MARGIN = 2, FUN = "mean")
 
 ---
 
-## 💻 It's your turn {#tu-turno-0-2-2}
+## 💻 It's your turn {#tu-turno-0-2-3}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -2660,7 +2669,7 @@ The `{datapasta}` package allows us to [**copy and paste**]{.hl-green} tables fr
 
 ---
 
-## 💻 It's your turn {#tu-turno-0-2-3}
+## 💻 It's your turn {#tu-turno-0-2-4}
 
 [**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
@@ -3984,7 +3993,7 @@ We have **different variables of the Star Wars characters**, with characteristic
 
 # Final task: [foundations of R base]{.flow} {#clase-0-4}
 
-[**Final task (70%)**: 10/09/2024 from 15:00 to 16:10]{style="color:#444442;"}
+[**Final task (70%)**: 09/09/2024 from 15:00 to 16:10]{style="color:#444442;"}
 
 ---
 
@@ -4008,16 +4017,10 @@ The day of the submission you will have uploaded a [**submission template**]{.hl
 
 [**Our favorite format: tibble. Tidyverse: an universe of tidy data**]{style="color:#444442;"}
 
-* [💻 Task correction](#tu-turno-1-1)
 * [💻 Solved exercises: tidy data](#tu-turno-1-2)
 * [🐣 Workbook/case study](#caso-practico-1)
 * [📆 Planning](#planificacion-curso)
 
----
-
-## 💻 Task correction {#tu-turno-1-1}
-
-[**Try to perform the following exercises without looking at the solutions**]{style="color:#444442;"}
 
 ---
 
