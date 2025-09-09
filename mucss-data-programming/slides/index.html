@@ -1737,7 +1737,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">today</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-09-02"</code></pre>
+<pre><code>[1] "2025-09-09"</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -1747,7 +1747,7 @@ Master in Computational Social Sciences • Javier Álvarez Liébana
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2025-09-02 11:55:54 CEST"</code></pre>
+<pre><code>[1] "2025-09-09 18:13:01 CEST"</code></pre>
 </div>
 </div>
 </div>
@@ -4179,11 +4179,33 @@ multiple of the number of rows [4]</code></pre>
 <li><p>It will be <span class="hl-yellow"><strong>MANDATORY</strong></span> to upload the generated <code>.html</code> file (only that file will be corrected) so render as you fill in the document, don’t leave it to the end.</p></li>
 </ol>
 </section></section>
+<section>
 <section id="data-programming" class="title-slide slide level1 center">
 <h1><span class="flow">DATA PROGRAMMING</span></h1>
 
 </section>
-
+<section id="evaluation-data-programming" class="slide level2">
+<h2>Evaluation: data programming</h2>
+<p>Evaluation just for the first 9 lessons (Javi’s module).</p>
+<ul>
+<li><span class="hl-yellow"><strong>Attendance and individual participation</strong></span> (10%)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>2 individual tasks</strong></span> sent during the course (20%-30%). Deadlines: 07/10/2025 and 25/10/2025.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Final exam</strong></span> with all materials and internet (40%, 11/11/2025). <span class="hl-purple"><strong>You are exempt if you get more than 7.5/10</strong></span> in the previous tasks. <span class="hl-purple"><strong>You must get more than 3/10</strong></span> to be considered.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="hl-yellow"><strong>Max grade</strong></span>: to get a grade greater than 9/10 you should get at least 9/10 in the average of individual tasks.</li>
+</ul>
+</div>
+</section></section>
 <section>
 <section id="clase-1" class="title-slide slide level1 center">
 <h1>L1: <span class="flow">tidydata</span></h1>
@@ -5974,8 +5996,8 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
-2 Arvel Cr…     NA    NA brown      fair       brown           NA   male  mascu…
+1 Finis Va…    170    NA blond      fair       blue              91 male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6020,10 +6042,10 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 4 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
-2 Bib Fort…    180    NA none       pale       pink              NA male  mascu…
-3 Wedge An…    170    77 brown      fair       hazel             21 male  mascu…
-4 Ben Quad…    163    65 none       grey, gre… orange            NA male  mascu…
+1 Mace Win…    188    84 none       dark       brown             72 male  mascu…
+2 San Hill     191    NA none       grey       gold              NA male  mascu…
+3 Biggs Da…    183    84 black      light      brown             24 male  mascu…
+4 Tion Med…    206    80 none       grey       black             NA male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6052,8 +6074,8 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
-2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
+2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6066,8 +6088,8 @@ multiple of the number of rows [4]</code></pre>
 <pre><code># A tibble: 2 × 14
   name      height  mass hair_color skin_color eye_color birth_year sex   gender
   &lt;chr&gt;      &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
-1 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
-2 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+1 C-3PO        167    75 &lt;NA&gt;       gold       yellow           112 none  mascu…
+2 Luke Sky…    172    77 blond      fair       blue              19 male  mascu…
 # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
@@ -6087,7 +6109,7 @@ multiple of the number of rows [4]</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb542"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb542-1"><a href="#cb542-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 6 3 2 1 5 6 6 4 5 3</code></pre>
+<pre><code> [1] 2 5 3 4 6 6 4 5 5 2</code></pre>
 </div>
 </div>
 </div>
@@ -6099,8 +6121,8 @@ multiple of the number of rows [4]</code></pre>
 <div class="sourceCode cell-code" id="cb544"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb544-1"><a href="#cb544-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb544-2"><a href="#cb544-2"></a>       <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="fl">0.05</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 2 4 1 1 1 1 2 1 1 4 6 4 1 4 1 2 2 6 1 6 1 2 1 2 5 1 1 1 3 1 3 1 3 4 4 1 1 3
-[39] 1 1 4 1 1 3 1 1 4 4 1 1</code></pre>
+<pre><code> [1] 1 2 6 3 6 1 1 1 3 6 4 1 1 6 1 1 1 1 1 6 1 4 2 1 2 1 1 1 2 1 1 1 1 1 3 2 6 6
+[39] 6 1 1 1 1 2 1 1 5 1 1 2</code></pre>
 </div>
 </div>
 </section>
@@ -8021,12 +8043,12 @@ dplyr 1.1.0.
 <span id="cb734-5"><a href="#cb734-5"></a>               <span class="at">times =</span> <span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: microseconds
-                                    expr      min       lq        mean
-                                y &lt;- x^2    1.722    1.927    2.280912
- for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1411.261 1444.943 1623.705698
-    median      uq      max neval
-    2.0705    2.46   13.653   500
- 1485.3480 1617.43 6174.067   500</code></pre>
+                                    expr      min       lq        mean   median
+                                y &lt;- x^2    1.681    1.927    2.502558    2.132
+ for (i in 1:100) {     y[i] &lt;- x[i]^2 } 1413.475 1442.647 1709.647110 1488.444
+       uq       max neval
+    2.542    11.275   500
+ 1610.603 15204.850   500</code></pre>
 </div>
 </div>
 </section>
@@ -10323,10 +10345,10 @@ $x2
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1] -0.01349801
+[1] -0.02245518
 
 [[2]]
-[1] 2.007898</code></pre>
+[1] 1.974083</code></pre>
 </div>
 </div>
 </section>
@@ -10340,10 +10362,10 @@ $x2
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1] 0.4809229
+[1] 0.5081869
 
 [[2]]
-[1] 6.382936</code></pre>
+[1] 6.236497</code></pre>
 </div>
 </div>
 </section>
@@ -10359,11 +10381,11 @@ $x2
 <div class="cell">
 <div class="sourceCode cell-code" id="cb946"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb946-1"><a href="#cb946-1"></a><span class="fu">map_dbl</span>(x, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.01349801  2.00789766</code></pre>
+<pre><code>[1] -0.02245518  1.97408310</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb948"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb948-1"><a href="#cb948-1"></a><span class="fu">map_chr</span>(x, <span class="cf">function</span>(x) { <span class="fu">glue</span>(<span class="st">"Mean is {round(mean(x), 5)}"</span>) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Mean is -0.0135" "Mean is 2.0079" </code></pre>
+<pre><code>[1] "Mean is -0.02246" "Mean is 1.97408" </code></pre>
 </div>
 </div>
 </section>
@@ -10372,14 +10394,14 @@ $x2
 <div class="cell">
 <div class="sourceCode cell-code" id="cb950"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb950-1"><a href="#cb950-1"></a><span class="fu">c</span>(x[[<span class="dv">1</span>]][<span class="dv">3</span>], x[[<span class="dv">2</span>]][<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3404583 4.2600467</code></pre>
+<pre><code>[1] -0.9090200 -0.3218306</code></pre>
 </div>
 </div>
 <p>Also, if you pass it a <span class="hl-yellow"><strong>number</strong></span> instead of a function, it will return the <span class="hl-yellow"><strong>ith element of each list</strong></span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb952"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb952-1"><a href="#cb952-1"></a><span class="fu">map_dbl</span>(x, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3404583 4.2600467</code></pre>
+<pre><code>[1] -0.9090200 -0.3218306</code></pre>
 </div>
 </div>
 </section>

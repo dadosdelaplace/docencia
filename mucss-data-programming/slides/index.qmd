@@ -4013,6 +4013,29 @@ The day of the submission you will have uploaded a [**submission template**]{.hl
 
 # [DATA PROGRAMMING]{.flow}
 
+---
+
+
+## Evaluation: data programming 
+
+Evaluation just for the first 9 lessons (Javi's module).
+
+-  [**Attendance and individual participation**]{.hl-yellow} (10%)
+
+. . .
+
+- [**2 individual tasks**]{.hl-yellow} sent during the course (20%-30%). Deadlines: 07/10/2025 and 25/10/2025.
+
+. . .
+
+- [**Final exam**]{.hl-yellow} with all materials and internet (40%, 11/11/2025). [**You are exempt if you get more than 7.5/10**]{.hl-purple} in the previous tasks. [**You must get more than 3/10**]{.hl-purple} to be considered.
+
+. . .
+
+* [**Max grade**]{.hl-yellow}: to get a grade greater than 9/10 you should get at least 9/10 in the average of individual tasks.
+
+
+
 # L1: [tidydata]{.flow} {#clase-1}
 
 [**Our favorite format: tibble. Tidyverse: an universe of tidy data**]{style="color:#444442;"}
